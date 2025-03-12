@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UpScale: Enhance Your Media</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to bottom, #E6EFFF, #CCDAFF);
+            background-size: cover;
+            background-attachment: fixed;
+            color: #495999;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .app-icon {
+            width: 120px;
+            height: 120px;
+            border-radius: 10px;
+        }
+
+        .title {
+            font-size: 32px;
+            color: #495999;
+            flex: 1;
+            margin: 0;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: #495999;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .feature-icon {
+            margin-right: 10px;
+            color: #FFD621;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        /* Comparison container with 4:3 aspect ratio */
+        .comparison-container {
+            position: relative;
+            width: 100%;
+            padding-top: 75%; /* 4:3 Aspect Ratio (3/4 = 0.75 or 75%) */
+            overflow: hidden;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer; /* Add cursor pointer for video interaction */
+            -khtml-user-select: none;
+            -o-user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        /* Before and after images */
+        .comparison-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Video player */
+        .video-player {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background-color: black;
+            cursor: pointer; /* Add cursor pointer for video interaction */
+        }
+
+        /* Slider divider */
+        .slider {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background-color: #FFD621;
+            cursor: col-resize;
+            z-index: 10;
+        }
+
+        .slider:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background-color: #FFD621;
+            border-radius: 50%;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Labels */
+        .label {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            z-index: 5;
+        }
+
+        .before-label {
+            top: 10px;
+            left: 10px;
+        }
+
+        .after-label {
+            top: 10px;
+            right: 10px;
+        }
+
+        /* Media switch tabs with 4:3 aspect ratio */
+        .media-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .media-tab {
+            position: relative;
+            width: 120px;
+            height: 90px; /* 4:3 Aspect Ratio (120 / 4 * 3 = 90) */
+            margin: 0 10px;
+            overflow: hidden;
+            border-radius: 5px;
+            cursor: pointer;
+            /* Add box-sizing to prevent jumping when border is added */
+            box-sizing: border-box;
+            border: 3px solid transparent;
+        }
+
+        .media-tab img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .media-tab:hover img {
+            transform: scale(1.1);
+        }
+
+        .media-tab.active {
+            border: 3px solid #FFD621;
+        }
+
+        .video-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 30px;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Download section */
+        .download-section {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .download-section img {
+            height: 60px;
+            transition: transform 0.3s;
+        }
+
+        .download-section img:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .title {
+                font-size: 28px;
+            }
+
+            .media-tab {
+                width: 80px;
+                height: 60px; /* Maintain 4:3 aspect ratio */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img class="app-icon" src="resources/upscale_icon.png" alt="UpScale App Icon">
+            <h1 class="title">UpScale: Enhance and Upscale Your Media</h1>
+        </div>
+
+        <div class="description">
+            <p>UpScale is the perfect solution for enhancing and upscaling your photos and videos with professional quality. Our advanced AI technology delivers stunning results while keeping your data completely private.</p>
+            
+            <div class="feature">
+                <div class="feature-icon">✓</div>
+                <div>Powerful upscaling for photos and videos</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✓</div>
+                <div>Intelligent face restoration technology</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✓</div>
+                <div>100% on-device processing for complete privacy</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✓</div>
+                <div>No internet connection required</div>
+            </div>
+        </div>
+
+        <h2 class="subtitle">See the Difference</h2>
+
+        <div class="comparison-container">
+            <img src="resources/before_after/after_1.jpg" alt="After Image" class="after-image">
+            <img src="resources/before_after/before_1.jpg" alt="Before Image" class="before-image">
+            <div class="slider"></div>
+            <div class="label before-label">Before</div>
+            <div class="label after-label">After</div>
+            <video class="video-player" style="display: none;" autoplay loop>
+                <source src="resources/before_after/before_after_3.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <div class="media-tabs">
+            <div class="media-tab active" data-before="resources/before_after/before_1.jpg" data-after="resources/before_after/after_1.jpg">
+                <img src="resources/before_after/preview_1.jpg" alt="Portrait Preview">
+            </div>
+            <div class="media-tab" data-before="resources/before_after/before_2.jpg" data-after="resources/before_after/after_2.jpg">
+                <img src="resources/before_after/preview_2.jpg" alt="Nature Preview">
+            </div>
+            <div class="media-tab video-tab" data-video="resources/before_after/before_after_3.mp4">
+                <img src="resources/before_after/preview_3.jpg" alt="Video Preview">
+                <div class="video-icon">▶</div>
+            </div>
+        </div>
+
+        <div class="download-section">
+            <a href="https://apps.apple.com/app/id6736931330" target="_blank">
+                <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="UpScale Download" title="UpScale Download">
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Variables to store DOM elements
+        const slider = document.querySelector('.slider');
+        const beforeImage = document.querySelector('.before-image');
+        const afterImage = document.querySelector('.after-image');
+        const comparisonContainer = document.querySelector('.comparison-container');
+        const videoPlayer = document.querySelector('.video-player');
+        const mediaTabs = document.querySelectorAll('.media-tab');
+        
+        // Initial position for the slider
+        let sliderPosition = 50;
+        let isDragging = false;
+
+        // Function to update the slider position
+        function updateSliderPosition(position) {
+            sliderPosition = position;
+            slider.style.left = `${position}%`;
+            beforeImage.style.clipPath = `inset(0 ${100-position}% 0 0)`;
+        }
+
+        // Initialize the slider
+        updateSliderPosition(sliderPosition);
+
+        // Video click to play/pause
+        videoPlayer.addEventListener('click', () => {
+            if (videoPlayer.paused) {
+                videoPlayer.play();
+            } else {
+                videoPlayer.pause();
+            }
+        });
+
+        // Mouse events for slider
+        slider.addEventListener('mousedown', () => {
+            isDragging = true;
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            
+            const rect = comparisonContainer.getBoundingClientRect();
+            const position = ((e.clientX - rect.left) / rect.width) * 100;
+            
+            // Limit position between 0 and 100
+            const limitedPosition = Math.max(0, Math.min(100, position));
+            
+            updateSliderPosition(limitedPosition);
+        });
+
+        // Touch events for mobile
+        slider.addEventListener('touchstart', () => {
+            isDragging = true;
+        });
+
+        document.addEventListener('touchend', () => {
+            isDragging = false;
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            
+            const touch = e.touches[0];
+            const rect = comparisonContainer.getBoundingClientRect();
+            const position = ((touch.clientX - rect.left) / rect.width) * 100;
+            
+            // Limit position between 0 and 100
+            const limitedPosition = Math.max(0, Math.min(100, position));
+            
+            updateSliderPosition(limitedPosition);
+            
+            // Prevent page scrolling while dragging
+            e.preventDefault();
+        });
+
+        // Media tabs functionality
+        mediaTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                mediaTabs.forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Check if it's a video
+                if (tab.classList.contains('video-tab')) {
+                    // Show video, hide images
+                    beforeImage.style.display = 'none';
+                    afterImage.style.display = 'none';
+                    slider.style.display = 'none';
+                    document.querySelector('.before-label').style.display = 'none';
+                    document.querySelector('.after-label').style.display = 'none';
+                    
+                    videoPlayer.style.display = 'block';
+                    videoPlayer.src = tab.dataset.video;
+                    videoPlayer.load();
+                    videoPlayer.play();
+                } else {
+                    // Show images, hide video
+                    beforeImage.style.display = 'block';
+                    afterImage.style.display = 'block';
+                    slider.style.display = 'block';
+                    document.querySelector('.before-label').style.display = 'block';
+                    document.querySelector('.after-label').style.display = 'block';
+                    
+                    videoPlayer.style.display = 'none';
+                    
+                    // Pause video if it was playing
+                    videoPlayer.pause();
+                    
+                    // Update images
+                    beforeImage.src = tab.dataset.before;
+                    afterImage.src = tab.dataset.after;
+                    
+                    // Reset slider position
+                    updateSliderPosition(50);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
