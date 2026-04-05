@@ -291,7 +291,7 @@
         </div>
 
         <div class="download-section">
-            <a href="https://apps.apple.com/app/id6736931330" target="_blank">
+            <a href="https://apps.apple.com/app/id6736931330" target="_blank" rel="noopener noreferrer">
                 <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="UpScale Download" title="UpScale Download">
             </a>
         </div>
@@ -373,7 +373,7 @@
             
             // Prevent page scrolling while dragging
             e.preventDefault();
-        });
+        }, { passive: false });
 
         // Media tabs functionality
         mediaTabs.forEach(tab => {

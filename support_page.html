@@ -125,6 +125,36 @@
             content: '▲';
         }
 
+        .footer-links {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .footer-links a {
+            display: inline-flex;
+            align-items: center;
+            margin: 0 15px;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            color: #495999;
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #3d5a80;
+            transform: translateY(-5px);
+        }
+
+        .footer-links a img {
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .footer-links a:hover img {
+            transform: scale(1.2);
+        }
+
         @media (max-width: 768px) {
             .header {
                 flex-direction: column;
@@ -154,42 +184,16 @@
                 width: 100%;
                 text-align: center;
             }
-
-            .footer-links {
-                text-align: center; /* Centers the links */
-                margin-top: 20px; /* Adds some space above the links */
-            }
-
-            .footer-links a {
-                display: inline-flex; /* Aligns the icon and text horizontally */
-                align-items: center; /* Centers icon and text vertically */
-                margin: 0 15px; /* Adds spacing between links */
-                font-size: 16px; /* Increases font size */
-                font-family: 'Arial', sans-serif; /* Custom font */
-                color: #495999; /* Text color */
-                text-decoration: none; /* Removes underline */
-                transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effect */
-            }
-
-            .footer-links a:hover {
-                color: #3d5a80; /* Changes text color on hover */
-                transform: translateY(-5px); /* Slightly lifts the link on hover */
-            }
-
-            .footer-links a img {
-                margin-right: 8px; /* Space between icon and text */
-                transition: transform 0.3s ease; /* Smooth transition for icon scale */
-            }
-
-            .footer-links a:hover img {
-                transform: scale(1.2); /* Enlarges the icon on hover */
-            }
         }
     </style>
     <script>
         function toggleAnswer(id) {
             const answer = document.getElementById(id);
-            const question = document.querySelector(`#${id} .faq-question`);
+            const question = answer?.previousElementSibling;
+
+            if (!answer || !question) {
+                return;
+            }
 
             if (answer.style.display === 'block') {
                 answer.style.display = 'none';
@@ -214,7 +218,7 @@
 
         <h2 class="subtitle">Contact Information</h2>
         <div class="contact">
-            <a href="https://x.com/sharrikk" target="_blank"><img src="https://img.icons8.com/ios-filled/50/FFD621/twitter.png" alt="Twitter Icon"> Twitter</a>
+            <a href="https://x.com/sharrikk" target="_blank" rel="noopener noreferrer"><img src="https://img.icons8.com/ios-filled/50/FFD621/twitter.png" alt="Twitter Icon"> Twitter</a>
             <a href="mailto:alexandr.graschenkov91@gmail.com"><img src="https://img.icons8.com/ios-glyphs/50/FFD621/email.png" alt="Email Icon"> Email</a>
         </div>
 

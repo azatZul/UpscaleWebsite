@@ -1,0 +1,17 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "RE82W8HD52.com.graz.upscaler"
+        ],
+        "components": [
+          {
+            "/": "/sale.html",
+            "comment": "Open sale landing page in the app when UpScale is installed."
+          }
+        ]
+      }
+    ]
+  }
+}
