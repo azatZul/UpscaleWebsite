@@ -106,7 +106,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
             background-color: black;
             cursor: pointer; /* Add cursor pointer for video interaction */
         }
@@ -229,8 +229,9 @@
             }
 
             .media-tab {
-                width: 80px;
-                height: 60px; /* Maintain 4:3 aspect ratio */
+                width: 72px;
+                height: 54px; /* Maintain 4:3 aspect ratio */
+                margin: 0 4px;
             }
         }
     </style>
@@ -255,6 +256,10 @@
             </div>
             <div class="feature">
                 <div class="feature-icon">✓</div>
+                <div>Smooth AI slow-motion video creation</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✓</div>
                 <div>100% on-device processing for complete privacy</div>
             </div>
             <div class="feature">
@@ -271,7 +276,7 @@
             <div class="slider"></div>
             <div class="label before-label">Before</div>
             <div class="label after-label">After</div>
-            <video class="video-player" style="display: none;" autoplay loop>
+            <video class="video-player" style="display: none;" autoplay muted loop playsinline>
                 <source src="resources/before_after/before_after_3.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
@@ -286,6 +291,10 @@
             </div>
             <div class="media-tab video-tab" data-video="resources/before_after/before_after_3.mp4">
                 <img src="resources/before_after/preview_3.jpg" alt="Video Preview">
+                <div class="video-icon">▶</div>
+            </div>
+            <div class="media-tab video-tab" data-video="resources/slow_mo_demo_small.mp4" title="Slow-motion video">
+                <img src="resources/before_after/preview_4.jpg" alt="Slow-motion video preview">
                 <div class="video-icon">▶</div>
             </div>
         </div>
@@ -396,6 +405,7 @@
                     videoPlayer.style.display = 'block';
                     videoPlayer.src = tab.dataset.video;
                     videoPlayer.load();
+                    videoPlayer.currentTime = 0;
                     videoPlayer.play();
                 } else {
                     // Show images, hide video
