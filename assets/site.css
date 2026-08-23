@@ -1,9 +1,7 @@
-/* UScale — upscales.app  |  design system */
 *,*::before,*::after{box-sizing:border-box}
-/* The palette is registered so the tokens themselves can be interpolated. That is the
-   whole theme animation: :root eases its colours and every rule that reads one follows
-   in the same frame. Transitioning `color` per element cannot work — an inherited colour
-   is resolved against the parent's *final* value, so a heading races ahead and then drops
+/* Registered tokens let the palette interpolate at :root — that alone is the theme
+   animation. Transitioning `color` per element cannot work: an inherited colour is
+   resolved against the parent's *final* value, so a heading races ahead and then snaps
    back to the parent's still-moving colour the moment its own transition ends. */
 @property --bg{syntax:"<color>";inherits:true;initial-value:#07080d}
 @property --bg-2{syntax:"<color>";inherits:true;initial-value:#0c0e16}
@@ -56,11 +54,7 @@
 @property --glow-o1{syntax:"<number>";inherits:true;initial-value:.5}
 @property --glow-o2{syntax:"<number>";inherits:true;initial-value:.32}
 
-/* ---------- palette ----------
-   Dark is the default. The light theme swaps the same tokens; its colours follow the
-   iOS app — blue-tinted paper (#E6EFFF family), near-black ink, the same gold, and the
-   app's action blue. An inline <head> script stamps html[data-theme] from the stored
-   choice (or the OS preference) before the first paint, so there is no flash. */
+/* ---------- palette ---------- */
 :root{
   color-scheme:dark;
   transition-property:--bg,--bg-2,--surface,--surface-2,--line,--line-2,--tint,--tint-2,--tx,--tx-2,
@@ -68,17 +62,15 @@
     --star,--star-off,--vio,--vio-2,--vio-soft,--vio-line,--ok,--ok-soft,--ok-line,--wash-v,
     --wash-v2,--wash-a,--wash-a2,--nav,--nav-2,--badge-bg,--badge-fg,--numeral,--numeral-2,
     --glow-1,--glow-2,--halo-v,--halo-a,--cast,--h1-1,--h1-2,--h1-3,--h1-4,--glow-o1,--glow-o2;
-  /* Fast out of the gate: an inverted palette has to cross itself somewhere, and a
-     front-loaded curve puts that crossing early and gets through it in a frame or two
-     instead of parking the page at zero contrast around the midpoint. */
+  /* Front-loaded curve: an inverted palette has to cross itself somewhere, and this
+     gets through that near-zero-contrast midpoint in a frame or two. */
   transition-duration:.3s; transition-timing-function:cubic-bezier(.18,1,.28,1);
   --bg:#07080d; --bg-2:#0c0e16; --surface:#12141f; --surface-2:#181b29;
   --line:rgba(255,255,255,.09); --line-2:rgba(255,255,255,.16);
-  /* --tint: the neutral wash used for hover fills and quiet chips */
   --tint:rgba(255,255,255,.05); --tint-2:rgba(255,255,255,.1);
   --tx:#eef0f7; --tx-2:#a8aec4; --tx-3:#767c93; --tx-4:#41455a;
-  /* --acc paints (buttons, bars, dots); --acc-tx writes (links, eyebrows, glyphs) —
-     they part ways in the light theme, where raw gold is unreadable as text */
+  /* --acc paints (buttons, bars, dots), --acc-tx writes (links, eyebrows, glyphs).
+     They part ways in the light theme, where raw gold is unreadable as text. */
   --acc:#ffd621; --acc-d:#e8c00c; --acc-tx:#ffd621; --ink:#0a0b11;
   --acc-soft:rgba(255,214,33,.12); --acc-line:rgba(255,214,33,.26);
   --acc-uline:rgba(255,214,33,.35); --acc-glow:rgba(255,214,33,.6);
@@ -86,7 +78,6 @@
   --vio:#6e7cf6; --vio-2:#a48bff;
   --vio-soft:rgba(110,124,246,.14); --vio-line:rgba(110,124,246,.28);
   --ok:#3ddc97; --ok-soft:rgba(61,220,151,.14); --ok-line:rgba(61,220,151,.45);
-  /* the violet/gold washes behind the big feature cards */
   --wash-v:rgba(110,124,246,.1); --wash-v2:rgba(110,124,246,.16);
   --wash-a:rgba(255,214,33,.05); --wash-a2:rgba(255,214,33,.09);
   --nav:rgba(7,8,13,.72); --nav-2:rgba(7,8,13,.9);
@@ -128,15 +119,14 @@
   --halo-v:rgba(110,124,246,.42); --halo-a:rgba(255,196,40,.3);
   --cast:rgba(24,34,84,.32);
   --dev-sh:0 30px 60px -16px rgba(20,30,80,.42),0 8px 20px rgba(20,30,80,.16);
-  /* gold straight into violet turns muddy on paper, so the light ramp goes
-     through a warm coral instead — the same sunset, one stop longer */
+  /* Gold straight into violet turns muddy on paper, so the light ramp detours
+     through a warm coral — the same sunset, one stop longer. */
   --h1-1:#da9b00; --h1-2:#e4910c; --h1-3:#cb5549; --h1-4:#6f4ff0;
   --shadow:0 22px 50px -22px rgba(20,30,80,.35);
 }
 /* Shadows are the one themed value that is not a bare colour token, so they still need a
-   real transition; everything else rides along on the variables above. The moon/sun glyph
-   is left out: it runs its own springy transforms at exactly this moment, and an
-   !important transition of its own would flatten them into a jump cut. */
+   real transition. The moon/sun glyph is excluded: it runs its own springy transforms at
+   exactly this moment, and an !important transition would flatten them into a jump cut. */
 html.theme-anim *:not(.theme-ico,.theme-ico *),
 html.theme-anim *:not(.theme-ico,.theme-ico *)::before,
 html.theme-anim *:not(.theme-ico,.theme-ico *)::after{
@@ -152,7 +142,6 @@ p{margin:0}
 ul,ol{margin:0;padding:0}
 :focus-visible{outline:2px solid var(--acc-tx);outline-offset:3px;border-radius:6px}
 .wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 22px}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 /* ---------- ambient background ---------- */
 .glow{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
@@ -171,7 +160,6 @@ ul,ol{margin:0;padding:0}
 .nav-links{display:flex;gap:4px;margin-left:auto;align-items:center}
 .nav-links a{padding:8px 12px;border-radius:10px;font-size:14.5px;font-weight:600;color:var(--tx-2);transition:.15s}
 .nav-links a:hover{color:var(--tx);background:var(--tint-2)}
-.nav-cta{margin-left:6px}
 .burger{display:none;margin-left:auto;background:none;border:1px solid var(--line);color:var(--tx);
   width:42px;height:42px;border-radius:12px;cursor:pointer;align-items:center;justify-content:center}
 .burger svg{width:20px;height:20px}
@@ -194,7 +182,6 @@ ul,ol{margin:0;padding:0}
 .theme-ico .rays{stroke:currentColor;fill:none;transform-box:fill-box;transform-origin:center;
   opacity:0;transform:rotate(-70deg) scale(.35);
   transition:opacity .3s ease,transform .55s cubic-bezier(.4,1.5,.5,1)}
-/* light theme picked: the crescent fills in and the rays spring out */
 [data-theme="light"] .theme-ico{transform:rotate(180deg)}
 [data-theme="light"] .theme-ico .orb{transform:scale(.78)}
 [data-theme="light"] .theme-ico .cut{transform:translate(9px,-9px)}
@@ -227,7 +214,6 @@ ul,ol{margin:0;padding:0}
 .btn-p:hover{background:var(--acc-d);transform:translateY(-1px)}
 .btn-g{background:var(--tint);color:var(--tx);border-color:var(--line-2)}
 .btn-g:hover{background:var(--tint-2)}
-.btn-sm{padding:9px 16px;font-size:14px;border-radius:11px}
 .btn-xl{font-size:17.5px;padding:19px 38px;border-radius:17px;gap:11px;letter-spacing:.005em}
 .btn-p.btn-xl{box-shadow:0 18px 46px -12px var(--acc-glow)}
 .btn-p.btn-xl:hover{box-shadow:0 26px 60px -12px var(--acc-glow);transform:translateY(-2px)}
@@ -273,12 +259,10 @@ section{position:relative}
 .hero-sub{color:var(--tx-2);font-size:19px;margin-top:22px;max-width:52ch}
 .hero-cta{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:34px}
 .hero-note{font-size:13.5px;color:var(--tx-3);margin-top:16px}
-/* a store badge and the caption that belongs to it — one column per store, so
-   Google Play / Mac / Web each get their own caption without extra CSS */
+/* Keep each store badge paired with its caption. */
 .stores{align-items:flex-start}
 .store{display:flex;flex-direction:column;align-items:flex-start}
 .store .hero-note{margin-top:12px}
-/* the caption is revealed while its own badge is hovered / focused */
 .hero-note.reveal{opacity:0;transform:translateY(-4px);transition:opacity .22s ease,transform .22s ease}
 .store:has(a:hover) .hero-note.reveal,
 .store:focus-within .hero-note.reveal{opacity:1;transform:none}
@@ -288,7 +272,6 @@ section{position:relative}
 .chips li{display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;color:var(--tx-2);
   background:var(--tint);border:1px solid var(--line);padding:7px 13px;border-radius:999px}
 .chips li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ok);flex:0 0 auto}
-/* in the hero the four chips have to sit on one line next to the device */
 @media (min-width:981px){
   .hero-copy .chips{gap:7px;margin-top:26px}
   .hero-copy .chips li{font-size:12px;padding:6px 10px;gap:6px}
@@ -299,7 +282,6 @@ section{position:relative}
 .vid-mute,.vid-paused{position:absolute;z-index:6;display:none;align-items:center;justify-content:center;
   border-radius:999px;background:rgba(10,10,14,.55);color:#fff;backdrop-filter:blur(6px);
   -webkit-backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.16)}
-/* bottom-left, so it never sits under the on-device badge */
 .vid-mute{left:12px;bottom:12px;width:38px;height:38px;padding:0;cursor:pointer;
   transition:background .18s ease,transform .18s ease}
 .cmp-wide .vid-mute{left:18px;bottom:18px}
@@ -336,17 +318,15 @@ section{position:relative}
   border:2px solid transparent;background:none;padding:0;transition:.18s;opacity:.6}
 .cmp-tab img{width:100%;height:100%;object-fit:cover}
 .cmp-tab:hover{opacity:.9}
-.cmp-tab[aria-selected="true"]{border-color:var(--acc);opacity:1}
+.cmp-tab[aria-pressed="true"]{border-color:var(--acc);opacity:1}
 .cmp-tab .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   color:#fff;font-size:17px;text-shadow:0 2px 8px rgba(0,0,0,.8)}
 
 /* ---------- wide results comparison ---------- */
 .cmp-wide{margin-top:4px;--cmp-h:780px}
-/* the box follows each example's own aspect ratio (--ar), capped by --cmp-h */
 .cmp-wide .cmp{--ar:1.6;--h:var(--cmp-h);aspect-ratio:var(--ar);height:auto;margin:0 auto;
   width:min(100%,calc(var(--h) * var(--ar)));max-width:100%}
-/* on wide screens the box keeps that height even when it runs out of width —
-   examples too wide to fit then fill it and crop at the sides (aspect fill) */
+/* Crop wide examples instead of shrinking below --cmp-h. */
 @media(min-width:1000px){
   .cmp-wide .cmp{--h:min(var(--cmp-h),70vw);aspect-ratio:auto;height:var(--h)}
 }
@@ -359,9 +339,9 @@ section{position:relative}
   display:flex;flex-direction:column;align-items:center;gap:9px}
 .cmp-tab.lg .cmp-thumb{position:relative;display:block;width:118px;aspect-ratio:4/3;
   border-radius:13px;overflow:hidden;border:2px solid transparent;transition:border-color .18s}
-.cmp-tab.lg[aria-selected="true"] .cmp-thumb{border-color:var(--acc)}
+.cmp-tab.lg[aria-pressed="true"] .cmp-thumb{border-color:var(--acc)}
 .cmp-cap{font-size:12.5px;font-weight:650;color:var(--tx-3);text-align:center;line-height:1.3;max-width:124px}
-.cmp-tab.lg[aria-selected="true"] .cmp-cap{color:var(--tx)}
+.cmp-tab.lg[aria-pressed="true"] .cmp-cap{color:var(--tx)}
 .on-device{position:absolute;right:14px;bottom:14px;z-index:6;display:flex;align-items:center;
   background:rgba(0,0,0,.6);backdrop-filter:blur(8px);color:#fff;font-size:12px;font-weight:650;
   padding:6px 12px;border-radius:999px;pointer-events:none}
@@ -377,33 +357,35 @@ section{position:relative}
   .cmp-wide .od-v{gap:6px}
 }
 
-/* ---------- hero device: landscape iPhone bleeding off the right edge ---------- */
+/* ---------- overflowing hero device ---------- */
 .hero-lead{overflow:hidden}
+/* overflow:hidden clips the x-axis, which is all the bleeding device needs — but it also
+   cuts .phone-halo / .phone-cast at the section edge and leaves a hard line across the page.
+   overflow-x:clip clips the same way without touching the y-axis. */
+@supports (overflow-x:clip){
+  .hero-lead{overflow:visible;overflow-x:clip}
+}
 .hero-lead .hero-grid{grid-template-columns:1.16fr .84fr;gap:40px}
 .hero-stage{position:relative;align-self:stretch;min-height:clamp(320px,34vw,430px)}
 .hero-stage .phone{
-  --pw:clamp(660px,89vw,1340px);           /* device width — everything scales from it */
-  --sh:calc(var(--pw)*.4439);              /* the screen's height (1131/2548 of the artwork) */
+  --pw:clamp(660px,89vw,1340px);
+  --sh:calc(var(--pw)*.4439);
   position:absolute;left:0;top:46%;transform:translateY(-50%);width:var(--pw);z-index:1}
-/* ambient light pools behind the device */
 .phone-halo{position:absolute;z-index:0;inset:-42% -18%;pointer-events:none;filter:blur(58px);
   background:radial-gradient(closest-side at 26% 46%,var(--halo-v),transparent 74%),
              radial-gradient(closest-side at 72% 58%,var(--halo-a),transparent 72%)}
 .phone-cast{position:absolute;z-index:0;left:2%;right:2%;top:88%;height:34%;pointer-events:none;
   filter:blur(30px);border-radius:50%;background:radial-gradient(closest-side,var(--cast),transparent 76%)}
 .phone-body{position:relative;z-index:1;aspect-ratio:2548/1252}
-/* the device's own shadow — a plate hidden behind the frame, so nothing darkens the picture */
 .phone-body::before{content:"";position:absolute;z-index:0;inset:3% 1.5%;background:#05060a;
   border-radius:calc(var(--sh)*.17);
   box-shadow:var(--dev-sh)}
-/* the frame artwork: transparent screen hole, so it lies on top of the picture */
 .phone-frame{position:absolute;z-index:3;inset:0;width:100%;height:100%;pointer-events:none;
   user-select:none;-webkit-user-drag:none}
-/* the picture sits behind the frame; the offsets come from the artwork (inline style) */
+/* Inline offsets align the comparison with the transparent screen. */
 .phone-screen{position:absolute;z-index:2;border-radius:calc(var(--sh)*.142);overflow:hidden;
   background:#05060a}
 
-/* the comparison fills the whole screen: one picture, one divider */
 .cmp-phone{position:absolute;inset:0;width:auto;height:auto;max-width:none;margin:0;aspect-ratio:auto;
   border:0;border-radius:0;box-shadow:none;background:#05060a;cursor:default}
 .cmp-phone .cmp-bar{width:3px;transform:translateX(-1.5px);background:var(--acc);
@@ -411,31 +393,27 @@ section{position:relative}
 .cmp-phone .cmp-bar::after{width:calc(var(--sh)*.115);height:calc(var(--sh)*.115);
   background-color:var(--acc);background-size:calc(var(--sh)*.062);
   box-shadow:0 calc(var(--sh)*.012) calc(var(--sh)*.05) rgba(0,0,0,.45)}
-/* with a mouse the divider simply follows the cursor: no handle, no resize cursor */
 @media (hover:hover) and (pointer:fine){
   .cmp-phone .cmp-bar{cursor:default}
   .cmp-phone .cmp-bar::after{display:none}
 }
-/* the two labels ride with the divider, so they stay in view however far the device bleeds */
 .cmp-lb{position:absolute;top:calc(var(--sh)*.085);white-space:nowrap;font-size:calc(var(--sh)*.052);
   font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.94);
   text-shadow:0 1px 10px rgba(0,0,0,.75),0 0 2px rgba(0,0,0,.5)}
 .cmp-lb.l{right:calc(100% + var(--sh)*.05)}
 .cmp-lb.r{left:calc(100% + var(--sh)*.05)}
-/* example switcher: iOS-style page dots on the glass, kept to the left because the
-   device bleeds off the right edge of the window on wide screens */
+/* Keep page dots on the visible half of the device. */
 .phone-dots{position:absolute;z-index:6;bottom:clamp(10px,calc(var(--sh)*.05),30px);
   left:clamp(12px,calc(var(--sh)*.06),36px);display:flex;align-items:center;
   gap:clamp(1px,calc(var(--sh)*.006),5px);padding:clamp(2px,calc(var(--sh)*.008),6px);
   border-radius:99px;background:rgba(8,10,16,.42);backdrop-filter:blur(10px);
   box-shadow:0 2px 14px rgba(0,0,0,.4),inset 0 0 0 1px rgba(255,255,255,.14)}
-/* the button is a comfortable tap target, the dot inside it is the visible part */
 .cmp-tab.dot{width:auto;height:auto;aspect-ratio:auto;display:flex;border:0;background:none;
   box-shadow:none;opacity:1;border-radius:99px;padding:clamp(9px,calc(var(--sh)*.018),11px)}
 .cmp-tab.dot i{display:block;width:clamp(8px,calc(var(--sh)*.022),12px);aspect-ratio:1;
   border-radius:50%;background:rgba(255,255,255,.46);transition:background .2s,transform .2s}
 .cmp-tab.dot:hover i{background:rgba(255,255,255,.82)}
-.cmp-tab.dot[aria-selected="true"] i{background:var(--acc);transform:scale(1.12)}
+.cmp-tab.dot[aria-pressed="true"] i{background:var(--acc);transform:scale(1.12)}
 .cmp-tab.dot:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
 
 /* ---------- reviews ---------- */
@@ -464,7 +442,7 @@ section{position:relative}
 .rev blockquote p{color:var(--tx-3);font-size:15px;line-height:1.62;transition:color .28s ease}
 .revs-note{margin:30px auto 0;text-align:center;font-size:15px;color:var(--tx-4);transition:color .28s ease}
 .revs-note:hover{color:var(--tx-2)}
-/* average-rating row: highlight only <fill> of the 5 stars (e.g. 4.6/5) */
+/* Reveal the filled fraction of the average rating. */
 .score .stars.part,.pill .stars.part{position:relative;display:inline-block;color:var(--star-off)}
 .score .stars.part{margin-right:-2px} .pill .stars.part{margin-right:-1px}
 .stars.part i{position:absolute;left:0;top:0;width:var(--fill);overflow:hidden;
@@ -472,8 +450,6 @@ section{position:relative}
 
 /* ---------- cards / features ---------- */
 .grid{display:grid;gap:20px}
-.g3{grid-template-columns:repeat(3,1fr)}
-.g2{grid-template-columns:repeat(2,1fr)}
 .card{background:linear-gradient(180deg,var(--surface),var(--bg-2));border:1px solid var(--line);
   border-radius:var(--r-m);padding:28px;transition:.22s;position:relative;overflow:hidden}
 .card:hover{border-color:var(--line-2);transform:translateY(-3px)}
@@ -517,19 +493,10 @@ section{position:relative}
 .ticks li svg{width:21px;height:21px;flex:0 0 auto;margin-top:2px;color:var(--ok)}
 .ticks li.cloud svg{color:var(--vio-2)}
 
-/* ---------- pricing table ---------- */
-.tbl{width:100%;border-collapse:collapse;border:1px solid var(--line);border-radius:var(--r-m);overflow:hidden}
-.tbl th,.tbl td{padding:16px 20px;text-align:left;border-bottom:1px solid var(--line);font-size:15.5px}
-.tbl thead th{background:var(--surface);font-size:14px;letter-spacing:.02em}
-.tbl tbody th{font-weight:650;color:var(--tx-2)}
-.tbl td{color:var(--tx)}
-.tbl td.pro{color:var(--acc-tx);font-weight:700}
-.tbl tr:last-child th,.tbl tr:last-child td{border-bottom:0}
-
 /* ---------- guides ---------- */
 .guides{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-/* the clipping box is padded (and pulled back with a negative margin) so the -2px hover
-   lift and the focus ring of the top row are not shaved off while collapsed */
+/* The clipping box is padded (and pulled back with a negative margin) so the -2px hover
+   lift and the focus ring of the top row are not shaved off while collapsed. */
 .guides-collapsible{overflow:hidden;margin:-10px -10px 0;padding:10px 10px 0;
   transition:height .48s cubic-bezier(.4,0,.2,1)}
 .guides-more{text-align:center;margin-top:34px}
@@ -542,9 +509,7 @@ section{position:relative}
   border-radius:var(--r-m);padding:18px;transition:.2s}
 .guide:hover{border-color:var(--acc);transform:translateY(-2px);background:var(--surface)}
 .guide img{width:78px;height:98px;object-fit:cover;border-radius:11px;flex:0 0 auto;background:#000}
-/* cards whose guide has an "after" thumbnail stack the two frames; hovering the card
-   cross-fades the before into the result. Hover-capable pointers only, so a tap on a
-   phone does not leave the card stuck on the after frame. */
+/* Cross-fade optional before/after thumbnails on hover-capable devices. */
 .guide-thumb{position:relative;width:78px;height:98px;flex:0 0 auto;border-radius:11px;
   overflow:hidden;background:#000;isolation:isolate}
 .guide-thumb img{display:block;width:100%;height:100%;border-radius:0}
@@ -564,15 +529,14 @@ section{position:relative}
 .faq details{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-m);overflow:hidden;
   transition:background .25s ease,border-color .25s ease}
 .faq details[open]{border-color:var(--line-2);background:var(--surface)}
-/* flex row rather than absolute "+": a question that wraps to two lines keeps the sign
-   next to its first line instead of drifting to the middle of the block */
+/* Flex keeps the sign aligned with wrapped questions. */
 .faq summary{cursor:pointer;list-style:none;display:flex;align-items:flex-start;gap:16px;
   padding:20px 24px;font-weight:700;font-size:17px}
 .faq summary::-webkit-details-marker{display:none}
-/* the sign's line box is the question's own first line (17px * 1.65), so the two share a
-   baseline. --nudge: the "+" glyph sits ~2px below the middle of that box; lift it and
-   rotate around the glyph centre so the x does not drift. Keep this a private name — a
-   length in one of the @property <color> vars above kills the whole transform */
+/* The sign's line box is the question's own first line (17px * 1.65), so the two share a
+   baseline. The "+" glyph sits ~2px below the middle of that box; --nudge lifts it and
+   moves the rotation origin with it so the x does not drift. Keep that name private — a
+   length in one of the @property <color> vars above kills the whole transform. */
 .faq summary::after{content:"+";margin-left:auto;flex:0 0 24px;height:28px;line-height:28px;
   text-align:center;font-size:24px;font-weight:400;color:var(--acc-tx);--nudge:2px;
   transform:translateY(calc(-1 * var(--nudge)));transform-origin:50% calc(50% + var(--nudge));
@@ -605,10 +569,6 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:64px 0 34
 .fgrid a{color:var(--tx-2);font-size:14.5px}
 .fgrid a:hover{color:var(--acc-tx)}
 .fbrand p{color:var(--tx-3);font-size:14.5px;margin-top:14px;max-width:34ch}
-.flangs{display:flex;flex-wrap:wrap;gap:8px;margin-top:44px;padding-top:26px;border-top:1px solid var(--line)}
-.flangs a{font-size:13px;color:var(--tx-3);padding:5px 11px;border:1px solid var(--line);border-radius:999px}
-.flangs a:hover{color:var(--tx);border-color:var(--line-2)}
-.flangs a[aria-current]{color:var(--acc-tx);border-color:var(--acc-line)}
 .fbot{margin-top:26px;padding-top:22px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;
   gap:12px;justify-content:space-between;color:var(--tx-3);font-size:13.5px}
 
@@ -706,7 +666,6 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:64px 0 34
 .doc-toc a.is-active{color:var(--acc-tx);background:var(--acc-soft)}
 
 .doc-cards{max-width:none;margin:0;padding:0}
-/* the whole document is one card; only the contacts sit apart */
 .doc-card{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);
   padding:34px 34px 38px;margin-bottom:16px}
 .doc-card.is-contact{border-color:var(--acc-line);
@@ -744,7 +703,6 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:64px 0 34
 .copy.copied{color:var(--ok);border-color:var(--ok-line)}
 .copy.copied .i-copy{display:none}
 .copy.copied .i-ok{display:block}
-/* confirmation floats above the button so the row never reflows */
 .copy .copy-t::after{content:"Copied";position:absolute;left:50%;bottom:calc(100% + 8px);
   transform:translateX(-50%);padding:4px 9px;border-radius:7px;background:var(--ok);color:var(--ink);
   font-size:11.5px;font-weight:800;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .18s}
@@ -776,12 +734,11 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:64px 0 34
   .nav-links.open{display:flex}
   .nav-links a{padding:12px 14px;font-size:16px}
   .burger{display:flex;flex:0 0 auto;order:4;margin-left:10px}
-  .nav-cta{display:none}
   .theme-btn{order:2;margin-left:auto}
   .lang{order:3;margin-left:0}
 }
 @media(max-width:560px){
-  /* phones: the flag alone stands in for the language, so the row still fits */
+  /* Hide the language name to keep the header on one row. */
   .nav-in{gap:8px}
   .burger{margin-left:0}
   .lang-btn{padding:10px}
@@ -792,11 +749,10 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:64px 0 34
   .cmp{max-width:520px;margin:0 auto}
   .hero-stage{min-height:calc(48vw + 24px)}
   .hero-stage .phone{--pw:min(104vw,720px);left:50%;transform:translate(-50%,-50%)}
-  /* the whole device is on screen here, so the dots sit where they belong */
   .phone-dots{left:50%;transform:translateX(-50%)}
   .cmp-wide{--cmp-h:540px}
   .split{grid-template-columns:1fr;gap:34px;padding:38px 28px}
-  .g3,.steps{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:repeat(2,1fr)}
   .fgrid{grid-template-columns:1fr 1fr;gap:32px}
   .revs{grid-template-columns:repeat(2,1fr)}
 }
@@ -805,9 +761,8 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:64px 0 34
   .sale-cta{justify-content:center}
   .sale-cta .btn-xl{width:100%;max-width:340px}
   .sect{padding:66px 0}
-  .guides,.g3,.g2,.steps,.next{grid-template-columns:1fr}
-  /* reviews become a swipeable rail: the next card peeks in from the right,
-     so it reads as "there is more over here" without any extra chrome */
+  .guides,.steps,.next{grid-template-columns:1fr}
+  /* Swipeable reviews keep the next card partly visible. */
   .revs{display:flex;gap:14px;overflow-x:auto;overscroll-behavior-x:contain;
     margin:0 -22px;padding:4px 22px 8px;
     scroll-snap-type:x mandatory;scroll-padding-left:22px;

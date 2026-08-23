@@ -1,0 +1,39 @@
+{
+  "site_url": "https://upscales.app",
+  "app_store_url": "https://apps.apple.com/app/id6736931330",
+  "app_name": "AI Photo Enhancer, UScale",
+  "version": "2.1.6",
+  "file_size": "78.4 MB",
+  "minimum_ios": "16",
+  "rating": {
+    "value": 4.6,
+    "count": 1575
+  },
+  "free_limits": {
+    "photos_per_day": 2
+  },
+  "pricing_usd": {
+    "annual": 39.99,
+    "annual_sale": 29.99
+  },
+  "annual_trial_days": 3,
+  "page_updated": {
+    "home": "2026-08-21",
+    "guide_hub": "2026-08-21",
+    "guides": {
+      "unblur-photo-iphone": "2026-08-21",
+      "restore-old-photos": "2026-08-21",
+      "colorize-black-and-white-photos": "2026-08-21",
+      "upscale-image-4k": "2026-08-21",
+      "enhance-video-quality": "2026-08-21",
+      "slow-motion-video": "2026-08-21",
+      "brighten-dark-photos": "2026-08-21",
+      "film-negative-to-photo": "2026-08-21",
+      "fix-blurry-faces": "2026-08-21",
+      "upscale-anime-art": "2026-08-21"
+    },
+    "support_page.html": "2026-08-21",
+    "terms.html": "2026-08-21",
+    "privacy_policy.html": "2026-08-21"
+  }
+}

@@ -10,9 +10,8 @@ so these pages look and behave exactly like the rest of upscales.app.
 EMAIL_LEGAL = "alexandr.graschenkov91@gmail.com"
 EMAIL_HELP = EMAIL_LEGAL
 X_HANDLE = "https://x.com/sharrikk"
-UPDATED_LEGAL = "Updated 21 August 2026"
 
-# ---------------------------------------------------------------- support
+# Support
 SUPPORT = dict(
     file="support_page.html",
     eyebrow="Support",
@@ -22,7 +21,6 @@ SUPPORT = dict(
     title="UScale Support — Help with the AI Photo Enhancer app",
     description="Get help with UScale, the on-device AI photo and video enhancer for iPhone and iPad. "
                 "FAQ, troubleshooting and direct contact with the developer.",
-    updated=UPDATED_LEGAL,
     body=f"""
 <div class="contact-card">
   <img class="me" src="/resources/alex_avatar.jpg" width="78" height="78" alt="Alex, the developer of UScale">
@@ -69,7 +67,7 @@ enhanced one — it makes the fix much faster.</p>
     those are listed in the <a href="/privacy_policy.html">Privacy Policy</a>.</p></div></details>
 
   <details><summary>Which devices and iOS versions are supported?</summary><div class="a">
-    <p>iPhone, iPad and iPod touch running iOS 16 or later. Newer chips finish a 4x upscale noticeably faster,
+    <p>iPhone, iPad and iPod touch running iOS {{minimum_ios}} or later. Newer chips finish a 4x upscale noticeably faster,
     but the same tools are available on every supported device.</p></div></details>
 
   <details><summary>Processing is slow or the app heats up. Is that normal?</summary><div class="a">
@@ -83,7 +81,7 @@ enhanced one — it makes the fix much faster.</p>
     instead of 4x, and always start from the largest original you have rather than a screenshot.</p></div></details>
 
   <details><summary>How much does Premium cost?</summary><div class="a">
-    <p>The app is free for 2 photo enhancements a day. Premium is $39.99 a year and starts with a 3-day free
+    <p>The app is free for {{free_photos_per_day}} photo enhancements a day. Premium is {{annual_price}} a year and starts with a {{trial_days}}-day free
     trial with everything unlocked. Prices vary slightly by region — the App Store shows the exact amount in
     your currency before you confirm.</p></div></details>
 
@@ -124,7 +122,7 @@ enhanced one — it makes the fix much faster.</p>
 """,
 )
 
-# ---------------------------------------------------------------- terms
+# Terms
 TERMS = dict(
     file="terms.html",
     eyebrow="Legal",
@@ -133,7 +131,6 @@ TERMS = dict(
     title="Terms of Use — UScale",
     description="Terms of Use for the UScale iOS app: licence, in-app purchases, third-party services, "
                 "user content, disclaimers and contact details.",
-    updated=UPDATED_LEGAL,
     sections=True,
     body=f"""
 <h2>Introduction</h2>
@@ -216,7 +213,7 @@ arising from or relating to these Terms shall be resolved exclusively in the cou
 """,
 )
 
-# ---------------------------------------------------------------- privacy
+# Privacy
 PRIVACY = dict(
     file="privacy_policy.html",
     eyebrow="Legal",
@@ -225,7 +222,6 @@ PRIVACY = dict(
     title="Privacy Policy — UScale",
     description="How UScale handles your data: photos and videos are processed on your device, plus the "
                 "analytics, advertising and subscription services the app uses.",
-    updated=UPDATED_LEGAL,
     sections=True,
     body=f"""
 <h2>Introduction</h2>

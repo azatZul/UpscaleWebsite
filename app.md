@@ -1,7 +1,9 @@
 # UScale — App Store Listing Data
 
-> Source of truth for all website copy, metadata and structured data.
-> Pulled from the iTunes Lookup API + App Store product page on **2026-08-21**.
+> Editorial and App Store research snapshot from **2026-08-21**.
+> Facts the site renders live in `build/app_facts.json` — the build injects them into page copy
+> and structured data. Change them there; the rows below marked *(build/app_facts.json)* are
+> pointers, not a second source of truth.
 
 ---
 
@@ -30,25 +32,28 @@
 | **Primary category** | Photo & Video |
 | **Secondary category** | Utilities |
 | **Content rating** | 4+ |
-| **Current version** | 2.1.6 |
+| **Current version** | *(build/app_facts.json → `version`)* |
 | **Version released** | 2026-08-18 |
 | **First released** | 2025-01-08 |
-| **File size** | 78.4 MB (78,400,512 bytes) |
-| **Minimum iOS** | 16.0 |
+| **File size** | *(build/app_facts.json → `file_size`; 78,400,512 bytes)* |
+| **Minimum iOS** | *(build/app_facts.json → `minimum_ios`)* |
 | **Devices** | iPhone, iPad, iPod touch (iosUniversal). Designed for iPad. Not verified for macOS. |
-| **Average rating** | 4.6 / 5 |
-| **Rating count** | 1,575 |
+| **Average rating** | *(build/app_facts.json → `rating.value`)* |
+| **Rating count** | *(build/app_facts.json → `rating.count`)* |
 | **Game Center** | No |
 
 ### In-App Purchases (US)
 
-| Product | Price |
-|---|---|
-| Weekly | $5.99 |
-| Annual | $39.99 |
-| Annual Sale | $29.99 |
-| Forever (lifetime) | $79.99 |
-| Forever Sale (lifetime) | $49.99 |
+Only the annual pair reaches the site (pricing copy and the sale page's discount);
+the rest is reference.
+
+| Product | Price | |
+|---|---|---|
+| Weekly | $5.99 | |
+| Annual | $39.99 | *(build/app_facts.json → `pricing_usd.annual`)* |
+| Annual Sale | $29.99 | *(build/app_facts.json → `pricing_usd.annual_sale`)* |
+| Forever (lifetime) | $79.99 | |
+| Forever Sale (lifetime) | $49.99 | |
 
 ### App languages (27 store locales)
 

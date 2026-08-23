@@ -1,4 +1,3 @@
-/* UScale — upscales.app */
 (function () {
   'use strict';
 
@@ -9,7 +8,7 @@
     return !!(window.matchMedia && window.matchMedia(q).matches);
   };
 
-  /* nav: shadow on scroll, mobile menu, language menu */
+  /* Navigation */
   var nav = document.querySelector('.nav');
   if (nav) {
     var onScroll = function () { nav.classList.toggle('stuck', window.scrollY > 8); };
@@ -29,11 +28,7 @@
     });
   }
 
-  /* theme switch.
-     The inline <head> script has already put the right theme on <html> before the
-     first paint (stored choice, else the OS preference), so this only wires the
-     button up: it flips the theme, remembers the pick for the rest of the site and
-     for the next visit, and — as long as nothing was picked — keeps following the OS. */
+  /* Theme is bootstrapped in <head>; this wires controls and persistence. */
   var THEME_KEY = 'uscale-theme';
   var THEME_BG = { dark: '#07080d', light: '#f3f6fe' };
   var root = document.documentElement;
@@ -53,10 +48,7 @@
   var applyTheme = function (theme, animate) {
     var light = theme === 'light';
     if (animate && !matches('(prefers-reduced-motion:reduce)')) {
-      /* The colours cross-fade on their own: the palette tokens are registered custom
-         properties and :root eases them. Only shadows need a per-element transition,
-         which this class turns on for one beat and then takes away again so it never
-         interferes with the hover animations. */
+      /* Palette tokens animate themselves; enable shadow transitions briefly. */
       root.classList.add('theme-anim');
       clearTimeout(themeTimer);
       themeTimer = setTimeout(function () { root.classList.remove('theme-anim'); }, 560);
@@ -71,7 +63,7 @@
     }
   };
 
-  applyTheme(currentTheme(), false); /* sync the button with what the head script chose */
+  applyTheme(currentTheme(), false);
 
   if (themeBtn) {
     themeBtn.addEventListener('click', function () {
@@ -79,7 +71,7 @@
       try { localStorage.setItem(THEME_KEY, theme); } catch (e) {}
       applyTheme(theme, true);
       themeBtn.classList.remove('flip');
-      void themeBtn.offsetWidth; /* reflow, so a quick second tap replays the pulse */
+      void themeBtn.offsetWidth; /* Restart the pulse animation. */
       themeBtn.classList.add('flip');
     });
   }
@@ -90,7 +82,6 @@
       if (!storedTheme()) applyTheme(e.matches ? 'light' : 'dark', true);
     });
   }
-  /* a pick made in another tab applies here too */
   window.addEventListener('storage', function (e) {
     if (e.key === THEME_KEY && (e.newValue === 'light' || e.newValue === 'dark')) {
       applyTheme(e.newValue, true);
@@ -109,11 +100,15 @@
       langMenu.classList.remove('open'); langBtn.setAttribute('aria-expanded', 'false');
     });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') { langMenu.classList.remove('open'); langBtn.setAttribute('aria-expanded', 'false'); }
+      if (e.key === 'Escape' && langMenu.classList.contains('open')) {
+        langMenu.classList.remove('open');
+        langBtn.setAttribute('aria-expanded', 'false');
+        langBtn.focus();
+      }
     });
   }
 
-  /* home guides: 4 cards on larger screens, 2 on phones, with an animated reveal */
+  /* Collapsible guide cards */
   (function () {
     var list = document.querySelector('.guides-collapsible');
     var toggle = document.querySelector('.guides-toggle');
@@ -129,7 +124,7 @@
       if (!count) return 0;
       var first = cards[0].getBoundingClientRect();
       var last = cards[count - 1].getBoundingClientRect();
-      /* the list is padded so hover lifts are not clipped; border-box height includes it */
+      /* Include hover-safe top padding in the collapsed height. */
       var pad = parseFloat(getComputedStyle(list).paddingTop) || 0;
       return Math.ceil(last.bottom - first.top + pad);
     }
@@ -163,7 +158,7 @@
     sync(true);
   })();
 
-  /* FAQ accordion — smooth height animation, opening one answer closes the others */
+  /* FAQ accordion */
   (function () {
     var EASE = 'cubic-bezier(.4,0,.2,1)';
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -202,7 +197,7 @@
       if (Math.abs(to - from) < 1) { setTimeout(finish, 0); return; }
       panel.style.transition = 'none';
       panel.style.height = from + 'px';
-      panel.offsetHeight; /* reflow */
+      panel.offsetHeight; /* Commit the start height before transitioning. */
       panel.style.transition = 'height ' + dur + 's ' + EASE;
       panel.style.height = to + 'px';
       panel.addEventListener('transitionend', finish);
@@ -244,7 +239,7 @@
     });
   })();
 
-  /* copy-to-clipboard buttons */
+  /* Copy buttons */
   document.querySelectorAll('[data-copy]').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var text = btn.getAttribute('data-copy');
@@ -269,7 +264,7 @@
         if (ok) { flash(); } else { selectAddress(); }
       }
 
-      /* clipboard blocked (some in-app browsers): select the address so it can be copied by hand */
+      /* Select the address when clipboard access is blocked. */
       function selectAddress() {
         var a = btn.parentNode.querySelector('a');
         if (!a || !window.getSelection) { return; }
@@ -282,10 +277,9 @@
     });
   });
 
-  /* legal pages: highlight the section the reader is in */
+  /* Legal-page table of contents */
   var toc = document.querySelector('.doc-toc');
   if (toc) {
-    /* the list is a dropdown on phones and an always-open sidebar on desktop */
     var narrow = window.matchMedia('(max-width:1000px)');
     var syncToc = function () {
       if (narrow.matches) { toc.removeAttribute('open'); } else { toc.setAttribute('open', ''); }
@@ -297,7 +291,6 @@
     var secs = [].slice.call(document.querySelectorAll('.doc-sec'));
     var tocLinks = [].slice.call(toc.querySelectorAll('a[href^="#"]'));
     tocLinks.forEach(function (a) {
-      /* on narrow screens the list is a dropdown — fold it back after a jump */
       a.addEventListener('click', function () {
         if (narrow.matches) { toc.removeAttribute('open'); }
       });
@@ -320,7 +313,7 @@
     }
   }
 
-  /* before / after comparison */
+  /* Before/after comparisons */
   document.querySelectorAll('.cmp-wrap').forEach(function (root) {
     var cmp = root.querySelector('.cmp');
     if (!cmp) return;
@@ -334,7 +327,6 @@
     var follow = root.hasAttribute('data-follow');
     var dragging = false, pos = 50, aim = 50, hold = 0;
 
-    /* in-video controls: click the clip to pause it, a badge shows it is stopped */
     function syncMute() {
       if (!mute || !vid) return;
       mute.classList.toggle('muted', vid.muted);
@@ -342,7 +334,7 @@
     }
     function playing() { return vid && vid.style.display === 'block'; }
 
-    /* switching sources pauses the player for a moment — that is not a real stop */
+    /* Ignore the temporary pause caused by switching sources. */
     var switching = false;
 
     function startClip(withSound, attempt) {
@@ -352,9 +344,9 @@
       if (!p || !p.then) { switching = false; return; }
       p.then(function () { switching = false; }, function (err) {
         var name = err && err.name;
-        /* the browser refuses sound without a gesture — fall back to a silent clip */
+        /* Fall back to muted autoplay when sound is blocked. */
         if (name === 'NotAllowedError' && withSound) { startClip(false, 0); return; }
-        /* load() interrupted the previous play() — try again once the source settles */
+        /* Retry once if load() interrupted play(). */
         if (name === 'AbortError' && !attempt) { setTimeout(function () { startClip(withSound, 1); }, 150); return; }
         switching = false;
         if (playing() && vid.paused) cmp.classList.add('paused');
@@ -379,16 +371,21 @@
       });
     }
 
+    /* Publish only whole-percent changes. The hero pauses its idle drift while the
+       slider is focused, so the accessible value stays current without noisy updates. */
+    var announced = -1;
     function setPos(p) {
       pos = Math.max(1, Math.min(99, p));
       bar.style.left = pos + '%';
       before.style.clipPath = 'inset(0 ' + (100 - pos) + '% 0 0)';
+      var whole = Math.round(pos);
+      if (whole !== announced) {
+        announced = whole;
+        bar.setAttribute('aria-valuenow', whole);
+      }
     }
 
-    /* the hero device runs past the right edge of the window, so the picture keeps the
-       device's own left, top and bottom edges but ends halfway between the window edge
-       and the far bezel: the subject then reads as centred in what is actually on
-       screen. When the whole device fits — phones, tablets — this is the screen itself. */
+    /* Crop half of the hero device's off-screen overflow. */
     var deck = root.querySelector('.phone-screen');
     var midPct = 50;
     function fit() {
@@ -397,8 +394,7 @@
       var vw = document.documentElement.clientWidth || window.innerWidth;
       var cut = Math.max(0, Math.round((r.right - vw) / 2));
       cmp.style.right = cut + 'px';
-      /* whatever is still past the window edge cannot be looked at, so the divider
-         rests in the middle of the part that is on screen, not of the picture */
+      /* Center the divider within the visible portion. */
       var w = r.width - cut;
       midPct = w > 0
         ? Math.max(8, Math.min(50, ((Math.min(vw, r.right - cut) - r.left) / w) * 50))
@@ -427,7 +423,6 @@
     function end() {
       if (!dragging) return;
       dragging = false;
-      /* after a drag the idle drift stays out of the way for a moment */
       hold = now() + 4000;
     }
 
@@ -440,8 +435,9 @@
 
     bar.setAttribute('tabindex', '0');
     bar.setAttribute('role', 'slider');
-    bar.setAttribute('aria-valuemin', '0');
-    bar.setAttribute('aria-valuemax', '100');
+    bar.setAttribute('aria-valuemin', '1');
+    bar.setAttribute('aria-valuemax', '99');
+    bar.setAttribute('aria-orientation', 'horizontal');
     bar.addEventListener('keydown', function (e) {
       if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
       aim = Math.max(0, Math.min(100, pos + (e.key === 'ArrowLeft' ? -4 : 4)));
@@ -450,17 +446,17 @@
       e.preventDefault();
     });
 
-    /* hero device: the divider drifts on its own and follows the cursor inside the stage */
+    /* Animated hero divider */
     if (follow) {
       var calm = matches('(prefers-reduced-motion:reduce)');
       var fine = matches('(hover:hover) and (pointer:fine)');
-      var hover = false, raf = 0, live = true, t0 = 0;
+      var hover = false, focused = false, raf = 0, live = true, t0 = 0;
 
       var frame = function (t) {
         raf = 0;
         if (!t0) t0 = t;
         var mid = midPct;
-        var chase = hover || dragging || t < hold;
+        var chase = hover || dragging || focused || t < hold;
         var goal = chase ? aim : (calm ? mid : mid * (1 + .46 * Math.sin((t - t0) / 2450)));
         var next = pos + (goal - pos) * (chase ? .18 : .06);
         if (Math.abs(goal - pos) < .04) next = goal;
@@ -469,9 +465,18 @@
       };
       var run = function () { if (live && !raf) raf = requestAnimationFrame(frame); };
 
-      /* the divider follows the cursor anywhere over the device — on wide screens that
-         reaches far past the column the stage itself occupies, so the window is watched
-         and the picture's own box decides what counts as "over it" */
+      bar.addEventListener('focus', function () {
+        focused = true;
+        aim = pos;
+        setPos(pos);
+      });
+      bar.addEventListener('blur', function () {
+        focused = false;
+        t0 = 0;
+        run();
+      });
+
+      /* Track the pointer against the overflowing comparison bounds. */
       var box = cmp.getBoundingClientRect();
       var remeasure = function () { box = cmp.getBoundingClientRect(); };
       if (fine) {
@@ -505,15 +510,15 @@
       run();
     }
 
-    /* media tabs */
+    /* Media tabs */
     var tabs = root.querySelectorAll('.cmp-tab');
     tabs.forEach(function (tab) {
       tab.addEventListener('click', function () {
-        tabs.forEach(function (t) { t.setAttribute('aria-selected', 'false'); });
-        tab.setAttribute('aria-selected', 'true');
+        tabs.forEach(function (t) { t.setAttribute('aria-pressed', 'false'); });
+        tab.setAttribute('aria-pressed', 'true');
         if (tab.dataset.ratio) cmp.style.setProperty('--ar', tab.dataset.ratio);
         if (badge) badge.classList.toggle('cloud', tab.dataset.cloud === '1');
-        /* the hero screen is wider than any photo: each example brings its own framing */
+        /* Each hero image defines its crop within the wide device. */
         if (tab.dataset.pos) {
           before.style.objectPosition = tab.dataset.pos;
           after.style.objectPosition = tab.dataset.pos;
@@ -543,8 +548,7 @@
       });
     });
 
-    /* the hero swaps in place, so the other examples are fetched once the page is
-       done loading — a tap should never wait for a download */
+    /* Preload alternate hero images after the initial page load. */
     if (root.dataset.preload && tabs.length > 1) {
       var warm = function () {
         tabs.forEach(function (tab) {

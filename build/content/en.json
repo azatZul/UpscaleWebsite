@@ -36,8 +36,8 @@
     "h1": "The AI photo enhancer that <em>unblurs, upscales and restores</em> — right on your iPhone",
     "h1_plain": "The AI photo enhancer that unblurs, upscales and restores — right on your iPhone",
     "sub": "Sharpen blurry shots, upscale images to 4K, improve video quality and repair old family photos. The core AI runs on your device, so your pictures are never uploaded.",
-    "rating_note": "1,575 App Store ratings",
-    "note": "Free to start · iPhone & iPad · iOS 16 or later · No account needed",
+    "rating_note": "{rating_count} App Store ratings",
+    "note": "Free to start · iPhone & iPad · iOS {minimum_ios} or later · No account needed",
     "chips": [
       "2x and 4x upscale",
       "Photos and video",
@@ -64,7 +64,7 @@
     "eyebrow": "Reviews",
     "h2": "What people say about UScale",
     "sub": "Real reviews, straight from the App Store.",
-    "score_note": "1,575 App Store ratings",
+    "score_note": "{rating_count} App Store ratings",
     "stars_alt": "Rated 5 out of 5",
     "items": [
       {
@@ -260,7 +260,7 @@
     "items": [
       {
         "q": "How much does UScale cost?",
-        "a": "The app is free for 2 photo enhancements a day. Premium is $39.99 a year and starts with a 3-day free trial with everything unlocked. Prices vary slightly by region.",
+        "a": "The app is free for {free_photos_per_day} photo enhancements a day. Premium is {annual_price} a year and starts with a {trial_days}-day free trial with everything unlocked. Prices vary slightly by region.",
         "href": ""
       },
       {
@@ -275,7 +275,7 @@
       },
       {
         "q": "Is my iPhone or iPad compatible?",
-        "a": "UScale needs iOS 16 or later and runs on iPhone, iPad and iPod touch. On iPad the before and after are shown side by side.",
+        "a": "UScale needs iOS {minimum_ios} or later and runs on iPhone, iPad and iPod touch. On iPad the before and after are shown side by side.",
         "href": ""
       },
       {
@@ -294,7 +294,7 @@
   "cta": {
     "h2": "Get the sharp version of your photos",
     "p": "Free to start, no account, and your pictures stay on your phone.",
-    "note": "iPhone, iPad and iPod touch · iOS 16 or later"
+    "note": "iPhone, iPad and iPod touch · iOS {minimum_ios} or later"
   },
   "footer": {
     "tagline": "AI photo and video enhancer for iPhone and iPad. Unblur, upscale and restore your media — processed on your device.",

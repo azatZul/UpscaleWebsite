@@ -1,35 +1,18 @@
 #!/usr/bin/env python3
-"""
-UScale static site generator — upscales.app
+"""Build the localized static site into dist/.
 
-Renders a fully SEO-optimised marketing site from build/content/<lang>.json.
+Usage: python3 build/build.py [locale ...]
+Assets and resources keep their paths; static/ is copied into the site root.
+Mutable app facts (prices, rating, version, publish dates) come from build/app_facts.json.
 
-    python3 build/build.py            # everything
-    python3 build/build.py en ru      # only these locales
-
-Everything is written to dist/, which is what Netlify publishes and what
-.gitignore keeps out of the repo — the repo holds sources only.
-
-Output (under dist/):
-    index.html                        en landing        -> /
-    guides/index.html                 en guide hub      -> /guides
-    guides/<slug>.html                en guides         -> /guides/<slug>
-    <lang>/index.html                 localised landing -> /<lang>/
-    <lang>/guides/index.html          localised hub     -> /<lang>/guides
-    <lang>/guides/<slug>.html         localised guides  -> /<lang>/guides/<slug>
-    sitemap.xml, robots.txt
-    assets/, resources/               copied from the repo verbatim
-    app-ads.txt, _headers, ...        copied from static/
-
-Sources that are NOT published: build/, static/ is copied but the folder
-itself never appears, and the *.md notes in the repo root stay behind.
+TODO: every locale still falls back to content/en.json — translate once the English
+copy is final.
 """
 
 import hashlib, json, os, re, shutil, sys
 from datetime import date
 
-# the build image only has to ship a python3; 3.8 is what shutil.copytree(dirs_exist_ok=)
-# needs, and nothing here reaches for anything newer
+# shutil.copytree(dirs_exist_ok=...) requires Python 3.8+.
 if sys.version_info < (3, 8):
     sys.exit(f"build.py needs Python 3.8+, got {sys.version.split()[0]}")
 
@@ -40,11 +23,13 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONTENT = os.path.join(ROOT, "build", "content")
 DIST = os.path.join(ROOT, "dist")
 STATIC = os.path.join(ROOT, "static")
-# copied into dist/ verbatim; everything else in the repo stays unpublished
 COPY_DIRS = ["assets", "resources"]
-SITE = "https://upscales.app"
-APPSTORE = "https://apps.apple.com/app/id6736931330"
-TODAY = date.today().isoformat()
+
+with open(os.path.join(ROOT, "build", "app_facts.json"), encoding="utf-8") as f:
+    APP_FACTS = json.load(f)
+
+SITE = APP_FACTS["site_url"]
+APPSTORE = APP_FACTS["app_store_url"]
 
 def asset_v(name):
     """short content hash, so a deploy busts the CSS/JS cache"""
@@ -55,18 +40,17 @@ def asset_v(name):
 CSS_V = asset_v("site.css")
 JS_V = asset_v("site.js")
 
-RATING = "4.6"
-RATING_COUNT = "1575"
-# width of the highlighted overlay on the 5-star row, e.g. 4.6/5 -> 92%
-STAR_FILL = f"{float(RATING) / 5 * 100:g}%"
+RATING = APP_FACTS["rating"]["value"]
+RATING_TEXT = f"{RATING:g}"
+RATING_COUNT = APP_FACTS["rating"]["count"]
+# Filled width of the five-star rating.
+STAR_FILL = f"{RATING / 5 * 100:g}%"
 STARS_PART = (f'<span class="stars part" aria-hidden="true" style="--fill:{STAR_FILL}">'
               f'\u2605\u2605\u2605\u2605\u2605<i>\u2605\u2605\u2605\u2605\u2605</i></span>')
-APP_NAME = "AI Photo Enhancer, UScale"
-APP_VERSION = "2.1.6"
+APP_NAME = APP_FACTS["app_name"]
+APP_VERSION = APP_FACTS["version"]
 
-# ---------------------------------------------------------------- locales
-# code, url segment ("" = root), english name, native name, hreflang, og locale,
-# flag (resources/flags/<cc>.png, same artwork as the iOS app)
+# Locales: code, URL segment, English/native names, hreflang, OG locale, flag.
 LOCALES = [
     ("en", "",     "English",              "English",     "en",      "en_US", "us"),
     ("es", "es",   "Spanish",              "Español",     "es",      "es_ES", "es"),
@@ -83,17 +67,12 @@ LOCALES = [
 ]
 BY_CODE = {l[0]: l for l in LOCALES}
 
-# ---------------------------------------------------------------- guides
+# Guides
 SHOTS = "/resources/appstore/screenshots"
 BA = "/resources/before_after"
 
-# Every guide card and article hero uses a real result from resources/before_after.
-# "shot" is always a 360x270 thumbnail of the *before* frame — the cards render it at
-# 78x98, so the full-size assets never belong here. "shot_after" is the same crop of
-# the *after* frame; where it exists the card cross-fades to it on hover, which only
-# reads well when the pair is a visible fix (blur, fading, colour, exposure).
-# Photo guides get an interactive comparison; video guides show the finished clip
-# directly (the video assets already present the relevant motion/result).
+# Cards use small crops; articles use full before/after assets or finished video clips.
+# Optional shot_after thumbnails cross-fade only where the result is visually clear.
 GUIDE_META = {
     "unblur-photo-iphone": {
         "shot": f"{BA}/lowq_portrait_thumb.jpg",
@@ -155,8 +134,7 @@ GUIDE_SLUGS = list(GUIDE_META)
 
 SCREENSHOTS = [f"{SHOTS}/screen_{i}.jpg" for i in range(1, 7)]
 
-# big before/after showcase in the #examples section (rendered when the
-# language file has a "showcase" block, otherwise the App Store rail is used)
+# A translated showcase replaces the App Store screenshot rail.
 SHOWCASE_TABS = [
     {"thumb": "/resources/before_after/girls_thumb.jpg",
      "before": "/resources/before_after/girls_before.jpg",
@@ -214,12 +192,7 @@ PAUSE_ICO = ('<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">'
              '<rect x="13.4" y="5" width="3.6" height="14" rx="1.3"/></svg>')
 
 
-# ---------------------------------------------------------------- hero device
-# the examples shown inside the landscape iPhone in the hero. The first one ships
-# in the HTML; the dots at the bottom of the screen swap the pair in place, so a
-# new example is just another entry here (both files cropped the same way).
-# "pos" is the object-position both pictures share — the screen is much wider than
-# a photo, so it decides how much is trimmed off the top and the bottom.
+# Hero device examples share object-position between each before/after pair.
 HERO_SHOTS = [
     {"before": "/resources/before_after/hero_spiderman_before.jpg", "bw": 823, "bh": 460,
      "after": "/resources/before_after/hero_spiderman_after.jpg", "aw": 2000, "ah": 1118,
@@ -232,30 +205,24 @@ HERO_SHOTS = [
      "pos": "50% 35%"},
 ]
 
-# the iPhone artwork itself: natural size and where its screen hole sits
+# Frame size and transparent-screen offsets.
 FRAME = {"src": "/resources/iphone_frame.png", "w": 2548, "h": 1252,
          "left": 54, "top": 60, "right": 50, "bottom": 61}
 
 
 def hero_phone(c, h):
-    """Landscape iPhone in the hero: one photo, one divider, dots to change it.
-
-    The frame is a PNG with a transparent screen cut-out; the picture sits behind
-    it and is inset by FRAME's px offsets (in the artwork's own 2548x1252 grid), so it
-    tucks a little under the bezel and never leaves a seam. The dots reuse the .cmp-tab
-    wiring of the big showcase — they only swap the two sources and their framing.
-    """
+    """Render the framed hero comparison and its example switcher."""
     s, f = HERO_SHOTS[0], FRAME
     screen = ("left:{:.4f}%;right:{:.4f}%;top:{:.4f}%;bottom:{:.4f}%".format(
         f["left"] / f["w"] * 100, f["right"] / f["w"] * 100,
         f["top"] / f["h"] * 100, f["bottom"] / f["h"] * 100))
     dots = "".join(
-        f'<button class="cmp-tab dot" type="button" role="tab" data-before="{d["before"]}" '
+        f'<button class="cmp-tab dot" type="button" data-before="{d["before"]}" '
         f'data-after="{d["after"]}" data-pos="{d["pos"]}" '
-        f'aria-selected="{"true" if i == 0 else "false"}" '
+        f'aria-pressed="{"true" if i == 0 else "false"}" '
         f'aria-label="{esc(h["shot"])} {i + 1}"><i></i></button>'
         for i, d in enumerate(HERO_SHOTS))
-    switch = (f'<div class="phone-dots" role="tablist" aria-label="{esc(h["shots_label"])}">'
+    switch = (f'<div class="phone-dots" role="group" aria-label="{esc(h["shots_label"])}">'
               f'{dots}</div>') if len(HERO_SHOTS) > 1 else ""
     return f"""<div class="hero-stage">
       <div class="phone cmp-wrap" data-follow="1" data-preload="1">
@@ -277,7 +244,7 @@ def hero_phone(c, h):
 
 
 def vid_controls(c):
-    """mute toggle + the "paused" badge that sits on top of a playing clip"""
+    """Render the mute control and paused badge."""
     u = c["ui"]
     return (f'<button class="vid-mute" type="button" hidden '
             f'data-on="{esc(u.get("sound_on", "Play sound"))}" '
@@ -297,9 +264,7 @@ CLOUD = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-widt
 BURGER = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" '
           'aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>')
 
-# Applied before the first paint, so a light-theme visitor never sees a dark flash:
-# the stored choice wins, otherwise the OS preference decides. assets/site.js takes it
-# from here (button state, persistence, live OS changes).
+# Apply the saved or OS theme before first paint; site.js handles later changes.
 THEME_BOOT = (
     "<script>(function(){var t;try{t=localStorage.getItem('uscale-theme')}catch(e){}"
     "if(t!=='light'&&t!=='dark')"
@@ -308,7 +273,6 @@ THEME_BOOT = (
     "var m=document.querySelector('meta[name=\"theme-color\"]');"
     "if(m)m.setAttribute('content','#f3f6fe')}})();</script>")
 
-# theme switch — a moon that opens into a sun
 THEME_ICON = ('<svg class="theme-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">'
               '<mask id="theme-cut"><rect width="24" height="24" fill="#fff"/>'
               '<circle class="cut" cx="17" cy="7" r="7" fill="#000"/></mask>'
@@ -323,10 +287,84 @@ def theme_toggle(c):
             f'data-light="{esc(u["theme_light"])}" data-dark="{esc(u["theme_dark"])}" '
             f'aria-label="{esc(u["theme_light"])}" title="{esc(u["theme_light"])}">{THEME_ICON}</button>')
 
-# ---------------------------------------------------------------- helpers
+# Helpers
 def esc(s):
     return (str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
             .replace('"', "&quot;"))
+
+_ANNUAL = APP_FACTS["pricing_usd"]["annual"]
+_ANNUAL_SALE = APP_FACTS["pricing_usd"]["annual_sale"]
+
+FACT_TEXT = {
+    "rating_count": f'{APP_FACTS["rating"]["count"]:,}',
+    "annual_price": f"${_ANNUAL:.2f}",
+    "annual_sale_price": f"${_ANNUAL_SALE:.2f}",
+    "sale_percent": f"{round((1 - _ANNUAL_SALE / _ANNUAL) * 100):d}",
+    "trial_days": APP_FACTS["annual_trial_days"],
+    "free_photos_per_day": APP_FACTS["free_limits"]["photos_per_day"],
+    "minimum_ios": APP_FACTS["minimum_ios"],
+}
+
+# Only {known_fact} is replaced. str.format_map would also try to read every other
+# brace pair in the copy, so a single "{" in a translation would abort the build.
+FACT_RE = re.compile(r"\{(\w+)\}")
+UNKNOWN_FACTS = set()
+
+def _sub_fact(m):
+    key = m.group(1)
+    if key in FACT_TEXT:
+        return str(FACT_TEXT[key])
+    UNKNOWN_FACTS.add(key)
+    return m.group(0)
+
+def inject_facts(value):
+    """Replace app-fact placeholders throughout localized content."""
+    if isinstance(value, str):
+        return FACT_RE.sub(_sub_fact, value)
+    if isinstance(value, list):
+        return [inject_facts(item) for item in value]
+    if isinstance(value, tuple):
+        return tuple(inject_facts(item) for item in value)
+    if isinstance(value, dict):
+        return {key: inject_facts(item) for key, item in value.items()}
+    return value
+
+MISSING_DATES = set()
+
+def updated_for(path=""):
+    """Hand-maintained publish date from app_facts.json — bump it when a page changes.
+
+    A page with no entry falls back to the home date rather than failing the build,
+    but main() reports it so a new guide does not ship with a borrowed lastmod."""
+    dates = APP_FACTS["page_updated"]
+    if not path:
+        return dates["home"]
+    if path == "guides":
+        return dates["guide_hub"]
+    if path.startswith("guides/"):
+        found = dates["guides"].get(path.split("/", 1)[1])
+    else:
+        found = dates.get(path)
+    if found:
+        return found
+    MISSING_DATES.add(path)
+    return dates["home"]
+
+MONTHS = ("January", "February", "March", "April", "May", "June",
+          "July", "August", "September", "October", "November", "December")
+
+def english_date(value):
+    """ISO date as English prose. strftime("%B") would follow the build box's LC_TIME."""
+    parsed = date.fromisoformat(value)
+    return f"{parsed.day} {MONTHS[parsed.month - 1]} {parsed.year}"
+
+def date_tag(value, prefix="", english=False):
+    """Rendered date that still exposes the ISO one to crawlers.
+
+    Localized pages keep the ISO text — it reads the same in all twelve locales;
+    the English-only legal pages spell the month out."""
+    text = english_date(value) if english else value
+    return f'<time datetime="{value}">{esc(f"{prefix} {text}".strip())}</time>'
 
 def content_lang(c, route_lang):
     """Language of the rendered copy, which may differ from its placeholder URL."""
@@ -368,19 +406,17 @@ def write(path, html):
     with open(full, "w", encoding="utf-8") as f:
         f.write(html)
 
-# Finder litter would otherwise be copied into dist/ and served
+# Exclude OS metadata from published assets.
 IGNORE = shutil.ignore_patterns(".DS_Store", "._*", "Thumbs.db")
 
 def copy_static():
-    """assets/ and resources/ keep their paths; static/ is unwrapped into the site root,
-    so /app-ads.txt and /.well-known/... stay exactly where Apple and the ad networks
-    already look for them."""
+    """Copy asset directories and unwrap static/ into the site root."""
     for name in COPY_DIRS:
         shutil.copytree(os.path.join(ROOT, name), os.path.join(DIST, name),
                         ignore=IGNORE, dirs_exist_ok=True)
     shutil.copytree(STATIC, DIST, ignore=IGNORE, dirs_exist_ok=True)
 
-# ---------------------------------------------------------------- partials
+# Shared markup
 def head(c, lang, title, desc, canonical, path="", og_image=None, extra_ld=None, robots=None,
          alternates=True):
     L = BY_CODE[lang]
@@ -433,9 +469,7 @@ def appstore_btn(c, dark=False, cls=""):
             f'<strong>{esc(c["ui"]["app_store"])}</strong></span></a>')
 
 def guide_card(c, slug, home_prefix):
-    """One guide card. Guides whose meta carries a "shot_after" get a second thumbnail
-    stacked on the first; hovering the card cross-fades the before frame into the result,
-    so the list previews what the guide actually does (see .guide-thumb in site.css)."""
+    """Render a guide card with an optional result thumbnail."""
     meta = GUIDE_META[slug]
     thumb = (f'<img src="{meta["shot"]}" width="78" height="98" loading="lazy" decoding="async" alt="">')
     if meta.get("shot_after"):
@@ -448,19 +482,11 @@ def guide_card(c, slug, home_prefix):
             f'<span class="arrow" aria-hidden="true">→</span></a>')
 
 def store_badge(btn, note):
-    """One store badge with the caption that fades in while that badge is hovered.
-
-    Every badge carries its own caption, so adding Google Play / Mac / Web later is
-    one more (button, note) pair — no per-store CSS."""
+    """Pair a store badge with its hover caption."""
     return f'<div class="store">{btn}<p class="hero-note reveal">{esc(note)}</p></div>'
 
 def download_cta(c, h2=None, p=None, stores=None, section=True, sect_cls="sect", style=""):
-    """The app-download block that closes every page.
-
-    One markup for all screens; a page passes h2 only when it wants its own wording,
-    and p only when it has something extra to say (the sale page does). `stores` is a
-    list of (button html, caption) pairs and defaults to the App Store badge.
-    section=False returns the bare card for pages whose markup already sits inside a .wrap."""
+    """Render the shared download CTA, optionally without its section wrapper."""
     stores = stores or [(appstore_btn(c), c["cta"]["note"])]
     badges = "".join(store_badge(btn, note) for btn, note in stores)
     card = f"""<div class="final"{f' style="{style}"' if style else ''}>
@@ -480,8 +506,7 @@ def download_cta(c, h2=None, p=None, stores=None, section=True, sect_cls="sect",
 </section>"""
 
 def flag(code, size=20, eager=False):
-    """flag icon for a locale — decorative, the language name next to it carries the meaning.
-    The picker button sits in the header, so its flag loads eagerly; the menu is lazy."""
+    """Render a decorative locale flag, eager only in the header button."""
     return (f'<img class="flag" src="/resources/flags/{BY_CODE[code][6]}.png" '
             f'width="{size}" height="{size}" alt=""'
             f'{"" if eager else " loading=\"lazy\""} decoding="async">')
@@ -493,9 +518,9 @@ def lang_switcher(c, lang, path=""):
         for code in BY_CODE
     )
     return f"""<div class="lang">
-      <button class="lang-btn" type="button" aria-haspopup="true" aria-expanded="false"
+      <button class="lang-btn" type="button" aria-expanded="false" aria-controls="language-links"
               aria-label="{esc(c['ui']['language'])}">{flag(lang, 18, eager=True)}<span>{esc(BY_CODE[lang][3])}</span></button>
-      <div class="lang-menu" role="menu">{items}</div>
+      <div class="lang-menu" id="language-links">{items}</div>
     </div>"""
 
 def nav(c, lang, home_prefix, path=""):
@@ -568,7 +593,7 @@ def footer(c, lang, home_prefix, path=""):
 </html>
 """
 
-# ---------------------------------------------------------------- landing
+# Landing page
 def render_home(c, lang):
     seg = BY_CODE[lang][1]
     home_prefix = f"/{seg}/" if seg else "/"
@@ -581,9 +606,9 @@ def render_home(c, lang):
         "url": canonical, "inLanguage": BY_CODE[content_lang(c, lang)][4],
         "applicationCategory": "MultimediaApplication",
         "applicationSubCategory": "Photo & Video",
-        "operatingSystem": "iOS 16.0 or later",
+        "operatingSystem": f'iOS {APP_FACTS["minimum_ios"]} or later',
         "softwareVersion": APP_VERSION,
-        "fileSize": "78.4 MB",
+        "fileSize": APP_FACTS["file_size"],
         "description": m["description"],
         "image": f"{SITE}/resources/appstore/icon_512.png",
         "screenshot": [f"{SITE}{s}" for s in SCREENSHOTS],
@@ -594,7 +619,7 @@ def render_home(c, lang):
         "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD",
                    "availability": "https://schema.org/InStock", "url": APPSTORE},
         "aggregateRating": {"@type": "AggregateRating", "ratingValue": RATING,
-                            "ratingCount": RATING_COUNT, "bestRating": "5", "worstRating": "1"},
+                            "ratingCount": RATING_COUNT, "bestRating": 5, "worstRating": 1},
         "featureList": [f["h"] for f in c["features"]["items"]],
     }
     faq_ld = {
@@ -615,7 +640,7 @@ def render_home(c, lang):
                 extra_ld=ld(app_ld) + ld(faq_ld) + ld(site_ld))]
     out.append(nav(c, lang, home_prefix))
 
-    # ---- hero
+    # Hero
     chips = "".join(f"<li>{esc(x)}</li>" for x in h["chips"])
 
     out.append(f"""<main>
@@ -623,7 +648,7 @@ def render_home(c, lang):
   <div class="wrap hero-grid">
     <div class="hero-copy">
       <div class="pill">{STARS_PART}
-        <span><b>{RATING}</b> \u00b7 {esc(h['rating_note'])}</span></div>
+        <span><b>{RATING_TEXT}</b> \u00b7 {esc(h['rating_note'])}</span></div>
       <h1>{h['h1']}</h1>
       <p class="hero-sub">{esc(h['sub'])}</p>
       <div class="hero-cta stores">{store_badge(appstore_btn(c), h['note'])}</div>
@@ -633,7 +658,7 @@ def render_home(c, lang):
   </div>
 </section>""")
 
-    # ---- reviews
+    # Reviews
     rv = c["reviews"]
     cards = "".join(
         f'<figure class="rev">'
@@ -648,7 +673,7 @@ def render_home(c, lang):
     <div class="head center"><span class="eyebrow">{esc(rv['eyebrow'])}</span>
       <h2 class="h2">{esc(rv['h2'])}</h2></div>
     <div class="score">
-      <b>{RATING}</b>
+      <b>{RATING_TEXT}</b>
       {STARS_PART}
       <span class="score-l">{esc(rv['score_note'])}</span>
     </div>
@@ -657,7 +682,7 @@ def render_home(c, lang):
   </div>
 </section>""")
 
-    # ---- examples: before/after showcase when translated, App Store rail otherwise
+    # Examples
     sw = c.get("showcase")
     if sw:
         sw_tabs = []
@@ -667,8 +692,8 @@ def render_home(c, lang):
                     else f'data-before="{t["before"]}" data-after="{t["after"]}"')
             cloud = ' data-cloud="1"' if t.get("cloud") else ""
             play = '<span class="play" aria-hidden="true">▶</span>' if "video" in t else ""
-            sw_tabs.append(f'<button class="cmp-tab lg"{cloud} type="button" role="tab" {data} '
-                           f'data-ratio="{t["ratio"]}" aria-selected="{"true" if i == 0 else "false"}">'
+            sw_tabs.append(f'<button class="cmp-tab lg"{cloud} type="button" {data} '
+                           f'data-ratio="{t["ratio"]}" aria-pressed="{"true" if i == 0 else "false"}">'
                            f'<span class="cmp-thumb"><img src="{t["thumb"]}" width="118" height="89" '
                            f'loading="lazy" alt="">{play}</span>'
                            f'<span class="cmp-cap">{esc(sw["tab_labels"][i])}</span></button>')
@@ -690,7 +715,7 @@ def render_home(c, lang):
         {vid_controls(c)}
         {badge}
       </div>
-      <div class="cmp-tabs cmp-tabs-lg" role="tablist" aria-label="{esc(sw['tabs_label'])}">{''.join(sw_tabs)}</div>
+      <div class="cmp-tabs cmp-tabs-lg" role="group" aria-label="{esc(sw['tabs_label'])}">{''.join(sw_tabs)}</div>
     </div>
   </div>
 </section>""")
@@ -707,7 +732,7 @@ def render_home(c, lang):
   <div class="wrap" style="max-width:none;padding:0"><div class="rail">{shots}</div></div>
 </section>""")
 
-    # ---- how it works
+    # How it works
     steps = "".join(f'<article class="step"><h3>{esc(s["h"])}</h3><p>{esc(s["p"])}</p></article>'
                     for s in c["how"]["steps"])
     out.append(f"""<section class="sect" id="how">
@@ -718,9 +743,9 @@ def render_home(c, lang):
   </div>
 </section>""")
 
-    # ---- privacy split
+    # Privacy
     pts = c["privacy"]["points"]
-    # the last point is the cloud AI caveat — a cloud icon reads better than a tick
+    # The final point is the cloud-processing exception.
     ticks = "".join(
         f'<li class="cloud">{CLOUD}<span>{esc(p)}</span></li>' if i == len(pts) - 1
         else f"<li>{CHECK}<span>{esc(p)}</span></li>"
@@ -739,7 +764,7 @@ def render_home(c, lang):
   </div></div>
 </section>""")
 
-    # ---- guides
+    # Guides
     gcards = "".join(
         guide_card(c, s, home_prefix) for s in GUIDE_SLUGS)
     out.append(f"""<section class="sect" id="guides">
@@ -758,7 +783,7 @@ def render_home(c, lang):
   </div>
 </section>""")
 
-    # ---- faq
+    # FAQ
     fq = "".join(
         f'<details{" open" if i == 0 else ""}><summary>{esc(q["q"])}</summary>'
         f'<div class="a"><p>{esc(q["a"])}</p>' + (
@@ -775,13 +800,13 @@ def render_home(c, lang):
   </div>
 </section>""")
 
-    # ---- final cta
+    # Final CTA
     out.append(download_cta(c) + "\n</main>")
 
     out.append(footer(c, lang, home_prefix))
     return "".join(out)
 
-# ---------------------------------------------------------------- guide hub
+# Guide hub
 def render_guides_index(c, lang):
     seg = BY_CODE[lang][1]
     home_prefix = f"/{seg}/" if seg else "/"
@@ -817,7 +842,7 @@ def render_guides_index(c, lang):
 </main>"""
             + footer(c, lang, home_prefix, "guides"))
 
-# ---------------------------------------------------------------- guide page
+# Guide page
 def render_guide(c, lang, slug):
     seg = BY_CODE[lang][1]
     home_prefix = f"/{seg}/" if seg else "/"
@@ -834,7 +859,7 @@ def render_guide(c, lang, slug):
         "name": g["h1"], "description": g["answer"], "inLanguage": BY_CODE[content_lang(c, lang)][4],
         "image": f"{SITE}{meta.get('og', meta['shot'])}",
         "totalTime": "PT2M",
-        "tool": [{"@type": "HowToTool", "name": "iPhone or iPad (iOS 16+)"},
+        "tool": [{"@type": "HowToTool", "name": f'iPhone or iPad (iOS {APP_FACTS["minimum_ios"]}+)'},
                  {"@type": "HowToTool", "name": "UScale"}],
         "supply": [{"@type": "HowToSupply", "name": g["supply"]}],
         "estimatedCost": {"@type": "MonetaryAmount", "currency": "USD", "value": "0"},
@@ -892,7 +917,7 @@ def render_guide(c, lang, slug):
   <article class="art">
     <span class="eyebrow">{esc(g['kicker'])}</span>
     <h1>{esc(g['h1'])}</h1>
-    <div class="meta"><span>{esc(c['ui']['updated'])} {TODAY}</span><span>·</span>
+    <div class="meta"><span>{date_tag(updated_for(path), c['ui']['updated'])}</span><span>·</span>
       <span>{esc(g['read_time'])}</span><span>·</span><span>{esc(c['ui']['by'])}</span></div>
 
     {media_html}
@@ -933,19 +958,19 @@ def render_guide(c, lang, slug):
             + body
             + footer(c, lang, home_prefix, path))
 
-# ---------------------------------------------------------------- standalone pages
+# Standalone pages
 def doc_body(c, d):
     if not d.get("sections"):
         return (f'<div class="art" style="max-width:820px;padding-bottom:4px">'
                 f'<span class="eyebrow">{esc(d["eyebrow"])}</span><h1>{esc(d["h1"])}</h1>'
                 f'<p class="lead">{esc(d["lead"])}</p>'
-                f'<div class="meta"><span>{esc(d["updated"])}</span></div></div>'
+                f'<div class="meta"><span>{d["updated"]}</span></div></div>'
                 f'<article class="doc">{d["body"]}</article>')
     secs, toc = doc_sections(d["body"])
     return f"""<header class="doc-head">
     <div class="doc-title">
       <h1>{esc(d['h1'])}</h1>
-      <span class="doc-upd">{DOT}{esc(d['updated'])}</span>
+      <span class="doc-upd">{DOT}{d['updated']}</span>
     </div>
     <p class="lead">{esc(d['lead'])}</p>
   </header>
@@ -959,7 +984,7 @@ def doc_body(c, d):
 
 
 def doc_sections(body):
-    """Split a legal document on its <h2>s: one card for the text, a separate one for contacts."""
+    """Split legal sections into the main and contact cards."""
     parts = [x for x in re.split(r"(?=<h2>)", body.strip()) if x.strip()]
     intro = "" if parts and parts[0].lstrip().startswith("<h2>") else (parts.pop(0) if parts else "")
     main, contact, toc = [], "", []
@@ -978,6 +1003,10 @@ def doc_sections(body):
 
 def render_doc(c, d):
     """English-only page kept at a historical URL (support / terms / privacy)."""
+    d = dict(d)
+    d["body"] = inject_facts(d["body"])
+    # Pre-rendered markup: doc_body drops it in as-is (see the two call sites below).
+    d["updated"] = date_tag(updated_for(d["file"]), "Updated", english=True)
     canonical = f"{SITE}/{d['file']}"
     crumbs_ld = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": c["ui"]["home"], "item": url("en")},
@@ -987,7 +1016,7 @@ def render_doc(c, d):
         extra += ld({"@context": "https://schema.org", "@type": "FAQPage", "url": canonical,
                      "mainEntity": [{"@type": "Question", "name": q,
                                      "acceptedAnswer": {"@type": "Answer", "text": a}}
-                                    for q, a in SUPPORT_FAQ_LD]})
+                                    for q, a in inject_facts(SUPPORT_FAQ_LD)]})
     return (head(c, "en", d["title"], d["description"], canonical, alternates=False, extra_ld=extra)
             + nav(c, "en", "/")
             + f"""<main class="wrap">
@@ -1011,9 +1040,10 @@ SUPPORT_FAQ_LD = [
      "No. Photo and video enhancement runs locally on your device, so your library never leaves your phone "
      "for processing."),
     ("Which devices and iOS versions are supported?",
-     "iPhone, iPad and iPod touch running iOS 16 or later."),
+     "iPhone, iPad and iPod touch running iOS {minimum_ios} or later."),
     ("How much does UScale Premium cost?",
-     "The app is free for 2 photo enhancements a day. Premium is $39.99 a year and starts with a 3-day free "
+     "The app is free for {free_photos_per_day} photo enhancements a day. Premium is {annual_price} a year "
+     "and starts with a {trial_days}-day free "
      "trial with everything unlocked. Prices vary slightly by region."),
     ("I paid but Premium is not active. What do I do?",
      "Use Restore purchases in the app settings while signed in with the Apple ID that made the purchase, or "
@@ -1026,8 +1056,9 @@ SUPPORT_FAQ_LD = [
 
 def render_sale(c):
     canonical = f"{SITE}/sale.html"
-    return (head(c, "en", "UScale Premium Sale — 25% off",
-                 "Unlock UScale Premium with 25% off. Open the app from this link and the discount is "
+    off = f'{FACT_TEXT["sale_percent"]}%'
+    return (head(c, "en", f"UScale Premium Sale — {off} off",
+                 f"Unlock UScale Premium with {off} off. Open the app from this link and the discount is "
                  "active for one hour on your device.",
                  canonical, alternates=False,
                  og_image=f"{SITE}{SCREENSHOTS[3]}",
@@ -1038,8 +1069,8 @@ def render_sale(c):
   <div class="wrap">
     <div class="hero-grid">
       <div>
-        <span class="pill"><b>Limited unlock</b> · 25% OFF</span>
-        <h1>Claim your <em>25% off</em> Premium upgrade</h1>
+        <span class="pill"><b>Limited unlock</b> · {off} OFF</span>
+        <h1>Claim your <em>{off} off</em> Premium upgrade</h1>
         <p class="hero-sub">Open the app from this link and a discounted Premium window opens for one hour.</p>
         <div class="promo" id="promo-code-card">
           <span class="promo-l">Promo code</span>
@@ -1084,7 +1115,7 @@ def render_sale(c):
             + footer(c, "en", "/"))
 
 
-# ---------------------------------------------------------------- sitemap
+# Sitemap
 def render_sitemap():
     entries = []
     paths = ["", "guides"] + [f"guides/{s}" for s in GUIDE_SLUGS]
@@ -1096,11 +1127,11 @@ def render_sitemap():
             alts += f'\n    <xhtml:link rel="alternate" hreflang="x-default" href="{url("en", p)}"/>'
             prio = "1.0" if p == "" and code == "en" else ("0.9" if p == "" else "0.8")
             entries.append(
-                f'  <url>\n    <loc>{url(code, p)}</loc>\n    <lastmod>{TODAY}</lastmod>'
+                f'  <url>\n    <loc>{url(code, p)}</loc>\n    <lastmod>{updated_for(p)}</lastmod>'
                 f'\n    <changefreq>weekly</changefreq>\n    <priority>{prio}</priority>{alts}\n  </url>')
-    # sale.html is a promo landing served behind a universal link -> noindex, kept out of the sitemap
+    # sale.html is noindex and intentionally omitted.
     for legal in ["support_page.html", "terms.html", "privacy_policy.html"]:
-        entries.append(f'  <url>\n    <loc>{SITE}/{legal}</loc>\n    <lastmod>{TODAY}</lastmod>'
+        entries.append(f'  <url>\n    <loc>{SITE}/{legal}</loc>\n    <lastmod>{updated_for(legal)}</lastmod>'
                        f'\n    <changefreq>yearly</changefreq>\n    <priority>0.3</priority>\n  </url>')
     return ('<?xml version="1.0" encoding="UTF-8"?>\n'
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n'
@@ -1113,14 +1144,13 @@ Allow: /
 Sitemap: {SITE}/sitemap.xml
 """
 
-# ---------------------------------------------------------------- main
+# Build entry point
 def main():
     langs = sys.argv[1:] or list(BY_CODE)
     unknown = [l for l in langs if l not in BY_CODE]
     if unknown:
         sys.exit(f"unknown locale(s) {unknown}; known: {list(BY_CODE)}")
-    # a full build wipes dist/ first, so stale output cannot survive a rename or a
-    # dropped locale; a partial one only refreshes the locales it was asked for
+    # Only a full build removes stale generated files.
     full = set(langs) == set(BY_CODE)
     if full and os.path.isdir(DIST):
         shutil.rmtree(DIST)
@@ -1131,7 +1161,7 @@ def main():
         if not os.path.exists(path):
             path = fallback_path
         with open(path, encoding="utf-8") as f:
-            c = json.load(f)
+            c = inject_facts(json.load(f))
         missing = [s for s in GUIDE_SLUGS if s not in c.get("guide_pages", {})]
         if missing:
             print(f"  ! {code}: missing guides {missing}")
@@ -1146,7 +1176,7 @@ def main():
         print(f"  ✓ {code}{fallback}")
     if "en" in langs:
         with open(os.path.join(CONTENT, "en.json"), encoding="utf-8") as f:
-            en = json.load(f)
+            en = inject_facts(json.load(f))
         for d in pages.DOCS:
             write(d["file"], render_doc(en, d)); built += 1
         write("sale.html", render_sale(en)); built += 1
@@ -1154,6 +1184,10 @@ def main():
     write("sitemap.xml", render_sitemap())
     write("robots.txt", ROBOTS)
     copy_static()
+    if UNKNOWN_FACTS:
+        print(f"  ! unknown fact placeholders left as-is: {sorted(UNKNOWN_FACTS)}")
+    if MISSING_DATES:
+        print(f"  ! no page_updated entry, using the home date: {sorted(MISSING_DATES)}")
     print(f"\nBuilt {built} pages + sitemap.xml + robots.txt into dist/")
 
 if __name__ == "__main__":
