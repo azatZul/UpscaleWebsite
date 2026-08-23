@@ -1,0 +1,10 @@
+# Netlify builds the site itself, so the repo holds sources only and a commit to main
+# is still all it takes to publish. A failing build leaves the previous deploy live.
+#
+# build.py is pure stdlib and needs no install step. It refuses to run below Python 3.8;
+# if a build image ever ships something older, pin it here with
+#   [build.environment]
+#     PYTHON_VERSION = "3.12"
+[build]
+  command = "python3 build/build.py"
+  publish = "dist"

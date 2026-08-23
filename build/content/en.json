@@ -1,0 +1,1045 @@
+{
+  "lang": "en",
+  "dir": "ltr",
+  "brand_tagline": "AI Photo & Video Enhancer",
+  "meta": {
+    "title": "AI Photo Enhancer for iPhone — Unblur & Upscale | UScale",
+    "description": "UScale is a free AI photo enhancer for iPhone and iPad. Unblur photos, upscale images to 4K, improve video quality and restore old photos — processed on your device."
+  },
+  "nav": {
+    "menu": "Menu",
+    "features": "Features",
+    "screens": "Examples",
+    "how": "How it works",
+    "guides": "Guides",
+    "faq": "FAQ",
+    "cta": "Get UScale"
+  },
+  "ui": {
+    "download_on": "Download on the",
+    "app_store": "App Store",
+    "language": "Language",
+    "theme_light": "Switch to light theme",
+    "theme_dark": "Switch to dark theme",
+    "icon_alt": "UScale AI photo enhancer app icon",
+    "home": "Home",
+    "updated": "Updated",
+    "by": "By the UScale team",
+    "next_guide": "Next guide",
+    "keep_reading": "Keep reading",
+    "sound_off": "Mute sound",
+    "sound_on": "Play sound",
+    "paused": "Paused",
+    "on_this_page": "On this page"
+  },
+  "hero": {
+    "h1": "The AI photo enhancer that <em>unblurs, upscales and restores</em> — right on your iPhone",
+    "h1_plain": "The AI photo enhancer that unblurs, upscales and restores — right on your iPhone",
+    "sub": "Sharpen blurry shots, upscale images to 4K, improve video quality and repair old family photos. The core AI runs on your device, so your pictures are never uploaded.",
+    "rating_note": "1,575 App Store ratings",
+    "note": "Free to start · iPhone & iPad · iOS 16 or later · No account needed",
+    "chips": [
+      "2x and 4x upscale",
+      "Photos and video",
+      "On-device processing",
+      "Batch processing"
+    ],
+    "cmp_label": "Before and after comparison of photos enhanced with UScale",
+    "before": "Before",
+    "after": "After",
+    "before_alt": "Blurry low-resolution photo before AI enhancement",
+    "after_alt": "The same photo after being upscaled and sharpened with UScale",
+    "drag": "Drag to compare",
+    "shot": "Example",
+    "shots_label": "Choose a before and after example",
+    "tab_labels": [
+      "Portrait upscale",
+      "Landscape upscale",
+      "Old photo restore",
+      "Video upscale",
+      "AI slow motion"
+    ]
+  },
+  "reviews": {
+    "eyebrow": "Reviews",
+    "h2": "What people say about UScale",
+    "sub": "Real reviews, straight from the App Store.",
+    "score_note": "1,575 App Store ratings",
+    "stars_alt": "Rated 5 out of 5",
+    "items": [
+      {
+        "initials": "JH",
+        "name": "Jhw00",
+        "meta": "Australia · Oct 2025",
+        "title": "Upscale",
+        "text": "All the functions work well, I especially like the 4x effect with the Eye Enhancer, it makes a spectacular difference to the overall clarity of your image. The automatic save to history with the name of effect is welcome as is the ability to save to camera roll or share the result."
+      },
+      {
+        "initials": "JO",
+        "name": "Joshua314159",
+        "meta": "United States · Nov 2025",
+        "title": "Great App",
+        "text": "I have tried several upscaling Apps, this is the best. Enhances faces breezily and with great resolution without distortions. Continue developing this app it has great potential."
+      },
+      {
+        "initials": "HU",
+        "name": "helpubuild",
+        "meta": "New Zealand · Oct 2025",
+        "title": "Easiest Photo Enhancer I’ve used",
+        "text": "Awesome, user friendly interface, simple transfer to Photos App. Keeps it all simple."
+      },
+      {
+        "initials": "DE",
+        "name": "Deepsouth80",
+        "meta": "United States · Feb 2026",
+        "title": "Great",
+        "text": "I have tested hundreds of apps and this one I’m really impressed with the overall outcome of video and image quality."
+      },
+      {
+        "initials": "AA",
+        "name": "AtticArchivist",
+        "meta": "United Kingdom · Mar 2025",
+        "title": "Works great for old photos",
+        "text": "I used it to fix some old Facebook photos and it got the job done. Would recommend."
+      },
+      {
+        "initials": "NA",
+        "name": "NoiseAllergy",
+        "meta": "United States · Sep 2025",
+        "title": "Good app",
+        "text": "It does a great job fixing faces and removing noise from photos. Thanks to the developers! ❤️"
+      }
+    ]
+  },
+  "features": {
+    "eyebrow": "Everything in one app",
+    "h2": "One app for every photo and video problem",
+    "sub": "Most enhancers only sharpen photos. UScale also upscales video, creates AI slow motion and restores damaged prints — without sending your files anywhere.",
+    "items": [
+      {
+        "icon": "🔍",
+        "h": "Unblur and sharpen photos",
+        "p": "Fix soft, shaky or out-of-focus shots. The AI rebuilds edges and texture instead of just adding contrast, so faces and fine detail stay natural."
+      },
+      {
+        "icon": "⬆️",
+        "h": "Upscale images 2x and 4x",
+        "p": "Turn a small, low-resolution picture into a print-ready file. The 4x model reconstructs detail rather than stretching pixels into a blurry mess."
+      },
+      {
+        "icon": "🎬",
+        "h": "Improve video quality",
+        "p": "Upscale and clean up video the same way as photos — grainy phone clips, old camcorder footage and heavily compressed downloads."
+      },
+      {
+        "icon": "⏱️",
+        "h": "AI slow motion",
+        "p": "Turn any normal clip into smooth slow motion. Frame interpolation generates the missing frames, so you never have to remember to shoot in slo-mo."
+      },
+      {
+        "icon": "🖼️",
+        "h": "Restore old photos",
+        "p": "Repair scratches, folds, dust and fading on scanned prints. Advanced restoration handles heavily damaged and partly missing areas."
+      },
+      {
+        "icon": "🎨",
+        "h": "Colorize black and white",
+        "p": "Add believable colour to vintage black-and-white portraits, wedding photos and family archive scans in a single tap."
+      },
+      {
+        "icon": "☀️",
+        "h": "Brighten dark photos",
+        "p": "Recover detail from underexposed concert, night and indoor shots without the blotchy noise you get from simply raising exposure."
+      },
+      {
+        "icon": "🙂",
+        "h": "Enhance faces",
+        "p": "A dedicated face model restores eyes, skin and hair in portraits and group photos where everyone is a little too small and a little too soft."
+      },
+      {
+        "icon": "🗂️",
+        "h": "Batch processing",
+        "p": "Select a whole set of photos and enhance them in one run instead of opening them one at a time."
+      }
+    ]
+  },
+  "screens": {
+    "eyebrow": "Inside the app",
+    "h2": "See what UScale actually does",
+    "sub": "Real before-and-after results from the app, straight from the App Store listing.",
+    "items": [
+      {
+        "cap": "Enhance photo quality",
+        "alt": "UScale enhancing a blurry graduation portrait, shown as a before and after split"
+      },
+      {
+        "cap": "Restore old photos",
+        "alt": "A damaged 1950s family photo restored and colorized in UScale"
+      },
+      {
+        "cap": "Private, offline processing",
+        "alt": "A blurry outdoor photo sharpened on-device with no upload"
+      },
+      {
+        "cap": "Upscale any photo or video",
+        "alt": "A pixelated illustration upscaled in UScale with the video timeline visible"
+      },
+      {
+        "cap": "Brighten dark photos",
+        "alt": "A dark concert photo brightened with detail recovered in the shadows"
+      },
+      {
+        "cap": "Unblur your memories",
+        "alt": "A blurry cat photo made sharp with the UScale unblur tool"
+      }
+    ]
+  },
+  "showcase": {
+    "eyebrow": "Real results",
+    "h2": "See what UScale actually does",
+    "sub": "",
+    "cmp_label": "Before and after comparison of photos and videos enhanced with UScale",
+    "tabs_label": "Choose a before and after example",
+    "on_device": "Processed on device",
+    "in_cloud": "Processed in cloud",
+    "tab_labels": [
+      "Portrait upscale",
+      "Landscape upscale",
+      "Low quality portrait",
+      "Old photo restore",
+      "Faded family photo",
+      "Vintage portrait",
+      "Video upscale",
+      "AI slow motion"
+    ]
+  },
+  "how": {
+    "eyebrow": "How it works",
+    "h2": "Three taps from blurry to sharp",
+    "sub": "No layers, no masks, no tutorials. Pick a file, pick a tool, save the result.",
+    "steps": [
+      {
+        "h": "Pick a photo or video",
+        "p": "Open UScale and choose any file from your library — a phone snap, a scanned print, a screenshot, a downloaded clip or a whole batch of photos."
+      },
+      {
+        "h": "Choose what to fix",
+        "p": "Enhance, unblur, 2x or 4x upscale, brighten, restore, colorize or slow motion. Every tool is a single tap and shows a live preview."
+      },
+      {
+        "h": "Compare and save",
+        "p": "Drag the before/after slider to check the result, then save it to your library or share it. Your original file is never overwritten."
+      }
+    ]
+  },
+  "privacy": {
+    "eyebrow": "Privacy first",
+    "h2": "Your photos never leave your iPhone",
+    "p": "Core enhancement — unblur, upscale, brighten, face restoration and slow motion — runs on the Neural Engine inside your device. There is no upload, no processing queue and no account to create.",
+    "points": [
+      "Works in airplane mode, with no internet connection at all",
+      "No sign-up, no email address, no photo library scanning",
+      "Your originals stay untouched — results are saved as new copies",
+      "Only Creative Upscale and advanced restoration use cloud AI, and only when you tap them"
+    ],
+    "img_alt": "UScale enhancing a photo offline on an iPhone, with airplane mode enabled"
+  },
+  "guides": {
+    "eyebrow": "Guides",
+    "h2": "How to fix the photo problem you actually have",
+    "sub": "Straight answers to the questions people search for, followed by the exact taps to do it in UScale.",
+    "all": "Browse all guides",
+    "expand": "Expand all guides",
+    "collapse": "Show fewer guides"
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "h2": "Frequently asked questions",
+    "sub": "Pricing, privacy and how UScale runs on your device.",
+    "learn_more": "Learn more",
+    "items": [
+      {
+        "q": "How much does UScale cost?",
+        "a": "The app is free for 2 photo enhancements a day. Premium is $39.99 a year and starts with a 3-day free trial with everything unlocked. Prices vary slightly by region.",
+        "href": ""
+      },
+      {
+        "q": "What languages does UScale support?",
+        "a": "UScale is available in 27 languages — Arabic, Chinese (Simplified), Chinese (Traditional), Dutch, English, Finnish, French, German, Hebrew, Hindi, Hungarian, Indonesian, Italian, Japanese, Korean, Malay, Norwegian, Polish, Portuguese, Romanian, Russian, Spanish, Swedish, Thai, Turkish, Ukrainian and Vietnamese.",
+        "href": ""
+      },
+      {
+        "q": "How does UScale use my data?",
+        "a": "Enhance, unblur, upscale, brighten, face restoration and slow motion run on your device, so those photos never leave your phone. Creative Upscale and advanced restoration are processed on our servers, and only when you pick them: the result stays available for download for a limited time and is then deleted. There is no account and no sign-up.",
+        "href": ""
+      },
+      {
+        "q": "Is my iPhone or iPad compatible?",
+        "a": "UScale needs iOS 16 or later and runs on iPhone, iPad and iPod touch. On iPad the before and after are shown side by side.",
+        "href": ""
+      },
+      {
+        "q": "Does UScale work without an internet connection?",
+        "a": "Yes. The on-device tools work in airplane mode. Only Creative Upscale and advanced restoration need a connection.",
+        "href": ""
+      },
+      {
+        "q": "How do I cancel my subscription?",
+        "a": "Subscriptions are handled by Apple. Open the App Store, tap your profile picture, choose Subscriptions, select UScale and cancel it there. If you were charged by mistake, the refund is requested from Apple at reportaproblem.apple.com.",
+        "href": "https://apps.apple.com/account/subscriptions",
+        "cta": "Manage subscriptions on apple.com"
+      }
+    ]
+  },
+  "cta": {
+    "h2": "Get the sharp version of your photos",
+    "p": "Free to start, no account, and your pictures stay on your phone.",
+    "note": "iPhone, iPad and iPod touch · iOS 16 or later"
+  },
+  "footer": {
+    "tagline": "AI photo and video enhancer for iPhone and iPad. Unblur, upscale and restore your media — processed on your device.",
+    "product": "Product",
+    "reviews": "Reviews",
+    "sale": "Special offer",
+    "all_guides": "All guides",
+    "support": "Support",
+    "help": "Help & support",
+    "contact": "Contact us",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "appstore": "App Store page",
+    "rights": "All rights reserved.",
+    "made": "Made for people who keep their photos."
+  },
+  "guides_index": {
+    "title": "UScale Guides — Unblur, Upscale & Restore Photos",
+    "description": "Practical guides on unblurring photos, upscaling images to 4K, restoring old prints, improving video quality and making AI slow motion on iPhone.",
+    "h1": "Photo and video guides",
+    "intro": "Each guide answers one specific question — the kind you actually type into a search box — and then shows you exactly how to do it in UScale. No filler, no ten-step Photoshop workflows."
+  },
+  "guide_pages": {
+    "unblur-photo-iphone": {
+      "nav_title": "Unblur a photo",
+      "card_title": "How to unblur a photo on iPhone",
+      "card_desc": "Fix soft, shaky and out-of-focus shots in four taps.",
+      "title": "How to Unblur a Photo on iPhone (Free Method)",
+      "description": "Learn how to unblur a photo on iPhone for free. What causes blur, what AI can and cannot recover, and how to sharpen a blurry picture in UScale in four taps.",
+      "h1": "How to unblur a photo on your iPhone",
+      "kicker": "Photo guide",
+      "read_time": "4 min read",
+      "answer": "To unblur a photo on iPhone, open it in an AI photo enhancer such as UScale and tap Enhance with the 2x or 4x model. The AI rebuilds edges, texture and facial detail that a sharpening slider cannot recover, then you save the sharp version as a new copy to your library.",
+      "supply": "A blurry photo in your iPhone photo library",
+      "intro": "There is a difference between sharpening a photo and unblurring it. Sharpening raises local contrast around edges that already exist — it makes a soft picture look crunchier without adding anything back. Unblurring with AI is a different job: the model has seen millions of sharp photos, so it can infer what the missing detail probably looked like and reconstruct it. That is why an AI enhancer succeeds on shots where the Photos app sharpening slider only makes things worse.",
+      "why_h": "Why your photo came out blurry",
+      "why_p": "Knowing which kind of blur you are dealing with tells you how much you can realistically recover. AI handles some causes far better than others.",
+      "why_list": [
+        "Camera shake — the phone moved during a slow shutter in low light. Usually recoverable, especially at moderate blur.",
+        "Missed focus — the camera locked onto the background instead of your subject. Recoverable when the subject is still reasonably defined.",
+        "Subject motion — a child, a pet or a car moved. Partly recoverable; direction-specific smear is the hardest case.",
+        "Low resolution — a cropped, screenshotted or messaging-app photo. This is the easiest case and where upscaling helps most.",
+        "Heavy compression — a picture that has been re-saved and re-shared many times. Denoise plus upscale usually cleans it up well."
+      ],
+      "steps_h": "Unblur a photo in UScale, step by step",
+      "steps_intro": "The whole thing takes under a minute, and the free tier covers two photos a day.",
+      "steps": [
+        {
+          "h": "Open UScale and tap Photo",
+          "p": "Install UScale from the App Store and pick the blurry image from your library. There is no account to create and no upload — the file stays on your device."
+        },
+        {
+          "h": "Choose the enhance model",
+          "p": "Start with 2x. It sharpens and denoises while keeping the picture close to the original. Switch to 4x when the source is small or heavily cropped and you also want more resolution."
+        },
+        {
+          "h": "Turn on face enhancement for people",
+          "p": "If the photo has faces, enable the face option. The dedicated model restores eyes, skin texture and hair, which the general model handles more conservatively."
+        },
+        {
+          "h": "Compare before and after",
+          "p": "Drag the slider across the result. Look at hair, fabric weave and text — those show whether the model recovered real detail or just added contrast."
+        },
+        {
+          "h": "Save or share",
+          "p": "Save the sharpened copy to your library. The original is untouched, so you can always go back and try a different model."
+        }
+      ],
+      "img_alt": "Unblurring a blurry photo on iPhone with UScale — before and after comparison",
+      "img_caption": "A blurry shot before and after being unblurred in UScale.",
+      "tips_h": "Tips for the sharpest result",
+      "tips": [
+        "Always start from the original file, not a screenshot of it or a version that has been sent through a messaging app. Every re-save throws away detail the AI would otherwise use.",
+        "Crop before you enhance, not after. The model then spends its resolution budget on the part of the picture you actually care about.",
+        "If 4x looks over-processed — plastic skin, painted-on texture — drop back to 2x. More upscaling is not always better.",
+        "For a photo that is both dark and blurry, brighten it first and enhance second. Denoising a shadow-lifted image works better than lifting shadows in an already-sharpened one."
+      ],
+      "cta_h": "Unblur your first photo now",
+      "cta_p": "Free for two photos a day, no account, and the processing happens on your iPhone.",
+      "faq_h": "Unblurring photos: common questions",
+      "faq": [
+        {
+          "q": "Can AI unblur a photo that is completely smeared?",
+          "a": "No. If the subject has no recognisable structure left, there is nothing for the model to anchor to and it will invent detail that was never there. AI unblurring works best on mild to moderate blur where edges are soft but still present."
+        },
+        {
+          "q": "Is unblurring the same as increasing resolution?",
+          "a": "They are related but not identical. Unblurring recovers detail at the existing size; upscaling increases the pixel dimensions. UScale does both in the same pass, which is why a 2x or 4x enhance usually looks sharper than sharpening alone."
+        },
+        {
+          "q": "Does unblurring a photo need an internet connection?",
+          "a": "No. The standard enhance and unblur models run on your device, so they work in airplane mode. Only the optional Creative Upscale uses cloud AI."
+        }
+      ]
+    },
+    "restore-old-photos": {
+      "nav_title": "Restore old photos",
+      "card_title": "How to restore old photos with your phone",
+      "card_desc": "Repair scratches, folds and fading on scanned family prints.",
+      "title": "How to Restore Old Photos on Your Phone (2026)",
+      "description": "Restore old family photos with your phone: how to photograph a print properly, remove scratches, folds and fading with AI, and save an archive-quality copy.",
+      "h1": "How to restore old photos with your phone",
+      "kicker": "Restoration guide",
+      "read_time": "5 min read",
+      "answer": "To restore an old photo, first digitise the print — photograph it flat in soft, even daylight or scan it — then open the file in UScale and tap Restore. The AI removes scratches, folds and dust, rebuilds faded areas and sharpens faces, and you save the repaired photo as a new copy.",
+      "supply": "A printed photo and an iPhone camera or scanner",
+      "intro": "Most old-photo restorations fail before any software is involved. A shadow across the print, a glare spot from a ceiling light or a slight angle that skews the frame all cost you more detail than the AI can put back. Spend two extra minutes on the capture and the restoration step becomes almost automatic.",
+      "why_h": "What actually goes wrong with old prints",
+      "why_p": "Different kinds of damage need different tools, and it helps to know what you are looking at before you start.",
+      "why_list": [
+        "Surface scratches and dust from handling and storage — the easiest damage to remove automatically.",
+        "Folds and cracks where the print was bent, often running straight through a face.",
+        "Fading and colour shift — 1970s and 1980s colour prints drift towards orange or magenta as the dyes break down.",
+        "Silvering and staining on very old black-and-white prints kept in damp conditions.",
+        "Softness from the original camera and film, which is a resolution problem rather than damage."
+      ],
+      "steps_h": "Restore an old photo in UScale, step by step",
+      "steps_intro": "Do the capture properly, then let the app handle the repair.",
+      "steps": [
+        {
+          "h": "Photograph the print flat and evenly lit",
+          "p": "Lay the print on a flat surface near a window, out of direct sun. Hold the phone parallel to the print so the edges stay rectangular, and keep your own shadow out of the frame. Never use the flash — it creates a glare spot you cannot remove."
+        },
+        {
+          "h": "Crop to the photo itself",
+          "p": "Trim away the table, the border and any white margin. The AI should spend its attention on the picture, not on the surface it is lying on."
+        },
+        {
+          "h": "Open it in UScale and tap Restore",
+          "p": "The restoration model removes scratches, dust and folds, rebuilds faded regions and reconstructs face detail. For heavily damaged prints, use the advanced restoration option, which can rebuild larger missing areas."
+        },
+        {
+          "h": "Colorize if the original is black and white",
+          "p": "One tap adds believable colour based on the content of the image — skin, clothing, foliage and sky. Keep both versions; families usually want the original monochrome as well."
+        },
+        {
+          "h": "Upscale and save",
+          "p": "Finish with a 2x or 4x pass so the restored file is large enough to reprint, then save it to your library and back it up. The original scan stays untouched."
+        }
+      ],
+      "img_alt": "A damaged 1950s family photo restored and colorized with UScale on iPhone",
+      "img_caption": "A scratched and folded 1950s print, restored and colorized in the app.",
+      "tips_h": "Getting archive-quality results",
+      "tips": [
+        "Soft, indirect daylight beats any lamp. An overcast day next to a window is the ideal light for copying prints.",
+        "If the print is glossy and reflective, tilt it slightly rather than the phone, and watch the preview until the reflection slides off the image area.",
+        "Restore one print at a time for the difficult ones, but use batch processing for a box of similar snapshots — it saves a lot of tapping.",
+        "Keep the untouched scan as well as the restored file. Restoration involves interpretation, and future models will do it better than today's."
+      ],
+      "cta_h": "Bring the family album back",
+      "cta_p": "Restore, colorize and reprint the photos in the shoebox — starting with two free every day.",
+      "faq_h": "Restoring old photos: common questions",
+      "faq": [
+        {
+          "q": "Do I need a scanner, or is a phone camera enough?",
+          "a": "A modern phone camera is enough for almost every print, as long as the lighting is even and the phone is parallel to the photo. A flatbed scanner is only clearly better for very small prints and for negatives."
+        },
+        {
+          "q": "Can AI repair a photo with a piece torn off?",
+          "a": "Advanced restoration can rebuild a missing corner or a tear that crosses a background area convincingly. A missing face is different — the model will invent one, and it will not be the person you remember."
+        },
+        {
+          "q": "Will restoration change how people look?",
+          "a": "Mild restoration keeps features intact. Aggressive settings on very damaged photos can smooth features into a generic face, which is why it is worth comparing the result to the original before you save it."
+        }
+      ]
+    },
+    "colorize-black-and-white-photos": {
+      "nav_title": "Colorize B&W photos",
+      "card_title": "How to colorize black and white photos",
+      "card_desc": "Add believable colour to vintage portraits in one tap.",
+      "title": "How to Colorize Black and White Photos with AI",
+      "description": "Colorize black and white photos on your phone with AI. How colourisation works, when it looks convincing, and how to colorize an old family photo in UScale.",
+      "h1": "How to colorize black and white photos",
+      "kicker": "Restoration guide",
+      "read_time": "4 min read",
+      "answer": "To colorize a black and white photo, open it in UScale and tap Colorize. The AI recognises skin, clothing, foliage and sky and assigns plausible colours to each, producing a natural-looking colour version in a few seconds. Save it as a new file and keep the monochrome original.",
+      "supply": "A black and white photo, scanned or photographed",
+      "intro": "Colourisation is informed guessing. The model has learned what the world normally looks like, so it knows grass is green, skin sits within a narrow range of tones and a mid-grey sky is probably pale blue. What it cannot know is that your grandmother's coat was red rather than brown. Treat the result as a beautiful interpretation, not as a recovered fact, and it will delight everyone who sees it.",
+      "why_h": "What makes a colourisation look convincing",
+      "why_p": "Some photos colourise almost perfectly and others look painted. The difference usually comes down to these factors.",
+      "why_list": [
+        "Contrast range — a print with real blacks and whites gives the model far more to work with than a flat, grey scan.",
+        "Recognisable content — faces, skies, grass, wood and common clothing colourise reliably because they appear constantly in training data.",
+        "Damage — scratches and stains get colourised as if they were part of the scene, so it pays to restore before you colorize.",
+        "Resolution — a small, soft scan produces muddy colour patches; enhance and upscale first for cleaner boundaries.",
+        "Unusual objects — a hand-painted sign or an unusual uniform is where colourisation most often guesses wrong."
+      ],
+      "steps_h": "Colorize a photo in UScale, step by step",
+      "steps_intro": "Order matters here: repair first, colour second, upscale last.",
+      "steps": [
+        {
+          "h": "Digitise the print cleanly",
+          "p": "Photograph it flat in soft daylight, without flash, and crop to the image area. A clean capture is worth more than any setting inside the app."
+        },
+        {
+          "h": "Restore before you colorize",
+          "p": "Run Restore first so scratches, folds and dust are gone. Otherwise the colourisation model treats a scratch as an object and paints it in."
+        },
+        {
+          "h": "Tap Colorize",
+          "p": "The model analyses the scene and assigns colour to skin, hair, clothing, vegetation and sky. It takes a few seconds and works on the whole image at once."
+        },
+        {
+          "h": "Compare against the original",
+          "p": "Drag the before/after slider. Check faces first — if skin tones look grey or waxy, re-run the restoration step at a stronger setting and colorize again."
+        },
+        {
+          "h": "Upscale and save both versions",
+          "p": "Finish with a 2x or 4x pass for print-ready resolution, then save. Keep the black and white version too — most families want both."
+        }
+      ],
+      "img_alt": "A black and white family photo colorized with AI in UScale on iPhone",
+      "img_caption": "The same 1950s portrait, restored and then colorized.",
+      "tips_h": "Tips for natural colour",
+      "tips": [
+        "Photos taken outdoors in daylight colourise best. Indoor shots lit by a single lamp give the model much weaker cues.",
+        "If a large area comes out an odd colour, try cropping the picture more tightly — extra clutter around the edges can pull the whole scene's colour balance off.",
+        "Show the result to someone who was there. They will often remember the real colour of a dress or a wall, which tells you whether to keep the AI's guess.",
+        "Never overwrite the monochrome original. It is the historical document; the colour version is a new interpretation of it."
+      ],
+      "cta_h": "See your family in colour",
+      "cta_p": "Restore, colorize and upscale old prints on your iPhone — the first two photos each day are free.",
+      "faq_h": "Colorizing photos: common questions",
+      "faq": [
+        {
+          "q": "Are the colours historically accurate?",
+          "a": "They are plausible, not documented. The model infers colour from context and from millions of colour photographs. Skin, sky and vegetation are usually right; specific clothing and painted objects are educated guesses."
+        },
+        {
+          "q": "Can I colorize a photo that is already partly colour?",
+          "a": "Faded colour prints are better handled by restoration, which corrects the colour shift, than by colourisation, which is designed for genuinely monochrome sources."
+        },
+        {
+          "q": "Does colourisation work on documents and drawings?",
+          "a": "It works on drawings and illustrations, though the result is more stylised. For documents and text there is nothing to gain — enhance and upscale instead."
+        }
+      ]
+    },
+    "upscale-image-4k": {
+      "nav_title": "Upscale to 4K",
+      "card_title": "How to upscale an image to 4K",
+      "card_desc": "Turn a small, low-resolution picture into a print-ready file.",
+      "title": "How to Upscale an Image to 4K on iPhone",
+      "description": "Upscale an image to 4K on your phone. How AI upscaling differs from resizing, how much resolution you can actually gain, and how to do it in UScale in four taps.",
+      "h1": "How to upscale an image to 4K",
+      "kicker": "Upscaling guide",
+      "read_time": "4 min read",
+      "answer": "To upscale an image to 4K, open it in UScale and choose the 4x model. A picture 1080 pixels wide becomes roughly 4320 pixels wide — beyond 4K — and the AI reconstructs edges and texture instead of stretching pixels, so the enlarged file stays sharp.",
+      "supply": "A low-resolution image in your photo library",
+      "intro": "Resizing and upscaling are not the same operation. Resizing spreads the pixels you already have over a bigger canvas, which is why an enlarged photo goes soft and blocky. AI upscaling generates new pixels based on what the model has learned about edges, skin, fabric and text, so a 4x enlargement can genuinely contain more usable detail than the original file did.",
+      "why_h": "How much resolution can you actually gain?",
+      "why_p": "The realistic ceiling depends on what is in the source file, not just on its pixel count.",
+      "why_list": [
+        "A clean, in-focus small photo upscales beautifully — this is the ideal case for 4x.",
+        "A screenshot of a photo has already lost data twice; expect a good result but not a perfect one.",
+        "A heavily compressed image from a chat app needs denoising as well as upscaling, which UScale does in the same pass.",
+        "A blurry original stays blurry in outline — upscaling multiplies pixels, it does not re-focus the lens.",
+        "Text and logos upscale surprisingly well because their shapes are highly predictable to the model."
+      ],
+      "steps_h": "Upscale to 4K in UScale, step by step",
+      "steps_intro": "Two taps to a result, one more to save it.",
+      "steps": [
+        {
+          "h": "Import the image",
+          "p": "Open UScale, tap Photo and select the file. Use the highest-quality copy you have — the original from the camera roll rather than a version you re-shared."
+        },
+        {
+          "h": "Select the 4x model",
+          "p": "4x multiplies each dimension by four, so a 1080 x 1350 picture becomes 4320 x 5400. That comfortably clears 4K in both directions and is enough for a large print."
+        },
+        {
+          "h": "Crop first if you only need part of it",
+          "p": "Cropping before upscaling means the model applies its full capacity to the region you care about, rather than spending it on background you are going to cut anyway."
+        },
+        {
+          "h": "Inspect at 100 percent",
+          "p": "Pinch to zoom into the result and check edges and skin. If texture looks artificial, drop to 2x — a clean 2x result usually beats an over-processed 4x one."
+        },
+        {
+          "h": "Save the upscaled file",
+          "p": "Save it to your library as a new copy. The original stays where it was, at its original size."
+        }
+      ],
+      "img_alt": "A pixelated illustration upscaled to 4K with the UScale AI image upscaler on iPhone",
+      "img_caption": "A pixelated source image upscaled 4x — reconstructed detail, not stretched pixels.",
+      "tips_h": "Getting the most from an upscale",
+      "tips": [
+        "For printing, aim for about 300 pixels per inch: a 4320-pixel-wide file prints cleanly at roughly 36 cm across.",
+        "Do not upscale twice. Running 4x on an already-upscaled file compounds the model's guesses and produces a waxy result.",
+        "If the source has visible JPEG blocking, that is a compression artefact — the enhance pass cleans it up before enlarging.",
+        "Batch mode is the fastest way to upscale a whole set of product shots or holiday photos at the same setting."
+      ],
+      "cta_h": "Upscale your first image free",
+      "cta_p": "Two free enhancements a day, and the 4x model is one tap away in premium.",
+      "faq_h": "Image upscaling: common questions",
+      "faq": [
+        {
+          "q": "Is 4x the same as 4K?",
+          "a": "No. 4x is a multiplier applied to your image's dimensions; 4K is an absolute resolution of about 3840 pixels wide. Upscaling a 1080-pixel-wide image by 4x takes it past 4K, but upscaling a very tiny image by 4x will not reach it."
+        },
+        {
+          "q": "Does upscaling make the file much larger?",
+          "a": "Yes — a 4x upscale has sixteen times the pixel count, so expect a much bigger file. That is normal and it is what makes the result printable."
+        },
+        {
+          "q": "Can I upscale an image without an internet connection?",
+          "a": "Yes. The 2x and 4x models run on your device, so upscaling works in airplane mode. Only Creative Upscale, which rebuilds detail more aggressively, uses cloud AI."
+        }
+      ]
+    },
+    "enhance-video-quality": {
+      "nav_title": "Improve video quality",
+      "card_title": "How to improve video quality on iPhone",
+      "card_desc": "Upscale and clean up grainy, compressed or old footage.",
+      "title": "How to Improve Video Quality on iPhone with AI",
+      "description": "Improve video quality on iPhone: upscale low-resolution clips, clean up grain and compression, and sharpen old camcorder footage with on-device AI in UScale.",
+      "h1": "How to improve video quality on iPhone",
+      "kicker": "Video guide",
+      "read_time": "5 min read",
+      "answer": "To improve video quality on iPhone, open the clip in UScale and run the enhance pass. Every frame is upscaled, denoised and sharpened by AI on your device, which fixes grainy low-light footage, old camcorder transfers and heavily compressed downloads. Save the enhanced clip as a new video.",
+      "supply": "A video clip in your photo library",
+      "intro": "Video enhancement is photo enhancement repeated a few thousand times, which is why so few phone apps do it well. UScale runs the same on-device models frame by frame and keeps them consistent, so the result does not shimmer between frames. The free tier processes five seconds a day, which is enough to test a clip before committing to a full-length pass.",
+      "why_h": "What limits your video quality",
+      "why_p": "It helps to know which problem you are actually fixing, because the same enhance pass addresses them to different degrees.",
+      "why_list": [
+        "Low resolution — an older 720p or 480p clip on a modern screen looks soft simply because it is being stretched.",
+        "Compression — footage downloaded or re-shared repeatedly develops blocking and smearing around motion.",
+        "Sensor noise — anything filmed indoors or at night carries grain that gets worse as you brighten it.",
+        "Analogue transfer artefacts — VHS and camcorder captures carry interlacing lines and colour bleed.",
+        "Soft optics — old phone and camcorder lenses were never sharp to begin with; AI can only recover so much."
+      ],
+      "steps_h": "Enhance a video in UScale, step by step",
+      "steps_intro": "Start with a short section, check it, then run the whole clip.",
+      "steps": [
+        {
+          "h": "Open UScale and pick Video",
+          "p": "Choose the clip from your library. Everything is processed on your device, so a long video does not need to upload anywhere."
+        },
+        {
+          "h": "Trim to the part that matters",
+          "p": "Most clips have a usable core and a lot of dead time. Trimming first means faster processing and a smaller output file."
+        },
+        {
+          "h": "Choose the enhance model",
+          "p": "2x is the safe default for footage that is already reasonably sharp. Use 4x when the source is genuinely low resolution and you want to fill a large screen."
+        },
+        {
+          "h": "Test five seconds first",
+          "p": "The free tier processes five seconds a day — use it deliberately, on the most difficult part of the clip, before you process the full length."
+        },
+        {
+          "h": "Export and compare",
+          "p": "Save the enhanced clip and play it next to the original. Watch motion and faces, which is where any frame-to-frame inconsistency would show up."
+        }
+      ],
+      "img_alt": "Improving video quality on iPhone with UScale — before and after frames of an upscaled clip",
+      "img_caption": "A low-resolution clip upscaled frame by frame on-device.",
+      "video_caption": "A real before-and-after from the app: the same clip, upscaled with AI.",
+      "tips_h": "Tips for better video results",
+      "tips": [
+        "Always work from the original recording. A clip you sent through a messaging app has been re-compressed and lost detail that no model can restore.",
+        "Keep the phone plugged in for long videos. Frame-by-frame AI is genuinely demanding and will drain the battery.",
+        "If the footage is dark, enhancing it will also amplify the grain. Brighten deliberately rather than pushing exposure afterwards.",
+        "For social media, 2x is usually enough — the platform will re-compress your upload anyway, so a huge 4x file mostly wastes processing time."
+      ],
+      "cta_h": "Fix your worst-looking clip",
+      "cta_p": "Five free seconds of video every day, processed entirely on your iPhone.",
+      "faq_h": "Video enhancement: common questions",
+      "faq": [
+        {
+          "q": "How long does it take to enhance a video?",
+          "a": "It depends on length, resolution and your device, because every frame is processed individually. A short clip takes a minute or two on a recent iPhone; a multi-minute 4x pass takes considerably longer."
+        },
+        {
+          "q": "Can I upscale a video to 4K?",
+          "a": "Yes. A 1080p clip run through the 4x model lands well beyond 4K in pixel dimensions. Whether it looks like true 4K depends on how much real detail the source had."
+        },
+        {
+          "q": "Is my video uploaded anywhere?",
+          "a": "No. Video enhancement runs entirely on your device, which is also why it keeps working in airplane mode."
+        }
+      ]
+    },
+    "slow-motion-video": {
+      "nav_title": "Make slow motion",
+      "card_title": "How to make a video slow motion",
+      "card_desc": "Turn a normal clip into smooth slo-mo with AI frames.",
+      "title": "How to Make a Video Slow Motion on iPhone (AI)",
+      "description": "Turn a normal video into smooth slow motion on iPhone. How AI frame interpolation beats simply slowing a clip down, and how to do it in UScale on-device.",
+      "h1": "How to make a video slow motion on iPhone",
+      "kicker": "Video guide",
+      "read_time": "4 min read",
+      "answer": "To make a normal video slow motion on iPhone, open it in UScale and choose Slow Motion. Instead of just stretching the clip, the AI generates new in-between frames so the movement stays fluid. Pick your slow-down factor, preview the result and save it as a new video.",
+      "supply": "A video clip filmed at normal speed",
+      "intro": "Slowing a video down in a normal editor does not create slow motion — it creates a stuttering video. A clip filmed at 30 frames per second and played at quarter speed shows you the same 30 frames spread across four times the duration, so each frame is on screen long enough for your eye to notice it. Real slow motion needs more frames, and if you did not film in slo-mo, the only way to get them is to generate them.",
+      "why_h": "Why AI slow motion looks different",
+      "why_p": "Frame interpolation analyses the motion between two consecutive frames and synthesises the frames that would have existed in between.",
+      "why_list": [
+        "Slowing down without interpolation gives you choppy playback — the classic stuttery slow-mo everyone recognises.",
+        "Frame blending, the older trick, cross-fades between frames and produces ghosting around moving subjects.",
+        "AI interpolation tracks motion and generates genuinely new frames, so movement stays crisp.",
+        "It works on footage you already filmed, including old clips where filming in slo-mo is no longer an option.",
+        "It also fixes the moment you realise afterwards that a shot deserved slow motion — jumps, pets, sport, water, reveals."
+      ],
+      "steps_h": "Create AI slow motion in UScale, step by step",
+      "steps_intro": "Everything below happens on your device — no upload, no waiting in a queue.",
+      "steps": [
+        {
+          "h": "Open the clip in UScale",
+          "p": "Tap Video and pick the recording. Any normal-speed clip works; you do not need to have filmed in slo-mo mode."
+        },
+        {
+          "h": "Trim to the moment",
+          "p": "Slow motion is at its best over one to three seconds of real time. Trim tightly to the action before you process — it is faster and the result is stronger."
+        },
+        {
+          "h": "Choose Slow Motion and a factor",
+          "p": "Pick how much to slow the clip down. A higher factor asks the AI to invent more frames, which looks superb on smooth motion and less convincing on very fast, erratic movement."
+        },
+        {
+          "h": "Preview before saving",
+          "p": "Play the result and watch the edges of moving objects. Interpolation artefacts, if any, show up around hands, ball edges and splashing water."
+        },
+        {
+          "h": "Save to your library",
+          "p": "Export the slow-motion version as a new file. Your original clip is untouched and still available at normal speed."
+        }
+      ],
+      "img_alt": "Creating AI slow motion from a normal video clip in UScale on iPhone",
+      "img_caption": "UScale generating in-between frames to turn a normal clip into slow motion.",
+      "video_caption": "AI slow motion generated on-device from a normal-speed recording.",
+      "tips_h": "Tips for smooth slow motion",
+      "tips": [
+        "Steady footage interpolates best. A handheld shot with a lot of camera shake gives the model conflicting motion cues.",
+        "Good light means shorter exposures per frame, which means less motion blur baked into the source — and cleaner interpolation.",
+        "Avoid clips with hard cuts inside them. Interpolating across a scene change produces a strange morph between two unrelated images.",
+        "Combine slow motion with the enhance pass when the source is low resolution — do the enhance first, then the slow motion."
+      ],
+      "cta_h": "Make your first slow-motion clip",
+      "cta_p": "AI frame interpolation that runs on your iPhone, with five free seconds every day.",
+      "faq_h": "AI slow motion: common questions",
+      "faq": [
+        {
+          "q": "Do I need to film in slo-mo mode first?",
+          "a": "No — that is the point. UScale generates the extra frames from a normal-speed recording, so you can turn a clip you filmed months ago into slow motion."
+        },
+        {
+          "q": "How is this different from slowing a clip in the Photos app?",
+          "a": "Photos stretches the existing frames, so playback stutters. UScale creates new frames between the existing ones, so movement stays continuous."
+        },
+        {
+          "q": "Does slow motion processing happen in the cloud?",
+          "a": "No. Frame interpolation runs on your device, which is why it works with no signal and why your footage is never uploaded."
+        }
+      ]
+    },
+    "brighten-dark-photos": {
+      "nav_title": "Brighten dark photos",
+      "card_title": "How to brighten a dark photo",
+      "card_desc": "Recover underexposed night, concert and indoor shots.",
+      "title": "How to Brighten a Dark Photo Without Ruining It",
+      "description": "Fix underexposed photos on iPhone. Why raising exposure creates noise, what AI brightening does differently, and how to recover a dark photo in UScale.",
+      "h1": "How to brighten a dark photo without ruining it",
+      "kicker": "Photo guide",
+      "read_time": "4 min read",
+      "answer": "To brighten a dark photo properly, use AI brightening rather than the exposure slider. Open the photo in UScale and tap Brighten: the model lifts shadows, restores colour and suppresses the blotchy noise that appears when you simply raise exposure on an underexposed file.",
+      "supply": "An underexposed photo in your library",
+      "intro": "Every underexposed photo contains noise in the shadows. Raising exposure in a normal editor amplifies the signal and the noise equally, which is why a rescued night photo looks grainy, blotchy and desaturated. An AI model treats the two differently — it has learned what a properly exposed version of this kind of scene looks like, so it can lift the shadows and clean them at the same time.",
+      "why_h": "Why dark photos fall apart when you brighten them",
+      "why_p": "Understanding the mechanism tells you how much you can realistically recover from a given shot.",
+      "why_list": [
+        "Shadow areas capture very little light, so they carry the worst signal-to-noise ratio in the frame.",
+        "Raising exposure multiplies that noise into visible blotches, especially in skies and skin.",
+        "Colour goes first — deep shadows lose saturation before they lose luminance detail.",
+        "Phone HDR already brightened the shadows once, so a second lift compounds the artefacts.",
+        "Anything that is pure black in the file contains no data at all and cannot be recovered by anything."
+      ],
+      "steps_h": "Brighten a dark photo in UScale, step by step",
+      "steps_intro": "One pass, and it is deliberately not a slider you have to fiddle with.",
+      "steps": [
+        {
+          "h": "Pick the darkest usable version",
+          "p": "Use the original file from the camera roll. A screenshot or a re-shared copy has already thrown away shadow information you are about to need."
+        },
+        {
+          "h": "Tap Brighten",
+          "p": "The model lifts the shadows, restores colour in the dark regions and denoises them in the same pass, which is what keeps the result clean."
+        },
+        {
+          "h": "Add the enhance pass for detail",
+          "p": "Brightening reveals detail; enhancing sharpens it. Running both, in that order, is what turns a rescued photo into a usable one."
+        },
+        {
+          "h": "Enable face enhancement for people",
+          "p": "Concert and party photos almost always have faces in shadow. The dedicated face model is what makes them look like people again."
+        },
+        {
+          "h": "Compare and save",
+          "p": "Drag the before/after slider before saving. If the result looks flat, the original may have been HDR-processed already — try enhancing without brightening."
+        }
+      ],
+      "img_alt": "A dark concert photo brightened with AI in UScale on iPhone, shadows recovered",
+      "img_caption": "A very dark concert photo with shadow detail and colour recovered.",
+      "tips_h": "Tips for rescuing dark shots",
+      "tips": [
+        "Shoot in RAW or ProRAW when you can. There is far more shadow information in a RAW file for the model to work with.",
+        "Do not brighten twice. The second pass mostly amplifies what the first one already invented.",
+        "For photos that are dark and blurry, brighten first, then unblur. Denoising a lifted image works better than lifting an already-sharpened one.",
+        "If the subject is backlit rather than uniformly dark, the result improves a lot when you crop to the subject before brightening."
+      ],
+      "cta_h": "Rescue your dark photos",
+      "cta_p": "AI brightening, denoising and face restoration in one tap — two free photos a day.",
+      "faq_h": "Brightening photos: common questions",
+      "faq": [
+        {
+          "q": "Why does the Photos app exposure slider make my photo look worse?",
+          "a": "It multiplies everything in the shadows, including sensor noise, and it has no idea what the scene should look like. An AI model brightens and denoises together, using what it has learned about correctly exposed scenes."
+        },
+        {
+          "q": "Can a completely black photo be recovered?",
+          "a": "No. If the pixels contain no signal there is nothing to amplify, and any result would be invented rather than recovered. Very dark is fixable; pure black is not."
+        },
+        {
+          "q": "Does brightening change the colours?",
+          "a": "It restores them. Deep shadows lose saturation first, so a good brightening pass usually brings colour back to something close to what you saw at the time."
+        }
+      ]
+    },
+    "film-negative-to-photo": {
+      "nav_title": "Negatives to photos",
+      "card_title": "How to turn film negatives into photos",
+      "card_desc": "Digitise and invert 35mm negatives with your phone.",
+      "title": "How to Convert Film Negatives to Photos with a Phone",
+      "description": "Turn 35mm film negatives into positive photos using your iPhone. How to light and photograph a negative, invert it, correct the orange mask and restore it in UScale.",
+      "h1": "How to turn film negatives into photos",
+      "kicker": "Restoration guide",
+      "read_time": "5 min read",
+      "answer": "To convert a film negative into a photo, photograph the negative on a bright, even white light source with your phone, then open the shot in UScale and use the negative restore tool. It inverts the image, neutralises the orange film mask and normalises contrast, and you finish with a restore and upscale pass.",
+      "supply": "A 35mm negative strip and a bright, even light source",
+      "intro": "A drawer of negatives is often the highest-quality version of a family archive that still exists — negatives hold more detail than the small prints made from them decades ago. The obstacle is simply that they are hard to look at. Your phone plus a white screen solves that in about two minutes per frame.",
+      "why_h": "What makes a negative hard to digitise",
+      "why_p": "Three things go wrong before software gets involved, and each has a simple fix.",
+      "why_list": [
+        "The orange base — colour negative film has a built-in orange mask that must be neutralised, or the inverted image comes out cyan and lifeless.",
+        "Uneven backlight — a lamp behind the film creates a bright hotspot; you need a diffused, even source instead.",
+        "Reflections — anything shiny in front of the film shows up in the capture, including your own phone.",
+        "Dust — negatives attract it, and every speck becomes a visible white dot after inversion.",
+        "Curl — film that has been rolled up for decades will not sit flat, which throws off focus across the frame."
+      ],
+      "steps_h": "Digitise a negative in UScale, step by step",
+      "steps_intro": "A tablet or laptop showing a plain white screen makes an excellent light table.",
+      "steps": [
+        {
+          "h": "Build a light table",
+          "p": "Open a plain white image full-screen on a tablet or laptop at maximum brightness. Lay a sheet of white paper over it to diffuse the pixels, then place the negative on top."
+        },
+        {
+          "h": "Photograph the frame",
+          "p": "Hold the phone parallel to the film and fill the frame with a single negative. Tap to focus on the film itself and keep any lamps behind you out of the reflection."
+        },
+        {
+          "h": "Open it in UScale and invert",
+          "p": "Use the negative restore tool. It inverts the image, removes the orange mask and normalises contrast — the three steps that turn an unreadable orange rectangle into a photograph."
+        },
+        {
+          "h": "Restore and enhance",
+          "p": "Run the restore pass to clear dust and scratches, then enhance to sharpen. Turn on face enhancement if there are people in the frame."
+        },
+        {
+          "h": "Upscale and save",
+          "p": "Finish with 2x or 4x so the result is large enough to print, then save it as a new photo in your library."
+        }
+      ],
+      "img_alt": "A film negative converted into a positive photo and restored with UScale on iPhone",
+      "img_caption": "Inverted, colour-corrected and restored — from negative to finished photo.",
+      "tips_h": "Tips for better negative scans",
+      "tips": [
+        "Use a blower or a soft brush on the negative first. Removing dust physically is much easier than removing it digitally.",
+        "Weigh the film flat under a piece of clean glass if it curls badly — a picture frame pane works well.",
+        "Keep the room dim. Ambient light bouncing off the film surface is the single biggest cause of washed-out negative scans.",
+        "Black-and-white negatives are easier than colour ones because there is no orange mask to neutralise. Start with those if you are new to it."
+      ],
+      "cta_h": "Open the drawer of negatives",
+      "cta_p": "Invert, restore and upscale film negatives on your iPhone — starting free.",
+      "faq_h": "Film negatives: common questions",
+      "faq": [
+        {
+          "q": "Do I need a dedicated film scanner?",
+          "a": "For an archive project, a film scanner gives the highest quality. For getting a drawer of negatives visible and shareable, a phone camera over a white screen is dramatically faster and the results are genuinely good."
+        },
+        {
+          "q": "Why does my inverted negative look blue or cyan?",
+          "a": "That is the orange film mask still in play. Simply inverting the colours is not enough — the mask has to be neutralised, which is what the dedicated negative tool does."
+        },
+        {
+          "q": "Can I do this with slides as well?",
+          "a": "Slides are already positive, so you skip the inversion entirely. Photograph them on the same light table and go straight to the restore and enhance passes."
+        }
+      ]
+    },
+    "fix-blurry-faces": {
+      "nav_title": "Fix blurry faces",
+      "card_title": "How to fix blurry faces in photos",
+      "card_desc": "Restore eyes, skin and hair in portraits and group shots.",
+      "title": "How to Fix Blurry Faces in Photos (AI Face Restore)",
+      "description": "Fix blurry faces in group photos and portraits with AI face restoration. Why faces need a dedicated model, and how to restore them in UScale on iPhone.",
+      "h1": "How to fix blurry faces in photos",
+      "kicker": "Photo guide",
+      "read_time": "4 min read",
+      "answer": "To fix a blurry face, use AI face restoration rather than general sharpening. Open the photo in UScale, enable face enhancement and run the enhance pass: a dedicated model rebuilds eyes, skin texture and hair, which is what makes a small or soft face look like a person again.",
+      "supply": "A photo with soft or small faces",
+      "intro": "Faces are the reason general upscaling often disappoints. A group photo might be perfectly sharp overall while each individual face occupies a couple of hundred pixels — far too few for the general model to treat as anything more than a smudge. A face-specific model works differently: it knows the structure of a face and can rebuild eyes, lips and hair with far less input data.",
+      "why_h": "Why faces need their own model",
+      "why_p": "The problem is not sharpness in general, it is how little of the frame a face usually occupies.",
+      "why_list": [
+        "In a group photo, each face may be one or two percent of the total pixels.",
+        "General upscalers optimise for the whole image, so they average faces into smooth blobs.",
+        "Eyes carry most of the perceived sharpness of a portrait — get them right and the whole face reads as sharp.",
+        "Skin texture is what separates a restored face from a plastic one, and it is the first thing crude sharpening destroys.",
+        "Hair is high-frequency detail that general models tend to turn into painted strands."
+      ],
+      "steps_h": "Restore faces in UScale, step by step",
+      "steps_intro": "It is a toggle, not a separate workflow.",
+      "steps": [
+        {
+          "h": "Open the photo",
+          "p": "Use the original file from your library rather than a shared or screenshotted copy, since faces suffer most from re-compression."
+        },
+        {
+          "h": "Turn on face enhancement",
+          "p": "Enable the face option before running the enhance pass. The app detects faces automatically and applies the dedicated model to each one."
+        },
+        {
+          "h": "Pick the upscale factor",
+          "p": "For group photos, 4x helps a lot — the extra resolution gives each small face more pixels to work with. For a single close-up portrait, 2x is usually plenty."
+        },
+        {
+          "h": "Check each face individually",
+          "p": "Zoom into each person. Face restoration works face by face, so one person can come out perfectly while another, further from the camera, needs a different setting."
+        },
+        {
+          "h": "Save the result",
+          "p": "Save as a new copy so you can compare against the original later, or re-run at a different strength."
+        }
+      ],
+      "img_alt": "Fixing a blurry face in a portrait with AI face restoration in UScale on iPhone",
+      "img_caption": "A soft portrait with eyes, skin and hair restored by the face model.",
+      "tips_h": "Tips for natural-looking faces",
+      "tips": [
+        "Compare against the original at full zoom before saving. Face restoration is interpretation, and a heavy setting can subtly change how someone looks.",
+        "For a photo where only one person matters, crop to them first. The model then has far more pixels to work with.",
+        "If skin comes out too smooth, step down from 4x to 2x — the general model is contributing to the plastic look.",
+        "Faces in profile or partly hidden restore less reliably than faces looking towards the camera, simply because there is less structure to anchor to."
+      ],
+      "cta_h": "Get the faces back",
+      "cta_p": "Dedicated AI face restoration, running on your iPhone. Two free photos every day.",
+      "faq_h": "Face restoration: common questions",
+      "faq": [
+        {
+          "q": "Will face restoration change what someone looks like?",
+          "a": "Mildly, yes — the model reconstructs detail rather than recovering it exactly. On moderately soft faces the result is very close to the person. On extremely small or smeared faces it can drift, so always compare before saving."
+        },
+        {
+          "q": "Does it work on multiple faces in one photo?",
+          "a": "Yes. Each detected face is processed individually, which is exactly why group photos benefit more from this than from general sharpening."
+        },
+        {
+          "q": "Does it work on old scanned photos?",
+          "a": "Yes, and it is one of the most striking uses. Run the restoration pass first to remove scratches, then enhance with face restoration enabled."
+        }
+      ]
+    },
+    "upscale-anime-art": {
+      "nav_title": "Upscale anime & art",
+      "card_title": "How to upscale anime art and drawings",
+      "card_desc": "Enlarge illustrations and pixel art without mush.",
+      "title": "How to Upscale Anime Art and Drawings on iPhone",
+      "description": "Upscale anime art, illustrations and pixel art on iPhone without turning lines into mush. How AI upscaling handles flat colour and line art, step by step in UScale.",
+      "h1": "How to upscale anime art and drawings",
+      "kicker": "Upscaling guide",
+      "read_time": "4 min read",
+      "answer": "To upscale anime art or a drawing, open it in UScale and run the 2x or 4x model. AI upscaling keeps line art crisp and flat colour clean instead of blurring edges the way a normal resize does, so a small illustration becomes a wallpaper- or print-sized file.",
+      "supply": "An illustration, anime frame or pixel-art image",
+      "intro": "Illustration is the friendliest possible input for an AI upscaler. Photographs are full of noise, texture and depth-of-field; drawings are made of clean lines and flat regions, which are exactly the structures these models predict most confidently. That is why a 4x upscale of a small anime image often looks like it was drawn at that size.",
+      "why_h": "Why drawings upscale better than photos",
+      "why_p": "The structure of illustration plays to every strength of a neural upscaler.",
+      "why_list": [
+        "Line art is high-contrast and continuous, so the model can extend edges with confidence.",
+        "Flat colour fields have no texture to invent — they simply need clean boundaries.",
+        "There is no sensor noise or motion blur competing with the real detail.",
+        "Pixel art has perfectly predictable structure, which upscales into crisp shapes rather than soft blocks.",
+        "Compression artefacts around lines, common in images saved from the web, are cleaned up in the same pass."
+      ],
+      "steps_h": "Upscale artwork in UScale, step by step",
+      "steps_intro": "The same enhance flow as photos, with one setting worth changing.",
+      "steps": [
+        {
+          "h": "Import the artwork",
+          "p": "Save the image to your library and open it in UScale. Use the largest version you have — a thumbnail will always limit the outcome."
+        },
+        {
+          "h": "Turn off face enhancement",
+          "p": "The face model is trained on photographic faces. On a drawn character it can push features towards photorealism, which is rarely what you want."
+        },
+        {
+          "h": "Run 4x for line art",
+          "p": "Illustration handles aggressive upscaling far better than photography does. 4x on a 1000-pixel image gives you a 4000-pixel file suitable for a poster or a desktop wallpaper."
+        },
+        {
+          "h": "Check the lines at full zoom",
+          "p": "Zoom in on line intersections and hair. Clean, continuous lines mean the model handled it well; wobbling or doubled lines mean the source was too small."
+        },
+        {
+          "h": "Save and use",
+          "p": "Save the upscaled file to your library. It is now large enough for wallpaper, printing or use as a high-resolution asset."
+        }
+      ],
+      "img_alt": "Upscaling a pixelated anime illustration 4x with UScale on iPhone",
+      "img_caption": "A pixelated illustration upscaled 4x — lines stay crisp, colour stays flat.",
+      "video_caption": "Anime footage upscaled with the on-device model.",
+      "tips_h": "Tips for artwork and pixel art",
+      "tips": [
+        "Upscale before you add text or a watermark. Running the model over text produces subtly warped letterforms.",
+        "For true pixel art where you want to keep the blocky look, a nearest-neighbour resize is the right tool — AI upscaling deliberately smooths those hard edges.",
+        "Screenshots of video frames upscale well, but interlacing lines from old sources should be cleaned with the video enhance pass first.",
+        "If you are upscaling a whole set, use batch processing — artwork rarely needs per-image tuning."
+      ],
+      "cta_h": "Upscale your art library",
+      "cta_p": "2x and 4x AI upscaling for illustrations, anime and pixel art, right on your iPhone.",
+      "faq_h": "Upscaling artwork: common questions",
+      "faq": [
+        {
+          "q": "Is this a waifu2x alternative for iPhone?",
+          "a": "It solves the same problem — enlarging anime-style art without softening the lines — with a modern model that runs on your device instead of a website, and it handles photographs and video as well."
+        },
+        {
+          "q": "Can I upscale a video of anime, not just a still?",
+          "a": "Yes. The video enhance pass applies the same model frame by frame, which works particularly well on animation because of the flat colour regions."
+        },
+        {
+          "q": "Will upscaling change the art style?",
+          "a": "The 2x and 4x models preserve the original style and just add resolution. Creative Upscale is the one that reinterprets detail, so avoid it if faithfulness matters."
+        }
+      ]
+    }
+  }
+}

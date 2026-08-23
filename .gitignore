@@ -1,6 +1,16 @@
+# build output — regenerate with `python3 build/build.py`
+dist/
+
+# python
+__pycache__/
+*.pyc
+
+# editors / OS
 .DS_Store
 ._*
 Thumbs.db
 .idea/
 .vscode/
 *.swp
+*.bak
+.tmp/

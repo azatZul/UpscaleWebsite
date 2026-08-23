@@ -1,0 +1,844 @@
+/* UScale — upscales.app  |  design system */
+*,*::before,*::after{box-sizing:border-box}
+/* The palette is registered so the tokens themselves can be interpolated. That is the
+   whole theme animation: :root eases its colours and every rule that reads one follows
+   in the same frame. Transitioning `color` per element cannot work — an inherited colour
+   is resolved against the parent's *final* value, so a heading races ahead and then drops
+   back to the parent's still-moving colour the moment its own transition ends. */
+@property --bg{syntax:"<color>";inherits:true;initial-value:#07080d}
+@property --bg-2{syntax:"<color>";inherits:true;initial-value:#0c0e16}
+@property --surface{syntax:"<color>";inherits:true;initial-value:#12141f}
+@property --surface-2{syntax:"<color>";inherits:true;initial-value:#181b29}
+@property --line{syntax:"<color>";inherits:true;initial-value:rgba(255,255,255,.09)}
+@property --line-2{syntax:"<color>";inherits:true;initial-value:rgba(255,255,255,.16)}
+@property --tint{syntax:"<color>";inherits:true;initial-value:rgba(255,255,255,.05)}
+@property --tint-2{syntax:"<color>";inherits:true;initial-value:rgba(255,255,255,.1)}
+@property --tx{syntax:"<color>";inherits:true;initial-value:#eef0f7}
+@property --tx-2{syntax:"<color>";inherits:true;initial-value:#a8aec4}
+@property --tx-3{syntax:"<color>";inherits:true;initial-value:#767c93}
+@property --tx-4{syntax:"<color>";inherits:true;initial-value:#41455a}
+@property --acc{syntax:"<color>";inherits:true;initial-value:#ffd621}
+@property --acc-d{syntax:"<color>";inherits:true;initial-value:#e8c00c}
+@property --acc-tx{syntax:"<color>";inherits:true;initial-value:#ffd621}
+@property --ink{syntax:"<color>";inherits:true;initial-value:#0a0b11}
+@property --acc-soft{syntax:"<color>";inherits:true;initial-value:rgba(255,214,33,.12)}
+@property --acc-line{syntax:"<color>";inherits:true;initial-value:rgba(255,214,33,.26)}
+@property --acc-uline{syntax:"<color>";inherits:true;initial-value:rgba(255,214,33,.35)}
+@property --acc-glow{syntax:"<color>";inherits:true;initial-value:rgba(255,214,33,.6)}
+@property --star{syntax:"<color>";inherits:true;initial-value:#ffd621}
+@property --star-off{syntax:"<color>";inherits:true;initial-value:rgba(255,214,33,.24)}
+@property --vio{syntax:"<color>";inherits:true;initial-value:#6e7cf6}
+@property --vio-2{syntax:"<color>";inherits:true;initial-value:#a48bff}
+@property --vio-soft{syntax:"<color>";inherits:true;initial-value:rgba(110,124,246,.14)}
+@property --vio-line{syntax:"<color>";inherits:true;initial-value:rgba(110,124,246,.28)}
+@property --ok{syntax:"<color>";inherits:true;initial-value:#3ddc97}
+@property --ok-soft{syntax:"<color>";inherits:true;initial-value:rgba(61,220,151,.14)}
+@property --ok-line{syntax:"<color>";inherits:true;initial-value:rgba(61,220,151,.45)}
+@property --wash-v{syntax:"<color>";inherits:true;initial-value:rgba(110,124,246,.1)}
+@property --wash-v2{syntax:"<color>";inherits:true;initial-value:rgba(110,124,246,.16)}
+@property --wash-a{syntax:"<color>";inherits:true;initial-value:rgba(255,214,33,.05)}
+@property --wash-a2{syntax:"<color>";inherits:true;initial-value:rgba(255,214,33,.09)}
+@property --nav{syntax:"<color>";inherits:true;initial-value:rgba(7,8,13,.72)}
+@property --nav-2{syntax:"<color>";inherits:true;initial-value:rgba(7,8,13,.9)}
+@property --badge-bg{syntax:"<color>";inherits:true;initial-value:#fff}
+@property --badge-fg{syntax:"<color>";inherits:true;initial-value:#000}
+@property --numeral{syntax:"<color>";inherits:true;initial-value:rgba(255,255,255,.045)}
+@property --numeral-2{syntax:"<color>";inherits:true;initial-value:rgba(255,255,255,.14)}
+@property --glow-1{syntax:"<color>";inherits:true;initial-value:#5a4bd8}
+@property --glow-2{syntax:"<color>";inherits:true;initial-value:#c9a207}
+@property --halo-v{syntax:"<color>";inherits:true;initial-value:rgba(110,124,246,.5)}
+@property --halo-a{syntax:"<color>";inherits:true;initial-value:rgba(255,214,33,.26)}
+@property --cast{syntax:"<color>";inherits:true;initial-value:rgba(0,0,0,.75)}
+@property --h1-1{syntax:"<color>";inherits:true;initial-value:#ffd621}
+@property --h1-2{syntax:"<color>";inherits:true;initial-value:#ffe378}
+@property --h1-3{syntax:"<color>";inherits:true;initial-value:#dcc5c4}
+@property --h1-4{syntax:"<color>";inherits:true;initial-value:#a48bff}
+@property --glow-o1{syntax:"<number>";inherits:true;initial-value:.5}
+@property --glow-o2{syntax:"<number>";inherits:true;initial-value:.32}
+
+/* ---------- palette ----------
+   Dark is the default. The light theme swaps the same tokens; its colours follow the
+   iOS app — blue-tinted paper (#E6EFFF family), near-black ink, the same gold, and the
+   app's action blue. An inline <head> script stamps html[data-theme] from the stored
+   choice (or the OS preference) before the first paint, so there is no flash. */
+:root{
+  color-scheme:dark;
+  transition-property:--bg,--bg-2,--surface,--surface-2,--line,--line-2,--tint,--tint-2,--tx,--tx-2,
+    --tx-3,--tx-4,--acc,--acc-d,--acc-tx,--ink,--acc-soft,--acc-line,--acc-uline,--acc-glow,
+    --star,--star-off,--vio,--vio-2,--vio-soft,--vio-line,--ok,--ok-soft,--ok-line,--wash-v,
+    --wash-v2,--wash-a,--wash-a2,--nav,--nav-2,--badge-bg,--badge-fg,--numeral,--numeral-2,
+    --glow-1,--glow-2,--halo-v,--halo-a,--cast,--h1-1,--h1-2,--h1-3,--h1-4,--glow-o1,--glow-o2;
+  /* Fast out of the gate: an inverted palette has to cross itself somewhere, and a
+     front-loaded curve puts that crossing early and gets through it in a frame or two
+     instead of parking the page at zero contrast around the midpoint. */
+  transition-duration:.3s; transition-timing-function:cubic-bezier(.18,1,.28,1);
+  --bg:#07080d; --bg-2:#0c0e16; --surface:#12141f; --surface-2:#181b29;
+  --line:rgba(255,255,255,.09); --line-2:rgba(255,255,255,.16);
+  /* --tint: the neutral wash used for hover fills and quiet chips */
+  --tint:rgba(255,255,255,.05); --tint-2:rgba(255,255,255,.1);
+  --tx:#eef0f7; --tx-2:#a8aec4; --tx-3:#767c93; --tx-4:#41455a;
+  /* --acc paints (buttons, bars, dots); --acc-tx writes (links, eyebrows, glyphs) —
+     they part ways in the light theme, where raw gold is unreadable as text */
+  --acc:#ffd621; --acc-d:#e8c00c; --acc-tx:#ffd621; --ink:#0a0b11;
+  --acc-soft:rgba(255,214,33,.12); --acc-line:rgba(255,214,33,.26);
+  --acc-uline:rgba(255,214,33,.35); --acc-glow:rgba(255,214,33,.6);
+  --star:#ffd621; --star-off:rgba(255,214,33,.24);
+  --vio:#6e7cf6; --vio-2:#a48bff;
+  --vio-soft:rgba(110,124,246,.14); --vio-line:rgba(110,124,246,.28);
+  --ok:#3ddc97; --ok-soft:rgba(61,220,151,.14); --ok-line:rgba(61,220,151,.45);
+  /* the violet/gold washes behind the big feature cards */
+  --wash-v:rgba(110,124,246,.1); --wash-v2:rgba(110,124,246,.16);
+  --wash-a:rgba(255,214,33,.05); --wash-a2:rgba(255,214,33,.09);
+  --nav:rgba(7,8,13,.72); --nav-2:rgba(7,8,13,.9);
+  --badge-bg:#fff; --badge-fg:#000;
+  --badge-sh:0 14px 40px -14px rgba(255,255,255,.4);
+  --badge-sh-h:0 20px 46px -14px rgba(255,255,255,.5);
+  --numeral:rgba(255,255,255,.045); --numeral-2:rgba(255,255,255,.14);
+  --glow-1:#5a4bd8; --glow-2:#c9a207; --glow-o1:.5; --glow-o2:.32;
+  --halo-v:rgba(110,124,246,.5); --halo-a:rgba(255,214,33,.26);
+  --cast:rgba(0,0,0,.75);
+  --dev-sh:0 30px 64px -14px rgba(0,0,0,.85),0 8px 22px rgba(0,0,0,.5);
+  --h1-1:#ffd621; --h1-2:#ffe378; --h1-3:#dcc5c4; --h1-4:#a48bff;
+  --shadow:0 24px 60px -20px rgba(0,0,0,.8);
+  --r-l:26px; --r-m:18px; --r-s:12px;
+  --wrap:1160px;
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,"Noto Sans","Noto Sans JP","Noto Sans KR","Noto Sans SC","Noto Sans Devanagari",sans-serif;
+}
+:root[data-theme="light"]{
+  color-scheme:light;
+  --bg:#f3f6fe; --bg-2:#e9effc; --surface:#fff; --surface-2:#fff;
+  --line:rgba(19,29,73,.11); --line-2:rgba(19,29,73,.2);
+  --tint:rgba(19,29,73,.045); --tint-2:rgba(19,29,73,.085);
+  --tx:#141728; --tx-2:#4a5169; --tx-3:#6a7189; --tx-4:#9aa0b6;
+  --acc:#f7bd00; --acc-d:#e0a800; --acc-tx:#8a6200;
+  --acc-soft:rgba(247,189,0,.16); --acc-line:rgba(203,150,0,.4);
+  --acc-uline:rgba(203,150,0,.45); --acc-glow:rgba(247,189,0,.5);
+  --star:#e8a900; --star-off:rgba(232,169,0,.26);
+  --vio:#5566e8; --vio-2:#6f4ff0;
+  --vio-soft:rgba(85,102,232,.13); --vio-line:rgba(85,102,232,.3);
+  --ok:#12a06b; --ok-soft:rgba(18,160,107,.14); --ok-line:rgba(18,160,107,.45);
+  --wash-v:rgba(85,102,232,.14); --wash-v2:rgba(85,102,232,.2);
+  --wash-a:rgba(247,189,0,.14); --wash-a2:rgba(247,189,0,.2);
+  --nav:rgba(243,246,254,.76); --nav-2:rgba(243,246,254,.92);
+  --badge-bg:#14161f; --badge-fg:#fff;
+  --badge-sh:0 14px 34px -16px rgba(20,30,80,.55);
+  --badge-sh-h:0 20px 42px -16px rgba(20,30,80,.6);
+  --numeral:rgba(19,29,73,.06); --numeral-2:rgba(19,29,73,.16);
+  --glow-1:#93a7ff; --glow-2:#ffd977; --glow-o1:.42; --glow-o2:.4;
+  --halo-v:rgba(110,124,246,.42); --halo-a:rgba(255,196,40,.3);
+  --cast:rgba(24,34,84,.32);
+  --dev-sh:0 30px 60px -16px rgba(20,30,80,.42),0 8px 20px rgba(20,30,80,.16);
+  /* gold straight into violet turns muddy on paper, so the light ramp goes
+     through a warm coral instead — the same sunset, one stop longer */
+  --h1-1:#da9b00; --h1-2:#e4910c; --h1-3:#cb5549; --h1-4:#6f4ff0;
+  --shadow:0 22px 50px -22px rgba(20,30,80,.35);
+}
+/* Shadows are the one themed value that is not a bare colour token, so they still need a
+   real transition; everything else rides along on the variables above. The moon/sun glyph
+   is left out: it runs its own springy transforms at exactly this moment, and an
+   !important transition of its own would flatten them into a jump cut. */
+html.theme-anim *:not(.theme-ico,.theme-ico *),
+html.theme-anim *:not(.theme-ico,.theme-ico *)::before,
+html.theme-anim *:not(.theme-ico,.theme-ico *)::after{
+  transition:box-shadow .3s ease!important}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:82px}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--font);
+  font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg,video{max-width:100%;display:block}
+img{height:auto}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{margin:0;line-height:1.12;letter-spacing:-.022em;font-weight:800}
+p{margin:0}
+ul,ol{margin:0;padding:0}
+:focus-visible{outline:2px solid var(--acc-tx);outline-offset:3px;border-radius:6px}
+.wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 22px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- ambient background ---------- */
+.glow{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.glow::before,.glow::after{content:"";position:absolute;border-radius:50%;filter:blur(110px);opacity:var(--glow-o1)}
+.glow::before{width:640px;height:640px;top:-260px;left:-160px;background:radial-gradient(circle,var(--glow-1),transparent 68%)}
+.glow::after{width:560px;height:560px;top:120px;right:-220px;background:radial-gradient(circle,var(--glow-2),transparent 68%);opacity:var(--glow-o2)}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:0;z-index:60;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  background:var(--nav);border-bottom:1px solid transparent;transition:border-color .2s,background .2s}
+.nav.stuck{border-bottom-color:var(--line);background:var(--nav-2)}
+.nav-in{display:flex;align-items:center;gap:14px;height:70px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:18px;letter-spacing:-.02em;flex:0 0 auto}
+.brand img{width:34px;height:34px;border-radius:9px}
+.brand small{display:block;font-size:11px;font-weight:600;color:var(--tx-3);letter-spacing:0;line-height:1.1;margin-top:1px}
+.nav-links{display:flex;gap:4px;margin-left:auto;align-items:center}
+.nav-links a{padding:8px 12px;border-radius:10px;font-size:14.5px;font-weight:600;color:var(--tx-2);transition:.15s}
+.nav-links a:hover{color:var(--tx);background:var(--tint-2)}
+.nav-cta{margin-left:6px}
+.burger{display:none;margin-left:auto;background:none;border:1px solid var(--line);color:var(--tx);
+  width:42px;height:42px;border-radius:12px;cursor:pointer;align-items:center;justify-content:center}
+.burger svg{width:20px;height:20px}
+
+/* theme switch — moon <-> sun */
+.theme-btn{position:relative;flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;
+  width:40px;height:40px;padding:0;border-radius:12px;border:1px solid var(--line);background:none;
+  color:var(--tx-2);cursor:pointer;transition:color .2s,border-color .2s}
+.theme-btn:hover{color:var(--tx);border-color:var(--line-2)}
+.theme-btn:active{transform:scale(.94)}
+.theme-btn::after{content:"";position:absolute;inset:-2px;border-radius:14px;pointer-events:none;opacity:0;
+  background:radial-gradient(circle at center,var(--acc-tx),transparent 70%)}
+.theme-btn.flip::after{animation:theme-pulse .6s ease-out}
+@keyframes theme-pulse{0%{opacity:.45;transform:scale(.35)}100%{opacity:0;transform:scale(1.7)}}
+.theme-ico{width:21px;height:21px;overflow:visible;transform-origin:center;
+  transition:transform .55s cubic-bezier(.5,1.4,.45,1)}
+.theme-ico .orb{fill:currentColor;transform-box:fill-box;transform-origin:center;
+  transition:transform .5s cubic-bezier(.5,1.5,.5,1)}
+.theme-ico .cut{transition:transform .45s cubic-bezier(.4,0,.2,1)}
+.theme-ico .rays{stroke:currentColor;fill:none;transform-box:fill-box;transform-origin:center;
+  opacity:0;transform:rotate(-70deg) scale(.35);
+  transition:opacity .3s ease,transform .55s cubic-bezier(.4,1.5,.5,1)}
+/* light theme picked: the crescent fills in and the rays spring out */
+[data-theme="light"] .theme-ico{transform:rotate(180deg)}
+[data-theme="light"] .theme-ico .orb{transform:scale(.78)}
+[data-theme="light"] .theme-ico .cut{transform:translate(9px,-9px)}
+[data-theme="light"] .theme-ico .rays{opacity:1;transform:rotate(0) scale(1)}
+@media(prefers-reduced-motion:reduce){
+  .theme-ico,.theme-ico .orb,.theme-ico .cut,.theme-ico .rays{transition-duration:.01ms}
+  .theme-btn.flip::after{animation:none}
+}
+
+/* language picker */
+.lang{position:relative;flex:0 0 auto}
+.lang-btn{display:flex;align-items:center;gap:7px;padding:8px 12px;border-radius:10px;font-size:14.5px;
+  font-weight:600;color:var(--tx-2);background:none;border:1px solid var(--line);cursor:pointer;font-family:inherit}
+.lang-btn:hover{color:var(--tx);border-color:var(--line-2)}
+.lang-btn .flag{width:18px;height:18px;flex:0 0 auto;border-radius:5px;box-shadow:0 0 0 1px var(--line-2) inset}
+.lang-menu{position:absolute;right:0;top:calc(100% + 8px);min-width:190px;background:var(--surface-2);
+  border:1px solid var(--line);border-radius:14px;padding:6px;box-shadow:var(--shadow);display:none;
+  max-height:60vh;overflow:auto}
+.lang-menu.open{display:block}
+.lang-menu a{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:9px;font-size:14.5px;color:var(--tx-2)}
+.lang-menu .flag{width:20px;height:20px;flex:0 0 auto;border-radius:5px;box-shadow:0 0 0 1px var(--line-2) inset}
+.lang-menu a:hover{background:var(--tint-2);color:var(--tx)}
+.lang-menu a[aria-current]{color:var(--acc-tx);font-weight:700}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:inherit;font-weight:700;
+  font-size:15px;padding:13px 22px;border-radius:14px;border:1px solid transparent;cursor:pointer;transition:.18s;
+  text-align:center;line-height:1.2}
+.btn-p{background:var(--acc);color:var(--ink);box-shadow:0 10px 30px -10px var(--acc-glow)}
+.btn-p:hover{background:var(--acc-d);transform:translateY(-1px)}
+.btn-g{background:var(--tint);color:var(--tx);border-color:var(--line-2)}
+.btn-g:hover{background:var(--tint-2)}
+.btn-sm{padding:9px 16px;font-size:14px;border-radius:11px}
+.btn-xl{font-size:17.5px;padding:19px 38px;border-radius:17px;gap:11px;letter-spacing:.005em}
+.btn-p.btn-xl{box-shadow:0 18px 46px -12px var(--acc-glow)}
+.btn-p.btn-xl:hover{box-shadow:0 26px 60px -12px var(--acc-glow);transform:translateY(-2px)}
+.btn .arrow{font-size:17px;line-height:1;margin-left:-1px;transition:transform .18s}
+.btn-xl .arrow{font-size:20px}
+.btn:hover .arrow{transform:translateX(3px)}
+
+/* App Store badge */
+.appstore{display:inline-flex;align-items:center;gap:12px;background:var(--badge-bg);color:var(--badge-fg);
+  padding:11px 22px 12px;border-radius:15px;transition:.18s;box-shadow:var(--badge-sh)}
+.appstore:hover{transform:translateY(-2px);box-shadow:var(--badge-sh-h)}
+.appstore svg{width:27px;height:33px;flex:0 0 auto;fill:currentColor}
+.appstore span{display:block;font-size:11px;font-weight:500;letter-spacing:.02em;line-height:1.25;opacity:.82}
+.appstore strong{display:block;font-size:19.5px;font-weight:650;letter-spacing:-.02em;line-height:1.15;margin-top:1px}
+.appstore.dark{background:#111;color:#fff;border:1px solid rgba(255,255,255,.2);box-shadow:none}
+
+/* ---------- shared section bits ---------- */
+section{position:relative}
+.sect{padding:96px 0}
+.sect-tight{padding:70px 0}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:750;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--acc-tx);margin-bottom:16px}
+.eyebrow::before{content:"";width:22px;height:2px;background:var(--acc-tx);border-radius:2px}
+.h2{font-size:clamp(30px,4.2vw,46px);text-wrap:balance}
+.lead{color:var(--tx-2);font-size:18px;margin-top:16px;max-width:62ch;text-wrap:pretty}
+.head.center .lead{text-wrap:balance}
+.head{max-width:720px;margin-bottom:52px}
+.head.center{margin-left:auto;margin-right:auto;text-align:center}
+.head.center .eyebrow::before{display:none}
+.head.center .lead{margin-left:auto;margin-right:auto}
+
+/* ---------- hero ---------- */
+.hero{padding:70px 0 92px}
+.hero-grid{display:grid;grid-template-columns:1.06fr .94fr;gap:48px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:9px;padding:7px 14px 7px 8px;border-radius:999px;
+  background:var(--tint);border:1px solid var(--line);font-size:13.5px;font-weight:600;color:var(--tx-2)}
+.pill b{color:var(--tx)}
+.pill .stars{color:var(--star);letter-spacing:1px;font-size:12.5px}
+.hero h1{font-size:clamp(38px,5.6vw,63px);margin:22px 0 0;letter-spacing:-.035em}
+.hero h1 em{font-style:normal;
+  background:linear-gradient(100deg,var(--h1-1) 6%,var(--h1-2) 34%,var(--h1-3) 64%,var(--h1-4) 96%);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{color:var(--tx-2);font-size:19px;margin-top:22px;max-width:52ch}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:34px}
+.hero-note{font-size:13.5px;color:var(--tx-3);margin-top:16px}
+/* a store badge and the caption that belongs to it — one column per store, so
+   Google Play / Mac / Web each get their own caption without extra CSS */
+.stores{align-items:flex-start}
+.store{display:flex;flex-direction:column;align-items:flex-start}
+.store .hero-note{margin-top:12px}
+/* the caption is revealed while its own badge is hovered / focused */
+.hero-note.reveal{opacity:0;transform:translateY(-4px);transition:opacity .22s ease,transform .22s ease}
+.store:has(a:hover) .hero-note.reveal,
+.store:focus-within .hero-note.reveal{opacity:1;transform:none}
+@media (hover:none){.hero-note.reveal{opacity:1;transform:none}}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;list-style:none}
+.chips li{white-space:nowrap}
+.chips li{display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;color:var(--tx-2);
+  background:var(--tint);border:1px solid var(--line);padding:7px 13px;border-radius:999px}
+.chips li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ok);flex:0 0 auto}
+/* in the hero the four chips have to sit on one line next to the device */
+@media (min-width:981px){
+  .hero-copy .chips{gap:7px;margin-top:26px}
+  .hero-copy .chips li{font-size:12px;padding:6px 10px;gap:6px}
+  .hero-copy .chips li::before{width:5px;height:5px}
+}
+
+/* ---------- in-video controls ---------- */
+.vid-mute,.vid-paused{position:absolute;z-index:6;display:none;align-items:center;justify-content:center;
+  border-radius:999px;background:rgba(10,10,14,.55);color:#fff;backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.16)}
+/* bottom-left, so it never sits under the on-device badge */
+.vid-mute{left:12px;bottom:12px;width:38px;height:38px;padding:0;cursor:pointer;
+  transition:background .18s ease,transform .18s ease}
+.cmp-wide .vid-mute{left:18px;bottom:18px}
+.vid-mute:not([hidden]){display:flex}
+.vid-mute:hover{background:rgba(10,10,14,.78);transform:translateY(-1px)}
+.vid-mute svg{width:19px;height:19px}
+.vid-mute .ico-off{display:none}
+.vid-mute.muted .ico-on{display:none}
+.vid-mute.muted .ico-off{display:block}
+.vid-paused{left:50%;top:50%;width:64px;height:64px;margin:-32px 0 0 -32px;pointer-events:none}
+.vid-paused svg{width:30px;height:30px}
+.cmp.paused .vid-paused{display:flex}
+.cmp.has-video{cursor:pointer}
+
+/* ---------- before/after comparison ---------- */
+.cmp-wrap{position:relative}
+.cmp{position:relative;width:100%;aspect-ratio:4/3;overflow:hidden;border-radius:var(--r-l);
+  border:1px solid var(--line-2);box-shadow:var(--shadow);user-select:none;-webkit-user-select:none;
+  touch-action:pan-y;background:#000}
+.cmp img,.cmp video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cmp .b{clip-path:inset(0 50% 0 0);z-index:2}
+.cmp-bar{position:absolute;top:0;bottom:0;left:50%;width:3px;background:var(--acc);z-index:4;
+  cursor:col-resize;transform:translateX(-1.5px)}
+.cmp-bar::after{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:44px;height:44px;border-radius:50%;background:var(--acc);
+  box-shadow:0 6px 22px rgba(0,0,0,.55);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230a0b11'%3E%3Cpath d='M9.2 6.3 4.6 11a1.4 1.4 0 0 0 0 2l4.6 4.7 1.5-1.5L7.4 13H11v-2H7.4l3.3-3.2zm5.6 0-1.5 1.5L16.6 11H13v2h3.6l-3.3 3.2 1.5 1.5 4.6-4.7a1.4 1.4 0 0 0 0-2z'/%3E%3C/svg%3E");
+  background-size:26px;background-repeat:no-repeat;background-position:center}
+.cmp-tag{position:absolute;top:14px;z-index:5;background:rgba(0,0,0,.68);backdrop-filter:blur(8px);
+  color:#fff;font-size:12.5px;font-weight:700;padding:6px 12px;border-radius:9px;letter-spacing:.01em}
+.cmp-tag.l{left:14px} .cmp-tag.r{right:14px}
+.cmp-tabs{display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.cmp-tab{position:relative;width:78px;aspect-ratio:4/3;border-radius:12px;overflow:hidden;cursor:pointer;
+  border:2px solid transparent;background:none;padding:0;transition:.18s;opacity:.6}
+.cmp-tab img{width:100%;height:100%;object-fit:cover}
+.cmp-tab:hover{opacity:.9}
+.cmp-tab[aria-selected="true"]{border-color:var(--acc);opacity:1}
+.cmp-tab .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:17px;text-shadow:0 2px 8px rgba(0,0,0,.8)}
+
+/* ---------- wide results comparison ---------- */
+.cmp-wide{margin-top:4px;--cmp-h:780px}
+/* the box follows each example's own aspect ratio (--ar), capped by --cmp-h */
+.cmp-wide .cmp{--ar:1.6;--h:var(--cmp-h);aspect-ratio:var(--ar);height:auto;margin:0 auto;
+  width:min(100%,calc(var(--h) * var(--ar)));max-width:100%}
+/* on wide screens the box keeps that height even when it runs out of width —
+   examples too wide to fit then fill it and crop at the sides (aspect fill) */
+@media(min-width:1000px){
+  .cmp-wide .cmp{--h:min(var(--cmp-h),70vw);aspect-ratio:auto;height:var(--h)}
+}
+.cmp-wide .cmp-bar{width:4px;transform:translateX(-2px)}
+.cmp-wide .cmp-bar::after{width:52px;height:52px;background-size:30px}
+.cmp-wide .cmp-tag{top:18px;font-size:13.5px;padding:7px 14px}
+.cmp-wide .cmp-tag.l{left:18px} .cmp-wide .cmp-tag.r{right:18px}
+.cmp-tabs-lg{gap:16px;margin-top:22px;align-items:flex-start}
+.cmp-tab.lg{width:auto;aspect-ratio:auto;overflow:visible;border:0;border-radius:0;
+  display:flex;flex-direction:column;align-items:center;gap:9px}
+.cmp-tab.lg .cmp-thumb{position:relative;display:block;width:118px;aspect-ratio:4/3;
+  border-radius:13px;overflow:hidden;border:2px solid transparent;transition:border-color .18s}
+.cmp-tab.lg[aria-selected="true"] .cmp-thumb{border-color:var(--acc)}
+.cmp-cap{font-size:12.5px;font-weight:650;color:var(--tx-3);text-align:center;line-height:1.3;max-width:124px}
+.cmp-tab.lg[aria-selected="true"] .cmp-cap{color:var(--tx)}
+.on-device{position:absolute;right:14px;bottom:14px;z-index:6;display:flex;align-items:center;
+  background:rgba(0,0,0,.6);backdrop-filter:blur(8px);color:#fff;font-size:12px;font-weight:650;
+  padding:6px 12px;border-radius:999px;pointer-events:none}
+.on-device svg{width:15px;height:15px;flex:0 0 auto;color:var(--acc)}
+.on-device .od-cloud svg{color:#fff}
+.od-v{display:flex;align-items:center;gap:7px}
+.on-device .od-cloud{display:none}
+.on-device.cloud .od-local{display:none}
+.on-device.cloud .od-cloud{display:flex}
+.cmp-wide .on-device{right:18px;bottom:18px;font-size:12.5px}
+@media(max-width:760px){
+  .cmp-wide .on-device{right:12px;bottom:12px;font-size:11.5px;padding:5px 10px}
+  .cmp-wide .od-v{gap:6px}
+}
+
+/* ---------- hero device: landscape iPhone bleeding off the right edge ---------- */
+.hero-lead{overflow:hidden}
+.hero-lead .hero-grid{grid-template-columns:1.16fr .84fr;gap:40px}
+.hero-stage{position:relative;align-self:stretch;min-height:clamp(320px,34vw,430px)}
+.hero-stage .phone{
+  --pw:clamp(660px,89vw,1340px);           /* device width — everything scales from it */
+  --sh:calc(var(--pw)*.4439);              /* the screen's height (1131/2548 of the artwork) */
+  position:absolute;left:0;top:46%;transform:translateY(-50%);width:var(--pw);z-index:1}
+/* ambient light pools behind the device */
+.phone-halo{position:absolute;z-index:0;inset:-42% -18%;pointer-events:none;filter:blur(58px);
+  background:radial-gradient(closest-side at 26% 46%,var(--halo-v),transparent 74%),
+             radial-gradient(closest-side at 72% 58%,var(--halo-a),transparent 72%)}
+.phone-cast{position:absolute;z-index:0;left:2%;right:2%;top:88%;height:34%;pointer-events:none;
+  filter:blur(30px);border-radius:50%;background:radial-gradient(closest-side,var(--cast),transparent 76%)}
+.phone-body{position:relative;z-index:1;aspect-ratio:2548/1252}
+/* the device's own shadow — a plate hidden behind the frame, so nothing darkens the picture */
+.phone-body::before{content:"";position:absolute;z-index:0;inset:3% 1.5%;background:#05060a;
+  border-radius:calc(var(--sh)*.17);
+  box-shadow:var(--dev-sh)}
+/* the frame artwork: transparent screen hole, so it lies on top of the picture */
+.phone-frame{position:absolute;z-index:3;inset:0;width:100%;height:100%;pointer-events:none;
+  user-select:none;-webkit-user-drag:none}
+/* the picture sits behind the frame; the offsets come from the artwork (inline style) */
+.phone-screen{position:absolute;z-index:2;border-radius:calc(var(--sh)*.142);overflow:hidden;
+  background:#05060a}
+
+/* the comparison fills the whole screen: one picture, one divider */
+.cmp-phone{position:absolute;inset:0;width:auto;height:auto;max-width:none;margin:0;aspect-ratio:auto;
+  border:0;border-radius:0;box-shadow:none;background:#05060a;cursor:default}
+.cmp-phone .cmp-bar{width:3px;transform:translateX(-1.5px);background:var(--acc);
+  box-shadow:0 0 0 1px rgba(0,0,0,.28),0 0 calc(var(--sh)*.06) rgba(0,0,0,.5)}
+.cmp-phone .cmp-bar::after{width:calc(var(--sh)*.115);height:calc(var(--sh)*.115);
+  background-color:var(--acc);background-size:calc(var(--sh)*.062);
+  box-shadow:0 calc(var(--sh)*.012) calc(var(--sh)*.05) rgba(0,0,0,.45)}
+/* with a mouse the divider simply follows the cursor: no handle, no resize cursor */
+@media (hover:hover) and (pointer:fine){
+  .cmp-phone .cmp-bar{cursor:default}
+  .cmp-phone .cmp-bar::after{display:none}
+}
+/* the two labels ride with the divider, so they stay in view however far the device bleeds */
+.cmp-lb{position:absolute;top:calc(var(--sh)*.085);white-space:nowrap;font-size:calc(var(--sh)*.052);
+  font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.94);
+  text-shadow:0 1px 10px rgba(0,0,0,.75),0 0 2px rgba(0,0,0,.5)}
+.cmp-lb.l{right:calc(100% + var(--sh)*.05)}
+.cmp-lb.r{left:calc(100% + var(--sh)*.05)}
+/* example switcher: iOS-style page dots on the glass, kept to the left because the
+   device bleeds off the right edge of the window on wide screens */
+.phone-dots{position:absolute;z-index:6;bottom:clamp(10px,calc(var(--sh)*.05),30px);
+  left:clamp(12px,calc(var(--sh)*.06),36px);display:flex;align-items:center;
+  gap:clamp(1px,calc(var(--sh)*.006),5px);padding:clamp(2px,calc(var(--sh)*.008),6px);
+  border-radius:99px;background:rgba(8,10,16,.42);backdrop-filter:blur(10px);
+  box-shadow:0 2px 14px rgba(0,0,0,.4),inset 0 0 0 1px rgba(255,255,255,.14)}
+/* the button is a comfortable tap target, the dot inside it is the visible part */
+.cmp-tab.dot{width:auto;height:auto;aspect-ratio:auto;display:flex;border:0;background:none;
+  box-shadow:none;opacity:1;border-radius:99px;padding:clamp(9px,calc(var(--sh)*.018),11px)}
+.cmp-tab.dot i{display:block;width:clamp(8px,calc(var(--sh)*.022),12px);aspect-ratio:1;
+  border-radius:50%;background:rgba(255,255,255,.46);transition:background .2s,transform .2s}
+.cmp-tab.dot:hover i{background:rgba(255,255,255,.82)}
+.cmp-tab.dot[aria-selected="true"] i{background:var(--acc);transform:scale(1.12)}
+.cmp-tab.dot:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+
+/* ---------- reviews ---------- */
+.score{display:flex;align-items:center;justify-content:center;gap:14px;margin:-18px 0 40px;flex-wrap:wrap}
+.score b{font-size:44px;font-weight:800;letter-spacing:-.04em;line-height:1;
+  background:linear-gradient(120deg,var(--tx),var(--acc-tx));-webkit-background-clip:text;background-clip:text;color:transparent}
+.score .stars{color:var(--star);letter-spacing:2px;font-size:18px}
+.score-l{font-size:14px;color:var(--tx-3);font-weight:600}
+.revs{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.rev{margin:0;background:linear-gradient(180deg,var(--surface),var(--bg-2));border:1px solid var(--line);
+  border-radius:var(--r-m);padding:26px 22px;transition:.2s}
+.rev:hover{border-color:var(--line-2);transform:translateY(-3px)}
+.rev:hover blockquote p{color:var(--tx-2)}
+.rev-top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.av{flex:0 0 auto;width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:14.5px;font-weight:800;letter-spacing:.02em;color:#0a0b11;
+  background:linear-gradient(135deg,var(--a1),var(--a2))}
+.av-0{--a1:#ffd621;--a2:#ff9a3d} .av-1{--a1:#6e7cf6;--a2:#a78bfa} .av-2{--a1:#3ddc97;--a2:#26c6da}
+.av-3{--a1:#ff8fa3;--a2:#ffc2a1} .av-4{--a1:#7ad3ff;--a2:#6e7cf6} .av-5{--a1:#ffe08a;--a2:#3ddc97}
+.rev-who{display:flex;flex-direction:column;min-width:0}
+.rev-who b{font-size:15px;font-weight:700}
+.rev-who small{font-size:12.5px;color:var(--tx-3);margin-top:2px}
+.stars.sm{color:var(--star);letter-spacing:2px;font-size:13px}
+.rev blockquote{margin:12px 0 0}
+.rev blockquote h3{font-size:16.5px;letter-spacing:-.01em;margin-bottom:7px}
+.rev blockquote p{color:var(--tx-3);font-size:15px;line-height:1.62;transition:color .28s ease}
+.revs-note{margin:30px auto 0;text-align:center;font-size:15px;color:var(--tx-4);transition:color .28s ease}
+.revs-note:hover{color:var(--tx-2)}
+/* average-rating row: highlight only <fill> of the 5 stars (e.g. 4.6/5) */
+.score .stars.part,.pill .stars.part{position:relative;display:inline-block;color:var(--star-off)}
+.score .stars.part{margin-right:-2px} .pill .stars.part{margin-right:-1px}
+.stars.part i{position:absolute;left:0;top:0;width:var(--fill);overflow:hidden;
+  color:var(--star);font-style:normal;letter-spacing:inherit;white-space:nowrap}
+
+/* ---------- cards / features ---------- */
+.grid{display:grid;gap:20px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+.card{background:linear-gradient(180deg,var(--surface),var(--bg-2));border:1px solid var(--line);
+  border-radius:var(--r-m);padding:28px;transition:.22s;position:relative;overflow:hidden}
+.card:hover{border-color:var(--line-2);transform:translateY(-3px)}
+.card h3{font-size:19.5px;margin-bottom:9px;letter-spacing:-.02em}
+.card p{color:var(--tx-2);font-size:15.5px;line-height:1.62}
+.ico{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;
+  font-size:22px;margin-bottom:18px;background:var(--acc-soft);border:1px solid var(--acc-line)}
+.card:nth-child(3n+2) .ico{background:var(--vio-soft);border-color:var(--vio-line)}
+.card:nth-child(3n+3) .ico{background:var(--ok-soft);border-color:var(--ok-line)}
+
+/* ---------- examples rail ---------- */
+.rail{display:flex;gap:20px;overflow-x:auto;padding:6px 22px 30px;scroll-snap-type:x mandatory;
+  scrollbar-width:thin;scrollbar-color:var(--line-2) transparent}
+.rail::-webkit-scrollbar{height:7px}
+.rail::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:99px}
+.shot{flex:0 0 236px;scroll-snap-align:center}
+.shot img{width:100%;height:auto;border-radius:22px;border:1px solid var(--line-2);box-shadow:var(--shadow);background:#000}
+.shot p{margin-top:14px;font-size:14.5px;font-weight:650;color:var(--tx-2);text-align:center}
+
+/* ---------- how it works ---------- */
+.steps{counter-reset:s;display:grid;gap:20px;grid-template-columns:repeat(3,1fr)}
+.step{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-m);padding:30px 28px 28px;position:relative;
+  transition:border-color .25s,background .25s}
+.step::before{counter-increment:s;content:counter(s);position:absolute;top:-1px;right:22px;font-size:66px;
+  font-weight:850;line-height:1;color:var(--numeral);letter-spacing:-.05em;transition:color .25s}
+.step h3{font-size:19px;margin-bottom:9px}
+.step p{color:var(--tx-2);font-size:15.5px;transition:color .25s}
+@media (hover:hover){
+  .step p{color:var(--tx-3)}
+  .step:hover{border-color:var(--line-2);background:var(--surface)}
+  .step:hover p{color:var(--tx)}
+  .step:hover::before{color:var(--numeral-2)}
+}
+
+/* ---------- split feature (privacy) ---------- */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;
+  background:linear-gradient(150deg,var(--wash-v),var(--wash-a));
+  border:1px solid var(--line);border-radius:var(--r-l);padding:52px}
+.ticks{list-style:none;display:grid;gap:14px;margin-top:26px}
+.ticks li{display:flex;gap:12px;align-items:flex-start;color:var(--tx-2);font-size:16px}
+.ticks li svg{width:21px;height:21px;flex:0 0 auto;margin-top:2px;color:var(--ok)}
+.ticks li.cloud svg{color:var(--vio-2)}
+
+/* ---------- pricing table ---------- */
+.tbl{width:100%;border-collapse:collapse;border:1px solid var(--line);border-radius:var(--r-m);overflow:hidden}
+.tbl th,.tbl td{padding:16px 20px;text-align:left;border-bottom:1px solid var(--line);font-size:15.5px}
+.tbl thead th{background:var(--surface);font-size:14px;letter-spacing:.02em}
+.tbl tbody th{font-weight:650;color:var(--tx-2)}
+.tbl td{color:var(--tx)}
+.tbl td.pro{color:var(--acc-tx);font-weight:700}
+.tbl tr:last-child th,.tbl tr:last-child td{border-bottom:0}
+
+/* ---------- guides ---------- */
+.guides{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+/* the clipping box is padded (and pulled back with a negative margin) so the -2px hover
+   lift and the focus ring of the top row are not shaved off while collapsed */
+.guides-collapsible{overflow:hidden;margin:-10px -10px 0;padding:10px 10px 0;
+  transition:height .48s cubic-bezier(.4,0,.2,1)}
+.guides-more{text-align:center;margin-top:34px}
+.guides-toggle{min-width:210px}
+.guides-chevron{display:block;flex:0 0 auto;margin-left:-1px;color:var(--tx-3);
+  transition:transform .3s cubic-bezier(.4,0,.2,1),color .18s}
+.guides-toggle:hover .guides-chevron{color:var(--tx)}
+.guides-toggle[aria-expanded="true"] .guides-chevron{transform:rotate(180deg)}
+.guide{display:flex;gap:18px;align-items:center;background:var(--bg-2);border:1px solid var(--line);
+  border-radius:var(--r-m);padding:18px;transition:.2s}
+.guide:hover{border-color:var(--acc);transform:translateY(-2px);background:var(--surface)}
+.guide img{width:78px;height:98px;object-fit:cover;border-radius:11px;flex:0 0 auto;background:#000}
+/* cards whose guide has an "after" thumbnail stack the two frames; hovering the card
+   cross-fades the before into the result. Hover-capable pointers only, so a tap on a
+   phone does not leave the card stuck on the after frame. */
+.guide-thumb{position:relative;width:78px;height:98px;flex:0 0 auto;border-radius:11px;
+  overflow:hidden;background:#000;isolation:isolate}
+.guide-thumb img{display:block;width:100%;height:100%;border-radius:0}
+.guide-thumb .after{position:absolute;inset:0;opacity:0;transform:scale(1.04);
+  transition:opacity .45s ease,transform .45s cubic-bezier(.4,0,.2,1)}
+@media (hover:hover){
+  .guide:hover .guide-thumb .after,.guide:focus-visible .guide-thumb .after{opacity:1;transform:none}
+}
+@media (prefers-reduced-motion:reduce){.guide-thumb .after{transform:none;transition:opacity .2s ease}}
+.guide h3{font-size:17px;line-height:1.3;margin-bottom:6px}
+.guide p{font-size:14px;color:var(--tx-3);line-height:1.5}
+.guide .arrow{margin-left:auto;color:var(--tx-3);flex:0 0 auto;font-size:20px;transition:.2s}
+.guide:hover .arrow{color:var(--acc-tx);transform:translateX(3px)}
+
+/* ---------- FAQ ---------- */
+.faq{display:grid;gap:12px;max-width:860px;margin:0 auto}
+.faq details{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-m);overflow:hidden;
+  transition:background .25s ease,border-color .25s ease}
+.faq details[open]{border-color:var(--line-2);background:var(--surface)}
+/* flex row rather than absolute "+": a question that wraps to two lines keeps the sign
+   next to its first line instead of drifting to the middle of the block */
+.faq summary{cursor:pointer;list-style:none;display:flex;align-items:flex-start;gap:16px;
+  padding:20px 24px;font-weight:700;font-size:17px}
+.faq summary::-webkit-details-marker{display:none}
+/* the sign's line box is the question's own first line (17px * 1.65), so the two share a
+   baseline. --nudge: the "+" glyph sits ~2px below the middle of that box; lift it and
+   rotate around the glyph centre so the x does not drift. Keep this a private name — a
+   length in one of the @property <color> vars above kills the whole transform */
+.faq summary::after{content:"+";margin-left:auto;flex:0 0 24px;height:28px;line-height:28px;
+  text-align:center;font-size:24px;font-weight:400;color:var(--acc-tx);--nudge:2px;
+  transform:translateY(calc(-1 * var(--nudge)));transform-origin:50% calc(50% + var(--nudge));
+  transition:transform .3s cubic-bezier(.4,0,.2,1)}
+.faq details[open] summary::after{transform:translateY(calc(-1 * var(--nudge))) rotate(45deg)}
+.faq .a{overflow:hidden;color:var(--tx-2);font-size:15.5px}
+.faq .a>*{padding-left:24px;padding-right:24px}
+.faq .a>*:last-child{padding-bottom:22px}
+.faq .a a{color:var(--acc-tx);font-weight:650;border-bottom:1px solid var(--acc-uline)}
+.faq .a a:hover{border-bottom-color:var(--acc-tx)}
+
+/* ---------- final CTA ---------- */
+.final{text-align:center;background:linear-gradient(160deg,var(--wash-v2),var(--wash-a2));
+  border:1px solid var(--line-2);border-radius:var(--r-l);padding:70px 32px}
+.final-app{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:26px}
+.final img.ic{width:86px;height:86px;border-radius:22px;box-shadow:var(--shadow);flex:0 0 auto}
+.final-name{text-align:left;font-weight:800;font-size:30px;letter-spacing:-.025em;line-height:1.15}
+.final-name small{display:block;font-size:16px;font-weight:600;color:var(--tx-3);letter-spacing:0;margin-top:5px}
+.final h2{font-size:clamp(29px,4vw,44px)}
+.final p{color:var(--tx-2);max-width:55ch;margin:18px auto 0;font-size:18px}
+.final .hero-cta{justify-content:center}
+.final .store{align-items:center}
+.final .store .hero-note{text-align:center}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);background:var(--bg-2);padding:64px 0 34px;margin-top:80px}
+.fgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}
+.fgrid h4{font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--tx-3);margin-bottom:16px;font-weight:750}
+.fgrid ul{list-style:none;display:grid;gap:10px}
+.fgrid a{color:var(--tx-2);font-size:14.5px}
+.fgrid a:hover{color:var(--acc-tx)}
+.fbrand p{color:var(--tx-3);font-size:14.5px;margin-top:14px;max-width:34ch}
+.flangs{display:flex;flex-wrap:wrap;gap:8px;margin-top:44px;padding-top:26px;border-top:1px solid var(--line)}
+.flangs a{font-size:13px;color:var(--tx-3);padding:5px 11px;border:1px solid var(--line);border-radius:999px}
+.flangs a:hover{color:var(--tx);border-color:var(--line-2)}
+.flangs a[aria-current]{color:var(--acc-tx);border-color:var(--acc-line)}
+.fbot{margin-top:26px;padding-top:22px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;
+  gap:12px;justify-content:space-between;color:var(--tx-3);font-size:13.5px}
+
+/* ---------- article (guides + legal) ---------- */
+.crumbs{display:flex;gap:8px;align-items:center;font-size:13.5px;color:var(--tx-3);
+  flex-wrap:wrap;padding:26px 0 0}
+.crumbs a:hover{color:var(--acc-tx)}
+.crumbs span{opacity:.5}
+.art{max-width:800px;margin:0 auto;padding:34px 0 20px}
+.art h1{font-size:clamp(31px,4.6vw,47px);letter-spacing:-.032em}
+.art .meta{display:flex;gap:14px;flex-wrap:wrap;color:var(--tx-3);font-size:13.5px;margin-top:20px}
+.art h2{font-size:clamp(23px,2.8vw,30px);margin:52px 0 18px;letter-spacing:-.025em}
+.art h3{font-size:19px;margin:32px 0 10px}
+.art p{color:var(--tx-2);font-size:17px;margin:16px 0}
+.art figure{margin:34px 0}
+.art figure video{width:100%;border-radius:var(--r-m);border:1px solid var(--line-2);box-shadow:var(--shadow);background:#000}
+.art figure img{width:100%;border-radius:var(--r-m);border:1px solid var(--line-2);box-shadow:var(--shadow)}
+.art figcaption{font-size:13.5px;color:var(--tx-3);margin-top:12px;text-align:center}
+.art .guide-media{margin:30px 0 38px}
+.art .guide-media.cmp-wrap{position:relative}
+.art .guide-media .cmp{margin:0 auto;width:min(100%,calc(620px * var(--ar)));max-width:100%}
+.art .guide-media .cmp img{border:0;border-radius:0;box-shadow:none}
+.art .guide-video video{max-height:620px;object-fit:contain}
+.art ul.b{list-style:none;display:grid;gap:12px;margin:20px 0}
+.art ul.b li{display:flex;gap:12px;color:var(--tx-2);font-size:16.5px}
+.art ul.b li::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--acc-tx);
+  flex:0 0 auto;margin-top:11px}
+.answer{background:linear-gradient(150deg,var(--wash-a2),var(--wash-v));
+  border:1px solid var(--acc-line);border-left:3px solid var(--acc);
+  border-radius:var(--r-m);padding:24px 26px;margin:30px 0}
+.answer p{color:var(--tx);font-size:18px;margin:0;font-weight:500}
+.howto{counter-reset:h;list-style:none;display:grid;gap:16px;margin:26px 0}
+.howto li{counter-increment:h;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-m);
+  padding:22px 24px 22px 66px;position:relative}
+.howto li::before{content:counter(h);position:absolute;left:22px;top:21px;width:28px;height:28px;
+  border-radius:9px;background:var(--acc);color:var(--ink);font-weight:800;font-size:14.5px;
+  display:flex;align-items:center;justify-content:center}
+.howto strong{display:block;font-size:17px;margin-bottom:5px;color:var(--tx)}
+.howto span{color:var(--tx-2);font-size:15.5px}
+.inline-cta{display:flex;gap:22px;align-items:center;flex-wrap:wrap;background:var(--surface);
+  border:1px solid var(--line-2);border-radius:var(--r-l);padding:32px;margin:46px 0}
+.inline-cta img{width:66px;height:66px;border-radius:17px;flex:0 0 auto}
+.inline-cta div{flex:1 1 250px}
+.inline-cta h3{font-size:20px;margin-bottom:7px}
+.inline-cta p{color:var(--tx-2);font-size:15.5px;margin:0}
+.next{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:24px}
+.next a{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-m);padding:20px;transition:.2s}
+.next a:hover{border-color:var(--acc);transform:translateY(-2px)}
+.next small{color:var(--tx-3);font-size:12.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+.next b{display:block;margin-top:8px;font-size:16.5px;line-height:1.35}
+
+/* legal / support pages */
+.doc{max-width:820px;margin:0 auto;padding:20px 0 40px}
+.doc h2{font-size:24px;margin:44px 0 14px;letter-spacing:-.02em}
+.doc h3{font-size:18px;margin:26px 0 8px}
+.doc p{color:var(--tx-2);margin:14px 0;font-size:16.5px}
+.doc ul{margin:16px 0 16px 4px;list-style:none;display:grid;gap:10px}
+.doc ul li{display:flex;gap:12px;color:var(--tx-2);font-size:16.5px}
+.doc ul li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--acc-tx);flex:0 0 auto;margin-top:11px}
+.doc a{color:var(--acc-tx);border-bottom:1px solid var(--acc-uline)}
+.doc a.btn,.doc a.appstore{border-bottom:0}
+.doc a.btn-p{color:var(--ink)}
+.doc a.btn-g{color:var(--tx)}
+.doc .appstore{color:var(--ink)}
+.doc strong{color:var(--tx)}
+
+/* ---------- legal pages (terms / privacy) ---------- */
+.doc-head{max-width:820px;padding:20px 0 4px}
+.doc-title{display:flex;align-items:center;flex-wrap:wrap;gap:8px 18px}
+.doc-head h1{font-size:clamp(29px,3.8vw,40px);letter-spacing:-.032em;margin:0}
+.doc-head .lead{margin-top:12px;max-width:660px}
+.doc-upd{display:inline-flex;align-items:center;gap:9px;padding:7px 14px;border-radius:999px;
+  background:var(--tint);border:1px solid var(--line);color:var(--tx-3);
+  font-size:13px;font-weight:650}
+.doc-upd .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);flex:0 0 auto;
+  box-shadow:0 0 0 4px var(--ok-soft)}
+
+.doc-grid{display:grid;grid-template-columns:246px minmax(0,1fr);gap:44px;
+  align-items:start;padding:26px 0 20px}
+.doc-toc{position:sticky;top:96px;background:var(--bg-2);border:1px solid var(--line);
+  border-radius:var(--r-m);padding:18px 20px}
+.doc-toc>summary{font-size:12.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--tx-3);cursor:pointer;list-style:none}
+.doc-toc>summary::-webkit-details-marker{display:none}
+.doc-toc>summary::after{content:"";float:right;width:7px;height:7px;margin-top:5px;
+  border-right:2px solid currentColor;border-bottom:2px solid currentColor;
+  transform:rotate(45deg);transition:transform .2s}
+.doc-toc[open]>summary::after{transform:rotate(-135deg);margin-top:8px}
+.doc-toc ol{counter-reset:t;list-style:none;margin-top:14px;display:grid;gap:2px}
+.doc-toc li{counter-increment:t}
+.doc-toc a{display:flex;gap:9px;padding:6px 9px;border-radius:9px;font-size:14px;line-height:1.4;
+  color:var(--tx-3);transition:color .16s,background .16s}
+.doc-toc a::before{content:counter(t);font-variant-numeric:tabular-nums;opacity:.6;flex:0 0 auto}
+.doc-toc a:hover{color:var(--tx);background:var(--tint)}
+.doc-toc a.is-active{color:var(--acc-tx);background:var(--acc-soft)}
+
+.doc-cards{max-width:none;margin:0;padding:0}
+/* the whole document is one card; only the contacts sit apart */
+.doc-card{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);
+  padding:34px 34px 38px;margin-bottom:16px}
+.doc-card.is-contact{border-color:var(--acc-line);
+  background:linear-gradient(150deg,var(--wash-a2),var(--wash-v))}
+.doc-sec{scroll-margin-top:96px}
+.doc-sec>h2{margin:0 0 6px;font-size:22px}
+.doc-sec>p:first-of-type{margin-top:10px}
+.doc-sec+.doc-sec{margin-top:30px;padding-top:28px;border-top:1px solid var(--line)}
+.doc-sec .answer{margin:20px 0 6px}
+
+@media(max-width:1000px){
+  .doc-grid{grid-template-columns:1fr;gap:20px;padding-top:26px}
+  .doc-toc{position:static}
+  .doc-card{padding:24px 22px 28px}
+  .doc-sec+.doc-sec{margin-top:24px;padding-top:22px}
+}
+
+.contact-row{display:flex;flex-wrap:wrap;gap:14px}
+.contact-card{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin:28px 0 14px;padding:22px 26px;
+  background:var(--surface);border:1px solid var(--line-2);border-radius:var(--r-l)}
+.contact-card .me{width:78px;height:78px;border-radius:50%;object-fit:cover;flex:0 0 auto;
+  border:2px solid var(--line-2);box-shadow:var(--shadow)}
+.contact-who{display:flex;flex-direction:column;gap:5px;flex:1 1 220px;min-width:0}
+.contact-who b{font-size:18px;letter-spacing:-.01em}
+.contact-who span{font-size:14.5px;color:var(--tx-3);line-height:1.5}
+.mailrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:4px}
+.mailrow a{font-size:14.5px;font-weight:650;color:var(--acc-tx);border-bottom:1px solid var(--acc-uline);
+  word-break:break-all;user-select:all}
+.copy{position:relative;display:inline-flex;align-items:center;font-family:inherit;
+  color:var(--tx-3);background:var(--tint);border:1px solid var(--line-2);border-radius:9px;
+  padding:5px 8px;cursor:pointer;transition:.18s}
+.copy:hover{color:var(--tx);border-color:var(--acc-tx)}
+.copy svg{width:14px;height:14px}
+.copy .i-ok{display:none}
+.copy.copied{color:var(--ok);border-color:var(--ok-line)}
+.copy.copied .i-copy{display:none}
+.copy.copied .i-ok{display:block}
+/* confirmation floats above the button so the row never reflows */
+.copy .copy-t::after{content:"Copied";position:absolute;left:50%;bottom:calc(100% + 8px);
+  transform:translateX(-50%);padding:4px 9px;border-radius:7px;background:var(--ok);color:var(--ink);
+  font-size:11.5px;font-weight:800;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .18s}
+.copy.copied .copy-t::after{opacity:1}
+
+/* ---------- sale page ---------- */
+.promo{display:none;align-items:center;gap:14px;margin-top:28px;padding:14px 20px;border-radius:var(--r-m);
+  background:linear-gradient(120deg,var(--wash-a2),var(--wash-v2));
+  border:1px dashed var(--acc-uline);width:fit-content}
+.promo.visible{display:inline-flex}
+.promo-l{font-size:12px;font-weight:750;letter-spacing:.1em;text-transform:uppercase;color:var(--tx-3)}
+.promo-v{font-size:20px;font-weight:800;letter-spacing:.12em;color:var(--acc-tx);font-variant-numeric:tabular-nums}
+.sale-art{position:relative;display:flex;justify-content:center}
+.sale-art img{width:100%;max-width:298px;height:auto;border-radius:30px;border:1px solid var(--line-2);
+  box-shadow:var(--shadow);background:#000}
+.sale-badge{position:absolute;top:16px;right:calc(50% - 178px);z-index:2;background:var(--acc);color:var(--ink);
+  font-size:12.5px;font-weight:800;letter-spacing:.02em;padding:7px 14px;border-radius:999px;
+  box-shadow:0 10px 26px -10px var(--acc-glow)}
+.sale-cta{margin-top:30px}
+.sale-cta .btn-xl{position:relative;isolation:isolate}
+.sale-cta .btn-xl::before{content:"";position:absolute;z-index:-1;inset:-6px;border-radius:23px;
+  background:var(--acc);opacity:.22;filter:blur(14px);animation:cta-glow 2.8s ease-in-out infinite}
+@keyframes cta-glow{0%,100%{opacity:.16;transform:scale(.98)}50%{opacity:.34;transform:scale(1.02)}}
+
+/* ---------- responsive ---------- */
+@media(max-width:1040px){
+  .nav-links{display:none;position:absolute;top:70px;left:0;right:0;flex-direction:column;align-items:stretch;
+    background:var(--surface-2);border-bottom:1px solid var(--line);padding:12px;gap:2px}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:12px 14px;font-size:16px}
+  .burger{display:flex;flex:0 0 auto;order:4;margin-left:10px}
+  .nav-cta{display:none}
+  .theme-btn{order:2;margin-left:auto}
+  .lang{order:3;margin-left:0}
+}
+@media(max-width:560px){
+  /* phones: the flag alone stands in for the language, so the row still fits */
+  .nav-in{gap:8px}
+  .burger{margin-left:0}
+  .lang-btn{padding:10px}
+  .lang-btn span{display:none}
+}
+@media(max-width:980px){
+  .hero-grid,.hero-lead .hero-grid{grid-template-columns:1fr;gap:30px}
+  .cmp{max-width:520px;margin:0 auto}
+  .hero-stage{min-height:calc(48vw + 24px)}
+  .hero-stage .phone{--pw:min(104vw,720px);left:50%;transform:translate(-50%,-50%)}
+  /* the whole device is on screen here, so the dots sit where they belong */
+  .phone-dots{left:50%;transform:translateX(-50%)}
+  .cmp-wide{--cmp-h:540px}
+  .split{grid-template-columns:1fr;gap:34px;padding:38px 28px}
+  .g3,.steps{grid-template-columns:repeat(2,1fr)}
+  .fgrid{grid-template-columns:1fr 1fr;gap:32px}
+  .revs{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:760px){
+  body{font-size:16.5px}
+  .sale-cta{justify-content:center}
+  .sale-cta .btn-xl{width:100%;max-width:340px}
+  .sect{padding:66px 0}
+  .guides,.g3,.g2,.steps,.next{grid-template-columns:1fr}
+  /* reviews become a swipeable rail: the next card peeks in from the right,
+     so it reads as "there is more over here" without any extra chrome */
+  .revs{display:flex;gap:14px;overflow-x:auto;overscroll-behavior-x:contain;
+    margin:0 -22px;padding:4px 22px 8px;
+    scroll-snap-type:x mandatory;scroll-padding-left:22px;
+    scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch}
+  .revs::-webkit-scrollbar{display:none}
+  .rev{flex:0 0 clamp(236px,78%,320px);scroll-snap-align:start;padding:22px 20px}
+  .rev:hover{transform:none}
+  .rev blockquote p{font-size:15px}
+  .final{padding:48px 22px}
+  .final-app{gap:13px}
+  .final img.ic{width:66px;height:66px;border-radius:17px}
+  .final-name{font-size:24px}
+  .final-name small{font-size:14px}
+  .sale-badge{right:12px}
+  .contact-card{padding:22px}
+  .contact-row{width:100%}
+  .contact-row .btn{flex:1 1 auto}
+  .rail{padding-left:22px;padding-right:22px}
+  .shot{flex-basis:212px}
+  .cmp-tabs-lg{gap:12px;flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;
+    padding-bottom:8px;scrollbar-width:thin;scrollbar-color:var(--line-2) transparent}
+  .cmp-tabs-lg::-webkit-scrollbar{height:6px}
+  .cmp-tabs-lg::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:99px}
+  .cmp-tab.lg{flex:0 0 auto}
+  .cmp-tab.lg .cmp-thumb{width:88px}
+  .cmp-cap{font-size:11.5px;max-width:92px}
+  .art h2{margin-top:40px}
+  .inline-cta{padding:24px}
+  footer{padding-top:48px}
+}
+@media(prefers-reduced-motion:reduce){
+  .sale-cta .btn-xl::before{animation:none}
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}

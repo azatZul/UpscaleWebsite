@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "site",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "python3 build/build.py && exec python3 -m http.server ${PORT:-4173} -d dist"],
+      "port": 4173,
+      "autoPort": true
+    }
+  ]
+}
