@@ -239,6 +239,22 @@
     });
   })();
 
+  /* Guide demo switch — cross-fades the two states of one photo */
+  document.querySelectorAll('[data-demo-switch]').forEach(function (btn) {
+    var fig = btn.closest('figure');
+    if (!fig) return;
+    var on = fig.querySelector('.demo-stage img.on');
+    var off = fig.querySelector('.demo-stage img.off');
+    btn.addEventListener('click', function () {
+      var next = btn.getAttribute('aria-checked') !== 'true';
+      btn.setAttribute('aria-checked', next ? 'true' : 'false');
+      fig.classList.toggle('is-on', next);
+      /* Keep the hidden state out of the accessibility tree. */
+      if (on) on.setAttribute('aria-hidden', next ? 'false' : 'true');
+      if (off) off.setAttribute('aria-hidden', next ? 'true' : 'false');
+    });
+  });
+
   /* Copy buttons */
   document.querySelectorAll('[data-copy]').forEach(function (btn) {
     btn.addEventListener('click', function () {
@@ -369,6 +385,24 @@
         vid.muted = !vid.muted;
         syncMute();
       });
+    }
+
+    /* Badge explainer: hover handles pointer devices, tap and focus cover the rest.
+       The badge sits on the drag surface, so its own gestures stop at the badge. */
+    if (badge) {
+      var closeTip = function () { badge.classList.remove('tip-on'); };
+      ['mousedown', 'touchstart'].forEach(function (ev) {
+        badge.addEventListener(ev, function (e) { e.stopPropagation(); }, { passive: true });
+      });
+      badge.addEventListener('click', function (e) {
+        e.stopPropagation();
+        badge.classList.toggle('tip-on');
+      });
+      badge.addEventListener('blur', closeTip);
+      badge.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' || e.key === 'Esc') { closeTip(); badge.blur(); }
+      });
+      document.addEventListener('click', closeTip);
     }
 
     /* Publish only whole-percent changes. The hero pauses its idle drift while the
@@ -512,12 +546,60 @@
 
     /* Media tabs */
     var tabs = root.querySelectorAll('.cmp-tab');
+    /* The comparison page swaps only the "after" side, so dissolve into the new result
+       instead of cutting to it: .a-ghost keeps the outgoing image underneath. */
+    var ghost = cmp.querySelector('.a-ghost');
+    /* Clicks can outrun the network: tag every request so a slow image that
+       lands after a newer click is dropped instead of painting over it. */
+    var fadeGen = 0;
+    var crossfade = function (beforeSrc, afterSrc, onshow) {
+      var gen = ++fadeGen;
+      if (after.getAttribute('src') === afterSrc) {
+        after.style.opacity = '1'; /* a fade we just cancelled may have hidden it */
+        onshow();
+        return;
+      }
+      ghost.src = after.currentSrc || after.src;
+      after.style.opacity = '0';
+      var pre = new Image(), done = false;
+      var show = function () {
+        if (done || gen !== fadeGen) return;
+        done = true;
+        if (beforeSrc) before.src = beforeSrc;
+        after.src = afterSrc;
+        void after.offsetWidth; /* flush the 0 before transitioning back up */
+        after.style.opacity = '1';
+        onshow();
+      };
+      pre.decoding = 'async';
+      pre.onload = show;
+      pre.onerror = show;
+      pre.src = afterSrc;
+      if (pre.complete) show();
+    };
+    var setTagText = function (el, text, ico) {
+      if (!el) return;
+      var nm = el.querySelector('.tag-nm');
+      if (nm) nm.textContent = text; else el.textContent = text;
+      var im = el.querySelector('.tag-ico');
+      if (im && ico) im.src = ico;
+    };
     tabs.forEach(function (tab) {
       tab.addEventListener('click', function () {
         tabs.forEach(function (t) { t.setAttribute('aria-pressed', 'false'); });
         tab.setAttribute('aria-pressed', 'true');
         if (tab.dataset.ratio) cmp.style.setProperty('--ar', tab.dataset.ratio);
-        if (badge) badge.classList.toggle('cloud', tab.dataset.cloud === '1');
+        if (badge) {
+          badge.classList.toggle('cloud', tab.dataset.cloud === '1');
+          badge.classList.toggle('vid', !!tab.dataset.video);
+        }
+        /* The comparison page renames the right side after the app that is showing;
+           with a crossfade the rename waits for the picture so the two never disagree. */
+        var applyTags = function () {
+          if (tab.dataset.tagL) setTagText(tags[0], tab.dataset.tagL);
+          if (tab.dataset.tagR) setTagText(tags[1], tab.dataset.tagR, tab.dataset.tagIco);
+        };
+        if (!ghost) applyTags();
         /* Each hero image defines its crop within the wide device. */
         if (tab.dataset.pos) {
           before.style.objectPosition = tab.dataset.pos;
@@ -541,11 +623,23 @@
           if (vid) { switching = true; vid.pause(); vid.style.display = 'none'; vid.removeAttribute('src'); vid.load(); }
           cmp.classList.remove('has-video', 'paused');
           if (mute) { mute.hidden = true; }
-          before.src = tab.dataset.before;
-          after.src = tab.dataset.after;
-          setPos(50);
+          if (ghost) {
+            crossfade(tab.dataset.before, tab.dataset.after, applyTags);
+          } else {
+            before.src = tab.dataset.before;
+            after.src = tab.dataset.after;
+          }
+          /* Keep the divider where the reader left it when only the result changes. */
+          if (!root.dataset.keepPos) setPos(50);
         }
       });
+      if (ghost && tab.dataset.after) {
+        tab.addEventListener('pointerenter', function () {
+          var pre = new Image();
+          pre.decoding = 'async';
+          pre.src = tab.dataset.after;
+        }, { once: true });
+      }
     });
 
     /* Preload alternate hero images after the initial page load. */

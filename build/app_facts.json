@@ -18,22 +18,23 @@
   },
   "annual_trial_days": 3,
   "page_updated": {
-    "home": "2026-08-21",
-    "guide_hub": "2026-08-21",
+    "home": "2026-08-23",
+    "guide_hub": "2026-08-23",
     "guides": {
-      "unblur-photo-iphone": "2026-08-21",
-      "restore-old-photos": "2026-08-21",
-      "colorize-black-and-white-photos": "2026-08-21",
-      "upscale-image-4k": "2026-08-21",
-      "enhance-video-quality": "2026-08-21",
-      "slow-motion-video": "2026-08-21",
-      "brighten-dark-photos": "2026-08-21",
-      "film-negative-to-photo": "2026-08-21",
-      "fix-blurry-faces": "2026-08-21",
+      "unblur-photo-iphone": "2026-08-23",
+      "restore-old-photos": "2026-08-23",
+      "colorize-black-and-white-photos": "2026-08-23",
+      "upscale-image-4k": "2026-08-23",
+      "enhance-video-quality": "2026-08-23",
+      "slow-motion-video": "2026-08-23",
+      "brighten-dark-photos": "2026-08-23",
+      "film-negative-to-photo": "2026-08-23",
+      "fix-blurry-faces": "2026-08-23",
       "upscale-anime-art": "2026-08-21"
     },
     "support_page.html": "2026-08-21",
     "terms.html": "2026-08-21",
-    "privacy_policy.html": "2026-08-21"
+    "privacy_policy.html": "2026-08-21",
+    "compare.html": "2026-08-23"
   }
 }

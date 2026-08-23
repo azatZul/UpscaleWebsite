@@ -110,10 +110,10 @@ AR, NL, EN, FI, FR, DE, HE, HI, HU, ID, IT, JA, KO, MS, NB, PL, PT, RO, RU, ZH-H
 | 2 | Unblur / fix blurry photos | On-device | Features, Guide: unblur-photo-iphone |
 | 3 | Video enhancement & upscaling | On-device | Features, Guide: enhance-video-quality |
 | 4 | AI slow motion (frame interpolation) | On-device | Features, Guide: slow-motion-video |
-| 5 | Brighten dark / underexposed photos | On-device | Features, Guide: brighten-dark-photos |
-| 6 | Old photo restoration (scratches, folds, dust, fading) | On-device + advanced cloud tier | Features, Guide: restore-old-photos |
-| 7 | Colorize black & white photos | Advanced AI | Guide: colorize-black-and-white-photos |
-| 8 | Photo negative restore (invert + normalise) | On-device | Guide: film-negative-to-photo |
+| 5 | Brighten dark / underexposed photos — Enlighten mode, no settings; large photos are scaled down slightly to fit an on-device pass | On-device | Features, Guide: brighten-dark-photos |
+| 6 | Old photo restoration — 4 modes: Restore, Restore & Colorize, Enhanced Colorize, Advanced Fix | Cloud AI (Premium) | Features, Guide: restore-old-photos |
+| 7 | Colorize black & white photos — part of the restoration pass, not a separate tool | Cloud AI (Premium) | Guide: colorize-black-and-white-photos |
+| 8 | Photo negative restore — Negative switch in the restoration advanced options | Invert on-device, restore in cloud | Guide: film-negative-to-photo |
 | 9 | Face enhancement in portraits & group shots | On-device | Features, Guide: fix-blurry-faces |
 | 10 | Creative Upscale — detail reconstruction, higher resolution | Cloud AI | Features, Guide: upscale-anime-art |
 | 11 | Batch processing of multiple photos | On-device | Features |

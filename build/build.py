@@ -93,9 +93,10 @@ GUIDE_META = {
         "ratio": "0.75", "before_size": (900, 1200), "after_size": (1200, 1600),
     },
     "upscale-image-4k": {
-        "shot": f"{BA}/upscale_4k_thumb.jpg",
-        "before": f"{BA}/before_1.jpg", "after": f"{BA}/after_1.jpg",
-        "ratio": "1.1735", "before_size": (683, 582), "after_size": (2732, 2328),
+        "shot": f"{BA}/girls_thumb.jpg",
+        "og": f"{BA}/girls_after.jpg",
+        "before": f"{BA}/girls_before.jpg", "after": f"{BA}/girls_after.jpg",
+        "ratio": "1.5", "before_size": (840, 560), "after_size": (3010, 2006),
     },
     "enhance-video-quality": {
         "shot": f"{BA}/video_quality_thumb.jpg",
@@ -117,6 +118,9 @@ GUIDE_META = {
         "og": f"{BA}/film_negative_after.jpg",
         "before": f"{BA}/film_negative_before.jpg", "after": f"{BA}/film_negative_after.jpg",
         "ratio": "1.4021", "before_size": (1000, 713), "after_size": (4788, 3415),
+        # Interactive demo of the Negative switch: off is the raw negative, on the inverted result.
+        "demo": {"off": f"{BA}/negative_demo_off.jpg", "on": f"{BA}/negative_demo_on.jpg",
+                 "size": (1024, 757), "ratio": "1.3527"},
     },
     "fix-blurry-faces": {
         "shot": f"{BA}/upscale_4k_thumb.jpg",
@@ -160,6 +164,69 @@ SHOWCASE_TABS = [
     {"thumb": "/resources/before_after/slowmo_thumb.jpg",
      "video": "/resources/slow_mo_demo_small.mp4", "ratio": "1.6"},
 ]
+
+# Competitor comparison (/compare.html)
+#
+# Results were produced by running the two source files below through each app once,
+# in August 2026. The rivals' exports of the park photo came back mirrored, so
+# resources/compare holds flipped copies — see the method note in the page copy.
+CMP = "/resources/compare"
+
+COMPARE_APPS = [
+    {"id": "uscale", "name": "UScale", "dev": "Alexandr Graschenkov",
+     "icon": "/resources/appstore/icon_512.png", "url": APPSTORE},
+    {"id": "remini", "name": "Remini", "dev": "Bending Spoons",
+     "icon": "/resources/competitors/remini.jpg",
+     "url": "https://apps.apple.com/us/app/remini-ai-photo-enhancer/id1470373330"},
+    {"id": "blurbuster", "name": "BlurBuster", "dev": "Louperkos Investments",
+     "icon": "/resources/competitors/blurbuster.jpg",
+     "url": "https://apps.apple.com/us/app/blurbuster-ai-photo-enhancer/id1599612633"},
+    {"id": "enhancefox", "name": "EnhanceFox", "dev": "Pixl Concerto Technology",
+     "icon": "/resources/competitors/enhancefox.jpg",
+     "url": "https://apps.apple.com/us/app/photo-enhancer-enhancefox-ai/id1544212575"},
+]
+RIVALS = [a for a in COMPARE_APPS if a["id"] != "uscale"]
+APP_BY_ID = {a["id"]: a for a in COMPARE_APPS}
+
+# Per test: the source file, every app's result, and the matching 100% crops.
+# "out" is the pixel size each app actually returned, straight from the export.
+COMPARE_TESTS = {
+    "spider": {
+        "ratio": "1.7891",
+        "before": f"{BA}/hero_spiderman_before.jpg", "before_size": (823, 460),
+        "size": (1400, 782), "zoom_size": (640, 526),
+        "out": {"uscale": "5479 × 3062", "remini": "3480 × 1944",
+                "blurbuster": "1646 × 920", "enhancefox": "1646 × 920"},
+        "shot": {"uscale": f"{CMP}/spider_uscale.jpg", "remini": f"{CMP}/spider_remini.jpg",
+                 "blurbuster": f"{CMP}/spider_blurbuster.jpg",
+                 "enhancefox": f"{CMP}/spider_enhancefox.jpg"},
+        "zoom": {"before": f"{CMP}/z_spider_before.jpg", "uscale": f"{CMP}/z_spider_uscale.jpg",
+                 "remini": f"{CMP}/z_spider_remini.jpg",
+                 "blurbuster": f"{CMP}/z_spider_blurbuster.jpg",
+                 "enhancefox": f"{CMP}/z_spider_enhancefox.jpg"},
+    },
+    "girls": {
+        "ratio": "1.5",
+        "before": f"{BA}/girls_before.jpg", "before_size": (840, 560),
+        "size": (1400, 933), "zoom_size": (640, 576),
+        "out": {"uscale": "5017 × 3344", "remini": "3480 × 2319",
+                "blurbuster": "1680 × 1120", "enhancefox": "1680 × 1120"},
+        "shot": {"uscale": f"{CMP}/girls_uscale.jpg", "remini": f"{CMP}/girls_remini.jpg",
+                 "blurbuster": f"{CMP}/girls_blurbuster.jpg",
+                 "enhancefox": f"{CMP}/girls_enhancefox.jpg"},
+        "zoom": {"before": f"{CMP}/z_girls_before.jpg", "uscale": f"{CMP}/z_girls_uscale.jpg",
+                 "remini": f"{CMP}/z_girls_remini.jpg",
+                 "blurbuster": f"{CMP}/z_girls_blurbuster.jpg",
+                 "enhancefox": f"{CMP}/z_girls_enhancefox.jpg"},
+        # the second face in the same frame, cropped the same way — the rail runs on with it
+        "zoom2": {"before": f"{CMP}/z_girls2_before.jpg", "uscale": f"{CMP}/z_girls2_uscale.jpg",
+                  "remini": f"{CMP}/z_girls2_remini.jpg",
+                  "blurbuster": f"{CMP}/z_girls2_blurbuster.jpg",
+                  "enhancefox": f"{CMP}/z_girls2_enhancefox.jpg"},
+    },
+}
+# BlurBuster's other pass on the night frame: bigger output, worse picture.
+BB_SOFT = {"zoom": f"{CMP}/z_spider_blurbuster_soft.jpg"}
 
 CHEVRON_SVG = ('<svg class="guides-chevron" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M5.5 8.75 12 15.25 18.5 8.75" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>')
 
@@ -256,8 +323,15 @@ def vid_controls(c):
 
 DOT = '<span class="dot" aria-hidden="true"></span>'
 
-CHECK = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" '
-         'stroke-linejoin="round" aria-hidden="true"><path d="m4 12.5 5 5L20 6.5"/></svg>')
+def check(sw="2.4"):
+    """A checkmark; the switch box wants a heavier stroke than running text."""
+    return ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+            f'stroke-width="{sw}" stroke-linecap="round" stroke-linejoin="round" '
+            'aria-hidden="true"><path d="m4 12.5 5 5L20 6.5"/></svg>')
+
+CHECK = check()
+DOWN_SVG = ('<svg class="vs-dl-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+            '<path d="M12 4v11m0 0 4.2-4.2M12 15l-4.2-4.2M4.8 18.5h14.4"/></svg>')
 CLOUD = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" '
          'stroke-linejoin="round" aria-hidden="true">'
          '<path d="M17.6 19H7a4.5 4.5 0 0 1-1.2-8.84 6 6 0 0 1 11.6-1.34A4.6 4.6 0 0 1 17.6 19Z"/></svg>')
@@ -481,6 +555,55 @@ def guide_card(c, slug, home_prefix):
             f'<p>{esc(c["guide_pages"][slug]["card_desc"])}</p></div>'
             f'<span class="arrow" aria-hidden="true">→</span></a>')
 
+# Thumbnails of the four restoration modes, lifted from the in-app mode picker.
+MODES = "/resources/restore_modes"
+MODE_IMG = {
+    "restore": f"{MODES}/mode_restore.jpg",
+    "colorize": f"{MODES}/mode_colorize.jpg",
+    "enhanced_colorize": f"{MODES}/mode_enhanced_colorize.jpg",
+    "advanced_fix": f"{MODES}/mode_advanced_fix.jpg",
+}
+
+def option_cards(items):
+    """Cards for the in-app restoration modes and their advanced options.
+
+    An entry with "img" renders the mode thumbnail; one with "tag" is the
+    recommended pick and gets highlighted."""
+    out = []
+    for it in items:
+        img = MODE_IMG.get(it.get("img", ""))
+        thumb = (f'<img src="{img}" width="240" height="240" loading="lazy" decoding="async" '
+                 f'alt="{esc(it.get("img_alt", ""))}">') if img else ""
+        tag = f'<span class="tag">{esc(it["tag"])}</span>' if it.get("tag") else ""
+        sub = f'<p class="sub">{esc(it["sub"])}</p>' if it.get("sub") else ""
+        out.append(f'<li class="mode{" pick" if it.get("tag") else ""}">{thumb}'
+                   f'<div><div class="mode-h"><h3>{esc(it["t"])}</h3> {tag}</div>'
+                   f'{sub}<p class="d">{esc(it["p"])}</p></div></li>')
+    return f'<ul class="modes">{"".join(out)}</ul>'
+
+def toggle_demo(d, dm):
+    """An in-article switch that cross-fades between two states of the same photo.
+
+    Used for the Negative option, where the effect is the whole point and a
+    static before/after says much less than flipping it yourself."""
+    w, h = dm["size"]
+    def shot(src, alt, on):
+        return (f'<img class="{"on" if on else "off"}" src="{src}" width="{w}" height="{h}" '
+                f'loading="lazy" decoding="async" alt="{esc(alt)}"'
+                f'{" aria-hidden=\"true\"" if on else ""}>')
+    return f'''<figure class="guide-media demo" style="--ar:{dm['ratio']}">
+      <div class="demo-stage" style="aspect-ratio:var(--ar)">
+        {shot(dm['off'], d['alt_off'], False)}
+        {shot(dm['on'], d['alt_on'], True)}
+      </div>
+      <button class="opt-switch" type="button" role="switch" aria-checked="false" data-demo-switch>
+        <span class="opt-box">{check("3.2")}</span>
+        <span class="opt-txt"><b>{esc(d['label'])}</b><small>{esc(d['sub'])}</small></span>
+        <span class="opt-hint" aria-hidden="true"><span class="h-off">{esc(d['hint_off'])}</span><span class="h-on">{esc(d['hint_on'])}</span></span>
+      </button>
+      <figcaption>{esc(d['caption'])}</figcaption>
+    </figure>'''
+
 def store_badge(btn, note):
     """Pair a store badge with its hover caption."""
     return f'<div class="store">{btn}<p class="hero-note reveal">{esc(note)}</p></div>'
@@ -534,6 +657,7 @@ def nav(c, lang, home_prefix, path=""):
     <button class="burger" type="button" aria-expanded="false" aria-label="{esc(n['menu'])}">{BURGER}</button>
     <nav class="nav-links" aria-label="{esc(n['menu'])}">
       <a href="{home_prefix}#examples">{esc(n['screens'])}</a>
+      <a href="/compare.html">{esc(n.get('compare', 'Comparison'))}</a>
       <a href="{home_prefix}guides/">{esc(n['guides'])}</a>
       <a href="{home_prefix}#faq">{esc(n['faq'])}</a>
     </nav>
@@ -565,7 +689,7 @@ def footer(c, lang, home_prefix, path=""):
           <li><a href="{home_prefix}#examples">{esc(c['nav']['screens'])}</a></li>
           <li><a href="{home_prefix}#how">{esc(c['nav']['how'])}</a></li>
           <li><a href="{home_prefix}#reviews">{esc(f['reviews'])}</a></li>
-          <li><a href="/sale.html">{esc(f['sale'])}</a></li>
+          <li><a href="/compare.html">{esc(c['nav'].get('compare', 'Comparison'))}</a></li>
         </ul>
       </div>
       <div>
@@ -576,7 +700,6 @@ def footer(c, lang, home_prefix, path=""):
         <h4>{esc(f['support'])}</h4>
         <ul>
           <li><a href="/support_page.html">{esc(f['help'])}</a></li>
-          <li><a href="mailto:alexandr.graschenkov91@gmail.com">{esc(f['contact'])}</a></li>
           <li><a href="/privacy_policy.html">{esc(f['privacy'])}</a></li>
           <li><a href="/terms.html">{esc(f['terms'])}</a></li>
         </ul>
@@ -592,6 +715,33 @@ def footer(c, lang, home_prefix, path=""):
 </body>
 </html>
 """
+
+def compare_teaser(c):
+    """Banner under the home examples: the same photos, run through the rival apps."""
+    cp = c.get("compare")
+    if not cp:
+        return ""
+    rivals = "".join(
+        f'<span class="vs-chip" style="--i:{i}">'
+        f'<img src="{a["icon"]}" width="60" height="60" loading="lazy" decoding="async" alt="">'
+        f'<b>{esc(a["name"])}</b></span>' for i, a in enumerate(RIVALS))
+    return f"""<a class="vs-card vs-inline" href="/compare.html">
+      <div class="vs-fan" aria-hidden="true">
+        <span class="vs-chip vs-chip-us">
+          <img src="/resources/appstore/icon_512.png" width="76" height="76" loading="lazy"
+               decoding="async" alt=""><b>UScale</b></span>
+        <span class="vs-fan-mark">{esc(cp['home_vs'])}</span>
+        <span class="vs-fan-rivals">{rivals}</span>
+      </div>
+      <div class="vs-card-copy">
+        <h3>{esc(cp['home_h2'])}</h3>
+        <p>{esc(cp['home_p'])}</p>
+        <span class="btn btn-p vs-card-btn">{esc(cp['home_cta'])}
+          <span class="arrow" aria-hidden="true">→</span></span>
+        <p class="hero-note">{esc(cp['home_note'])}</p>
+      </div>
+    </a>"""
+
 
 # Landing page
 def render_home(c, lang):
@@ -682,7 +832,8 @@ def render_home(c, lang):
   </div>
 </section>""")
 
-    # Examples
+    # Examples — the competitor comparison sits right under them.
+    teaser = compare_teaser(c)
     sw = c.get("showcase")
     if sw:
         sw_tabs = []
@@ -697,9 +848,21 @@ def render_home(c, lang):
                            f'<span class="cmp-thumb"><img src="{t["thumb"]}" width="118" height="89" '
                            f'loading="lazy" alt="">{play}</span>'
                            f'<span class="cmp-cap">{esc(sw["tab_labels"][i])}</span></button>')
-        badge = (f'<span class="on-device">'
+        # The note under the badge follows the open example: a still on device,
+        # a clip on device, or the advanced models we run for it.
+        def od_tip(cls, key, icon):
+            return (f'<span class="od-tip-v {cls}"><span class="od-tip-ic">{icon}</span>'
+                    f'<span class="od-tip-tx"><b>{esc(sw[f"tip_{key}_h"])}</b>'
+                    f'{esc(sw[f"tip_{key}_p"])}</span></span>')
+        badge_state = ((" cloud" if SHOWCASE_TABS[0].get("cloud") else "")
+                       + (" vid" if SHOWCASE_TABS[0].get("video") else ""))
+        badge = (f'<span class="on-device{badge_state}" tabindex="0" aria-describedby="od-tip">'
                  f'<span class="od-v od-local">{LOCK_SVG}<span>{esc(sw["on_device"])}</span></span>'
-                 f'<span class="od-v od-cloud">{CLOUD_SVG}<span>{esc(sw["in_cloud"])}</span></span></span>')
+                 f'<span class="od-v od-cloud">{CLOUD_SVG}<span>{esc(sw["in_cloud"])}</span></span>'
+                 f'<span class="od-tip" id="od-tip" role="tooltip">'
+                 f'{od_tip("tv-photo", "device", LOCK_SVG)}'
+                 f'{od_tip("tv-video", "video", LOCK_SVG)}'
+                 f'{od_tip("tv-cloud", "cloud", CLOUD_SVG)}</span></span>')
         out.append(f"""<section class="sect" id="examples">
   <div class="wrap">
     <div class="head center"><span class="eyebrow">{esc(sw['eyebrow'])}</span>
@@ -717,6 +880,7 @@ def render_home(c, lang):
       </div>
       <div class="cmp-tabs cmp-tabs-lg" role="group" aria-label="{esc(sw['tabs_label'])}">{''.join(sw_tabs)}</div>
     </div>
+    {teaser}
   </div>
 </section>""")
     else:
@@ -730,6 +894,7 @@ def render_home(c, lang):
       <h2 class="h2">{esc(c['screens']['h2'])}</h2><p class="lead">{esc(c['screens']['sub'])}</p></div>
   </div>
   <div class="wrap" style="max-width:none;padding:0"><div class="rail">{shots}</div></div>
+  <div class="wrap">{teaser}</div>
 </section>""")
 
     # How it works
@@ -886,6 +1051,16 @@ def render_guide(c, lang, slug):
         f'<a href="{home_prefix}guides/{s}.html"><small>{esc(c["ui"]["next_guide"])}</small>'
         f'<b>{esc(c["guide_pages"][s]["card_title"])}</b></a>' for s in nxt)
 
+    # Optional blocks: the restoration guides explain the mode picker and its advanced options.
+    extra = ""
+    if g.get("demo") and meta.get("demo"):
+        extra += (f'<h2 id="demo">{esc(g["demo"]["h"])}</h2><p>{esc(g["demo"]["intro"])}</p>'
+                  + toggle_demo(g["demo"], meta["demo"]))
+    for key in ("modes", "options"):
+        if g.get(key):
+            extra += (f'<h2 id="{key}">{esc(g[f"{key}_h"])}</h2><p>{esc(g[f"{key}_intro"])}</p>'
+                      + option_cards(g[key]))
+
     if meta.get("video"):
         poster = f' poster="{meta["poster"]}"' if meta.get("poster") else ""
         media_html = (f'<figure class="guide-media guide-video">'
@@ -933,6 +1108,7 @@ def render_guide(c, lang, slug):
     <h2 id="steps">{esc(g['steps_h'])}</h2>
     <p>{esc(g['steps_intro'])}</p>
     <ol class="howto">{steps}</ol>
+    {extra}
     <h2>{esc(g['tips_h'])}</h2>
     <ul class="b">{tips}</ul>
 
@@ -1115,6 +1291,201 @@ def render_sale(c):
             + footer(c, "en", "/"))
 
 
+# Competitor comparison
+def app_icon(app, size=54, cls="vs-ico"):
+    return (f'<img class="{cls}" src="{app["icon"]}" width="{size}" height="{size}" '
+            f'loading="lazy" decoding="async" '
+            f'alt="{esc(app["name"])} app icon">')
+
+
+def compare_slider(c, cp, tid):
+    """The original on the left; each tab swaps in the result of one app on the right."""
+    t = COMPARE_TESTS[tid]
+    w, h = t["size"]
+    bw, bh = t["before_size"]
+    us = APP_BY_ID["uscale"]
+    btns = "".join(
+        f'<button class="cmp-tab lg vs-tab" type="button" data-before="{t["before"]}" '
+        f'data-after="{t["shot"][a["id"]]}" data-tag-l="{esc(cp["original"])}" '
+        f'data-tag-r="{esc(a["name"])}" data-tag-ico="{a["icon"]}" '
+        f'aria-pressed="{"true" if i == 0 else "false"}">'
+        f'<span class="cmp-thumb"><img src="{a["icon"]}" width="72" height="72" loading="lazy" '
+        f'decoding="async" alt=""></span><span class="cmp-cap">{esc(a["name"])}</span></button>'
+        for i, a in enumerate(COMPARE_APPS))
+    return f"""<div class="cmp-wrap cmp-wide vs-cmp" data-keep-pos="1">
+      <div class="cmp" style="--ar:{t['ratio']}" role="group" aria-label="{esc(cp['h1'])}">
+        <img class="a-ghost" src="{t['shot']['uscale']}" width="{w}" height="{h}" loading="lazy"
+             decoding="async" alt="" aria-hidden="true">
+        <img class="a-img" src="{t['shot']['uscale']}" width="{w}" height="{h}" loading="lazy" decoding="async"
+             alt="{esc(cp['alt_uscale'])}">
+        <img class="b" src="{t['before']}" width="{bw}" height="{bh}" loading="lazy" decoding="async"
+             alt="{esc(cp['alt_before'])}">
+        <span class="cmp-bar" aria-label="{esc(c['hero']['drag'])}"></span>
+        <span class="cmp-tag l">{esc(cp['original'])}</span>
+        <span class="cmp-tag r"><img class="tag-ico" src="{us['icon']}" width="20" height="20"
+              decoding="async" alt=""><span class="tag-nm">UScale</span></span>
+      </div>
+      <div class="cmp-tabs cmp-tabs-lg vs-tabs" role="group" aria-label="{esc(cp['apps_h'])}">{btns}</div>
+    </div>"""
+
+
+def compare_zoom(cp, tid):
+    """The same crop out of every app, at the size it is actually delivered."""
+    t = COMPARE_TESTS[tid]
+    w, h = t["zoom_size"]
+    zooms = [z for z in (t["zoom"], t.get("zoom2")) if z]
+    keys = [(cp["original"], None, "before")] + [(a["name"], a, a["id"]) for a in COMPARE_APPS]
+
+    def shots(key, name):
+        # one column per app; a second crop simply stacks under the first
+        return "".join(
+            f'<img src="{z[key]}" width="{w}" height="{h}" loading="lazy" decoding="async" '
+            f'alt="{esc(name)} — close crop">' for z in zooms)
+
+    out = "".join(
+        f'<figure class="zt{" is-us" if app and app["id"] == "uscale" else ""}">'
+        f'{shots(key, name)}'
+        f'<figcaption>{app_icon(app, 26, "zt-ico") if app else ""}<b>{esc(name)}</b></figcaption>'
+        f'</figure>'
+        for name, app, key in keys)
+    return f'<div class="rail vs-rail">{out}</div>'
+
+
+def compare_table(cp):
+    rows = cp["table_rows"]
+    head = "".join(
+        f'<th scope="col"{" class=\"is-us\"" if a["id"] == "uscale" else ""}>{app_icon(a, 34)}'
+        f'<span>{esc(a["name"])}</span></th>' for a in COMPARE_APPS)
+
+    def row(label, values, cls=""):
+        cells = "".join(
+            f'<td{" class=\"is-us\"" if a["id"] == "uscale" else ""}>{values[a["id"]]}</td>'
+            for a in COMPARE_APPS)
+        return f'<tr{f" class=\"{cls}\"" if cls else ""}><th scope="row">{esc(label)}</th>{cells}</tr>'
+
+    def mark(ok):
+        return (f'<span class="vs-yes">{CHECK}{esc(cp["yes"])}</span>' if ok
+                else f'<span class="vs-no">✕ {esc(cp["no"])}</span>')
+
+    escaped = {k: {i: esc(v) for i, v in cells.items()} for k, cells in cp["cells"].items()}
+    out_spider = dict(COMPARE_TESTS["spider"]["out"])
+    out_spider["blurbuster"] += f'<small>{esc(cp["table_bb_note"])}</small>'
+    body = (row(rows["out_girls"], COMPARE_TESTS["girls"]["out"], "vs-num")
+            + row(rows["out_spider"], out_spider, "vs-num")
+            + row(rows["faces"], escaped["faces"])
+            + row(rows["rest"], escaped["rest"])
+            + row(rows["noface"], escaped["noface"])
+            + row(rows["fidelity"], {a["id"]: mark(a["id"] != "blurbuster") for a in COMPARE_APPS}))
+    return (f'<div class="vs-table-wrap"><table class="vs-table">'
+            f'<thead><tr><td></td>{head}</tr></thead><tbody>{body}</tbody></table></div>')
+
+
+def render_compare(c):
+    cp = c["compare"]
+    canonical = f"{SITE}/compare.html"
+    faq_ld = {"@context": "https://schema.org", "@type": "FAQPage", "url": canonical,
+              "mainEntity": [{"@type": "Question", "name": q["q"],
+                              "acceptedAnswer": {"@type": "Answer", "text": q["a"]}}
+                             for q in cp["faq"]]}
+    crumbs_ld = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": c["ui"]["home"], "item": url("en")},
+        {"@type": "ListItem", "position": 2, "name": cp["nav"], "item": canonical}]}
+
+    apps = "".join(
+        f'<li{" class=\"is-us\"" if a["id"] == "uscale" else ""}>'
+        f'<a href="{a["url"]}" target="_blank" rel="noopener nofollow">{app_icon(a, 62)}'
+        f'<b>{esc(a["name"])}</b><small>{esc(a["dev"])}</small>'
+        f'<span>{esc(cp["apps"][a["id"]]["role"])}</span></a>'
+        f'<p>{esc(cp["apps"][a["id"]]["verdict"])}</p></li>'
+        for a in COMPARE_APPS)
+
+    tests = ""
+    for i, t in enumerate(cp["tests"]):
+        tests += f"""<section class="vs-test" id="test-{t['id']}">
+    <div class="vs-head">
+      <span class="vs-step">{i + 1}</span>
+      <div><h2>{esc(t['h2'])}</h2><p class="lead">{esc(t['sub'])}</p></div>
+    </div>
+    {compare_slider(c, cp, t['id'])}
+    <div class="vs-zoom-head"><h3>{esc(cp['zoom_h'])}</h3></div>
+    {compare_zoom(cp, t['id'])}
+    <div class="answer vs-look"><p><b>{esc(cp['look_for'])}:</b> {esc(t['look'])}</p></div>
+  </section>"""
+
+    bb = APP_BY_ID["blurbuster"]
+    w, h = COMPARE_TESTS["spider"]["zoom_size"]
+    modes = f"""<section class="vs-modes">
+    <div class="vs-modes-copy">
+      {app_icon(bb, 46)}
+      <h2>{esc(cp['modes_h'])}</h2>
+      <p>{esc(cp['modes_p'])}</p>
+    </div>
+    <div class="vs-modes-shots">
+      <figure><img src="{COMPARE_TESTS['spider']['zoom']['blurbuster']}" width="{w}" height="{h}"
+        loading="lazy" decoding="async" alt="{esc(cp['modes_a'])}">
+        <figcaption>{esc(cp['modes_a'])}</figcaption></figure>
+      <figure><img src="{BB_SOFT['zoom']}" width="{w}" height="{h}" loading="lazy" decoding="async"
+        alt="{esc(cp['modes_b'])}"><figcaption>{esc(cp['modes_b'])}</figcaption></figure>
+    </div>
+  </section>"""
+
+    dl = (f'<p class="vs-dl-h">{esc(cp["dl_h"])}</p><div class="vs-dl">'
+          + "".join(f'<a class="btn btn-g vs-dl-btn" href="{COMPARE_TESTS[k]["before"]}" download>'
+                    f'{DOWN_SVG}{esc(v)}</a>' for k, v in cp["dl"].items())
+          + '</div>')
+    faq = "".join(
+        f'<details{" open" if i == 0 else ""}><summary>{esc(q["q"])}</summary>'
+        f'<div class="a"><p>{esc(q["a"])}</p>{dl if q.get("dl") else ""}</div></details>'
+        for i, q in enumerate(cp["faq"]))
+
+    chips = "".join(f"<li>{esc(x)}</li>" for x in cp["chips"])
+
+    return (head(c, "en", cp["title"], cp["description"], canonical, alternates=False,
+                 og_image=f"{SITE}{COMPARE_TESTS['spider']['shot']['uscale']}",
+                 extra_ld=ld(faq_ld) + ld(crumbs_ld))
+            + nav(c, "en", "/")
+            + f"""<main class="wrap vs">
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="/">{esc(c['ui']['home'])}</a><span>&rsaquo;</span><span>{esc(cp['nav'])}</span>
+  </nav>
+  <div class="vs-intro">
+    <span class="eyebrow">{esc(cp['eyebrow'])}</span>
+    <h1>{esc(cp['h1'])}</h1>
+    <p class="lead">{esc(cp['lead'])}</p>
+    <ul class="chips">{chips}</ul>
+    <div class="meta"><span>{date_tag(updated_for('compare.html'), 'Updated', english=True)}</span>
+      <span>&middot;</span><span>{esc(c['ui']['by'])}</span></div>
+  </div>
+
+  <h2 class="vs-h">{esc(cp['apps_h'])}</h2>
+  <ul class="vs-apps">{apps}</ul>
+
+  {tests}
+
+  {modes}
+
+  <section class="vs-sum">
+    <h2>{esc(cp['table_h'])}</h2>
+    {compare_table(cp)}
+    <p class="vs-sub">{esc(cp['table_note'])}</p>
+  </section>
+
+  <section class="vs-faq">
+    <h2>{esc(cp['faq_h'])}</h2>
+    <div class="faq">{faq}</div>
+  </section>
+
+  <section class="vs-method">
+    <h2>{esc(cp['method_h'])}</h2>
+    <p>{esc(cp['method_p'])}</p>
+  </section>
+
+  {download_cta(c, section=False, h2=cp['cta_h'], p=cp['cta_p'])}
+  <p class="vs-legal">{esc(cp['disclaimer'])}</p>
+</main>"""
+            + footer(c, "en", "/"))
+
+
 # Sitemap
 def render_sitemap():
     entries = []
@@ -1129,6 +1500,9 @@ def render_sitemap():
             entries.append(
                 f'  <url>\n    <loc>{url(code, p)}</loc>\n    <lastmod>{updated_for(p)}</lastmod>'
                 f'\n    <changefreq>weekly</changefreq>\n    <priority>{prio}</priority>{alts}\n  </url>')
+    entries.append(f'  <url>\n    <loc>{SITE}/compare.html</loc>'
+                   f'\n    <lastmod>{updated_for("compare.html")}</lastmod>'
+                   f'\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>')
     # sale.html is noindex and intentionally omitted.
     for legal in ["support_page.html", "terms.html", "privacy_policy.html"]:
         entries.append(f'  <url>\n    <loc>{SITE}/{legal}</loc>\n    <lastmod>{updated_for(legal)}</lastmod>'
@@ -1180,7 +1554,8 @@ def main():
         for d in pages.DOCS:
             write(d["file"], render_doc(en, d)); built += 1
         write("sale.html", render_sale(en)); built += 1
-        print("  ✓ support / terms / privacy / sale")
+        write("compare.html", render_compare(en)); built += 1
+        print("  ✓ support / terms / privacy / sale / compare")
     write("sitemap.xml", render_sitemap())
     write("robots.txt", ROBOTS)
     copy_static()
