@@ -17,10 +17,9 @@ if sys.version_info < (3, 8):
     sys.exit(f"build.py needs Python 3.8+, got {sys.version.split()[0]}")
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import pages
+import localization_catalog
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CONTENT = os.path.join(ROOT, "build", "content")
 DIST = os.path.join(ROOT, "dist")
 STATIC = os.path.join(ROOT, "static")
 COPY_DIRS = ["assets", "resources"]
@@ -66,10 +65,10 @@ LOCALES = [
     ("tr", "tr",   "Turkish",              "Türkçe",      "tr",      "tr_TR", "tr"),
 ]
 BY_CODE = {l[0]: l for l in LOCALES}
-# Only locales with their own content file are indexable and shown in the picker.
-# Adding build/content/<code>.json automatically grows the hreflang cluster.
+# Only locales represented in every localization section are indexable and shown
+# in the picker. Importing a complete locale automatically grows the cluster.
 LOCALIZED_CODES = tuple(
-    code for code in BY_CODE if os.path.exists(os.path.join(CONTENT, f"{code}.json"))
+    code for code in BY_CODE if code in localization_catalog.available_locales()
 )
 
 # Guides
@@ -384,6 +383,7 @@ FACT_TEXT = {
     "trial_days": APP_FACTS["annual_trial_days"],
     "free_photos_per_day": APP_FACTS["free_limits"]["photos_per_day"],
     "minimum_ios": APP_FACTS["minimum_ios"],
+    "off": f"{round((1 - _ANNUAL_SALE / _ANNUAL) * 100):d}%",
 }
 
 # Only {known_fact} is replaced. str.format_map would also try to read every other
@@ -1228,8 +1228,8 @@ def render_doc(c, d, lang):
         {"@type": "ListItem", "position": 1, "name": c["ui"]["home"], "item": url(lang)},
         {"@type": "ListItem", "position": 2, "name": d["h1"], "item": canonical}]}
     extra = ld(crumbs_ld)
-    if d["file"] == pages.SUPPORT["file"]:
-        support_faq = c.get("support_faq_ld", SUPPORT_FAQ_LD)
+    if d["file"] == "support_page.html":
+        support_faq = c["support_faq_ld"]
         extra += ld({"@context": "https://schema.org", "@type": "FAQPage", "url": canonical,
                      "mainEntity": [{"@type": "Question", "name": q,
                                      "acceptedAnswer": {"@type": "Answer", "text": a}}
@@ -1245,43 +1245,15 @@ def render_doc(c, d, lang):
             + footer(c, lang, home_prefix, path))
 
 
-SUPPORT_FAQ_LD = [
-    ("What does UScale actually do?",
-     "UScale runs AI enhancement models on your iPhone or iPad: it unblurs and sharpens photos, upscales them "
-     "2x or 4x, restores faces in old scans, colorises black-and-white pictures, improves video quality and "
-     "generates smooth slow motion. Everyday enhancement runs on the device. Only Creative Upscale and "
-     "old-photo restoration upload the selected photo to our processing servers."),
-    ("How do I enhance a photo in UScale?",
-     "Open the app, tap the photo you want to fix, pick a tool (Enhance, Upscale, Face restore or Colorize), "
-     "wait for the preview and save the result to your library."),
-    ("Are my photos uploaded anywhere?",
-     "Most tools run locally on your device and do not upload your media. Creative Upscale and old-photo "
-     "restoration upload only the photo you select for server processing. See the Privacy Policy for "
-     "processing and retention details."),
-    ("Which devices and iOS versions are supported?",
-     "iPhone and iPad running iOS {minimum_ios} or later."),
-    ("How much does UScale Premium cost?",
-     "The app is free for {free_photos_per_day} photo enhancements a day. Premium is {annual_price} a year "
-     "and starts with a {trial_days}-day free "
-     "trial with everything unlocked. Prices vary slightly by region."),
-    ("I paid but Premium is not active. What do I do?",
-     "Use Restore purchases in the app settings while signed in with the Apple ID that made the purchase, or "
-     "email support with your App Store receipt."),
-    ("How do I cancel a UScale subscription?",
-     "Subscriptions are handled by Apple: open Settings, tap your name, choose Subscriptions, select UScale "
-     "and cancel it there."),
-]
-
-
 def render_sale(c, lang):
     canonical = url(lang, "sale")
     home_prefix = rel_url(lang)
     off = f'{FACT_TEXT["sale_percent"]}%'
-    sale = c.get("sale", {})
-    def st(key, fallback):
-        return sale.get(key, fallback).replace("{off}", off)
-    return (head(c, lang, st("title", f"UScale Premium Sale — {off} off"),
-                 st("description", f"Unlock UScale Premium with {off} off. Open the app from this link and the discount is active for one hour on your device."),
+    sale = c["sale"]
+    def st(key):
+        return sale[key].replace("{off}", off)
+    return (head(c, lang, st("title"),
+                 st("description"),
                  canonical, path="sale",
                  og_image=f"{SITE}{SCREENSHOTS[3]}",
                  robots="noindex,follow")
@@ -1291,21 +1263,21 @@ def render_sale(c, lang):
   <div class="wrap">
     <div class="hero-grid">
       <div>
-        <span class="pill"><b>{esc(st('pill', 'Limited unlock'))}</b> · {esc(st('off', '{off} OFF'))}</span>
-        <h1>{st('h1', 'Claim your <em>{off} off</em> Premium upgrade')}</h1>
-        <p class="hero-sub">{esc(st('sub', 'Open the app from this link and a discounted Premium window opens for one hour.'))}</p>
+        <span class="pill"><b>{esc(st('pill'))}</b> · {esc(st('off'))}</span>
+        <h1>{st('h1')}</h1>
+        <p class="hero-sub">{esc(st('sub'))}</p>
         <div class="promo" id="promo-code-card">
-          <span class="promo-l">{esc(st('promo', 'Promo code'))}</span>
+          <span class="promo-l">{esc(st('promo'))}</span>
           <span class="promo-v" id="promo-code-value"></span>
         </div>
         <div class="hero-cta sale-cta">
-          <a class="btn btn-p btn-xl" id="open-app-link" href="upscale://offer/sale">{esc(st('open', 'Open in app'))}<span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn-p btn-xl" id="open-app-link" href="upscale://offer/sale">{esc(st('open'))}<span class="arrow" aria-hidden="true">→</span></a>
         </div>
-        <p class="hero-note">{esc(st('note', 'Already installed? iOS opens UScale straight from this link. No app yet? Install it and reopen the same link.'))}</p>
+        <p class="hero-note">{esc(st('note'))}</p>
       </div>
       <div class="sale-art">
-        <span class="sale-badge">{esc(st('badge', 'Best value'))}</span>
-        <img src="{SCREENSHOTS[3]}" width="298" height="645" alt="{esc(st('image_alt', 'UScale Premium in the app'))}"
+        <span class="sale-badge">{esc(st('badge'))}</span>
+        <img src="{SCREENSHOTS[3]}" width="298" height="645" alt="{esc(st('image_alt'))}"
              fetchpriority="high" decoding="async">
       </div>
     </div>
@@ -1313,8 +1285,8 @@ def render_sale(c, lang):
 </section>
 
 {download_cta(c, sect_cls="sect sect-tight",
-              h2=st('cta_h', 'App not opening yet?'),
-              p=st('cta_p', 'Install UScale from the App Store, then open this same sale link again — the promo code stays attached.'))}
+              h2=st('cta_h'),
+              p=st('cta_p'))}
 </main>
 <script>
 (function () {{
@@ -1639,16 +1611,7 @@ def main():
         shutil.rmtree(DIST)
     built = 0
     for code in langs:
-        path = os.path.join(CONTENT, f"{code}.json")
-        with open(path, encoding="utf-8") as f:
-            c = inject_facts(json.load(f), code)
-        if code == "ru":
-            import ru_guides, ru_standalone
-            c["guide_pages"] = inject_facts(ru_guides.GUIDES, code)
-            c["compare"] = inject_facts(ru_standalone.COMPARE, code)
-            c["docs"] = inject_facts(ru_standalone.DOCS, code)
-            c["support_faq_ld"] = inject_facts(ru_standalone.SUPPORT_FAQ_LD, code)
-            c["sale"] = ru_standalone.SALE
+        c = inject_facts(localization_catalog.load_locale(code), code)
         missing = [s for s in GUIDE_SLUGS if s not in c.get("guide_pages", {})]
         if missing:
             print(f"  ! {code}: missing guides {missing}")
@@ -1659,8 +1622,7 @@ def main():
         for slug in GUIDE_SLUGS:
             if slug in c["guide_pages"]:
                 write(f"{base}guides/{slug}.html", render_guide(c, code, slug)); built += 1
-        docs = c.get("docs") or pages.DOCS
-        for d in docs:
+        for d in c["docs"]:
             write(f"{base}{d['file']}", render_doc(c, d, code)); built += 1
         write(f"{base}sale.html", render_sale(c, code)); built += 1
         write(f"{base}compare.html", render_compare(c, code)); built += 1

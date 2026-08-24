@@ -1,0 +1,4390 @@
+{
+  "guides.eyebrow": {
+    "localizations": {
+      "en": "Guides",
+      "ru": "Руководства"
+    }
+  },
+  "guides.h2": {
+    "localizations": {
+      "en": "How to fix the photo problem you actually have",
+      "ru": "Как решить именно вашу проблему с фото или видео"
+    }
+  },
+  "guides.sub": {
+    "localizations": {
+      "en": "Straight answers to the questions people search for, followed by the exact taps to do it in UScale.",
+      "ru": "Сначала — краткий ответ на популярный поисковый вопрос, затем — точные шаги для решения задачи в UScale."
+    }
+  },
+  "guides.all": {
+    "localizations": {
+      "en": "Browse all guides",
+      "ru": "Просмотреть все руководства"
+    }
+  },
+  "guides.expand": {
+    "localizations": {
+      "en": "Expand all guides",
+      "ru": "Развернуть все руководства"
+    }
+  },
+  "guides.collapse": {
+    "localizations": {
+      "en": "Show fewer guides",
+      "ru": "Показать меньше руководств"
+    }
+  },
+  "guides_index.title": {
+    "localizations": {
+      "en": "UScale Guides — Unblur, Upscale & Restore Photos",
+      "ru": "Гайды UScale — резкость, 4K и восстановление фото"
+    },
+    "comment": "Page or section title; preserve product names."
+  },
+  "guides_index.description": {
+    "localizations": {
+      "en": "Practical guides on unblurring photos, upscaling images to 4K, restoring old prints, improving video quality and making AI slow motion on iPhone.",
+      "ru": "Практические гайды: как убрать размытие, увеличить фото до 4K, восстановить старые снимки, улучшить видео и сделать плавное замедление в UScale на iPhone."
+    },
+    "comment": "Description copy; keep factual claims unchanged."
+  },
+  "guides_index.h1": {
+    "localizations": {
+      "en": "Photo and video guides",
+      "ru": "Руководства по фото и видео"
+    }
+  },
+  "guides_index.intro": {
+    "localizations": {
+      "en": "Each guide answers one specific question and then shows you the exact steps to do it in UScale on your iPhone.",
+      "ru": "Каждое руководство отвечает на один конкретный вопрос и затем показывает вам точные шаги для выполнения этого в UScale на вашем iPhone."
+    }
+  },
+  "guide_pages.unblur-photo-iphone.nav_title": {
+    "localizations": {
+      "en": "Unblur a photo",
+      "ru": "Убрать размытие"
+    }
+  },
+  "guide_pages.unblur-photo-iphone.card_title": {
+    "localizations": {
+      "en": "How to unblur a photo on iPhone",
+      "ru": "Как убрать размытие на фото на iPhone"
+    }
+  },
+  "guide_pages.unblur-photo-iphone.card_desc": {
+    "localizations": {
+      "en": "Fix soft, shaky and out-of-focus shots in under a minute.",
+      "ru": "Сделайте нечёткий снимок резче прямо на iPhone."
+    }
+  },
+  "guide_pages.unblur-photo-iphone.title": {
+    "localizations": {
+      "en": "How to Unblur a Photo on iPhone (Free Method)",
+      "ru": "Как убрать размытие на фото на iPhone — 3 способа | UScale"
+    },
+    "comment": "Page or section title; preserve product names."
+  },
+  "guide_pages.unblur-photo-iphone.description": {
+    "localizations": {
+      "en": "How to unblur a photo on iPhone for free: what causes blur, what AI can and cannot recover, and how to fix a blurry picture with Creative Upscale in UScale.",
+      "ru": "Как убрать размытие на фото на iPhone: выберите Creative Upscale, Face Enhancer или локальное увеличение, сравните результат и сохраните чёткую копию."
+    },
+    "comment": "Description copy; keep factual claims unchanged."
+  },
+  "guide_pages.unblur-photo-iphone.h1": {
+    "localizations": {
+      "en": "How to unblur a photo on your iPhone",
+      "ru": "Как убрать размытие на фото на iPhone"
+    }
+  },
+  "guide_pages.unblur-photo-iphone.kicker": {
+    "localizations": {
+      "en": "Photo guide",
+      "ru": "Гайд по фото"
+    }
+  },
+  "guide_pages.unblur-photo-iphone.read_time": {
+    "localizations": {
+      "en": "4 min read",
+      "ru": "6 мин чтения"
+    }
+  },
+  "guide_pages.unblur-photo-iphone.answer": {
+    "localizations": {
+      "en": "To unblur a photo on iPhone, open UScale, tap Upscale your media → Photos and pick the blurry shot, then choose Creative Upscale. It reconstructs edges, texture and facial detail instead of merely sharpening them, and returns a clean 2K, 4K or 8K copy in about 30 seconds.",
+      "ru": "Для максимального восстановления деталей откройте фото в UScale и выберите Creative Upscale; этот режим обрабатывает выбранный файл в облаке. Если важно оставить снимок на устройстве, используйте Face Enhancer для людей или Regular Upscale 2×/4× для остальных кадров."
+    }
+  },
+  "guide_pages.unblur-photo-iphone.supply": {
+    "localizations": {
+      "en": "A blurry photo in your iPhone photo library",
+      "ru": "Нечёткая фотография"
+    }
+  },
+  "guide_pages.unblur-photo-iphone.intro": {
+    "localizations": {
+      "en": "Sharpening and unblurring are different jobs. Sharpening lifts contrast around edges that already exist; AI unblurring infers what the missing detail looked like and rebuilds it. UScale gives you three ways to do that, and the mode matters more than any setting inside it. Creative Upscale rebuilds the most detail but runs in the cloud; Face Enhancer and Regular Upscale run on your iPhone and upload nothing.",
+      "ru": "Размытие бывает разным: движение оставляет направленный смаз, ошибка фокуса делает мягким весь кадр, а мессенджеры добавляют квадраты и шум сжатия. Поэтому одного ползунка резкости недостаточно. В UScale есть три режима: Creative Upscale сильнее реконструирует утраченную текстуру, Face Enhancer отдельно восстанавливает небольшие лица, а Regular Upscale осторожно увеличивает снимок прямо на iPhone."
+    }
+  },
+  "guide_pages.unblur-photo-iphone.why_h": {
+    "localizations": {
+      "en": "Why your photo came out blurry",
+      "ru": "Почему это работает"
+    }
+  },
+  "guide_pages.unblur-photo-iphone.why_p": {
+    "localizations": {
+      "en": "Which kind of blur you are dealing with decides how much you can realistically recover.",
+      "ru": "Повышение резкости усиливает контраст на существующих границах, тогда как ИИ-модель анализирует форму объектов и восстанавливает недостающие переходы. Результат зависит от причины и силы размытия: модель не может достоверно вернуть деталь, которой в файле совсем не осталось."
+    }
+  },
+  "guide_pages.unblur-photo-iphone.why_list.0": {
+    "localizations": {
+      "en": "Low resolution — a cropped, screenshotted or messaging-app photo. The easiest case, and what Creative Upscale handles best.",
+      "ru": "Лёгкая расфокусировка обычно исправляется лучше сильного смаза от движения."
+    }
+  },
+  "guide_pages.unblur-photo-iphone.why_list.1": {
+    "localizations": {
+      "en": "Heavy compression — a file re-saved and re-shared many times. Denoise and upscale run in the same pass and usually clean it up.",
+      "ru": "Creative Upscale даёт наиболее заметную реконструкцию, но использует облачную обработку."
+    }
+  },
+  "guide_pages.unblur-photo-iphone.why_list.2": {
+    "localizations": {
+      "en": "Missed focus — the camera locked onto the background. Recoverable while the subject still has some definition left.",
+      "ru": "Face Enhancer работает на устройстве и подходит для маленьких лиц в групповом снимке."
+    }
+  },
+  "guide_pages.unblur-photo-iphone.why_list.3": {
+    "localizations": {
+      "en": "Camera shake — mild shake cleans up nicely; a long, obvious smear does not.",
+      "ru": "Regular Upscale сохраняет композицию и стиль ближе к оригиналу."
+    }
+  },
+  "guide_pages.unblur-photo-iphone.why_list.4": {
+    "localizations": {
+      "en": "Motion blur — the honest weak spot: the smear runs in one direction and today's models rebuild it poorly. A model built for motion blur is in testing now."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.unblur-photo-iphone.steps_h": {
+    "localizations": {
+      "en": "Unblur a photo in UScale, step by step",
+      "ru": "Как сделать это в UScale"
+    }
+  },
+  "guide_pages.unblur-photo-iphone.steps_intro": {
+    "localizations": {
+      "en": "Under a minute end to end. Start with Creative Upscale — it gives the best result on most blurry photos.",
+      "ru": "Весь процесс занимает несколько касаний."
+    }
+  },
+  "guide_pages.unblur-photo-iphone.steps.0.h": {
+    "localizations": {
+      "en": "Open Upscale your media → Photos",
+      "ru": "Откройте лучший исходник"
+    }
+  },
+  "guide_pages.unblur-photo-iphone.steps.0.p": {
+    "localizations": {
+      "en": "On the UScale home screen tap Upscale your media, choose Photos and select the blurry shot. Several photos can go in one batch, and there is no account to create.",
+      "ru": "Выберите оригинальный файл из медиатеки. Не используйте скриншот или копию из мессенджера, если сохранился исходник."
+    }
+  },
+  "guide_pages.unblur-photo-iphone.steps.1.h": {
+    "localizations": {
+      "en": "Choose Creative Upscale",
+      "ru": "Выберите подходящий режим"
+    }
+  },
+  "guide_pages.unblur-photo-iphone.steps.1.p": {
+    "localizations": {
+      "en": "It reconstructs texture and fills in detail the file no longer holds, rather than only sharpening what is there. It runs on our servers, so this photo is uploaded.",
+      "ru": "Начните с Creative Upscale для общей реконструкции. Для небольших лиц выберите Face Enhancer, а для полностью локальной обработки — Regular Upscale."
+    }
+  },
+  "guide_pages.unblur-photo-iphone.steps.2.h": {
+    "localizations": {
+      "en": "Pick the output resolution — 2K, 4K or 8K",
+      "ru": "Настройте размер результата"
+    }
+  },
+  "guide_pages.unblur-photo-iphone.steps.2.p": {
+    "localizations": {
+      "en": "The only setting Creative Upscale needs. 2K is plenty for sharing, 4K is the safe default, 8K is for printing or cropping hard into the result.",
+      "ru": "В Creative Upscale выберите 2K, 4K или 8K. В Regular Upscale используются множители 2× и 4× — это другой способ задания размера."
+    }
+  },
+  "guide_pages.unblur-photo-iphone.steps.3.h": {
+    "localizations": {
+      "en": "Tap Upscale and give it about 30 seconds",
+      "ru": "Проверьте сложные детали"
+    }
+  },
+  "guide_pages.unblur-photo-iphone.steps.3.p": {
+    "localizations": {
+      "en": "Pinch to zoom into hair, fabric weave and text — that is where you see whether real detail came back or contrast was merely added.",
+      "ru": "Сравните глаза, волосы, текст, тонкие линии и фон при масштабе 100%. Если появились вымышленные детали, используйте более осторожный режим."
+    }
+  },
+  "guide_pages.unblur-photo-iphone.steps.4.h": {
+    "localizations": {
+      "en": "Want it fully private? Use Face Enhancer or Regular Upscale",
+      "ru": "Сохраните новую копию"
+    }
+  },
+  "guide_pages.unblur-photo-iphone.steps.4.p": {
+    "localizations": {
+      "en": "Both run on your device and work in airplane mode. They ask for a style instead of a resolution: Natural keeps the original texture, Smoothed gives cleaner, harder edges. Either way the sharp copy is saved as a new photo and the original stays untouched.",
+      "ru": "Передвиньте ползунок «до/после» и сохраните понравившийся результат. Оригинал останется неизменным."
+    }
+  },
+  "guide_pages.unblur-photo-iphone.img_alt": {
+    "localizations": {
+      "en": "Unblurring a blurry photo on iPhone with UScale — before and after comparison",
+      "ru": "Размытая фотография до и после улучшения в UScale."
+    },
+    "comment": "Accessibility text describing an image."
+  },
+  "guide_pages.unblur-photo-iphone.img_caption": {
+    "localizations": {
+      "en": "A blurry shot before and after being unblurred in UScale.",
+      "ru": "Размытая фотография до и после улучшения в UScale."
+    }
+  },
+  "guide_pages.unblur-photo-iphone.tips_h": {
+    "localizations": {
+      "en": "Tips for the sharpest result",
+      "ru": "Как получить лучший результат"
+    }
+  },
+  "guide_pages.unblur-photo-iphone.tips.0": {
+    "localizations": {
+      "en": "Start from the original file, not a screenshot or a copy that has been through a messaging app. Every re-save throws away detail the AI would have used.",
+      "ru": "Не повышайте резкость в другом редакторе перед обработкой — ореолы станут заметнее."
+    }
+  },
+  "guide_pages.unblur-photo-iphone.tips.1": {
+    "localizations": {
+      "en": "Crop before you enhance, so the model spends its resolution on the part of the picture you care about.",
+      "ru": "На портрете отдельно проверьте каждый глаз и контуры зубов."
+    }
+  },
+  "guide_pages.unblur-photo-iphone.tips.2": {
+    "localizations": {
+      "en": "On the on-device modes, try Natural and Smoothed on the same photo — it takes seconds and the difference is obvious.",
+      "ru": "Для важного снимка сохраните версии из двух режимов и сравните их на большом экране."
+    }
+  },
+  "guide_pages.unblur-photo-iphone.tips.3": {
+    "localizations": {
+      "en": "Motion blur is the hardest case for every AI enhancer. Expect an improvement rather than a rescue.",
+      "ru": "Сильный смаз нельзя восстановить документально точно: ИИ создаёт наиболее вероятную деталь."
+    }
+  },
+  "guide_pages.unblur-photo-iphone.tips.4": {
+    "localizations": {
+      "en": "For a photo that is both dark and blurry, brighten it first and enhance second."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.unblur-photo-iphone.tips.5": {
+    "localizations": {
+      "en": "Still not happy? Email the photo to alexandr.graschenkov91@gmail.com — the developer answers personally."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.unblur-photo-iphone.cta_h": {
+    "localizations": {
+      "en": "Unblur your first photo now",
+      "ru": "Верните снимку чёткость"
+    }
+  },
+  "guide_pages.unblur-photo-iphone.cta_p": {
+    "localizations": {
+      "en": "Free for two photos a day, no account, and the on-device modes never upload a thing.",
+      "ru": "Два бесплатных улучшения каждый день, без аккаунта."
+    }
+  },
+  "guide_pages.unblur-photo-iphone.faq_h": {
+    "localizations": {
+      "en": "Unblurring photos: common questions",
+      "ru": "Частые вопросы"
+    }
+  },
+  "guide_pages.unblur-photo-iphone.faq.0.q": {
+    "localizations": {
+      "en": "Which mode should I use — Creative Upscale, Face Enhancer or Regular Upscale?",
+      "ru": "Можно ли исправить сильный смаз от движения?"
+    }
+  },
+  "guide_pages.unblur-photo-iphone.faq.0.a": {
+    "localizations": {
+      "en": "Creative Upscale gives the best result on most blurry photos because it can rebuild detail the file no longer contains, but it processes in the cloud. If you would rather nothing left your iPhone, use Face Enhancer for people and Regular Upscale for everything else.",
+      "ru": "Иногда можно сделать кадр читаемее, но точное восстановление полностью стёртых деталей невозможно. Чем короче след от движения, тем надёжнее результат."
+    }
+  },
+  "guide_pages.unblur-photo-iphone.faq.1.q": {
+    "localizations": {
+      "en": "Can AI fix motion blur?",
+      "ru": "Какие режимы загружают фото?"
+    }
+  },
+  "guide_pages.unblur-photo-iphone.faq.1.a": {
+    "localizations": {
+      "en": "Only partly. Motion blur smears detail along the direction of movement, leaving no clean structure to anchor to. A model built specifically for motion blur is being tested and will be added to the app.",
+      "ru": "Creative Upscale обрабатывает выбранный файл в облаке. Face Enhancer и Regular Upscale работают на iPhone или iPad и доступны офлайн."
+    }
+  },
+  "guide_pages.unblur-photo-iphone.faq.2.q": {
+    "localizations": {
+      "en": "Can AI unblur a photo that is completely smeared?",
+      "ru": "Что выбрать: 2K, 4K, 8K или 2×/4×?"
+    }
+  },
+  "guide_pages.unblur-photo-iphone.faq.2.a": {
+    "localizations": {
+      "en": "No. With no recognisable structure left the model invents detail that was never there. AI unblurring works best on mild to moderate blur, where edges are soft but still present.",
+      "ru": "2K, 4K и 8K — целевая ширина в Creative Upscale. 2× и 4× — множители размера в Regular Upscale. Для просмотра обычно достаточно 2K или 2×; 4K и выше полезны для печати и кадрирования."
+    }
+  },
+  "guide_pages.unblur-photo-iphone.faq.3.q": {
+    "localizations": {
+      "en": "Does unblurring a photo need an internet connection?"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.unblur-photo-iphone.faq.3.a": {
+    "localizations": {
+      "en": "Only for Creative Upscale. Face Enhancer and Regular Upscale process the photo on your iPhone, so they work in airplane mode and upload nothing."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.restore-old-photos.nav_title": {
+    "localizations": {
+      "en": "Restore old photos",
+      "ru": "Восстановить старые фото"
+    }
+  },
+  "guide_pages.restore-old-photos.card_title": {
+    "localizations": {
+      "en": "How to restore old photos with your phone",
+      "ru": "Как восстановить старую фотографию"
+    }
+  },
+  "guide_pages.restore-old-photos.card_desc": {
+    "localizations": {
+      "en": "Repair scratches, folds and fading on scanned family prints.",
+      "ru": "Уберите царапины, пыль, заломы и выцветание."
+    }
+  },
+  "guide_pages.restore-old-photos.title": {
+    "localizations": {
+      "en": "How to Restore Old Photos on Your Phone with AI (2026)",
+      "ru": "Как восстановить старую фотографию на телефоне с ИИ | UScale"
+    },
+    "comment": "Page or section title; preserve product names."
+  },
+  "guide_pages.restore-old-photos.description": {
+    "localizations": {
+      "en": "Restore old family photos on your phone: how to photograph a print, which AI restoration mode to pick, and how to repair scratches, folds and fading.",
+      "ru": "Как восстановить старое фото на iPhone с ИИ: правильно снимите отпечаток, выберите режим реставрации, удалите царапины и сохраните новую копию."
+    },
+    "comment": "Description copy; keep factual claims unchanged."
+  },
+  "guide_pages.restore-old-photos.h1": {
+    "localizations": {
+      "en": "How to restore old photos with your phone",
+      "ru": "Как восстановить старую фотографию"
+    }
+  },
+  "guide_pages.restore-old-photos.kicker": {
+    "localizations": {
+      "en": "Restoration guide",
+      "ru": "Гайд по фото"
+    }
+  },
+  "guide_pages.restore-old-photos.read_time": {
+    "localizations": {
+      "en": "5 min read",
+      "ru": "6 мин чтения"
+    }
+  },
+  "guide_pages.restore-old-photos.answer": {
+    "localizations": {
+      "en": "To restore an old photo, photograph the print flat in soft daylight, then open UScale, tap Upscale your media → Photos and pick the shot. Choose Photo restoration, set the mode — Enhanced Colorize suits most prints — and tap Upscale. The repaired photo comes back in about 40 seconds.",
+      "ru": "Снимите или отсканируйте отпечаток без бликов, откройте его в UScale и выберите Photo Restoration. Начните с Enhanced Colorize, а для чёрно-белого результата используйте Restore. Реставрация обрабатывает только выбранный файл в облаке."
+    }
+  },
+  "guide_pages.restore-old-photos.supply": {
+    "localizations": {
+      "en": "A printed photo and an iPhone camera or scanner",
+      "ru": "Скан или фото старого отпечатка"
+    }
+  },
+  "guide_pages.restore-old-photos.intro": {
+    "localizations": {
+      "en": "Most old-photo restorations are lost at the capture stage: a shadow across the print, a glare spot from a ceiling light or a slightly skewed angle costs more detail than the AI can put back. Spend two minutes on the capture and the rest is one mode choice and one tap. Restoration runs on our servers rather than on your iPhone, so it uploads the photo and needs a connection.",
+      "ru": "Качество реставрации начинается до запуска ИИ. Положите отпечаток на ровную поверхность, снимайте строго сверху при мягком боковом свете и заполните фотографией весь кадр. После этого выберите режим по состоянию оригинала: Restore сохраняет палитру, Restore & Colorize добавляет цвет, Enhanced Colorize дополнительно восстанавливает резкость, Advanced Fix предназначен для разрывов и крупных утрат."
+    }
+  },
+  "guide_pages.restore-old-photos.why_h": {
+    "localizations": {
+      "en": "What actually goes wrong with old prints",
+      "ru": "Почему это работает"
+    }
+  },
+  "guide_pages.restore-old-photos.why_p": {
+    "localizations": {
+      "en": "Different damage needs a different mode, so it helps to know what you are looking at.",
+      "ru": "Модель распознаёт структуру лиц, одежды и фона, отделяет реальные детали от пыли и царапин, а затем заполняет повреждённые участки согласованной текстурой. Чем больше исходных данных осталось на отпечатке, тем меньше модели приходится предполагать."
+    }
+  },
+  "guide_pages.restore-old-photos.why_list.0": {
+    "localizations": {
+      "en": "Scratches and dust from handling and storage — the easiest damage to remove automatically.",
+      "ru": "Мягкий равномерный свет предотвращает блики и цветовые пятна."
+    }
+  },
+  "guide_pages.restore-old-photos.why_list.1": {
+    "localizations": {
+      "en": "Folds and cracks where the print was bent, often running straight through a face.",
+      "ru": "Enhanced Colorize подходит большинству выцветших семейных снимков."
+    }
+  },
+  "guide_pages.restore-old-photos.why_list.2": {
+    "localizations": {
+      "en": "Fading and colour shift — 1970s and 1980s colour prints drift towards orange or magenta as the dyes break down.",
+      "ru": "Restore сохраняет чёрно-белую или существующую цветную палитру."
+    }
+  },
+  "guide_pages.restore-old-photos.why_list.3": {
+    "localizations": {
+      "en": "Tears and missing corners, which have to be rebuilt rather than cleaned: that is what Advanced Fix is for.",
+      "ru": "Advanced Fix следует применять только к действительно сильным повреждениям."
+    }
+  },
+  "guide_pages.restore-old-photos.why_list.4": {
+    "localizations": {
+      "en": "Softness from the original camera and film, which is a resolution problem rather than damage."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.restore-old-photos.steps_h": {
+    "localizations": {
+      "en": "Restore an old photo in UScale, step by step",
+      "ru": "Как сделать это в UScale"
+    }
+  },
+  "guide_pages.restore-old-photos.steps_intro": {
+    "localizations": {
+      "en": "Do the capture properly, then it is four taps and about 40 seconds of waiting.",
+      "ru": "Весь процесс занимает несколько касаний."
+    }
+  },
+  "guide_pages.restore-old-photos.steps.0.h": {
+    "localizations": {
+      "en": "Photograph the print flat and evenly lit",
+      "ru": "Подготовьте отпечаток"
+    }
+  },
+  "guide_pages.restore-old-photos.steps.0.p": {
+    "localizations": {
+      "en": "Lay the print near a window, out of direct sun, and hold the phone parallel to it so the edges stay rectangular. Never use the flash — it leaves a glare spot no model can remove.",
+      "ru": "Осторожно удалите свободную пыль, положите фотографию ровно и отключите вспышку. Не пытайтесь расправлять хрупкую бумагу силой."
+    }
+  },
+  "guide_pages.restore-old-photos.steps.1.h": {
+    "localizations": {
+      "en": "Crop to the photo itself",
+      "ru": "Снимите или отсканируйте"
+    }
+  },
+  "guide_pages.restore-old-photos.steps.1.p": {
+    "localizations": {
+      "en": "Trim away the table, the border and any white margin, so the AI works on the picture rather than on the surface under it.",
+      "ru": "Держите iPhone параллельно отпечатку. Избегайте теней от рук и ламп; при возможности используйте скан с разрешением 600 dpi."
+    }
+  },
+  "guide_pages.restore-old-photos.steps.2.h": {
+    "localizations": {
+      "en": "Open Upscale your media → Photos and choose Photo restoration",
+      "ru": "Откройте Photo Restoration"
+    }
+  },
+  "guide_pages.restore-old-photos.steps.2.p": {
+    "localizations": {
+      "en": "Select the shot — or several, to restore a box of similar snapshots with the same settings. The Cloud Processing badge marks Photo restoration as a server-side mode.",
+      "ru": "Выберите полученный файл в UScale. В облако отправляется только этот снимок, а не вся медиатека."
+    }
+  },
+  "guide_pages.restore-old-photos.steps.3.h": {
+    "localizations": {
+      "en": "Pick a restoration mode",
+      "ru": "Сравните режимы"
+    }
+  },
+  "guide_pages.restore-old-photos.steps.3.p": {
+    "localizations": {
+      "en": "Tap the mode card for Restore, Restore & Colorize, Enhanced Colorize and Advanced Fix. Enhanced Colorize is the one to start with; the section below covers the rest.",
+      "ru": "Сначала попробуйте Enhanced Colorize. Если лицо выглядит слишком резким, сравните с Restore & Colorize; для сохранения исходных цветов используйте Restore."
+    }
+  },
+  "guide_pages.restore-old-photos.steps.4.h": {
+    "localizations": {
+      "en": "Set the advanced options if you need them",
+      "ru": "Проверьте и сохраните"
+    }
+  },
+  "guide_pages.restore-old-photos.steps.4.p": {
+    "localizations": {
+      "en": "All three are optional: Negative for film negatives, Increased resolution for more fine detail, and Prompt for facts the model cannot guess, such as eye colour or the colour of a dress.",
+      "ru": "Увеличьте глаза, края повреждений и мелкий фон. Сохраните результат отдельно от исходного скана."
+    }
+  },
+  "guide_pages.restore-old-photos.steps.5.h": {
+    "localizations": {
+      "en": "Tap Upscale, then save or re-run"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.restore-old-photos.steps.5.p": {
+    "localizations": {
+      "en": "The result arrives in about 40 seconds. Zoom into faces, hair and fabric to see whether the damage was repaired or merely blurred over, then save the copy — the original scan is untouched — or run it again in another mode."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.restore-old-photos.modes_h": {
+    "localizations": {
+      "en": "The four restoration modes, and when to use each",
+      "ru": "Четыре режима восстановления"
+    }
+  },
+  "guide_pages.restore-old-photos.modes_intro": {
+    "localizations": {
+      "en": "Photo restoration opens with a Mode picker. These are the app's own previews — one damaged portrait through each mode.",
+      "ru": "Выбор зависит от состояния снимка и нужного уровня вмешательства."
+    }
+  },
+  "guide_pages.restore-old-photos.modes.0.img": {
+    "localizations": {
+      "en": "enhanced_colorize",
+      "ru": "enhanced_colorize"
+    },
+    "shouldTranslate": false
+  },
+  "guide_pages.restore-old-photos.modes.0.img_alt": {
+    "localizations": {
+      "en": "Enhanced Colorize mode preview in UScale — the same portrait colorized with sharper detail",
+      "ru": "Предпросмотр Enhanced Colorize в UScale"
+    },
+    "comment": "Accessibility text describing an image."
+  },
+  "guide_pages.restore-old-photos.modes.0.t": {
+    "localizations": {
+      "en": "Enhanced Colorize",
+      "ru": "Enhanced Colorize"
+    }
+  },
+  "guide_pages.restore-old-photos.modes.0.tag": {
+    "localizations": {
+      "en": "Best results",
+      "ru": "Лучший результат"
+    }
+  },
+  "guide_pages.restore-old-photos.modes.0.sub": {
+    "localizations": {
+      "en": "Restore and colorize with improved sharpness",
+      "ru": "Восстановить, раскрасить и повысить резкость"
+    }
+  },
+  "guide_pages.restore-old-photos.modes.0.p": {
+    "localizations": {
+      "en": "The right default for almost every old print: it repairs the damage, adds colour and rebuilds detail, so faces and fabric keep real texture.",
+      "ru": "Оптимальный старт для большинства старых снимков: исправляет повреждения, добавляет цвет и восстанавливает детали."
+    }
+  },
+  "guide_pages.restore-old-photos.modes.1.img": {
+    "localizations": {
+      "en": "colorize",
+      "ru": "colorize"
+    },
+    "shouldTranslate": false
+  },
+  "guide_pages.restore-old-photos.modes.1.img_alt": {
+    "localizations": {
+      "en": "Restore & Colorize mode preview in UScale — the same old portrait repaired and colorized",
+      "ru": "Предпросмотр Restore & Colorize в UScale"
+    },
+    "comment": "Accessibility text describing an image."
+  },
+  "guide_pages.restore-old-photos.modes.1.t": {
+    "localizations": {
+      "en": "Restore & Colorize",
+      "ru": "Restore & Colorize"
+    }
+  },
+  "guide_pages.restore-old-photos.modes.1.sub": {
+    "localizations": {
+      "en": "Restore and colorize the photo",
+      "ru": "Восстановить и раскрасить"
+    }
+  },
+  "guide_pages.restore-old-photos.modes.1.p": {
+    "localizations": {
+      "en": "Repairs and colorizes without the extra sharpening. Use it when Enhanced Colorize invents detail a very small or soft scan never had.",
+      "ru": "Восстанавливает и раскрашивает без дополнительного повышения резкости; полезно для маленьких и мягких сканов."
+    }
+  },
+  "guide_pages.restore-old-photos.modes.2.img": {
+    "localizations": {
+      "en": "restore",
+      "ru": "restore"
+    },
+    "shouldTranslate": false
+  },
+  "guide_pages.restore-old-photos.modes.2.img_alt": {
+    "localizations": {
+      "en": "Restore mode preview in UScale — an old portrait cleaned up and left in black and white",
+      "ru": "Предпросмотр Restore в UScale"
+    },
+    "comment": "Accessibility text describing an image."
+  },
+  "guide_pages.restore-old-photos.modes.2.t": {
+    "localizations": {
+      "en": "Restore",
+      "ru": "Restore"
+    }
+  },
+  "guide_pages.restore-old-photos.modes.2.sub": {
+    "localizations": {
+      "en": "Remove scratches while keeping the original colors",
+      "ru": "Убрать царапины и сохранить исходные цвета"
+    }
+  },
+  "guide_pages.restore-old-photos.modes.2.p": {
+    "localizations": {
+      "en": "Cleans scratches, dust, folds and tears and leaves the palette alone — for prints you want repaired but not reinterpreted.",
+      "ru": "Убирает царапины, пыль, заломы и разрывы, не меняя палитру."
+    }
+  },
+  "guide_pages.restore-old-photos.modes.3.img": {
+    "localizations": {
+      "en": "advanced_fix",
+      "ru": "advanced_fix"
+    },
+    "shouldTranslate": false
+  },
+  "guide_pages.restore-old-photos.modes.3.img_alt": {
+    "localizations": {
+      "en": "Advanced Fix mode preview in UScale — a cracked, stained print of the kind this mode is built for",
+      "ru": "Предпросмотр Advanced Fix в UScale"
+    },
+    "comment": "Accessibility text describing an image."
+  },
+  "guide_pages.restore-old-photos.modes.3.t": {
+    "localizations": {
+      "en": "Advanced Fix",
+      "ru": "Advanced Fix"
+    }
+  },
+  "guide_pages.restore-old-photos.modes.3.sub": {
+    "localizations": {
+      "en": "Fixes severe damage and boosts quality",
+      "ru": "Исправить сильные повреждения"
+    }
+  },
+  "guide_pages.restore-old-photos.modes.3.p": {
+    "localizations": {
+      "en": "A heavier model for cracked, torn or mould-stained prints. It rebuilds far more, so it drifts furthest from the original, and it ignores the Prompt field.",
+      "ru": "Более мощная модель для треснувших, порванных или покрытых пятнами отпечатков."
+    }
+  },
+  "guide_pages.restore-old-photos.options_h": {
+    "localizations": {
+      "en": "Advanced options: Negative, Increased resolution and Prompt",
+      "ru": "Дополнительные параметры"
+    }
+  },
+  "guide_pages.restore-old-photos.options_intro": {
+    "localizations": {
+      "en": "Under the mode picker sit three optional settings, each solving a specific problem.",
+      "ru": "Prompt, Increased resolution и Negative решают три разные задачи."
+    }
+  },
+  "guide_pages.restore-old-photos.options.0.t": {
+    "localizations": {
+      "en": "Prompt",
+      "ru": "Prompt"
+    }
+  },
+  "guide_pages.restore-old-photos.options.0.sub": {
+    "localizations": {
+      "en": "Add eye color, clothing color, or other important details",
+      "ru": "Укажите цвет глаз, одежды или другие важные детали"
+    }
+  },
+  "guide_pages.restore-old-photos.options.0.p": {
+    "localizations": {
+      "en": "Free text for what the model cannot infer — “blue eyes”, “red dress”, “green army uniform”. Ask whoever remembers the photo. Not used by Advanced Fix.",
+      "ru": "Опишите то, что модель не может угадать: например, «голубые глаза, красное платье»."
+    }
+  },
+  "guide_pages.restore-old-photos.options.1.t": {
+    "localizations": {
+      "en": "Increased resolution",
+      "ru": "Increased resolution"
+    }
+  },
+  "guide_pages.restore-old-photos.options.1.sub": {
+    "localizations": {
+      "en": "Generates the result at a higher resolution",
+      "ru": "Создать результат в более высоком разрешении"
+    }
+  },
+  "guide_pages.restore-old-photos.options.1.p": {
+    "localizations": {
+      "en": "Server models that recover more fine detail, at the cost of predictability: they can add detail the print never had.",
+      "ru": "Полезно для печати: модель сохраняет больше мелких деталей."
+    }
+  },
+  "guide_pages.restore-old-photos.options.2.t": {
+    "localizations": {
+      "en": "Negative",
+      "ru": "Negative"
+    }
+  },
+  "guide_pages.restore-old-photos.options.2.sub": {
+    "localizations": {
+      "en": "Invert and normalize photo colors before restoration",
+      "ru": "Инвертировать и нормализовать цвета"
+    }
+  },
+  "guide_pages.restore-old-photos.options.2.p": {
+    "localizations": {
+      "en": "For film negatives rather than prints: the frame is inverted and the orange film mask neutralised before restoration runs.",
+      "ru": "Только для плёночных негативов: инвертирует кадр и нейтрализует оранжевую маску."
+    }
+  },
+  "guide_pages.restore-old-photos.img_alt": {
+    "localizations": {
+      "en": "A damaged 1950s family photo restored and colorized with UScale on iPhone",
+      "ru": "Старая семейная фотография до и после удаления царапин и восстановления деталей в UScale."
+    },
+    "comment": "Accessibility text describing an image."
+  },
+  "guide_pages.restore-old-photos.img_caption": {
+    "localizations": {
+      "en": "A scratched and folded 1950s print, restored and colorized in the app.",
+      "ru": "Старая семейная фотография до и после удаления царапин и восстановления деталей в UScale."
+    }
+  },
+  "guide_pages.restore-old-photos.tips_h": {
+    "localizations": {
+      "en": "Getting archive-quality results",
+      "ru": "Как получить лучший результат"
+    }
+  },
+  "guide_pages.restore-old-photos.tips.0": {
+    "localizations": {
+      "en": "Soft, indirect daylight beats any lamp — an overcast day by a window is the ideal light for copying prints.",
+      "ru": "Не обрезайте рамку и края отпечатка до реставрации — они помогают определить геометрию."
+    }
+  },
+  "guide_pages.restore-old-photos.tips.1": {
+    "localizations": {
+      "en": "If the print is glossy, tilt the print rather than the phone until the reflection slides off the image.",
+      "ru": "Сравните два режима: различие на лицах часто заметнее, чем на общем плане."
+    }
+  },
+  "guide_pages.restore-old-photos.tips.2": {
+    "localizations": {
+      "en": "Try two modes before deciding. Enhanced Colorize against Restore & Colorize takes a minute, and the difference on faces is obvious.",
+      "ru": "Используйте Prompt только для известных фактов, например цвета формы или глаз."
+    }
+  },
+  "guide_pages.restore-old-photos.tips.3": {
+    "localizations": {
+      "en": "Fill in the Prompt for anything you actually know: “blue eyes, dark green uniform” fixes what colourisation gets wrong most often.",
+      "ru": "Храните исходный скан: будущие модели смогут извлечь из него больше."
+    }
+  },
+  "guide_pages.restore-old-photos.tips.4": {
+    "localizations": {
+      "en": "Restore a box of similar snapshots as one batch, and keep the untouched scan as well as the result — future models will do more with it."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.restore-old-photos.tips.5": {
+    "localizations": {
+      "en": "Stuck on a particular print? Email it to alexandr.graschenkov91@gmail.com — the developer answers personally."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.restore-old-photos.cta_h": {
+    "localizations": {
+      "en": "Bring the family album back",
+      "ru": "Верните семейные снимки к жизни"
+    }
+  },
+  "guide_pages.restore-old-photos.cta_p": {
+    "localizations": {
+      "en": "Restore, colorize and reprint the photos in the shoebox. Restoration runs on our cloud models and is part of Premium — the annual plan starts with a {trial_days}-day free trial.",
+      "ru": "Попробуйте режимы восстановления и сохраните результат рядом с исходным сканом."
+    },
+    "comment": "Preserve every {placeholder} exactly.",
+    "relaxedValidationLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.restore-old-photos.faq_h": {
+    "localizations": {
+      "en": "Restoring old photos: common questions",
+      "ru": "Частые вопросы"
+    }
+  },
+  "guide_pages.restore-old-photos.faq.0.q": {
+    "localizations": {
+      "en": "Which restoration mode should I use?",
+      "ru": "Какой режим выбрать первым?"
+    }
+  },
+  "guide_pages.restore-old-photos.faq.0.a": {
+    "localizations": {
+      "en": "Enhanced Colorize on most old prints — it repairs, colorizes and sharpens in one pass. Restore & Colorize when that sharpening overreaches on a soft scan, Restore when the colours should stay as they are, and Advanced Fix only for severe damage.",
+      "ru": "Enhanced Colorize — лучший старт для большинства старых отпечатков: он восстанавливает повреждения, добавляет цвет и повышает резкость. Для более мягкого результата попробуйте Restore & Colorize."
+    }
+  },
+  "guide_pages.restore-old-photos.faq.1.q": {
+    "localizations": {
+      "en": "How long does restoration take?",
+      "ru": "Можно ли оставить фото чёрно-белым?"
+    }
+  },
+  "guide_pages.restore-old-photos.faq.1.a": {
+    "localizations": {
+      "en": "About 40 seconds per photo. The work happens on our servers, so your connection and the queue matter, and a batch takes proportionally longer.",
+      "ru": "Да. Выберите Restore: он удаляет повреждения и сохраняет исходную палитру."
+    }
+  },
+  "guide_pages.restore-old-photos.faq.2.q": {
+    "localizations": {
+      "en": "Do I need a scanner, or is a phone camera enough?",
+      "ru": "Куда загружается фотография?"
+    }
+  },
+  "guide_pages.restore-old-photos.faq.2.a": {
+    "localizations": {
+      "en": "A modern phone camera is enough for almost every print, as long as the lighting is even and the phone is parallel to the photo. A flatbed scanner is only clearly better for very small prints and for negatives.",
+      "ru": "Для реставрации выбранный файл временно отправляется WaveSpeedAI или Replicate и удаляется провайдером в срок от одного часа до семи дней. UScale не загружает остальные фотографии."
+    }
+  },
+  "guide_pages.restore-old-photos.faq.3.q": {
+    "localizations": {
+      "en": "Are my old photos uploaded anywhere?"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.restore-old-photos.faq.3.a": {
+    "localizations": {
+      "en": "Yes — restoration is the cloud part of UScale. The photo goes to our processing provider, stays available for download for a limited time and is then deleted. On-device tools such as Face Enhancer never upload anything."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.restore-old-photos.faq.4.q": {
+    "localizations": {
+      "en": "Can AI repair a photo with a piece torn off?"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.restore-old-photos.faq.4.a": {
+    "localizations": {
+      "en": "Advanced Fix can rebuild a missing corner or a tear across a background convincingly. A missing face is different — the model will invent one, and it will not be the person you remember."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.restore-old-photos.faq.5.q": {
+    "localizations": {
+      "en": "Will restoration change how people look?"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.restore-old-photos.faq.5.a": {
+    "localizations": {
+      "en": "Mildly, yes. Restoration reconstructs detail rather than recovering it, and Advanced Fix moves furthest from the original, so compare every result against the scan before you save it."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.colorize-black-and-white-photos.nav_title": {
+    "localizations": {
+      "en": "Colorize B&W photos",
+      "ru": "Раскрасить ч/б фото"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.card_title": {
+    "localizations": {
+      "en": "How to colorize black and white photos",
+      "ru": "Как раскрасить чёрно-белую фотографию"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.card_desc": {
+    "localizations": {
+      "en": "Add believable colour to vintage portraits in one tap.",
+      "ru": "Добавьте естественные цвета в старый снимок."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.title": {
+    "localizations": {
+      "en": "How to Colorize Black and White Photos with AI (iPhone)",
+      "ru": "Как раскрасить чёрно-белую фотографию на iPhone | UScale"
+    },
+    "comment": "Page or section title; preserve product names."
+  },
+  "guide_pages.colorize-black-and-white-photos.description": {
+    "localizations": {
+      "en": "Colorize black and white photos on your phone with AI: which restoration mode gives the most natural colour, and how to steer tones with a prompt.",
+      "ru": "Как сделать чёрно-белое фото цветным в UScale: подготовьте скан, выберите Enhanced Colorize или Restore & Colorize и уточните известные цвета."
+    },
+    "comment": "Description copy; keep factual claims unchanged."
+  },
+  "guide_pages.colorize-black-and-white-photos.h1": {
+    "localizations": {
+      "en": "How to colorize black and white photos",
+      "ru": "Как раскрасить чёрно-белую фотографию"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.kicker": {
+    "localizations": {
+      "en": "Restoration guide",
+      "ru": "Гайд по фото"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.read_time": {
+    "localizations": {
+      "en": "5 min read",
+      "ru": "6 мин чтения"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.answer": {
+    "localizations": {
+      "en": "To colorize a black and white photo, open UScale, tap Upscale your media → Photos and pick the photo, then choose Photo restoration. Set the mode to Enhanced Colorize and tap Upscale. Colour arrives in about 40 seconds, and a prompt such as “blue eyes, red dress” steers it towards the real thing.",
+      "ru": "Откройте чёрно-белый снимок в Photo Restoration и выберите Enhanced Colorize. Если нужно сохранить мягкость оригинала, сравните результат с Restore & Colorize. Облачная модель добавит правдоподобные цвета и одновременно исправит повреждения."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.supply": {
+    "localizations": {
+      "en": "A black and white photo, scanned or photographed",
+      "ru": "Чёрно-белая фотография"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.intro": {
+    "localizations": {
+      "en": "Colourisation is informed guessing. The model has learned that grass is green and that skin sits within a narrow range of tones, but it cannot know your grandmother's coat was red rather than brown — which is what the Prompt field is for. One thing to know before you start: colourising is not a separate button in UScale. It is a mode inside Photo restoration, so the same pass that adds the colour also removes the scratches.",
+      "ru": "Колоризация не извлекает исходные цвета из монохромного файла: модель предполагает их по форме объектов, освещению и визуальному контексту. Поэтому оттенок кожи обычно выглядит убедительно, а цвет одежды, автомобиля или интерьера может отличаться от реального. Если точный цвет известен, укажите его в Prompt."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.why_h": {
+    "localizations": {
+      "en": "What makes a colourisation look convincing",
+      "ru": "Почему это работает"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.why_p": {
+    "localizations": {
+      "en": "Some photos colourise almost perfectly and others look painted. The difference usually comes down to these factors.",
+      "ru": "ИИ сегментирует изображение на смысловые области и подбирает цвет с учётом яркости исходного серого тона. Тени и блики сохраняются, поэтому результат выглядит объёмнее простой заливки цветом."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.why_list.0": {
+    "localizations": {
+      "en": "Contrast range — a print with real blacks and whites gives the model far more to work with than a flat, grey scan.",
+      "ru": "Enhanced Colorize одновременно раскрашивает и восстанавливает мелкие детали."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.why_list.1": {
+    "localizations": {
+      "en": "Recognisable content — faces, skies, grass, wood and common clothing colourise reliably because they appear constantly in training data.",
+      "ru": "Restore & Colorize действует мягче и подходит небольшим или нерезким сканам."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.why_list.2": {
+    "localizations": {
+      "en": "Capture quality — a shadow or a glare spot across the print is read as part of the scene and coloured in as if it belonged there.",
+      "ru": "Prompt помогает закрепить известные цвета одежды, глаз или предметов."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.why_list.3": {
+    "localizations": {
+      "en": "Resolution — a small, soft scan produces muddy colour patches, which is where Enhanced Colorize earns its place.",
+      "ru": "Колоризация не должна заменять исходный архивный файл."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.why_list.4": {
+    "localizations": {
+      "en": "Unusual objects — a uniform, a painted sign or a specific dress is where colourisation guesses wrong, and where a prompt fixes it."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.colorize-black-and-white-photos.steps_h": {
+    "localizations": {
+      "en": "Colorize a photo in UScale, step by step",
+      "ru": "Как сделать это в UScale"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.steps_intro": {
+    "localizations": {
+      "en": "Repair and colour happen in the same pass, so this is one job rather than two.",
+      "ru": "Весь процесс занимает несколько касаний."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.steps.0.h": {
+    "localizations": {
+      "en": "Digitise the print cleanly",
+      "ru": "Подготовьте чистый скан"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.steps.0.p": {
+    "localizations": {
+      "en": "Photograph it flat in soft daylight, without flash, and crop to the image area. A shadow across a face becomes a grey patch that the model then tries to colour.",
+      "ru": "Используйте оригинальный скан или ровную фотографию отпечатка без бликов. Удалять глубокие царапины вручную не нужно."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.steps.1.h": {
+    "localizations": {
+      "en": "Open Upscale your media → Photos",
+      "ru": "Откройте Photo Restoration"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.steps.1.p": {
+    "localizations": {
+      "en": "Tap Upscale your media on the home screen, choose Photos and select the picture. Several photos can go in at once and share the same settings.",
+      "ru": "Выберите снимок и режим Enhanced Colorize. Для мягкого портрета дополнительно попробуйте Restore & Colorize."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.steps.2.h": {
+    "localizations": {
+      "en": "Choose Photo restoration",
+      "ru": "Добавьте известные цвета"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.steps.2.p": {
+    "localizations": {
+      "en": "Colorize lives inside Photo restoration rather than as a separate tool, and the Cloud Processing badge is the reminder that it runs on our servers.",
+      "ru": "В Prompt кратко укажите только проверенные сведения: «голубые глаза, тёмно-зелёная форма». Не перегружайте описание."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.steps.3.h": {
+    "localizations": {
+      "en": "Set the mode to Enhanced Colorize",
+      "ru": "Проверьте границы"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.steps.3.p": {
+    "localizations": {
+      "en": "Two of the four modes add colour. Enhanced Colorize is the stronger one and the right default; Restore & Colorize is the gentler alternative.",
+      "ru": "Посмотрите на волосы, одежду, фон и участки вокруг рук. Если цвет выходит за контур, попробуйте более мягкий режим."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.steps.4.h": {
+    "localizations": {
+      "en": "Add a prompt if you know the real colours",
+      "ru": "Сохраните обе версии"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.steps.4.p": {
+    "localizations": {
+      "en": "Open Prompt in Advanced options and type what you know: “blue eyes, navy jacket, red brick house”. It is the single biggest improvement available, because it replaces guesswork with fact.",
+      "ru": "Сохраните цветной результат как новую копию и оставьте рядом исходный чёрно-белый файл."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.steps.5.h": {
+    "localizations": {
+      "en": "Tap Upscale, then save both versions"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.colorize-black-and-white-photos.steps.5.p": {
+    "localizations": {
+      "en": "Colour arrives in about 40 seconds. Zoom into the faces first — grey or waxy skin means it is worth re-running with a prompt or the other colorize mode. The colour version saves as a new photo and the monochrome original stays where it was."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.colorize-black-and-white-photos.modes_h": {
+    "localizations": {
+      "en": "Which mode to colorize with",
+      "ru": "Четыре режима восстановления"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.modes_intro": {
+    "localizations": {
+      "en": "Two of the four restoration modes add colour, one deliberately does not, and one is reserved for wrecked prints.",
+      "ru": "Выбор зависит от состояния снимка и нужного уровня вмешательства."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.modes.0.img": {
+    "localizations": {
+      "en": "enhanced_colorize",
+      "ru": "enhanced_colorize"
+    },
+    "shouldTranslate": false
+  },
+  "guide_pages.colorize-black-and-white-photos.modes.0.img_alt": {
+    "localizations": {
+      "en": "Enhanced Colorize mode preview in UScale — the same portrait colorized with sharper detail",
+      "ru": "Предпросмотр Enhanced Colorize в UScale"
+    },
+    "comment": "Accessibility text describing an image."
+  },
+  "guide_pages.colorize-black-and-white-photos.modes.0.t": {
+    "localizations": {
+      "en": "Enhanced Colorize",
+      "ru": "Enhanced Colorize"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.modes.0.tag": {
+    "localizations": {
+      "en": "Best results",
+      "ru": "Лучший результат"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.modes.0.sub": {
+    "localizations": {
+      "en": "Restore and colorize with improved sharpness",
+      "ru": "Восстановить, раскрасить и повысить резкость"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.modes.0.p": {
+    "localizations": {
+      "en": "The best colourisation in the app and the one to start with. It repairs, colours and rebuilds detail in one pass, so skin and fabric hold texture.",
+      "ru": "Оптимальный старт для большинства старых снимков: исправляет повреждения, добавляет цвет и восстанавливает детали."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.modes.1.img": {
+    "localizations": {
+      "en": "colorize",
+      "ru": "colorize"
+    },
+    "shouldTranslate": false
+  },
+  "guide_pages.colorize-black-and-white-photos.modes.1.img_alt": {
+    "localizations": {
+      "en": "Restore & Colorize mode preview in UScale — the same old portrait repaired and colorized",
+      "ru": "Предпросмотр Restore & Colorize в UScale"
+    },
+    "comment": "Accessibility text describing an image."
+  },
+  "guide_pages.colorize-black-and-white-photos.modes.1.t": {
+    "localizations": {
+      "en": "Restore & Colorize",
+      "ru": "Restore & Colorize"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.modes.1.sub": {
+    "localizations": {
+      "en": "Restore and colorize the photo",
+      "ru": "Восстановить и раскрасить"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.modes.1.p": {
+    "localizations": {
+      "en": "The same repair and colour without the sharpening. Switch to it when Enhanced Colorize looks synthetic on a small or soft scan.",
+      "ru": "Восстанавливает и раскрашивает без дополнительного повышения резкости; полезно для маленьких и мягких сканов."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.modes.2.img": {
+    "localizations": {
+      "en": "restore",
+      "ru": "restore"
+    },
+    "shouldTranslate": false
+  },
+  "guide_pages.colorize-black-and-white-photos.modes.2.img_alt": {
+    "localizations": {
+      "en": "Restore mode preview in UScale — an old portrait cleaned up and left in black and white",
+      "ru": "Предпросмотр Restore в UScale"
+    },
+    "comment": "Accessibility text describing an image."
+  },
+  "guide_pages.colorize-black-and-white-photos.modes.2.t": {
+    "localizations": {
+      "en": "Restore",
+      "ru": "Restore"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.modes.2.sub": {
+    "localizations": {
+      "en": "Remove scratches while keeping the original colors",
+      "ru": "Убрать царапины и сохранить исходные цвета"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.modes.2.p": {
+    "localizations": {
+      "en": "No colourisation at all — for photos that should stay black and white, or a faded colour print that needs its damage removed.",
+      "ru": "Убирает царапины, пыль, заломы и разрывы, не меняя палитру."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.modes.3.img": {
+    "localizations": {
+      "en": "advanced_fix",
+      "ru": "advanced_fix"
+    },
+    "shouldTranslate": false
+  },
+  "guide_pages.colorize-black-and-white-photos.modes.3.img_alt": {
+    "localizations": {
+      "en": "Advanced Fix mode preview in UScale — a cracked, stained print of the kind this mode is built for",
+      "ru": "Предпросмотр Advanced Fix в UScale"
+    },
+    "comment": "Accessibility text describing an image."
+  },
+  "guide_pages.colorize-black-and-white-photos.modes.3.t": {
+    "localizations": {
+      "en": "Advanced Fix",
+      "ru": "Advanced Fix"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.modes.3.sub": {
+    "localizations": {
+      "en": "Fixes severe damage and boosts quality",
+      "ru": "Исправить сильные повреждения"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.modes.3.p": {
+    "localizations": {
+      "en": "A heavier model for cracked, torn or badly stained prints. It rebuilds aggressively and ignores the Prompt field.",
+      "ru": "Более мощная модель для треснувших, порванных или покрытых пятнами отпечатков."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.options_h": {
+    "localizations": {
+      "en": "Steering the colours: Prompt and the other advanced options",
+      "ru": "Дополнительные параметры"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.options_intro": {
+    "localizations": {
+      "en": "Colourisation is the one place where these options change the result dramatically rather than subtly.",
+      "ru": "Prompt, Increased resolution и Negative решают три разные задачи."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.options.0.t": {
+    "localizations": {
+      "en": "Prompt",
+      "ru": "Prompt"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.options.0.sub": {
+    "localizations": {
+      "en": "Add eye color, clothing color, or other important details",
+      "ru": "Укажите цвет глаз, одежды или другие важные детали"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.options.0.p": {
+    "localizations": {
+      "en": "Type the colours you know — “green eyes, yellow summer dress, blue sky”. The model follows it, turning a plausible guess into the right answer.",
+      "ru": "Опишите то, что модель не может угадать: например, «голубые глаза, красное платье»."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.options.1.t": {
+    "localizations": {
+      "en": "Increased resolution",
+      "ru": "Increased resolution"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.options.1.sub": {
+    "localizations": {
+      "en": "Generates the result at a higher resolution",
+      "ru": "Создать результат в более высоком разрешении"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.options.1.p": {
+    "localizations": {
+      "en": "Server models that hold more fine detail, useful if you plan to print. They are less predictable, so compare against a run with it off.",
+      "ru": "Полезно для печати: модель сохраняет больше мелких деталей."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.options.2.t": {
+    "localizations": {
+      "en": "Negative",
+      "ru": "Negative"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.options.2.sub": {
+    "localizations": {
+      "en": "Invert and normalize photo colors before restoration",
+      "ru": "Инвертировать и нормализовать цвета"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.options.2.p": {
+    "localizations": {
+      "en": "Only for film negatives: it inverts and normalises the frame before the colour pass runs.",
+      "ru": "Только для плёночных негативов: инвертирует кадр и нейтрализует оранжевую маску."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.img_alt": {
+    "localizations": {
+      "en": "A black and white family photo colorized with AI in UScale on iPhone",
+      "ru": "Чёрно-белый семейный снимок до и после колоризации в UScale."
+    },
+    "comment": "Accessibility text describing an image."
+  },
+  "guide_pages.colorize-black-and-white-photos.img_caption": {
+    "localizations": {
+      "en": "The same 1950s portrait, restored and then colorized.",
+      "ru": "Чёрно-белый семейный снимок до и после колоризации в UScale."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.tips_h": {
+    "localizations": {
+      "en": "Tips for natural colour",
+      "ru": "Как получить лучший результат"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.tips.0": {
+    "localizations": {
+      "en": "Photos taken outdoors in daylight colourise best. Indoor shots lit by one lamp give weaker cues, so the prompt matters more there.",
+      "ru": "Начинайте с нейтрального скана без цветного фильтра."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.tips.1": {
+    "localizations": {
+      "en": "Judge the result by the faces. If skin tones read grey or waxy, nothing else in the picture will convince either.",
+      "ru": "Не просите модель угадывать десятки деталей сразу."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.tips.2": {
+    "localizations": {
+      "en": "If a large area comes out an odd colour, name it in the prompt — “brown wooden door”, “grey stone wall”.",
+      "ru": "Сравнивайте оттенки кожи на нескольких лицах, а не только на главном персонаже."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.tips.3": {
+    "localizations": {
+      "en": "Show the result to someone who was there; they often remember the real colour of a dress or a wall.",
+      "ru": "Для выцветшего цветного снимка используйте Restore, а не режим колоризации."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.tips.4": {
+    "localizations": {
+      "en": "Never overwrite the monochrome original. It is the historical document; the colour version is an interpretation of it."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.colorize-black-and-white-photos.cta_h": {
+    "localizations": {
+      "en": "See your family in colour",
+      "ru": "Добавьте цвет старому снимку"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.cta_p": {
+    "localizations": {
+      "en": "Colorize, repair and upscale old prints on your iPhone. Restoration uses our cloud models and is part of Premium, starting with a {trial_days}-day free trial.",
+      "ru": "Сравните два режима колоризации и сохраните исходник вместе с готовой версией."
+    },
+    "comment": "Preserve every {placeholder} exactly.",
+    "relaxedValidationLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.colorize-black-and-white-photos.faq_h": {
+    "localizations": {
+      "en": "Colorizing photos: common questions",
+      "ru": "Частые вопросы"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.faq.0.q": {
+    "localizations": {
+      "en": "Where is the Colorize button in UScale?",
+      "ru": "Какой режим лучше для колоризации?"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.faq.0.a": {
+    "localizations": {
+      "en": "There is no separate Colorize tool. Tap Upscale your media → Photos, choose Photo restoration, and set the Mode to Enhanced Colorize or Restore & Colorize. The same pass repairs the print and adds the colour.",
+      "ru": "Enhanced Colorize подходит большинству снимков и добавляет резкость. Restore & Colorize лучше, если сильная реконструкция делает лицо неестественным."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.faq.1.q": {
+    "localizations": {
+      "en": "Enhanced Colorize or Restore & Colorize — what is the difference?",
+      "ru": "Можно ли получить исторически точные цвета?"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.faq.1.a": {
+    "localizations": {
+      "en": "Both repair and colourise. Enhanced Colorize also rebuilds fine detail, so it looks sharper and suits most photos. Restore & Colorize leaves the underlying quality alone, which is safer on very small or soft scans.",
+      "ru": "Только если вы сообщите известные цвета в Prompt. Без подсказки модель создаёт правдоподобный, но не документально точный вариант."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.faq.2.q": {
+    "localizations": {
+      "en": "Are the colours historically accurate?",
+      "ru": "Колоризация работает офлайн?"
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.faq.2.a": {
+    "localizations": {
+      "en": "They are plausible, not documented. Skin, sky and vegetation are usually right; clothing and painted objects are educated guesses. Use the Prompt field to supply the colours you know.",
+      "ru": "Нет. Режимы восстановления и колоризации используют облачную обработку выбранного файла."
+    }
+  },
+  "guide_pages.colorize-black-and-white-photos.faq.3.q": {
+    "localizations": {
+      "en": "Can I colorize a photo that is already partly colour?"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.colorize-black-and-white-photos.faq.3.a": {
+    "localizations": {
+      "en": "A faded colour print is better served by the plain Restore mode, which removes the damage and keeps the existing palette, than by a colorize mode built for genuinely monochrome sources."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.colorize-black-and-white-photos.faq.4.q": {
+    "localizations": {
+      "en": "Does colourising need an internet connection?"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.colorize-black-and-white-photos.faq.4.a": {
+    "localizations": {
+      "en": "Yes. Restoration and colourisation run on our servers because the models are too heavy for a phone, so the photo is uploaded and the result comes back in about 40 seconds. UScale's on-device tools work offline."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.upscale-image-4k.nav_title": {
+    "localizations": {
+      "en": "Upscale to 4K",
+      "ru": "Увеличить фото до 4K"
+    }
+  },
+  "guide_pages.upscale-image-4k.card_title": {
+    "localizations": {
+      "en": "How to upscale an image to 4K",
+      "ru": "Как увеличить фото до 4K на iPhone"
+    }
+  },
+  "guide_pages.upscale-image-4k.card_desc": {
+    "localizations": {
+      "en": "Turn a small, low-resolution picture into a print-ready file.",
+      "ru": "Получите файл шириной 4K без простого растягивания пикселей."
+    }
+  },
+  "guide_pages.upscale-image-4k.title": {
+    "localizations": {
+      "en": "How to Upscale an Image to 4K on iPhone",
+      "ru": "Как увеличить фото до 4K без потери качества | UScale"
+    },
+    "comment": "Page or section title; preserve product names."
+  },
+  "guide_pages.upscale-image-4k.description": {
+    "localizations": {
+      "en": "Upscale an image to 4K on iPhone. How AI upscaling differs from resizing, and how Creative Upscale turns a low-res picture into a sharp 4K or 8K file.",
+      "ru": "Как увеличить изображение до 4K на iPhone: выберите Creative Upscale, задайте 4K, сравните восстановленные детали и сохраните результат в UScale."
+    },
+    "comment": "Description copy; keep factual claims unchanged."
+  },
+  "guide_pages.upscale-image-4k.h1": {
+    "localizations": {
+      "en": "How to upscale an image to 4K",
+      "ru": "Как увеличить фото до 4K на iPhone"
+    }
+  },
+  "guide_pages.upscale-image-4k.kicker": {
+    "localizations": {
+      "en": "Upscaling guide",
+      "ru": "Гайд по фото"
+    }
+  },
+  "guide_pages.upscale-image-4k.read_time": {
+    "localizations": {
+      "en": "4 min read",
+      "ru": "6 мин чтения"
+    }
+  },
+  "guide_pages.upscale-image-4k.answer": {
+    "localizations": {
+      "en": "To upscale an image to 4K, open UScale, tap Upscale your media → Photos, select the picture and choose Creative Upscale, then set the output to 4K. The AI reconstructs edges and texture instead of stretching pixels, so the enlarged file is genuinely sharper, not just bigger.",
+      "ru": "Откройте изображение в UScale, выберите Creative Upscale и задайте выход 4K. Этот облачный режим создаёт файл шириной около 3840 пикселей и реконструирует детали. Не путайте 4K с локальным режимом 4×: 4× умножает исходные размеры, а не задаёт фиксированную ширину."
+    }
+  },
+  "guide_pages.upscale-image-4k.supply": {
+    "localizations": {
+      "en": "A low-resolution image in your photo library",
+      "ru": "Фотография низкого разрешения"
+    }
+  },
+  "guide_pages.upscale-image-4k.intro": {
+    "localizations": {
+      "en": "Resizing and upscaling are not the same operation. Resizing spreads the pixels you already have over a bigger canvas, which is why an enlargement goes soft. AI upscaling generates new pixels from what the model has learned about edges, skin, fabric and text, so the result can hold more usable detail than the original file did. Creative Upscale is the mode built for this: you pick 2K, 4K or 8K and it rebuilds the detail to fill it. Regular Upscale and Face Enhancer stay closer to the source and run on your device.",
+      "ru": "Обычное изменение размера делает холст больше, но не добавляет информации — края остаются мягкими, а пиксели становятся заметнее. Creative Upscale строит новые пиксели с учётом объектов, текстуры и границ. Для осторожного увеличения без облака доступен Regular Upscale 2×/4×, но итоговый размер зависит от исходника."
+    }
+  },
+  "guide_pages.upscale-image-4k.why_h": {
+    "localizations": {
+      "en": "How much resolution can you actually gain?",
+      "ru": "Почему это работает"
+    }
+  },
+  "guide_pages.upscale-image-4k.why_p": {
+    "localizations": {
+      "en": "The realistic ceiling depends on what is in the source file, not just on its pixel count.",
+      "ru": "4K — это целевая ширина примерно 3840 пикселей, а 4× — множитель каждой стороны. Например, файл шириной 800 пикселей после 4× станет 3200 пикселей, то есть всё ещё не достигнет 4K. Creative Upscale позволяет выбрать абсолютную цель 2K, 4K или 8K."
+    }
+  },
+  "guide_pages.upscale-image-4k.why_list.0": {
+    "localizations": {
+      "en": "A clean, in-focus small photo upscales beautifully — the ideal case for a 4K or 8K output.",
+      "ru": "Creative Upscale предлагает конкретный размер 2K, 4K или 8K и работает в облаке."
+    }
+  },
+  "guide_pages.upscale-image-4k.why_list.1": {
+    "localizations": {
+      "en": "A screenshot of a photo has already lost data twice; expect a good result rather than a perfect one.",
+      "ru": "Regular Upscale умножает размеры в 2× или 4× и работает на устройстве."
+    }
+  },
+  "guide_pages.upscale-image-4k.why_list.2": {
+    "localizations": {
+      "en": "A heavily compressed image from a chat app needs denoising as well as upscaling, which happens in the same pass.",
+      "ru": "ИИ-реконструкция полезнее простой интерполяции для маленьких и сжатых файлов."
+    }
+  },
+  "guide_pages.upscale-image-4k.why_list.3": {
+    "localizations": {
+      "en": "An out-of-focus original stays soft in outline — upscaling multiplies pixels, it does not re-focus the lens.",
+      "ru": "Чем меньше исходник, тем больше деталей модели приходится предполагать."
+    }
+  },
+  "guide_pages.upscale-image-4k.why_list.4": {
+    "localizations": {
+      "en": "Text and logos upscale surprisingly well, because their shapes are highly predictable to the model."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.upscale-image-4k.steps_h": {
+    "localizations": {
+      "en": "Upscale to 4K in UScale, step by step",
+      "ru": "Как сделать это в UScale"
+    }
+  },
+  "guide_pages.upscale-image-4k.steps_intro": {
+    "localizations": {
+      "en": "Three taps to a 4K file, one more to save it.",
+      "ru": "Весь процесс занимает несколько касаний."
+    }
+  },
+  "guide_pages.upscale-image-4k.steps.0.h": {
+    "localizations": {
+      "en": "Open Upscale your media → Photos",
+      "ru": "Проверьте размер исходника"
+    }
+  },
+  "guide_pages.upscale-image-4k.steps.0.p": {
+    "localizations": {
+      "en": "Tap Upscale your media on the home screen, choose Photos and select the image — or a whole set, processed as one batch. Use the original from your camera roll rather than a re-shared copy.",
+      "ru": "Откройте сведения о файле и запомните ширину. Если она уже близка к 4K, возможно, достаточно локального улучшения без увеличения."
+    }
+  },
+  "guide_pages.upscale-image-4k.steps.1.h": {
+    "localizations": {
+      "en": "Choose Creative Upscale",
+      "ru": "Выберите Creative Upscale"
+    }
+  },
+  "guide_pages.upscale-image-4k.steps.1.p": {
+    "localizations": {
+      "en": "This is the mode to use when the goal is resolution. It reconstructs detail instead of interpolating it, which keeps a large enlargement looking like a photograph. Processing happens in the cloud, so the image is uploaded.",
+      "ru": "Откройте фотографию и выберите облачный режим Creative Upscale — именно в нём доступны абсолютные размеры 2K, 4K и 8K."
+    }
+  },
+  "guide_pages.upscale-image-4k.steps.2.h": {
+    "localizations": {
+      "en": "Set the output to 4K",
+      "ru": "Задайте 4K"
+    }
+  },
+  "guide_pages.upscale-image-4k.steps.2.p": {
+    "localizations": {
+      "en": "2K, 4K and 8K are absolute targets, so there are no multipliers to work out: 2K for sharing, 4K for prints and large screens, 8K when you intend to crop hard into the result.",
+      "ru": "Выберите 4K как размер результата. Для печати с сильным кадрированием можно сравнить с 8K, но больший файл не всегда означает больше достоверной детали."
+    }
+  },
+  "guide_pages.upscale-image-4k.steps.3.h": {
+    "localizations": {
+      "en": "Tap Upscale and give it about 30 seconds",
+      "ru": "Оцените результат"
+    }
+  },
+  "guide_pages.upscale-image-4k.steps.3.p": {
+    "localizations": {
+      "en": "Pinch to zoom right in when the result comes back. Edges, fabric and single blades of grass show whether detail was reconstructed or merely smoothed.",
+      "ru": "Смотрите на текст, глаза, волосы, архитектурные линии и повторяющиеся узоры. При вымышленных деталях попробуйте Regular Upscale."
+    }
+  },
+  "guide_pages.upscale-image-4k.steps.4.h": {
+    "localizations": {
+      "en": "Save it — or keep it on device with Regular Upscale",
+      "ru": "Сохраните полную версию"
+    }
+  },
+  "guide_pages.upscale-image-4k.steps.4.p": {
+    "localizations": {
+      "en": "The upscaled file saves as a new copy and the original stays at its original size. If you would rather nothing was uploaded, Regular Upscale and Face Enhancer run on your iPhone and ask for a Natural or Smoothed style instead of a target resolution.",
+      "ru": "Сохраните результат без повторного сжатия через мессенджер и проверьте его фактические размеры."
+    }
+  },
+  "guide_pages.upscale-image-4k.img_alt": {
+    "localizations": {
+      "en": "A low-resolution photo of two children upscaled with the UScale AI image upscaler on iPhone",
+      "ru": "Небольшая фотография до и после увеличения до 4K в Creative Upscale."
+    },
+    "comment": "Accessibility text describing an image."
+  },
+  "guide_pages.upscale-image-4k.img_caption": {
+    "localizations": {
+      "en": "An 840-pixel-wide source upscaled with Creative Upscale — reconstructed detail, not stretched pixels.",
+      "ru": "Небольшая фотография до и после увеличения до 4K в Creative Upscale."
+    }
+  },
+  "guide_pages.upscale-image-4k.tips_h": {
+    "localizations": {
+      "en": "Getting the most from an upscale",
+      "ru": "Как получить лучший результат"
+    }
+  },
+  "guide_pages.upscale-image-4k.tips.0": {
+    "localizations": {
+      "en": "Crop before you upscale, not after. The output resolution then goes entirely to the part of the picture you want.",
+      "ru": "Используйте оригинал, а не уменьшенную копию из социальной сети."
+    }
+  },
+  "guide_pages.upscale-image-4k.tips.1": {
+    "localizations": {
+      "en": "For printing, aim for about 300 pixels per inch: a 4K-wide file prints cleanly at roughly 32 cm across.",
+      "ru": "Не запускайте 4K несколько раз подряд — повторная генерация может изменить текстуру."
+    }
+  },
+  "guide_pages.upscale-image-4k.tips.2": {
+    "localizations": {
+      "en": "Do not upscale twice. Running an upscale on an already-upscaled file compounds the model's guesses and looks waxy.",
+      "ru": "Для логотипов и мелкого текста сравнивайте ИИ-версию с обычным увеличением."
+    }
+  },
+  "guide_pages.upscale-image-4k.tips.3": {
+    "localizations": {
+      "en": "Visible JPEG blocking is a compression artefact — the enhance pass cleans it up before enlarging.",
+      "ru": "Для конфиденциального файла используйте локальный Regular Upscale 2×/4×."
+    }
+  },
+  "guide_pages.upscale-image-4k.tips.4": {
+    "localizations": {
+      "en": "Batch mode is the fastest way to take a whole set of product or holiday shots to 4K at the same setting."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.upscale-image-4k.cta_h": {
+    "localizations": {
+      "en": "Upscale your first image free",
+      "ru": "Создайте чёткую версию в 4K"
+    }
+  },
+  "guide_pages.upscale-image-4k.cta_p": {
+    "localizations": {
+      "en": "Two free enhancements a day, and Creative Upscale at 4K or 8K is one tap away in premium.",
+      "ru": "Выберите 4K или сравните с полностью локальным увеличением 2×/4×."
+    }
+  },
+  "guide_pages.upscale-image-4k.faq_h": {
+    "localizations": {
+      "en": "Image upscaling: common questions",
+      "ru": "Частые вопросы"
+    }
+  },
+  "guide_pages.upscale-image-4k.faq.0.q": {
+    "localizations": {
+      "en": "Is 4x the same as 4K?",
+      "ru": "4× и 4K — одно и то же?"
+    }
+  },
+  "guide_pages.upscale-image-4k.faq.0.a": {
+    "localizations": {
+      "en": "No. 4x is a multiplier applied to your image's dimensions; 4K is an absolute width of about 3840 pixels. Creative Upscale asks for the absolute target — 2K, 4K or 8K — while Regular Upscale works in 2x and 4x multipliers.",
+      "ru": "Нет. 4× умножает ширину и высоту исходника на четыре, а 4K задаёт целевую ширину около 3840 пикселей."
+    }
+  },
+  "guide_pages.upscale-image-4k.faq.1.q": {
+    "localizations": {
+      "en": "Does upscaling make the file much larger?",
+      "ru": "Можно ли увеличить фото до 4K офлайн?"
+    }
+  },
+  "guide_pages.upscale-image-4k.faq.1.a": {
+    "localizations": {
+      "en": "Yes — a 4K file holds many times the pixel count of a phone-sized source, so expect a much bigger file. That is what makes the result printable.",
+      "ru": "Regular Upscale работает офлайн, но использует множители 2×/4×. Чтобы получить ровно 4K в Creative Upscale, требуется интернет и облачная обработка."
+    }
+  },
+  "guide_pages.upscale-image-4k.faq.2.q": {
+    "localizations": {
+      "en": "Can I upscale an image without an internet connection?",
+      "ru": "Станет ли любой файл действительно детальным?"
+    }
+  },
+  "guide_pages.upscale-image-4k.faq.2.a": {
+    "localizations": {
+      "en": "Yes, with Regular Upscale or Face Enhancer, which run on your device and work in airplane mode. Creative Upscale rebuilds detail far more aggressively and processes in the cloud, so it needs a connection.",
+      "ru": "ИИ может восстановить правдоподобную текстуру, но не гарантирует документальную точность полностью утраченных деталей. Особенно внимательно проверяйте текст и лица."
+    }
+  },
+  "guide_pages.enhance-video-quality.nav_title": {
+    "localizations": {
+      "en": "Improve video quality",
+      "ru": "Улучшить качество видео"
+    }
+  },
+  "guide_pages.enhance-video-quality.card_title": {
+    "localizations": {
+      "en": "How to improve video quality on iPhone",
+      "ru": "Как улучшить качество видео на iPhone"
+    }
+  },
+  "guide_pages.enhance-video-quality.card_desc": {
+    "localizations": {
+      "en": "Upscale a clip 2x or 4x on-device, in a style that suits the footage.",
+      "ru": "Сделайте старый или сжатый ролик чище и резче."
+    }
+  },
+  "guide_pages.enhance-video-quality.title": {
+    "localizations": {
+      "en": "How to Improve Video Quality on iPhone with AI (2026)",
+      "ru": "Как улучшить качество видео на iPhone | UScale"
+    },
+    "comment": "Page or section title; preserve product names."
+  },
+  "guide_pages.enhance-video-quality.description": {
+    "localizations": {
+      "en": "Improve video quality on iPhone: upscale a clip 2x or 4x, clean up grain and compression, and pick the upscale style that suits your footage — all on-device in UScale.",
+      "ru": "Как улучшить качество видео на iPhone: выберите исходный ролик, задайте увеличение, обработайте кадры локально и экспортируйте видео без лишнего сжатия."
+    },
+    "comment": "Description copy; keep factual claims unchanged."
+  },
+  "guide_pages.enhance-video-quality.h1": {
+    "localizations": {
+      "en": "How to improve video quality on iPhone",
+      "ru": "Как улучшить качество видео на iPhone"
+    }
+  },
+  "guide_pages.enhance-video-quality.kicker": {
+    "localizations": {
+      "en": "Video guide",
+      "ru": "Гайд по видео"
+    }
+  },
+  "guide_pages.enhance-video-quality.read_time": {
+    "localizations": {
+      "en": "5 min read",
+      "ru": "6 мин чтения"
+    }
+  },
+  "guide_pages.enhance-video-quality.answer": {
+    "localizations": {
+      "en": "To improve video quality on iPhone, open UScale, tap Upscale your media → Videos and pick the clip. Choose Upscale Video — or Enhance Animation for cartoons and 3D — set the scale to 2x or 4x, choose the Smoothed or Natural style, trim to the part you want and tap Upscale. Every frame is enhanced on your device and saved as a new video.",
+      "ru": "Откройте ролик в UScale, выберите улучшение видео и подходящий масштаб, дождитесь обработки и экспортируйте новую копию. Каждый кадр обрабатывается на iPhone или iPad, поэтому видео не требуется загружать на сервер."
+    }
+  },
+  "guide_pages.enhance-video-quality.supply": {
+    "localizations": {
+      "en": "A video clip in your photo library",
+      "ru": "Видеоролик"
+    }
+  },
+  "guide_pages.enhance-video-quality.intro": {
+    "localizations": {
+      "en": "Video enhancement is photo enhancement repeated a few thousand times, which is why so few phone apps do it well. UScale runs the same on-device models frame by frame and keeps them consistent, so the result does not shimmer between frames. You choose the scale, the style and the section to process before it starts — and nothing is uploaded, so a long clip has nowhere to queue.",
+      "ru": "Плохое видео может быть маленьким, шумным, пережатым или нерезким из-за движения. Увеличение разрешения помогает при низком размере кадра, очистка уменьшает шум и блоки сжатия, но ни один режим не исправит сильный смаз камеры во всех кадрах. Короткий тестовый фрагмент позволяет выбрать параметры до обработки длинного ролика."
+    }
+  },
+  "guide_pages.enhance-video-quality.why_h": {
+    "localizations": {
+      "en": "What limits your video quality",
+      "ru": "Почему это работает"
+    }
+  },
+  "guide_pages.enhance-video-quality.why_p": {
+    "localizations": {
+      "en": "It helps to know which problem you are actually fixing, because the same enhance pass addresses them to different degrees.",
+      "ru": "Видео состоит из последовательности кадров. Модель применяет улучшение к каждому кадру, сохраняя размер, частоту и порядок, а затем собирает результат. Нагрузка заметно выше, чем для одной фотографии, поэтому время и нагрев зависят от длины, разрешения и чипа устройства."
+    }
+  },
+  "guide_pages.enhance-video-quality.why_list.0": {
+    "localizations": {
+      "en": "Low resolution — an older 720p or 480p clip on a modern screen looks soft simply because it is being stretched.",
+      "ru": "Локальная обработка не отправляет ролик с устройства."
+    }
+  },
+  "guide_pages.enhance-video-quality.why_list.1": {
+    "localizations": {
+      "en": "Compression — footage downloaded or re-shared repeatedly develops blocking and smearing around motion.",
+      "ru": "Исходное разрешение и степень сжатия влияют на результат сильнее длины видео."
+    }
+  },
+  "guide_pages.enhance-video-quality.why_list.2": {
+    "localizations": {
+      "en": "Sensor noise — anything filmed indoors or at night carries grain that gets worse as you brighten it.",
+      "ru": "Стабильный короткий клип улучшить легче, чем тёмный ролик с быстрым движением."
+    }
+  },
+  "guide_pages.enhance-video-quality.why_list.3": {
+    "localizations": {
+      "en": "Analogue transfer artefacts — VHS and camcorder captures carry interlacing lines and colour bleed.",
+      "ru": "Повторное сохранение в мессенджере снова уменьшает качество."
+    }
+  },
+  "guide_pages.enhance-video-quality.why_list.4": {
+    "localizations": {
+      "en": "Soft optics — old phone and camcorder lenses were never sharp to begin with; AI can only recover so much."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.steps_h": {
+    "localizations": {
+      "en": "Enhance a video in UScale, step by step",
+      "ru": "Как сделать это в UScale"
+    }
+  },
+  "guide_pages.enhance-video-quality.steps_intro": {
+    "localizations": {
+      "en": "Everything below runs on your device — no upload, no queue, and it works in airplane mode.",
+      "ru": "Весь процесс занимает несколько касаний."
+    }
+  },
+  "guide_pages.enhance-video-quality.steps.0.h": {
+    "localizations": {
+      "en": "Open Upscale your media → Videos",
+      "ru": "Выберите оригинальный ролик"
+    }
+  },
+  "guide_pages.enhance-video-quality.steps.0.p": {
+    "localizations": {
+      "en": "On the home screen tap Upscale your media, switch to Videos and pick the clip. Work from the original recording where you can — a copy that came through a messaging app has already been re-compressed.",
+      "ru": "Используйте файл прямо из медиатеки или камеры. Скачанная из социальной сети копия уже могла потерять детали."
+    }
+  },
+  "guide_pages.enhance-video-quality.steps.1.h": {
+    "localizations": {
+      "en": "Choose Upscale Video or Enhance Animation",
+      "ru": "Обрежьте ненужные части"
+    }
+  },
+  "guide_pages.enhance-video-quality.steps.1.p": {
+    "localizations": {
+      "en": "Upscale Video is the general model for filmed footage. Enhance Animation is trained on drawn and rendered frames — use it for cartoons, anime and 3D graphics, where flat colour areas and clean line work need very different treatment from camera noise.",
+      "ru": "Для первого теста оставьте 5–10 секунд с типичным движением и сложными деталями."
+    }
+  },
+  "guide_pages.enhance-video-quality.steps.2.h": {
+    "localizations": {
+      "en": "Set the scale — 2x or 4x",
+      "ru": "Запустите улучшение видео"
+    }
+  },
+  "guide_pages.enhance-video-quality.steps.2.p": {
+    "localizations": {
+      "en": "2x is the safe default for footage that is already reasonably sharp. 4x is for genuinely low-resolution sources you want to fill a large screen with; it multiplies the pixels, and the processing time, by four.",
+      "ru": "Выберите масштаб и держите приложение на переднем плане. На длинных 4K-роликах устройство может нагреваться — это ожидаемо."
+    }
+  },
+  "guide_pages.enhance-video-quality.steps.3.h": {
+    "localizations": {
+      "en": "Pick the upscale style",
+      "ru": "Просмотрите движение"
+    }
+  },
+  "guide_pages.enhance-video-quality.steps.3.p": {
+    "localizations": {
+      "en": "Smoothed gives more contrast along edges and irons out noise more aggressively. Natural holds on to the original texture, which suits detailed footage — though it can leave artefacts in blurred backgrounds. If you are unsure, run a few seconds each way.",
+      "ru": "Проверьте не только отдельный кадр, но и лица, текстуры и тонкие линии во время движения."
+    }
+  },
+  "guide_pages.enhance-video-quality.steps.4.h": {
+    "localizations": {
+      "en": "Trim to the part you want",
+      "ru": "Экспортируйте результат"
+    }
+  },
+  "guide_pages.enhance-video-quality.steps.4.p": {
+    "localizations": {
+      "en": "Most clips have a usable core and a lot of dead time. Set the section to enhance before you start: fewer frames means proportionally less processing and a smaller output file.",
+      "ru": "Сохраните новую копию и передавайте её способом без дополнительного сжатия, например как файл."
+    }
+  },
+  "guide_pages.enhance-video-quality.steps.5.h": {
+    "localizations": {
+      "en": "Tap Upscale and leave the app open"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.steps.5.p": {
+    "localizations": {
+      "en": "Processing time depends on the resolution, the scale you chose, how many frames you selected and how fast your device is. Keep UScale in the foreground — sending it to the background can stop the pass — and put the phone on a charger for anything long. Then play the result next to the original, watching motion and faces."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.modes_h": {
+    "localizations": {
+      "en": "Upscale Video or Enhance Animation"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.modes_intro": {
+    "localizations": {
+      "en": "The two video modes use different models. Picking the wrong one is the single most common reason a result looks off, so choose by what was in front of the camera — or whether there was a camera at all."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.modes.0.t": {
+    "localizations": {
+      "en": "Upscale Video"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.modes.0.tag": {
+    "localizations": {
+      "en": "Filmed footage"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.modes.0.sub": {
+    "localizations": {
+      "en": "Camera recordings of the real world"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.modes.0.p": {
+    "localizations": {
+      "en": "Handles the things real sensors produce: grain, compression blocking, motion blur and soft optics. This is what you want for phone clips, camcorder transfers, drone shots and anything filmed."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.modes.1.t": {
+    "localizations": {
+      "en": "Enhance Animation"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.modes.1.sub": {
+    "localizations": {
+      "en": "Cartoons, anime and 3D renders"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.modes.1.p": {
+    "localizations": {
+      "en": "Drawn and rendered frames have no sensor noise — they have flat colour fields, hard outlines and clean gradients, and a photo model tends to soften exactly those. Enhance Animation keeps the line work crisp and the colour areas clean."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.options_h": {
+    "localizations": {
+      "en": "Scale and upscale style"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.options_intro": {
+    "localizations": {
+      "en": "Two settings shape the output, and both are visible before you start the pass: how far the frames are enlarged, and how the model treats detail on the way there."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.options.0.t": {
+    "localizations": {
+      "en": "2x"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.options.0.tag": {
+    "localizations": {
+      "en": "Start here"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.options.0.sub": {
+    "localizations": {
+      "en": "Doubles each dimension"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.options.0.p": {
+    "localizations": {
+      "en": "Enough for most footage, and the fastest to process. A 1080p clip lands at 4K, which is more than any social platform will keep after it re-compresses your upload."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.options.1.t": {
+    "localizations": {
+      "en": "4x"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.options.1.sub": {
+    "localizations": {
+      "en": "Quadruples each dimension"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.options.1.p": {
+    "localizations": {
+      "en": "For genuinely low-resolution sources — old 480p or 720p clips — that need to fill a large screen. Four times the pixels means roughly four times the work, so trim tightly before you run it."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.options.2.t": {
+    "localizations": {
+      "en": "Smoothed"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.options.2.sub": {
+    "localizations": {
+      "en": "Contrast edges, stronger clean-up"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.options.2.p": {
+    "localizations": {
+      "en": "Pushes edges harder and smooths more aggressively, which suppresses grain and compression noise. The safer choice for noisy, dark or heavily compressed footage, at the cost of some fine texture."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.options.3.t": {
+    "localizations": {
+      "en": "Natural"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.options.3.sub": {
+    "localizations": {
+      "en": "Keeps the original texture"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.options.3.p": {
+    "localizations": {
+      "en": "Preserves skin, fabric and foliage detail instead of ironing it flat — the better look when the source is clean. Watch defocused backgrounds, where it can bring out artefacts that the smoothed pass would have hidden."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.img_alt": {
+    "localizations": {
+      "en": "Improving video quality on iPhone with UScale — before and after frames of an upscaled clip",
+      "ru": "Кадр из видео до и после локального улучшения качества в UScale."
+    },
+    "comment": "Accessibility text describing an image."
+  },
+  "guide_pages.enhance-video-quality.img_caption": {
+    "localizations": {
+      "en": "A low-resolution clip upscaled frame by frame on-device.",
+      "ru": "Кадр из видео до и после локального улучшения качества в UScale."
+    }
+  },
+  "guide_pages.enhance-video-quality.video_caption": {
+    "localizations": {
+      "en": "A real before-and-after from the app: the same clip, upscaled with AI.",
+      "ru": "Кадр из видео до и после локального улучшения качества в UScale."
+    }
+  },
+  "guide_pages.enhance-video-quality.tips_h": {
+    "localizations": {
+      "en": "Tips for better video results",
+      "ru": "Как получить лучший результат"
+    }
+  },
+  "guide_pages.enhance-video-quality.tips.0": {
+    "localizations": {
+      "en": "Always work from the original recording. A clip you sent through a messaging app has been re-compressed and lost detail that no model can restore.",
+      "ru": "Сначала обработайте короткий фрагмент, затем весь ролик."
+    }
+  },
+  "guide_pages.enhance-video-quality.tips.1": {
+    "localizations": {
+      "en": "Keep the phone plugged in and the app on screen. Frame-by-frame AI is genuinely demanding, and a backgrounded app can lose the whole pass.",
+      "ru": "Закройте тяжёлые приложения и отключите режим энергосбережения."
+    }
+  },
+  "guide_pages.enhance-video-quality.tips.2": {
+    "localizations": {
+      "en": "Test on the hardest few seconds first — the darkest, softest or busiest part of the clip. If a setting survives that, it will hold up across the rest.",
+      "ru": "Не ожидайте восстановления читаемого текста из полностью размытого кадра."
+    }
+  },
+  "guide_pages.enhance-video-quality.tips.3": {
+    "localizations": {
+      "en": "If the footage is dark, enhancing it will also amplify the grain. Smoothed handles that better than Natural.",
+      "ru": "Сравнивайте результат на экране, для которого готовится видео."
+    }
+  },
+  "guide_pages.enhance-video-quality.tips.4": {
+    "localizations": {
+      "en": "Use Enhance Animation for anything drawn or rendered, even a screen recording of a game — there is no camera noise in those frames for the photo model to work with."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.tips.5": {
+    "localizations": {
+      "en": "For social media, 2x is usually enough: the platform re-compresses your upload anyway, so a huge 4x file mostly spends processing time you will not see."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.cta_h": {
+    "localizations": {
+      "en": "Fix your worst-looking clip",
+      "ru": "Улучшите важный ролик"
+    }
+  },
+  "guide_pages.enhance-video-quality.cta_p": {
+    "localizations": {
+      "en": "Five free seconds of video every day, processed entirely on your iPhone.",
+      "ru": "Начните с короткого фрагмента и выберите настройки до обработки всего видео."
+    }
+  },
+  "guide_pages.enhance-video-quality.faq_h": {
+    "localizations": {
+      "en": "Video enhancement: common questions",
+      "ru": "Частые вопросы"
+    }
+  },
+  "guide_pages.enhance-video-quality.faq.0.q": {
+    "localizations": {
+      "en": "How long does it take to enhance a video?",
+      "ru": "Видео загружается в облако?"
+    }
+  },
+  "guide_pages.enhance-video-quality.faq.0.a": {
+    "localizations": {
+      "en": "It depends on the clip's resolution, the scale you picked, how many frames you selected and how powerful your device is, because every frame is processed individually. A few trimmed seconds take about a minute on a recent iPhone; a long 4x pass takes considerably more.",
+      "ru": "Нет. Обычное улучшение видео выполняется на поддерживаемом iPhone или iPad."
+    }
+  },
+  "guide_pages.enhance-video-quality.faq.1.q": {
+    "localizations": {
+      "en": "Smoothed or Natural — which style should I use?",
+      "ru": "Почему обработка занимает много времени?"
+    }
+  },
+  "guide_pages.enhance-video-quality.faq.1.a": {
+    "localizations": {
+      "en": "Smoothed for noisy, dark or heavily compressed footage: it gives more contrast along edges and cleans up more. Natural for clean, detailed sources, because it holds the original texture — though blurred backgrounds can pick up artefacts. Trim a few seconds and try both; it is quick.",
+      "ru": "Модель обрабатывает каждый кадр отдельно. Длина, разрешение, выбранный масштаб и производительность чипа напрямую влияют на время."
+    }
+  },
+  "guide_pages.enhance-video-quality.faq.2.q": {
+    "localizations": {
+      "en": "Can I upscale a video to 4K?",
+      "ru": "Можно ли исправить видео из мессенджера?"
+    }
+  },
+  "guide_pages.enhance-video-quality.faq.2.a": {
+    "localizations": {
+      "en": "Yes. A 1080p clip run at 2x lands at 4K, and 4x goes well beyond it. Whether it looks like true 4K depends on how much real detail the source had to begin with.",
+      "ru": "Можно уменьшить шум и сделать края заметнее, но потерянные из-за сильного сжатия детали не всегда восстанавливаются точно."
+    }
+  },
+  "guide_pages.enhance-video-quality.faq.3.q": {
+    "localizations": {
+      "en": "What should I use for cartoons or 3D animation?"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.faq.3.a": {
+    "localizations": {
+      "en": "Enhance Animation. It is built for frames that were drawn or rendered rather than filmed, so it keeps outlines sharp and flat colour areas clean instead of treating them as noise to be smoothed."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.faq.4.q": {
+    "localizations": {
+      "en": "Why did my video stop processing?"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.faq.4.a": {
+    "localizations": {
+      "en": "Almost always because the app went to the background. Keep UScale in the foreground while it works, and leave the phone on a charger for long clips so it does not run flat mid-pass."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.faq.5.q": {
+    "localizations": {
+      "en": "Is my video uploaded anywhere?"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.enhance-video-quality.faq.5.a": {
+    "localizations": {
+      "en": "No. Video enhancement runs entirely on your device, which is also why it keeps working in airplane mode."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.slow-motion-video.nav_title": {
+    "localizations": {
+      "en": "Make slow motion",
+      "ru": "Сделать плавное замедление"
+    }
+  },
+  "guide_pages.slow-motion-video.card_title": {
+    "localizations": {
+      "en": "How to make a video slow motion",
+      "ru": "Как сделать плавное замедленное видео"
+    }
+  },
+  "guide_pages.slow-motion-video.card_desc": {
+    "localizations": {
+      "en": "Raise a clip's frame rate with AI, then slow the moment down.",
+      "ru": "Превратите обычный ролик в плавное slow motion."
+    }
+  },
+  "guide_pages.slow-motion-video.title": {
+    "localizations": {
+      "en": "How to Make a Video Slow Motion on iPhone with AI (2026)",
+      "ru": "Как сделать плавное замедленное видео на iPhone | UScale"
+    },
+    "comment": "Page or section title; preserve product names."
+  },
+  "guide_pages.slow-motion-video.description": {
+    "localizations": {
+      "en": "Turn a normal video into slow motion on iPhone: increase the frame rate 2x or 4x with AI frame interpolation, pick the moment to slow down, all on-device.",
+      "ru": "Как замедлить обычное видео на iPhone без рывков: выберите Slow Motion в UScale, задайте скорость и создайте промежуточные кадры с ИИ прямо на устройстве."
+    },
+    "comment": "Description copy; keep factual claims unchanged."
+  },
+  "guide_pages.slow-motion-video.h1": {
+    "localizations": {
+      "en": "How to make a video slow motion on iPhone",
+      "ru": "Как сделать плавное замедленное видео"
+    }
+  },
+  "guide_pages.slow-motion-video.kicker": {
+    "localizations": {
+      "en": "Video guide",
+      "ru": "Гайд по видео"
+    }
+  },
+  "guide_pages.slow-motion-video.read_time": {
+    "localizations": {
+      "en": "5 min read",
+      "ru": "6 мин чтения"
+    }
+  },
+  "guide_pages.slow-motion-video.answer": {
+    "localizations": {
+      "en": "To make a normal video slow motion on iPhone, open UScale, tap Upscale your media → Videos and pick the clip. Choose Slow Motion, set the output FPS to 2x or 4x and tap Increase FPS. When it finishes, mark the section you want slowed and save it as a new video.",
+      "ru": "Откройте короткий ролик в UScale, выберите Slow Motion и степень замедления. ИИ создаст промежуточные кадры между исходными, поэтому движение останется плавным даже для видео, которое не снималось в режиме slo-mo."
+    }
+  },
+  "guide_pages.slow-motion-video.supply": {
+    "localizations": {
+      "en": "A video clip filmed at normal speed",
+      "ru": "Короткий видеоролик"
+    }
+  },
+  "guide_pages.slow-motion-video.intro": {
+    "localizations": {
+      "en": "Slowing a clip down in a normal editor does not create slow motion — it creates a stutter. A 30 fps recording played at quarter speed still has only 30 frames to show you, each one held on screen four times as long. UScale fixes the cause instead: it generates the frames that were never filmed, doubling or quadrupling the frame rate, and only then do you choose which moment to slow down. All of it runs on your iPhone — nothing is uploaded.",
+      "ru": "Простое замедление удерживает каждый исходный кадр дольше и быстро превращает движение в слайд-шоу. Интерполяция анализирует положение объектов между соседними кадрами и создаёт недостающие фазы движения. Лучше всего работают короткие клипы с чётким объектом и стабильной камерой."
+    }
+  },
+  "guide_pages.slow-motion-video.why_h": {
+    "localizations": {
+      "en": "Why AI slow motion looks different",
+      "ru": "Почему это работает"
+    }
+  },
+  "guide_pages.slow-motion-video.why_p": {
+    "localizations": {
+      "en": "Frame interpolation analyses the motion between two consecutive frames and synthesises the frames that would have existed in between.",
+      "ru": "Для замедления в два раза требуется примерно один новый кадр между каждой парой исходных. При более сильном замедлении модель создаёт больше промежуточных изображений, поэтому возрастает вероятность артефактов вокруг рук, волос, колёс и пересекающихся объектов."
+    }
+  },
+  "guide_pages.slow-motion-video.why_list.0": {
+    "localizations": {
+      "en": "Slowing footage down without new frames gives choppy playback — the stuttery slow-mo everyone recognises.",
+      "ru": "Высокая исходная частота кадров даёт модели больше информации."
+    }
+  },
+  "guide_pages.slow-motion-video.why_list.1": {
+    "localizations": {
+      "en": "Frame blending, the older trick, cross-fades between frames and leaves ghosting around anything that moves.",
+      "ru": "Стабильная камера уменьшает двоение по краям."
+    }
+  },
+  "guide_pages.slow-motion-video.why_list.2": {
+    "localizations": {
+      "en": "AI interpolation tracks the motion and draws genuinely new frames, so movement stays crisp instead of smearing.",
+      "ru": "Сильное размытие движения переносится и на созданные кадры."
+    }
+  },
+  "guide_pages.slow-motion-video.why_list.3": {
+    "localizations": {
+      "en": "The Photos app can only slow clips you filmed in slo-mo mode at a high frame rate. UScale creates that frame rate afterwards, from ordinary footage.",
+      "ru": "Обработка выполняется локально на устройстве."
+    }
+  },
+  "guide_pages.slow-motion-video.why_list.4": {
+    "localizations": {
+      "en": "So any clip qualifies, including recordings from years ago — jumps, pets, sport, water, reveals."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.slow-motion-video.steps_h": {
+    "localizations": {
+      "en": "Make a slow-motion clip in UScale, step by step",
+      "ru": "Как сделать это в UScale"
+    }
+  },
+  "guide_pages.slow-motion-video.steps_intro": {
+    "localizations": {
+      "en": "Everything below happens on your device — no upload, no queue, and it works in airplane mode.",
+      "ru": "Весь процесс занимает несколько касаний."
+    }
+  },
+  "guide_pages.slow-motion-video.steps.0.h": {
+    "localizations": {
+      "en": "Open Upscale your media → Videos",
+      "ru": "Выберите подходящий момент"
+    }
+  },
+  "guide_pages.slow-motion-video.steps.0.p": {
+    "localizations": {
+      "en": "On the home screen tap Upscale your media, switch to Videos and pick the recording. Any normal-speed clip works; you do not need to have filmed in slo-mo mode.",
+      "ru": "Обрежьте клип вокруг движения, которое хотите подчеркнуть. Короткий ролик быстрее обработать и проще проверить."
+    }
+  },
+  "guide_pages.slow-motion-video.steps.1.h": {
+    "localizations": {
+      "en": "Choose Slow Motion",
+      "ru": "Откройте Slow Motion"
+    }
+  },
+  "guide_pages.slow-motion-video.steps.1.p": {
+    "localizations": {
+      "en": "Slow Motion is the frame-interpolation mode: rather than sharpening each frame, it adds frames between them. The line under the player shows the clip's current frame rate and the frame rate you will end up with.",
+      "ru": "Импортируйте видео и выберите инструмент плавного замедления."
+    }
+  },
+  "guide_pages.slow-motion-video.steps.2.h": {
+    "localizations": {
+      "en": "Set the output FPS — 2x or 4x",
+      "ru": "Задайте скорость"
+    }
+  },
+  "guide_pages.slow-motion-video.steps.2.p": {
+    "localizations": {
+      "en": "2x doubles the frame rate, so 30 fps becomes 60. 4x quadruples it to 120 and buys a much deeper slow-down, at the cost of asking the model to invent three frames for every filmed one.",
+      "ru": "Начните с умеренного замедления. Чем сильнее эффект, тем больше кадров должен создать ИИ."
+    }
+  },
+  "guide_pages.slow-motion-video.steps.3.h": {
+    "localizations": {
+      "en": "Tap Increase FPS and leave the app open",
+      "ru": "Проверьте границы объектов"
+    }
+  },
+  "guide_pages.slow-motion-video.steps.3.p": {
+    "localizations": {
+      "en": "Processing time depends on the resolution, the number of frames and how fast your device is. Keep UScale in the foreground — sending it to the background can stop the pass and you start over — and put the phone on a charger for anything long.",
+      "ru": "Просмотрите руки, волосы, ноги, колёса и места пересечения предметов. Именно там чаще появляется двоение."
+    }
+  },
+  "guide_pages.slow-motion-video.steps.4.h": {
+    "localizations": {
+      "en": "Pick the moment to slow down",
+      "ru": "Сохраните и добавьте звук"
+    }
+  },
+  "guide_pages.slow-motion-video.steps.4.p": {
+    "localizations": {
+      "en": "With the extra frames in place, mark the section you want in slow motion, much as you would on a slo-mo clip in the Photos app. The rest of the video carries on at normal speed.",
+      "ru": "Экспортируйте готовый клип. При необходимости замените или приглушите исходную аудиодорожку в видеоредакторе."
+    }
+  },
+  "guide_pages.slow-motion-video.steps.5.h": {
+    "localizations": {
+      "en": "Preview, then save"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.slow-motion-video.steps.5.p": {
+    "localizations": {
+      "en": "Play it back and watch the edges of moving objects — interpolation artefacts, when they appear, show up around hands, ball edges and splashing water. Save the result as a new video; the original clip is untouched."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.slow-motion-video.options_h": {
+    "localizations": {
+      "en": "Output FPS and the fast model"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.slow-motion-video.options_intro": {
+    "localizations": {
+      "en": "By default the pass runs on the strongest frame-interpolation models that fit on the device, so quality is the starting point. Two settings change it: the multiplier on the Slow Motion screen, and the model choice in Settings."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.slow-motion-video.options.0.t": {
+    "localizations": {
+      "en": "2x FPS"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.slow-motion-video.options.0.tag": {
+    "localizations": {
+      "en": "Start here"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.slow-motion-video.options.0.sub": {
+    "localizations": {
+      "en": "Doubles the frame rate"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.slow-motion-video.options.0.p": {
+    "localizations": {
+      "en": "One generated frame between every pair of real ones — the safest interpolation and the quickest to process. Enough for a natural, gentle slow-down of most footage."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.slow-motion-video.options.1.t": {
+    "localizations": {
+      "en": "4x FPS"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.slow-motion-video.options.1.sub": {
+    "localizations": {
+      "en": "Quadruples the frame rate"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.slow-motion-video.options.1.p": {
+    "localizations": {
+      "en": "Three generated frames for every filmed one, so the moment can be stretched much further and still play smoothly. It takes proportionally longer and asks more of the model on fast, erratic movement."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.slow-motion-video.options.2.t": {
+    "localizations": {
+      "en": "Fast model"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.slow-motion-video.options.2.sub": {
+    "localizations": {
+      "en": "In Settings — processes 3–5x faster"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.slow-motion-video.options.2.p": {
+    "localizations": {
+      "en": "A lighter interpolation model that runs three to five times quicker. Worth switching on for long or high-resolution clips built from large shapes and broad motion; leave it off when fine detail — faces, hair, text, fabric — has to survive into the new frames."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.slow-motion-video.img_alt": {
+    "localizations": {
+      "en": "Creating AI slow motion from a normal video clip in UScale on iPhone",
+      "ru": "Обычный ролик и плавная замедленная версия после интерполяции кадров в UScale."
+    },
+    "comment": "Accessibility text describing an image."
+  },
+  "guide_pages.slow-motion-video.img_caption": {
+    "localizations": {
+      "en": "UScale generating in-between frames to turn a normal clip into slow motion.",
+      "ru": "Обычный ролик и плавная замедленная версия после интерполяции кадров в UScale."
+    }
+  },
+  "guide_pages.slow-motion-video.video_caption": {
+    "localizations": {
+      "en": "AI slow motion generated on-device from a normal-speed recording.",
+      "ru": "Обычный ролик и плавная замедленная версия после интерполяции кадров в UScale."
+    }
+  },
+  "guide_pages.slow-motion-video.tips_h": {
+    "localizations": {
+      "en": "Tips for smooth slow motion",
+      "ru": "Как получить лучший результат"
+    }
+  },
+  "guide_pages.slow-motion-video.tips.0": {
+    "localizations": {
+      "en": "Keep the phone plugged in and the app on screen. Frame interpolation is genuinely demanding, and a backgrounded app can lose the whole pass.",
+      "ru": "Используйте исходник без предварительного замедления."
+    }
+  },
+  "guide_pages.slow-motion-video.tips.1": {
+    "localizations": {
+      "en": "Short beats long. One to three seconds of real time is where slow motion lands hardest, and fewer frames means far less processing.",
+      "ru": "Сцены с одним движущимся объектом обычно чище толпы или конфетти."
+    }
+  },
+  "guide_pages.slow-motion-video.tips.2": {
+    "localizations": {
+      "en": "Steady footage interpolates best — heavy camera shake gives the model conflicting motion cues.",
+      "ru": "При артефактах уменьшите степень замедления."
+    }
+  },
+  "guide_pages.slow-motion-video.tips.3": {
+    "localizations": {
+      "en": "Good light means a shorter exposure per frame, so less motion blur is baked into the source and the generated frames come out cleaner.",
+      "ru": "Сохраняйте готовый ролик до публикации, чтобы социальная сеть сжимала его только один раз."
+    }
+  },
+  "guide_pages.slow-motion-video.tips.4": {
+    "localizations": {
+      "en": "Avoid clips with a cut inside them. Interpolating across a scene change produces a strange morph between two unrelated shots."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.slow-motion-video.tips.5": {
+    "localizations": {
+      "en": "If the source is low resolution, run the enhance pass first and the FPS increase after — there are fewer frames to upscale, and the interpolation then works from sharper ones."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.slow-motion-video.cta_h": {
+    "localizations": {
+      "en": "Make your first slow-motion clip",
+      "ru": "Замедлите движение без рывков"
+    }
+  },
+  "guide_pages.slow-motion-video.cta_p": {
+    "localizations": {
+      "en": "AI frame interpolation that runs on your iPhone, with five free seconds of video every day.",
+      "ru": "Создайте плавный slow motion из обычного видео прямо на iPhone."
+    }
+  },
+  "guide_pages.slow-motion-video.faq_h": {
+    "localizations": {
+      "en": "AI slow motion: common questions",
+      "ru": "Частые вопросы"
+    }
+  },
+  "guide_pages.slow-motion-video.faq.0.q": {
+    "localizations": {
+      "en": "Do I need to film in slo-mo mode first?",
+      "ru": "Нужно ли заранее снимать в Slow Motion?"
+    }
+  },
+  "guide_pages.slow-motion-video.faq.0.a": {
+    "localizations": {
+      "en": "No — that is the point. UScale generates the extra frames from a normal-speed recording, so a clip you filmed months ago can still become slow motion.",
+      "ru": "Нет. UScale может создать промежуточные кадры для обычного ролика, хотя исходные 60 fps обычно дают более чистый результат, чем 24 или 30 fps."
+    }
+  },
+  "guide_pages.slow-motion-video.faq.1.q": {
+    "localizations": {
+      "en": "How is this different from slowing a clip in the Photos app?",
+      "ru": "Почему вокруг рук появляется двоение?"
+    }
+  },
+  "guide_pages.slow-motion-video.faq.1.a": {
+    "localizations": {
+      "en": "Photos can only make slow motion out of footage that was already filmed at a high frame rate; slowing an ordinary clip there just stretches the frames you have, and playback stutters. UScale creates the missing frames first, then lets you pick the moment to slow down.",
+      "ru": "Модель должна угадать положение быстро движущегося объекта между кадрами. Пересечения, размытие и резкая смена направления усложняют эту задачу."
+    }
+  },
+  "guide_pages.slow-motion-video.faq.2.q": {
+    "localizations": {
+      "en": "Should I choose 2x or 4x?",
+      "ru": "Нужен ли интернет?"
+    }
+  },
+  "guide_pages.slow-motion-video.faq.2.a": {
+    "localizations": {
+      "en": "2x for a natural slow-down and the fastest processing, 4x when you want the moment stretched much further. The frame rate you start from and the one you will get are both shown under the player before you tap Increase FPS.",
+      "ru": "Нет. Интерполяция выполняется на поддерживаемом iPhone или iPad."
+    }
+  },
+  "guide_pages.slow-motion-video.faq.3.q": {
+    "localizations": {
+      "en": "How long does it take to process?"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.slow-motion-video.faq.3.a": {
+    "localizations": {
+      "en": "It depends on the video's resolution, how many frames it contains and how powerful your device is — every generated frame is real work. If a clip is large, the fast model in Settings gets through it three to five times quicker."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.slow-motion-video.faq.4.q": {
+    "localizations": {
+      "en": "Why did my video stop processing?"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.slow-motion-video.faq.4.a": {
+    "localizations": {
+      "en": "Almost always because the app went to the background. Keep UScale in the foreground while it works, and leave the phone on a charger for long clips so it does not run flat mid-pass."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.slow-motion-video.faq.5.q": {
+    "localizations": {
+      "en": "Does slow motion processing happen in the cloud?"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.slow-motion-video.faq.5.a": {
+    "localizations": {
+      "en": "No. Frame interpolation runs on your device, which is why it works with no signal and why your footage is never uploaded."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.brighten-dark-photos.nav_title": {
+    "localizations": {
+      "en": "Brighten dark photos",
+      "ru": "Осветлить тёмное фото"
+    }
+  },
+  "guide_pages.brighten-dark-photos.card_title": {
+    "localizations": {
+      "en": "How to brighten a dark photo",
+      "ru": "Как осветлить тёмную фотографию"
+    }
+  },
+  "guide_pages.brighten-dark-photos.card_desc": {
+    "localizations": {
+      "en": "Recover underexposed night, concert and indoor shots.",
+      "ru": "Верните детали в тенях без пятнистого шума."
+    }
+  },
+  "guide_pages.brighten-dark-photos.title": {
+    "localizations": {
+      "en": "How to Brighten a Dark Photo on iPhone Without Ruining It",
+      "ru": "Как осветлить тёмную фотографию без потери качества | UScale"
+    },
+    "comment": "Page or section title; preserve product names."
+  },
+  "guide_pages.brighten-dark-photos.description": {
+    "localizations": {
+      "en": "Fix underexposed iPhone photos. Why raising exposure adds noise, what AI brightening does differently, and how to rescue a dark photo in UScale in one tap.",
+      "ru": "Как сделать тёмное фото светлее на iPhone: используйте Enlighten в UScale, восстановите детали в тенях и не усиливайте цветной шум без загрузки в облако."
+    },
+    "comment": "Description copy; keep factual claims unchanged."
+  },
+  "guide_pages.brighten-dark-photos.h1": {
+    "localizations": {
+      "en": "How to brighten a dark photo on iPhone without ruining it",
+      "ru": "Как осветлить тёмную фотографию"
+    }
+  },
+  "guide_pages.brighten-dark-photos.kicker": {
+    "localizations": {
+      "en": "Photo guide",
+      "ru": "Гайд по фото"
+    }
+  },
+  "guide_pages.brighten-dark-photos.read_time": {
+    "localizations": {
+      "en": "2 min read",
+      "ru": "6 мин чтения"
+    }
+  },
+  "guide_pages.brighten-dark-photos.answer": {
+    "localizations": {
+      "en": "To brighten a dark photo on iPhone, open UScale, tap Upscale your media → Photos and pick the underexposed shot. Choose Enlighten and tap Upscale — there is nothing to configure. The pass runs on your iPhone and saves the brightened photo as a new copy.",
+      "ru": "Откройте недоэкспонированный снимок в UScale и выберите Enlighten. Модель осветлит тени, одновременно подавляя шум и сохраняя яркие участки. Обработка выполняется на устройстве и не требует загрузки файла."
+    }
+  },
+  "guide_pages.brighten-dark-photos.supply": {
+    "localizations": {
+      "en": "An underexposed photo in your library",
+      "ru": "Тёмная фотография"
+    }
+  },
+  "guide_pages.brighten-dark-photos.intro": {
+    "localizations": {
+      "en": "Raising exposure in a normal editor multiplies the shadows and their noise equally, which is why a rescued night photo comes out grainy and desaturated. Enlighten lifts and denoises in the same pass, on your iPhone, with nothing to set.",
+      "ru": "Обычный ползунок экспозиции одинаково усиливает полезный сигнал и шум. В глубоких тенях появляются цветные пятна, а фонари и окна могут стать белыми. Enlighten анализирует разные области кадра отдельно: сильнее поднимает тени и осторожнее обращается со светами."
+    }
+  },
+  "guide_pages.brighten-dark-photos.why_h": {
+    "localizations": {
+      "en": "Why dark photos fall apart when you brighten them",
+      "ru": "Почему это работает"
+    }
+  },
+  "guide_pages.brighten-dark-photos.why_p": {
+    "localizations": {
+      "en": "How much comes back depends on what is still left in the shadows.",
+      "ru": "Модель оценивает локальную яркость, цветовой шум и границы объектов. Она восстанавливает контраст в тенях до общего повышения яркости, поэтому результат выглядит чище простой коррекции экспозиции."
+    }
+  },
+  "guide_pages.brighten-dark-photos.why_list.0": {
+    "localizations": {
+      "en": "Shadows carry the worst signal-to-noise ratio in the frame, so lifting them turns noise into visible blotches.",
+      "ru": "Недоэкспонированный RAW или оригинальный JPEG содержит больше данных, чем скриншот."
+    }
+  },
+  "guide_pages.brighten-dark-photos.why_list.1": {
+    "localizations": {
+      "en": "Colour goes first — deep shadows lose saturation before they lose detail.",
+      "ru": "Света нужно проверять отдельно от теней."
+    }
+  },
+  "guide_pages.brighten-dark-photos.why_list.2": {
+    "localizations": {
+      "en": "Phone HDR already lifted the shadows once, so there is less headroom than the photo suggests.",
+      "ru": "Цветной шум заметнее всего на коже и однотонных стенах."
+    }
+  },
+  "guide_pages.brighten-dark-photos.why_list.3": {
+    "localizations": {
+      "en": "Pure black holds no data at all. Very dark is fixable; black is not.",
+      "ru": "Локальная обработка доступна в авиарежиме."
+    }
+  },
+  "guide_pages.brighten-dark-photos.steps_h": {
+    "localizations": {
+      "en": "Brighten a dark photo in UScale, step by step",
+      "ru": "Как сделать это в UScale"
+    }
+  },
+  "guide_pages.brighten-dark-photos.steps_intro": {
+    "localizations": {
+      "en": "Two taps once the photo is picked.",
+      "ru": "Весь процесс занимает несколько касаний."
+    }
+  },
+  "guide_pages.brighten-dark-photos.steps.0.h": {
+    "localizations": {
+      "en": "Open Upscale your media → Photos",
+      "ru": "Выберите оригинал"
+    }
+  },
+  "guide_pages.brighten-dark-photos.steps.0.p": {
+    "localizations": {
+      "en": "Pick the original from the camera roll — a screenshot or a re-shared copy has already thrown away the shadow detail. Several photos can go in one batch.",
+      "ru": "Используйте файл прямо с камеры. Не повышайте экспозицию и резкость несколько раз в других приложениях перед UScale."
+    }
+  },
+  "guide_pages.brighten-dark-photos.steps.1.h": {
+    "localizations": {
+      "en": "Choose Enlighten",
+      "ru": "Запустите Enlighten"
+    }
+  },
+  "guide_pages.brighten-dark-photos.steps.1.p": {
+    "localizations": {
+      "en": "It lifts the shadows, brings colour back into them and denoises in the same pass. There are no options: the model decides how far to lift each area.",
+      "ru": "Откройте инструмент осветления и дождитесь предпросмотра на устройстве."
+    }
+  },
+  "guide_pages.brighten-dark-photos.steps.2.h": {
+    "localizations": {
+      "en": "Tap Upscale",
+      "ru": "Сравните тени и света"
+    }
+  },
+  "guide_pages.brighten-dark-photos.steps.2.p": {
+    "localizations": {
+      "en": "It runs on your iPhone, works in airplane mode and uploads nothing. A very large photo is scaled down slightly first so it fits into one on-device pass, so the result can come back a little smaller than the original.",
+      "ru": "Передвиньте ползунок «до/после». Проверьте лица в тени, небо, лампы и окна."
+    }
+  },
+  "guide_pages.brighten-dark-photos.steps.3.h": {
+    "localizations": {
+      "en": "Zoom in, then save",
+      "ru": "Проверьте шум"
+    }
+  },
+  "guide_pages.brighten-dark-photos.steps.3.p": {
+    "localizations": {
+      "en": "Check faces and the darkest corners before saving. The brightened photo is saved as a new copy and the original stays untouched.",
+      "ru": "Увеличьте тёмные однотонные участки. Если цветные пятна слишком заметны, выберите более мягкий результат."
+    }
+  },
+  "guide_pages.brighten-dark-photos.img_alt": {
+    "localizations": {
+      "en": "A dark concert photo brightened with AI in UScale on iPhone, shadows recovered",
+      "ru": "Тёмный портрет до и после осветления и восстановления деталей в тенях."
+    },
+    "comment": "Accessibility text describing an image."
+  },
+  "guide_pages.brighten-dark-photos.img_caption": {
+    "localizations": {
+      "en": "A very dark concert photo with shadow detail and colour recovered.",
+      "ru": "Тёмный портрет до и после осветления и восстановления деталей в тенях."
+    }
+  },
+  "guide_pages.brighten-dark-photos.tips_h": {
+    "localizations": {
+      "en": "Tips for rescuing dark shots",
+      "ru": "Как получить лучший результат"
+    }
+  },
+  "guide_pages.brighten-dark-photos.tips.0": {
+    "localizations": {
+      "en": "Shoot in RAW or ProRAW when you can — far more shadow information survives for the model to work with.",
+      "ru": "Не пытайтесь сделать ночной кадр похожим на дневной."
+    }
+  },
+  "guide_pages.brighten-dark-photos.tips.1": {
+    "localizations": {
+      "en": "Need the resolution back after the resize? Run the brightened copy through Regular Upscale 2x or 4x.",
+      "ru": "Сначала осветлите, затем при необходимости слегка скорректируйте цвет."
+    }
+  },
+  "guide_pages.brighten-dark-photos.tips.2": {
+    "localizations": {
+      "en": "Do not run Enlighten twice. The second pass mostly amplifies what the first one invented.",
+      "ru": "На концертах следите за красными и синими прожекторами — они легко теряют детали."
+    }
+  },
+  "guide_pages.brighten-dark-photos.tips.3": {
+    "localizations": {
+      "en": "Dark and blurry? Brighten first, then unblur — denoising a lifted image beats lifting a sharpened one.",
+      "ru": "Для серии с одинаковым светом используйте пакетную обработку."
+    }
+  },
+  "guide_pages.brighten-dark-photos.cta_h": {
+    "localizations": {
+      "en": "Rescue your dark photos",
+      "ru": "Верните детали из теней"
+    }
+  },
+  "guide_pages.brighten-dark-photos.cta_p": {
+    "localizations": {
+      "en": "AI brightening and denoising in one tap, running on your iPhone — two free photos a day.",
+      "ru": "Осветлите недоэкспонированный снимок без регистрации и загрузки файла."
+    }
+  },
+  "guide_pages.brighten-dark-photos.faq_h": {
+    "localizations": {
+      "en": "Brightening photos: common questions",
+      "ru": "Частые вопросы"
+    }
+  },
+  "guide_pages.brighten-dark-photos.faq.0.q": {
+    "localizations": {
+      "en": "Why does the Photos app exposure slider make my photo look worse?",
+      "ru": "Можно ли восстановить полностью чёрные участки?"
+    }
+  },
+  "guide_pages.brighten-dark-photos.faq.0.a": {
+    "localizations": {
+      "en": "It multiplies everything in the shadows, sensor noise included, with no idea what the scene should look like. Enlighten brightens and denoises together.",
+      "ru": "Если пиксели записаны как чистый чёрный без сигнала, точную деталь вернуть нельзя. Модель лучше работает там, где информация сохранилась, но скрыта шумом."
+    }
+  },
+  "guide_pages.brighten-dark-photos.faq.1.q": {
+    "localizations": {
+      "en": "Why did my brightened photo come back slightly smaller?",
+      "ru": "Почему обычная экспозиция добавляет шум?"
+    }
+  },
+  "guide_pages.brighten-dark-photos.faq.1.a": {
+    "localizations": {
+      "en": "A very large image is scaled down a little so it fits into what your iPhone can process in one pass. Run the result through Regular Upscale 2x or 4x to get the pixels back.",
+      "ru": "Она усиливает и полезный сигнал, и ошибки сенсора. Enlighten старается сначала отделить шум от деталей."
+    }
+  },
+  "guide_pages.brighten-dark-photos.faq.2.q": {
+    "localizations": {
+      "en": "Does UScale upload my dark photos to brighten them?",
+      "ru": "Фото отправляется на сервер?"
+    }
+  },
+  "guide_pages.brighten-dark-photos.faq.2.a": {
+    "localizations": {
+      "en": "No. Enlighten is an on-device mode: it works in airplane mode, needs no account and the photo never leaves your iPhone.",
+      "ru": "Нет. Enlighten относится к инструментам, которые работают на iPhone или iPad."
+    }
+  },
+  "guide_pages.brighten-dark-photos.faq.3.q": {
+    "localizations": {
+      "en": "Does brightening change the colours?"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.brighten-dark-photos.faq.3.a": {
+    "localizations": {
+      "en": "It restores them. Deep shadows lose saturation first, so the pass usually brings colour back to something close to what you saw at the time."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.film-negative-to-photo.nav_title": {
+    "localizations": {
+      "en": "Negatives to photos",
+      "ru": "Превратить негатив в фото"
+    }
+  },
+  "guide_pages.film-negative-to-photo.card_title": {
+    "localizations": {
+      "en": "How to turn film negatives into photos",
+      "ru": "Как превратить плёночный негатив в фотографию"
+    }
+  },
+  "guide_pages.film-negative-to-photo.card_desc": {
+    "localizations": {
+      "en": "Digitise and invert 35mm negatives with your phone.",
+      "ru": "Инвертируйте плёнку, нейтрализуйте маску и восстановите кадр."
+    }
+  },
+  "guide_pages.film-negative-to-photo.title": {
+    "localizations": {
+      "en": "How to Convert Film Negatives to Photos with Your Phone",
+      "ru": "Как оцифровать плёночный негатив на iPhone | UScale"
+    },
+    "comment": "Page or section title; preserve product names."
+  },
+  "guide_pages.film-negative-to-photo.description": {
+    "localizations": {
+      "en": "Turn 35mm film negatives into photos with your iPhone: how to light and photograph a strip, then invert and restore it with the Negative option.",
+      "ru": "Как оцифровать плёночный негатив телефоном с ИИ: равномерно подсветите кадр, включите Negative в UScale, восстановите цвета и сохраните позитив."
+    },
+    "comment": "Description copy; keep factual claims unchanged."
+  },
+  "guide_pages.film-negative-to-photo.h1": {
+    "localizations": {
+      "en": "How to turn film negatives into photos",
+      "ru": "Как превратить плёночный негатив в фотографию"
+    }
+  },
+  "guide_pages.film-negative-to-photo.kicker": {
+    "localizations": {
+      "en": "Restoration guide",
+      "ru": "Гайд по фото"
+    }
+  },
+  "guide_pages.film-negative-to-photo.read_time": {
+    "localizations": {
+      "en": "5 min read",
+      "ru": "6 мин чтения"
+    }
+  },
+  "guide_pages.film-negative-to-photo.answer": {
+    "localizations": {
+      "en": "To convert a film negative into a photo, photograph it on an even white light source, then open UScale, tap Upscale your media → Photos and choose Photo restoration. Turn on Negative in Advanced options, pick a mode and tap Upscale. About 40 seconds later the frame comes back inverted, colour-corrected and cleaned up.",
+      "ru": "Положите негатив на ровную белую подсветку, снимите его строго сверху без отражений, откройте кадр в Photo Restoration и включите Negative. UScale инвертирует тона, нейтрализует оранжевую маску цветной плёнки и восстановит повреждения в облаке."
+    }
+  },
+  "guide_pages.film-negative-to-photo.supply": {
+    "localizations": {
+      "en": "A 35mm negative strip and a bright, even light source",
+      "ru": "Снимок плёночного негатива"
+    }
+  },
+  "guide_pages.film-negative-to-photo.intro": {
+    "localizations": {
+      "en": "A drawer of negatives is often the highest-quality version of a family archive that still exists — negatives hold more detail than the small prints made from them. The obstacle is simply that they are hard to look at. Your phone plus a white screen solves that in about two minutes per frame, and the Negative switch inside Photo restoration handles the part that trips most people up: inverting the image without ending up with a cyan, lifeless picture.",
+      "ru": "Главная сложность — получить равномерно подсвеченный исходник. Экран с белым фоном можно использовать только через матовый рассеиватель, чтобы не снять сетку пикселей. Между телефоном и плёнкой держите их строго параллельно, а вокруг кадра оставьте немного прозрачной основы для оценки маски."
+    }
+  },
+  "guide_pages.film-negative-to-photo.why_h": {
+    "localizations": {
+      "en": "What makes a negative hard to digitise",
+      "ru": "Почему это работает"
+    }
+  },
+  "guide_pages.film-negative-to-photo.why_p": {
+    "localizations": {
+      "en": "Several things go wrong before software gets involved, and each has a simple fix.",
+      "ru": "Чёрно-белый негатив требует инверсии яркости, а цветной — ещё и компенсации оранжевой основы. После нормализации модель реставрации удаляет пыль и царапины и при выбранном режиме восстанавливает цвет и детали."
+    }
+  },
+  "guide_pages.film-negative-to-photo.why_list.0": {
+    "localizations": {
+      "en": "The orange base — colour negative film has a built-in mask that must be neutralised, or a straight inversion comes out cyan and flat.",
+      "ru": "Равномерная подсветка важнее разрешения камеры."
+    }
+  },
+  "guide_pages.film-negative-to-photo.why_list.1": {
+    "localizations": {
+      "en": "Uneven backlight — a bare lamp behind the film creates a hotspot; you need a diffused, even source instead.",
+      "ru": "Рассеиватель скрывает пиксели экрана и горячие точки."
+    }
+  },
+  "guide_pages.film-negative-to-photo.why_list.2": {
+    "localizations": {
+      "en": "Reflections — anything shiny in front of the film shows up in the capture, including your own phone.",
+      "ru": "Опция Negative выполняет инверсию до реставрации."
+    }
+  },
+  "guide_pages.film-negative-to-photo.why_list.3": {
+    "localizations": {
+      "en": "Dust — negatives attract it, and every speck becomes a visible white dot after inversion.",
+      "ru": "Restore сохраняет монохром, Enhanced Colorize создаёт цветной результат."
+    }
+  },
+  "guide_pages.film-negative-to-photo.why_list.4": {
+    "localizations": {
+      "en": "Curl and age — film rolled up for decades will not sit flat, and colour negatives fade and shift just as prints do."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.film-negative-to-photo.steps_h": {
+    "localizations": {
+      "en": "Digitise a negative in UScale, step by step",
+      "ru": "Как сделать это в UScale"
+    }
+  },
+  "guide_pages.film-negative-to-photo.steps_intro": {
+    "localizations": {
+      "en": "A tablet or laptop showing a plain white screen makes an excellent light table.",
+      "ru": "Весь процесс занимает несколько касаний."
+    }
+  },
+  "guide_pages.film-negative-to-photo.steps.0.h": {
+    "localizations": {
+      "en": "Build a light table",
+      "ru": "Подготовьте подсветку"
+    }
+  },
+  "guide_pages.film-negative-to-photo.steps.0.p": {
+    "localizations": {
+      "en": "Open a plain white image full-screen on a tablet or laptop at maximum brightness. Lay a sheet of white paper over it to diffuse the pixels, then place the negative on top.",
+      "ru": "Используйте световой стол или белый экран под матовым листом. Уберите внешние отражения и протрите поверхность от пыли."
+    }
+  },
+  "guide_pages.film-negative-to-photo.steps.1.h": {
+    "localizations": {
+      "en": "Photograph the frame",
+      "ru": "Снимите негатив"
+    }
+  },
+  "guide_pages.film-negative-to-photo.steps.1.p": {
+    "localizations": {
+      "en": "Hold the phone parallel to the film and fill the frame with a single negative. Tap to focus on the film itself, keep the room dim, and check that no lamp behind you reflects off the surface.",
+      "ru": "Расположите iPhone строго параллельно плёнке, заполните кадром большую часть изображения и заблокируйте фокус."
+    }
+  },
+  "guide_pages.film-negative-to-photo.steps.2.h": {
+    "localizations": {
+      "en": "Open Upscale your media → Photos and choose Photo restoration",
+      "ru": "Включите Negative"
+    }
+  },
+  "guide_pages.film-negative-to-photo.steps.2.p": {
+    "localizations": {
+      "en": "Select your captures — a whole strip photographed frame by frame can go in as one batch. Photo restoration is the mode that carries the negative tooling, and it runs on our servers.",
+      "ru": "Откройте Photo Restoration, выберите снимок и включите дополнительную опцию Negative."
+    }
+  },
+  "guide_pages.film-negative-to-photo.steps.3.h": {
+    "localizations": {
+      "en": "Turn on Negative in Advanced options",
+      "ru": "Выберите режим"
+    }
+  },
+  "guide_pages.film-negative-to-photo.steps.3.p": {
+    "localizations": {
+      "en": "It inverts the image and normalises the colours before restoration runs, which is what neutralises the orange mask rather than merely flipping it to cyan.",
+      "ru": "Для чёрно-белого позитива используйте Restore. Для цветного негатива начните с Enhanced Colorize и сравните с Restore & Colorize."
+    }
+  },
+  "guide_pages.film-negative-to-photo.steps.4.h": {
+    "localizations": {
+      "en": "Pick a mode for the restoration pass",
+      "ru": "Проверьте края и цвет"
+    }
+  },
+  "guide_pages.film-negative-to-photo.steps.4.p": {
+    "localizations": {
+      "en": "Enhanced Colorize for a colour negative, or when a black-and-white negative should end up in colour. Restore for a black-and-white negative that should stay monochrome.",
+      "ru": "Оцените пыль, царапины, оттенок кожи и нейтральные предметы. Сохраните результат отдельно от исходного снимка негатива."
+    }
+  },
+  "guide_pages.film-negative-to-photo.steps.5.h": {
+    "localizations": {
+      "en": "Tap Upscale, then save the positive"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.film-negative-to-photo.steps.5.p": {
+    "localizations": {
+      "en": "About 40 seconds later the inverted, corrected and cleaned frame comes back as a positive photo. Zoom in to check the grain and the faces, then save it — and keep the raw negative capture as your digital master."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.film-negative-to-photo.demo.h": {
+    "localizations": {
+      "en": "See what the Negative switch does",
+      "ru": "Как работает переключатель Negative"
+    }
+  },
+  "guide_pages.film-negative-to-photo.demo.intro": {
+    "localizations": {
+      "en": "This is the step people get wrong most often. Below is a black-and-white negative photographed straight off a light table — press the button to run the same inversion the Negative option applies before restoration starts.",
+      "ru": "Нажмите на переключатель, чтобы увидеть инверсию, которую UScale выполняет до восстановления."
+    }
+  },
+  "guide_pages.film-negative-to-photo.demo.label": {
+    "localizations": {
+      "en": "Negative",
+      "ru": "Negative"
+    }
+  },
+  "guide_pages.film-negative-to-photo.demo.sub": {
+    "localizations": {
+      "en": "Invert and normalize photo colors before restoration",
+      "ru": "Инвертировать и нормализовать цвета"
+    }
+  },
+  "guide_pages.film-negative-to-photo.demo.hint_off": {
+    "localizations": {
+      "en": "Tap to turn on",
+      "ru": "Включить"
+    }
+  },
+  "guide_pages.film-negative-to-photo.demo.hint_on": {
+    "localizations": {
+      "en": "Tap to turn off",
+      "ru": "Выключить"
+    }
+  },
+  "guide_pages.film-negative-to-photo.demo.alt_off": {
+    "localizations": {
+      "en": "A black and white film negative of two men in a motorboat, photographed on a light table",
+      "ru": "Чёрно-белый плёночный негатив на световом столе"
+    }
+  },
+  "guide_pages.film-negative-to-photo.demo.alt_on": {
+    "localizations": {
+      "en": "The same film negative converted into a positive photograph by the Negative option in UScale",
+      "ru": "Тот же негатив после преобразования в позитив в UScale"
+    }
+  },
+  "guide_pages.film-negative-to-photo.demo.caption": {
+    "localizations": {
+      "en": "The Negative option inverts the frame and normalises its tones; on colour film the same step neutralises the orange mask.",
+      "ru": "Negative инвертирует кадр и нормализует тона; на цветной плёнке также нейтрализуется оранжевая маска."
+    }
+  },
+  "guide_pages.film-negative-to-photo.modes_h": {
+    "localizations": {
+      "en": "Which mode to run after the inversion",
+      "ru": "Четыре режима восстановления"
+    }
+  },
+  "guide_pages.film-negative-to-photo.modes_intro": {
+    "localizations": {
+      "en": "Negative only handles the inversion. The mode decides what happens to the picture underneath — these are the app's previews.",
+      "ru": "Выбор зависит от состояния снимка и нужного уровня вмешательства."
+    }
+  },
+  "guide_pages.film-negative-to-photo.modes.0.img": {
+    "localizations": {
+      "en": "enhanced_colorize",
+      "ru": "enhanced_colorize"
+    },
+    "shouldTranslate": false
+  },
+  "guide_pages.film-negative-to-photo.modes.0.img_alt": {
+    "localizations": {
+      "en": "Enhanced Colorize mode preview in UScale — the same portrait colorized with sharper detail",
+      "ru": "Предпросмотр Enhanced Colorize в UScale"
+    },
+    "comment": "Accessibility text describing an image."
+  },
+  "guide_pages.film-negative-to-photo.modes.0.t": {
+    "localizations": {
+      "en": "Enhanced Colorize",
+      "ru": "Enhanced Colorize"
+    }
+  },
+  "guide_pages.film-negative-to-photo.modes.0.tag": {
+    "localizations": {
+      "en": "Best results",
+      "ru": "Лучший результат"
+    }
+  },
+  "guide_pages.film-negative-to-photo.modes.0.sub": {
+    "localizations": {
+      "en": "Restore and colorize with improved sharpness",
+      "ru": "Восстановить, раскрасить и повысить резкость"
+    }
+  },
+  "guide_pages.film-negative-to-photo.modes.0.p": {
+    "localizations": {
+      "en": "The right default for a faded colour negative, where the dyes have shifted so far that the colour has to be rebuilt. It also colourises black-and-white film.",
+      "ru": "Оптимальный старт для большинства старых снимков: исправляет повреждения, добавляет цвет и восстанавливает детали."
+    }
+  },
+  "guide_pages.film-negative-to-photo.modes.1.img": {
+    "localizations": {
+      "en": "colorize",
+      "ru": "colorize"
+    },
+    "shouldTranslate": false
+  },
+  "guide_pages.film-negative-to-photo.modes.1.img_alt": {
+    "localizations": {
+      "en": "Restore & Colorize mode preview in UScale — the same old portrait repaired and colorized",
+      "ru": "Предпросмотр Restore & Colorize в UScale"
+    },
+    "comment": "Accessibility text describing an image."
+  },
+  "guide_pages.film-negative-to-photo.modes.1.t": {
+    "localizations": {
+      "en": "Restore & Colorize",
+      "ru": "Restore & Colorize"
+    }
+  },
+  "guide_pages.film-negative-to-photo.modes.1.sub": {
+    "localizations": {
+      "en": "Restore and colorize the photo",
+      "ru": "Восстановить и раскрасить"
+    }
+  },
+  "guide_pages.film-negative-to-photo.modes.1.p": {
+    "localizations": {
+      "en": "Repair and colour without the extra sharpening — a safer choice on grainy 35mm, where Enhanced Colorize can turn grain into invented detail.",
+      "ru": "Восстанавливает и раскрашивает без дополнительного повышения резкости; полезно для маленьких и мягких сканов."
+    }
+  },
+  "guide_pages.film-negative-to-photo.modes.2.img": {
+    "localizations": {
+      "en": "restore",
+      "ru": "restore"
+    },
+    "shouldTranslate": false
+  },
+  "guide_pages.film-negative-to-photo.modes.2.img_alt": {
+    "localizations": {
+      "en": "Restore mode preview in UScale — an old portrait cleaned up and left in black and white",
+      "ru": "Предпросмотр Restore в UScale"
+    },
+    "comment": "Accessibility text describing an image."
+  },
+  "guide_pages.film-negative-to-photo.modes.2.t": {
+    "localizations": {
+      "en": "Restore",
+      "ru": "Restore"
+    }
+  },
+  "guide_pages.film-negative-to-photo.modes.2.sub": {
+    "localizations": {
+      "en": "Remove scratches while keeping the original colors",
+      "ru": "Убрать царапины и сохранить исходные цвета"
+    }
+  },
+  "guide_pages.film-negative-to-photo.modes.2.p": {
+    "localizations": {
+      "en": "Cleans dust and scratches and leaves the tones alone: for black-and-white negatives, and for colour film that held its colour.",
+      "ru": "Убирает царапины, пыль, заломы и разрывы, не меняя палитру."
+    }
+  },
+  "guide_pages.film-negative-to-photo.modes.3.img": {
+    "localizations": {
+      "en": "advanced_fix",
+      "ru": "advanced_fix"
+    },
+    "shouldTranslate": false
+  },
+  "guide_pages.film-negative-to-photo.modes.3.img_alt": {
+    "localizations": {
+      "en": "Advanced Fix mode preview in UScale — a cracked, stained print of the kind this mode is built for",
+      "ru": "Предпросмотр Advanced Fix в UScale"
+    },
+    "comment": "Accessibility text describing an image."
+  },
+  "guide_pages.film-negative-to-photo.modes.3.t": {
+    "localizations": {
+      "en": "Advanced Fix",
+      "ru": "Advanced Fix"
+    }
+  },
+  "guide_pages.film-negative-to-photo.modes.3.sub": {
+    "localizations": {
+      "en": "Fixes severe damage and boosts quality",
+      "ru": "Исправить сильные повреждения"
+    }
+  },
+  "guide_pages.film-negative-to-photo.modes.3.p": {
+    "localizations": {
+      "en": "For film that is scratched, mouldy or physically damaged. It rebuilds heavily and drifts furthest from what was on the frame.",
+      "ru": "Более мощная модель для треснувших, порванных или покрытых пятнами отпечатков."
+    }
+  },
+  "guide_pages.film-negative-to-photo.options_h": {
+    "localizations": {
+      "en": "Advanced options that matter for negatives",
+      "ru": "Дополнительные параметры"
+    }
+  },
+  "guide_pages.film-negative-to-photo.options_intro": {
+    "localizations": {
+      "en": "Negative is the one you cannot skip. The other two are worth knowing once your first frame looks right.",
+      "ru": "Prompt, Increased resolution и Negative решают три разные задачи."
+    }
+  },
+  "guide_pages.film-negative-to-photo.options.0.t": {
+    "localizations": {
+      "en": "Negative",
+      "ru": "Prompt"
+    }
+  },
+  "guide_pages.film-negative-to-photo.options.0.sub": {
+    "localizations": {
+      "en": "Invert and normalize photo colors before restoration",
+      "ru": "Укажите цвет глаз, одежды или другие важные детали"
+    }
+  },
+  "guide_pages.film-negative-to-photo.options.0.p": {
+    "localizations": {
+      "en": "The switch that does the conversion: it inverts the frame and neutralises the orange mask before restoration. Without it you get a cyan negative of a negative.",
+      "ru": "Опишите то, что модель не может угадать: например, «голубые глаза, красное платье»."
+    }
+  },
+  "guide_pages.film-negative-to-photo.options.1.t": {
+    "localizations": {
+      "en": "Increased resolution",
+      "ru": "Increased resolution"
+    }
+  },
+  "guide_pages.film-negative-to-photo.options.1.sub": {
+    "localizations": {
+      "en": "Generates the result at a higher resolution",
+      "ru": "Создать результат в более высоком разрешении"
+    }
+  },
+  "guide_pages.film-negative-to-photo.options.1.p": {
+    "localizations": {
+      "en": "Negatives hold a lot of detail, so the higher-resolution models pay off here — especially for printing. Test one frame before committing a strip.",
+      "ru": "Полезно для печати: модель сохраняет больше мелких деталей."
+    }
+  },
+  "guide_pages.film-negative-to-photo.options.2.t": {
+    "localizations": {
+      "en": "Prompt",
+      "ru": "Negative"
+    }
+  },
+  "guide_pages.film-negative-to-photo.options.2.sub": {
+    "localizations": {
+      "en": "Add eye color, clothing color, or other important details",
+      "ru": "Инвертировать и нормализовать цвета"
+    }
+  },
+  "guide_pages.film-negative-to-photo.options.2.p": {
+    "localizations": {
+      "en": "Useful on a second pass: once you can read the scene, “blue car, green lawn, blonde hair” lands closer to the real day. Not used by Advanced Fix.",
+      "ru": "Только для плёночных негативов: инвертирует кадр и нейтрализует оранжевую маску."
+    }
+  },
+  "guide_pages.film-negative-to-photo.img_alt": {
+    "localizations": {
+      "en": "A film negative converted into a positive photo and restored with UScale on iPhone",
+      "ru": "Плёночный негатив на подсветке и готовый позитив после обработки в UScale."
+    },
+    "comment": "Accessibility text describing an image."
+  },
+  "guide_pages.film-negative-to-photo.img_caption": {
+    "localizations": {
+      "en": "Inverted, colour-corrected and restored — from negative to finished photo.",
+      "ru": "Плёночный негатив на подсветке и готовый позитив после обработки в UScale."
+    }
+  },
+  "guide_pages.film-negative-to-photo.tips_h": {
+    "localizations": {
+      "en": "Tips for better negative scans",
+      "ru": "Как получить лучший результат"
+    }
+  },
+  "guide_pages.film-negative-to-photo.tips.0": {
+    "localizations": {
+      "en": "Use a blower or a soft brush on the negative first — removing dust physically is much easier than removing it digitally.",
+      "ru": "Не кладите плёнку прямо на видимый экран без рассеивателя."
+    }
+  },
+  "guide_pages.film-negative-to-photo.tips.1": {
+    "localizations": {
+      "en": "Weigh curled film flat under a piece of clean glass; a picture frame pane works well.",
+      "ru": "Оставьте небольшой участок основы плёнки для правильной нейтрализации маски."
+    }
+  },
+  "guide_pages.film-negative-to-photo.tips.2": {
+    "localizations": {
+      "en": "Keep the room dim. Ambient light bouncing off the film surface is the biggest cause of washed-out negative scans.",
+      "ru": "Не используйте вспышку и автоматические фильтры камеры."
+    }
+  },
+  "guide_pages.film-negative-to-photo.tips.3": {
+    "localizations": {
+      "en": "Black-and-white negatives are easier than colour ones because there is no orange mask to neutralise. Start with those.",
+      "ru": "Для целой плёнки сначала настройте один кадр, затем снимайте остальные без изменения света."
+    }
+  },
+  "guide_pages.film-negative-to-photo.tips.4": {
+    "localizations": {
+      "en": "Test your setup on one frame before photographing a whole strip, and shoot frame by frame — one negative filling the phone frame gives far more pixels than six sharing it."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.film-negative-to-photo.cta_h": {
+    "localizations": {
+      "en": "Open the drawer of negatives",
+      "ru": "Оцифруйте плёночный архив"
+    }
+  },
+  "guide_pages.film-negative-to-photo.cta_p": {
+    "localizations": {
+      "en": "Invert, restore and upscale film negatives on your iPhone. Restoration runs on our cloud models as part of Premium, starting with a {trial_days}-day free trial.",
+      "ru": "Снимите негатив на iPhone, включите Negative и восстановите кадр одной обработкой."
+    },
+    "comment": "Preserve every {placeholder} exactly.",
+    "relaxedValidationLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.film-negative-to-photo.faq_h": {
+    "localizations": {
+      "en": "Film negatives: common questions",
+      "ru": "Частые вопросы"
+    }
+  },
+  "guide_pages.film-negative-to-photo.faq.0.q": {
+    "localizations": {
+      "en": "Do I need a dedicated film scanner?",
+      "ru": "Подойдёт ли экран iPad как подсветка?"
+    }
+  },
+  "guide_pages.film-negative-to-photo.faq.0.a": {
+    "localizations": {
+      "en": "For an archive project a film scanner gives the highest quality. For getting a drawer of negatives visible and shareable, a phone camera over a white screen is dramatically faster and the results are genuinely good.",
+      "ru": "Да, если положить между экраном и плёнкой матовый белый рассеиватель и приподнять негатив, чтобы камера не видела пиксельную сетку."
+    }
+  },
+  "guide_pages.film-negative-to-photo.faq.1.q": {
+    "localizations": {
+      "en": "Why does my inverted negative look blue or cyan?",
+      "ru": "Какой режим нужен для чёрно-белого негатива?"
+    }
+  },
+  "guide_pages.film-negative-to-photo.faq.1.a": {
+    "localizations": {
+      "en": "That is the orange film mask still in play. Inverting the colours is not enough — the mask has to be neutralised, which is what the Negative option does before the restoration pass runs.",
+      "ru": "Включите Negative и выберите Restore, если результат должен остаться чёрно-белым. Enhanced Colorize используйте только если хотите цветную интерпретацию."
+    }
+  },
+  "guide_pages.film-negative-to-photo.faq.2.q": {
+    "localizations": {
+      "en": "Can I do this with slides as well?",
+      "ru": "Обработка выполняется на устройстве?"
+    }
+  },
+  "guide_pages.film-negative-to-photo.faq.2.a": {
+    "localizations": {
+      "en": "Slides are already positive, so leave Negative switched off. Photograph them on the same light table and run Photo restoration normally to clean up dust and fading.",
+      "ru": "Нет. Photo Restoration с опцией Negative использует облачную модель и отправляет только выбранный кадр."
+    }
+  },
+  "guide_pages.film-negative-to-photo.faq.3.q": {
+    "localizations": {
+      "en": "Which mode should I use on a black and white negative?"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.film-negative-to-photo.faq.3.a": {
+    "localizations": {
+      "en": "Restore if it should stay black and white, Enhanced Colorize if you want it in colour. Both handle the dust and scratches; only the colour differs."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.film-negative-to-photo.faq.4.q": {
+    "localizations": {
+      "en": "Can I convert a whole roll at once?"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.film-negative-to-photo.faq.4.a": {
+    "localizations": {
+      "en": "Photograph each frame separately, then select all the captures together in Photos — one batch shares the same mode and options, so you set them once and wait once."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.fix-blurry-faces.nav_title": {
+    "localizations": {
+      "en": "Fix blurry faces",
+      "ru": "Исправить нечёткие лица"
+    }
+  },
+  "guide_pages.fix-blurry-faces.card_title": {
+    "localizations": {
+      "en": "How to fix blurry faces in photos",
+      "ru": "Как исправить нечёткие лица на фото"
+    }
+  },
+  "guide_pages.fix-blurry-faces.card_desc": {
+    "localizations": {
+      "en": "Restore eyes, skin and hair in portraits and group shots.",
+      "ru": "Восстановите глаза, кожу и волосы в портретах и групповых снимках."
+    }
+  },
+  "guide_pages.fix-blurry-faces.title": {
+    "localizations": {
+      "en": "How to Fix Blurry Faces in Photos (AI Face Restore)",
+      "ru": "Как исправить нечёткие лица на фото с ИИ | UScale"
+    },
+    "comment": "Page or section title; preserve product names."
+  },
+  "guide_pages.fix-blurry-faces.description": {
+    "localizations": {
+      "en": "Fix blurry faces in group photos with AI face restoration. When to use Face Enhancer, when Creative Upscale works better, and how to do it in UScale.",
+      "ru": "Как сделать размытые лица чётче: используйте Face Enhancer для небольших лиц или Creative Upscale для крупного портрета и проверьте результат в UScale."
+    },
+    "comment": "Description copy; keep factual claims unchanged."
+  },
+  "guide_pages.fix-blurry-faces.h1": {
+    "localizations": {
+      "en": "How to fix blurry faces in photos",
+      "ru": "Как исправить нечёткие лица на фото"
+    }
+  },
+  "guide_pages.fix-blurry-faces.kicker": {
+    "localizations": {
+      "en": "Photo guide",
+      "ru": "Гайд по фото"
+    }
+  },
+  "guide_pages.fix-blurry-faces.read_time": {
+    "localizations": {
+      "en": "4 min read",
+      "ru": "6 мин чтения"
+    }
+  },
+  "guide_pages.fix-blurry-faces.answer": {
+    "localizations": {
+      "en": "To fix a blurry face, open UScale, tap Upscale your media → Photos and run Face Enhancer: a dedicated model rebuilds eyes, skin and hair on your device, and afterwards you choose which detected faces keep the enhancement. For large, close-up faces, Creative Upscale gives a better result.",
+      "ru": "Для небольших лиц в групповом снимке откройте фото в UScale и запустите Face Enhancer: он работает на устройстве, найдёт лица и позволит выбрать результат для каждого. Если лицо занимает большую часть кадра, сравните с облачным Creative Upscale."
+    }
+  },
+  "guide_pages.fix-blurry-faces.supply": {
+    "localizations": {
+      "en": "A photo with soft or small faces",
+      "ru": "Фотография с нечёткими лицами"
+    }
+  },
+  "guide_pages.fix-blurry-faces.intro": {
+    "localizations": {
+      "en": "Faces are the reason general upscaling often disappoints. A group photo can be sharp overall while each face occupies a couple of hundred pixels — far too few for a general model to treat as more than a smudge. Face Enhancer knows the structure of a face and can rebuild eyes, lips and hair from very little. Its blind spot is the opposite case: trained on small, blurry faces, it adds less than you would expect to a large close-up, and that is where Creative Upscale takes over.",
+      "ru": "Общая модель увеличения видит маленькое лицо как несколько размытых пятен. Face Enhancer обучен структуре глаз, губ, кожи и волос и поэтому может восстановить читаемый портрет из меньшего числа пикселей. Но на крупном лице он иногда сглаживает текстуру — там лучше Creative Upscale."
+    }
+  },
+  "guide_pages.fix-blurry-faces.why_h": {
+    "localizations": {
+      "en": "Why faces need their own model",
+      "ru": "Почему это работает"
+    }
+  },
+  "guide_pages.fix-blurry-faces.why_p": {
+    "localizations": {
+      "en": "The problem is not sharpness in general, it is how little of the frame a face usually occupies.",
+      "ru": "Модель сначала обнаруживает лица, затем обрабатывает каждое отдельно и возвращает их в общий кадр. Вы решаете, для каких обнаруженных лиц оставить улучшение, поэтому фон и люди, которым обработка не подошла, можно сохранить ближе к оригиналу."
+    }
+  },
+  "guide_pages.fix-blurry-faces.why_list.0": {
+    "localizations": {
+      "en": "In a group photo, each face may be one or two percent of the total pixels.",
+      "ru": "Face Enhancer лучше всего работает с маленькими и мягкими лицами."
+    }
+  },
+  "guide_pages.fix-blurry-faces.why_list.1": {
+    "localizations": {
+      "en": "General upscalers optimise for the whole image, so they average small faces into smooth blobs.",
+      "ru": "Creative Upscale подходит крупным портретам и восстанавливает больше текстуры."
+    }
+  },
+  "guide_pages.fix-blurry-faces.why_list.2": {
+    "localizations": {
+      "en": "Eyes carry most of the perceived sharpness of a portrait — get them right and the whole face reads as sharp.",
+      "ru": "Локальный Face Enhancer не загружает фотографию."
+    }
+  },
+  "guide_pages.fix-blurry-faces.why_list.3": {
+    "localizations": {
+      "en": "Skin texture is what separates a restored face from a plastic one, and crude sharpening destroys it first.",
+      "ru": "Слишком маленькое или закрытое лицо нельзя восстановить достоверно."
+    }
+  },
+  "guide_pages.fix-blurry-faces.why_list.4": {
+    "localizations": {
+      "en": "Face Enhancer was trained on small and blurry faces, which is why it adds so little to a big, already-detailed close-up. Use Creative Upscale for those."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.fix-blurry-faces.steps_h": {
+    "localizations": {
+      "en": "Restore faces in UScale, step by step",
+      "ru": "Как сделать это в UScale"
+    }
+  },
+  "guide_pages.fix-blurry-faces.steps_intro": {
+    "localizations": {
+      "en": "Two modes, and which one you want depends on how big the faces are in the frame.",
+      "ru": "Весь процесс занимает несколько касаний."
+    }
+  },
+  "guide_pages.fix-blurry-faces.steps.0.h": {
+    "localizations": {
+      "en": "Open Upscale your media → Photos",
+      "ru": "Откройте исходное фото"
+    }
+  },
+  "guide_pages.fix-blurry-faces.steps.0.p": {
+    "localizations": {
+      "en": "Tap Upscale your media, choose Photos and select the shot — or several at once. Use the original file rather than a shared or screenshotted copy, since faces suffer most from re-compression.",
+      "ru": "Выберите полную версию группового снимка, а не пересланную копию. Не кадрируйте слишком рано."
+    }
+  },
+  "guide_pages.fix-blurry-faces.steps.1.h": {
+    "localizations": {
+      "en": "Choose Face Enhancer",
+      "ru": "Запустите Face Enhancer"
+    }
+  },
+  "guide_pages.fix-blurry-faces.steps.1.p": {
+    "localizations": {
+      "en": "Face Enhancer runs entirely on your iPhone, so the photo is never uploaded. It detects every face in the frame and applies a dedicated restoration model to each one.",
+      "ru": "Для небольших лиц выберите локальный инструмент Face Enhancer и дождитесь обнаружения людей."
+    }
+  },
+  "guide_pages.fix-blurry-faces.steps.2.h": {
+    "localizations": {
+      "en": "Pick a style — Natural or Smoothed",
+      "ru": "Выберите лица"
+    }
+  },
+  "guide_pages.fix-blurry-faces.steps.2.p": {
+    "localizations": {
+      "en": "Natural keeps real skin texture and is the safer choice for portraits. Smoothed gives a cleaner face with harder edges, which helps when the source is very noisy.",
+      "ru": "Просмотрите результат для каждого человека и оставьте обработку только там, где сходство и выражение сохранились."
+    }
+  },
+  "guide_pages.fix-blurry-faces.steps.3.h": {
+    "localizations": {
+      "en": "Tap Upscale and check each face",
+      "ru": "Проверьте крупный портрет"
+    }
+  },
+  "guide_pages.fix-blurry-faces.steps.3.p": {
+    "localizations": {
+      "en": "Processing takes seconds. Pinch to zoom into each person: restoration happens face by face, so one can come out perfectly while another, further away, does not.",
+      "ru": "Если лицо занимает большую часть кадра, запустите Creative Upscale и сравните кожу, волосы и глаза с Face Enhancer."
+    }
+  },
+  "guide_pages.fix-blurry-faces.steps.4.h": {
+    "localizations": {
+      "en": "Choose which faces keep the enhancement",
+      "ru": "Сохраните лучшую версию"
+    }
+  },
+  "guide_pages.fix-blurry-faces.steps.4.p": {
+    "localizations": {
+      "en": "After processing you select the faces the enhancement applies to. A heavily blurred face in the background sometimes gets rebuilt into something strange, and switching it off — or switching on one the app skipped — tells the algorithm where to work.",
+      "ru": "Проверьте все лица в масштабе 100% и сохраните результат как новую копию."
+    }
+  },
+  "guide_pages.fix-blurry-faces.steps.5.h": {
+    "localizations": {
+      "en": "Big face in the frame? Run Creative Upscale instead"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.fix-blurry-faces.steps.5.p": {
+    "localizations": {
+      "en": "For a close-up where the face already fills the picture, Creative Upscale usually wins: it rebuilds pores, hair and skin texture and returns a 2K, 4K or 8K result in about 30 seconds, processed in the cloud. Save whichever version you prefer as a new copy."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.fix-blurry-faces.img_alt": {
+    "localizations": {
+      "en": "Fixing blurry faces in a group photo with AI face restoration in UScale on iPhone",
+      "ru": "Групповая фотография с нечёткими лицами до и после Face Enhancer."
+    },
+    "comment": "Accessibility text describing an image."
+  },
+  "guide_pages.fix-blurry-faces.img_caption": {
+    "localizations": {
+      "en": "A soft group portrait with eyes, skin and hair restored face by face.",
+      "ru": "Групповая фотография с нечёткими лицами до и после Face Enhancer."
+    }
+  },
+  "guide_pages.fix-blurry-faces.tips_h": {
+    "localizations": {
+      "en": "Tips for natural-looking faces",
+      "ru": "Как получить лучший результат"
+    }
+  },
+  "guide_pages.fix-blurry-faces.tips.0": {
+    "localizations": {
+      "en": "Compare against the original at full zoom before saving. Face restoration is interpretation, and a strong result can subtly change how someone looks.",
+      "ru": "Не оценивайте лицо только по уменьшенному предпросмотру."
+    }
+  },
+  "guide_pages.fix-blurry-faces.tips.1": {
+    "localizations": {
+      "en": "If only one person matters, crop to them — but if that makes the face fill the frame, switch to Creative Upscale.",
+      "ru": "Проверьте очки, зубы, серьги и пряди волос — там заметны ошибки реконструкции."
+    }
+  },
+  "guide_pages.fix-blurry-faces.tips.2": {
+    "localizations": {
+      "en": "Use the face selection after processing. Leaving a barely visible background face enhanced is the most common way a group photo ends up looking odd.",
+      "ru": "Если важен один человек, можно кадрировать его, но для крупного лица переключитесь на Creative Upscale."
+    }
+  },
+  "guide_pages.fix-blurry-faces.tips.3": {
+    "localizations": {
+      "en": "Faces in profile or partly hidden restore less reliably, and motion blur across a face is the one case no mode fully fixes yet.",
+      "ru": "Сохраните вариант без обработки лиц для сравнения."
+    }
+  },
+  "guide_pages.fix-blurry-faces.tips.4": {
+    "localizations": {
+      "en": "Face Enhancer uploads nothing and needs no connection, so it is the mode for photos of children."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.fix-blurry-faces.tips.5": {
+    "localizations": {
+      "en": "If neither mode gets you there, email the photo to alexandr.graschenkov91@gmail.com — the developer answers personally."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.fix-blurry-faces.cta_h": {
+    "localizations": {
+      "en": "Get the faces back",
+      "ru": "Верните лицам чёткость"
+    }
+  },
+  "guide_pages.fix-blurry-faces.cta_p": {
+    "localizations": {
+      "en": "Dedicated AI face restoration, running on your iPhone. Two free photos every day.",
+      "ru": "Обработайте небольшие лица локально или сравните крупный портрет с Creative Upscale."
+    }
+  },
+  "guide_pages.fix-blurry-faces.faq_h": {
+    "localizations": {
+      "en": "Face restoration: common questions",
+      "ru": "Частые вопросы"
+    }
+  },
+  "guide_pages.fix-blurry-faces.faq.0.q": {
+    "localizations": {
+      "en": "Should I use Face Enhancer or Creative Upscale?",
+      "ru": "Face Enhancer или Creative Upscale?"
+    }
+  },
+  "guide_pages.fix-blurry-faces.faq.0.a": {
+    "localizations": {
+      "en": "Face Enhancer for small or soft faces — group shots, distant subjects, old scans — and it runs on your device. Creative Upscale for close-up portraits where the face is already large: it rebuilds pores and skin texture, which the face model largely leaves alone.",
+      "ru": "Face Enhancer — для небольших лиц в групповых и дальних снимках; он работает на устройстве. Creative Upscale — для крупного портрета, где важна текстура кожи и волос; он работает в облаке."
+    }
+  },
+  "guide_pages.fix-blurry-faces.faq.1.q": {
+    "localizations": {
+      "en": "Will face restoration change what someone looks like?",
+      "ru": "Можно ли улучшить каждое лицо отдельно?"
+    }
+  },
+  "guide_pages.fix-blurry-faces.faq.1.a": {
+    "localizations": {
+      "en": "Mildly, yes — the model reconstructs detail rather than recovering it exactly. On moderately soft faces the result stays very close to the person; on extremely small or smeared faces it can drift, so always compare before saving.",
+      "ru": "Да. После обнаружения лиц UScale позволяет выбрать, для каких людей сохранить результат Face Enhancer."
+    }
+  },
+  "guide_pages.fix-blurry-faces.faq.2.q": {
+    "localizations": {
+      "en": "Does it work on multiple faces in one photo?",
+      "ru": "Изменится ли внешность человека?"
+    }
+  },
+  "guide_pages.fix-blurry-faces.faq.2.a": {
+    "localizations": {
+      "en": "Yes. Each detected face is processed individually, and afterwards you choose which of them keep the enhancement — useful when a blurry background face comes out worse than it went in.",
+      "ru": "ИИ восстанавливает вероятные детали, поэтому при очень маленьком или сильно размытом лице возможны отличия. Всегда сравнивайте с оригиналом."
+    }
+  },
+  "guide_pages.fix-blurry-faces.faq.3.q": {
+    "localizations": {
+      "en": "Does it work on old scanned photos?"
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.fix-blurry-faces.faq.3.a": {
+    "localizations": {
+      "en": "Yes, and it is one of the most striking uses. Run the restoration pass first to remove scratches, then Face Enhancer on the result."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.upscale-anime-art.nav_title": {
+    "localizations": {
+      "en": "Upscale anime & art",
+      "ru": "Увеличить аниме и рисунки"
+    }
+  },
+  "guide_pages.upscale-anime-art.card_title": {
+    "localizations": {
+      "en": "How to upscale anime art and drawings",
+      "ru": "Как увеличить аниме-арт и рисунки на iPhone"
+    }
+  },
+  "guide_pages.upscale-anime-art.card_desc": {
+    "localizations": {
+      "en": "Enlarge illustrations and pixel art without mush.",
+      "ru": "Увеличьте иллюстрацию, сохранив чёткие линии и ровные цвета."
+    }
+  },
+  "guide_pages.upscale-anime-art.title": {
+    "localizations": {
+      "en": "How to Upscale Anime Art and Drawings on iPhone",
+      "ru": "Как увеличить аниме-арт и рисунки без пикселизации | UScale"
+    },
+    "comment": "Page or section title; preserve product names."
+  },
+  "guide_pages.upscale-anime-art.description": {
+    "localizations": {
+      "en": "Upscale anime art, illustrations and pixel art on iPhone without turning lines into mush. How AI upscaling handles flat colour and line art, step by step in UScale.",
+      "ru": "Как увеличить аниме, рисунок или пиксель-арт на iPhone: отключите улучшение лиц, выберите 2×/4× в UScale и проверьте линии, текст и ровные заливки."
+    },
+    "comment": "Description copy; keep factual claims unchanged."
+  },
+  "guide_pages.upscale-anime-art.h1": {
+    "localizations": {
+      "en": "How to upscale anime art and drawings",
+      "ru": "Как увеличить аниме-арт и рисунки на iPhone"
+    }
+  },
+  "guide_pages.upscale-anime-art.kicker": {
+    "localizations": {
+      "en": "Upscaling guide",
+      "ru": "Гайд по фото"
+    }
+  },
+  "guide_pages.upscale-anime-art.read_time": {
+    "localizations": {
+      "en": "4 min read",
+      "ru": "6 мин чтения"
+    }
+  },
+  "guide_pages.upscale-anime-art.answer": {
+    "localizations": {
+      "en": "To upscale anime art or a drawing, open it in UScale and run the 2x or 4x model. AI upscaling keeps line art crisp and flat colour clean instead of blurring edges the way a normal resize does, so a small illustration becomes a wallpaper- or print-sized file.",
+      "ru": "Откройте иллюстрацию в UScale, отключите Face Enhancer и начните с локального Regular Upscale 2× или 4×. Он сохраняет стиль и геометрию лучше генеративного режима. Creative Upscale используйте только если допустима более свободная интерпретация деталей."
+    }
+  },
+  "guide_pages.upscale-anime-art.supply": {
+    "localizations": {
+      "en": "An illustration, anime frame or pixel-art image",
+      "ru": "Иллюстрация, аниме-кадр или пиксель-арт"
+    }
+  },
+  "guide_pages.upscale-anime-art.intro": {
+    "localizations": {
+      "en": "Illustration is the friendliest possible input for an AI upscaler. Photographs are full of noise, texture and depth-of-field; drawings are made of clean lines and flat regions, which are exactly the structures these models predict most confidently. That is why a 4x upscale of a small anime image often looks like it was drawn at that size.",
+      "ru": "Фотографические модели стремятся добавить поры, волосы и естественную текстуру, которой в рисунке быть не должно. Для иллюстраций важнее сохранить чистые контуры, плоские цвета и авторский стиль. Поэтому сначала нужен осторожный режим без улучшения лиц."
+    }
+  },
+  "guide_pages.upscale-anime-art.why_h": {
+    "localizations": {
+      "en": "Why drawings upscale better than photos",
+      "ru": "Почему это работает"
+    }
+  },
+  "guide_pages.upscale-anime-art.why_p": {
+    "localizations": {
+      "en": "The structure of illustration plays to every strength of a neural upscaler.",
+      "ru": "Локальное увеличение анализирует границы цветовых областей и создаёт новые пиксели вдоль линий, не размывая их обычной интерполяцией. На пиксель-арте любое сглаживание меняет форму намеренных квадратных пикселей, поэтому его следует проверять отдельно."
+    }
+  },
+  "guide_pages.upscale-anime-art.why_list.0": {
+    "localizations": {
+      "en": "Line art is high-contrast and continuous, so the model can extend edges with confidence.",
+      "ru": "Face Enhancer следует отключить даже для нарисованных персонажей."
+    }
+  },
+  "guide_pages.upscale-anime-art.why_list.1": {
+    "localizations": {
+      "en": "Flat colour fields have no texture to invent — they simply need clean boundaries.",
+      "ru": "2× сохраняет стиль осторожнее, 4× полезно для печати и больших экранов."
+    }
+  },
+  "guide_pages.upscale-anime-art.why_list.2": {
+    "localizations": {
+      "en": "There is no sensor noise or motion blur competing with the real detail.",
+      "ru": "Creative Upscale может придумать текстуру и изменить линию."
+    }
+  },
+  "guide_pages.upscale-anime-art.why_list.3": {
+    "localizations": {
+      "en": "Pixel art has perfectly predictable structure, which upscales into crisp shapes rather than soft blocks.",
+      "ru": "Мелкий текст и геометрические узоры требуют проверки при 100%."
+    }
+  },
+  "guide_pages.upscale-anime-art.why_list.4": {
+    "localizations": {
+      "en": "Compression artefacts around lines, common in images saved from the web, are cleaned up in the same pass."
+    },
+    "excludedLocales": [
+      "ru"
+    ]
+  },
+  "guide_pages.upscale-anime-art.steps_h": {
+    "localizations": {
+      "en": "Upscale artwork in UScale, step by step",
+      "ru": "Как сделать это в UScale"
+    }
+  },
+  "guide_pages.upscale-anime-art.steps_intro": {
+    "localizations": {
+      "en": "The same enhance flow as photos, with one setting worth changing.",
+      "ru": "Весь процесс занимает несколько касаний."
+    }
+  },
+  "guide_pages.upscale-anime-art.steps.0.h": {
+    "localizations": {
+      "en": "Import the artwork",
+      "ru": "Выберите исходный файл"
+    }
+  },
+  "guide_pages.upscale-anime-art.steps.0.p": {
+    "localizations": {
+      "en": "Save the image to your library and open it in UScale. Use the largest version you have — a thumbnail will always limit the outcome.",
+      "ru": "Используйте PNG или исходный экспорт без JPEG-артефактов, если он доступен."
+    }
+  },
+  "guide_pages.upscale-anime-art.steps.1.h": {
+    "localizations": {
+      "en": "Turn off face enhancement",
+      "ru": "Отключите улучшение лиц"
+    }
+  },
+  "guide_pages.upscale-anime-art.steps.1.p": {
+    "localizations": {
+      "en": "The face model is trained on photographic faces. On a drawn character it can push features towards photorealism, which is rarely what you want.",
+      "ru": "Нарисованные глаза и кожа не должны проходить через модель для фотографических лиц."
+    }
+  },
+  "guide_pages.upscale-anime-art.steps.2.h": {
+    "localizations": {
+      "en": "Run 4x for line art",
+      "ru": "Начните с Regular Upscale"
+    }
+  },
+  "guide_pages.upscale-anime-art.steps.2.p": {
+    "localizations": {
+      "en": "Illustration handles aggressive upscaling far better than photography does. 4x on a 1000-pixel image gives you a 4000-pixel file suitable for a poster or a desktop wallpaper.",
+      "ru": "Выберите 2× для осторожного увеличения или 4×, если нужен крупный файл для печати."
+    }
+  },
+  "guide_pages.upscale-anime-art.steps.3.h": {
+    "localizations": {
+      "en": "Check the lines at full zoom",
+      "ru": "Проверьте стиль"
+    }
+  },
+  "guide_pages.upscale-anime-art.steps.3.p": {
+    "localizations": {
+      "en": "Zoom in on line intersections and hair. Clean, continuous lines mean the model handled it well; wobbling or doubled lines mean the source was too small.",
+      "ru": "Увеличьте контуры, градиенты, мелкий текст и повторяющиеся узоры. Для пиксель-арта проверьте форму каждого блока."
+    }
+  },
+  "guide_pages.upscale-anime-art.steps.4.h": {
+    "localizations": {
+      "en": "Save and use",
+      "ru": "Сравните режимы при необходимости"
+    }
+  },
+  "guide_pages.upscale-anime-art.steps.4.p": {
+    "localizations": {
+      "en": "Save the upscaled file to your library. It is now large enough for wallpaper, printing or use as a high-resolution asset.",
+      "ru": "Creative Upscale можно попробовать как отдельную творческую версию, но не заменяйте ею исходник, если важна точность авторской линии."
+    }
+  },
+  "guide_pages.upscale-anime-art.img_alt": {
+    "localizations": {
+      "en": "Upscaling a pixelated anime illustration 4x with UScale on iPhone",
+      "ru": "Аниме-иллюстрация до и после увеличения с сохранением чётких линий."
+    },
+    "comment": "Accessibility text describing an image."
+  },
+  "guide_pages.upscale-anime-art.img_caption": {
+    "localizations": {
+      "en": "A pixelated illustration upscaled 4x — lines stay crisp, colour stays flat.",
+      "ru": "Аниме-иллюстрация до и после увеличения с сохранением чётких линий."
+    }
+  },
+  "guide_pages.upscale-anime-art.video_caption": {
+    "localizations": {
+      "en": "Anime footage upscaled with the on-device model.",
+      "ru": "Аниме-иллюстрация до и после увеличения с сохранением чётких линий."
+    }
+  },
+  "guide_pages.upscale-anime-art.tips_h": {
+    "localizations": {
+      "en": "Tips for artwork and pixel art",
+      "ru": "Как получить лучший результат"
+    }
+  },
+  "guide_pages.upscale-anime-art.tips.0": {
+    "localizations": {
+      "en": "Upscale before you add text or a watermark. Running the model over text produces subtly warped letterforms.",
+      "ru": "Экспортируйте результат в PNG, чтобы не добавить новые JPEG-блоки."
+    }
+  },
+  "guide_pages.upscale-anime-art.tips.1": {
+    "localizations": {
+      "en": "For true pixel art where you want to keep the blocky look, a nearest-neighbour resize is the right tool — AI upscaling deliberately smooths those hard edges.",
+      "ru": "Не запускайте Face Enhancer на нарисованных лицах."
+    }
+  },
+  "guide_pages.upscale-anime-art.tips.2": {
+    "localizations": {
+      "en": "Screenshots of video frames upscale well, but interlacing lines from old sources should be cleaned with the video enhance pass first.",
+      "ru": "Для логотипов и шрифтов векторный исходник лучше любого ИИ-увеличения."
+    }
+  },
+  "guide_pages.upscale-anime-art.tips.3": {
+    "localizations": {
+      "en": "If you are upscaling a whole set, use batch processing — artwork rarely needs per-image tuning.",
+      "ru": "Сохраняйте творческую и точную версии отдельно."
+    }
+  },
+  "guide_pages.upscale-anime-art.cta_h": {
+    "localizations": {
+      "en": "Upscale your art library",
+      "ru": "Увеличьте рисунок без мыльных линий"
+    }
+  },
+  "guide_pages.upscale-anime-art.cta_p": {
+    "localizations": {
+      "en": "2x and 4x AI upscaling for illustrations, anime and pixel art, right on your iPhone.",
+      "ru": "Начните с локального 2×/4× и сохраните авторский стиль иллюстрации."
+    }
+  },
+  "guide_pages.upscale-anime-art.faq_h": {
+    "localizations": {
+      "en": "Upscaling artwork: common questions",
+      "ru": "Частые вопросы"
+    }
+  },
+  "guide_pages.upscale-anime-art.faq.0.q": {
+    "localizations": {
+      "en": "Is this a waifu2x alternative for iPhone?",
+      "ru": "Подходит ли UScale для пиксель-арта?"
+    }
+  },
+  "guide_pages.upscale-anime-art.faq.0.a": {
+    "localizations": {
+      "en": "It solves the same problem — enlarging anime-style art without softening the lines — with a modern model that runs on your device instead of a website, and it handles photographs and video as well.",
+      "ru": "Да, но внимательно проверяйте сетку: модель может сгладить намеренно квадратные пиксели. Для строгого nearest-neighbor лучше специализированный редактор."
+    }
+  },
+  "guide_pages.upscale-anime-art.faq.1.q": {
+    "localizations": {
+      "en": "Can I upscale a video of anime, not just a still?",
+      "ru": "Почему нельзя включать Face Enhancer?"
+    }
+  },
+  "guide_pages.upscale-anime-art.faq.1.a": {
+    "localizations": {
+      "en": "Yes. The video enhance pass applies the same model frame by frame, which works particularly well on animation because of the flat colour regions.",
+      "ru": "Он обучен фотографическим лицам и может добавить рисунку неуместную реалистичную текстуру или изменить глаза."
+    }
+  },
+  "guide_pages.upscale-anime-art.faq.2.q": {
+    "localizations": {
+      "en": "Will upscaling change the art style?",
+      "ru": "Когда использовать Creative Upscale?"
+    }
+  },
+  "guide_pages.upscale-anime-art.faq.2.a": {
+    "localizations": {
+      "en": "The 2x and 4x models preserve the original style and just add resolution. Creative Upscale is the one that reinterprets detail, so avoid it if faithfulness matters.",
+      "ru": "Когда допустима новая интерпретация — например, для концепт-арта или мягкого аниме-кадра. Если нужно точно сохранить линию, выбирайте Regular Upscale 2×/4×."
+    }
+  },
+  "guide_pages.unblur-photo-iphone.video_caption": {
+    "localizations": {
+      "ru": "Размытая фотография до и после улучшения в UScale."
+    },
+    "locales": [
+      "ru"
+    ]
+  },
+  "guide_pages.restore-old-photos.video_caption": {
+    "localizations": {
+      "ru": "Старая семейная фотография до и после удаления царапин и восстановления деталей в UScale."
+    },
+    "locales": [
+      "ru"
+    ]
+  },
+  "guide_pages.colorize-black-and-white-photos.video_caption": {
+    "localizations": {
+      "ru": "Чёрно-белый семейный снимок до и после колоризации в UScale."
+    },
+    "locales": [
+      "ru"
+    ]
+  },
+  "guide_pages.upscale-image-4k.video_caption": {
+    "localizations": {
+      "ru": "Небольшая фотография до и после увеличения до 4K в Creative Upscale."
+    },
+    "locales": [
+      "ru"
+    ]
+  },
+  "guide_pages.brighten-dark-photos.steps.4.h": {
+    "localizations": {
+      "ru": "Сохраните новую копию"
+    },
+    "locales": [
+      "ru"
+    ]
+  },
+  "guide_pages.brighten-dark-photos.steps.4.p": {
+    "localizations": {
+      "ru": "Оставьте исходный тёмный кадр — он может пригодиться для другой коррекции."
+    },
+    "locales": [
+      "ru"
+    ]
+  },
+  "guide_pages.brighten-dark-photos.video_caption": {
+    "localizations": {
+      "ru": "Тёмный портрет до и после осветления и восстановления деталей в тенях."
+    },
+    "locales": [
+      "ru"
+    ]
+  },
+  "guide_pages.film-negative-to-photo.video_caption": {
+    "localizations": {
+      "ru": "Плёночный негатив на подсветке и готовый позитив после обработки в UScale."
+    },
+    "locales": [
+      "ru"
+    ]
+  },
+  "guide_pages.fix-blurry-faces.video_caption": {
+    "localizations": {
+      "ru": "Групповая фотография с нечёткими лицами до и после Face Enhancer."
+    },
+    "locales": [
+      "ru"
+    ]
+  }
+}

@@ -234,6 +234,7 @@ ul,ol{margin:0;padding:0}
 .appstore span{display:block;font-size:11px;font-weight:500;letter-spacing:.02em;line-height:1.25;opacity:.82}
 .appstore strong{display:block;font-size:19.5px;font-weight:650;letter-spacing:-.02em;line-height:1.15;margin-top:1px}
 .appstore.dark{background:#111;color:#fff;border:1px solid rgba(255,255,255,.2);box-shadow:none}
+html:lang(ru) .hero-lead .appstore .txt>span{text-align:center}
 
 /* ---------- shared section bits ---------- */
 section{position:relative}

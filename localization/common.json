@@ -1,0 +1,246 @@
+{
+  "brand_tagline": {
+    "localizations": {
+      "en": "AI Photo & Video Enhancer",
+      "ru": "Улучшение качества фото и видео"
+    }
+  },
+  "nav.menu": {
+    "localizations": {
+      "en": "Menu",
+      "ru": "Меню"
+    }
+  },
+  "nav.features": {
+    "localizations": {
+      "en": "Features",
+      "ru": "Функции"
+    }
+  },
+  "nav.screens": {
+    "localizations": {
+      "en": "Examples",
+      "ru": "Примеры"
+    }
+  },
+  "nav.how": {
+    "localizations": {
+      "en": "How it works",
+      "ru": "Как это работает"
+    }
+  },
+  "nav.guides": {
+    "localizations": {
+      "en": "Guides",
+      "ru": "Руководства"
+    }
+  },
+  "nav.faq": {
+    "localizations": {
+      "en": "FAQ",
+      "ru": "Часто задаваемые вопросы"
+    }
+  },
+  "nav.compare": {
+    "localizations": {
+      "en": "Comparison",
+      "ru": "Сравнение"
+    }
+  },
+  "nav.cta": {
+    "localizations": {
+      "en": "Get UScale",
+      "ru": "Получить UScale"
+    }
+  },
+  "ui.download_on": {
+    "localizations": {
+      "en": "Download on the",
+      "ru": "Скачать в"
+    }
+  },
+  "ui.app_store": {
+    "localizations": {
+      "en": "App Store",
+      "ru": "App Store"
+    }
+  },
+  "ui.language": {
+    "localizations": {
+      "en": "Language",
+      "ru": "Язык"
+    }
+  },
+  "ui.skip_to_content": {
+    "localizations": {
+      "en": "Skip to content",
+      "ru": "Перейти к содержимому"
+    }
+  },
+  "ui.theme_light": {
+    "localizations": {
+      "en": "Switch to light theme",
+      "ru": "Переключить на светлую тему"
+    }
+  },
+  "ui.theme_dark": {
+    "localizations": {
+      "en": "Switch to dark theme",
+      "ru": "Переключить на тёмную тему"
+    }
+  },
+  "ui.icon_alt": {
+    "localizations": {
+      "en": "UScale AI photo enhancer app icon",
+      "ru": "Иконка приложения UScale AI для улучшения фотографий"
+    },
+    "comment": "Accessibility text describing an image."
+  },
+  "ui.home": {
+    "localizations": {
+      "en": "Home",
+      "ru": "Главная"
+    }
+  },
+  "ui.updated": {
+    "localizations": {
+      "en": "Updated",
+      "ru": "Обновлено"
+    }
+  },
+  "ui.by": {
+    "localizations": {
+      "en": "By the UScale team",
+      "ru": "Команда UScale"
+    }
+  },
+  "ui.next_guide": {
+    "localizations": {
+      "en": "Next guide",
+      "ru": "Следующий гайд"
+    }
+  },
+  "ui.keep_reading": {
+    "localizations": {
+      "en": "Keep reading",
+      "ru": "Продолжить чтение"
+    }
+  },
+  "ui.sound_off": {
+    "localizations": {
+      "en": "Mute sound",
+      "ru": "Выключить звук"
+    }
+  },
+  "ui.sound_on": {
+    "localizations": {
+      "en": "Play sound",
+      "ru": "Включить звук"
+    }
+  },
+  "ui.paused": {
+    "localizations": {
+      "en": "Paused",
+      "ru": "Пауза"
+    }
+  },
+  "ui.on_this_page": {
+    "localizations": {
+      "en": "On this page",
+      "ru": "На этой странице"
+    }
+  },
+  "cta.h2": {
+    "localizations": {
+      "en": "Get the sharp version of your photos",
+      "ru": "Сделайте свои фотографии чётче"
+    }
+  },
+  "cta.p": {
+    "localizations": {
+      "en": "Free to start, no account, and your pictures stay on your phone.",
+      "ru": "Начните бесплатно и без учётной записи. При локальной обработке фотографии останутся на вашем устройстве."
+    }
+  },
+  "cta.note": {
+    "localizations": {
+      "en": "iPhone and iPad · iOS {minimum_ios} or later",
+      "ru": "iPhone и iPad · iOS {minimum_ios} или новее"
+    },
+    "comment": "Preserve every {placeholder} exactly."
+  },
+  "footer.tagline": {
+    "localizations": {
+      "en": "AI photo and video enhancer for iPhone and iPad. Unblur and upscale on your device, restore old photos with cloud AI.",
+      "ru": "AI-улучшение фото и видео для iPhone и iPad. Базовые функции работают прямо на устройстве."
+    }
+  },
+  "footer.product": {
+    "localizations": {
+      "en": "Product",
+      "ru": "Продукт"
+    }
+  },
+  "footer.reviews": {
+    "localizations": {
+      "en": "Reviews",
+      "ru": "Отзывы"
+    }
+  },
+  "footer.all_guides": {
+    "localizations": {
+      "en": "All guides",
+      "ru": "Все руководства"
+    }
+  },
+  "footer.support": {
+    "localizations": {
+      "en": "Support",
+      "ru": "Поддержка"
+    }
+  },
+  "footer.help": {
+    "localizations": {
+      "en": "Help & support",
+      "ru": "Помощь и поддержка"
+    }
+  },
+  "footer.privacy": {
+    "localizations": {
+      "en": "Privacy Policy",
+      "ru": "Политика конфиденциальности"
+    }
+  },
+  "footer.terms": {
+    "localizations": {
+      "en": "Terms of Use",
+      "ru": "Условия использования"
+    }
+  },
+  "footer.appstore": {
+    "localizations": {
+      "en": "App Store page",
+      "ru": "Страница в App Store"
+    }
+  },
+  "footer.rights": {
+    "localizations": {
+      "en": "All rights reserved.",
+      "ru": "Все права защищены."
+    }
+  },
+  "footer.made": {
+    "localizations": {
+      "en": "Made for people who keep their photos.",
+      "ru": "Создано для тех, кто ценит свои фотографии."
+    }
+  },
+  "ui.breadcrumb": {
+    "localizations": {
+      "ru": "Навигационная цепочка"
+    },
+    "locales": [
+      "ru"
+    ]
+  }
+}
