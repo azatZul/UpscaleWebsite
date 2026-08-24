@@ -534,6 +534,7 @@ def head(c, lang, title, desc, canonical, path="", og_image=None, extra_ld=None,
 </head>
 <body>
 <div class="glow" aria-hidden="true"></div>
+<a class="skip-link" href="#main-content">{esc(c['ui'].get('skip_to_content', 'Skip to content'))}</a>
 """
 
 def appstore_btn(c, dark=False, cls=""):
@@ -646,19 +647,22 @@ def lang_switcher(c, lang, path=""):
       <div class="lang-menu" id="language-links">{items}</div>
     </div>"""
 
-def nav(c, lang, home_prefix, path=""):
+def nav(c, lang, home_prefix, path="", on_home=False):
     n = c["nav"]
+    compare_href = f"{home_prefix}#comparison" if on_home else "/compare.html"
+    guides_href = f"{home_prefix}#guides" if on_home else f"{home_prefix}guides/"
     return f"""<header class="nav">
   <div class="wrap nav-in">
     <a class="brand" href="{home_prefix}">
       <img src="/resources/appstore/icon_180.png" width="34" height="34" alt="{esc(c['ui']['icon_alt'])}">
       <span>UScale<small>{esc(c['brand_tagline'])}</small></span>
     </a>
-    <button class="burger" type="button" aria-expanded="false" aria-label="{esc(n['menu'])}">{BURGER}</button>
-    <nav class="nav-links" aria-label="{esc(n['menu'])}">
+    <button class="burger" type="button" aria-expanded="false" aria-controls="primary-navigation"
+            aria-label="{esc(n['menu'])}">{BURGER}</button>
+    <nav class="nav-links" id="primary-navigation" aria-label="{esc(n['menu'])}">
       <a href="{home_prefix}#examples">{esc(n['screens'])}</a>
-      <a href="/compare.html">{esc(n.get('compare', 'Comparison'))}</a>
-      <a href="{home_prefix}guides/">{esc(n['guides'])}</a>
+      <a href="{compare_href}">{esc(n.get('compare', 'Comparison'))}</a>
+      <a href="{guides_href}">{esc(n['guides'])}</a>
       <a href="{home_prefix}#faq">{esc(n['faq'])}</a>
     </nav>
     {theme_toggle(c)}
@@ -725,7 +729,7 @@ def compare_teaser(c):
         f'<span class="vs-chip" style="--i:{i}">'
         f'<img src="{a["icon"]}" width="60" height="60" loading="lazy" decoding="async" alt="">'
         f'<b>{esc(a["name"])}</b></span>' for i, a in enumerate(RIVALS))
-    return f"""<a class="vs-card vs-inline" href="/compare.html">
+    return f"""<a class="vs-card vs-inline" id="comparison" href="/compare.html">
       <div class="vs-fan" aria-hidden="true">
         <span class="vs-chip vs-chip-us">
           <img src="/resources/appstore/icon_512.png" width="76" height="76" loading="lazy"
@@ -788,12 +792,12 @@ def render_home(c, lang):
 
     out = [head(c, lang, m["title"], m["description"], canonical,
                 extra_ld=ld(app_ld) + ld(faq_ld) + ld(site_ld))]
-    out.append(nav(c, lang, home_prefix))
+    out.append(nav(c, lang, home_prefix, on_home=True))
 
     # Hero
     chips = "".join(f"<li>{esc(x)}</li>" for x in h["chips"])
 
-    out.append(f"""<main>
+    out.append(f"""<main id="main-content" tabindex="-1">
 <section class="hero hero-lead">
   <div class="wrap hero-grid">
     <div class="hero-copy">
@@ -925,7 +929,7 @@ def render_home(c, lang):
     </div>
     <img src="{SCREENSHOTS[2]}" width="1290" height="2803" loading="lazy" decoding="async"
          alt="{esc(c['privacy']['img_alt'])}"
-         style="max-width:290px;margin:0 auto;border-radius:28px;border:1px solid var(--line-2)">
+         style="width:100%;max-width:290px;margin:0 auto;border-radius:28px;border:1px solid var(--line-2)">
   </div></div>
 </section>""")
 
@@ -993,7 +997,7 @@ def render_guides_index(c, lang):
     return (head(c, lang, gi["title"], gi["description"], canonical, path="guides",
                  extra_ld=ld(crumbs_ld) + ld(list_ld))
             + nav(c, lang, home_prefix, "guides")
-            + f"""<main class="wrap">
+            + f"""<main class="wrap" id="main-content" tabindex="-1">
   <nav class="crumbs" aria-label="Breadcrumb">
     <a href="{home_prefix}">{esc(c['ui']['home'])}</a><span>›</span><span>{esc(c['nav']['guides'])}</span>
   </nav>
@@ -1083,7 +1087,7 @@ def render_guide(c, lang, slug):
       <figcaption>{esc(g['img_caption'])}</figcaption>
     </figure>'''
 
-    body = f"""<main class="wrap">
+    body = f"""<main class="wrap" id="main-content" tabindex="-1">
   <nav class="crumbs" aria-label="Breadcrumb">
     <a href="{home_prefix}">{esc(c['ui']['home'])}</a><span>›</span>
     <a href="{home_prefix}guides/">{esc(c['nav']['guides'])}</a><span>›</span>
@@ -1195,7 +1199,7 @@ def render_doc(c, d):
                                     for q, a in inject_facts(SUPPORT_FAQ_LD)]})
     return (head(c, "en", d["title"], d["description"], canonical, alternates=False, extra_ld=extra)
             + nav(c, "en", "/")
-            + f"""<main class="wrap">
+            + f"""<main class="wrap" id="main-content" tabindex="-1">
   <nav class="crumbs" aria-label="Breadcrumb">
     <a href="/">{esc(c['ui']['home'])}</a><span>&rsaquo;</span><span>{esc(d['h1'])}</span>
   </nav>
@@ -1215,8 +1219,8 @@ SUPPORT_FAQ_LD = [
      "wait for the preview and save the result to your library."),
     ("Are my photos uploaded anywhere?",
      "Most tools run locally on your device and do not upload your media. Creative Upscale and old-photo "
-     "restoration upload only the photo you select to our processing servers. The processed result is kept "
-     "for a short, limited period so you can download it, then it is deleted."),
+     "restoration upload only the photo you select for server processing. See the Privacy Policy for "
+     "processing and retention details."),
     ("Which devices and iOS versions are supported?",
      "iPhone, iPad and iPod touch running iOS {minimum_ios} or later."),
     ("How much does UScale Premium cost?",
@@ -1242,7 +1246,7 @@ def render_sale(c):
                  og_image=f"{SITE}{SCREENSHOTS[3]}",
                  robots="noindex,follow")
             + nav(c, "en", "/")
-            + f"""<main>
+            + f"""<main id="main-content" tabindex="-1">
 <section class="hero">
   <div class="wrap">
     <div class="hero-grid">
@@ -1255,7 +1259,7 @@ def render_sale(c):
           <span class="promo-v" id="promo-code-value"></span>
         </div>
         <div class="hero-cta sale-cta">
-          <a class="btn btn-p btn-xl" id="open-app-link" href="https://upscales.app/sale.html">Open in app<span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn-p btn-xl" id="open-app-link" href="upscale://offer/sale">Open in app<span class="arrow" aria-hidden="true">→</span></a>
         </div>
         <p class="hero-note">Already installed? iOS opens UScale straight from this link.
           No app yet? Install it and reopen the same link.</p>
@@ -1281,13 +1285,14 @@ def render_sale(c):
   var code = raw.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 12)
                 .replace(/(.{{4}})/g, '$1-').replace(/-$/, '');
 
-  var saleURL = new URL('https://upscales.app/sale.html');
+  var appURL = new URL('upscale://offer/sale');
   if (code) {{
-    saleURL.searchParams.set('code', code);
+    appURL = new URL('upscale://offer/promo');
+    appURL.searchParams.set('code', code);
     document.getElementById('promo-code-value').textContent = code;
     document.getElementById('promo-code-card').classList.add('visible');
   }}
-  document.getElementById('open-app-link').href = saleURL.toString();
+  document.getElementById('open-app-link').href = appURL.toString();
 }})();
 </script>"""
             + footer(c, "en", "/"))
@@ -1451,7 +1456,7 @@ def render_compare(c):
                  og_image=f"{SITE}{COMPARE_TESTS['spider']['shot']['uscale']}",
                  extra_ld=ld(faq_ld) + ld(crumbs_ld))
             + nav(c, "en", "/")
-            + f"""<main class="wrap vs">
+            + f"""<main class="wrap vs" id="main-content" tabindex="-1">
   <nav class="crumbs" aria-label="Breadcrumb">
     <a href="/">{esc(c['ui']['home'])}</a><span>&rsaquo;</span><span>{esc(cp['nav'])}</span>
   </nav>

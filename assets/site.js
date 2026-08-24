@@ -19,12 +19,24 @@
   var burger = document.querySelector('.burger');
   var links = document.querySelector('.nav-links');
   if (burger && links) {
+    var closeNav = function (restoreFocus) {
+      if (!links.classList.contains('open')) return;
+      links.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+      if (restoreFocus) burger.focus();
+    };
     burger.addEventListener('click', function () {
       var open = links.classList.toggle('open');
       burger.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
     links.addEventListener('click', function (e) {
-      if (e.target.tagName === 'A') { links.classList.remove('open'); burger.setAttribute('aria-expanded', 'false'); }
+      if (e.target.closest && e.target.closest('a')) closeNav(false);
+    });
+    document.addEventListener('click', function (e) {
+      if (!links.contains(e.target) && !burger.contains(e.target)) closeNav(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' || e.key === 'Esc') closeNav(true);
     });
   }
 

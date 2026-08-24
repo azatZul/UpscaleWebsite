@@ -63,10 +63,8 @@ enhanced one — it makes the fix much faster.</p>
 
   <details><summary>Are my photos uploaded anywhere?</summary><div class="a">
     <p>Most tools run locally on your device and do not upload your media. When you choose Creative Upscale or
-    old-photo restoration, only the photo you selected is uploaded to our processing servers. The processed
-    result is kept for a short, limited period so you can download it, then it is deleted. The app also uses
-    third-party services for analytics, ads and subscription management — those are listed in the
-    <a href="/privacy_policy.html">Privacy Policy</a>.</p></div></details>
+    old-photo restoration, only the photo you selected is uploaded for server processing. See the
+    <a href="/privacy_policy.html">Privacy Policy</a> for processing and retention details.</p></div></details>
 
   <details><summary>Which devices and iOS versions are supported?</summary><div class="a">
     <p>iPhone, iPad and iPod touch running iOS {{minimum_ios}} or later. Newer chips finish a 4x upscale noticeably faster,
@@ -100,8 +98,10 @@ enhanced one — it makes the fix much faster.</p>
     <a href="https://reportaproblem.apple.com" target="_blank" rel="noopener">reportaproblem.apple.com</a>.</p></div></details>
 
   <details><summary>Can I use enhanced photos commercially?</summary><div class="a">
-    <p>You keep the rights to your own files and to the results you create from them. The
-    <a href="/terms.html">Terms of Use</a> cover how the app itself may be used.</p></div></details>
+    <p>Yes. You may use enhanced photos and videos commercially, provided you have the right to use the
+    original files and your use complies with applicable law. You keep the rights to your files and to the
+    results you create from them; UScale does not claim ownership of either. See the
+    <a href="/terms.html">Terms of Use</a> for the full rules.</p></div></details>
 </div>
 
 <h2>Reporting a bug</h2>
@@ -147,7 +147,8 @@ regulations.</p>
 
 <h2>Licence to use the App</h2>
 <p>UScale grants you a limited, non-exclusive, non-transferable, and revocable licence to use the App for
-personal, non-commercial purposes. You agree not to:</p>
+lawful personal or commercial purposes. You may use results created with the App commercially, provided you
+have the necessary rights to the source content and comply with applicable law. You agree not to:</p>
 <ul>
   <li>Modify, copy, distribute, or create derivative works of the App.</li>
   <li>Reverse-engineer or decompile the App, except as permitted by applicable law.</li>
@@ -155,9 +156,10 @@ personal, non-commercial purposes. You agree not to:</p>
 </ul>
 
 <h2>In-app purchases</h2>
-<p>The App may include in-app purchases managed through RevenueCat. By making a purchase, you agree to the
-pricing, payment, and subscription terms provided at the point of sale. All purchases are final and
-non-refundable, except as required by applicable law.</p>
+<p>The App may include in-app purchases billed by Apple through the App Store, with RevenueCat used to manage
+subscription access. By making a purchase, you agree to the pricing, payment, renewal, and subscription terms
+shown by Apple at the point of sale. You can manage or cancel subscriptions in your Apple ID settings. Refund
+requests are handled by Apple under its refund policies and applicable law.</p>
 
 <h2>Third-party services and advertising</h2>
 <p>The App is provided as an ad-supported service and uses various third-party services for functionality and
@@ -169,7 +171,13 @@ advertising. Your use of these services is subject to their respective terms and
   <li><a href="https://developers.google.com/admob/terms" target="_blank" rel="noopener">AdMob Terms of Service</a></li>
   <li><a href="https://www.appodeal.com/home/terms-of-service/" target="_blank" rel="noopener">Appodeal Terms of Service</a></li>
   <li><a href="https://unity3d.com/legal/terms-of-service" target="_blank" rel="noopener">Unity Terms of Service</a></li>
+  <li><a href="https://wavespeed.ai/static/terms" target="_blank" rel="noopener">WaveSpeedAI Terms of Service</a></li>
+  <li><a href="https://replicate.com/terms" target="_blank" rel="noopener">Replicate Terms of Service</a></li>
 </ul>
+<p>Creative Upscale and old-photo restoration use WaveSpeedAI or Replicate for server processing. Files sent
+for these features and their processed results are retained temporarily for a period ranging from one hour to
+seven days, depending on the provider, and are then deleted. UScale does not retain additional copies on
+systems it controls after processing. See our <a href="/privacy_policy.html">Privacy Policy</a> for details.</p>
 <p>Please be aware that the Service Provider does not assume responsibility for certain aspects. Some functions
 of the Application require an active internet connection, which can be Wi-Fi or provided by your mobile network
 provider. The Service Provider cannot be held responsible if the Application does not function at full capacity
@@ -243,8 +251,10 @@ Only Creative Upscale and old-photo restoration send the photo you select to our
 result back. You can review or revoke that access at any time in <strong>Settings → Privacy &amp; Security →
 Photos</strong> on your device.</p>
 <p>When you choose Creative Upscale or old-photo restoration, the selected photo is transmitted solely to
-perform the processing you requested. The processed result is stored for a short, limited period so that you
-can download it, after which it is deleted. We do not scan or upload the rest of your photo library.</p>
+perform the processing you requested. WaveSpeedAI or Replicate temporarily retains the selected photo and its
+processed result for a period ranging from one hour to seven days, depending on the provider, and then deletes
+them. UScale does not retain additional copies on systems it controls after processing. We do not scan or
+upload the rest of your photo library.</p>
 
 <h2>Personal data we collect</h2>
 <p>We collect certain data to provide and improve the app's functionality, including:</p>
@@ -264,6 +274,10 @@ services may collect data as outlined below:</p>
     experience. See <a href="https://amplitude.com/privacy" target="_blank" rel="noopener">Amplitude's Privacy Policy</a>.</li>
   <li><strong>RevenueCat:</strong> to manage subscriptions and in-app purchases. See
     <a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener">RevenueCat's Privacy Policy</a>.</li>
+  <li><strong>WaveSpeedAI:</strong> for temporary server processing of selected photos. See
+    <a href="https://wavespeed.ai/docs/data-retention-policy" target="_blank" rel="noopener">WaveSpeedAI's Data Retention Policy</a>.</li>
+  <li><strong>Replicate:</strong> for temporary server processing of selected photos. See
+    <a href="https://replicate.com/docs/topics/predictions/data-retention/" target="_blank" rel="noopener">Replicate's Data Retention Policy</a>.</li>
   <li><strong>Google Firebase:</strong> for app performance monitoring, analytics, and crash reporting. See
     <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase's Privacy Policy</a>.</li>
   <li><strong>AdMob:</strong> for serving advertisements. See
