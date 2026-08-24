@@ -100,25 +100,25 @@ The 12 locales use *native* keywords pulled from their own store — not machine
 
 ```
 /                                  ai photo enhancer, enhance photo quality, unblur photo (en, x-default)
-/{lang}/                           localised head terms above           (11 locales)
+/{lang}/                           localised head terms above           (currently Russian)
 /guides/                           "ai photo enhancer guides", hub
 /guides/<slug>.html                one long-tail keyword each           (10 guides)
 /{lang}/guides/                     localised hub
-/{lang}/guides/<slug>.html          localised long-tail                 (10 × 11 = 110 pages)
+/{lang}/guides/<slug>.html          localised long-tail                 (currently 10 Russian pages)
 /support_page.html                 brand + "uscale support"             (kept, redesigned)
 /terms.html /privacy_policy.html   legal                                (kept, redesigned)
 /sale.html                         "uscale discount / lifetime deal"    (kept, redesigned)
 ```
 
-Total indexable pages: **12 landings + 12 guide hubs + 120 guides = 144**, all cross-linked with `hreflang` (12 locales + `x-default`).
+Current indexable set: **32 pages** — English and Russian versions of the landing, guide hub, 10 guides, comparison, support, terms and privacy pages. A locale joins the indexable `hreflang` cluster automatically only after its own `build/content/<code>.json` exists; locales without translated content cannot be built.
 
 ## 5. On-page SEO checklist applied to every generated page
 
 - One `<h1>` containing the primary keyword, `<h2>` per section with secondary keywords
 - `<title>` ≤ 60 chars, `<meta name="description">` 140–160 chars, both keyword-led and benefit-led
-- Canonical URL + full `hreflang` cluster (12 locales + `x-default`) on every page
+- Canonical URL + reciprocal `hreflang` cluster for every translated locale, plus `x-default`
 - Open Graph + Twitter card, OG image = App Store screenshot 1
-- JSON-LD: `SoftwareApplication` + `AggregateRating` (4.54 / 464) + `Offer` on landings; `HowTo` + `FAQPage` + `BreadcrumbList` on guides; `Organization` + `WebSite` site-wide
+- JSON-LD: `MobileApplication` + `AggregateRating` (4.6 / 1,579) + `Offer` on landings; `HowTo` + `FAQPage` + `BreadcrumbList` on guides; `Organization` + `WebSite` site-wide
 - Descriptive `alt` text on every image using the target keyword naturally
 - `width`/`height` on every image, `loading="lazy"` below the fold → no CLS
 - Zero render-blocking external requests (all CSS/JS inlined or same-origin, no web fonts, no trackers)

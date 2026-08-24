@@ -258,6 +258,7 @@ section{position:relative}
 .pill b{color:var(--tx)}
 .pill .stars{color:var(--star);letter-spacing:1px;font-size:12.5px}
 .hero h1{font-size:clamp(38px,5.6vw,63px);margin:22px 0 0;letter-spacing:-.035em}
+html:lang(ru) .hero-lead h1{font-size:clamp(34px,4.8vw,54px)}
 .hero h1 em{font-style:normal;
   background:linear-gradient(100deg,var(--h1-1) 6%,var(--h1-2) 34%,var(--h1-3) 64%,var(--h1-4) 96%);
   -webkit-background-clip:text;background-clip:text;color:transparent}
@@ -277,10 +278,9 @@ section{position:relative}
 .chips li{display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;color:var(--tx-2);
   background:var(--tint);border:1px solid var(--line);padding:7px 13px;border-radius:999px}
 .chips li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ok);flex:0 0 auto}
+.hero-chips{margin-top:0}
 @media (min-width:981px){
-  .hero-copy .chips{gap:7px;margin-top:26px}
-  .hero-copy .chips li{font-size:12px;padding:6px 10px;gap:6px}
-  .hero-copy .chips li::before{width:5px;height:5px}
+  .hero-chips{grid-column:1/-1;flex-wrap:nowrap}
 }
 
 /* ---------- in-video controls ---------- */
@@ -795,6 +795,8 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:64px 0 34
 }
 
 .contact-row{display:flex;flex-wrap:wrap;gap:14px}
+.contact-row.is-stacked{flex-direction:column;align-items:stretch;min-width:190px}
+.contact-row.is-stacked .btn{width:100%}
 .contact-card{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin:28px 0 14px;padding:22px 26px;
   background:var(--surface);border:1px solid var(--line-2);border-radius:var(--r-l)}
 .contact-card .me{width:78px;height:78px;border-radius:50%;object-fit:cover;flex:0 0 auto;
@@ -860,6 +862,8 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:64px 0 34
 }
 @media(max-width:980px){
   .hero-grid,.hero-lead .hero-grid{grid-template-columns:1fr;gap:30px}
+  .hero-lead .hero-chips{grid-row:2}
+  .hero-lead .hero-stage{grid-row:3}
   .cmp{max-width:520px;margin:0 auto}
   .hero-stage{min-height:calc(48vw + 24px)}
   .hero-stage .phone{--pw:min(104vw,720px);left:50%;transform:translate(-50%,-50%)}

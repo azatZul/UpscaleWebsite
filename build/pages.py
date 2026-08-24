@@ -23,9 +23,9 @@ SUPPORT = dict(
                 "FAQ, troubleshooting and direct contact with the developer.",
     body=f"""
 <div class="contact-card">
-  <img class="me" src="/resources/alex_avatar.jpg" width="78" height="78" alt="Alex, the developer of UScale">
+  <img class="me" src="/resources/alex_avatar.jpg" width="78" height="78" alt="Alexandr, the developer of UScale">
   <div class="contact-who">
-    <b>Alex</b>
+    <b>Alexandr</b>
     <span>Developer of UScale — every message lands with me, not a helpdesk.</span>
     <span class="mailrow">
       <a href="mailto:{EMAIL_HELP}">{EMAIL_HELP}</a>
@@ -67,7 +67,7 @@ enhanced one — it makes the fix much faster.</p>
     <a href="/privacy_policy.html">Privacy Policy</a> for processing and retention details.</p></div></details>
 
   <details><summary>Which devices and iOS versions are supported?</summary><div class="a">
-    <p>iPhone, iPad and iPod touch running iOS {{minimum_ios}} or later. Newer chips finish a 4x upscale noticeably faster,
+    <p>iPhone and iPad running iOS {{minimum_ios}} or later. Newer chips finish a 4x upscale noticeably faster,
     but the same tools are available on every supported device.</p></div></details>
 
   <details><summary>Processing is slow or the app heats up. Is that normal?</summary><div class="a">

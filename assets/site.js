@@ -103,6 +103,14 @@
   var langBtn = document.querySelector('.lang-btn');
   var langMenu = document.querySelector('.lang-menu');
   if (langBtn && langMenu) {
+    /* Keep query state and only language-independent section anchors across locales. */
+    var stableLocaleHash = /^#(?:main-content|download|reviews|examples|how|privacy|guides|faq|comparison|steps|demo|modes|options|step-\d+|test-[a-z0-9-]+)$/;
+    [].forEach.call(langMenu.querySelectorAll('a[href]'), function (link) {
+      var target = new URL(link.getAttribute('href'), window.location.href);
+      target.search = window.location.search;
+      if (stableLocaleHash.test(window.location.hash)) target.hash = window.location.hash;
+      link.href = target.pathname + target.search + target.hash;
+    });
     langBtn.addEventListener('click', function (e) {
       e.stopPropagation();
       var open = langMenu.classList.toggle('open');

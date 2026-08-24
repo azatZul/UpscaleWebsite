@@ -5,8 +5,8 @@ Usage: python3 build/build.py [locale ...]
 Assets and resources keep their paths; static/ is copied into the site root.
 Mutable app facts (prices, rating, version, publish dates) come from build/app_facts.json.
 
-TODO: every locale still falls back to content/en.json — translate once the English
-copy is final.
+Only locales with translated content can be built. Standalone pages use the same
+locale-aware routes as the landing page and guides.
 """
 
 import hashlib, json, os, re, shutil, sys
@@ -66,6 +66,11 @@ LOCALES = [
     ("tr", "tr",   "Turkish",              "Türkçe",      "tr",      "tr_TR", "tr"),
 ]
 BY_CODE = {l[0]: l for l in LOCALES}
+# Only locales with their own content file are indexable and shown in the picker.
+# Adding build/content/<code>.json automatically grows the hreflang cluster.
+LOCALIZED_CODES = tuple(
+    code for code in BY_CODE if os.path.exists(os.path.join(CONTENT, f"{code}.json"))
+)
 
 # Guides
 SHOTS = "/resources/appstore/screenshots"
@@ -279,6 +284,8 @@ FRAME = {"src": "/resources/iphone_frame.png", "w": 2548, "h": 1252,
 
 def hero_phone(c, h):
     """Render the framed hero comparison and its example switcher."""
+    # h["before"] is the temporal state before processing. Localizations should use
+    # their equivalent of "before/after" (Russian: "До/После"), not a spatial label.
     s, f = HERO_SHOTS[0], FRAME
     screen = ("left:{:.4f}%;right:{:.4f}%;top:{:.4f}%;bottom:{:.4f}%".format(
         f["left"] / f["w"] * 100, f["right"] / f["w"] * 100,
@@ -384,24 +391,30 @@ FACT_TEXT = {
 FACT_RE = re.compile(r"\{(\w+)\}")
 UNKNOWN_FACTS = set()
 
-def _sub_fact(m):
-    key = m.group(1)
-    if key in FACT_TEXT:
-        return str(FACT_TEXT[key])
-    UNKNOWN_FACTS.add(key)
-    return m.group(0)
+def inject_facts(value, lang="en"):
+    """Replace app-fact placeholders, including locale-specific number formatting."""
+    facts = dict(FACT_TEXT)
+    if lang == "ru":
+        facts["rating_count"] = f'{APP_FACTS["rating"]["count"]:,}'.replace(",", "\u00a0")
 
-def inject_facts(value):
-    """Replace app-fact placeholders throughout localized content."""
-    if isinstance(value, str):
-        return FACT_RE.sub(_sub_fact, value)
-    if isinstance(value, list):
-        return [inject_facts(item) for item in value]
-    if isinstance(value, tuple):
-        return tuple(inject_facts(item) for item in value)
-    if isinstance(value, dict):
-        return {key: inject_facts(item) for key, item in value.items()}
-    return value
+    def replace(item):
+        if isinstance(item, str):
+            def sub_fact(match):
+                key = match.group(1)
+                if key in facts:
+                    return str(facts[key])
+                UNKNOWN_FACTS.add(key)
+                return match.group(0)
+            return FACT_RE.sub(sub_fact, item)
+        if isinstance(item, list):
+            return [replace(child) for child in item]
+        if isinstance(item, tuple):
+            return tuple(replace(child) for child in item)
+        if isinstance(item, dict):
+            return {key: replace(child) for key, child in item.items()}
+        return item
+
+    return replace(value)
 
 MISSING_DATES = set()
 
@@ -418,7 +431,7 @@ def updated_for(path=""):
     if path.startswith("guides/"):
         found = dates["guides"].get(path.split("/", 1)[1])
     else:
-        found = dates.get(path)
+        found = dates.get(path) or dates.get(page_path(path))
     if found:
         return found
     MISSING_DATES.add(path)
@@ -441,7 +454,7 @@ def date_tag(value, prefix="", english=False):
     return f'<time datetime="{value}">{esc(f"{prefix} {text}".strip())}</time>'
 
 def content_lang(c, route_lang):
-    """Language of the rendered copy, which may differ from its placeholder URL."""
+    """Resolve and validate the language declared by the localized content."""
     code = c.get("lang", route_lang)
     return code if code in BY_CODE else route_lang
 
@@ -452,6 +465,10 @@ def page_path(path=""):
     if path == "guides":
         return "guides/"
     return path + ".html"
+
+def logical_path(filename):
+    """A generated filename as the extension-free route used by rel_url/url."""
+    return filename[:-5] if filename.endswith(".html") else filename
 
 def rel_url(lang, path=""):
     """The same page in another locale, as a site-relative link — what the language
@@ -498,7 +515,8 @@ def head(c, lang, title, desc, canonical, path="", og_image=None, extra_ld=None,
     alts = ""
     if alternates:
         alts = "\n  ".join(
-            f'<link rel="alternate" hreflang="{BY_CODE[l][4]}" href="{url(l, path)}">' for l in BY_CODE
+            f'<link rel="alternate" hreflang="{BY_CODE[l][4]}" href="{url(l, path)}">'
+            for l in LOCALIZED_CODES
         ) + f'\n  <link rel="alternate" hreflang="x-default" href="{url("en", path)}">' 
     copy_locale = BY_CODE[content_lang(c, lang)]
     return f"""<!doctype html>
@@ -639,7 +657,7 @@ def lang_switcher(c, lang, path=""):
     items = "".join(
         f'<a href="{rel_url(code, path)}" hreflang="{BY_CODE[code][4]}" lang="{BY_CODE[code][4]}"'
         f'{" aria-current=\"true\"" if code == lang else ""}>{flag(code)}{BY_CODE[code][3]}</a>'
-        for code in BY_CODE
+        for code in LOCALIZED_CODES
     )
     return f"""<div class="lang">
       <button class="lang-btn" type="button" aria-expanded="false" aria-controls="language-links"
@@ -649,7 +667,7 @@ def lang_switcher(c, lang, path=""):
 
 def nav(c, lang, home_prefix, path="", on_home=False):
     n = c["nav"]
-    compare_href = f"{home_prefix}#comparison" if on_home else "/compare.html"
+    compare_href = f"{home_prefix}#comparison" if on_home else rel_url(lang, "compare")
     guides_href = f"{home_prefix}#guides" if on_home else f"{home_prefix}guides/"
     return f"""<header class="nav">
   <div class="wrap nav-in">
@@ -693,7 +711,7 @@ def footer(c, lang, home_prefix, path=""):
           <li><a href="{home_prefix}#examples">{esc(c['nav']['screens'])}</a></li>
           <li><a href="{home_prefix}#how">{esc(c['nav']['how'])}</a></li>
           <li><a href="{home_prefix}#reviews">{esc(f['reviews'])}</a></li>
-          <li><a href="/compare.html">{esc(c['nav'].get('compare', 'Comparison'))}</a></li>
+          <li><a href="{rel_url(lang, 'compare')}">{esc(c['nav'].get('compare', 'Comparison'))}</a></li>
         </ul>
       </div>
       <div>
@@ -703,9 +721,9 @@ def footer(c, lang, home_prefix, path=""):
       <div>
         <h4>{esc(f['support'])}</h4>
         <ul>
-          <li><a href="/support_page.html">{esc(f['help'])}</a></li>
-          <li><a href="/privacy_policy.html">{esc(f['privacy'])}</a></li>
-          <li><a href="/terms.html">{esc(f['terms'])}</a></li>
+          <li><a href="{rel_url(lang, 'support_page')}">{esc(f['help'])}</a></li>
+          <li><a href="{rel_url(lang, 'privacy_policy')}">{esc(f['privacy'])}</a></li>
+          <li><a href="{rel_url(lang, 'terms')}">{esc(f['terms'])}</a></li>
         </ul>
       </div>
     </div>
@@ -720,7 +738,7 @@ def footer(c, lang, home_prefix, path=""):
 </html>
 """
 
-def compare_teaser(c):
+def compare_teaser(c, lang):
     """Banner under the home examples: the same photos, run through the rival apps."""
     cp = c.get("compare")
     if not cp:
@@ -729,7 +747,7 @@ def compare_teaser(c):
         f'<span class="vs-chip" style="--i:{i}">'
         f'<img src="{a["icon"]}" width="60" height="60" loading="lazy" decoding="async" alt="">'
         f'<b>{esc(a["name"])}</b></span>' for i, a in enumerate(RIVALS))
-    return f"""<a class="vs-card vs-inline" id="comparison" href="/compare.html">
+    return f"""<a class="vs-card vs-inline" id="comparison" href="{rel_url(lang, 'compare')}">
       <div class="vs-fan" aria-hidden="true">
         <span class="vs-chip vs-chip-us">
           <img src="/resources/appstore/icon_512.png" width="76" height="76" loading="lazy"
@@ -806,9 +824,9 @@ def render_home(c, lang):
       <h1>{h['h1']}</h1>
       <p class="hero-sub">{esc(h['sub'])}</p>
       <div class="hero-cta stores">{store_badge(appstore_btn(c), h['note'])}</div>
-      <ul class="chips">{chips}</ul>
     </div>
     {hero_phone(c, h)}
+    <ul class="chips hero-chips">{chips}</ul>
   </div>
 </section>""")
 
@@ -837,7 +855,7 @@ def render_home(c, lang):
 </section>""")
 
     # Examples — the competitor comparison sits right under them.
-    teaser = compare_teaser(c)
+    teaser = compare_teaser(c, lang)
     sw = c.get("showcase")
     if sw:
         sw_tabs = []
@@ -998,7 +1016,7 @@ def render_guides_index(c, lang):
                  extra_ld=ld(crumbs_ld) + ld(list_ld))
             + nav(c, lang, home_prefix, "guides")
             + f"""<main class="wrap" id="main-content" tabindex="-1">
-  <nav class="crumbs" aria-label="Breadcrumb">
+  <nav class="crumbs" aria-label="{esc(c['ui'].get('breadcrumb', 'Breadcrumb'))}">
     <a href="{home_prefix}">{esc(c['ui']['home'])}</a><span>›</span><span>{esc(c['nav']['guides'])}</span>
   </nav>
   <div class="art" style="max-width:900px">
@@ -1088,7 +1106,7 @@ def render_guide(c, lang, slug):
     </figure>'''
 
     body = f"""<main class="wrap" id="main-content" tabindex="-1">
-  <nav class="crumbs" aria-label="Breadcrumb">
+  <nav class="crumbs" aria-label="{esc(c['ui'].get('breadcrumb', 'Breadcrumb'))}">
     <a href="{home_prefix}">{esc(c['ui']['home'])}</a><span>›</span>
     <a href="{home_prefix}guides/">{esc(c['nav']['guides'])}</a><span>›</span>
     <span>{esc(g['card_title'])}</span>
@@ -1168,11 +1186,15 @@ def doc_sections(body):
     parts = [x for x in re.split(r"(?=<h2>)", body.strip()) if x.strip()]
     intro = "" if parts and parts[0].lstrip().startswith("<h2>") else (parts.pop(0) if parts else "")
     main, contact, toc = [], "", []
-    for part in parts:
+    for index, part in enumerate(parts, 1):
         title = re.sub(r"<[^>]+>", "", re.match(r"<h2>(.*?)</h2>", part, re.S).group(1)).strip()
-        sid = re.sub(r"-+", "-", re.sub(r"[^a-z0-9]+", "-", title.lower())).strip("-")
+        sid = re.sub(r"-+", "-", re.sub(r"[^\w]+", "-", title.lower())).strip("-_")
+        sid = sid or f"section-{index}"
         sec = f'<section class="doc-sec" id="{sid}">{part.strip()}</section>'
-        if sid.startswith("contact"):
+        # The translated heading may not begin with "contact". Legal documents
+        # consistently keep their contact section last; earlier sections may also
+        # contain a mailto link and must not disappear from the main card.
+        if index == len(parts) and "mailto:" in part:
             contact = f'<div class="doc-card is-contact">{sec}</div>'
         else:
             main.append(sec)
@@ -1181,31 +1203,46 @@ def doc_sections(body):
     return card + contact, "".join(toc)
 
 
-def render_doc(c, d):
-    """English-only page kept at a historical URL (support / terms / privacy)."""
+def localize_body_links(body, lang):
+    """Point root-relative links in standalone copy at the matching locale."""
+    if lang == "en":
+        return body
+    prefix = f'/{BY_CODE[lang][1]}'
+    routes = ("guides/", "support_page.html", "privacy_policy.html", "terms.html",
+              "sale.html", "compare.html")
+    for route in routes:
+        body = body.replace(f'href="/{route}', f'href="{prefix}/{route}')
+    return body
+
+
+def render_doc(c, d, lang):
+    """Render support / terms / privacy at their locale-aware historical route."""
     d = dict(d)
-    d["body"] = inject_facts(d["body"])
+    d["body"] = localize_body_links(inject_facts(d["body"], lang), lang)
     # Pre-rendered markup: doc_body drops it in as-is (see the two call sites below).
-    d["updated"] = date_tag(updated_for(d["file"]), "Updated", english=True)
-    canonical = f"{SITE}/{d['file']}"
+    d["updated"] = date_tag(updated_for(d["file"]), c["ui"]["updated"], english=lang == "en")
+    path = logical_path(d["file"])
+    canonical = url(lang, path)
+    home_prefix = rel_url(lang)
     crumbs_ld = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": c["ui"]["home"], "item": url("en")},
+        {"@type": "ListItem", "position": 1, "name": c["ui"]["home"], "item": url(lang)},
         {"@type": "ListItem", "position": 2, "name": d["h1"], "item": canonical}]}
     extra = ld(crumbs_ld)
     if d["file"] == pages.SUPPORT["file"]:
+        support_faq = c.get("support_faq_ld", SUPPORT_FAQ_LD)
         extra += ld({"@context": "https://schema.org", "@type": "FAQPage", "url": canonical,
                      "mainEntity": [{"@type": "Question", "name": q,
                                      "acceptedAnswer": {"@type": "Answer", "text": a}}
-                                    for q, a in inject_facts(SUPPORT_FAQ_LD)]})
-    return (head(c, "en", d["title"], d["description"], canonical, alternates=False, extra_ld=extra)
-            + nav(c, "en", "/")
+                                    for q, a in inject_facts(support_faq, lang)]})
+    return (head(c, lang, d["title"], d["description"], canonical, path=path, extra_ld=extra)
+            + nav(c, lang, home_prefix, path)
             + f"""<main class="wrap" id="main-content" tabindex="-1">
-  <nav class="crumbs" aria-label="Breadcrumb">
-    <a href="/">{esc(c['ui']['home'])}</a><span>&rsaquo;</span><span>{esc(d['h1'])}</span>
+  <nav class="crumbs" aria-label="{esc(c['ui'].get('breadcrumb', 'Breadcrumb'))}">
+    <a href="{home_prefix}">{esc(c['ui']['home'])}</a><span>&rsaquo;</span><span>{esc(d['h1'])}</span>
   </nav>
   {doc_body(c, d)}
 </main>"""
-            + footer(c, "en", "/"))
+            + footer(c, lang, home_prefix, path))
 
 
 SUPPORT_FAQ_LD = [
@@ -1222,7 +1259,7 @@ SUPPORT_FAQ_LD = [
      "restoration upload only the photo you select for server processing. See the Privacy Policy for "
      "processing and retention details."),
     ("Which devices and iOS versions are supported?",
-     "iPhone, iPad and iPod touch running iOS {minimum_ios} or later."),
+     "iPhone and iPad running iOS {minimum_ios} or later."),
     ("How much does UScale Premium cost?",
      "The app is free for {free_photos_per_day} photo enhancements a day. Premium is {annual_price} a year "
      "and starts with a {trial_days}-day free "
@@ -1236,37 +1273,39 @@ SUPPORT_FAQ_LD = [
 ]
 
 
-def render_sale(c):
-    canonical = f"{SITE}/sale.html"
+def render_sale(c, lang):
+    canonical = url(lang, "sale")
+    home_prefix = rel_url(lang)
     off = f'{FACT_TEXT["sale_percent"]}%'
-    return (head(c, "en", f"UScale Premium Sale — {off} off",
-                 f"Unlock UScale Premium with {off} off. Open the app from this link and the discount is "
-                 "active for one hour on your device.",
-                 canonical, alternates=False,
+    sale = c.get("sale", {})
+    def st(key, fallback):
+        return sale.get(key, fallback).replace("{off}", off)
+    return (head(c, lang, st("title", f"UScale Premium Sale — {off} off"),
+                 st("description", f"Unlock UScale Premium with {off} off. Open the app from this link and the discount is active for one hour on your device."),
+                 canonical, path="sale",
                  og_image=f"{SITE}{SCREENSHOTS[3]}",
                  robots="noindex,follow")
-            + nav(c, "en", "/")
+            + nav(c, lang, home_prefix, "sale")
             + f"""<main id="main-content" tabindex="-1">
 <section class="hero">
   <div class="wrap">
     <div class="hero-grid">
       <div>
-        <span class="pill"><b>Limited unlock</b> · {off} OFF</span>
-        <h1>Claim your <em>{off} off</em> Premium upgrade</h1>
-        <p class="hero-sub">Open the app from this link and a discounted Premium window opens for one hour.</p>
+        <span class="pill"><b>{esc(st('pill', 'Limited unlock'))}</b> · {esc(st('off', '{off} OFF'))}</span>
+        <h1>{st('h1', 'Claim your <em>{off} off</em> Premium upgrade')}</h1>
+        <p class="hero-sub">{esc(st('sub', 'Open the app from this link and a discounted Premium window opens for one hour.'))}</p>
         <div class="promo" id="promo-code-card">
-          <span class="promo-l">Promo code</span>
+          <span class="promo-l">{esc(st('promo', 'Promo code'))}</span>
           <span class="promo-v" id="promo-code-value"></span>
         </div>
         <div class="hero-cta sale-cta">
-          <a class="btn btn-p btn-xl" id="open-app-link" href="upscale://offer/sale">Open in app<span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn-p btn-xl" id="open-app-link" href="upscale://offer/sale">{esc(st('open', 'Open in app'))}<span class="arrow" aria-hidden="true">→</span></a>
         </div>
-        <p class="hero-note">Already installed? iOS opens UScale straight from this link.
-          No app yet? Install it and reopen the same link.</p>
+        <p class="hero-note">{esc(st('note', 'Already installed? iOS opens UScale straight from this link. No app yet? Install it and reopen the same link.'))}</p>
       </div>
       <div class="sale-art">
-        <span class="sale-badge">Best value</span>
-        <img src="{SCREENSHOTS[3]}" width="298" height="645" alt="UScale Premium in the app"
+        <span class="sale-badge">{esc(st('badge', 'Best value'))}</span>
+        <img src="{SCREENSHOTS[3]}" width="298" height="645" alt="{esc(st('image_alt', 'UScale Premium in the app'))}"
              fetchpriority="high" decoding="async">
       </div>
     </div>
@@ -1274,9 +1313,8 @@ def render_sale(c):
 </section>
 
 {download_cta(c, sect_cls="sect sect-tight",
-              h2="App not opening yet?",
-              p="Install UScale from the App Store, then open this same sale link again — "
-                "the promo code stays attached.")}
+              h2=st('cta_h', 'App not opening yet?'),
+              p=st('cta_p', 'Install UScale from the App Store, then open this same sale link again — the promo code stays attached.'))}
 </main>
 <script>
 (function () {{
@@ -1295,14 +1333,14 @@ def render_sale(c):
   document.getElementById('open-app-link').href = appURL.toString();
 }})();
 </script>"""
-            + footer(c, "en", "/"))
+            + footer(c, lang, home_prefix, "sale"))
 
 
 # Competitor comparison
 def app_icon(app, size=54, cls="vs-ico"):
     return (f'<img class="{cls}" src="{app["icon"]}" width="{size}" height="{size}" '
             f'loading="lazy" decoding="async" '
-            f'alt="{esc(app["name"])} app icon">')
+            f'alt="{esc(app["name"])}">')
 
 
 def compare_slider(c, cp, tid):
@@ -1352,7 +1390,7 @@ def compare_zoom(cp, tid):
         # one column per app; a second crop simply stacks under the first
         return "".join(
             f'<img src="{z[key]}" width="{w}" height="{h}" loading="lazy" decoding="async" '
-            f'alt="{esc(name)} — close crop">' for z in zooms)
+            f'alt="{esc(name)} — {esc(cp.get("crop_alt", "close crop"))}">' for z in zooms)
 
     out = "".join(
         f'<figure class="zt{" is-us" if app and app["id"] == "uscale" else ""}">'
@@ -1392,15 +1430,75 @@ def compare_table(cp):
             f'<thead><tr><td></td>{head}</tr></thead><tbody>{body}</tbody></table></div>')
 
 
-def render_compare(c):
+def render_compare_simple(c, lang):
+    """Compact localized comparison page; it keeps every interactive test asset."""
     cp = c["compare"]
-    canonical = f"{SITE}/compare.html"
+    canonical = url(lang, "compare")
+    home_prefix = rel_url(lang)
+    crumbs_ld = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": c["ui"]["home"], "item": url(lang)},
+        {"@type": "ListItem", "position": 2, "name": cp["nav"], "item": canonical}]}
+    faq_ld = {"@context": "https://schema.org", "@type": "FAQPage", "url": canonical,
+              "mainEntity": [{"@type": "Question", "name": q["q"],
+                              "acceptedAnswer": {"@type": "Answer", "text": q["a"]}}
+                             for q in cp["faq"]]}
+    apps = "".join(
+        f'<li{" class=\"is-us\"" if a["id"] == "uscale" else ""}>'
+        f'<a href="{a["url"]}" target="_blank" rel="noopener nofollow">{app_icon(a, 62)}'
+        f'<b>{esc(a["name"])}</b><small>{esc(a["dev"])}</small>'
+        f'<span>{esc(cp["apps"][a["id"]]["role"])}</span></a>'
+        f'<p>{esc(cp["apps"][a["id"]]["verdict"])}</p></li>' for a in COMPARE_APPS)
+    tests = ""
+    for i, t in enumerate(cp["tests"]):
+        tests += f"""<section class="vs-test" id="test-{t['id']}">
+    <div class="vs-head"><span class="vs-step">{i + 1}</span>
+      <div><h2>{esc(t['h2'])}</h2><p class="lead">{esc(t['sub'])}</p></div></div>
+    {compare_slider(c, cp, t['id'])}
+    <div class="vs-zoom-head"><h3>{esc(cp['zoom_h'])}</h3></div>
+    {compare_zoom(cp, t['id'])}
+    <div class="answer vs-look"><p><b>{esc(cp['look_for'])}:</b> {esc(t['look'])}</p></div>
+  </section>"""
+    dl = (f'<p class="vs-dl-h">{esc(cp["dl_h"])}</p><div class="vs-dl">'
+          + "".join(f'<a class="btn btn-g vs-dl-btn" href="{COMPARE_TESTS[k]["before"]}" download>'
+                    f'{DOWN_SVG}{esc(v)}</a>' for k, v in cp.get("dl", {}).items())
+          + '</div>') if cp.get("dl") else ""
+    faq = "".join(
+        f'<details{" open" if i == 0 else ""}><summary>{esc(q["q"])}</summary>'
+        f'<div class="a"><p>{esc(q["a"])}</p>{dl if q.get("dl") else ""}</div></details>'
+        for i, q in enumerate(cp["faq"]))
+    chips = "".join(f"<li>{esc(x)}</li>" for x in cp["chips"])
+    return (head(c, lang, cp["title"], cp["description"], canonical, path="compare",
+                 og_image=f"{SITE}{COMPARE_TESTS['spider']['shot']['uscale']}",
+                 extra_ld=ld(faq_ld) + ld(crumbs_ld))
+            + nav(c, lang, home_prefix, "compare")
+            + f"""<main class="wrap vs" id="main-content" tabindex="-1">
+  <nav class="crumbs" aria-label="{esc(c['ui'].get('breadcrumb', 'Breadcrumb'))}"><a href="{home_prefix}">{esc(c['ui']['home'])}</a>
+    <span>&rsaquo;</span><span>{esc(cp['nav'])}</span></nav>
+  <div class="vs-intro"><span class="eyebrow">{esc(cp['eyebrow'])}</span><h1>{esc(cp['h1'])}</h1>
+    <p class="lead">{esc(cp['lead'])}</p><ul class="chips">{chips}</ul>
+    <div class="meta"><span>{date_tag(updated_for('compare.html'), c['ui']['updated'])}</span>
+      <span>&middot;</span><span>{esc(c['ui']['by'])}</span></div></div>
+  <h2 class="vs-h">{esc(cp['apps_h'])}</h2><ul class="vs-apps">{apps}</ul>
+  {tests}
+  <section class="vs-faq"><h2>{esc(cp['faq_h'])}</h2><div class="faq">{faq}</div></section>
+  <section class="vs-method"><h2>{esc(cp['method_h'])}</h2><p>{esc(cp['method_p'])}</p></section>
+  {download_cta(c, section=False, h2=cp['cta_h'], p=cp['cta_p'])}
+  <p class="vs-legal">{esc(cp['disclaimer'])}</p>
+</main>""" + footer(c, lang, home_prefix, "compare"))
+
+
+def render_compare(c, lang):
+    cp = c["compare"]
+    if cp.get("simple"):
+        return render_compare_simple(c, lang)
+    canonical = url(lang, "compare")
+    home_prefix = rel_url(lang)
     faq_ld = {"@context": "https://schema.org", "@type": "FAQPage", "url": canonical,
               "mainEntity": [{"@type": "Question", "name": q["q"],
                               "acceptedAnswer": {"@type": "Answer", "text": q["a"]}}
                              for q in cp["faq"]]}
     crumbs_ld = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": c["ui"]["home"], "item": url("en")},
+        {"@type": "ListItem", "position": 1, "name": c["ui"]["home"], "item": url(lang)},
         {"@type": "ListItem", "position": 2, "name": cp["nav"], "item": canonical}]}
 
     apps = "".join(
@@ -1452,13 +1550,13 @@ def render_compare(c):
 
     chips = "".join(f"<li>{esc(x)}</li>" for x in cp["chips"])
 
-    return (head(c, "en", cp["title"], cp["description"], canonical, alternates=False,
+    return (head(c, lang, cp["title"], cp["description"], canonical, path="compare",
                  og_image=f"{SITE}{COMPARE_TESTS['spider']['shot']['uscale']}",
                  extra_ld=ld(faq_ld) + ld(crumbs_ld))
-            + nav(c, "en", "/")
+            + nav(c, lang, home_prefix, "compare")
             + f"""<main class="wrap vs" id="main-content" tabindex="-1">
-  <nav class="crumbs" aria-label="Breadcrumb">
-    <a href="/">{esc(c['ui']['home'])}</a><span>&rsaquo;</span><span>{esc(cp['nav'])}</span>
+  <nav class="crumbs" aria-label="{esc(c['ui'].get('breadcrumb', 'Breadcrumb'))}">
+    <a href="{home_prefix}">{esc(c['ui']['home'])}</a><span>&rsaquo;</span><span>{esc(cp['nav'])}</span>
   </nav>
   <div class="vs-intro">
     <span class="eyebrow">{esc(cp['eyebrow'])}</span>
@@ -1495,30 +1593,25 @@ def render_compare(c):
   {download_cta(c, section=False, h2=cp['cta_h'], p=cp['cta_p'])}
   <p class="vs-legal">{esc(cp['disclaimer'])}</p>
 </main>"""
-            + footer(c, "en", "/"))
+            + footer(c, lang, home_prefix, "compare"))
 
 
 # Sitemap
 def render_sitemap():
     entries = []
-    paths = ["", "guides"] + [f"guides/{s}" for s in GUIDE_SLUGS]
+    paths = (["", "guides"] + [f"guides/{s}" for s in GUIDE_SLUGS]
+             + ["compare", "support_page", "terms", "privacy_policy"])
     for p in paths:
-        for code in BY_CODE:
+        for code in LOCALIZED_CODES:
             alts = "".join(
                 f'\n    <xhtml:link rel="alternate" hreflang="{BY_CODE[o][4]}" href="{url(o, p)}"/>'
-                for o in BY_CODE)
+                for o in LOCALIZED_CODES)
             alts += f'\n    <xhtml:link rel="alternate" hreflang="x-default" href="{url("en", p)}"/>'
             prio = "1.0" if p == "" and code == "en" else ("0.9" if p == "" else "0.8")
             entries.append(
                 f'  <url>\n    <loc>{url(code, p)}</loc>\n    <lastmod>{updated_for(p)}</lastmod>'
                 f'\n    <changefreq>weekly</changefreq>\n    <priority>{prio}</priority>{alts}\n  </url>')
-    entries.append(f'  <url>\n    <loc>{SITE}/compare.html</loc>'
-                   f'\n    <lastmod>{updated_for("compare.html")}</lastmod>'
-                   f'\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>')
     # sale.html is noindex and intentionally omitted.
-    for legal in ["support_page.html", "terms.html", "privacy_policy.html"]:
-        entries.append(f'  <url>\n    <loc>{SITE}/{legal}</loc>\n    <lastmod>{updated_for(legal)}</lastmod>'
-                       f'\n    <changefreq>yearly</changefreq>\n    <priority>0.3</priority>\n  </url>')
     return ('<?xml version="1.0" encoding="UTF-8"?>\n'
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n'
             '        xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
@@ -1532,22 +1625,30 @@ Sitemap: {SITE}/sitemap.xml
 
 # Build entry point
 def main():
-    langs = sys.argv[1:] or list(BY_CODE)
+    requested = sys.argv[1:]
+    langs = requested or list(LOCALIZED_CODES)
     unknown = [l for l in langs if l not in BY_CODE]
     if unknown:
         sys.exit(f"unknown locale(s) {unknown}; known: {list(BY_CODE)}")
+    untranslated = [l for l in langs if l not in LOCALIZED_CODES]
+    if untranslated:
+        sys.exit(f"locale(s) {untranslated} have no translated content; available: {list(LOCALIZED_CODES)}")
     # Only a full build removes stale generated files.
-    full = set(langs) == set(BY_CODE)
+    full = not requested or set(langs) == set(LOCALIZED_CODES)
     if full and os.path.isdir(DIST):
         shutil.rmtree(DIST)
     built = 0
-    fallback_path = os.path.join(CONTENT, "en.json")
     for code in langs:
         path = os.path.join(CONTENT, f"{code}.json")
-        if not os.path.exists(path):
-            path = fallback_path
         with open(path, encoding="utf-8") as f:
-            c = inject_facts(json.load(f))
+            c = inject_facts(json.load(f), code)
+        if code == "ru":
+            import ru_guides, ru_standalone
+            c["guide_pages"] = inject_facts(ru_guides.GUIDES, code)
+            c["compare"] = inject_facts(ru_standalone.COMPARE, code)
+            c["docs"] = inject_facts(ru_standalone.DOCS, code)
+            c["support_faq_ld"] = inject_facts(ru_standalone.SUPPORT_FAQ_LD, code)
+            c["sale"] = ru_standalone.SALE
         missing = [s for s in GUIDE_SLUGS if s not in c.get("guide_pages", {})]
         if missing:
             print(f"  ! {code}: missing guides {missing}")
@@ -1558,16 +1659,12 @@ def main():
         for slug in GUIDE_SLUGS:
             if slug in c["guide_pages"]:
                 write(f"{base}guides/{slug}.html", render_guide(c, code, slug)); built += 1
-        fallback = " (English fallback)" if content_lang(c, code) != code else ""
-        print(f"  ✓ {code}{fallback}")
-    if "en" in langs:
-        with open(os.path.join(CONTENT, "en.json"), encoding="utf-8") as f:
-            en = inject_facts(json.load(f))
-        for d in pages.DOCS:
-            write(d["file"], render_doc(en, d)); built += 1
-        write("sale.html", render_sale(en)); built += 1
-        write("compare.html", render_compare(en)); built += 1
-        print("  ✓ support / terms / privacy / sale / compare")
+        docs = c.get("docs") or pages.DOCS
+        for d in docs:
+            write(f"{base}{d['file']}", render_doc(c, d, code)); built += 1
+        write(f"{base}sale.html", render_sale(c, code)); built += 1
+        write(f"{base}compare.html", render_compare(c, code)); built += 1
+        print(f"  ✓ {code}")
     write("sitemap.xml", render_sitemap())
     write("robots.txt", ROBOTS)
     copy_static()

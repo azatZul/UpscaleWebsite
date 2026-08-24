@@ -37,7 +37,7 @@
 | **First released** | 2025-01-08 |
 | **File size** | *(build/app_facts.json → `file_size`; 78,400,512 bytes)* |
 | **Minimum iOS** | *(build/app_facts.json → `minimum_ios`)* |
-| **Devices** | iPhone, iPad, iPod touch (iosUniversal). Designed for iPad. Not verified for macOS. |
+| **Devices** | iPhone and iPad. Designed for iPad. Not verified for macOS. |
 | **Average rating** | *(build/app_facts.json → `rating.value`)* |
 | **Rating count** | *(build/app_facts.json → `rating.count`)* |
 | **Game Center** | No |

@@ -283,7 +283,7 @@
       },
       {
         "q": "Is my iPhone or iPad compatible?",
-        "a": "UScale needs iOS {minimum_ios} or later and runs on iPhone, iPad and iPod touch. On iPad the before and after are shown side by side.",
+        "a": "UScale needs iOS {minimum_ios} or later and runs on iPhone and iPad. On iPad the before and after are shown side by side.",
         "href": ""
       },
       {
@@ -302,7 +302,7 @@
   "cta": {
     "h2": "Get the sharp version of your photos",
     "p": "Free to start, no account, and your pictures stay on your phone.",
-    "note": "iPhone, iPad and iPod touch · iOS {minimum_ios} or later"
+    "note": "iPhone and iPad · iOS {minimum_ios} or later"
   },
   "compare": {
     "title": "UScale vs Remini, BlurBuster and EnhanceFox — the same photo in four apps",
@@ -352,7 +352,7 @@
         "id": "girls",
         "tab": "Park video still",
         "h2": "Test 2 — a low-resolution video still with two faces",
-        "sub": "840 × 560, soft and flat, grabbed from a video. This is the case every photo enhancer is built for.",
+        "sub": "840 × 560, soft and flat, captured in a forest.",
         "look": "The eyes, single hairs, the print on the dress and the blades of grass."
       }
     ],
@@ -362,8 +362,8 @@
     "modes_b": "The bigger, softer mode",
     "apps": {
       "uscale": {
-        "role": "Creative Upscale, or on device",
-        "verdict": "Adds detail without moving the picture: same colours, same framing, texture that belongs to the photo. The on-device mode keeps the file on your iPhone."
+        "role": "Creative Upscale",
+        "verdict": "Adds detail without moving the picture: same colours, same framing, texture that belongs to the photo."
       },
       "remini": {
         "role": "Face-first, in the cloud",
