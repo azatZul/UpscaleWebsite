@@ -38,14 +38,14 @@
   "guides_index.title": {
     "localizations": {
       "en": "UScale Guides — Unblur, Upscale & Restore Photos",
-      "ru": "Гайды UScale — резкость, 4K и восстановление фото"
+      "ru": "Руководства UScale — резкость, 4K и восстановление фото"
     },
     "comment": "Page or section title; preserve product names."
   },
   "guides_index.description": {
     "localizations": {
       "en": "Practical guides on unblurring photos, upscaling images to 4K, restoring old prints, improving video quality and making AI slow motion on iPhone.",
-      "ru": "Практические гайды: как убрать размытие, увеличить фото до 4K, восстановить старые снимки, улучшить видео и сделать плавное замедление в UScale на iPhone."
+      "ru": "Практические руководства: как убрать размытие, увеличить фото до 4K, восстановить старые снимки, улучшить видео и сделать плавное замедление в UScale на iPhone."
     },
     "comment": "Description copy; keep factual claims unchanged."
   },
@@ -58,7 +58,7 @@
   "guides_index.intro": {
     "localizations": {
       "en": "Each guide answers one specific question and then shows you the exact steps to do it in UScale on your iPhone.",
-      "ru": "Каждое руководство отвечает на один конкретный вопрос и затем показывает вам точные шаги для выполнения этого в UScale на вашем iPhone."
+      "ru": "Каждое руководство отвечает на конкретный вопрос и показывает, какие шаги нужно выполнить в UScale на iPhone."
     }
   },
   "guide_pages.unblur-photo-iphone.nav_title": {
@@ -102,7 +102,7 @@
   "guide_pages.unblur-photo-iphone.kicker": {
     "localizations": {
       "en": "Photo guide",
-      "ru": "Гайд по фото"
+      "ru": "Руководство по фото"
     }
   },
   "guide_pages.unblur-photo-iphone.read_time": {
@@ -230,7 +230,7 @@
   "guide_pages.unblur-photo-iphone.steps.3.p": {
     "localizations": {
       "en": "Pinch to zoom into hair, fabric weave and text — that is where you see whether real detail came back or contrast was merely added.",
-      "ru": "Сравните глаза, волосы, текст, тонкие линии и фон при масштабе 100%. Если появились вымышленные детали, используйте более осторожный режим."
+      "ru": "Сравните глаза, волосы, текст, тонкие линии и фон в масштабе 100%. Если появились вымышленные детали, используйте более осторожный режим."
     }
   },
   "guide_pages.unblur-photo-iphone.steps.4.h": {
@@ -285,7 +285,7 @@
   "guide_pages.unblur-photo-iphone.tips.3": {
     "localizations": {
       "en": "Motion blur is the hardest case for every AI enhancer. Expect an improvement rather than a rescue.",
-      "ru": "Сильный смаз нельзя восстановить документально точно: ИИ создаёт наиболее вероятную деталь."
+      "ru": "Сильный смаз нельзя восстановить с документальной точностью: ИИ создаёт наиболее вероятные детали."
     }
   },
   "guide_pages.unblur-photo-iphone.tips.4": {
@@ -313,7 +313,7 @@
   "guide_pages.unblur-photo-iphone.cta_p": {
     "localizations": {
       "en": "Free for two photos a day, no account, and the on-device modes never upload a thing.",
-      "ru": "Два бесплатных улучшения каждый день, без аккаунта."
+      "ru": "Два бесплатных улучшения каждый день, без регистрации."
     }
   },
   "guide_pages.unblur-photo-iphone.faq_h": {
@@ -415,7 +415,7 @@
   "guide_pages.restore-old-photos.kicker": {
     "localizations": {
       "en": "Restoration guide",
-      "ru": "Гайд по фото"
+      "ru": "Руководство по реставрации"
     }
   },
   "guide_pages.restore-old-photos.read_time": {
@@ -900,7 +900,7 @@
   "guide_pages.restore-old-photos.faq.2.a": {
     "localizations": {
       "en": "A modern phone camera is enough for almost every print, as long as the lighting is even and the phone is parallel to the photo. A flatbed scanner is only clearly better for very small prints and for negatives.",
-      "ru": "Для реставрации выбранный файл временно отправляется WaveSpeedAI или Replicate и удаляется провайдером в срок от одного часа до семи дней. UScale не загружает остальные фотографии."
+      "ru": "Для реставрации выбранный файл временно отправляется на серверы WaveSpeedAI или Replicate. В зависимости от сервиса файл хранится от одного часа до семи дней, после чего удаляется. UScale не загружает остальные фотографии."
     }
   },
   "guide_pages.restore-old-photos.faq.3.q": {
@@ -966,7 +966,7 @@
   "guide_pages.colorize-black-and-white-photos.card_desc": {
     "localizations": {
       "en": "Add believable colour to vintage portraits in one tap.",
-      "ru": "Добавьте естественные цвета в старый снимок."
+      "ru": "Добавьте естественные цвета старому снимку."
     }
   },
   "guide_pages.colorize-black-and-white-photos.title": {
@@ -992,7 +992,7 @@
   "guide_pages.colorize-black-and-white-photos.kicker": {
     "localizations": {
       "en": "Restoration guide",
-      "ru": "Гайд по фото"
+      "ru": "Руководство по реставрации"
     }
   },
   "guide_pages.colorize-black-and-white-photos.read_time": {
@@ -1457,7 +1457,7 @@
   "guide_pages.colorize-black-and-white-photos.faq.1.a": {
     "localizations": {
       "en": "Both repair and colourise. Enhanced Colorize also rebuilds fine detail, so it looks sharper and suits most photos. Restore & Colorize leaves the underlying quality alone, which is safer on very small or soft scans.",
-      "ru": "Только если вы сообщите известные цвета в Prompt. Без подсказки модель создаёт правдоподобный, но не документально точный вариант."
+      "ru": "Только если вы укажете известные цвета в поле Prompt. Без подсказки модель создаёт правдоподобный вариант, но не гарантирует исторической точности."
     }
   },
   "guide_pages.colorize-black-and-white-photos.faq.2.q": {
@@ -1545,7 +1545,7 @@
   "guide_pages.upscale-image-4k.kicker": {
     "localizations": {
       "en": "Upscaling guide",
-      "ru": "Гайд по фото"
+      "ru": "Руководство по увеличению"
     }
   },
   "guide_pages.upscale-image-4k.read_time": {
@@ -1834,7 +1834,7 @@
   "guide_pages.enhance-video-quality.kicker": {
     "localizations": {
       "en": "Video guide",
-      "ru": "Гайд по видео"
+      "ru": "Руководство по видео"
     }
   },
   "guide_pages.enhance-video-quality.read_time": {
@@ -1846,7 +1846,7 @@
   "guide_pages.enhance-video-quality.answer": {
     "localizations": {
       "en": "To improve video quality on iPhone, open UScale, tap Upscale your media → Videos and pick the clip. Choose Upscale Video — or Enhance Animation for cartoons and 3D — set the scale to 2x or 4x, choose the Smoothed or Natural style, trim to the part you want and tap Upscale. Every frame is enhanced on your device and saved as a new video.",
-      "ru": "Откройте ролик в UScale, выберите улучшение видео и подходящий масштаб, дождитесь обработки и экспортируйте новую копию. Каждый кадр обрабатывается на iPhone или iPad, поэтому видео не требуется загружать на сервер."
+      "ru": "Откройте ролик в UScale, выберите улучшение видео и подходящий масштаб, дождитесь обработки и экспортируйте новую копию. Каждый кадр обрабатывается на iPhone или iPad, поэтому видео не загружается на сервер."
     }
   },
   "guide_pages.enhance-video-quality.supply": {
@@ -1858,7 +1858,7 @@
   "guide_pages.enhance-video-quality.intro": {
     "localizations": {
       "en": "Video enhancement is photo enhancement repeated a few thousand times, which is why so few phone apps do it well. UScale runs the same on-device models frame by frame and keeps them consistent, so the result does not shimmer between frames. You choose the scale, the style and the section to process before it starts — and nothing is uploaded, so a long clip has nowhere to queue.",
-      "ru": "Плохое видео может быть маленьким, шумным, пережатым или нерезким из-за движения. Увеличение разрешения помогает при низком размере кадра, очистка уменьшает шум и блоки сжатия, но ни один режим не исправит сильный смаз камеры во всех кадрах. Короткий тестовый фрагмент позволяет выбрать параметры до обработки длинного ролика."
+      "ru": "Исходное видео может иметь низкое разрешение, быть шумным, сильно сжатым или нерезким из-за движения. Увеличение помогает при низком разрешении кадра, а очистка уменьшает шум и блоки сжатия, но ни один режим не исправит сильный смаз камеры во всех кадрах. Короткий тестовый фрагмент позволяет выбрать параметры до обработки длинного ролика."
     }
   },
   "guide_pages.enhance-video-quality.why_h": {
@@ -2367,7 +2367,7 @@
   "guide_pages.slow-motion-video.card_desc": {
     "localizations": {
       "en": "Raise a clip's frame rate with AI, then slow the moment down.",
-      "ru": "Превратите обычный ролик в плавное slow motion."
+      "ru": "Превратите обычный ролик в плавное замедленное видео."
     }
   },
   "guide_pages.slow-motion-video.title": {
@@ -2393,7 +2393,7 @@
   "guide_pages.slow-motion-video.kicker": {
     "localizations": {
       "en": "Video guide",
-      "ru": "Гайд по видео"
+      "ru": "Руководство по видео"
     }
   },
   "guide_pages.slow-motion-video.read_time": {
@@ -2405,7 +2405,7 @@
   "guide_pages.slow-motion-video.answer": {
     "localizations": {
       "en": "To make a normal video slow motion on iPhone, open UScale, tap Upscale your media → Videos and pick the clip. Choose Slow Motion, set the output FPS to 2x or 4x and tap Increase FPS. When it finishes, mark the section you want slowed and save it as a new video.",
-      "ru": "Откройте короткий ролик в UScale, выберите Slow Motion и степень замедления. ИИ создаст промежуточные кадры между исходными, поэтому движение останется плавным даже для видео, которое не снималось в режиме slo-mo."
+      "ru": "Откройте короткий ролик в UScale, выберите Slow Motion и степень замедления. ИИ создаст промежуточные кадры между исходными, поэтому движение останется плавным, даже если видео не снималось в режиме замедленной съёмки."
     }
   },
   "guide_pages.slow-motion-video.supply": {
@@ -2682,7 +2682,7 @@
   "guide_pages.slow-motion-video.tips.1": {
     "localizations": {
       "en": "Short beats long. One to three seconds of real time is where slow motion lands hardest, and fewer frames means far less processing.",
-      "ru": "Сцены с одним движущимся объектом обычно чище толпы или конфетти."
+      "ru": "Сцены с одним движущимся объектом обычно дают более чистый результат, чем сцены с толпой или конфетти."
     }
   },
   "guide_pages.slow-motion-video.tips.2": {
@@ -2722,7 +2722,7 @@
   "guide_pages.slow-motion-video.cta_p": {
     "localizations": {
       "en": "AI frame interpolation that runs on your iPhone, with five free seconds of video every day.",
-      "ru": "Создайте плавный slow motion из обычного видео прямо на iPhone."
+      "ru": "Создайте плавное замедленное видео из обычного ролика прямо на iPhone."
     }
   },
   "guide_pages.slow-motion-video.faq_h": {
@@ -2740,7 +2740,7 @@
   "guide_pages.slow-motion-video.faq.0.a": {
     "localizations": {
       "en": "No — that is the point. UScale generates the extra frames from a normal-speed recording, so a clip you filmed months ago can still become slow motion.",
-      "ru": "Нет. UScale может создать промежуточные кадры для обычного ролика, хотя исходные 60 fps обычно дают более чистый результат, чем 24 или 30 fps."
+      "ru": "Нет. UScale может создать промежуточные кадры для обычного ролика, хотя исходные 60 кадров/с обычно дают более чистый результат, чем 24 или 30 кадров/с."
     }
   },
   "guide_pages.slow-motion-video.faq.1.q": {
@@ -2856,7 +2856,7 @@
   "guide_pages.brighten-dark-photos.kicker": {
     "localizations": {
       "en": "Photo guide",
-      "ru": "Гайд по фото"
+      "ru": "Руководство по фото"
     }
   },
   "guide_pages.brighten-dark-photos.read_time": {
@@ -2976,7 +2976,7 @@
   "guide_pages.brighten-dark-photos.steps.3.p": {
     "localizations": {
       "en": "Check faces and the darkest corners before saving. The brightened photo is saved as a new copy and the original stays untouched.",
-      "ru": "Увеличьте тёмные однотонные участки. Если цветные пятна слишком заметны, выберите более мягкий результат."
+      "ru": "Увеличьте тёмные однотонные участки. Если цветные пятна всё ещё заметны, не запускайте Enlighten повторно — это может усилить артефакты."
     }
   },
   "guide_pages.brighten-dark-photos.img_alt": {
@@ -3133,7 +3133,7 @@
   "guide_pages.film-negative-to-photo.kicker": {
     "localizations": {
       "en": "Restoration guide",
-      "ru": "Гайд по фото"
+      "ru": "Руководство по реставрации"
     }
   },
   "guide_pages.film-negative-to-photo.read_time": {
@@ -3145,7 +3145,7 @@
   "guide_pages.film-negative-to-photo.answer": {
     "localizations": {
       "en": "To convert a film negative into a photo, photograph it on an even white light source, then open UScale, tap Upscale your media → Photos and choose Photo restoration. Turn on Negative in Advanced options, pick a mode and tap Upscale. About 40 seconds later the frame comes back inverted, colour-corrected and cleaned up.",
-      "ru": "Положите негатив на ровную белую подсветку, снимите его строго сверху без отражений, откройте кадр в Photo Restoration и включите Negative. UScale инвертирует тона, нейтрализует оранжевую маску цветной плёнки и восстановит повреждения в облаке."
+      "ru": "Положите негатив на ровную белую подсветку, снимите его строго сверху без отражений, откройте кадр в Photo Restoration и включите Negative. UScale инвертирует тона, нейтрализует оранжевую маску цветной плёнки и восстанавливает повреждения в облаке."
     }
   },
   "guide_pages.film-negative-to-photo.supply": {
@@ -3157,7 +3157,7 @@
   "guide_pages.film-negative-to-photo.intro": {
     "localizations": {
       "en": "A drawer of negatives is often the highest-quality version of a family archive that still exists — negatives hold more detail than the small prints made from them. The obstacle is simply that they are hard to look at. Your phone plus a white screen solves that in about two minutes per frame, and the Negative switch inside Photo restoration handles the part that trips most people up: inverting the image without ending up with a cyan, lifeless picture.",
-      "ru": "Главная сложность — получить равномерно подсвеченный исходник. Экран с белым фоном можно использовать только через матовый рассеиватель, чтобы не снять сетку пикселей. Между телефоном и плёнкой держите их строго параллельно, а вокруг кадра оставьте немного прозрачной основы для оценки маски."
+      "ru": "Главная сложность — получить равномерно подсвеченный исходник. Экран с белым фоном можно использовать только через матовый рассеиватель, чтобы не снять сетку пикселей. Держите iPhone строго параллельно плёнке, а вокруг кадра оставьте немного прозрачной основы, чтобы модель могла оценить маску."
     }
   },
   "guide_pages.film-negative-to-photo.why_h": {
@@ -3237,7 +3237,7 @@
   "guide_pages.film-negative-to-photo.steps.1.p": {
     "localizations": {
       "en": "Hold the phone parallel to the film and fill the frame with a single negative. Tap to focus on the film itself, keep the room dim, and check that no lamp behind you reflects off the surface.",
-      "ru": "Расположите iPhone строго параллельно плёнке, заполните кадром большую часть изображения и заблокируйте фокус."
+      "ru": "Расположите iPhone строго параллельно плёнке, заполните негативом большую часть кадра и зафиксируйте фокус."
     }
   },
   "guide_pages.film-negative-to-photo.steps.2.h": {
@@ -3598,7 +3598,7 @@
   "guide_pages.film-negative-to-photo.tips.3": {
     "localizations": {
       "en": "Black-and-white negatives are easier than colour ones because there is no orange mask to neutralise. Start with those.",
-      "ru": "Для целой плёнки сначала настройте один кадр, затем снимайте остальные без изменения света."
+      "ru": "Для серии кадров сначала настройте съёмку на одном, затем снимайте остальные, не меняя освещение."
     }
   },
   "guide_pages.film-negative-to-photo.tips.4": {
@@ -3740,7 +3740,7 @@
   "guide_pages.fix-blurry-faces.kicker": {
     "localizations": {
       "en": "Photo guide",
-      "ru": "Гайд по фото"
+      "ru": "Руководство по фото"
     }
   },
   "guide_pages.fix-blurry-faces.read_time": {
@@ -4069,7 +4069,7 @@
   "guide_pages.upscale-anime-art.kicker": {
     "localizations": {
       "en": "Upscaling guide",
-      "ru": "Гайд по фото"
+      "ru": "Руководство по увеличению"
     }
   },
   "guide_pages.upscale-anime-art.read_time": {
@@ -4129,7 +4129,7 @@
   "guide_pages.upscale-anime-art.why_list.3": {
     "localizations": {
       "en": "Pixel art has perfectly predictable structure, which upscales into crisp shapes rather than soft blocks.",
-      "ru": "Мелкий текст и геометрические узоры требуют проверки при 100%."
+      "ru": "Мелкий текст и геометрические узоры нужно проверять в масштабе 100%."
     }
   },
   "guide_pages.upscale-anime-art.why_list.4": {
@@ -4288,7 +4288,7 @@
   "guide_pages.upscale-anime-art.faq.0.a": {
     "localizations": {
       "en": "It solves the same problem — enlarging anime-style art without softening the lines — with a modern model that runs on your device instead of a website, and it handles photographs and video as well.",
-      "ru": "Да, но внимательно проверяйте сетку: модель может сгладить намеренно квадратные пиксели. Для строгого nearest-neighbor лучше специализированный редактор."
+      "ru": "Да, но внимательно проверяйте сетку: модель может сгладить намеренно квадратные пиксели. Для точного масштабирования методом ближайшего соседа лучше использовать специализированный редактор."
     }
   },
   "guide_pages.upscale-anime-art.faq.1.q": {

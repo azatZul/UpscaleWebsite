@@ -35,14 +35,14 @@
   "hero.rating_note": {
     "localizations": {
       "en": "{rating_count} App Store ratings",
-      "ru": "Оценки в App Store — {rating_count}"
+      "ru": "Оценок в App Store: {rating_count}"
     },
     "comment": "Preserve every {placeholder} exactly."
   },
   "hero.note": {
     "localizations": {
       "en": "Free to start · iPhone & iPad · iOS {minimum_ios} or later · No account needed",
-      "ru": "Можно начать бесплатно · iPhone и iPad · iOS {minimum_ios} или новее · Учётная запись не требуется"
+      "ru": "Можно начать бесплатно · iPhone и iPad · iOS {minimum_ios} или новее · Без регистрации"
     },
     "comment": "Preserve every {placeholder} exactly."
   },
@@ -171,7 +171,7 @@
   "reviews.score_note": {
     "localizations": {
       "en": "{rating_count} App Store ratings",
-      "ru": "Оценки в App Store — {rating_count}"
+      "ru": "Оценок в App Store: {rating_count}"
     },
     "comment": "Preserve every {placeholder} exactly."
   },
@@ -394,14 +394,14 @@
   },
   "features.h2": {
     "localizations": {
-      "en": "One app for every photo and video problem",
-      "ru": "Одно приложение для всех проблем с фотографиями и видео"
+      "en": "One app for your photo and video fixes",
+      "ru": "Одно приложение для улучшения фото и видео"
     }
   },
   "features.sub": {
     "localizations": {
-      "en": "Most enhancers only sharpen photos. UScale also upscales video, creates AI slow motion and restores damaged prints — without sending your files anywhere.",
-      "ru": "Большинство приложений для улучшения фото лишь повышают резкость. UScale также улучшает видео, создаёт плавное замедление и восстанавливает повреждённые отпечатки."
+      "en": "Most enhancers only sharpen photos. UScale also upscales video, creates AI slow motion and restores damaged prints. Core tools run on your device; Creative Upscale and restoration use cloud processing.",
+      "ru": "Большинство приложений для улучшения фото лишь повышают резкость. UScale также улучшает видео, создаёт плавное замедление и восстанавливает повреждённые отпечатки. Основные инструменты работают на устройстве, а Creative Upscale и реставрация — в облаке."
     }
   },
   "features.items.0.icon": {
@@ -509,13 +509,13 @@
   "features.items.5.h": {
     "localizations": {
       "en": "Colorize black and white",
-      "ru": "Раскрашивать чёрно-белые фотографии"
+      "ru": "Раскрасить чёрно-белые фотографии"
     }
   },
   "features.items.5.p": {
     "localizations": {
       "en": "Add believable colour to vintage black-and-white portraits, wedding photos and family archive scans in a single tap.",
-      "ru": "Добавьте реалистичный цвет к старым портретам, свадебным фотографиям и сканированным архивным материалам одним нажатием."
+      "ru": "Добавьте естественные цвета старым портретам, свадебным фотографиям и архивным снимкам — одним нажатием."
     }
   },
   "features.items.6.icon": {
@@ -528,13 +528,13 @@
   "features.items.6.h": {
     "localizations": {
       "en": "Brighten dark photos",
-      "ru": "Осветлять тёмные фотографии"
+      "ru": "Осветлить тёмные фотографии"
     }
   },
   "features.items.6.p": {
     "localizations": {
       "en": "Recover detail from underexposed concert, night and indoor shots without the blotchy noise you get from simply raising exposure.",
-      "ru": "Возвращайте детали на недоэкспонированных концертных, ночных и домашних снимках без пятнистого шума, который появляется при простом увеличении экспозиции."
+      "ru": "Возвращайте детали на недоэкспонированных концертных, ночных снимках и кадрах в помещении без пятнистого шума, который появляется при простом увеличении экспозиции."
     }
   },
   "features.items.7.icon": {
@@ -572,7 +572,7 @@
   "features.items.8.p": {
     "localizations": {
       "en": "Select a whole set of photos and enhance them in one run instead of opening them one at a time.",
-      "ru": "Выберите целый набор фотографий и улучшите их в одном запуске вместо того, чтобы открывать каждую по отдельности."
+      "ru": "Выберите целый набор фотографий и улучшите их все за один раз, вместо того чтобы открывать каждую по отдельности."
     }
   },
   "screens.eyebrow": {
@@ -583,8 +583,8 @@
   },
   "screens.h2": {
     "localizations": {
-      "en": "See what UScale actually does",
-      "ru": "Посмотрите, что на самом деле делает UScale"
+      "en": "See UScale in action",
+      "ru": "Посмотрите, что умеет UScale"
     }
   },
   "screens.sub": {
@@ -648,7 +648,7 @@
   "screens.items.4.cap": {
     "localizations": {
       "en": "Brighten dark photos",
-      "ru": "Осветляйте тёмные фотографии"
+      "ru": "Осветлить тёмные фотографии"
     }
   },
   "screens.items.4.alt": {
@@ -679,7 +679,7 @@
   },
   "showcase.h2": {
     "localizations": {
-      "en": "See what UScale actually does",
+      "en": "See UScale in action",
       "ru": "Посмотрите, как работает UScale"
     }
   },
@@ -717,31 +717,31 @@
   "showcase.tip_device_h": {
     "localizations": {
       "en": "Stays on your iPhone",
-      "ru": "Останется на вашем iPhone"
+      "ru": "Остаётся на вашем iPhone"
     }
   },
   "showcase.tip_device_p": {
     "localizations": {
       "en": "The AI ran on the iPhone itself, so this photo never left the device — no upload, no account, and it works offline.",
-      "ru": "ИИ работает непосредственно на iPhone, поэтому фотография никуда не загружается. Учётная запись не нужна, а обработка доступна офлайн."
+      "ru": "ИИ работает непосредственно на iPhone, поэтому фотография никуда не загружается. Регистрация не требуется, а обработка доступна офлайн."
     }
   },
   "showcase.tip_video_h": {
     "localizations": {
       "en": "Stays on your iPhone",
-      "ru": "Останется на вашем iPhone"
+      "ru": "Остаётся на вашем iPhone"
     }
   },
   "showcase.tip_video_p": {
     "localizations": {
       "en": "Every frame was processed on the iPhone itself, so the clip never left the device — no upload, no account, and it works offline.",
-      "ru": "Каждый кадр обрабатывается непосредственно на iPhone, поэтому видео не покидает устройство. Загрузка и учётная запись не нужны, обработка доступна офлайн."
+      "ru": "Каждый кадр обрабатывается непосредственно на iPhone, поэтому видео не покидает устройство. Регистрация не требуется, а обработка доступна офлайн."
     }
   },
   "showcase.tip_cloud_h": {
     "localizations": {
-      "en": "Made with our advanced models",
-      "ru": "Сделано с нашими продвинутыми моделями"
+      "en": "Processed with our advanced models",
+      "ru": "Обработано нашими продвинутыми моделями"
     }
   },
   "showcase.tip_cloud_p": {
@@ -765,7 +765,7 @@
   "showcase.tab_labels.2": {
     "localizations": {
       "en": "Low quality portrait",
-      "ru": "Низкокачественный портрет"
+      "ru": "Портрет низкого качества"
     }
   },
   "showcase.tab_labels.3": {
@@ -807,7 +807,7 @@
   "how.h2": {
     "localizations": {
       "en": "Three taps from blurry to sharp",
-      "ru": "Три нажатия - и размытый снимок становится чётким"
+      "ru": "Три нажатия — и размытый снимок становится чётким"
     }
   },
   "how.sub": {
@@ -837,7 +837,7 @@
   "how.steps.1.p": {
     "localizations": {
       "en": "Enhance, unblur, 2x or 4x upscale, brighten, restore, colorize or slow motion. Every tool is a single tap and shows a live preview.",
-      "ru": "Повысьте резкость, уберите размытие, увеличьте в 2 или 4 раза, осветлите, восстановите, раскрасьте или замедлите. Каждый инструмент запускается одним нажатием и показывает предпросмотр."
+      "ru": "Повысьте резкость, уберите размытие, увеличьте в 2 или 4 раза, осветлите, восстановите, раскрасьте или замедлите. Каждый инструмент запускается одним нажатием и позволяет предварительно оценить результат."
     }
   },
   "how.steps.2.h": {
@@ -849,7 +849,7 @@
   "how.steps.2.p": {
     "localizations": {
       "en": "Drag the before/after slider to check the result, then save it to your library or share it. Your original file is never overwritten.",
-      "ru": "Перетащите ползунок до/после, чтобы проверить результат, затем сохраните его в библиотеку или поделитесь. Ваш исходный файл никогда не будет перезаписан."
+      "ru": "Перетащите ползунок «До/После», чтобы проверить результат, затем сохраните его в медиатеку или поделитесь им. Исходный файл останется неизменным."
     }
   },
   "privacy.eyebrow": {
@@ -867,7 +867,7 @@
   "privacy.p": {
     "localizations": {
       "en": "Core enhancement — unblur, upscale, brighten, face restoration and slow motion — runs on the Neural Engine inside your device. There is no upload, no processing queue and no account to create.",
-      "ru": "Базовое улучшение — устранение размытия, повышение разрешения, осветление, работа с лицами и замедление видео — выполняется на Neural Engine внутри вашего устройства. Ничего не загружается, нет очереди обработки и не нужен аккаунт."
+      "ru": "Базовое улучшение — устранение размытия, повышение разрешения, осветление, работа с лицами и замедление видео — выполняется с помощью Neural Engine на вашем устройстве. Файлы никуда не загружаются, а регистрация не требуется."
     }
   },
   "privacy.points.0": {
@@ -897,7 +897,7 @@
   "privacy.img_alt": {
     "localizations": {
       "en": "UScale enhancing a photo offline on an iPhone, with airplane mode enabled",
-      "ru": "UScale улучшает фотографию офлайн на iPhone с включенным режимом самолета"
+      "ru": "UScale улучшает фотографию офлайн на iPhone с включённым авиарежимом"
     },
     "comment": "Accessibility text describing an image."
   },
@@ -916,7 +916,7 @@
   "faq.sub": {
     "localizations": {
       "en": "Pricing, privacy and how UScale runs on your device.",
-      "ru": "Цены, конфиденциальность и как UScale работает на вашем устройстве."
+      "ru": "Ответы о стоимости, конфиденциальности и работе UScale на вашем устройстве."
     }
   },
   "faq.learn_more": {
@@ -934,7 +934,7 @@
   "faq.items.0.a": {
     "localizations": {
       "en": "The app is free for {free_photos_per_day} photo enhancements a day. Premium is {annual_price} a year and starts with a {trial_days}-day free trial with everything unlocked. Prices vary slightly by region.",
-      "ru": "Бесплатный лимит — {free_photos_per_day} фото в день. Премиум-версия стоит {annual_price} в год и начинается с {trial_days}-дневного пробного периода с доступом ко всем функциям. Цены могут немного отличаться в зависимости от региона."
+      "ru": "Бесплатный лимит — {free_photos_per_day} фото в день. Премиум-версия стоит {annual_price} в год и включает {trial_days}-дневный пробный период с доступом ко всем функциям. Цены могут немного отличаться в зависимости от региона."
     },
     "comment": "Preserve every {placeholder} exactly."
   },
@@ -973,7 +973,7 @@
   "faq.items.2.a": {
     "localizations": {
       "en": "Enhance, unblur, upscale, brighten, face restoration and slow motion run on your device, so those photos never leave your phone. Creative Upscale and advanced restoration are processed on our servers, and only when you pick them: the result stays available for download for a limited time and is then deleted. There is no account and no sign-up.",
-      "ru": "Устранение размытия, увеличение, осветление, улучшение лиц и замедление видео выполняются на устройстве, поэтому эти файлы не покидают iPhone. Creative Upscale и продвинутое восстановление обрабатываются на сервере, и только когда вы сами их выбираете. Результат хранится ограниченное время, затем удаляется. Аккаунт и регистрация не нужны."
+      "ru": "Устранение размытия, увеличение, осветление, улучшение лиц и замедление видео выполняются на устройстве, поэтому эти файлы не покидают iPhone или iPad. Creative Upscale и продвинутое восстановление обрабатываются на сервере, и только когда вы сами их выбираете. Результат хранится ограниченное время, затем удаляется. Регистрация не требуется."
     }
   },
   "faq.items.2.href": {
@@ -1025,7 +1025,7 @@
   "faq.items.5.q": {
     "localizations": {
       "en": "How do I cancel my subscription?",
-      "ru": "Как я могу отменить подписку?"
+      "ru": "Как отменить подписку?"
     }
   },
   "faq.items.5.a": {
@@ -1063,7 +1063,7 @@
   },
   "sale.pill": {
     "localizations": {
-      "en": "Limited unlock",
+      "en": "Limited-time offer",
       "ru": "Ограниченное предложение"
     }
   },
@@ -1076,14 +1076,14 @@
   },
   "sale.h1": {
     "localizations": {
-      "en": "Claim your <em>{off} off</em> Premium upgrade",
+      "en": "Save <em>{off}</em> on Premium",
       "ru": "Получите <em>скидку {off}</em> на Premium"
     },
     "comment": "Preserve every {placeholder} exactly. Contains HTML; translate visible text and preserve tags, attributes, and URLs."
   },
   "sale.sub": {
     "localizations": {
-      "en": "Open the app from this link and a discounted Premium window opens for one hour.",
+      "en": "Open this link in UScale to unlock the discounted Premium price for one hour.",
       "ru": "Откройте приложение по этой ссылке — цена со скидкой будет доступна в течение часа."
     }
   },

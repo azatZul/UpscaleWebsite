@@ -50,7 +50,7 @@
   "nav.cta": {
     "localizations": {
       "en": "Get UScale",
-      "ru": "Получить UScale"
+      "ru": "Скачать UScale"
     }
   },
   "ui.download_on": {
@@ -92,7 +92,7 @@
   "ui.icon_alt": {
     "localizations": {
       "en": "UScale AI photo enhancer app icon",
-      "ru": "Иконка приложения UScale AI для улучшения фотографий"
+      "ru": "Значок приложения UScale для улучшения фотографий с помощью ИИ"
     },
     "comment": "Accessibility text describing an image."
   },
@@ -117,7 +117,7 @@
   "ui.next_guide": {
     "localizations": {
       "en": "Next guide",
-      "ru": "Следующий гайд"
+      "ru": "Следующее руководство"
     }
   },
   "ui.keep_reading": {
@@ -152,14 +152,14 @@
   },
   "cta.h2": {
     "localizations": {
-      "en": "Get the sharp version of your photos",
+      "en": "Make your photos sharp again",
       "ru": "Сделайте свои фотографии чётче"
     }
   },
   "cta.p": {
     "localizations": {
       "en": "Free to start, no account, and your pictures stay on your phone.",
-      "ru": "Начните бесплатно и без учётной записи. При локальной обработке фотографии останутся на вашем устройстве."
+      "ru": "Начните бесплатно — регистрация не требуется. При локальной обработке фотографии останутся на вашем устройстве."
     }
   },
   "cta.note": {
@@ -172,7 +172,7 @@
   "footer.tagline": {
     "localizations": {
       "en": "AI photo and video enhancer for iPhone and iPad. Unblur and upscale on your device, restore old photos with cloud AI.",
-      "ru": "AI-улучшение фото и видео для iPhone и iPad. Базовые функции работают прямо на устройстве."
+      "ru": "Приложение для улучшения фото и видео с помощью ИИ на iPhone и iPad. Убирайте размытие и повышайте разрешение на устройстве, а старые снимки восстанавливайте с помощью облачного ИИ."
     }
   },
   "footer.product": {
@@ -231,7 +231,7 @@
   },
   "footer.made": {
     "localizations": {
-      "en": "Made for people who keep their photos.",
+      "en": "Made for the photos worth keeping.",
       "ru": "Создано для тех, кто ценит свои фотографии."
     }
   },

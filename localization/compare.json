@@ -16,13 +16,13 @@
   "compare.eyebrow": {
     "localizations": {
       "en": "Head to head",
-      "ru": "Сравнение лицом к лицу"
+      "ru": "Прямое сравнение"
     }
   },
   "compare.h1": {
     "localizations": {
       "en": "The same photo, four AI enhancers",
-      "ru": "Одно фото — четыре приложения для улучшения фото"
+      "ru": "Одно фото — четыре приложения"
     }
   },
   "compare.lead": {
@@ -268,7 +268,7 @@
   "compare.tests.1.sub": {
     "localizations": {
       "en": "840 × 560, soft and flat, captured in a forest.",
-      "ru": "840 × 560, мягкий и плоский кадр в лесу."
+      "ru": "840 × 560, нечёткий кадр с низким контрастом, снятый в лесу."
     }
   },
   "compare.tests.1.look": {
@@ -317,7 +317,7 @@
   },
   "compare.apps.uscale.verdict": {
     "localizations": {
-      "en": "Adds detail without moving the picture: same colours, same framing, texture that belongs to the photo.",
+      "en": "Adds detail while preserving the colours and framing, with natural-looking texture that stays faithful to the source.",
       "ru": "Добавляет детали, сохраняя цвета и кадрирование."
     }
   },
@@ -329,7 +329,7 @@
   },
   "compare.apps.remini.verdict": {
     "localizations": {
-      "en": "Best of the three rivals on human faces, close to a no-op when the frame has none. Expect a rebuilt face on a background that is still soft.",
+      "en": "Best of the three rivals on human faces, but it changes very little when no face is present. Expect a rebuilt face on a background that is still soft.",
       "ru": "Хорошо восстанавливает лица, но фон и кадры без лиц меняет слабее."
     }
   },
@@ -474,7 +474,7 @@
   "compare.faq.1.a": {
     "localizations": {
       "en": "Creative Upscale — UScale's cloud mode, the one that adds the most detail. UScale can also enhance entirely on your iPhone: that mode is a smaller jump than Creative Upscale, but on files like these it still recovers more real detail than the three rivals, and the photo never leaves the device.",
-      "ru": "Creative Upscale — облачный режим UScale, который добавляет больше всего деталей. UScale также умеет улучшать фото полностью на iPhone: прирост будет меньше, чем в Creative Upscale, но на таких файлах этот режим всё равно восстанавливает больше настоящих деталей, чем три конкурента, и фотография не покидает устройство."
+      "ru": "Creative Upscale — облачный режим UScale, который добавляет больше всего деталей. UScale также умеет улучшать фото полностью на iPhone: прирост будет меньше, чем в Creative Upscale, но на таких файлах этот режим всё равно восстанавливает больше полезных деталей, чем три конкурента, и фотография не покидает устройство."
     }
   },
   "compare.faq.2.q": {
@@ -485,8 +485,8 @@
   },
   "compare.faq.2.a": {
     "localizations": {
-      "en": "Remini's strength is a face model, and a mask is not a face. With nothing to rebuild, the picture comes back close to the way it went in. It is the same reason Remini shines on old portraits and stalls on landscapes, pets, artwork and screenshots.",
-      "ru": "Сильная сторона Remini — модель для лиц, а маска не является лицом. Когда восстанавливать нечего, изображение возвращается почти таким же, каким было загружено. По той же причине Remini хорошо справляется со старыми портретами, но слабее работает с пейзажами, животными, иллюстрациями и скриншотами."
+      "en": "Remini's strength is its face model, and a mask is not a face. With nothing to rebuild, the result stays close to the original. That is also why Remini shines on old portraits but does less for landscapes, pets, artwork and screenshots.",
+      "ru": "Сильная сторона Remini — модель для лиц, а маска — не лицо. Когда восстанавливать нечего, результат почти не отличается от исходника. По той же причине Remini хорошо справляется со старыми портретами, но слабее работает с пейзажами, животными, иллюстрациями и скриншотами."
     }
   },
   "compare.faq.3.q": {
@@ -498,7 +498,7 @@
   "compare.faq.3.a": {
     "localizations": {
       "en": "Each app decides its own output resolution — 2× in BlurBuster and EnhanceFox, roughly 4× in Remini, close to 6× in UScale. Bigger is not automatically better: BlurBuster's larger mode returned the biggest file of the night-frame test and the worst-looking one.",
-      "ru": "Каждое приложение само выбирает выходное разрешение: примерно 2× в BlurBuster и EnhanceFox, около 4× в Remini и почти 6× в UScale. Больше не всегда значит лучше: дополнительный режим BlurBuster вернул самый большой файл в тесте с ночным кадром, но результат оказался худшим по качеству."
+      "ru": "Каждое приложение само выбирает выходное разрешение: примерно 2× в BlurBuster и EnhanceFox, около 4× в Remini и почти 6× в UScale. Больше не всегда значит лучше: режим BlurBuster с более сильным увеличением вернул самый большой файл в тесте с ночным кадром, но результат оказался худшим по качеству."
     }
   },
   "compare.faq.4.q": {
@@ -510,7 +510,7 @@
   "compare.faq.4.a": {
     "localizations": {
       "en": "It is one test on two files, so treat it as a starting point — and check it for yourself. Both source photos are right here: run them through the free tier of any of these apps and compare what comes back. Every app here got the same original at full size and a single standard pass, and no result was retouched afterwards. What it does not cover is every mode, every subscription tier and every kind of photo.",
-      "ru": "Это один тест на двух файлах, поэтому воспринимайте его как отправную точку — и проверьте сами. Обе исходные фотографии доступны здесь: обработайте их в бесплатной версии любого из этих приложений и сравните результаты. Каждое приложение получило один и тот же оригинал в полном размере и выполнило один стандартный проход; после обработки результаты не ретушировались. Тест не охватывает все режимы, уровни подписки и типы фотографий."
+      "ru": "Это один тест на двух файлах, поэтому воспринимайте его как отправную точку — и проверьте сами. Обе исходные фотографии доступны здесь: обработайте их в бесплатной версии любого из этих приложений и сравните результаты. Каждое приложение получило один и тот же оригинал в полном размере и обработало его один раз в стандартном режиме; после обработки результаты не ретушировались. Тест не охватывает все режимы, тарифы и типы фотографий."
     }
   },
   "compare.faq.4.dl": {
@@ -528,7 +528,7 @@
   },
   "compare.faq.5.a": {
     "localizations": {
-      "en": "The runs were done in August 2026 with the versions on the App Store at that time. Apps update often; if you get a clearly different result on the same kind of photo, send it to us and we will re-run the comparison.",
+      "en": "The runs were done in August 2026 with the versions on the App Store at that time. Apps are updated often; if you get a clearly different result on the same kind of photo, send it to us and we will re-run the comparison.",
       "ru": "Тест проведён в августе 2026 года на версиях, доступных тогда в App Store. Приложения часто обновляются; если на похожем фото вы получили заметно другой результат, отправьте его нам, и мы повторим сравнение."
     }
   },
@@ -541,7 +541,7 @@
   "compare.cta_p": {
     "localizations": {
       "en": "Two free photo enhancements every day, no account — and an on-device mode that never sends your photo anywhere.",
-      "ru": "Два бесплатных улучшения фотографий каждый день, без аккаунта, плюс локальный режим, который никуда не отправляет ваше фото."
+      "ru": "Два бесплатных улучшения фотографий каждый день без регистрации. Локальный режим никуда не отправляет ваше фото."
     }
   },
   "compare.nav": {
@@ -577,7 +577,7 @@
   "compare.home_note": {
     "localizations": {
       "en": "Same source files · one pass per app · August 2026",
-      "ru": "Два изображения · четыре приложения · одна обработка"
+      "ru": "Два изображения · четыре приложения · одна обработка · август 2026"
     }
   },
   "compare.dl_h": {
