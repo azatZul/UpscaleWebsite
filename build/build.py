@@ -1208,13 +1208,15 @@ SUPPORT_FAQ_LD = [
     ("What does UScale actually do?",
      "UScale runs AI enhancement models on your iPhone or iPad: it unblurs and sharpens photos, upscales them "
      "2x or 4x, restores faces in old scans, colorises black-and-white pictures, improves video quality and "
-     "generates smooth slow motion. The core processing happens on the device."),
+     "generates smooth slow motion. Everyday enhancement runs on the device. Only Creative Upscale and "
+     "old-photo restoration upload the selected photo to our processing servers."),
     ("How do I enhance a photo in UScale?",
      "Open the app, tap the photo you want to fix, pick a tool (Enhance, Upscale, Face restore or Colorize), "
      "wait for the preview and save the result to your library."),
     ("Are my photos uploaded anywhere?",
-     "No. Photo and video enhancement runs locally on your device, so your library never leaves your phone "
-     "for processing."),
+     "Most tools run locally on your device and do not upload your media. Creative Upscale and old-photo "
+     "restoration upload only the photo you select to our processing servers. The processed result is kept "
+     "for a short, limited period so you can download it, then it is deleted."),
     ("Which devices and iOS versions are supported?",
      "iPhone, iPad and iPod touch running iOS {minimum_ios} or later."),
     ("How much does UScale Premium cost?",
@@ -1304,10 +1306,15 @@ def compare_slider(c, cp, tid):
     w, h = t["size"]
     bw, bh = t["before_size"]
     us = APP_BY_ID["uscale"]
+
+    def result_alt(app):
+        return f'{cp["alt_result"]} {app["name"]}'
+
     btns = "".join(
         f'<button class="cmp-tab lg vs-tab" type="button" data-before="{t["before"]}" '
         f'data-after="{t["shot"][a["id"]]}" data-tag-l="{esc(cp["original"])}" '
         f'data-tag-r="{esc(a["name"])}" data-tag-ico="{a["icon"]}" '
+        f'data-after-alt="{esc(result_alt(a))}" '
         f'aria-pressed="{"true" if i == 0 else "false"}">'
         f'<span class="cmp-thumb"><img src="{a["icon"]}" width="72" height="72" loading="lazy" '
         f'decoding="async" alt=""></span><span class="cmp-cap">{esc(a["name"])}</span></button>'
@@ -1317,7 +1324,7 @@ def compare_slider(c, cp, tid):
         <img class="a-ghost" src="{t['shot']['uscale']}" width="{w}" height="{h}" loading="lazy"
              decoding="async" alt="" aria-hidden="true">
         <img class="a-img" src="{t['shot']['uscale']}" width="{w}" height="{h}" loading="lazy" decoding="async"
-             alt="{esc(cp['alt_uscale'])}">
+             alt="{esc(result_alt(us))}">
         <img class="b" src="{t['before']}" width="{bw}" height="{bh}" loading="lazy" decoding="async"
              alt="{esc(cp['alt_before'])}">
         <span class="cmp-bar" aria-label="{esc(c['hero']['drag'])}"></span>

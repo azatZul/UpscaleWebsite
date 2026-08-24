@@ -593,13 +593,14 @@
           badge.classList.toggle('cloud', tab.dataset.cloud === '1');
           badge.classList.toggle('vid', !!tab.dataset.video);
         }
-        /* The comparison page renames the right side after the app that is showing;
-           with a crossfade the rename waits for the picture so the two never disagree. */
-        var applyTags = function () {
+        /* The comparison page updates the result metadata after the app that is showing;
+           with a crossfade this waits for the picture so they never disagree. */
+        var applyMeta = function () {
           if (tab.dataset.tagL) setTagText(tags[0], tab.dataset.tagL);
           if (tab.dataset.tagR) setTagText(tags[1], tab.dataset.tagR, tab.dataset.tagIco);
+          if (tab.dataset.afterAlt) after.alt = tab.dataset.afterAlt;
         };
-        if (!ghost) applyTags();
+        if (!ghost) applyMeta();
         /* Each hero image defines its crop within the wide device. */
         if (tab.dataset.pos) {
           before.style.objectPosition = tab.dataset.pos;
@@ -624,7 +625,7 @@
           cmp.classList.remove('has-video', 'paused');
           if (mute) { mute.hidden = true; }
           if (ghost) {
-            crossfade(tab.dataset.before, tab.dataset.after, applyTags);
+            crossfade(tab.dataset.before, tab.dataset.after, applyMeta);
           } else {
             before.src = tab.dataset.before;
             after.src = tab.dataset.after;

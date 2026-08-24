@@ -320,7 +320,7 @@
     "method_p": "Both files went into every app at their original size and came straight back out. UScale ran in Creative Upscale mode. The competitor exports of the park photo returned mirrored, so we flipped them back to match the original — nothing else was touched. Every result is shown at the same display size, which is how you would look at them on a phone. Tested in August 2026 on the App Store versions current at the time.",
     "original": "Original",
     "alt_before": "The original photo before any AI enhancement",
-    "alt_uscale": "The same photo enhanced with UScale",
+    "alt_result": "The same photo enhanced with",
     "table_bb_note": "3296 × 1840 in its other mode",
     "zoom_h": "Zoomed in",
     "look_for": "Look at",

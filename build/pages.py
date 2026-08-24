@@ -53,8 +53,8 @@ enhanced one — it makes the fix much faster.</p>
   <details open><summary>What does UScale actually do?</summary><div class="a">
     <p>UScale runs AI enhancement models on your iPhone or iPad. It unblurs and sharpens photos, upscales them
     2x or 4x, restores faces in old scans, colorises black-and-white pictures, improves video quality and
-    generates smooth slow motion. The core processing happens on the device — your files are not uploaded
-    to a server.</p></div></details>
+    generates smooth slow motion. Everyday enhancement runs on your device. Only Creative Upscale and old-photo
+    restoration upload the photo you select to our processing servers.</p></div></details>
 
   <details><summary>How do I enhance a photo?</summary><div class="a">
     <p>Open the app, tap the photo you want to fix, pick a tool (Enhance, Upscale, Face restore or Colorize),
@@ -62,9 +62,11 @@ enhanced one — it makes the fix much faster.</p>
     <p style="margin-top:12px"><a href="/guides/unblur-photo-iphone.html">Step-by-step guide →</a></p></div></details>
 
   <details><summary>Are my photos uploaded anywhere?</summary><div class="a">
-    <p>No. Photo and video enhancement runs locally on your device, so your library never leaves your phone
-    for processing. The app does use third-party services for analytics, ads and subscription management —
-    those are listed in the <a href="/privacy_policy.html">Privacy Policy</a>.</p></div></details>
+    <p>Most tools run locally on your device and do not upload your media. When you choose Creative Upscale or
+    old-photo restoration, only the photo you selected is uploaded to our processing servers. The processed
+    result is kept for a short, limited period so you can download it, then it is deleted. The app also uses
+    third-party services for analytics, ads and subscription management — those are listed in the
+    <a href="/privacy_policy.html">Privacy Policy</a>.</p></div></details>
 
   <details><summary>Which devices and iOS versions are supported?</summary><div class="a">
     <p>iPhone, iPad and iPod touch running iOS {{minimum_ios}} or later. Newer chips finish a 4x upscale noticeably faster,
@@ -220,8 +222,8 @@ PRIVACY = dict(
     h1="Privacy Policy",
     lead="What the UScale app collects, what it never collects, and who we share data with.",
     title="Privacy Policy — UScale",
-    description="How UScale handles your data: photos and videos are processed on your device, plus the "
-                "analytics, advertising and subscription services the app uses.",
+    description="How UScale handles your data: most photo and video tools run on your device, while Creative "
+                "Upscale and old-photo restoration use temporary server processing.",
     sections=True,
     body=f"""
 <h2>Introduction</h2>
@@ -235,17 +237,22 @@ here. We may update this policy from time to time, so we encourage you to review
 changes.</p>
 
 <h2>Your photos and videos</h2>
-<div class="answer"><p>Photo and video enhancement runs on your device. Your media is not uploaded to our
-servers for processing, and we never collect, store or share the content of your library.</p></div>
+<div class="answer"><p>Most photo and video enhancement runs on your device and does not upload your media.
+Only Creative Upscale and old-photo restoration send the photo you select to our processing servers.</p></div>
 <p>The app asks for access to your photo library only so that you can pick a file to enhance and save the
 result back. You can review or revoke that access at any time in <strong>Settings → Privacy &amp; Security →
 Photos</strong> on your device.</p>
+<p>When you choose Creative Upscale or old-photo restoration, the selected photo is transmitted solely to
+perform the processing you requested. The processed result is stored for a short, limited period so that you
+can download it, after which it is deleted. We do not scan or upload the rest of your photo library.</p>
 
 <h2>Personal data we collect</h2>
 <p>We collect certain data to provide and improve the app's functionality, including:</p>
 <ul>
   <li>Usage data, such as app interactions, crash reports, and device information.</li>
   <li>In-app purchase data via RevenueCat to manage subscriptions and transactions.</li>
+  <li>For Creative Upscale and old-photo restoration only, the selected photo and its processed result for the
+  limited purpose of processing and delivering that result.</li>
 </ul>
 <p>This data helps us enhance app performance, track usage trends, and resolve technical issues.</p>
 
