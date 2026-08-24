@@ -14,7 +14,7 @@
   "guides.sub": {
     "localizations": {
       "en": "Straight answers to the questions people search for, followed by the exact taps to do it in UScale.",
-      "ru": "Сначала — краткий ответ на популярный поисковый вопрос, затем — точные шаги для решения задачи в UScale."
+      "ru": "Сначала — краткий ответ, затем — точные шаги для решения задачи в UScale."
     }
   },
   "guides.all": {
@@ -108,7 +108,7 @@
   "guide_pages.unblur-photo-iphone.read_time": {
     "localizations": {
       "en": "4 min read",
-      "ru": "6 мин чтения"
+      "ru": "6 минут чтения"
     }
   },
   "guide_pages.unblur-photo-iphone.answer": {
@@ -126,7 +126,7 @@
   "guide_pages.unblur-photo-iphone.intro": {
     "localizations": {
       "en": "Sharpening and unblurring are different jobs. Sharpening lifts contrast around edges that already exist; AI unblurring infers what the missing detail looked like and rebuilds it. UScale gives you three ways to do that, and the mode matters more than any setting inside it. Creative Upscale rebuilds the most detail but runs in the cloud; Face Enhancer and Regular Upscale run on your iPhone and upload nothing.",
-      "ru": "Размытие бывает разным: движение оставляет направленный смаз, ошибка фокуса делает мягким весь кадр, а мессенджеры добавляют квадраты и шум сжатия. Поэтому одного ползунка резкости недостаточно. В UScale есть три режима: Creative Upscale сильнее реконструирует утраченную текстуру, Face Enhancer отдельно восстанавливает небольшие лица, а Regular Upscale осторожно увеличивает снимок прямо на iPhone."
+      "ru": "Размытие бывает разным: движение оставляет направленный смаз, промах фокусировки делает весь кадр нечётким, а мессенджеры добавляют квадраты и шум сжатия. Поэтому одного ползунка резкости недостаточно. В UScale есть три режима: Creative Upscale сильнее реконструирует утраченную текстуру, Face Enhancer отдельно восстанавливает небольшие лица, а Regular Upscale осторожно увеличивает снимок прямо на iPhone."
     }
   },
   "guide_pages.unblur-photo-iphone.why_h": {
@@ -421,7 +421,7 @@
   "guide_pages.restore-old-photos.read_time": {
     "localizations": {
       "en": "5 min read",
-      "ru": "6 мин чтения"
+      "ru": "6 минут чтения"
     }
   },
   "guide_pages.restore-old-photos.answer": {
@@ -653,7 +653,7 @@
   "guide_pages.restore-old-photos.modes.1.p": {
     "localizations": {
       "en": "Repairs and colorizes without the extra sharpening. Use it when Enhanced Colorize invents detail a very small or soft scan never had.",
-      "ru": "Восстанавливает и раскрашивает без дополнительного повышения резкости; полезно для маленьких и мягких сканов."
+      "ru": "Восстанавливает и раскрашивает без дополнительного повышения резкости; полезно для небольших или нерезких сканов."
     }
   },
   "guide_pages.restore-old-photos.modes.2.img": {
@@ -854,7 +854,7 @@
   "guide_pages.restore-old-photos.cta_p": {
     "localizations": {
       "en": "Restore, colorize and reprint the photos in the shoebox. Restoration runs on our cloud models and is part of Premium — the annual plan starts with a {trial_days}-day free trial.",
-      "ru": "Попробуйте режимы восстановления и сохраните результат рядом с исходным сканом."
+      "ru": "Восстанавливайте, раскрашивайте и готовьте к печати старые снимки. Реставрация выполняется в облаке и входит в Premium; годовой план начинается с {trial_days}-дневного бесплатного пробного периода."
     },
     "comment": "Preserve every {placeholder} exactly.",
     "relaxedValidationLocales": [
@@ -998,7 +998,7 @@
   "guide_pages.colorize-black-and-white-photos.read_time": {
     "localizations": {
       "en": "5 min read",
-      "ru": "6 мин чтения"
+      "ru": "6 минут чтения"
     }
   },
   "guide_pages.colorize-black-and-white-photos.answer": {
@@ -1230,7 +1230,7 @@
   "guide_pages.colorize-black-and-white-photos.modes.1.p": {
     "localizations": {
       "en": "The same repair and colour without the sharpening. Switch to it when Enhanced Colorize looks synthetic on a small or soft scan.",
-      "ru": "Восстанавливает и раскрашивает без дополнительного повышения резкости; полезно для маленьких и мягких сканов."
+      "ru": "Восстанавливает и раскрашивает без дополнительного повышения резкости; полезно для небольших или нерезких сканов."
     }
   },
   "guide_pages.colorize-black-and-white-photos.modes.2.img": {
@@ -1423,7 +1423,7 @@
   "guide_pages.colorize-black-and-white-photos.cta_p": {
     "localizations": {
       "en": "Colorize, repair and upscale old prints on your iPhone. Restoration uses our cloud models and is part of Premium, starting with a {trial_days}-day free trial.",
-      "ru": "Сравните два режима колоризации и сохраните исходник вместе с готовой версией."
+      "ru": "Раскрашивайте, восстанавливайте и увеличивайте старые снимки. Реставрация выполняется в облаке и входит в Premium; доступ начинается с {trial_days}-дневного бесплатного пробного периода."
     },
     "comment": "Preserve every {placeholder} exactly.",
     "relaxedValidationLocales": [
@@ -1551,7 +1551,7 @@
   "guide_pages.upscale-image-4k.read_time": {
     "localizations": {
       "en": "4 min read",
-      "ru": "6 мин чтения"
+      "ru": "6 минут чтения"
     }
   },
   "guide_pages.upscale-image-4k.answer": {
@@ -1593,7 +1593,7 @@
   "guide_pages.upscale-image-4k.why_list.1": {
     "localizations": {
       "en": "A screenshot of a photo has already lost data twice; expect a good result rather than a perfect one.",
-      "ru": "Regular Upscale умножает размеры в 2× или 4× и работает на устройстве."
+      "ru": "Regular Upscale увеличивает ширину и высоту в 2 или 4 раза и работает на устройстве."
     }
   },
   "guide_pages.upscale-image-4k.why_list.2": {
@@ -1759,13 +1759,13 @@
   },
   "guide_pages.upscale-image-4k.faq.0.q": {
     "localizations": {
-      "en": "Is 4x the same as 4K?",
+      "en": "Is 4× the same as 4K?",
       "ru": "4× и 4K — одно и то же?"
     }
   },
   "guide_pages.upscale-image-4k.faq.0.a": {
     "localizations": {
-      "en": "No. 4x is a multiplier applied to your image's dimensions; 4K is an absolute width of about 3840 pixels. Creative Upscale asks for the absolute target — 2K, 4K or 8K — while Regular Upscale works in 2x and 4x multipliers.",
+      "en": "No. 4× is a multiplier applied to your image's dimensions; 4K is an absolute width of about 3840 pixels. Creative Upscale asks for the absolute target — 2K, 4K or 8K — while Regular Upscale works in 2× and 4× multipliers.",
       "ru": "Нет. 4× умножает ширину и высоту исходника на четыре, а 4K задаёт целевую ширину около 3840 пикселей."
     }
   },
@@ -1807,7 +1807,7 @@
   },
   "guide_pages.enhance-video-quality.card_desc": {
     "localizations": {
-      "en": "Upscale a clip 2x or 4x on-device, in a style that suits the footage.",
+      "en": "Upscale a clip 2× or 4× on-device, in a style that suits the footage.",
       "ru": "Сделайте старый или сжатый ролик чище и резче."
     }
   },
@@ -1820,7 +1820,7 @@
   },
   "guide_pages.enhance-video-quality.description": {
     "localizations": {
-      "en": "Improve video quality on iPhone: upscale a clip 2x or 4x, clean up grain and compression, and pick the upscale style that suits your footage — all on-device in UScale.",
+      "en": "Improve video quality on iPhone: upscale a clip 2× or 4×, clean up grain and compression, and pick the upscale style that suits your footage — all on-device in UScale.",
       "ru": "Как улучшить качество видео на iPhone: выберите исходный ролик, задайте увеличение, обработайте кадры локально и экспортируйте видео без лишнего сжатия."
     },
     "comment": "Description copy; keep factual claims unchanged."
@@ -1840,12 +1840,12 @@
   "guide_pages.enhance-video-quality.read_time": {
     "localizations": {
       "en": "5 min read",
-      "ru": "6 мин чтения"
+      "ru": "6 минут чтения"
     }
   },
   "guide_pages.enhance-video-quality.answer": {
     "localizations": {
-      "en": "To improve video quality on iPhone, open UScale, tap Upscale your media → Videos and pick the clip. Choose Upscale Video — or Enhance Animation for cartoons and 3D — set the scale to 2x or 4x, choose the Smoothed or Natural style, trim to the part you want and tap Upscale. Every frame is enhanced on your device and saved as a new video.",
+      "en": "To improve video quality on iPhone, open UScale, tap Upscale your media → Videos and pick the clip. Choose Upscale Video — or Enhance Animation for cartoons and 3D — set the scale to 2× or 4×, choose the Smoothed or Natural style, trim to the part you want and tap Upscale. Every frame is enhanced on your device and saved as a new video.",
       "ru": "Откройте ролик в UScale, выберите улучшение видео и подходящий масштаб, дождитесь обработки и экспортируйте новую копию. Каждый кадр обрабатывается на iPhone или iPad, поэтому видео не загружается на сервер."
     }
   },
@@ -1870,7 +1870,7 @@
   "guide_pages.enhance-video-quality.why_p": {
     "localizations": {
       "en": "It helps to know which problem you are actually fixing, because the same enhance pass addresses them to different degrees.",
-      "ru": "Видео состоит из последовательности кадров. Модель применяет улучшение к каждому кадру, сохраняя размер, частоту и порядок, а затем собирает результат. Нагрузка заметно выше, чем для одной фотографии, поэтому время и нагрев зависят от длины, разрешения и чипа устройства."
+      "ru": "Видео состоит из последовательности кадров. Модель обрабатывает каждый кадр, сохраняя их последовательность и временные интервалы, а затем собирает результат в видео большего разрешения. Нагрузка заметно выше, чем для одной фотографии, поэтому время и нагрев зависят от длины, разрешения и чипа устройства."
     }
   },
   "guide_pages.enhance-video-quality.why_list.0": {
@@ -1943,13 +1943,13 @@
   },
   "guide_pages.enhance-video-quality.steps.2.h": {
     "localizations": {
-      "en": "Set the scale — 2x or 4x",
+      "en": "Set the scale — 2× or 4×",
       "ru": "Запустите улучшение видео"
     }
   },
   "guide_pages.enhance-video-quality.steps.2.p": {
     "localizations": {
-      "en": "2x is the safe default for footage that is already reasonably sharp. 4x is for genuinely low-resolution sources you want to fill a large screen with; it multiplies the pixels, and the processing time, by four.",
+      "en": "2× is the safe default for footage that is already reasonably sharp. 4× is for genuinely low-resolution sources you want to fill a large screen with; it multiplies the pixels, and the processing time, by four.",
       "ru": "Выберите масштаб и держите приложение на переднем плане. На длинных 4K-роликах устройство может нагреваться — это ожидаемо."
     }
   },
@@ -2083,7 +2083,7 @@
   },
   "guide_pages.enhance-video-quality.options.0.t": {
     "localizations": {
-      "en": "2x"
+      "en": "2×"
     },
     "excludedLocales": [
       "ru"
@@ -2115,7 +2115,7 @@
   },
   "guide_pages.enhance-video-quality.options.1.t": {
     "localizations": {
-      "en": "4x"
+      "en": "4×"
     },
     "excludedLocales": [
       "ru"
@@ -2244,7 +2244,7 @@
   },
   "guide_pages.enhance-video-quality.tips.5": {
     "localizations": {
-      "en": "For social media, 2x is usually enough: the platform re-compresses your upload anyway, so a huge 4x file mostly spends processing time you will not see."
+      "en": "For social media, 2× is usually enough: the platform re-compresses your upload anyway, so a huge 4× file mostly spends processing time you will not see."
     },
     "excludedLocales": [
       "ru"
@@ -2276,7 +2276,7 @@
   },
   "guide_pages.enhance-video-quality.faq.0.a": {
     "localizations": {
-      "en": "It depends on the clip's resolution, the scale you picked, how many frames you selected and how powerful your device is, because every frame is processed individually. A few trimmed seconds take about a minute on a recent iPhone; a long 4x pass takes considerably more.",
+      "en": "It depends on the clip's resolution, the scale you picked, how many frames you selected and how powerful your device is, because every frame is processed individually. A few trimmed seconds take about a minute on a recent iPhone; a long 4× pass takes considerably more.",
       "ru": "Нет. Обычное улучшение видео выполняется на поддерживаемом iPhone или iPad."
     }
   },
@@ -2300,7 +2300,7 @@
   },
   "guide_pages.enhance-video-quality.faq.2.a": {
     "localizations": {
-      "en": "Yes. A 1080p clip run at 2x lands at 4K, and 4x goes well beyond it. Whether it looks like true 4K depends on how much real detail the source had to begin with.",
+      "en": "Yes. A 1080p clip run at 2× lands at 4K, and 4× goes well beyond it. Whether it looks like true 4K depends on how much real detail the source had to begin with.",
       "ru": "Можно уменьшить шум и сделать края заметнее, но потерянные из-за сильного сжатия детали не всегда восстанавливаются точно."
     }
   },
@@ -2379,7 +2379,7 @@
   },
   "guide_pages.slow-motion-video.description": {
     "localizations": {
-      "en": "Turn a normal video into slow motion on iPhone: increase the frame rate 2x or 4x with AI frame interpolation, pick the moment to slow down, all on-device.",
+      "en": "Turn a normal video into slow motion on iPhone: increase the frame rate 2× or 4× with AI frame interpolation, pick the moment to slow down, all on-device.",
       "ru": "Как замедлить обычное видео на iPhone без рывков: выберите Slow Motion в UScale, задайте скорость и создайте промежуточные кадры с ИИ прямо на устройстве."
     },
     "comment": "Description copy; keep factual claims unchanged."
@@ -2399,12 +2399,12 @@
   "guide_pages.slow-motion-video.read_time": {
     "localizations": {
       "en": "5 min read",
-      "ru": "6 мин чтения"
+      "ru": "6 минут чтения"
     }
   },
   "guide_pages.slow-motion-video.answer": {
     "localizations": {
-      "en": "To make a normal video slow motion on iPhone, open UScale, tap Upscale your media → Videos and pick the clip. Choose Slow Motion, set the output FPS to 2x or 4x and tap Increase FPS. When it finishes, mark the section you want slowed and save it as a new video.",
+      "en": "To make a normal video slow motion on iPhone, open UScale, tap Upscale your media → Videos and pick the clip. Choose Slow Motion, set the output FPS to 2× or 4× and tap Increase FPS. When it finishes, mark the section you want slowed and save it as a new video.",
       "ru": "Откройте короткий ролик в UScale, выберите Slow Motion и степень замедления. ИИ создаст промежуточные кадры между исходными, поэтому движение останется плавным, даже если видео не снималось в режиме замедленной съёмки."
     }
   },
@@ -2502,13 +2502,13 @@
   },
   "guide_pages.slow-motion-video.steps.2.h": {
     "localizations": {
-      "en": "Set the output FPS — 2x or 4x",
+      "en": "Set the output FPS — 2× or 4×",
       "ru": "Задайте скорость"
     }
   },
   "guide_pages.slow-motion-video.steps.2.p": {
     "localizations": {
-      "en": "2x doubles the frame rate, so 30 fps becomes 60. 4x quadruples it to 120 and buys a much deeper slow-down, at the cost of asking the model to invent three frames for every filmed one.",
+      "en": "2× doubles the frame rate, so 30 fps becomes 60. 4× quadruples it to 120 and buys a much deeper slow-down, at the cost of asking the model to invent three frames for every filmed one.",
       "ru": "Начните с умеренного замедления. Чем сильнее эффект, тем больше кадров должен создать ИИ."
     }
   },
@@ -2570,7 +2570,7 @@
   },
   "guide_pages.slow-motion-video.options.0.t": {
     "localizations": {
-      "en": "2x FPS"
+      "en": "2× FPS"
     },
     "excludedLocales": [
       "ru"
@@ -2602,7 +2602,7 @@
   },
   "guide_pages.slow-motion-video.options.1.t": {
     "localizations": {
-      "en": "4x FPS"
+      "en": "4× FPS"
     },
     "excludedLocales": [
       "ru"
@@ -2757,13 +2757,13 @@
   },
   "guide_pages.slow-motion-video.faq.2.q": {
     "localizations": {
-      "en": "Should I choose 2x or 4x?",
+      "en": "Should I choose 2× or 4×?",
       "ru": "Нужен ли интернет?"
     }
   },
   "guide_pages.slow-motion-video.faq.2.a": {
     "localizations": {
-      "en": "2x for a natural slow-down and the fastest processing, 4x when you want the moment stretched much further. The frame rate you start from and the one you will get are both shown under the player before you tap Increase FPS.",
+      "en": "2× for a natural slow-down and the fastest processing, 4× when you want the moment stretched much further. The frame rate you start from and the one you will get are both shown under the player before you tap Increase FPS.",
       "ru": "Нет. Интерполяция выполняется на поддерживаемом iPhone или iPad."
     }
   },
@@ -2862,7 +2862,7 @@
   "guide_pages.brighten-dark-photos.read_time": {
     "localizations": {
       "en": "2 min read",
-      "ru": "6 мин чтения"
+      "ru": "6 минут чтения"
     }
   },
   "guide_pages.brighten-dark-photos.answer": {
@@ -3006,7 +3006,7 @@
   },
   "guide_pages.brighten-dark-photos.tips.1": {
     "localizations": {
-      "en": "Need the resolution back after the resize? Run the brightened copy through Regular Upscale 2x or 4x.",
+      "en": "Need the resolution back after the resize? Run the brightened copy through Regular Upscale 2× or 4×.",
       "ru": "Сначала осветлите, затем при необходимости слегка скорректируйте цвет."
     }
   },
@@ -3060,7 +3060,7 @@
   },
   "guide_pages.brighten-dark-photos.faq.1.a": {
     "localizations": {
-      "en": "A very large image is scaled down a little so it fits into what your iPhone can process in one pass. Run the result through Regular Upscale 2x or 4x to get the pixels back.",
+      "en": "A very large image is scaled down a little so it fits into what your iPhone can process in one pass. Run the result through Regular Upscale 2× or 4× to get the pixels back.",
       "ru": "Она усиливает и полезный сигнал, и ошибки сенсора. Enlighten старается сначала отделить шум от деталей."
     }
   },
@@ -3139,7 +3139,7 @@
   "guide_pages.film-negative-to-photo.read_time": {
     "localizations": {
       "en": "5 min read",
-      "ru": "6 мин чтения"
+      "ru": "6 минут чтения"
     }
   },
   "guide_pages.film-negative-to-photo.answer": {
@@ -3425,7 +3425,7 @@
   "guide_pages.film-negative-to-photo.modes.1.p": {
     "localizations": {
       "en": "Repair and colour without the extra sharpening — a safer choice on grainy 35mm, where Enhanced Colorize can turn grain into invented detail.",
-      "ru": "Восстанавливает и раскрашивает без дополнительного повышения резкости; полезно для маленьких и мягких сканов."
+      "ru": "Восстанавливает и раскрашивает без дополнительного повышения резкости; полезно для небольших или нерезких сканов."
     }
   },
   "guide_pages.film-negative-to-photo.modes.2.img": {
@@ -3618,7 +3618,7 @@
   "guide_pages.film-negative-to-photo.cta_p": {
     "localizations": {
       "en": "Invert, restore and upscale film negatives on your iPhone. Restoration runs on our cloud models as part of Premium, starting with a {trial_days}-day free trial.",
-      "ru": "Снимите негатив на iPhone, включите Negative и восстановите кадр одной обработкой."
+      "ru": "Инвертируйте, восстанавливайте и увеличивайте плёночные негативы. Реставрация выполняется в облаке и входит в Premium; доступ начинается с {trial_days}-дневного бесплатного пробного периода."
     },
     "comment": "Preserve every {placeholder} exactly.",
     "relaxedValidationLocales": [
@@ -3746,7 +3746,7 @@
   "guide_pages.fix-blurry-faces.read_time": {
     "localizations": {
       "en": "4 min read",
-      "ru": "6 мин чтения"
+      "ru": "6 минут чтения"
     }
   },
   "guide_pages.fix-blurry-faces.answer": {
@@ -3764,7 +3764,7 @@
   "guide_pages.fix-blurry-faces.intro": {
     "localizations": {
       "en": "Faces are the reason general upscaling often disappoints. A group photo can be sharp overall while each face occupies a couple of hundred pixels — far too few for a general model to treat as more than a smudge. Face Enhancer knows the structure of a face and can rebuild eyes, lips and hair from very little. Its blind spot is the opposite case: trained on small, blurry faces, it adds less than you would expect to a large close-up, and that is where Creative Upscale takes over.",
-      "ru": "Общая модель увеличения видит маленькое лицо как несколько размытых пятен. Face Enhancer обучен структуре глаз, губ, кожи и волос и поэтому может восстановить читаемый портрет из меньшего числа пикселей. Но на крупном лице он иногда сглаживает текстуру — там лучше Creative Upscale."
+      "ru": "Общая модель увеличения видит маленькое лицо как несколько размытых пятен. Face Enhancer обучен структуре глаз, губ, кожи и волос и поэтому может сделать черты лица различимыми даже при небольшом числе пикселей. Но на крупном лице он иногда сглаживает текстуру — там лучше Creative Upscale."
     }
   },
   "guide_pages.fix-blurry-faces.why_h": {
@@ -4075,12 +4075,12 @@
   "guide_pages.upscale-anime-art.read_time": {
     "localizations": {
       "en": "4 min read",
-      "ru": "6 мин чтения"
+      "ru": "6 минут чтения"
     }
   },
   "guide_pages.upscale-anime-art.answer": {
     "localizations": {
-      "en": "To upscale anime art or a drawing, open it in UScale and run the 2x or 4x model. AI upscaling keeps line art crisp and flat colour clean instead of blurring edges the way a normal resize does, so a small illustration becomes a wallpaper- or print-sized file.",
+      "en": "To upscale anime art or a drawing, open it in UScale and run the 2× or 4× model. AI upscaling keeps line art crisp and flat colour clean instead of blurring edges the way a normal resize does, so a small illustration becomes a wallpaper- or print-sized file.",
       "ru": "Откройте иллюстрацию в UScale, отключите Face Enhancer и начните с локального Regular Upscale 2× или 4×. Он сохраняет стиль и геометрию лучше генеративного режима. Creative Upscale используйте только если допустима более свободная интерпретация деталей."
     }
   },
@@ -4092,7 +4092,7 @@
   },
   "guide_pages.upscale-anime-art.intro": {
     "localizations": {
-      "en": "Illustration is the friendliest possible input for an AI upscaler. Photographs are full of noise, texture and depth-of-field; drawings are made of clean lines and flat regions, which are exactly the structures these models predict most confidently. That is why a 4x upscale of a small anime image often looks like it was drawn at that size.",
+      "en": "Illustration is the friendliest possible input for an AI upscaler. Photographs are full of noise, texture and depth-of-field; drawings are made of clean lines and flat regions, which are exactly the structures these models predict most confidently. That is why a 4× upscale of a small anime image often looks like it was drawn at that size.",
       "ru": "Фотографические модели стремятся добавить поры, волосы и естественную текстуру, которой в рисунке быть не должно. Для иллюстраций важнее сохранить чистые контуры, плоские цвета и авторский стиль. Поэтому сначала нужен осторожный режим без улучшения лиц."
     }
   },
@@ -4178,13 +4178,13 @@
   },
   "guide_pages.upscale-anime-art.steps.2.h": {
     "localizations": {
-      "en": "Run 4x for line art",
+      "en": "Run 4× for line art",
       "ru": "Начните с Regular Upscale"
     }
   },
   "guide_pages.upscale-anime-art.steps.2.p": {
     "localizations": {
-      "en": "Illustration handles aggressive upscaling far better than photography does. 4x on a 1000-pixel image gives you a 4000-pixel file suitable for a poster or a desktop wallpaper.",
+      "en": "Illustration handles aggressive upscaling far better than photography does. 4× on a 1000-pixel image gives you a 4000-pixel file suitable for a poster or a desktop wallpaper.",
       "ru": "Выберите 2× для осторожного увеличения или 4×, если нужен крупный файл для печати."
     }
   },
@@ -4214,14 +4214,14 @@
   },
   "guide_pages.upscale-anime-art.img_alt": {
     "localizations": {
-      "en": "Upscaling a pixelated anime illustration 4x with UScale on iPhone",
+      "en": "Upscaling a pixelated anime illustration 4× with UScale on iPhone",
       "ru": "Аниме-иллюстрация до и после увеличения с сохранением чётких линий."
     },
     "comment": "Accessibility text describing an image."
   },
   "guide_pages.upscale-anime-art.img_caption": {
     "localizations": {
-      "en": "A pixelated illustration upscaled 4x — lines stay crisp, colour stays flat.",
+      "en": "A pixelated illustration upscaled 4× — lines stay crisp, colour stays flat.",
       "ru": "Аниме-иллюстрация до и после увеличения с сохранением чётких линий."
     }
   },
@@ -4269,7 +4269,7 @@
   },
   "guide_pages.upscale-anime-art.cta_p": {
     "localizations": {
-      "en": "2x and 4x AI upscaling for illustrations, anime and pixel art, right on your iPhone.",
+      "en": "2× and 4× AI upscaling for illustrations, anime and pixel art, right on your iPhone.",
       "ru": "Начните с локального 2×/4× и сохраните авторский стиль иллюстрации."
     }
   },
@@ -4311,7 +4311,7 @@
   },
   "guide_pages.upscale-anime-art.faq.2.a": {
     "localizations": {
-      "en": "The 2x and 4x models preserve the original style and just add resolution. Creative Upscale is the one that reinterprets detail, so avoid it if faithfulness matters.",
+      "en": "The 2× and 4× models preserve the original style and just add resolution. Creative Upscale is the one that reinterprets detail, so avoid it if faithfulness matters.",
       "ru": "Когда допустима новая интерпретация — например, для концепт-арта или мягкого аниме-кадра. Если нужно точно сохранить линию, выбирайте Regular Upscale 2×/4×."
     }
   },

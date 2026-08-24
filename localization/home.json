@@ -48,7 +48,7 @@
   },
   "hero.chips.0": {
     "localizations": {
-      "en": "2x and 4x upscale",
+      "en": "2× and 4× upscale",
       "ru": "Увеличение в 2× и 4×"
     }
   },
@@ -394,7 +394,7 @@
   },
   "features.h2": {
     "localizations": {
-      "en": "One app for your photo and video fixes",
+      "en": "One app to improve your photos and videos",
       "ru": "Одно приложение для улучшения фото и видео"
     }
   },
@@ -432,13 +432,13 @@
   },
   "features.items.1.h": {
     "localizations": {
-      "en": "Upscale images 2x and 4x",
-      "ru": "Увеличить разрешение изображений в 2× и 4×"
+      "en": "Upscale images 2× and 4×",
+      "ru": "Увеличить разрешение изображений в 2 и 4 раза"
     }
   },
   "features.items.1.p": {
     "localizations": {
-      "en": "Turn a small, low-resolution picture into a print-ready file. The 4x model reconstructs detail rather than stretching pixels into a blurry mess.",
+      "en": "Turn a small, low-resolution picture into a print-ready file. The 4× model reconstructs detail rather than stretching pixels into a blurry mess.",
       "ru": "Превратите маленькое изображение низкого разрешения в файл, пригодный для печати. Модель 4× восстанавливает детали, а не просто растягивает пиксели."
     }
   },
@@ -635,7 +635,7 @@
   "screens.items.3.cap": {
     "localizations": {
       "en": "Upscale any photo or video",
-      "ru": "Улучшить любую фотографию или видео"
+      "ru": "Улучшить любое фото или видео"
     }
   },
   "screens.items.3.alt": {
@@ -836,7 +836,7 @@
   },
   "how.steps.1.p": {
     "localizations": {
-      "en": "Enhance, unblur, 2x or 4x upscale, brighten, restore, colorize or slow motion. Every tool is a single tap and shows a live preview.",
+      "en": "Enhance, unblur, 2× or 4× upscale, brighten, restore, colorize or slow motion. Every tool is a single tap and shows a live preview.",
       "ru": "Повысьте резкость, уберите размытие, увеличьте в 2 или 4 раза, осветлите, восстановите, раскрасьте или замедлите. Каждый инструмент запускается одним нажатием и позволяет предварительно оценить результат."
     }
   },
@@ -860,7 +860,7 @@
   },
   "privacy.h2": {
     "localizations": {
-      "en": "Everyday enhancement never leaves your iPhone",
+      "en": "Core enhancement runs entirely on your device",
       "ru": "Обычные улучшения выполняются прямо на iPhone"
     }
   },
@@ -916,7 +916,7 @@
   "faq.sub": {
     "localizations": {
       "en": "Pricing, privacy and how UScale runs on your device.",
-      "ru": "Ответы о стоимости, конфиденциальности и работе UScale на вашем устройстве."
+      "ru": "Ответы на вопросы о стоимости, конфиденциальности и работе UScale на вашем устройстве."
     }
   },
   "faq.learn_more": {

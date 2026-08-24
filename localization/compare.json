@@ -208,7 +208,7 @@
   "compare.disclaimer": {
     "localizations": {
       "en": "Remini, BlurBuster and EnhanceFox are trademarks of their respective owners and are not affiliated with UScale. This page shows one test on two files, run in August 2026. Apps change, modes differ, and your own photos will behave differently — the source files are the ones you see above, so the test is easy to repeat.",
-      "ru": "Remini, BlurBuster и EnhanceFox — товарные знаки своих владельцев и не связаны с UScale. На этой странице показан один тест на двух файлах, проведённый в августе 2026 года. Приложения обновляются, режимы отличаются, а на ваших фотографиях результаты могут быть другими. Исходники показаны выше и доступны для скачивания, поэтому тест легко повторить."
+      "ru": "Remini, BlurBuster и EnhanceFox — товарные знаки, принадлежащие соответствующим владельцам; их разработчики не связаны с UScale. На этой странице показан один тест на двух файлах, проведённый в августе 2026 года. Приложения обновляются, режимы отличаются, а на ваших фотографиях результаты могут быть другими. Исходники показаны выше и доступны для скачивания, поэтому тест легко повторить."
     }
   },
   "compare.tests.0.id": {
@@ -229,7 +229,7 @@
   "compare.tests.0.h2": {
     "localizations": {
       "en": "Test 1 — a rainy night frame with no human face",
-      "ru": "Тест 1 — дождливый ночной кадр без человеческого лица"
+      "ru": "Тест 1 — дождливый ночной кадр без лиц"
     }
   },
   "compare.tests.0.sub": {
@@ -287,7 +287,7 @@
   },
   "compare.modes_p": {
     "localizations": {
-      "en": "BlurBuster's result depends on which mode you tap, and the difference is not subtle. Its other pass on the same night frame came back bigger — 3296 × 1840 instead of 1646 × 920 — and clearly worse: waxy fabric, smeared rain, mushy edges. Finding the mode that actually helps is left to you."
+      "en": "BlurBuster's result depends on which mode you tap, and the difference is not subtle. Its other pass on the same night frame came back bigger — 3296 × 1840 instead of 1646 × 920 — and clearly worse: waxy fabric, smeared rain, mushy edges. Results vary substantially by mode, so it is worth testing both."
     },
     "excludedLocales": [
       "ru"
