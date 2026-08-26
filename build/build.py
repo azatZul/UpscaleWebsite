@@ -64,6 +64,9 @@ LOCALES = [
     ("tr", "tr",   "Turkish",              "Türkçe",      "tr",      "tr_TR", "tr"),
 ]
 BY_CODE = {l[0]: l for l in LOCALES}
+# Locales whose official App Store badge puts the "App Store" service mark on
+# the first line and the translated "download" phrase under it.
+MARK_FIRST_LOCALES = frozenset({"ja"})
 # Only locales represented in every localization section are indexable and shown
 # in the picker. Importing a complete locale automatically grows the cluster.
 LOCALIZED_CODES = tuple(
@@ -242,12 +245,12 @@ CLOUD_SVG = ('<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor"
              '<circle cx="16.4" cy="13.9" r="3.4"/>'
              '<rect x="4.9" y="13.8" width="14.9" height="4" rx="2"/></g></svg>')
 
-APPLE_LOGO = ('<svg viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8'
-              '-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C61.9 141.2 12'
-              ' 184.6 12 273c0 26.1 4.8 53.1 14.4 80.8 12.8 36.5 58.9 126 107 124.5 25.1-.6 42.9-17.9 75.6-17.9'
-              ' 31.7 0 48.1 17.9 76.1 17.9 48.5-.7 90.2-82 102.4-118.6-65-30.6-68.8-89.7-68.8-91zM255.9 82.6c'
-              '24.5-29.1 22.3-55.6 21.6-65.1-21.7 1.3-46.8 14.8-61.1 31.4-15.7 17.8-24.9 39.8-22.9 64.6 23.4 1.8'
-              ' 44.8-10.2 62.4-30.9z"/></svg>')
+# Apple's official badge artwork, vendored by build/fetch_badges.py. The
+# guidelines require it be used unmodified, so the site supplies only the frame
+# around it; BADGE_H is the rendered height, well over Apple's 40px minimum.
+BADGE_DIR = os.path.join(ROOT, "resources", "appstore", "badges")
+BADGE_H = 56
+_BADGE_WIDTHS = {}
 
 SPK_ON = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" '
           'stroke-linejoin="round" aria-hidden="true" class="ico-on">'
@@ -383,6 +386,7 @@ CURRENCIES = {
     "USD": ("$", True, 2),
     "EUR": ("\u20ac", False, 2),
     "RUB": ("\u20bd", False, 0),
+    "JPY": ("\u00a5", True, 0),
 }
 # Decimal and thousands separators, and whether a percent sign is spaced off.
 NUMBER_FORMATS = {
@@ -499,12 +503,24 @@ def english_date(value):
     parsed = date.fromisoformat(value)
     return f"{parsed.day} {MONTHS[parsed.month - 1]} {parsed.year}"
 
-def date_tag(value, prefix="", english=False):
+def japanese_date(value):
+    """ISO date the way every Japanese page writes one. A bare ISO string is
+    legible there but reads as foreign, so 年月日 is worth the branch."""
+    parsed = date.fromisoformat(value)
+    return f"{parsed.year}年{parsed.month}月{parsed.day}日"
+
+def date_tag(value, prefix="", english=False, lang=None):
     """Rendered date that still exposes the ISO one to crawlers.
 
-    Localized pages keep the ISO text — it reads the same in all twelve locales;
-    the English-only legal pages spell the month out."""
-    text = english_date(value) if english else value
+    Most localized pages keep the ISO text — it reads the same in Latin and
+    Cyrillic locales; the English-only legal pages spell the month out, and
+    Japanese takes its own 年月日 form."""
+    if english:
+        text = english_date(value)
+    elif lang == "ja":
+        text = japanese_date(value)
+    else:
+        text = value
     return f'<time datetime="{value}">{esc(f"{prefix} {text}".strip())}</time>'
 
 def content_lang(c, route_lang):
@@ -609,11 +625,40 @@ def head(c, lang, title, desc, canonical, path="", og_image=None, extra_ld=None,
 <a class="skip-link" href="#main-content">{esc(c['ui'].get('skip_to_content', 'Skip to content'))}</a>
 """
 
-def appstore_btn(c, dark=False, cls=""):
-    return (f'<a class="appstore{" dark" if dark else ""} {cls}" href="{APPSTORE}" target="_blank" '
-            f'rel="noopener" data-cta="appstore">{APPLE_LOGO}'
-            f'<span class="txt"><span>{esc(c["ui"]["download_on"])}</span>'
-            f'<strong>{esc(c["ui"]["app_store"])}</strong></span></a>')
+def badge_width(lang):
+    """Rendered width of a locale's badge at BADGE_H, from the artwork's own
+    aspect ratio. Apple draws every badge 40 units tall but lets the width
+    follow the translated phrase — 108 for Japanese against 151 for Turkish —
+    so the width has to be read per locale rather than assumed."""
+    if lang not in _BADGE_WIDTHS:
+        path = os.path.join(BADGE_DIR, f"{lang}-black.svg")
+        with open(path, encoding="utf-8") as handle:
+            head = handle.read(400)
+        box = re.search(r'viewBox="0 0 ([\d.]+) 40"', head)
+        if not box:
+            raise SystemExit(f"{path}: no 40-unit-tall viewBox; re-run build/fetch_badges.py")
+        _BADGE_WIDTHS[lang] = round(float(box.group(1)) / 40 * BADGE_H, 1)
+    return _BADGE_WIDTHS[lang]
+
+def appstore_btn(c, cls=""):
+    """The App Store badge, as Apple's own artwork for this locale.
+
+    The guidelines forbid recreating or restyling the badge, so the link is only
+    a frame: it carries the site's shadow and hover lift, and both colourways
+    are emitted so the theme can cross-fade between them the way the rest of the
+    palette does. The accessible name still has to be built here, and Japanese
+    inverts the lockup — the "App Store" service mark leads and the translated
+    modifier follows, which is the order the phrase reads in."""
+    lang = c["lang"]
+    lead, mark = c["ui"]["download_on"], c["ui"]["app_store"]
+    label = esc(f"{mark}{lead}" if lang in MARK_FIRST_LOCALES else f"{lead} {mark}")
+    width = badge_width(lang)
+    art = "".join(
+        f'<img class="badge-{colour}" src="/resources/appstore/badges/{lang}-{colour}.svg" '
+        f'width="{width}" height="{BADGE_H}" alt="" decoding="async">'
+        for colour in ("black", "white"))
+    return (f'<a class="appstore {cls}" href="{APPSTORE}" target="_blank" rel="noopener" '
+            f'data-cta="appstore" aria-label="{label}" style="width:{width}px">{art}</a>')
 
 def guide_card(c, slug, home_prefix):
     """Render a guide card with an optional result thumbnail."""
@@ -1169,7 +1214,7 @@ def render_guide(c, lang, slug):
   <article class="art">
     <span class="eyebrow">{esc(g['kicker'])}</span>
     <h1>{esc(g['h1'])}</h1>
-    <div class="meta"><span>{date_tag(updated_for(path), c['ui']['updated'])}</span><span>·</span>
+    <div class="meta"><span>{date_tag(updated_for(path), c['ui']['updated'], lang=lang)}</span><span>·</span>
       <span>{esc(g['read_time'])}</span><span>·</span><span>{esc(c['ui']['by'])}</span></div>
 
     {media_html}
@@ -1275,7 +1320,7 @@ def render_doc(c, d, lang):
     d = dict(d)
     d["body"] = localize_body_links(inject_facts(d["body"], lang), lang)
     # Pre-rendered markup: doc_body drops it in as-is (see the two call sites below).
-    d["updated"] = date_tag(updated_for(d["file"]), c["ui"]["updated"], english=lang == "en")
+    d["updated"] = date_tag(updated_for(d["file"]), c["ui"]["updated"], english=lang == "en", lang=lang)
     path = logical_path(d["file"])
     canonical = url(lang, path)
     home_prefix = rel_url(lang)
@@ -1501,7 +1546,7 @@ def render_compare_simple(c, lang):
     <span>&rsaquo;</span><span>{esc(cp['nav'])}</span></nav>
   <div class="vs-intro"><span class="eyebrow">{esc(cp['eyebrow'])}</span><h1>{esc(cp['h1'])}</h1>
     <p class="lead">{esc(cp['lead'])}</p><ul class="chips">{chips}</ul>
-    <div class="meta"><span>{date_tag(updated_for('compare.html'), c['ui']['updated'])}</span>
+    <div class="meta"><span>{date_tag(updated_for('compare.html'), c['ui']['updated'], lang=lang)}</span>
       <span>&middot;</span><span>{esc(c['ui']['by'])}</span></div></div>
   <h2 class="vs-h">{esc(cp['apps_h'])}</h2><ul class="vs-apps">{apps}</ul>
   {tests}
@@ -1588,7 +1633,7 @@ def render_compare(c, lang):
     <h1>{esc(cp['h1'])}</h1>
     <p class="lead">{esc(cp['lead'])}</p>
     <ul class="chips">{chips}</ul>
-    <div class="meta"><span>{date_tag(updated_for('compare.html'), 'Updated', english=True)}</span>
+    <div class="meta"><span>{date_tag(updated_for('compare.html'), c['ui']['updated'], english=lang == 'en', lang=lang)}</span>
       <span>&middot;</span><span>{esc(c['ui']['by'])}</span></div>
   </div>
 

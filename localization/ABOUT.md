@@ -74,9 +74,13 @@ German "Negative" is the plural of "Negativ", so only the switch becomes
   iOS versions, and file formats.
 - SEO titles and descriptions should read naturally in the target language and
   use the phrases that locale actually searches for, not a literal translation
-  of the English keyword. `keywords.md` records the head terms per locale;
-  App Store popularity there ranks app-store demand, so check the web SERP
-  before letting it decide a `<title>`. Keep titles at or under 60 characters
+  of the English keyword. **`localization/keywords/<locale>.md` is the brief for
+  the locale you are translating** — head terms, measured demand, wrong-intent
+  traps to avoid, and a page-by-page placement map. Read it before writing any
+  `<title>`. `keywords.md` holds only the shared English terms and the page
+  architecture. App Store popularity ranks app-store demand, not web demand, so
+  check the web SERP before letting it decide a `<title>`. A locale with no file
+  has not been researched yet. Keep titles at or under 60 characters
   and descriptions at or under 160 — a quoted in-app label can push a
   translated description past the limit that the English source fitted into.
 - Prices, ratings, counts, and percentages are formatted by the build from
@@ -100,6 +104,10 @@ languages that should be kept as context:
 ```sh
 python3 build/localize.py export de --source-languages en,ru
 ```
+
+`localization/prompts/<locale>.md` holds the ready-made translator prompt for a
+locale, condensed from this document and the locale's keyword brief; a locale
+without one has not been prepared yet.
 
 This writes one minified file per catalog section to `localization_work/de/`.
 Every record contains the available requested source texts, a `de: null` field

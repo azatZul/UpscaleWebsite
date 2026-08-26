@@ -3,7 +3,8 @@
     "localizations": {
       "en": "UScale vs Remini, BlurBuster and EnhanceFox — the same photo in four apps",
       "ru": "UScale или Remini: сравнение четырёх приложений для улучшения фото",
-      "de": "UScale vs. Remini, BlurBuster & EnhanceFox im Vergleich"
+      "de": "UScale vs. Remini, BlurBuster & EnhanceFox im Vergleich",
+      "ja": "UScale・Reminiほか2アプリを比較"
     },
     "comment": "Page or section title; preserve product names."
   },
@@ -11,7 +12,8 @@
     "localizations": {
       "en": "The same two photos run through UScale, Remini, BlurBuster and EnhanceFox. Full-size results, side-by-side close-ups and what each AI photo enhancer got right and wrong.",
       "ru": "Сравните UScale, Remini, BlurBuster и EnhanceFox на двух одинаковых фото: полные кадры, крупные фрагменты, сильные стороны и ограничения приложений.",
-      "de": "Dieselben zwei Fotos in UScale, Remini, BlurBuster und EnhanceFox: Ergebnisse in voller Größe, Detailvergleiche sowie Stärken und Schwächen."
+      "de": "Dieselben zwei Fotos in UScale, Remini, BlurBuster und EnhanceFox: Ergebnisse in voller Größe, Detailvergleiche sowie Stärken und Schwächen.",
+      "ja": "同じ2枚の写真をUScale、Remini、BlurBuster、EnhanceFoxで高画質化し、原寸結果と拡大画像、各AIアプリの長所と短所を比較します。"
     },
     "comment": "Description copy; keep factual claims unchanged."
   },
@@ -19,97 +21,111 @@
     "localizations": {
       "en": "Head to head",
       "ru": "Прямое сравнение",
-      "de": "Direkter Vergleich"
+      "de": "Direkter Vergleich",
+      "ja": "直接比較"
     }
   },
   "compare.h1": {
     "localizations": {
       "en": "The same photo, four AI enhancers",
       "ru": "Одно фото — четыре приложения",
-      "de": "Dasselbe Foto, vier KI-Fotoverbesserer"
+      "de": "Dasselbe Foto, vier KI-Fotoverbesserer",
+      "ja": "同じ写真を4つのAI高画質化アプリで比較"
     }
   },
   "compare.lead": {
     "localizations": {
       "en": "We picked two hard files — a rainy night frame and a low-resolution video still — and ran each one through UScale, Remini, BlurBuster and EnhanceFox. One pass per app, nothing retouched afterwards.",
       "ru": "Мы взяли два сложных кадра и один раз обработали каждый в UScale, Remini, BlurBuster и EnhanceFox. После экспорта ничего не ретушировали.",
-      "de": "Wir haben zwei schwierige Dateien ausgewählt – eine regnerische Nachtaufnahme und ein niedrig aufgelöstes Standbild aus einem Video – und beide mit UScale, Remini, BlurBuster und EnhanceFox verarbeitet. Ein Durchlauf pro App, danach wurde nichts retuschiert."
+      "de": "Wir haben zwei schwierige Dateien ausgewählt – eine regnerische Nachtaufnahme und ein niedrig aufgelöstes Standbild aus einem Video – und beide mit UScale, Remini, BlurBuster und EnhanceFox verarbeitet. Ein Durchlauf pro App, danach wurde nichts retuschiert.",
+      "ja": "雨の夜景と低解像度の動画フレームという難しい2つのファイルを選び、UScale、Remini、BlurBuster、EnhanceFoxでそれぞれ1回処理しました。書き出し後の手直しはしていません。"
     }
   },
   "compare.chips.0": {
     "localizations": {
       "en": "2 source photos",
       "ru": "2 исходных фото",
-      "de": "2 Ausgangsfotos"
+      "de": "2 Ausgangsfotos",
+      "ja": "元写真2枚"
     }
   },
   "compare.chips.1": {
     "localizations": {
       "en": "4 iPhone apps",
       "ru": "4 приложения для iPhone",
-      "de": "4 iPhone-Apps"
+      "de": "4 iPhone-Apps",
+      "ja": "iPhoneアプリ4種"
     }
   },
   "compare.chips.2": {
     "localizations": {
       "en": "One pass each",
       "ru": "Одна обработка",
-      "de": "Je ein Durchlauf"
+      "de": "Je ein Durchlauf",
+      "ja": "各1回処理"
     }
   },
   "compare.chips.3": {
     "localizations": {
       "en": "No manual edits",
       "ru": "Без ручной правки",
-      "de": "Keine manuelle Bearbeitung"
+      "de": "Keine manuelle Bearbeitung",
+      "ja": "手作業の修正なし"
     }
   },
   "compare.apps_h": {
     "localizations": {
       "en": "The four apps",
       "ru": "Четыре приложения",
-      "de": "Die vier Apps"
+      "de": "Die vier Apps",
+      "ja": "4つのアプリ"
     }
   },
   "compare.method_h": {
     "localizations": {
       "en": "How the test was run",
       "ru": "Как проводился тест",
-      "de": "So wurde getestet"
+      "de": "So wurde getestet",
+      "ja": "テスト方法"
     }
   },
   "compare.method_p": {
     "localizations": {
       "en": "Both files went into every app at their original size and came straight back out. UScale ran in Creative Upscale mode. The competitor exports of the park photo returned mirrored, so we flipped them back to match the original — nothing else was touched. Every result is shown at the same display size, which is how you would look at them on a phone. Tested in August 2026 on the App Store versions current at the time.",
       "ru": "Оба файла загрузили в каждое приложение в исходном размере и сразу экспортировали результат. В UScale использовался режим «Креативное увеличение». Конкурирующие приложения вернули кадр из парка зеркально отражённым, поэтому мы развернули его обратно, чтобы он совпадал с оригиналом, — больше ничего не меняли. Все результаты показаны в одном масштабе, как при просмотре на телефоне. Тест проведён в августе 2026 года на актуальных на тот момент версиях из App Store.",
-      "de": "Beide Dateien wurden in ihrer Originalgröße in jeder App verarbeitet und direkt wieder exportiert. UScale lief im Modus „Kreatives Hochskalieren“. Die anderen Apps exportierten das Parkfoto spiegelverkehrt, daher haben wir es wieder passend zum Original gespiegelt – sonst wurde nichts verändert. Alle Ergebnisse werden in derselben Anzeigegröße gezeigt, so wie du sie auf einem Smartphone ansehen würdest. Getestet wurde im August 2026 mit den damals aktuellen Versionen aus dem App Store."
+      "de": "Beide Dateien wurden in ihrer Originalgröße in jeder App verarbeitet und direkt wieder exportiert. UScale lief im Modus „Kreatives Hochskalieren“. Die anderen Apps exportierten das Parkfoto spiegelverkehrt, daher haben wir es wieder passend zum Original gespiegelt – sonst wurde nichts verändert. Alle Ergebnisse werden in derselben Anzeigegröße gezeigt, so wie du sie auf einem Smartphone ansehen würdest. Getestet wurde im August 2026 mit den damals aktuellen Versionen aus dem App Store.",
+      "ja": "両方のファイルを元のサイズのまま各アプリに読み込み、そのまま書き出しました。UScaleでは「クリエイティブアップスケール」を使用しました。公園の写真は競合アプリから左右反転して書き出されたため、元画像に合わせて反転し直しました。それ以外は一切変更していません。すべての結果は、スマートフォンで見るときと同じ表示サイズで示しています。2026年8月時点のApp Store最新版でテストしました。"
     }
   },
   "compare.original": {
     "localizations": {
       "en": "Original",
       "ru": "Оригинал",
-      "de": "Original"
+      "de": "Original",
+      "ja": "元画像"
     }
   },
   "compare.alt_before": {
     "localizations": {
       "en": "The original photo before any AI enhancement",
       "ru": "Исходная фотография до обработки",
-      "de": "Das Originalfoto vor jeder KI-Verbesserung"
+      "de": "Das Originalfoto vor jeder KI-Verbesserung",
+      "ja": "AI高画質化前の元写真"
     }
   },
   "compare.alt_result": {
     "localizations": {
       "en": "The same photo enhanced with",
       "ru": "Та же фотография после обработки в",
-      "de": "Dasselbe Foto, verbessert mit"
+      "de": "Dasselbe Foto, verbessert mit",
+      "ja": "同じ写真を次のアプリで高画質化："
     }
   },
   "compare.table_bb_note": {
     "localizations": {
       "en": "3296 × 1840 in its other mode",
-      "de": "3296 × 1840 im anderen Modus"
+      "de": "3296 × 1840 im anderen Modus",
+      "ja": "別モードでは3296 × 1840"
     },
     "excludedLocales": [
       "ru"
@@ -119,20 +135,23 @@
     "localizations": {
       "en": "Zoomed in",
       "ru": "Фрагменты при увеличении",
-      "de": "Vergrößert"
+      "de": "Vergrößert",
+      "ja": "拡大比較"
     }
   },
   "compare.look_for": {
     "localizations": {
       "en": "Look at",
       "ru": "Обратите внимание",
-      "de": "Achte auf"
+      "de": "Achte auf",
+      "ja": "注目点"
     }
   },
   "compare.table_h": {
     "localizations": {
       "en": "The results side by side",
-      "de": "Die Ergebnisse im direkten Vergleich"
+      "de": "Die Ergebnisse im direkten Vergleich",
+      "ja": "結果を並べて比較"
     },
     "excludedLocales": [
       "ru"
@@ -141,7 +160,8 @@
   "compare.table_note": {
     "localizations": {
       "en": "Everything in this table comes from the two runs above, with UScale in Creative Upscale mode. UScale also has an on-device mode: it is a smaller jump than Creative Upscale, but on files like these it still resolves more real detail than the three rivals — without the photo leaving your iPhone.",
-      "de": "Alle Angaben in dieser Tabelle stammen aus den beiden Durchläufen oben, bei denen UScale im Modus „Kreatives Hochskalieren“ lief. UScale hat außerdem einen Modus zur Verarbeitung auf dem Gerät: Der Unterschied ist kleiner als bei „Kreatives Hochskalieren“, doch bei Dateien wie diesen stellt er noch immer mehr echte Details wieder her als die drei Konkurrenten – ohne dass das Foto dein iPhone verlässt."
+      "de": "Alle Angaben in dieser Tabelle stammen aus den beiden Durchläufen oben, bei denen UScale im Modus „Kreatives Hochskalieren“ lief. UScale hat außerdem einen Modus zur Verarbeitung auf dem Gerät: Der Unterschied ist kleiner als bei „Kreatives Hochskalieren“, doch bei Dateien wie diesen stellt er noch immer mehr echte Details wieder her als die drei Konkurrenten – ohne dass das Foto dein iPhone verlässt.",
+      "ja": "この表は、上の2回のテスト結果をまとめたものです。UScaleでは「クリエイティブアップスケール」を使用しています。UScaleにはデバイス上で処理するモードもあります。「クリエイティブアップスケール」ほど大幅には向上しませんが、このようなファイルでも3つの競合アプリより実際のディテールを多く再現し、写真がiPhoneから送信されることもありません。"
     },
     "excludedLocales": [
       "ru"
@@ -150,7 +170,8 @@
   "compare.table_rows.out_girls": {
     "localizations": {
       "en": "Output from the 840 × 560 park photo",
-      "de": "Ausgabe des Parkfotos mit 840 × 560"
+      "de": "Ausgabe des Parkfotos mit 840 × 560",
+      "ja": "840 × 560の公園写真からの出力"
     },
     "excludedLocales": [
       "ru"
@@ -159,7 +180,8 @@
   "compare.table_rows.out_spider": {
     "localizations": {
       "en": "Output from the 823 × 460 night frame",
-      "de": "Ausgabe der Nachtaufnahme mit 823 × 460"
+      "de": "Ausgabe der Nachtaufnahme mit 823 × 460",
+      "ja": "823 × 460の夜景フレームからの出力"
     },
     "excludedLocales": [
       "ru"
@@ -168,7 +190,8 @@
   "compare.table_rows.faces": {
     "localizations": {
       "en": "Faces",
-      "de": "Gesichter"
+      "de": "Gesichter",
+      "ja": "顔"
     },
     "excludedLocales": [
       "ru"
@@ -177,7 +200,8 @@
   "compare.table_rows.rest": {
     "localizations": {
       "en": "Everything else in the frame",
-      "de": "Alles andere im Bild"
+      "de": "Alles andere im Bild",
+      "ja": "画面内のその他の部分"
     },
     "excludedLocales": [
       "ru"
@@ -186,7 +210,8 @@
   "compare.table_rows.fidelity": {
     "localizations": {
       "en": "Colour and framing kept",
-      "de": "Farben und Bildausschnitt erhalten"
+      "de": "Farben und Bildausschnitt erhalten",
+      "ja": "色と構図を維持"
     },
     "excludedLocales": [
       "ru"
@@ -195,7 +220,8 @@
   "compare.table_rows.noface": {
     "localizations": {
       "en": "Frame with no human face",
-      "de": "Bild ohne menschliches Gesicht"
+      "de": "Bild ohne menschliches Gesicht",
+      "ja": "人物の顔がない画像"
     },
     "excludedLocales": [
       "ru"
@@ -204,7 +230,8 @@
   "compare.yes": {
     "localizations": {
       "en": "Yes",
-      "de": "Ja"
+      "de": "Ja",
+      "ja": "はい"
     },
     "excludedLocales": [
       "ru"
@@ -213,7 +240,8 @@
   "compare.no": {
     "localizations": {
       "en": "No",
-      "de": "Nein"
+      "de": "Nein",
+      "ja": "いいえ"
     },
     "excludedLocales": [
       "ru"
@@ -222,7 +250,8 @@
   "compare.store_link": {
     "localizations": {
       "en": "View on the App Store",
-      "de": "Im App Store ansehen"
+      "de": "Im App Store ansehen",
+      "ja": "App Storeで見る"
     },
     "excludedLocales": [
       "ru"
@@ -232,14 +261,16 @@
     "localizations": {
       "en": "Questions about this test",
       "ru": "Вопросы об этом тесте",
-      "de": "Fragen zu diesem Test"
+      "de": "Fragen zu diesem Test",
+      "ja": "このテストに関する質問"
     }
   },
   "compare.disclaimer": {
     "localizations": {
       "en": "Remini, BlurBuster and EnhanceFox are trademarks of their respective owners and are not affiliated with UScale. This page shows one test on two files, run in August 2026. Apps change, modes differ, and your own photos will behave differently — the source files are the ones you see above, so the test is easy to repeat.",
       "ru": "Remini, BlurBuster и EnhanceFox — товарные знаки, принадлежащие соответствующим владельцам; их разработчики не связаны с UScale. На этой странице показан один тест на двух файлах, проведённый в августе 2026 года. Приложения обновляются, режимы отличаются, а на ваших фотографиях результаты могут быть другими. Исходники показаны выше и доступны для скачивания, поэтому тест легко повторить.",
-      "de": "Remini, BlurBuster und EnhanceFox sind Marken ihrer jeweiligen Inhaber und stehen in keiner Verbindung zu UScale. Diese Seite zeigt einen Test mit zwei Dateien, der im August 2026 durchgeführt wurde. Apps ändern sich, Modi unterscheiden sich und deine eigenen Fotos können andere Ergebnisse liefern – die Ausgangsdateien siehst du oben, sodass sich der Test leicht wiederholen lässt."
+      "de": "Remini, BlurBuster und EnhanceFox sind Marken ihrer jeweiligen Inhaber und stehen in keiner Verbindung zu UScale. Diese Seite zeigt einen Test mit zwei Dateien, der im August 2026 durchgeführt wurde. Apps ändern sich, Modi unterscheiden sich und deine eigenen Fotos können andere Ergebnisse liefern – die Ausgangsdateien siehst du oben, sodass sich der Test leicht wiederholen lässt.",
+      "ja": "Remini、BlurBuster、EnhanceFoxは各所有者の商標であり、UScaleとは関係ありません。このページでは、2026年8月に2つのファイルで実施した1回のテストを紹介しています。アプリは更新され、モードによっても異なり、写真ごとに結果は変わります。元ファイルは上に掲載しているため、簡単に同じテストを試せます。"
     }
   },
   "compare.tests.0.id": {
@@ -252,7 +283,8 @@
   "compare.tests.0.tab": {
     "localizations": {
       "en": "Night frame",
-      "de": "Nachtaufnahme"
+      "de": "Nachtaufnahme",
+      "ja": "夜景フレーム"
     },
     "excludedLocales": [
       "ru"
@@ -262,21 +294,24 @@
     "localizations": {
       "en": "Test 1 — a rainy night frame with no human face",
       "ru": "Тест 1 — дождливый ночной кадр без лиц",
-      "de": "Test 1 – eine regnerische Nachtaufnahme ohne menschliches Gesicht"
+      "de": "Test 1 – eine regnerische Nachtaufnahme ohne menschliches Gesicht",
+      "ja": "テスト1 — 人物の顔がない雨の夜景フレーム"
     }
   },
   "compare.tests.0.sub": {
     "localizations": {
       "en": "823 × 460, compressed, neon behind rain — and no human face in the frame.",
       "ru": "823 × 460, сжатый кадр с неоном и дождём.",
-      "de": "823 × 460, komprimiert, Neonlicht hinter Regen – und kein menschliches Gesicht im Bild."
+      "de": "823 × 460, komprimiert, Neonlicht hinter Regen – und kein menschliches Gesicht im Bild.",
+      "ja": "823 × 460、圧縮済みで、雨の向こうにネオンがあり、人物の顔は写っていません。"
     }
   },
   "compare.tests.0.look": {
     "localizations": {
       "en": "The web lines on the mask, the droplets on the shoulders, and the rain falling in front of the lens.",
       "ru": "на сетку маски, капли на плечах и линии дождя",
-      "de": "die Netzlinien auf der Maske, die Tropfen auf den Schultern und den Regen vor dem Objektiv."
+      "de": "die Netzlinien auf der Maske, die Tropfen auf den Schultern und den Regen vor dem Objektiv.",
+      "ja": "マスクの網目、肩の水滴、レンズの前を落ちる雨。"
     }
   },
   "compare.tests.1.id": {
@@ -289,7 +324,8 @@
   "compare.tests.1.tab": {
     "localizations": {
       "en": "Park video still",
-      "de": "Standbild im Park"
+      "de": "Standbild im Park",
+      "ja": "公園の動画フレーム"
     },
     "excludedLocales": [
       "ru"
@@ -299,27 +335,31 @@
     "localizations": {
       "en": "Test 2 — a low-resolution video still with two faces",
       "ru": "Тест 2 — кадр низкого разрешения с двумя лицами",
-      "de": "Test 2 – ein niedrig aufgelöstes Standbild mit zwei Gesichtern"
+      "de": "Test 2 – ein niedrig aufgelöstes Standbild mit zwei Gesichtern",
+      "ja": "テスト2 — 2人の顔が写った低解像度の動画フレーム"
     }
   },
   "compare.tests.1.sub": {
     "localizations": {
       "en": "840 × 560, soft and flat, captured in a forest.",
       "ru": "840 × 560, нечёткий кадр с низким контрастом, снятый в лесу.",
-      "de": "840 × 560, weich und kontrastarm, aufgenommen in einem Wald."
+      "de": "840 × 560, weich und kontrastarm, aufgenommen in einem Wald.",
+      "ja": "840 × 560、森で撮影された、ぼんやりして平坦な画像です。"
     }
   },
   "compare.tests.1.look": {
     "localizations": {
       "en": "The eyes, single hairs, the print on the dress and the blades of grass.",
       "ru": "на глаза, отдельные волоски, рисунок платья и траву",
-      "de": "die Augen, einzelne Haare, das Muster auf dem Kleid und die Grashalme."
+      "de": "die Augen, einzelne Haare, das Muster auf dem Kleid und die Grashalme.",
+      "ja": "目、1本ずつの髪、ドレスの模様、草の葉。"
     }
   },
   "compare.modes_h": {
     "localizations": {
       "en": "One more thing about BlurBuster",
-      "de": "Noch ein Hinweis zu BlurBuster"
+      "de": "Noch ein Hinweis zu BlurBuster",
+      "ja": "BlurBusterについてもう1点"
     },
     "excludedLocales": [
       "ru"
@@ -328,7 +368,8 @@
   "compare.modes_p": {
     "localizations": {
       "en": "BlurBuster's result depends on which mode you tap, and the difference is not subtle. Its other pass on the same night frame came back bigger — 3296 × 1840 instead of 1646 × 920 — and clearly worse: waxy fabric, smeared rain, mushy edges. Results vary substantially by mode, so it is worth testing both.",
-      "de": "Das Ergebnis von BlurBuster hängt davon ab, welchen Modus du auswählst, und der Unterschied ist deutlich. Der andere Durchlauf derselben Nachtaufnahme war größer – 3296 × 1840 statt 1646 × 920 – und klar schlechter: wachsartig wirkender Stoff, verschmierter Regen, breiige Kanten. Die Ergebnisse unterscheiden sich je nach Modus erheblich, daher lohnt es sich, beide zu testen."
+      "de": "Das Ergebnis von BlurBuster hängt davon ab, welchen Modus du auswählst, und der Unterschied ist deutlich. Der andere Durchlauf derselben Nachtaufnahme war größer – 3296 × 1840 statt 1646 × 920 – und klar schlechter: wachsartig wirkender Stoff, verschmierter Regen, breiige Kanten. Die Ergebnisse unterscheiden sich je nach Modus erheblich, daher lohnt es sich, beide zu testen.",
+      "ja": "BlurBusterの結果は選ぶモードによって変わり、その差は明らかです。同じ夜景フレームを別モードで処理すると、1646 × 920ではなく3296 × 1840と大きくなりましたが、布地はろうのようになり、雨はにじみ、輪郭も崩れて、品質は明らかに低下しました。モードによる違いが大きいため、両方を試す価値があります。"
     },
     "excludedLocales": [
       "ru"
@@ -337,7 +378,8 @@
   "compare.modes_a": {
     "localizations": {
       "en": "The mode that works",
-      "de": "Der passende Modus"
+      "de": "Der passende Modus",
+      "ja": "良好な結果のモード"
     },
     "excludedLocales": [
       "ru"
@@ -346,7 +388,8 @@
   "compare.modes_b": {
     "localizations": {
       "en": "The bigger, softer mode",
-      "de": "Der größere, weichere Modus"
+      "de": "Der größere, weichere Modus",
+      "ja": "大きく、柔らかくなるモード"
     },
     "excludedLocales": [
       "ru"
@@ -356,62 +399,71 @@
     "localizations": {
       "en": "Creative Upscale",
       "ru": "Креативное увеличение",
-      "de": "Kreatives Hochskalieren"
+      "de": "Kreatives Hochskalieren",
+      "ja": "クリエイティブアップスケール"
     }
   },
   "compare.apps.uscale.verdict": {
     "localizations": {
       "en": "Adds detail while preserving the colours and framing, with natural-looking texture that stays faithful to the source.",
       "ru": "Добавляет детали, сохраняя цвета и кадрирование.",
-      "de": "Fügt Details hinzu, bewahrt dabei Farben und Bildausschnitt und erzeugt eine natürlich wirkende Textur, die dem Original treu bleibt."
+      "de": "Fügt Details hinzu, bewahrt dabei Farben und Bildausschnitt und erzeugt eine natürlich wirkende Textur, die dem Original treu bleibt.",
+      "ja": "色と構図を保ちながらディテールを加え、元画像に忠実で自然な質感に仕上げます。"
     }
   },
   "compare.apps.remini.role": {
     "localizations": {
       "en": "Face-first, in the cloud",
       "ru": "Акцент на лицах, обработка в облаке",
-      "de": "Gesichter zuerst, in der Cloud"
+      "de": "Gesichter zuerst, in der Cloud",
+      "ja": "顔を優先、クラウド処理"
     }
   },
   "compare.apps.remini.verdict": {
     "localizations": {
       "en": "Best of the three rivals on human faces, but it changes very little when no face is present. Expect a rebuilt face on a background that is still soft.",
       "ru": "Хорошо восстанавливает лица, но фон и кадры без лиц меняет слабее.",
-      "de": "Bei menschlichen Gesichtern der beste der drei Konkurrenten, doch ohne Gesicht ändert sich kaum etwas. Das Gesicht wird neu aufgebaut, der Hintergrund bleibt jedoch weich."
+      "de": "Bei menschlichen Gesichtern der beste der drei Konkurrenten, doch ohne Gesicht ändert sich kaum etwas. Das Gesicht wird neu aufgebaut, der Hintergrund bleibt jedoch weich.",
+      "ja": "人物の顔では3つの競合アプリ中もっとも良好ですが、顔がない画像はほとんど変わりません。顔は再構成されても、背景はぼんやりしたままです。"
     }
   },
   "compare.apps.blurbuster.role": {
     "localizations": {
       "en": "Generative repaint",
       "ru": "Генеративная перерисовка",
-      "de": "Generatives Neuzeichnen"
+      "de": "Generatives Neuzeichnen",
+      "ja": "生成AIによる再描画"
     }
   },
   "compare.apps.blurbuster.verdict": {
     "localizations": {
       "en": "Makes the boldest-looking picture and the least faithful one. Colour, contrast and texture all move, and the mode picker decides how far.",
       "ru": "Результат выглядит эффектно, но цвет, контраст и текстуры отходят от оригинала сильнее всего.",
-      "de": "Erzeugt das auffälligste Bild, bleibt dem Original aber am wenigsten treu. Farbe, Kontrast und Textur verändern sich, und die Wahl des Modus bestimmt, wie stark."
+      "de": "Erzeugt das auffälligste Bild, bleibt dem Original aber am wenigsten treu. Farbe, Kontrast und Textur verändern sich, und die Wahl des Modus bestimmt, wie stark.",
+      "ja": "もっとも大胆な見た目になりますが、元画像への忠実度はもっとも低くなります。色、コントラスト、質感が変化し、その程度は選ぶモードによって決まります。"
     }
   },
   "compare.apps.enhancefox.role": {
     "localizations": {
       "en": "Sharpen and upscale",
       "ru": "Резкость и увеличение",
-      "de": "Schärfen und hochskalieren"
+      "de": "Schärfen und hochskalieren",
+      "ja": "鮮明化とアップスケール"
     }
   },
   "compare.apps.enhancefox.verdict": {
     "localizations": {
       "en": "The safest of the three and the least ambitious: more pixels, a little more edge contrast, not much new detail.",
       "ru": "Самый осторожный из трёх конкурентов: больше пикселей и контраста, но мало новых деталей.",
-      "de": "Der vorsichtigste der drei Konkurrenten und zugleich der zurückhaltendste: mehr Pixel, etwas mehr Kantenkontrast, aber kaum neue Details."
+      "de": "Der vorsichtigste der drei Konkurrenten und zugleich der zurückhaltendste: mehr Pixel, etwas mehr Kantenkontrast, aber kaum neue Details.",
+      "ja": "3つの競合アプリ中もっとも控えめで安全です。画素数と輪郭のコントラストは少し増えますが、新しいディテールはあまり加わりません。"
     }
   },
   "compare.cells.faces.uscale": {
     "localizations": {
       "en": "Rebuilt, keeps skin texture",
-      "de": "Neu aufgebaut, Hauttextur bleibt erhalten"
+      "de": "Neu aufgebaut, Hauttextur bleibt erhalten",
+      "ja": "再構成、肌の質感を維持"
     },
     "excludedLocales": [
       "ru"
@@ -420,7 +472,8 @@
   "compare.cells.faces.remini": {
     "localizations": {
       "en": "Rebuilt and smoothed",
-      "de": "Neu aufgebaut und geglättet"
+      "de": "Neu aufgebaut und geglättet",
+      "ja": "再構成して滑らかに"
     },
     "excludedLocales": [
       "ru"
@@ -429,7 +482,8 @@
   "compare.cells.faces.blurbuster": {
     "localizations": {
       "en": "Redrawn, high contrast",
-      "de": "Neu gezeichnet, hoher Kontrast"
+      "de": "Neu gezeichnet, hoher Kontrast",
+      "ja": "高コントラストで再描画"
     },
     "excludedLocales": [
       "ru"
@@ -438,7 +492,8 @@
   "compare.cells.faces.enhancefox": {
     "localizations": {
       "en": "Lightly sharpened",
-      "de": "Leicht geschärft"
+      "de": "Leicht geschärft",
+      "ja": "軽く鮮明化"
     },
     "excludedLocales": [
       "ru"
@@ -447,7 +502,8 @@
   "compare.cells.rest.uscale": {
     "localizations": {
       "en": "Real detail added",
-      "de": "Echte Details hinzugefügt"
+      "de": "Echte Details hinzugefügt",
+      "ja": "実際のディテールを追加"
     },
     "excludedLocales": [
       "ru"
@@ -456,7 +512,8 @@
   "compare.cells.rest.remini": {
     "localizations": {
       "en": "Left as soft as the source",
-      "de": "So weich wie das Original"
+      "de": "So weich wie das Original",
+      "ja": "元画像と同じくぼんやり"
     },
     "excludedLocales": [
       "ru"
@@ -465,7 +522,8 @@
   "compare.cells.rest.blurbuster": {
     "localizations": {
       "en": "Repainted",
-      "de": "Neu gezeichnet"
+      "de": "Neu gezeichnet",
+      "ja": "再描画"
     },
     "excludedLocales": [
       "ru"
@@ -474,7 +532,8 @@
   "compare.cells.rest.enhancefox": {
     "localizations": {
       "en": "Lightly sharpened",
-      "de": "Leicht geschärft"
+      "de": "Leicht geschärft",
+      "ja": "軽く鮮明化"
     },
     "excludedLocales": [
       "ru"
@@ -483,7 +542,8 @@
   "compare.cells.noface.uscale": {
     "localizations": {
       "en": "Same gain as on faces",
-      "de": "Gleicher Gewinn wie bei Gesichtern"
+      "de": "Gleicher Gewinn wie bei Gesichtern",
+      "ja": "顔と同様に向上"
     },
     "excludedLocales": [
       "ru"
@@ -492,7 +552,8 @@
   "compare.cells.noface.remini": {
     "localizations": {
       "en": "Barely changes it",
-      "de": "Ändert es kaum"
+      "de": "Ändert es kaum",
+      "ja": "ほとんど変化なし"
     },
     "excludedLocales": [
       "ru"
@@ -501,7 +562,8 @@
   "compare.cells.noface.blurbuster": {
     "localizations": {
       "en": "Works, but repaints it",
-      "de": "Funktioniert, zeichnet es aber neu"
+      "de": "Funktioniert, zeichnet es aber neu",
+      "ja": "機能するが再描画される"
     },
     "excludedLocales": [
       "ru"
@@ -510,7 +572,8 @@
   "compare.cells.noface.enhancefox": {
     "localizations": {
       "en": "Works, adds halos",
-      "de": "Funktioniert, erzeugt aber Säume"
+      "de": "Funktioniert, erzeugt aber Säume",
+      "ja": "機能するがハローが出る"
     },
     "excludedLocales": [
       "ru"
@@ -520,70 +583,80 @@
     "localizations": {
       "en": "Which app won?",
       "ru": "Какое приложение победило?",
-      "de": "Welche App hat gewonnen?"
+      "de": "Welche App hat gewonnen?",
+      "ja": "どのアプリが最も良かったですか？"
     }
   },
   "compare.faq.0.a": {
     "localizations": {
       "en": "On these two files, UScale. On the park photo Remini's faces are genuinely competitive, but the dress, the grass and the trees stay as soft as the source — and on the night frame Remini changed almost nothing. BlurBuster produces the most dramatic picture and the least faithful one, and EnhanceFox mostly adds pixels.",
       "ru": "На этих двух файлах — UScale. На фотографии из парка лица после Remini действительно выглядят достойно, но платье, трава и деревья остаются такими же мягкими, как в исходнике, а ночной кадр Remini почти не изменил. BlurBuster создаёт самый эффектный, но наименее близкий к оригиналу результат, а EnhanceFox в основном лишь добавляет пиксели.",
-      "de": "Bei diesen beiden Dateien UScale. Beim Parkfoto sind die Gesichter von Remini wirklich konkurrenzfähig, doch Kleid, Gras und Bäume bleiben so weich wie im Original – und an der Nachtaufnahme änderte Remini fast nichts. BlurBuster erzeugt das auffälligste Bild, bleibt dem Original aber am wenigsten treu, während EnhanceFox hauptsächlich Pixel hinzufügt."
+      "de": "Bei diesen beiden Dateien UScale. Beim Parkfoto sind die Gesichter von Remini wirklich konkurrenzfähig, doch Kleid, Gras und Bäume bleiben so weich wie im Original – und an der Nachtaufnahme änderte Remini fast nichts. BlurBuster erzeugt das auffälligste Bild, bleibt dem Original aber am wenigsten treu, während EnhanceFox hauptsächlich Pixel hinzufügt.",
+      "ja": "この2つのファイルではUScaleです。公園の写真ではReminiの顔も十分に競争力がありますが、ドレス、草、木は元画像と同じくぼんやりしたままで、夜景フレームはほとんど変わりませんでした。BlurBusterはもっとも劇的に変化しますが、元画像への忠実度はもっとも低く、EnhanceFoxは主に画素数を増やすだけです。"
     }
   },
   "compare.faq.1.q": {
     "localizations": {
       "en": "Which UScale mode was used?",
       "ru": "Какой режим UScale использовался?",
-      "de": "Welcher UScale-Modus wurde verwendet?"
+      "de": "Welcher UScale-Modus wurde verwendet?",
+      "ja": "UScaleのどのモードを使いましたか？"
     }
   },
   "compare.faq.1.a": {
     "localizations": {
       "en": "Creative Upscale — UScale's cloud mode, the one that adds the most detail. UScale can also enhance entirely on your iPhone: that mode is a smaller jump than Creative Upscale, but on files like these it still recovers more real detail than the three rivals, and the photo never leaves the device.",
       "ru": "«Креативное увеличение» — облачный режим UScale, который добавляет больше всего деталей. UScale также умеет улучшать фото полностью на iPhone: прирост будет меньше, чем в режиме «Креативное увеличение», но на таких файлах этот режим всё равно восстанавливает больше полезных деталей, чем три конкурента, и фотография не покидает устройство.",
-      "de": "„Kreatives Hochskalieren“ – der Cloud-Modus von UScale, der die meisten Details hinzufügt. UScale kann Fotos auch vollständig auf deinem iPhone verbessern: Der Unterschied ist kleiner als bei „Kreatives Hochskalieren“, doch bei Dateien wie diesen stellt dieser Modus noch immer mehr echte Details wieder her als die drei Konkurrenten, und das Foto verlässt dein Gerät nie."
+      "de": "„Kreatives Hochskalieren“ – der Cloud-Modus von UScale, der die meisten Details hinzufügt. UScale kann Fotos auch vollständig auf deinem iPhone verbessern: Der Unterschied ist kleiner als bei „Kreatives Hochskalieren“, doch bei Dateien wie diesen stellt dieser Modus noch immer mehr echte Details wieder her als die drei Konkurrenten, und das Foto verlässt dein Gerät nie.",
+      "ja": "「クリエイティブアップスケール」です。UScaleのクラウドモードで、もっとも多くのディテールを加えます。UScaleはiPhone上だけで高画質化することもできます。このモードは「クリエイティブアップスケール」ほど大幅には向上しませんが、このようなファイルでも3つの競合アプリより実際のディテールを多く再現し、写真がデバイスから送信されることもありません。"
     }
   },
   "compare.faq.2.q": {
     "localizations": {
       "en": "Why did Remini do so little to the Spider-Man frame?",
       "ru": "Почему Remini почти не изменил кадр с Человеком-пауком?",
-      "de": "Warum hat Remini die Spider-Man-Aufnahme kaum verändert?"
+      "de": "Warum hat Remini die Spider-Man-Aufnahme kaum verändert?",
+      "ja": "ReminiでSpider-Manのフレームがほとんど変わらなかったのはなぜですか？"
     }
   },
   "compare.faq.2.a": {
     "localizations": {
       "en": "Remini's strength is its face model, and a mask is not a face. With nothing to rebuild, the result stays close to the original. That is also why Remini shines on old portraits but does less for landscapes, pets, artwork and screenshots.",
       "ru": "Сильная сторона Remini — модель для лиц, а маска — не лицо. Когда восстанавливать нечего, результат почти не отличается от исходника. По той же причине Remini хорошо справляется со старыми портретами, но слабее работает с пейзажами, животными, иллюстрациями и скриншотами.",
-      "de": "Die Stärke von Remini ist sein Gesichtsmodell, und eine Maske ist kein Gesicht. Wenn nichts neu aufgebaut werden kann, bleibt das Ergebnis nah am Original. Deshalb glänzt Remini auch bei alten Porträts, leistet aber weniger bei Landschaften, Haustieren, Illustrationen und Bildschirmfotos."
+      "de": "Die Stärke von Remini ist sein Gesichtsmodell, und eine Maske ist kein Gesicht. Wenn nichts neu aufgebaut werden kann, bleibt das Ergebnis nah am Original. Deshalb glänzt Remini auch bei alten Porträts, leistet aber weniger bei Landschaften, Haustieren, Illustrationen und Bildschirmfotos.",
+      "ja": "Reminiの強みは顔モデルですが、マスクは顔として扱われません。再構成する対象がないため、結果は元画像に近いままです。同じ理由で、Reminiは古い肖像写真では優れていますが、風景、ペット、アート、スクリーンショットでは変化が小さくなります。"
     }
   },
   "compare.faq.3.q": {
     "localizations": {
       "en": "Why are all the outputs different sizes?",
       "ru": "Почему все результаты имеют разный размер?",
-      "de": "Warum haben alle Ausgaben unterschiedliche Größen?"
+      "de": "Warum haben alle Ausgaben unterschiedliche Größen?",
+      "ja": "出力サイズがすべて異なるのはなぜですか？"
     }
   },
   "compare.faq.3.a": {
     "localizations": {
       "en": "Each app decides its own output resolution — 2× in BlurBuster and EnhanceFox, roughly 4× in Remini, close to 6× in UScale. Bigger is not automatically better: BlurBuster's larger mode returned the biggest file of the night-frame test and the worst-looking one.",
       "ru": "Каждое приложение само выбирает выходное разрешение: примерно 2× в BlurBuster и EnhanceFox, около 4× в Remini и почти 6× в UScale. Больше не всегда значит лучше: режим BlurBuster с более сильным увеличением вернул самый большой файл в тесте с ночным кадром, но результат оказался худшим по качеству.",
-      "de": "Jede App bestimmt ihre eigene Ausgabeauflösung – 2× bei BlurBuster und EnhanceFox, ungefähr 4× bei Remini und fast 6× bei UScale. Größer ist nicht automatisch besser: Der größere Modus von BlurBuster lieferte im Test der Nachtaufnahme die größte Datei und zugleich das schlechteste Ergebnis."
+      "de": "Jede App bestimmt ihre eigene Ausgabeauflösung – 2× bei BlurBuster und EnhanceFox, ungefähr 4× bei Remini und fast 6× bei UScale. Größer ist nicht automatisch besser: Der größere Modus von BlurBuster lieferte im Test der Nachtaufnahme die größte Datei und zugleich das schlechteste Ergebnis.",
+      "ja": "各アプリが出力解像度を独自に決めるためです。BlurBusterとEnhanceFoxは2×、Reminiは約4×、UScaleは約6×です。大きければ自動的に良いわけではありません。BlurBusterの大きいモードは、夜景フレームのテストでもっとも大きなファイルを出力しましたが、見た目はもっとも劣っていました。"
     }
   },
   "compare.faq.4.q": {
     "localizations": {
       "en": "Is this a fair test?",
       "ru": "Это честный тест?",
-      "de": "Ist dieser Test fair?"
+      "de": "Ist dieser Test fair?",
+      "ja": "公平なテストですか？"
     }
   },
   "compare.faq.4.a": {
     "localizations": {
       "en": "It is one test on two files, so treat it as a starting point — and check it for yourself. Both source photos are right here: run them through the free tier of any of these apps and compare what comes back. Every app here got the same original at full size and a single standard pass, and no result was retouched afterwards. What it does not cover is every mode, every subscription tier and every kind of photo.",
       "ru": "Это один тест на двух файлах, поэтому воспринимайте его как отправную точку — и проверьте сами. Обе исходные фотографии доступны здесь: обработайте их в бесплатной версии любого из этих приложений и сравните результаты. Каждое приложение получило один и тот же оригинал в полном размере и обработало его один раз в стандартном режиме; после обработки результаты не ретушировались. Тест не охватывает все режимы, тарифы и типы фотографий.",
-      "de": "Es ist ein einzelner Test mit zwei Dateien. Betrachte ihn daher als Ausgangspunkt – und prüfe selbst nach. Beide Ausgangsfotos findest du hier: Verarbeite sie mit der kostenlosen Version einer dieser Apps und vergleiche die Ergebnisse. Jede App erhielt dasselbe Original in voller Größe und führte einen einzigen Standarddurchlauf aus; danach wurde kein Ergebnis retuschiert. Der Test deckt nicht jeden Modus, jedes Abo-Modell und jede Art von Foto ab."
+      "de": "Es ist ein einzelner Test mit zwei Dateien. Betrachte ihn daher als Ausgangspunkt – und prüfe selbst nach. Beide Ausgangsfotos findest du hier: Verarbeite sie mit der kostenlosen Version einer dieser Apps und vergleiche die Ergebnisse. Jede App erhielt dasselbe Original in voller Größe und führte einen einzigen Standarddurchlauf aus; danach wurde kein Ergebnis retuschiert. Der Test deckt nicht jeden Modus, jedes Abo-Modell und jede Art von Foto ab.",
+      "ja": "2つのファイルを使った1回のテストなので、出発点として捉え、実際に確認してください。両方の元写真をここから入手し、各アプリの無料枠で処理して結果を比較できます。すべてのアプリに同じ元画像をフルサイズで入力し、標準モードで1回だけ処理しました。書き出し後の手直しはしていません。ただし、すべてのモード、料金プラン、写真の種類を網羅するものではありません。"
     }
   },
   "compare.faq.4.dl": {
@@ -597,91 +670,104 @@
     "localizations": {
       "en": "Are these the current versions of the apps?",
       "ru": "Это актуальные версии приложений?",
-      "de": "Sind das die aktuellen Versionen der Apps?"
+      "de": "Sind das die aktuellen Versionen der Apps?",
+      "ja": "アプリは現在のバージョンですか？"
     }
   },
   "compare.faq.5.a": {
     "localizations": {
       "en": "The runs were done in August 2026 with the versions on the App Store at that time. Apps are updated often; if you get a clearly different result on the same kind of photo, send it to us and we will re-run the comparison.",
       "ru": "Тест проведён в августе 2026 года на версиях, доступных тогда в App Store. Приложения часто обновляются; если на похожем фото вы получили заметно другой результат, отправьте его нам, и мы повторим сравнение.",
-      "de": "Die Durchläufe wurden im August 2026 mit den damals im App Store verfügbaren Versionen durchgeführt. Apps werden häufig aktualisiert. Wenn du bei einem ähnlichen Foto ein deutlich anderes Ergebnis erhältst, sende es uns, und wir wiederholen den Vergleich."
+      "de": "Die Durchläufe wurden im August 2026 mit den damals im App Store verfügbaren Versionen durchgeführt. Apps werden häufig aktualisiert. Wenn du bei einem ähnlichen Foto ein deutlich anderes Ergebnis erhältst, sende es uns, und wir wiederholen den Vergleich.",
+      "ja": "2026年8月に、当時App Storeで提供されていたバージョンでテストしました。アプリは頻繁に更新されます。同じ種類の写真で明らかに異なる結果になった場合は、お送りいただければ比較を再実施します。"
     }
   },
   "compare.cta_h": {
     "localizations": {
       "en": "Try it on your own photo",
       "ru": "Проверьте на своём фото",
-      "de": "Probiere es mit deinem eigenen Foto"
+      "de": "Probiere es mit deinem eigenen Foto",
+      "ja": "写真で試してみる"
     }
   },
   "compare.cta_p": {
     "localizations": {
       "en": "Two free photo enhancements every day, no account — and an on-device mode that never sends your photo anywhere.",
       "ru": "Два бесплатных улучшения фотографий каждый день без регистрации. Локальный режим никуда не отправляет ваше фото.",
-      "de": "Jeden Tag zwei kostenlose Fotoverbesserungen, ohne Konto – und ein Modus auf dem Gerät, der dein Foto niemals versendet."
+      "de": "Jeden Tag zwei kostenlose Fotoverbesserungen, ohne Konto – und ein Modus auf dem Gerät, der dein Foto niemals versendet.",
+      "ja": "毎日写真2枚まで無料で高画質化でき、アカウントも不要です。デバイス上のモードでは写真が外部に送信されることはありません。"
     }
   },
   "compare.nav": {
     "localizations": {
       "en": "Comparison",
       "ru": "Сравнение",
-      "de": "Vergleich"
+      "de": "Vergleich",
+      "ja": "比較"
     }
   },
   "compare.home_h2": {
     "localizations": {
       "en": "See how UScale compares",
       "ru": "Чем UScale отличается от других приложений для улучшения фото?",
-      "de": "So schneidet UScale ab"
+      "de": "So schneidet UScale ab",
+      "ja": "UScaleとの違いを比較"
     }
   },
   "compare.home_p": {
     "localizations": {
       "en": "Compare the same photos enhanced by UScale, Remini, BlurBuster and EnhanceFox.",
       "ru": "Мы обработали одинаковые фото в UScale, Remini, BlurBuster и EnhanceFox и показали результаты без ретуши.",
-      "de": "Vergleiche dieselben Fotos, verbessert mit UScale, Remini, BlurBuster und EnhanceFox."
+      "de": "Vergleiche dieselben Fotos, verbessert mit UScale, Remini, BlurBuster und EnhanceFox.",
+      "ja": "同じ写真をUScale、Remini、BlurBuster、EnhanceFoxで高画質化した結果を比較します。"
     }
   },
   "compare.home_cta": {
     "localizations": {
       "en": "See the comparison",
       "ru": "Открыть сравнение",
-      "de": "Vergleich ansehen"
+      "de": "Vergleich ansehen",
+      "ja": "比較を見る"
     }
   },
   "compare.home_vs": {
     "localizations": {
       "en": "vs",
       "ru": "VS",
-      "de": "vs."
+      "de": "vs.",
+      "ja": "vs"
     }
   },
   "compare.home_note": {
     "localizations": {
       "en": "Same source files · one pass per app · August 2026",
       "ru": "Два изображения · четыре приложения · одна обработка · август 2026",
-      "de": "Dieselben Dateien · je ein Durchlauf · August 2026"
+      "de": "Dieselben Dateien · je ein Durchlauf · August 2026",
+      "ja": "同じ元ファイル · 各アプリ1回 · 2026年8月"
     }
   },
   "compare.dl_h": {
     "localizations": {
       "en": "Grab the two source files and try it yourself:",
       "ru": "Скачайте два исходных файла и проверьте сами:",
-      "de": "Lade die beiden Ausgangsdateien herunter und teste selbst:"
+      "de": "Lade die beiden Ausgangsdateien herunter und teste selbst:",
+      "ja": "2つの元ファイルを入手して試せます："
     }
   },
   "compare.dl.spider": {
     "localizations": {
       "en": "Night frame · 823 × 460 JPG",
       "ru": "Ночной кадр · 823 × 460 JPG",
-      "de": "Nachtaufnahme · 823 × 460 JPG"
+      "de": "Nachtaufnahme · 823 × 460 JPG",
+      "ja": "夜景フレーム · 823 × 460 JPG"
     }
   },
   "compare.dl.girls": {
     "localizations": {
       "en": "Park still · 840 × 560 JPG",
       "ru": "Кадр из парка · 840 × 560 JPG",
-      "de": "Standbild im Park · 840 × 560 JPG"
+      "de": "Standbild im Park · 840 × 560 JPG",
+      "ja": "公園のフレーム · 840 × 560 JPG"
     }
   },
   "compare.simple": {
@@ -697,7 +783,8 @@
     "localizations": {
       "en": "close crop",
       "ru": "увеличенный фрагмент",
-      "de": "vergrößerter Ausschnitt"
+      "de": "vergrößerter Ausschnitt",
+      "ja": "拡大部分"
     },
     "comment": "Accessibility text describing an image."
   }

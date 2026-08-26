@@ -24,7 +24,7 @@ class CatalogTests(unittest.TestCase):
         self.assertEqual(len(records), len(owners))
 
     def test_renderer_payloads_are_complete(self):
-        for locale in ("en", "ru", "de"):
+        for locale in ("en", "ru", "de", "ja"):
             data = catalog.load_locale(locale)
             self.assertEqual(data["lang"], locale)
             self.assertEqual(len(data["guide_pages"]), 10)
@@ -49,21 +49,33 @@ class CatalogTests(unittest.TestCase):
         self.assertIsNone(compare["compare.crop_alt"]["de"])
 
     def test_dynamic_facts_use_each_locale_own_numbers_and_currency(self):
+        # The rating count is refreshed from the App Store, so take it from the
+        # facts file and assert only the grouping separator each locale uses.
+        digits = str(site_build.RATING_COUNT)
+        self.assertEqual(len(digits), 4, "regroup the expectations below")
+        grouped = {"en": ",", "de": ".", "ru": "\u00a0", "ja": ","}
         template = "{rating_count} · {annual_price} · {off}"
         self.assertEqual(
-            site_build.inject_facts(template, "en"), "1,579 · $39.99 · 25%"
+            site_build.inject_facts(template, "en"),
+            f"{digits[0]}{grouped['en']}{digits[1:]} · $39.99 · 25%",
         )
         self.assertEqual(
             site_build.inject_facts(template, "de"),
-            "1.579 · 44,99\u00a0\u20ac · 25\u00a0%",
+            f"{digits[0]}{grouped['de']}{digits[1:]} · 44,99\u00a0\u20ac · 25\u00a0%",
         )
         self.assertEqual(
             site_build.inject_facts(template, "ru"),
-            "1\u00a0579 · 3\u00a0490\u00a0\u20bd · 25%",
+            f"{digits[0]}{grouped['ru']}{digits[1:]} · 3\u00a0490\u00a0\u20bd · 25%",
+        )
+        # Japanese groups and points like English, so only the currency differs.
+        self.assertEqual(
+            site_build.inject_facts(template, "ja"),
+            f"{digits[0]}{grouped['ja']}{digits[1:]} · \u00a56,000 · 25%",
         )
 
     def test_rating_uses_the_locale_decimal_mark(self):
         self.assertEqual(site_build.rating_text("en"), "4.6")
+        self.assertEqual(site_build.rating_text("ja"), "4.6")
         self.assertEqual(site_build.rating_text("de"), "4,6")
         self.assertEqual(site_build.rating_text("ru"), "4,6")
 
@@ -71,7 +83,7 @@ class CatalogTests(unittest.TestCase):
         self.assertEqual(site_build.locale_pricing("fr"), site_build._PRICING["default"])
 
     def test_translations_name_app_features_in_their_own_language(self):
-        """Guides must not tell a German or Russian reader to tap an English label.
+        """Guides must not tell a German, Russian or Japanese reader to tap an English label.
 
         Every one of these is localized in the app itself
         (Upscaler/Upscaler/Resources/Localizable.xcstrings), so quoting the
@@ -91,7 +103,7 @@ class CatalogTests(unittest.TestCase):
             f"{key}[{locale}]: {label}"
             for key, record in records.items()
             for locale, text in record["localizations"].items()
-            if locale in ("de", "ru") and isinstance(text, str)
+            if locale in ("de", "ru", "ja") and isinstance(text, str)
             for label in english_only
             if re.search(rf"(?<![\w\u201e\u00ab-]){re.escape(label)}(?![\w\u201c\u00bb])", text)
         ]

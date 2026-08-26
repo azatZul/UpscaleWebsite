@@ -38,8 +38,6 @@
 @property --wash-a2{syntax:"<color>";inherits:true;initial-value:rgba(255,214,33,.09)}
 @property --nav{syntax:"<color>";inherits:true;initial-value:rgba(7,8,13,.72)}
 @property --nav-2{syntax:"<color>";inherits:true;initial-value:rgba(7,8,13,.9)}
-@property --badge-bg{syntax:"<color>";inherits:true;initial-value:#fff}
-@property --badge-fg{syntax:"<color>";inherits:true;initial-value:#000}
 @property --numeral{syntax:"<color>";inherits:true;initial-value:rgba(255,255,255,.045)}
 @property --numeral-2{syntax:"<color>";inherits:true;initial-value:rgba(255,255,255,.14)}
 @property --glow-1{syntax:"<color>";inherits:true;initial-value:#5a4bd8}
@@ -60,7 +58,7 @@
   transition-property:--bg,--bg-2,--surface,--surface-2,--line,--line-2,--tint,--tint-2,--tx,--tx-2,
     --tx-3,--tx-4,--acc,--acc-d,--acc-tx,--ink,--acc-soft,--acc-line,--acc-uline,--acc-glow,
     --star,--star-off,--vio,--vio-2,--vio-soft,--vio-line,--ok,--ok-soft,--ok-line,--wash-v,
-    --wash-v2,--wash-a,--wash-a2,--nav,--nav-2,--badge-bg,--badge-fg,--numeral,--numeral-2,
+    --wash-v2,--wash-a,--wash-a2,--nav,--nav-2,--numeral,--numeral-2,
     --glow-1,--glow-2,--halo-v,--halo-a,--cast,--h1-1,--h1-2,--h1-3,--h1-4,--glow-o1,--glow-o2;
   /* Front-loaded curve: an inverted palette has to cross itself somewhere, and this
      gets through that near-zero-contrast midpoint in a frame or two. */
@@ -81,7 +79,7 @@
   --wash-v:rgba(110,124,246,.1); --wash-v2:rgba(110,124,246,.16);
   --wash-a:rgba(255,214,33,.05); --wash-a2:rgba(255,214,33,.09);
   --nav:rgba(7,8,13,.72); --nav-2:rgba(7,8,13,.9);
-  --badge-bg:#fff; --badge-fg:#000;
+  /* --badge-rim:#000; */
   --badge-sh:0 14px 40px -14px rgba(255,255,255,.4);
   --badge-sh-h:0 20px 46px -14px rgba(255,255,255,.5);
   --numeral:rgba(255,255,255,.045); --numeral-2:rgba(255,255,255,.14);
@@ -111,7 +109,7 @@
   --wash-v:rgba(85,102,232,.14); --wash-v2:rgba(85,102,232,.2);
   --wash-a:rgba(247,189,0,.14); --wash-a2:rgba(247,189,0,.2);
   --nav:rgba(243,246,254,.76); --nav-2:rgba(243,246,254,.92);
-  --badge-bg:#14161f; --badge-fg:#fff;
+  /* --badge-rim:#a6a6a6; */
   --badge-sh:0 14px 34px -16px rgba(20,30,80,.55);
   --badge-sh-h:0 20px 42px -16px rgba(20,30,80,.6);
   --numeral:rgba(19,29,73,.06); --numeral-2:rgba(19,29,73,.16);
@@ -127,9 +125,9 @@
 /* Shadows are the one themed value that is not a bare colour token, so they still need a
    real transition. The moon/sun glyph is excluded: it runs its own springy transforms at
    exactly this moment, and an !important transition would flatten them into a jump cut. */
-html.theme-anim *:not(.theme-ico,.theme-ico *),
-html.theme-anim *:not(.theme-ico,.theme-ico *)::before,
-html.theme-anim *:not(.theme-ico,.theme-ico *)::after{
+html.theme-anim *:not(.theme-ico,.theme-ico *,.appstore img),
+html.theme-anim *:not(.theme-ico,.theme-ico *,.appstore img)::before,
+html.theme-anim *:not(.theme-ico,.theme-ico *,.appstore img)::after{
   transition:box-shadow .3s ease!important}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:82px}
 body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--font);
@@ -226,15 +224,30 @@ ul,ol{margin:0;padding:0}
 .btn-xl .arrow{font-size:20px}
 .btn:hover .arrow{transform:translateX(3px)}
 
-/* App Store badge */
-.appstore{display:inline-flex;align-items:center;gap:12px;background:var(--badge-bg);color:var(--badge-fg);
-  padding:11px 22px 12px;border-radius:15px;transition:.18s;box-shadow:var(--badge-sh)}
+/* App Store badge. Apple's guidelines forbid recreating or restyling the badge,
+   so both colourways ship as their official artwork -- rim and all -- and the
+   link is only a frame: it keeps the site's shadow and hover lift, and matches
+   the pill's own corner radius (8.44 of the artwork's 40 units, so 11.8px at
+   this height) so the shadow follows its edge and nothing gets clipped. */
+.appstore{display:block;position:relative;height:56px;border-radius:11.8px;
+  transition:.18s;box-shadow:var(--badge-sh)}
 .appstore:hover{transform:translateY(-2px);box-shadow:var(--badge-sh-h)}
-.appstore svg{width:27px;height:33px;flex:0 0 auto;fill:currentColor}
-.appstore .txt{text-align:center}
-.appstore span{display:block;font-size:11px;font-weight:500;letter-spacing:.02em;line-height:1.25;opacity:.82}
-.appstore strong{display:block;font-size:19.5px;font-weight:650;letter-spacing:-.02em;line-height:1.15;margin-top:1px}
-.appstore.dark{background:#111;color:#fff;border:1px solid rgba(255,255,255,.2);box-shadow:none}
+/* Stacked rather than swapped, so the badge cross-fades with the palette
+   instead of cutting. The dark theme takes the white badge: Apple asks for the
+   white one wherever the black would sit heavy, which a near-black page is. */
+.appstore img{position:absolute;inset:0;width:100%;height:100%;border-radius:inherit;
+  transition:opacity .3s cubic-bezier(.18,1,.28,1)}
+/* The rim comes from Apple's artwork now. Kept for reference: it used to be
+   stripped out in fetch_badges.py and redrawn here, because Apple's own 1px rim
+   traces the artwork's 8.44-of-40 corner and any radius past that clips it off
+   at the corners while leaving it dangling on the straight edges. Restoring
+   this means restoring strip_border() too, and only then can the radius above
+   go past 11.8px.
+.appstore::after{content:"";position:absolute;inset:0;border-radius:inherit;
+  box-shadow:inset 0 0 0 1px var(--badge-rim);pointer-events:none} */
+.appstore .badge-black{opacity:0}
+:root[data-theme="light"] .appstore .badge-black{opacity:1}
+:root[data-theme="light"] .appstore .badge-white{opacity:0}
 
 /* ---------- shared section bits ---------- */
 section{position:relative}
@@ -260,6 +273,16 @@ section{position:relative}
 .pill .stars{color:var(--star);letter-spacing:1px;font-size:12.5px}
 .hero h1{font-size:clamp(38px,5.6vw,63px);margin:22px 0 0;letter-spacing:-.035em}
 html:lang(ru) .hero-lead h1{font-size:clamp(34px,4.8vw,54px)}
+/* Full-width glyphs need the room the Latin tracking below takes back, so the
+   Japanese h1 buys it with a smaller clamp instead — same trade as Russian. */
+html:lang(ja) .hero-lead h1{font-size:clamp(34px,5.2vw,58px)}
+/* Japanese has no spaces, so a heading breaks mid-word by default — 「鮮明 / 化」.
+   auto-phrase moves the break to a phrase boundary; older engines ignore it.
+   The Latin tracking above is cut from full-width glyphs, which are drawn with
+   their own side bearings and turn cramped at -.035em, and line-break:strict
+   keeps 「・」 and 「、」 off the start of a line. */
+html:lang(ja) h1,html:lang(ja) h2,html:lang(ja) h3,html:lang(ja) h4{
+  word-break:auto-phrase;letter-spacing:normal;line-break:strict}
 .hero h1 em{font-style:normal;
   background:linear-gradient(100deg,var(--h1-1) 6%,var(--h1-2) 34%,var(--h1-3) 64%,var(--h1-4) 96%);
   -webkit-background-clip:text;background-clip:text;color:transparent}

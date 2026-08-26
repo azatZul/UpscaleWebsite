@@ -3,112 +3,128 @@
     "localizations": {
       "en": "AI Photo & Video Enhancer",
       "ru": "Улучшение качества фото и видео",
-      "de": "KI-Verbesserung für Fotos und Videos"
+      "de": "KI-Verbesserung für Fotos und Videos",
+      "ja": "AIで写真・動画を高画質化"
     }
   },
   "nav.menu": {
     "localizations": {
       "en": "Menu",
       "ru": "Меню",
-      "de": "Menü"
+      "de": "Menü",
+      "ja": "メニュー"
     }
   },
   "nav.features": {
     "localizations": {
       "en": "Features",
       "ru": "Функции",
-      "de": "Funktionen"
+      "de": "Funktionen",
+      "ja": "機能"
     }
   },
   "nav.screens": {
     "localizations": {
       "en": "Examples",
       "ru": "Примеры",
-      "de": "Beispiele"
+      "de": "Beispiele",
+      "ja": "使用例"
     }
   },
   "nav.how": {
     "localizations": {
       "en": "How it works",
       "ru": "Как это работает",
-      "de": "So funktioniert’s"
+      "de": "So funktioniert’s",
+      "ja": "使い方"
     }
   },
   "nav.guides": {
     "localizations": {
       "en": "Guides",
       "ru": "Руководства",
-      "de": "Anleitungen"
+      "de": "Anleitungen",
+      "ja": "ガイド"
     }
   },
   "nav.faq": {
     "localizations": {
       "en": "FAQ",
       "ru": "Часто задаваемые вопросы",
-      "de": "FAQ"
+      "de": "FAQ",
+      "ja": "よくある質問"
     }
   },
   "nav.compare": {
     "localizations": {
       "en": "Comparison",
       "ru": "Сравнение",
-      "de": "Vergleich"
+      "de": "Vergleich",
+      "ja": "比較"
     }
   },
   "nav.cta": {
     "localizations": {
       "en": "Get UScale",
       "ru": "Скачать UScale",
-      "de": "UScale laden"
+      "de": "UScale laden",
+      "ja": "UScaleを入手"
     }
   },
   "ui.download_on": {
     "localizations": {
       "en": "Download on the",
-      "ru": "Скачать в",
-      "de": "Laden im"
+      "ru": "Загрузите в",
+      "de": "Laden im",
+      "ja": "からダウンロード"
     }
   },
   "ui.app_store": {
     "localizations": {
       "en": "App Store",
       "ru": "App Store",
-      "de": "App Store"
+      "de": "App Store",
+      "ja": "App Store"
     }
   },
   "ui.language": {
     "localizations": {
       "en": "Language",
       "ru": "Язык",
-      "de": "Sprache"
+      "de": "Sprache",
+      "ja": "言語"
     }
   },
   "ui.skip_to_content": {
     "localizations": {
       "en": "Skip to content",
       "ru": "Перейти к содержимому",
-      "de": "Zum Inhalt springen"
+      "de": "Zum Inhalt springen",
+      "ja": "コンテンツへ移動"
     }
   },
   "ui.theme_light": {
     "localizations": {
       "en": "Switch to light theme",
       "ru": "Переключить на светлую тему",
-      "de": "Zum hellen Design wechseln"
+      "de": "Zum hellen Design wechseln",
+      "ja": "ライトテーマに切り替える"
     }
   },
   "ui.theme_dark": {
     "localizations": {
       "en": "Switch to dark theme",
       "ru": "Переключить на тёмную тему",
-      "de": "Zum dunklen Design wechseln"
+      "de": "Zum dunklen Design wechseln",
+      "ja": "ダークテーマに切り替える"
     }
   },
   "ui.icon_alt": {
     "localizations": {
       "en": "UScale AI photo enhancer app icon",
       "ru": "Значок приложения UScale для улучшения фотографий с помощью ИИ",
-      "de": "App-Symbol von UScale zur KI-Fotoverbesserung"
+      "de": "App-Symbol von UScale zur KI-Fotoverbesserung",
+      "ja": "UScaleのAI写真高画質化アプリアイコン"
     },
     "comment": "Accessibility text describing an image."
   },
@@ -116,84 +132,96 @@
     "localizations": {
       "en": "Home",
       "ru": "Главная",
-      "de": "Startseite"
+      "de": "Startseite",
+      "ja": "ホーム"
     }
   },
   "ui.updated": {
     "localizations": {
       "en": "Updated",
       "ru": "Обновлено",
-      "de": "Aktualisiert"
+      "de": "Aktualisiert",
+      "ja": "更新日"
     }
   },
   "ui.by": {
     "localizations": {
       "en": "By the UScale team",
       "ru": "Команда UScale",
-      "de": "Vom UScale-Team"
+      "de": "Vom UScale-Team",
+      "ja": "UScaleチーム"
     }
   },
   "ui.next_guide": {
     "localizations": {
       "en": "Next guide",
       "ru": "Следующее руководство",
-      "de": "Nächste Anleitung"
+      "de": "Nächste Anleitung",
+      "ja": "次のガイド"
     }
   },
   "ui.keep_reading": {
     "localizations": {
       "en": "Keep reading",
       "ru": "Продолжить чтение",
-      "de": "Weiterlesen"
+      "de": "Weiterlesen",
+      "ja": "続きを読む"
     }
   },
   "ui.sound_off": {
     "localizations": {
       "en": "Mute sound",
       "ru": "Выключить звук",
-      "de": "Ton ausschalten"
+      "de": "Ton ausschalten",
+      "ja": "消音"
     }
   },
   "ui.sound_on": {
     "localizations": {
       "en": "Play sound",
       "ru": "Включить звук",
-      "de": "Ton einschalten"
+      "de": "Ton einschalten",
+      "ja": "音声を再生"
     }
   },
   "ui.paused": {
     "localizations": {
       "en": "Paused",
       "ru": "Пауза",
-      "de": "Pausiert"
+      "de": "Pausiert",
+      "ja": "一時停止"
     }
   },
   "ui.on_this_page": {
     "localizations": {
       "en": "On this page",
       "ru": "На этой странице",
-      "de": "Auf dieser Seite"
+      "de": "Auf dieser Seite",
+      "ja": "このページの内容"
     }
   },
   "cta.h2": {
     "localizations": {
       "en": "Make your photos sharp again",
       "ru": "Сделайте свои фотографии чётче",
-      "de": "Mach deine Fotos wieder scharf"
+      "de": "Mach deine Fotos wieder scharf",
+      "ja": "写真をもう一度鮮明に"
     }
   },
   "cta.p": {
     "localizations": {
       "en": "Free to start, no account. On-device tools keep your pictures on your phone.",
       "ru": "Начните бесплатно — регистрация не требуется. При локальной обработке фотографии останутся на вашем устройстве.",
-      "de": "Kostenlos starten, ohne Konto. Bei der Verarbeitung auf dem Gerät bleiben deine Bilder auf deinem iPhone."
+      "de": "Kostenlos starten, ohne Konto. Bei der Verarbeitung auf dem Gerät bleiben deine Bilder auf deinem iPhone.",
+      "ja": "無料で始められ、アカウントは不要です。デバイス上で処理するツールなら、写真はiPhoneの中に留まります。"
     }
   },
   "cta.note": {
     "localizations": {
       "en": "iPhone and iPad · iOS {minimum_ios} or later",
       "ru": "iPhone и iPad · iOS {minimum_ios} или новее",
-      "de": "iPhone und iPad · iOS {minimum_ios} oder neuer"
+      "de": "iPhone und iPad · iOS {minimum_ios} oder neuer",
+      "ja": "iPhoneとiPad · iOS {minimum_ios}以降"
     },
     "comment": "Preserve every {placeholder} exactly."
   },
@@ -201,84 +229,96 @@
     "localizations": {
       "en": "AI photo and video enhancer for iPhone and iPad. Unblur and upscale on your device, restore old photos with cloud AI.",
       "ru": "Приложение для улучшения фото и видео с помощью ИИ на iPhone и iPad. Убирайте размытие и повышайте разрешение на устройстве, а старые снимки восстанавливайте с помощью облачного ИИ.",
-      "de": "KI-Verbesserung für Fotos und Videos auf iPhone und iPad. Entferne Unschärfe und skaliere Fotos auf deinem Gerät hoch, restauriere alte Fotos mit Cloud-KI."
+      "de": "KI-Verbesserung für Fotos und Videos auf iPhone und iPad. Entferne Unschärfe und skaliere Fotos auf deinem Gerät hoch, restauriere alte Fotos mit Cloud-KI.",
+      "ja": "iPhoneとiPad向けのAI写真・動画高画質化アプリです。デバイス上でぼやけを鮮明にして解像度を上げ、古い写真はクラウドAIで修復します。"
     }
   },
   "footer.product": {
     "localizations": {
       "en": "Product",
       "ru": "Продукт",
-      "de": "Produkt"
+      "de": "Produkt",
+      "ja": "製品"
     }
   },
   "footer.reviews": {
     "localizations": {
       "en": "Reviews",
       "ru": "Отзывы",
-      "de": "Bewertungen"
+      "de": "Bewertungen",
+      "ja": "レビュー"
     }
   },
   "footer.all_guides": {
     "localizations": {
       "en": "All guides",
       "ru": "Все руководства",
-      "de": "Alle Anleitungen"
+      "de": "Alle Anleitungen",
+      "ja": "ガイド一覧"
     }
   },
   "footer.support": {
     "localizations": {
       "en": "Support",
       "ru": "Поддержка",
-      "de": "Support"
+      "de": "Support",
+      "ja": "サポート"
     }
   },
   "footer.help": {
     "localizations": {
       "en": "Help & support",
       "ru": "Помощь и поддержка",
-      "de": "Hilfe und Support"
+      "de": "Hilfe und Support",
+      "ja": "ヘルプとサポート"
     }
   },
   "footer.privacy": {
     "localizations": {
       "en": "Privacy Policy",
       "ru": "Политика конфиденциальности",
-      "de": "Datenschutzerklärung"
+      "de": "Datenschutzerklärung",
+      "ja": "プライバシーポリシー"
     }
   },
   "footer.terms": {
     "localizations": {
       "en": "Terms of Use",
       "ru": "Условия использования",
-      "de": "Nutzungsbedingungen"
+      "de": "Nutzungsbedingungen",
+      "ja": "利用規約"
     }
   },
   "footer.appstore": {
     "localizations": {
       "en": "App Store page",
       "ru": "Страница в App Store",
-      "de": "Seite im App Store"
+      "de": "Seite im App Store",
+      "ja": "App Storeページ"
     }
   },
   "footer.rights": {
     "localizations": {
       "en": "All rights reserved.",
       "ru": "Все права защищены.",
-      "de": "Alle Rechte vorbehalten."
+      "de": "Alle Rechte vorbehalten.",
+      "ja": "すべての権利を留保します。"
     }
   },
   "footer.made": {
     "localizations": {
       "en": "Made for the photos worth keeping.",
       "ru": "Создано для тех, кто ценит свои фотографии.",
-      "de": "Für Fotos, die es wert sind, bewahrt zu werden."
+      "de": "Für Fotos, die es wert sind, bewahrt zu werden.",
+      "ja": "残しておきたい写真のために作りました。"
     }
   },
   "ui.breadcrumb": {
     "localizations": {
       "en": "Breadcrumb",
       "ru": "Навигационная цепочка",
-      "de": "Brotkrümelnavigation"
+      "de": "Brotkrümelnavigation",
+      "ja": "パンくずリスト"
     }
   }
 }
