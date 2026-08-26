@@ -12,9 +12,20 @@
   "free_limits": {
     "photos_per_day": 2
   },
-  "pricing_usd": {
-    "annual": 39.99,
-    "annual_sale": 29.99
+  "pricing": {
+    "default": {
+      "currency": "USD",
+      "annual": 39.99,
+      "annual_sale": 29.99
+    },
+    "de": {
+      "currency": "EUR",
+      "annual": 44.99
+    },
+    "ru": {
+      "currency": "RUB",
+      "annual": 3490
+    }
   },
   "annual_trial_days": 3,
   "page_updated": {

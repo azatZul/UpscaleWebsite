@@ -40,7 +40,6 @@ CSS_V = asset_v("site.css")
 JS_V = asset_v("site.js")
 
 RATING = APP_FACTS["rating"]["value"]
-RATING_TEXT = f"{RATING:g}"
 RATING_COUNT = APP_FACTS["rating"]["count"]
 # Filled width of the five-star rating.
 STAR_FILL = f"{RATING / 5 * 100:g}%"
@@ -372,19 +371,76 @@ def esc(s):
     return (str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
             .replace('"', "&quot;"))
 
-_ANNUAL = APP_FACTS["pricing_usd"]["annual"]
-_ANNUAL_SALE = APP_FACTS["pricing_usd"]["annual_sale"]
+_PRICING = APP_FACTS["pricing"]
+_ANNUAL = _PRICING["default"]["annual"]
+_ANNUAL_SALE = _PRICING["default"]["annual_sale"]
+# The discount is one global marketing claim, so it is derived once from the
+# reference currency and never recomputed per locale.
+_SALE_PERCENT = round((1 - _ANNUAL_SALE / _ANNUAL) * 100)
 
-FACT_TEXT = {
-    "rating_count": f'{APP_FACTS["rating"]["count"]:,}',
-    "annual_price": f"${_ANNUAL:.2f}",
-    "annual_sale_price": f"${_ANNUAL_SALE:.2f}",
-    "sale_percent": f"{round((1 - _ANNUAL_SALE / _ANNUAL) * 100):d}",
-    "trial_days": APP_FACTS["annual_trial_days"],
-    "free_photos_per_day": APP_FACTS["free_limits"]["photos_per_day"],
-    "minimum_ios": APP_FACTS["minimum_ios"],
-    "off": f"{round((1 - _ANNUAL_SALE / _ANNUAL) * 100):d}%",
+# Symbol, whether it leads the amount, and how many decimals the store prints.
+CURRENCIES = {
+    "USD": ("$", True, 2),
+    "EUR": ("\u20ac", False, 2),
+    "RUB": ("\u20bd", False, 0),
 }
+# Decimal and thousands separators, and whether a percent sign is spaced off.
+NUMBER_FORMATS = {
+    "en": (".", ",", ""),
+    "de": (",", ".", "\u00a0"),
+    "ru": (",", "\u00a0", ""),
+}
+
+
+def number_text(amount, lang, decimals=0):
+    """Write a number the way the locale writes it."""
+    decimal_mark, thousands_mark, _ = NUMBER_FORMATS.get(lang, NUMBER_FORMATS["en"])
+    text = f"{amount:,.{decimals}f}"
+    return text.translate(str.maketrans({",": "\x00", ".": decimal_mark})).replace(
+        "\x00", thousands_mark
+    )
+
+
+def money_text(amount, currency, lang):
+    """Write a price the way the locale's own App Store shows it."""
+    symbol, symbol_leads, decimals = CURRENCIES[currency]
+    text = number_text(amount, lang, decimals)
+    return f"{symbol}{text}" if symbol_leads else f"{text}\u00a0{symbol}"
+
+
+def locale_pricing(lang):
+    """A locale's own prices, falling back to the reference currency."""
+    override = _PRICING.get(lang, {})
+    prices = {**_PRICING["default"], **override}
+    # A locale that sets its own annual price but no sale price inherits the
+    # discount rather than the reference currency's sale amount.
+    if "annual" in override and "annual_sale" not in override:
+        prices["annual_sale"] = prices["annual"] * _ANNUAL_SALE / _ANNUAL
+    return prices
+
+
+def fact_text(lang="en"):
+    """App facts as strings, formatted for one locale."""
+    prices = locale_pricing(lang)
+    currency = prices["currency"]
+    return {
+        "rating_count": number_text(APP_FACTS["rating"]["count"], lang),
+        "annual_price": money_text(prices["annual"], currency, lang),
+        "annual_sale_price": money_text(prices["annual_sale"], currency, lang),
+        "sale_percent": f"{_SALE_PERCENT:d}",
+        "trial_days": APP_FACTS["annual_trial_days"],
+        "free_photos_per_day": APP_FACTS["free_limits"]["photos_per_day"],
+        "minimum_ios": APP_FACTS["minimum_ios"],
+        "off": f"{_SALE_PERCENT:d}{NUMBER_FORMATS.get(lang, NUMBER_FORMATS['en'])[2]}%",
+    }
+
+
+def rating_text(lang="en"):
+    """The star score, with the locale's decimal mark."""
+    return number_text(RATING, lang, 0 if float(RATING).is_integer() else 1)
+
+
+FACT_TEXT = fact_text()
 
 # Only {known_fact} is replaced. str.format_map would also try to read every other
 # brace pair in the copy, so a single "{" in a translation would abort the build.
@@ -393,9 +449,7 @@ UNKNOWN_FACTS = set()
 
 def inject_facts(value, lang="en"):
     """Replace app-fact placeholders, including locale-specific number formatting."""
-    facts = dict(FACT_TEXT)
-    if lang == "ru":
-        facts["rating_count"] = f'{APP_FACTS["rating"]["count"]:,}'.replace(",", "\u00a0")
+    facts = fact_text(lang)
 
     def replace(item):
         if isinstance(item, str):
@@ -771,6 +825,7 @@ def render_home(c, lang):
     home_prefix = f"/{seg}/" if seg else "/"
     canonical = url(lang)
     h, m = c["hero"], c["meta"]
+    rating = rating_text(lang)
 
     app_ld = {
         "@context": "https://schema.org", "@type": "MobileApplication",
@@ -820,7 +875,7 @@ def render_home(c, lang):
   <div class="wrap hero-grid">
     <div class="hero-copy">
       <div class="pill">{STARS_PART}
-        <span><b>{RATING_TEXT}</b> \u00b7 {esc(h['rating_note'])}</span></div>
+        <span><b>{rating}</b> \u00b7 {esc(h['rating_note'])}</span></div>
       <h1>{h['h1']}</h1>
       <p class="hero-sub">{esc(h['sub'])}</p>
       <div class="hero-cta stores">{store_badge(appstore_btn(c), h['note'])}</div>
@@ -845,7 +900,7 @@ def render_home(c, lang):
     <div class="head center"><span class="eyebrow">{esc(rv['eyebrow'])}</span>
       <h2 class="h2">{esc(rv['h2'])}</h2></div>
     <div class="score">
-      <b>{RATING_TEXT}</b>
+      <b>{rating}</b>
       {STARS_PART}
       <span class="score-l">{esc(rv['score_note'])}</span>
     </div>
@@ -1248,12 +1303,10 @@ def render_doc(c, d, lang):
 def render_sale(c, lang):
     canonical = url(lang, "sale")
     home_prefix = rel_url(lang)
-    off = f'{FACT_TEXT["sale_percent"]}%'
+    # inject_facts has already resolved {off} in the locale's own number format.
     sale = c["sale"]
-    def st(key):
-        return sale[key].replace("{off}", off)
-    return (head(c, lang, st("title"),
-                 st("description"),
+    return (head(c, lang, sale["title"],
+                 sale["description"],
                  canonical, path="sale",
                  og_image=f"{SITE}{SCREENSHOTS[3]}",
                  robots="noindex,follow")
@@ -1263,21 +1316,21 @@ def render_sale(c, lang):
   <div class="wrap">
     <div class="hero-grid">
       <div>
-        <span class="pill"><b>{esc(st('pill'))}</b> · {esc(st('off'))}</span>
-        <h1>{st('h1')}</h1>
-        <p class="hero-sub">{esc(st('sub'))}</p>
+        <span class="pill"><b>{esc(sale['pill'])}</b> · {esc(sale['off'])}</span>
+        <h1>{sale['h1']}</h1>
+        <p class="hero-sub">{esc(sale['sub'])}</p>
         <div class="promo" id="promo-code-card">
-          <span class="promo-l">{esc(st('promo'))}</span>
+          <span class="promo-l">{esc(sale['promo'])}</span>
           <span class="promo-v" id="promo-code-value"></span>
         </div>
         <div class="hero-cta sale-cta">
-          <a class="btn btn-p btn-xl" id="open-app-link" href="upscale://offer/sale">{esc(st('open'))}<span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn-p btn-xl" id="open-app-link" href="upscale://offer/sale">{esc(sale['open'])}<span class="arrow" aria-hidden="true">→</span></a>
         </div>
-        <p class="hero-note">{esc(st('note'))}</p>
+        <p class="hero-note">{esc(sale['note'])}</p>
       </div>
       <div class="sale-art">
-        <span class="sale-badge">{esc(st('badge'))}</span>
-        <img src="{SCREENSHOTS[3]}" width="298" height="645" alt="{esc(st('image_alt'))}"
+        <span class="sale-badge">{esc(sale['badge'])}</span>
+        <img src="{SCREENSHOTS[3]}" width="298" height="645" alt="{esc(sale['image_alt'])}"
              fetchpriority="high" decoding="async">
       </div>
     </div>
@@ -1285,8 +1338,8 @@ def render_sale(c, lang):
 </section>
 
 {download_cta(c, sect_cls="sect sect-tight",
-              h2=st('cta_h'),
-              p=st('cta_p'))}
+              h2=sale['cta_h'],
+              p=sale['cta_p'])}
 </main>
 <script>
 (function () {{

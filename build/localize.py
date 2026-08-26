@@ -2,8 +2,9 @@
 """Export, import, and validate the website localization catalog.
 
 Examples:
-  python3 build/localize.py export de --split
-  python3 build/localize.py export de --section guides
+  python3 build/localize.py export de --source-languages en,ru
+  python3 build/localize.py export de --source-languages en,ru --merge
+  python3 build/localize.py export de --source-languages en,ru --section guides
   python3 build/localize.py import de localization_work/de
   python3 build/localize.py validate de
 """
@@ -82,55 +83,117 @@ def _selected_sections(values: Optional[Sequence[str]]) -> Tuple[str, ...]:
     return tuple(result)
 
 
-def _export_records(target: str, sections: Sequence[str]) -> Dict[str, Dict[str, Any]]:
+def _source_languages(values: Sequence[str]) -> Tuple[str, ...]:
+    result: List[str] = []
+    for value in values:
+        for item in value.split(","):
+            language = item.strip()
+            if not language:
+                continue
+            if language not in result:
+                result.append(language)
+    if not result:
+        raise catalog.CatalogError("at least one source language is required")
+    return tuple(result)
+
+
+def _validate_language_selection(target: str, sources: Sequence[str]) -> None:
+    available = set(catalog.available_locales())
+    unknown = [language for language in sources if language not in available]
+    if unknown:
+        known = ", ".join(sorted(available))
+        raise catalog.CatalogError(
+            f"unknown source language(s): {', '.join(unknown)}; available: {known}"
+        )
+    if target in sources:
+        raise catalog.CatalogError("the target language must not be a source language")
+    if target == catalog.SOURCE_LANGUAGE:
+        raise catalog.CatalogError("cannot export a translation over the canonical English source")
+
+
+def _record_applies_to_target(record: Mapping[str, Any], target: str) -> bool:
+    if record.get("shouldTranslate") is False:
+        return False
+    scoped_locales = record.get("locales")
+    if scoped_locales is not None and target not in scoped_locales:
+        return False
+    if target in record.get("excludedLocales", ()):
+        return False
+    return True
+
+
+def _export_records(
+    target: str,
+    sources: Sequence[str],
+    sections: Sequence[str],
+) -> Dict[str, Dict[str, Any]]:
     result: Dict[str, Dict[str, Any]] = {}
     for filename in sections:
         for key, record in catalog.section_records(filename).items():
-            if record.get("shouldTranslate") is False:
+            if not _record_applies_to_target(record, target):
                 continue
-            if target in record.get("excludedLocales", ()):
-                continue
-            source = record.get("localizations", {}).get(catalog.SOURCE_LANGUAGE)
-            if source is None:
-                continue
-            exported: Dict[str, Any] = {}
+            localizations = record.get("localizations", {})
+            exported: Dict[str, Any] = {
+                language: localizations[language]
+                for language in sources
+                if language in localizations
+            }
+            if not exported:
+                joined = ", ".join(sources)
+                raise catalog.CatalogError(
+                    f"{filename}:{key}: none of the selected source languages "
+                    f"({joined}) has text"
+                )
+            exported[target] = None
             if record.get("comment"):
                 exported["comment"] = record["comment"]
-            exported["localizations"] = {
-                catalog.SOURCE_LANGUAGE: source,
-                target: None,
-            }
             result[key] = exported
     return result
 
 
-def _write_json(path: str, data: Mapping[str, Any]) -> None:
+def _write_json(path: str, data: Mapping[str, Any], *, compact: bool = True) -> None:
     parent = os.path.dirname(os.path.abspath(path))
     os.makedirs(parent, exist_ok=True)
     with open(path, "w", encoding="utf-8") as handle:
-        json.dump(data, handle, ensure_ascii=False, indent=2)
-        handle.write("\n")
+        if compact:
+            json.dump(data, handle, ensure_ascii=False, separators=(",", ":"))
+        else:
+            json.dump(data, handle, ensure_ascii=False, indent=2)
+            handle.write("\n")
+
+
+def _prefixed_records(
+    sections: Sequence[str],
+    section_data: Mapping[str, Mapping[str, Any]],
+) -> Dict[str, Dict[str, Any]]:
+    result: Dict[str, Dict[str, Any]] = {}
+    for filename in sections:
+        prefix = filename[:-5]
+        for key, record in section_data[filename].items():
+            result[f"{prefix}.{key}"] = dict(record)
+    return result
 
 
 def command_export(args) -> None:
-    if args.language == catalog.SOURCE_LANGUAGE:
-        raise catalog.CatalogError("the export target must differ from the English source language")
+    sources = _source_languages(args.source_languages)
+    _validate_language_selection(args.language, sources)
     sections = _selected_sections(args.section)
     default_root = os.path.join(catalog.ROOT, "localization_work")
-    if args.split:
+    section_data = {
+        filename: _export_records(args.language, sources, (filename,))
+        for filename in sections
+    }
+    total = sum(len(data) for data in section_data.values())
+    if not args.merge:
         output_dir = args.output or os.path.join(default_root, args.language)
-        os.makedirs(output_dir, exist_ok=True)
-        total = 0
-        for filename in sections:
-            data = _export_records(args.language, (filename,))
+        for filename, data in section_data.items():
             path = os.path.join(output_dir, filename)
             _write_json(path, data)
-            total += len(data)
             print(f"  ✓ {path}: {len(data)} keys")
         print(f"Exported {total} keys for {args.language} into {output_dir}")
         return
     output = args.output or os.path.join(default_root, f"{args.language}.json")
-    data = _export_records(args.language, sections)
+    data = _prefixed_records(sections, section_data)
     _write_json(output, data)
     print(f"Exported {len(data)} keys for {args.language} into {output}")
 
@@ -154,7 +217,25 @@ def _input_files(paths: Sequence[str]) -> List[str]:
     return result
 
 
+def _normalize_import_key(
+    key: str,
+    canonical_keys: Mapping[str, Any],
+    canonical_owners: Mapping[str, str],
+) -> str:
+    if key in canonical_keys:
+        return key
+    for filename in catalog.SECTION_FILES:
+        prefix = f"{filename[:-5]}."
+        if key.startswith(prefix):
+            unprefixed = key[len(prefix):]
+            if canonical_owners.get(unprefixed) == filename:
+                return unprefixed
+            return key
+    return key
+
+
 def _read_imports(paths: Sequence[str]) -> Dict[str, Dict[str, Any]]:
+    canonical_records, canonical_owners = catalog.load_records()
     merged: Dict[str, Dict[str, Any]] = {}
     owners: Dict[str, str] = {}
     for path in _input_files(paths):
@@ -163,21 +244,46 @@ def _read_imports(paths: Sequence[str]) -> Dict[str, Dict[str, Any]]:
         if not isinstance(data, dict):
             raise catalog.CatalogError(f"{path}: root must be an object")
         for key, record in data.items():
-            if key in merged:
+            normalized_key = _normalize_import_key(
+                key, canonical_records, canonical_owners
+            )
+            if normalized_key in merged:
                 raise catalog.CatalogError(
-                    f"duplicate import key {key!r} in {owners[key]} and {path}"
+                    f"duplicate import key {normalized_key!r} in "
+                    f"{owners[normalized_key]} and {path}"
                 )
             if not isinstance(record, dict):
                 raise catalog.CatalogError(f"{path}:{key}: record must be an object")
-            merged[key] = record
-            owners[key] = path
+            merged[normalized_key] = record
+            owners[normalized_key] = path
     return merged
 
 
-def _expected_records(sections: Sequence[str]) -> Dict[str, Dict[str, Any]]:
+def _import_source_languages(
+    language: str,
+    imported: Mapping[str, Mapping[str, Any]],
+) -> Tuple[str, ...]:
+    sources: List[str] = []
+    for record in imported.values():
+        for field in record:
+            if field in {language, "comment"}:
+                continue
+            if field not in sources:
+                sources.append(field)
+    if not sources:
+        raise catalog.CatalogError("the import package contains no source languages")
+    _validate_language_selection(language, sources)
+    return tuple(sources)
+
+
+def _expected_records(
+    language: str,
+    sources: Sequence[str],
+    sections: Sequence[str],
+) -> Dict[str, Dict[str, Any]]:
     result: Dict[str, Dict[str, Any]] = {}
     for filename in sections:
-        result.update(_export_records("__target__", (filename,)))
+        result.update(_export_records(language, sources, (filename,)))
     return result
 
 
@@ -193,7 +299,8 @@ def _validate_translation(key: str, source: str, translated: Any) -> None:
 
 
 def _validated_updates(language: str, imported, sections) -> Dict[str, str]:
-    expected = _expected_records(sections)
+    sources = _import_source_languages(language, imported)
+    expected = _expected_records(language, sources, sections)
     missing = sorted(set(expected) - set(imported))
     extra = sorted(set(imported) - set(expected))
     if missing or extra:
@@ -206,16 +313,31 @@ def _validated_updates(language: str, imported, sections) -> Dict[str, str]:
     updates: Dict[str, str] = {}
     for key, canonical_export in expected.items():
         record = imported[key]
-        localizations = record.get("localizations")
-        if not isinstance(localizations, dict):
-            raise catalog.CatalogError(f"{key}: localizations must be an object")
-        source = canonical_export["localizations"][catalog.SOURCE_LANGUAGE]
-        if localizations.get(catalog.SOURCE_LANGUAGE) != source:
-            raise catalog.CatalogError(f"{key}: English source was changed")
-        canonical_comment = canonical_export.get("comment")
-        if record.get("comment") != canonical_comment:
+        missing_fields = sorted(set(canonical_export) - set(record))
+        extra_fields = sorted(set(record) - set(canonical_export))
+        if missing_fields or extra_fields:
+            messages = []
+            if missing_fields:
+                messages.append(f"missing fields: {', '.join(missing_fields)}")
+            if extra_fields:
+                messages.append(f"unexpected fields: {', '.join(extra_fields)}")
+            raise catalog.CatalogError(f"{key}: {'; '.join(messages)}")
+        for source_language in sources:
+            if source_language not in canonical_export:
+                continue
+            if record[source_language] != canonical_export[source_language]:
+                raise catalog.CatalogError(
+                    f"{key}: {source_language} source text was changed"
+                )
+        if record.get("comment") != canonical_export.get("comment"):
             raise catalog.CatalogError(f"{key}: localization comment was changed")
-        translated = localizations.get(language)
+        source_language = (
+            catalog.SOURCE_LANGUAGE
+            if catalog.SOURCE_LANGUAGE in canonical_export
+            else next(item for item in sources if item in canonical_export)
+        )
+        source = canonical_export[source_language]
+        translated = record.get(language)
         _validate_translation(key, source, translated)
         updates[key] = translated
     return updates
@@ -247,7 +369,7 @@ def command_import(args) -> None:
     sections = _selected_sections(args.section)
     imported = _read_imports(args.inputs)
     updates = _validated_updates(args.language, imported, sections)
-    all_records, owners = catalog.load_records()
+    _, owners = catalog.load_records()
     changed_sections: Dict[str, Dict[str, Any]] = {
         filename: catalog.section_records(filename) for filename in sections
     }
@@ -288,14 +410,27 @@ def command_validate(args) -> None:
 
 
 def parser() -> argparse.ArgumentParser:
-    result = argparse.ArgumentParser(description=__doc__)
+    result = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
     commands = result.add_subparsers(dest="command", required=True)
 
     export = commands.add_parser("export", help="create a source-to-target translation package")
     export.add_argument("language", help="target locale code, for example de")
+    export.add_argument(
+        "--source-languages",
+        action="append",
+        required=True,
+        help="existing source locale codes; repeat or use commas, for example en,ru",
+    )
     export.add_argument("--section", action="append", help="section name; repeat or use commas")
-    export.add_argument("--split", action="store_true", help="write one JSON file per section")
-    export.add_argument("--output", help="output file, or directory with --split")
+    export.add_argument(
+        "--merge",
+        action="store_true",
+        help="merge sections into one JSON file and prefix every key with its section",
+    )
+    export.add_argument("--output", help="output directory, or output file with --merge")
     export.set_defaults(func=command_export)
 
     import_command = commands.add_parser("import", help="validate and write translated packages")

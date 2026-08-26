@@ -198,10 +198,10 @@ ul,ol{margin:0;padding:0}
 
 /* language picker */
 .lang{position:relative;flex:0 0 auto}
-.lang-btn{display:flex;align-items:center;gap:7px;padding:8px 12px;border-radius:10px;font-size:14.5px;
+.lang-btn{display:flex;align-items:center;gap:7px;height:40px;padding:0 9px;border-radius:12px;font-size:14.5px;
   font-weight:600;color:var(--tx-2);background:none;border:1px solid var(--line);cursor:pointer;font-family:inherit}
 .lang-btn:hover{color:var(--tx);border-color:var(--line-2)}
-.lang-btn .flag{width:18px;height:18px;flex:0 0 auto;border-radius:5px;box-shadow:0 0 0 1px var(--line-2) inset}
+.lang-btn .flag{width:20px;height:20px;flex:0 0 auto;border-radius:5px;box-shadow:0 0 0 1px var(--line-2) inset}
 .lang-menu{position:absolute;right:0;top:calc(100% + 8px);min-width:190px;background:var(--surface-2);
   border:1px solid var(--line);border-radius:14px;padding:6px;box-shadow:var(--shadow);display:none;
   max-height:60vh;overflow:auto}
@@ -231,10 +231,10 @@ ul,ol{margin:0;padding:0}
   padding:11px 22px 12px;border-radius:15px;transition:.18s;box-shadow:var(--badge-sh)}
 .appstore:hover{transform:translateY(-2px);box-shadow:var(--badge-sh-h)}
 .appstore svg{width:27px;height:33px;flex:0 0 auto;fill:currentColor}
+.appstore .txt{text-align:center}
 .appstore span{display:block;font-size:11px;font-weight:500;letter-spacing:.02em;line-height:1.25;opacity:.82}
 .appstore strong{display:block;font-size:19.5px;font-weight:650;letter-spacing:-.02em;line-height:1.15;margin-top:1px}
 .appstore.dark{background:#111;color:#fff;border:1px solid rgba(255,255,255,.2);box-shadow:none}
-html:lang(ru) .hero-lead .appstore .txt>span{text-align:center}
 
 /* ---------- shared section bits ---------- */
 section{position:relative}
@@ -852,13 +852,13 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:64px 0 34
   .lang{order:3;margin-left:0}
 }
 @media(max-width:560px){
-  /* Hide the language name to keep the header on one row. */
+  /* Drop the language name and the tagline to keep the header on one row:
+     localized taglines run far wider than the English one and would otherwise
+     push the burger off screen. */
   .nav-in{gap:8px}
   .burger{margin-left:0}
-  .lang-btn{padding:10px}
+  .lang-btn{padding:0 9px}
   .lang-btn span{display:none}
-}
-@media(max-width:359px){
   .brand small{display:none}
 }
 @media(max-width:980px){

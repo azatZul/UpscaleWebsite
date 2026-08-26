@@ -2,183 +2,212 @@
   "meta.title": {
     "localizations": {
       "en": "AI Photo Enhancer for iPhone — Unblur & Upscale | UScale",
-      "ru": "Улучшение качества фото на iPhone — ИИ и 4K | UScale"
+      "ru": "Улучшить качество фото на iPhone — нейросеть и 4K | UScale",
+      "de": "Bildqualität verbessern am iPhone – KI-App | UScale"
     },
     "comment": "Page or section title; preserve product names."
   },
   "meta.description": {
     "localizations": {
       "en": "UScale is a free AI photo enhancer for iPhone and iPad. Unblur photos and upscale images to 4K right on your device, improve video quality and restore old photos.",
-      "ru": "Улучшайте качество фото на iPhone и iPad бесплатно: убирайте размытие, увеличивайте изображения до 4K, восстанавливайте старые снимки и улучшайте видео."
+      "ru": "Улучшить качество фото на iPhone и iPad бесплатно: убрать размытие, увеличить фото до 4K без потери качества, восстановить старые снимки и улучшить видео.",
+      "de": "Bildqualität verbessern auf iPhone und iPad: Fotos schärfen, Bilder ohne Qualitätsverlust auf 4K vergrößern, Videos verbessern und alte Fotos restaurieren."
     },
     "comment": "Description copy; keep factual claims unchanged."
   },
   "hero.h1": {
     "localizations": {
       "en": "The AI photo enhancer that <em>unblurs, upscales and restores</em> — right on your iPhone",
-      "ru": "Улучшайте качество фото: <em>убирайте размытие, повышайте разрешение и восстанавливайте снимки</em> — прямо на iPhone"
+      "ru": "Улучшайте качество фото: <em>убирайте размытие, увеличивайте разрешение и восстанавливайте снимки</em> — прямо на iPhone",
+      "de": "Die KI-App, die <em>Bilder schärft, vergrößert und restauriert</em> – direkt auf deinem iPhone"
     },
     "comment": "Contains HTML; translate visible text and preserve tags, attributes, and URLs."
   },
   "hero.h1_plain": {
     "localizations": {
       "en": "The AI photo enhancer that unblurs, upscales and restores — right on your iPhone",
-      "ru": "Улучшайте качество фото: убирайте размытие, повышайте разрешение и восстанавливайте снимки — прямо на iPhone"
+      "ru": "Улучшайте качество фото: убирайте размытие, увеличивайте разрешение и восстанавливайте снимки — прямо на iPhone",
+      "de": "Die KI-App, die Bilder schärft, vergrößert und restauriert – direkt auf deinem iPhone"
     }
   },
   "hero.sub": {
     "localizations": {
       "en": "Sharpen blurry shots, upscale images to 4K, improve video quality and repair old family photos. Unblur and upscale run on your device; restoration is handled by our cloud AI.",
-      "ru": "Делайте нечёткие снимки резче, увеличивайте фото до 4K, улучшайте видео и восстанавливайте старые семейные снимки. Базовое улучшение работает на устройстве, а реставрация — в облаке."
+      "ru": "Делайте нечёткие снимки резче, увеличивайте фото до 4K без потери качества, улучшайте видео и восстанавливайте старые семейные снимки. Базовое улучшение работает на устройстве, а реставрация — в облаке.",
+      "de": "Verbessere die Bildqualität unscharfer Aufnahmen, erhöhe die Auflösung auf 4K, mach Videos schärfer und repariere alte Familienfotos. Schärfen und Vergrößern laufen auf deinem Gerät; die Restaurierung übernimmt unsere Cloud-KI."
     }
   },
   "hero.rating_note": {
     "localizations": {
       "en": "{rating_count} App Store ratings",
-      "ru": "Оценок в App Store: {rating_count}"
+      "ru": "Оценок в App Store: {rating_count}",
+      "de": "{rating_count} Bewertungen"
     },
     "comment": "Preserve every {placeholder} exactly."
   },
   "hero.note": {
     "localizations": {
       "en": "Free to start · iPhone & iPad · iOS {minimum_ios} or later · No account needed",
-      "ru": "Можно начать бесплатно · iPhone и iPad · iOS {minimum_ios} или новее · Без регистрации"
+      "ru": "Можно начать бесплатно · iPhone и iPad · iOS {minimum_ios} или новее · Без регистрации",
+      "de": "Kostenlos starten · iPhone & iPad · iOS {minimum_ios} oder neuer · Kein Konto nötig"
     },
     "comment": "Preserve every {placeholder} exactly."
   },
   "hero.chips.0": {
     "localizations": {
       "en": "2× and 4× upscale",
-      "ru": "Увеличение в 2× и 4×"
+      "ru": "Увеличение в 2× и 4×",
+      "de": "2× und 4× hochskalieren"
     }
   },
   "hero.chips.1": {
     "localizations": {
       "en": "Photos and video",
-      "ru": "Фотографии и видео"
+      "ru": "Фотографии и видео",
+      "de": "Fotos und Videos"
     }
   },
   "hero.chips.2": {
     "localizations": {
       "en": "On-device processing",
-      "ru": "Обработка на устройстве"
+      "ru": "Обработка на устройстве",
+      "de": "Verarbeitung auf dem Gerät"
     }
   },
   "hero.chips.3": {
     "localizations": {
       "en": "Batch processing",
-      "ru": "Пакетная обработка"
+      "ru": "Пакетная обработка",
+      "de": "Stapelverarbeitung"
     }
   },
   "hero.cmp_label": {
     "localizations": {
       "en": "Before and after comparison of photos enhanced with UScale",
-      "ru": "Сравнение до и после улучшения фотографий с помощью UScale"
+      "ru": "Сравнение до и после улучшения фотографий с помощью UScale",
+      "de": "Vorher-Nachher-Vergleich von mit UScale verbesserten Fotos"
     }
   },
   "hero.before": {
     "localizations": {
       "en": "Before",
-      "ru": "До"
+      "ru": "До",
+      "de": "Vorher"
     }
   },
   "hero.after": {
     "localizations": {
       "en": "After",
-      "ru": "После"
+      "ru": "После",
+      "de": "Nachher"
     }
   },
   "hero.before_alt": {
     "localizations": {
       "en": "Blurry low-resolution photo before AI enhancement",
-      "ru": "Размытая фотография низкого разрешения до обработки в UScale"
+      "ru": "Размытая фотография низкого разрешения до обработки в UScale",
+      "de": "Unscharfes Foto mit niedriger Auflösung vor der KI-Verbesserung"
     },
     "comment": "Accessibility text describing an image."
   },
   "hero.after_alt": {
     "localizations": {
       "en": "The same photo after being upscaled and sharpened with UScale",
-      "ru": "Та же фотография после увеличения и улучшения с помощью UScale"
+      "ru": "Та же фотография после увеличения и улучшения с помощью UScale",
+      "de": "Dasselbe Foto, mit UScale hochskaliert und geschärft"
     },
     "comment": "Accessibility text describing an image."
   },
   "hero.drag": {
     "localizations": {
       "en": "Drag to compare",
-      "ru": "Перетащите для сравнения"
+      "ru": "Перетащите для сравнения",
+      "de": "Zum Vergleichen ziehen"
     }
   },
   "hero.shot": {
     "localizations": {
       "en": "Example",
-      "ru": "Пример"
+      "ru": "Пример",
+      "de": "Beispiel"
     }
   },
   "hero.shots_label": {
     "localizations": {
       "en": "Choose a before and after example",
-      "ru": "Выберите пример до и после"
+      "ru": "Выберите пример до и после",
+      "de": "Vorher-Nachher-Beispiel auswählen"
     }
   },
   "hero.tab_labels.0": {
     "localizations": {
       "en": "Portrait upscale",
-      "ru": "Улучшение портретов"
+      "ru": "Улучшение портретов",
+      "de": "Porträt hochskalieren"
     }
   },
   "hero.tab_labels.1": {
     "localizations": {
       "en": "Landscape upscale",
-      "ru": "Улучшение пейзажей"
+      "ru": "Улучшение пейзажей",
+      "de": "Landschaft hochskalieren"
     }
   },
   "hero.tab_labels.2": {
     "localizations": {
       "en": "Old photo restore",
-      "ru": "Восстановление старых фотографий"
+      "ru": "Восстановление старых фотографий",
+      "de": "Altes Foto restaurieren"
     }
   },
   "hero.tab_labels.3": {
     "localizations": {
       "en": "Video upscale",
-      "ru": "Улучшение видео"
+      "ru": "Улучшение видео",
+      "de": "Video hochskalieren"
     }
   },
   "hero.tab_labels.4": {
     "localizations": {
       "en": "AI slow motion",
-      "ru": "Плавное замедление с ИИ"
+      "ru": "Плавное замедление с ИИ",
+      "de": "KI-Zeitlupe"
     }
   },
   "reviews.eyebrow": {
     "localizations": {
       "en": "Reviews",
-      "ru": "Отзывы"
+      "ru": "Отзывы",
+      "de": "Bewertungen"
     }
   },
   "reviews.h2": {
     "localizations": {
       "en": "What people say about UScale",
-      "ru": "Что говорят о UScale"
+      "ru": "Что говорят о UScale",
+      "de": "Das sagen Nutzer über UScale"
     }
   },
   "reviews.sub": {
     "localizations": {
       "en": "Real reviews, straight from the App Store.",
-      "ru": "Настоящие отзывы пользователей из App Store."
+      "ru": "Настоящие отзывы пользователей из App Store.",
+      "de": "Echte Bewertungen direkt aus dem App Store."
     }
   },
   "reviews.score_note": {
     "localizations": {
       "en": "{rating_count} App Store ratings",
-      "ru": "Оценок в App Store: {rating_count}"
+      "ru": "Оценок в App Store: {rating_count}",
+      "de": "{rating_count} Bewertungen"
     },
     "comment": "Preserve every {placeholder} exactly."
   },
   "reviews.stars_alt": {
     "localizations": {
       "en": "Rated 5 out of 5",
-      "ru": "Оценка 5 из 5"
+      "ru": "Оценка 5 из 5",
+      "de": "Mit 5 von 5 bewertet"
     },
     "comment": "Accessibility text describing an image."
   },
@@ -199,20 +228,23 @@
   "reviews.items.0.meta": {
     "localizations": {
       "en": "Australia · Oct 2025",
-      "ru": "Австралия · октябрь 2025"
+      "ru": "Австралия · октябрь 2025",
+      "de": "Australien · Okt. 2025"
     }
   },
   "reviews.items.0.title": {
     "localizations": {
       "en": "Upscale",
-      "ru": "Повышение качества"
+      "ru": "Повышение качества",
+      "de": "Hochskalieren"
     },
     "comment": "Page or section title; preserve product names."
   },
   "reviews.items.0.text": {
     "localizations": {
       "en": "All the functions work well, I especially like the 4x effect with the Eye Enhancer, it makes a spectacular difference to the overall clarity of your image. The automatic save to history with the name of effect is welcome as is the ability to save to camera roll or share the result.",
-      "ru": "Все функции работают хорошо. Особенно нравится режим 4× с Eye Enhancer — он заметно повышает общую чёткость изображения. Удобно, что результат автоматически сохраняется в истории вместе с названием эффекта, а затем его можно сохранить в «Фото» или отправить другим."
+      "ru": "Все функции работают хорошо. Особенно нравится режим 4× с Eye Enhancer — он заметно повышает общую чёткость изображения. Удобно, что результат автоматически сохраняется в истории вместе с названием эффекта, а затем его можно сохранить в «Фото» или отправить другим.",
+      "de": "Alle Funktionen arbeiten gut. Besonders gefällt mir der 4x-Effekt mit dem Eye Enhancer – er verbessert die Gesamtschärfe des Bildes enorm. Praktisch sind auch das automatische Speichern im Verlauf mit dem Namen des Effekts sowie die Möglichkeit, das Ergebnis in Fotos zu speichern oder zu teilen."
     },
     "comment": "App Store review; preserve the reviewer's meaning and tone."
   },
@@ -233,20 +265,23 @@
   "reviews.items.1.meta": {
     "localizations": {
       "en": "United States · Nov 2025",
-      "ru": "США · ноябрь 2025"
+      "ru": "США · ноябрь 2025",
+      "de": "USA · Nov. 2025"
     }
   },
   "reviews.items.1.title": {
     "localizations": {
       "en": "Great App",
-      "ru": "Отличное приложение"
+      "ru": "Отличное приложение",
+      "de": "Tolle App"
     },
     "comment": "Page or section title; preserve product names."
   },
   "reviews.items.1.text": {
     "localizations": {
       "en": "I have tried several upscaling Apps, this is the best. Enhances faces breezily and with great resolution without distortions. Continue developing this app it has great potential.",
-      "ru": "Попробовал несколько приложений для повышения качества, и это оказалось лучшим. Оно легко улучшает лица, повышает разрешение и не создаёт искажений. Продолжайте развивать приложение — у него огромный потенциал."
+      "ru": "Попробовал несколько приложений для повышения качества, и это оказалось лучшим. Оно легко улучшает лица, повышает разрешение и не создаёт искажений. Продолжайте развивать приложение — у него огромный потенциал.",
+      "de": "Ich habe mehrere Apps zum Hochskalieren ausprobiert, und diese ist die beste. Sie verbessert Gesichter mühelos und mit hoher Auflösung, ohne Verzerrungen. Entwickelt diese App weiter, sie hat großes Potenzial."
     },
     "comment": "App Store review; preserve the reviewer's meaning and tone."
   },
@@ -267,20 +302,23 @@
   "reviews.items.2.meta": {
     "localizations": {
       "en": "New Zealand · Oct 2025",
-      "ru": "Новая Зеландия · октябрь 2025"
+      "ru": "Новая Зеландия · октябрь 2025",
+      "de": "Neuseeland · Okt. 2025"
     }
   },
   "reviews.items.2.title": {
     "localizations": {
       "en": "Easiest Photo Enhancer I’ve used",
-      "ru": "Самое удобное приложение для улучшения фото"
+      "ru": "Самое удобное приложение для улучшения фото",
+      "de": "Die einfachste Fotoverbesserung, die ich je genutzt habe"
     },
     "comment": "Page or section title; preserve product names."
   },
   "reviews.items.2.text": {
     "localizations": {
       "en": "Awesome, user friendly interface, simple transfer to Photos App. Keeps it all simple.",
-      "ru": "Отличный и понятный интерфейс, а результат легко сохранить в «Фото». Всё просто и удобно."
+      "ru": "Отличный и понятный интерфейс, а результат легко сохранить в «Фото». Всё просто и удобно.",
+      "de": "Klasse, benutzerfreundliche Oberfläche und einfaches Übertragen in die Fotos-App. Alles bleibt unkompliziert."
     },
     "comment": "App Store review; preserve the reviewer's meaning and tone."
   },
@@ -301,20 +339,23 @@
   "reviews.items.3.meta": {
     "localizations": {
       "en": "United States · Feb 2026",
-      "ru": "США · февраль 2026"
+      "ru": "США · февраль 2026",
+      "de": "USA · Feb. 2026"
     }
   },
   "reviews.items.3.title": {
     "localizations": {
       "en": "Great",
-      "ru": "Отлично"
+      "ru": "Отлично",
+      "de": "Großartig"
     },
     "comment": "Page or section title; preserve product names."
   },
   "reviews.items.3.text": {
     "localizations": {
       "en": "I have tested hundreds of apps and this one I’m really impressed with the overall outcome of video and image quality.",
-      "ru": "Я протестировал сотни приложений, но именно это впечатлило меня качеством обработки видео и фото."
+      "ru": "Я протестировал сотни приложений, но именно это впечатлило меня качеством обработки видео и фото.",
+      "de": "Ich habe Hunderte Apps getestet und bin bei dieser vom Gesamtergebnis der Video- und Bildqualität wirklich beeindruckt."
     },
     "comment": "App Store review; preserve the reviewer's meaning and tone."
   },
@@ -335,20 +376,23 @@
   "reviews.items.4.meta": {
     "localizations": {
       "en": "United Kingdom · Mar 2025",
-      "ru": "Великобритания · март 2025"
+      "ru": "Великобритания · март 2025",
+      "de": "Vereinigtes Königreich · März 2025"
     }
   },
   "reviews.items.4.title": {
     "localizations": {
       "en": "Works great for old photos",
-      "ru": "Отлично подходит для старых фотографий"
+      "ru": "Отлично подходит для старых фотографий",
+      "de": "Funktioniert hervorragend bei alten Fotos"
     },
     "comment": "Page or section title; preserve product names."
   },
   "reviews.items.4.text": {
     "localizations": {
       "en": "I used it to fix some old Facebook photos and it got the job done. Would recommend.",
-      "ru": "Использовал приложение, чтобы улучшить несколько старых фотографий из Facebook, и оно отлично справилось. Рекомендую."
+      "ru": "Использовал приложение, чтобы улучшить несколько старых фотографий из Facebook, и оно отлично справилось. Рекомендую.",
+      "de": "Ich habe damit einige alte Facebook-Fotos repariert, und die App hat die Aufgabe erfüllt. Kann ich empfehlen."
     },
     "comment": "App Store review; preserve the reviewer's meaning and tone."
   },
@@ -369,39 +413,45 @@
   "reviews.items.5.meta": {
     "localizations": {
       "en": "United States · Sep 2025",
-      "ru": "США · сентябрь 2025"
+      "ru": "США · сентябрь 2025",
+      "de": "USA · Sept. 2025"
     }
   },
   "reviews.items.5.title": {
     "localizations": {
       "en": "Good app",
-      "ru": "Хорошее приложение"
+      "ru": "Хорошее приложение",
+      "de": "Gute App"
     },
     "comment": "Page or section title; preserve product names."
   },
   "reviews.items.5.text": {
     "localizations": {
       "en": "It does a great job fixing faces and removing noise from photos. Thanks to the developers! ❤️",
-      "ru": "Приложение отлично восстанавливает детали лиц и убирает шум на фотографиях. Спасибо разработчикам! ❤️"
+      "ru": "Приложение отлично восстанавливает детали лиц и убирает шум на фотографиях. Спасибо разработчикам! ❤️",
+      "de": "Sie repariert Gesichter hervorragend und entfernt Bildrauschen aus Fotos. Danke an die Entwickler! ❤️"
     },
     "comment": "App Store review; preserve the reviewer's meaning and tone."
   },
   "features.eyebrow": {
     "localizations": {
       "en": "Everything in one app",
-      "ru": "Всё в одном приложении"
+      "ru": "Всё в одном приложении",
+      "de": "Alles in einer App"
     }
   },
   "features.h2": {
     "localizations": {
       "en": "One app to improve your photos and videos",
-      "ru": "Одно приложение для улучшения фото и видео"
+      "ru": "Одно приложение для улучшения фото и видео",
+      "de": "Eine App für bessere Fotos und Videos"
     }
   },
   "features.sub": {
     "localizations": {
       "en": "Most enhancers only sharpen photos. UScale also upscales video, creates AI slow motion and restores damaged prints. Core tools run on your device; Creative Upscale and restoration use cloud processing.",
-      "ru": "Большинство приложений для улучшения фото лишь повышают резкость. UScale также улучшает видео, создаёт плавное замедление и восстанавливает повреждённые отпечатки. Основные инструменты работают на устройстве, а Creative Upscale и реставрация — в облаке."
+      "ru": "Большинство приложений для улучшения фото лишь повышают резкость. UScale также улучшает видео, создаёт плавное замедление и восстанавливает повреждённые отпечатки. Основные инструменты работают на устройстве, а «Креативное увеличение» и реставрация — в облаке.",
+      "de": "Die meisten Fotoverbesserer schärfen nur Fotos. UScale skaliert auch Videos hoch, erstellt KI-Zeitlupen und restauriert beschädigte Abzüge. Die wichtigsten Werkzeuge laufen auf deinem Gerät; „Kreatives Hochskalieren“ und die Restaurierung nutzen die Cloud."
     }
   },
   "features.items.0.icon": {
@@ -414,13 +464,15 @@
   "features.items.0.h": {
     "localizations": {
       "en": "Unblur and sharpen photos",
-      "ru": "Убрать размытие и повысить резкость"
+      "ru": "Убрать размытие и повысить резкость",
+      "de": "Unscharfe Bilder schärfen"
     }
   },
   "features.items.0.p": {
     "localizations": {
       "en": "Fix soft, shaky or out-of-focus shots. The AI rebuilds edges and texture instead of just adding contrast, so faces and fine detail stay natural.",
-      "ru": "Исправьте нечёткие снимки, кадры со смазом от движения или ошибкой фокуса. ИИ восстанавливает границы и текстуры, а не просто повышает контраст, поэтому лица и мелкие детали остаются естественными."
+      "ru": "Исправьте нечёткие снимки, кадры со смазом от движения или ошибкой фокуса. ИИ восстанавливает границы и текстуры, а не просто повышает контраст, поэтому лица и мелкие детали остаются естественными.",
+      "de": "Korrigiere weiche, verwackelte oder nicht fokussierte Aufnahmen. Die KI rekonstruiert Kanten und Strukturen, statt nur den Kontrast zu erhöhen. So bleiben Gesichter und feine Details natürlich."
     }
   },
   "features.items.1.icon": {
@@ -433,13 +485,15 @@
   "features.items.1.h": {
     "localizations": {
       "en": "Upscale images 2× and 4×",
-      "ru": "Увеличить разрешение изображений в 2 и 4 раза"
+      "ru": "Увеличить разрешение изображений в 2 и 4 раза",
+      "de": "Bilder 2× und 4× hochskalieren"
     }
   },
   "features.items.1.p": {
     "localizations": {
       "en": "Turn a small, low-resolution picture into a print-ready file. The 4× model reconstructs detail rather than stretching pixels into a blurry mess.",
-      "ru": "Превратите маленькое изображение низкого разрешения в файл, пригодный для печати. Модель 4× восстанавливает детали, а не просто растягивает пиксели."
+      "ru": "Превратите маленькое изображение низкого разрешения в файл, пригодный для печати. Модель 4× восстанавливает детали, а не просто растягивает пиксели.",
+      "de": "Mache aus einem kleinen Bild mit niedriger Auflösung eine druckfertige Datei. Das 4×-Modell rekonstruiert Details, statt Pixel zu einem unscharfen Durcheinander zu strecken."
     }
   },
   "features.items.2.icon": {
@@ -452,13 +506,15 @@
   "features.items.2.h": {
     "localizations": {
       "en": "Improve video quality",
-      "ru": "Улучшить качество видео"
+      "ru": "Улучшить качество видео",
+      "de": "Videoqualität verbessern"
     }
   },
   "features.items.2.p": {
     "localizations": {
       "en": "Upscale and clean up video the same way as photos — grainy phone clips, old camcorder footage and heavily compressed downloads.",
-      "ru": "Увеличивайте разрешение и очищайте видео так же, как фотографии: улучшайте зернистые ролики с телефона, записи со старых видеокамер и сильно сжатые файлы."
+      "ru": "Увеличивайте разрешение и очищайте видео так же, как фотографии: улучшайте зернистые ролики с телефона, записи со старых видеокамер и сильно сжатые файлы.",
+      "de": "Skaliere Videos hoch und bereinige sie wie Fotos – körnige Handyvideos, alte Camcorder-Aufnahmen und stark komprimierte Downloads."
     }
   },
   "features.items.3.icon": {
@@ -471,13 +527,15 @@
   "features.items.3.h": {
     "localizations": {
       "en": "AI slow motion",
-      "ru": "Плавное замедление с ИИ"
+      "ru": "Плавное замедление с ИИ",
+      "de": "KI-Zeitlupe"
     }
   },
   "features.items.3.p": {
     "localizations": {
       "en": "Turn any normal clip into smooth slow motion. Frame interpolation generates the missing frames, so you never have to remember to shoot in slo-mo.",
-      "ru": "Превратите обычный ролик в плавное замедленное видео. Интерполяция создаёт промежуточные кадры, поэтому не нужно заранее снимать в режиме Slow Motion."
+      "ru": "Превратите обычный ролик в плавное замедленное видео. Интерполяция создаёт промежуточные кадры, поэтому не нужно заранее снимать в режиме «Замедленная съёмка».",
+      "de": "Verwandle jedes normale Video in eine flüssige Zeitlupe. Die Bildinterpolation erzeugt fehlende Einzelbilder, sodass du nicht daran denken musst, vorher in Zeitlupe aufzunehmen."
     }
   },
   "features.items.4.icon": {
@@ -490,13 +548,15 @@
   "features.items.4.h": {
     "localizations": {
       "en": "Restore old photos",
-      "ru": "Восстановить старые фотографии"
+      "ru": "Восстановить старые фотографии",
+      "de": "Alte Fotos restaurieren"
     }
   },
   "features.items.4.p": {
     "localizations": {
       "en": "Repair scratches, folds, dust and fading on scanned prints. Advanced restoration handles heavily damaged and partly missing areas.",
-      "ru": "Исправляйте царапины, заломы, пыль и выцветание на отсканированных отпечатках. Продвинутая модель восстанавливает сильно повреждённые и частично утраченные области."
+      "ru": "Исправляйте царапины, заломы, пыль и выцветание на отсканированных отпечатках. Продвинутая модель восстанавливает сильно повреждённые и частично утраченные области.",
+      "de": "Repariere Kratzer, Knicke, Staub und verblasste Farben auf eingescannten Abzügen. Die erweiterte Restaurierung bewältigt stark beschädigte und teilweise fehlende Bereiche."
     }
   },
   "features.items.5.icon": {
@@ -509,13 +569,15 @@
   "features.items.5.h": {
     "localizations": {
       "en": "Colorize black and white",
-      "ru": "Раскрасить чёрно-белые фотографии"
+      "ru": "Раскрасить чёрно-белые фотографии",
+      "de": "Schwarz-Weiß-Fotos kolorieren"
     }
   },
   "features.items.5.p": {
     "localizations": {
       "en": "Add believable colour to vintage black-and-white portraits, wedding photos and family archive scans in a single tap.",
-      "ru": "Добавьте естественные цвета старым портретам, свадебным фотографиям и архивным снимкам — одним нажатием."
+      "ru": "Добавьте естественные цвета старым портретам, свадебным фотографиям и архивным снимкам — одним нажатием.",
+      "de": "Färbe alte Schwarz-Weiß-Porträts, Hochzeitsfotos und Scans aus dem Familienarchiv mit einem Fingertipp glaubwürdig ein."
     }
   },
   "features.items.6.icon": {
@@ -528,13 +590,15 @@
   "features.items.6.h": {
     "localizations": {
       "en": "Brighten dark photos",
-      "ru": "Осветлить тёмные фотографии"
+      "ru": "Осветлить тёмные фотографии",
+      "de": "Dunkle Fotos aufhellen"
     }
   },
   "features.items.6.p": {
     "localizations": {
       "en": "Recover detail from underexposed concert, night and indoor shots without the blotchy noise you get from simply raising exposure.",
-      "ru": "Возвращайте детали на недоэкспонированных концертных, ночных снимках и кадрах в помещении без пятнистого шума, который появляется при простом увеличении экспозиции."
+      "ru": "Возвращайте детали на недоэкспонированных концертных, ночных снимках и кадрах в помещении без пятнистого шума, который появляется при простом увеличении экспозиции.",
+      "de": "Hole Details aus unterbelichteten Konzert-, Nacht- und Innenaufnahmen zurück – ohne das fleckige Rauschen, das beim bloßen Erhöhen der Belichtung entsteht."
     }
   },
   "features.items.7.icon": {
@@ -547,13 +611,15 @@
   "features.items.7.h": {
     "localizations": {
       "en": "Enhance faces",
-      "ru": "Улучшить лица"
+      "ru": "Улучшить лица",
+      "de": "Gesichter verbessern"
     }
   },
   "features.items.7.p": {
     "localizations": {
       "en": "A dedicated face model restores eyes, skin and hair in portraits and group photos where everyone is a little too small and a little too soft.",
-      "ru": "Специализированная модель восстанавливает глаза, кожу и волосы на портретах и групповых снимках, где лица получились слишком маленькими или нечёткими."
+      "ru": "Специализированная модель восстанавливает глаза, кожу и волосы на портретах и групповых снимках, где лица получились слишком маленькими или нечёткими.",
+      "de": "Ein spezielles Gesichtsmodell rekonstruiert Augen, Haut und Haare in Porträts und Gruppenfotos, auf denen alle etwas zu klein und unscharf sind."
     }
   },
   "features.items.8.icon": {
@@ -566,121 +632,140 @@
   "features.items.8.h": {
     "localizations": {
       "en": "Batch processing",
-      "ru": "Пакетная обработка"
+      "ru": "Пакетная обработка",
+      "de": "Stapelverarbeitung"
     }
   },
   "features.items.8.p": {
     "localizations": {
       "en": "Select a whole set of photos and enhance them in one run instead of opening them one at a time.",
-      "ru": "Выберите целый набор фотографий и улучшите их все за один раз, вместо того чтобы открывать каждую по отдельности."
+      "ru": "Выберите целый набор фотографий и улучшите их все за один раз, вместо того чтобы открывать каждую по отдельности.",
+      "de": "Wähle eine ganze Reihe von Fotos aus und verbessere sie in einem Durchgang, statt jedes einzeln zu öffnen."
     }
   },
   "screens.eyebrow": {
     "localizations": {
       "en": "Inside the app",
-      "ru": "Внутри приложения"
+      "ru": "Внутри приложения",
+      "de": "In der App"
     }
   },
   "screens.h2": {
     "localizations": {
       "en": "See UScale in action",
-      "ru": "Посмотрите, что умеет UScale"
+      "ru": "Посмотрите, что умеет UScale",
+      "de": "UScale in Aktion"
     }
   },
   "screens.sub": {
     "localizations": {
       "en": "Real before-and-after results from the app, straight from the App Store listing.",
-      "ru": "Реальные результаты до и после обработки, показанные на странице приложения в App Store."
+      "ru": "Реальные результаты до и после обработки, показанные на странице приложения в App Store.",
+      "de": "Echte Vorher-Nachher-Ergebnisse aus der App, direkt aus dem Eintrag im App Store."
     }
   },
   "screens.items.0.cap": {
     "localizations": {
       "en": "Enhance photo quality",
-      "ru": "Улучшить качество фотографий"
+      "ru": "Улучшить качество фотографий",
+      "de": "Bildqualität verbessern"
     }
   },
   "screens.items.0.alt": {
     "localizations": {
       "en": "UScale enhancing a blurry graduation portrait, shown as a before and after split",
-      "ru": "Размытый выпускной портрет до и после улучшения в UScale"
+      "ru": "Размытый выпускной портрет до и после улучшения в UScale",
+      "de": "UScale verbessert ein unscharfes Abschlussfoto in einer geteilten Vorher-Nachher-Ansicht"
     },
     "comment": "Accessibility text describing an image."
   },
   "screens.items.1.cap": {
     "localizations": {
       "en": "Restore old photos",
-      "ru": "Восстановить старые фотографии"
+      "ru": "Восстановить старые фотографии",
+      "de": "Alte Fotos restaurieren"
     }
   },
   "screens.items.1.alt": {
     "localizations": {
       "en": "A damaged 1950s family photo restored and colorized in UScale",
-      "ru": "Повреждённая семейная фотография 1950-х годов восстановлена и раскрашена в UScale"
+      "ru": "Повреждённая семейная фотография 1950-х годов восстановлена и раскрашена в UScale",
+      "de": "Ein beschädigtes Familienfoto aus den 1950er-Jahren, mit UScale restauriert und koloriert"
     },
     "comment": "Accessibility text describing an image."
   },
   "screens.items.2.cap": {
     "localizations": {
       "en": "Private, offline processing",
-      "ru": "Конфиденциальная обработка на устройстве"
+      "ru": "Конфиденциальная обработка на устройстве",
+      "de": "Private Offline-Verarbeitung"
     }
   },
   "screens.items.2.alt": {
     "localizations": {
       "en": "A blurry outdoor photo sharpened on-device with no upload",
-      "ru": "Нечёткая уличная фотография стала резче после локальной обработки"
+      "ru": "Нечёткая уличная фотография стала резче после локальной обработки",
+      "de": "Ein unscharfes Outdoor-Foto, ohne Upload auf dem Gerät geschärft"
     },
     "comment": "Accessibility text describing an image."
   },
   "screens.items.3.cap": {
     "localizations": {
       "en": "Upscale any photo or video",
-      "ru": "Улучшить любое фото или видео"
+      "ru": "Улучшить любое фото или видео",
+      "de": "Jedes Foto oder Video hochskalieren"
     }
   },
   "screens.items.3.alt": {
     "localizations": {
       "en": "A pixelated illustration upscaled in UScale with the video timeline visible",
-      "ru": "Пикселизированная иллюстрация увеличена в UScale; внизу видна временная шкала видео"
+      "ru": "Пикселизированная иллюстрация увеличена в UScale; внизу видна временная шкала видео",
+      "de": "Eine verpixelte Illustration, mit UScale hochskaliert; die Videozeitleiste ist sichtbar"
     },
     "comment": "Accessibility text describing an image."
   },
   "screens.items.4.cap": {
     "localizations": {
       "en": "Brighten dark photos",
-      "ru": "Осветлить тёмные фотографии"
+      "ru": "Осветлить тёмные фотографии",
+      "de": "Dunkle Fotos aufhellen"
     }
   },
   "screens.items.4.alt": {
     "localizations": {
       "en": "A dark concert photo brightened with detail recovered in the shadows",
-      "ru": "Тёмный концертный портрет после осветления с восстановленными деталями в тенях"
+      "ru": "Тёмный концертный портрет после осветления с восстановленными деталями в тенях",
+      "de": "Ein dunkles Konzertfoto, aufgehellt und mit wiederhergestellten Details in den Schatten"
     },
     "comment": "Accessibility text describing an image."
   },
   "screens.items.5.cap": {
     "localizations": {
       "en": "Unblur your memories",
-      "ru": "Вернуть воспоминаниям чёткость"
+      "ru": "Вернуть воспоминаниям чёткость",
+      "de": "Erinnerungen schärfen"
     }
   },
   "screens.items.5.alt": {
     "localizations": {
       "en": "A blurry cat photo made sharp with the UScale unblur tool",
-      "ru": "Размытая фотография кошки стала чётче после устранения размытия в UScale"
+      "ru": "Размытая фотография кошки стала чётче после устранения размытия в UScale",
+      "de": "Ein unscharfes Katzenfoto, mit dem Schärfewerkzeug von UScale geschärft"
     },
     "comment": "Accessibility text describing an image."
   },
   "showcase.eyebrow": {
     "localizations": {
       "en": "Real results",
-      "ru": "Реальные результаты"
+      "ru": "Реальные результаты",
+      "de": "Echte Ergebnisse"
     }
   },
   "showcase.h2": {
     "localizations": {
       "en": "See UScale in action",
-      "ru": "Посмотрите, как работает UScale"
+      "ru": "Посмотрите, как работает UScale",
+      "de": "UScale in Aktion"
     }
   },
   "showcase.sub": {
@@ -693,248 +778,289 @@
   "showcase.cmp_label": {
     "localizations": {
       "en": "Before and after comparison of photos and videos enhanced with UScale",
-      "ru": "Сравнение фотографий и видео до и после улучшения с помощью UScale"
+      "ru": "Сравнение фотографий и видео до и после улучшения с помощью UScale",
+      "de": "Vorher-Nachher-Vergleich von mit UScale verbesserten Fotos und Videos"
     }
   },
   "showcase.tabs_label": {
     "localizations": {
       "en": "Choose a before and after example",
-      "ru": "Выберите пример до и после"
+      "ru": "Выберите пример до и после",
+      "de": "Vorher-Nachher-Beispiel auswählen"
     }
   },
   "showcase.on_device": {
     "localizations": {
       "en": "Processed on device",
-      "ru": "Обрабатывается на устройстве"
+      "ru": "Обрабатывается на устройстве",
+      "de": "Auf dem Gerät verarbeitet"
     }
   },
   "showcase.in_cloud": {
     "localizations": {
       "en": "Processed in cloud",
-      "ru": "Обрабатывается в облаке"
+      "ru": "Обрабатывается в облаке",
+      "de": "In der Cloud verarbeitet"
     }
   },
   "showcase.tip_device_h": {
     "localizations": {
       "en": "Stays on your iPhone",
-      "ru": "Остаётся на вашем iPhone"
+      "ru": "Остаётся на вашем iPhone",
+      "de": "Bleibt auf deinem iPhone"
     }
   },
   "showcase.tip_device_p": {
     "localizations": {
       "en": "The AI ran on the iPhone itself, so this photo never left the device — no upload, no account, and it works offline.",
-      "ru": "ИИ работает непосредственно на iPhone, поэтому фотография никуда не загружается. Регистрация не требуется, а обработка доступна офлайн."
+      "ru": "ИИ работает непосредственно на iPhone, поэтому фотография никуда не загружается. Регистрация не требуется, а обработка доступна офлайн.",
+      "de": "Die KI lief direkt auf dem iPhone. Deshalb hat dieses Foto das Gerät nie verlassen – kein Upload, kein Konto und auch offline verfügbar."
     }
   },
   "showcase.tip_video_h": {
     "localizations": {
       "en": "Stays on your iPhone",
-      "ru": "Остаётся на вашем iPhone"
+      "ru": "Остаётся на вашем iPhone",
+      "de": "Bleibt auf deinem iPhone"
     }
   },
   "showcase.tip_video_p": {
     "localizations": {
       "en": "Every frame was processed on the iPhone itself, so the clip never left the device — no upload, no account, and it works offline.",
-      "ru": "Каждый кадр обрабатывается непосредственно на iPhone, поэтому видео не покидает устройство. Регистрация не требуется, а обработка доступна офлайн."
+      "ru": "Каждый кадр обрабатывается непосредственно на iPhone, поэтому видео не покидает устройство. Регистрация не требуется, а обработка доступна офлайн.",
+      "de": "Jedes Einzelbild wurde direkt auf dem iPhone verarbeitet. Deshalb hat das Video das Gerät nie verlassen – kein Upload, kein Konto und auch offline verfügbar."
     }
   },
   "showcase.tip_cloud_h": {
     "localizations": {
       "en": "Processed with our advanced models",
-      "ru": "Обработано нашими продвинутыми моделями"
+      "ru": "Обработано нашими продвинутыми моделями",
+      "de": "Mit unseren fortschrittlichen Modellen verarbeitet"
     }
   },
   "showcase.tip_cloud_p": {
     "localizations": {
       "en": "These models are too heavy to run on a phone, so we run this kind of enhancement on our servers.",
-      "ru": "Эти модели слишком тяжёлы для телефона, поэтому такие улучшения выполняются на наших серверах."
+      "ru": "Эти модели слишком тяжёлы для телефона, поэтому такие улучшения выполняются на наших серверах.",
+      "de": "Diese Modelle sind zu rechenintensiv für ein Smartphone. Deshalb führen wir diese Art der Verbesserung auf unseren Servern aus."
     }
   },
   "showcase.tab_labels.0": {
     "localizations": {
       "en": "Portrait upscale",
-      "ru": "Улучшение портрета"
+      "ru": "Улучшение портрета",
+      "de": "Porträt hochskalieren"
     }
   },
   "showcase.tab_labels.1": {
     "localizations": {
       "en": "Landscape upscale",
-      "ru": "Улучшение пейзажа"
+      "ru": "Улучшение пейзажа",
+      "de": "Landschaft hochskalieren"
     }
   },
   "showcase.tab_labels.2": {
     "localizations": {
       "en": "Low quality portrait",
-      "ru": "Портрет низкого качества"
+      "ru": "Портрет низкого качества",
+      "de": "Porträt in niedriger Qualität"
     }
   },
   "showcase.tab_labels.3": {
     "localizations": {
       "en": "Old photo restore",
-      "ru": "Восстановление старого фото"
+      "ru": "Восстановление старого фото",
+      "de": "Altes Foto restaurieren"
     }
   },
   "showcase.tab_labels.4": {
     "localizations": {
       "en": "Faded family photo",
-      "ru": "Тусклый семейный снимок"
+      "ru": "Тусклый семейный снимок",
+      "de": "Verblasstes Familienfoto"
     }
   },
   "showcase.tab_labels.5": {
     "localizations": {
       "en": "Vintage portrait",
-      "ru": "Винтажный портрет"
+      "ru": "Винтажный портрет",
+      "de": "Historisches Porträt"
     }
   },
   "showcase.tab_labels.6": {
     "localizations": {
       "en": "Video upscale",
-      "ru": "Улучшение видео"
+      "ru": "Улучшение видео",
+      "de": "Video hochskalieren"
     }
   },
   "showcase.tab_labels.7": {
     "localizations": {
       "en": "AI slow motion",
-      "ru": "Плавное замедление с ИИ"
+      "ru": "Плавное замедление с ИИ",
+      "de": "KI-Zeitlupe"
     }
   },
   "how.eyebrow": {
     "localizations": {
       "en": "How it works",
-      "ru": "Как это работает"
+      "ru": "Как это работает",
+      "de": "So funktioniert’s"
     }
   },
   "how.h2": {
     "localizations": {
       "en": "Three taps from blurry to sharp",
-      "ru": "Три нажатия — и размытый снимок становится чётким"
+      "ru": "Три нажатия — и размытый снимок становится чётким",
+      "de": "Mit drei Fingertipps von unscharf zu scharf"
     }
   },
   "how.sub": {
     "localizations": {
       "en": "No layers, no masks, no tutorials. Pick a file, pick a tool, save the result.",
-      "ru": "Без слоёв, масок и сложных инструкций. Выберите файл, инструмент и сохраните результат."
+      "ru": "Без слоёв, масок и сложных инструкций. Выберите файл, инструмент и сохраните результат.",
+      "de": "Keine Ebenen, Masken oder Anleitungen. Datei wählen, Werkzeug wählen, Ergebnis speichern."
     }
   },
   "how.steps.0.h": {
     "localizations": {
       "en": "Pick a photo or video",
-      "ru": "Выберите фото или видео"
+      "ru": "Выберите фото или видео",
+      "de": "Foto oder Video auswählen"
     }
   },
   "how.steps.0.p": {
     "localizations": {
       "en": "Open UScale and choose any file from your library — a phone snap, a scanned print, a screenshot, a downloaded clip or a whole batch of photos.",
-      "ru": "Откройте UScale и выберите любой файл из медиатеки: снимок с телефона, отсканированный отпечаток, скриншот, загруженный ролик или целую серию фотографий."
+      "ru": "Откройте UScale и выберите любой файл из медиатеки: снимок с телефона, отсканированный отпечаток, скриншот, загруженный ролик или целую серию фотографий.",
+      "de": "Öffne UScale und wähle eine beliebige Datei aus deiner Mediathek – ein Handyfoto, einen eingescannten Abzug, einen Screenshot, ein heruntergeladenes Video oder einen ganzen Stapel Fotos."
     }
   },
   "how.steps.1.h": {
     "localizations": {
       "en": "Choose what to fix",
-      "ru": "Выберите, что нужно исправить"
+      "ru": "Выберите, что нужно исправить",
+      "de": "Verbesserung auswählen"
     }
   },
   "how.steps.1.p": {
     "localizations": {
       "en": "Enhance, unblur, 2× or 4× upscale, brighten, restore, colorize or slow motion. Every tool is a single tap and shows a live preview.",
-      "ru": "Повысьте резкость, уберите размытие, увеличьте в 2 или 4 раза, осветлите, восстановите, раскрасьте или замедлите. Каждый инструмент запускается одним нажатием и позволяет предварительно оценить результат."
+      "ru": "Повысьте резкость, уберите размытие, увеличьте в 2 или 4 раза, осветлите, восстановите, раскрасьте или замедлите. Каждый инструмент запускается одним нажатием и позволяет предварительно оценить результат.",
+      "de": "Verbessern, schärfen, 2× oder 4× hochskalieren, aufhellen, restaurieren, kolorieren oder verlangsamen. Jedes Werkzeug funktioniert mit einem Fingertipp und zeigt eine Live-Vorschau."
     }
   },
   "how.steps.2.h": {
     "localizations": {
       "en": "Compare and save",
-      "ru": "Сравните и сохраните"
+      "ru": "Сравните и сохраните",
+      "de": "Vergleichen und speichern"
     }
   },
   "how.steps.2.p": {
     "localizations": {
       "en": "Drag the before/after slider to check the result, then save it to your library or share it. Your original file is never overwritten.",
-      "ru": "Перетащите ползунок «До/После», чтобы проверить результат, затем сохраните его в медиатеку или поделитесь им. Исходный файл останется неизменным."
+      "ru": "Перетащите ползунок «До/После», чтобы проверить результат, затем сохраните его в медиатеку или поделитесь им. Исходный файл останется неизменным.",
+      "de": "Ziehe den Vorher-Nachher-Regler, um das Ergebnis zu prüfen. Speichere es dann in deiner Mediathek oder teile es. Deine Originaldatei wird nie überschrieben."
     }
   },
   "privacy.eyebrow": {
     "localizations": {
       "en": "Privacy first",
-      "ru": "Конфиденциальность прежде всего"
+      "ru": "Конфиденциальность прежде всего",
+      "de": "Privatsphäre zuerst"
     }
   },
   "privacy.h2": {
     "localizations": {
       "en": "Core enhancement runs entirely on your device",
-      "ru": "Обычные улучшения выполняются прямо на iPhone"
+      "ru": "Обычные улучшения выполняются прямо на iPhone",
+      "de": "Die wichtigsten Verbesserungen laufen vollständig auf deinem Gerät"
     }
   },
   "privacy.p": {
     "localizations": {
       "en": "Core enhancement — unblur, upscale, brighten, face restoration and slow motion — runs on the Neural Engine inside your device. There is no upload, no processing queue and no account to create.",
-      "ru": "Базовое улучшение — устранение размытия, повышение разрешения, осветление, работа с лицами и замедление видео — выполняется с помощью Neural Engine на вашем устройстве. Файлы никуда не загружаются, а регистрация не требуется."
+      "ru": "Базовое улучшение — устранение размытия, повышение разрешения, осветление, работа с лицами и замедление видео — выполняется с помощью Neural Engine на вашем устройстве. Файлы никуда не загружаются, а регистрация не требуется.",
+      "de": "Die wichtigsten Verbesserungen – Schärfen, Hochskalieren, Aufhellen, Gesichtsrestaurierung und Zeitlupe – laufen auf der Neural Engine in deinem Gerät. Es gibt keinen Upload, keine Warteschlange und du musst kein Konto erstellen."
     }
   },
   "privacy.points.0": {
     "localizations": {
       "en": "Works in airplane mode, with no internet connection at all",
-      "ru": "Работает в авиарежиме без подключения к интернету"
+      "ru": "Работает в авиарежиме без подключения к интернету",
+      "de": "Funktioniert im Flugmodus ganz ohne Internetverbindung"
     }
   },
   "privacy.points.1": {
     "localizations": {
       "en": "No sign-up, no email address, no photo library scanning",
-      "ru": "Без регистрации, адреса электронной почты и сканирования медиатеки"
+      "ru": "Без регистрации, адреса электронной почты и сканирования медиатеки",
+      "de": "Keine Anmeldung, keine E-Mail-Adresse, kein Scannen deiner Fotomediathek"
     }
   },
   "privacy.points.2": {
     "localizations": {
       "en": "Your originals stay untouched — results are saved as new copies",
-      "ru": "Ваши оригиналы остаются неизменными — результаты сохраняются как новые копии"
+      "ru": "Ваши оригиналы остаются неизменными — результаты сохраняются как новые копии",
+      "de": "Deine Originale bleiben unverändert – Ergebnisse werden als neue Kopien gespeichert"
     }
   },
   "privacy.points.3": {
     "localizations": {
       "en": "Only Creative Upscale and advanced restoration use cloud AI, and only when you tap them",
-      "ru": "Только Creative Upscale и продвинутое восстановление используют облачный ИИ — и лишь когда вы сами запускаете эти функции"
+      "ru": "Только «Креативное увеличение» и продвинутое восстановление используют облачный ИИ — и лишь когда вы сами запускаете эти функции",
+      "de": "Nur „Kreatives Hochskalieren“ und die erweiterte Restaurierung nutzen Cloud-KI – und nur, wenn du sie antippst"
     }
   },
   "privacy.img_alt": {
     "localizations": {
       "en": "UScale enhancing a photo offline on an iPhone, with airplane mode enabled",
-      "ru": "UScale улучшает фотографию офлайн на iPhone с включённым авиарежимом"
+      "ru": "UScale улучшает фотографию офлайн на iPhone с включённым авиарежимом",
+      "de": "UScale verbessert auf einem iPhone im Flugmodus offline ein Foto"
     },
     "comment": "Accessibility text describing an image."
   },
   "faq.eyebrow": {
     "localizations": {
       "en": "FAQ",
-      "ru": "Часто задаваемые вопросы"
+      "ru": "Часто задаваемые вопросы",
+      "de": "FAQ"
     }
   },
   "faq.h2": {
     "localizations": {
       "en": "Frequently asked questions",
-      "ru": "Часто задаваемые вопросы"
+      "ru": "Часто задаваемые вопросы",
+      "de": "Häufig gestellte Fragen"
     }
   },
   "faq.sub": {
     "localizations": {
       "en": "Pricing, privacy and how UScale runs on your device.",
-      "ru": "Ответы на вопросы о стоимости, конфиденциальности и работе UScale на вашем устройстве."
+      "ru": "Ответы на вопросы о стоимости, конфиденциальности и работе UScale на вашем устройстве.",
+      "de": "Preise, Datenschutz und die Verarbeitung durch UScale auf deinem Gerät."
     }
   },
   "faq.learn_more": {
     "localizations": {
       "en": "Learn more",
-      "ru": "Узнать больше"
+      "ru": "Узнать больше",
+      "de": "Mehr erfahren"
     }
   },
   "faq.items.0.q": {
     "localizations": {
       "en": "How much does UScale cost?",
-      "ru": "Сколько стоит UScale?"
+      "ru": "Сколько стоит UScale?",
+      "de": "Was kostet UScale?"
     }
   },
   "faq.items.0.a": {
     "localizations": {
       "en": "The app is free for {free_photos_per_day} photo enhancements a day. Premium is {annual_price} a year and starts with a {trial_days}-day free trial with everything unlocked. Prices vary slightly by region.",
-      "ru": "Бесплатный лимит — {free_photos_per_day} фото в день. Премиум-версия стоит {annual_price} в год и включает {trial_days}-дневный пробный период с доступом ко всем функциям. Цены могут немного отличаться в зависимости от региона."
+      "ru": "Бесплатный лимит — {free_photos_per_day} фото в день. Премиум-версия стоит {annual_price} в год и включает {trial_days}-дневный пробный период с доступом ко всем функциям. Цены могут немного отличаться в зависимости от региона.",
+      "de": "Die App ist für {free_photos_per_day} Fotoverbesserungen pro Tag kostenlos. Premium kostet {annual_price} pro Jahr und beginnt mit einer kostenlosen Testphase von {trial_days} Tagen, in der alle Funktionen freigeschaltet sind. Die Preise variieren je nach Region geringfügig."
     },
     "comment": "Preserve every {placeholder} exactly."
   },
@@ -948,13 +1074,15 @@
   "faq.items.1.q": {
     "localizations": {
       "en": "What languages does UScale support?",
-      "ru": "Какие языки поддерживает UScale?"
+      "ru": "Какие языки поддерживает UScale?",
+      "de": "Welche Sprachen unterstützt UScale?"
     }
   },
   "faq.items.1.a": {
     "localizations": {
       "en": "UScale is available in 27 languages — Arabic, Chinese (Simplified), Chinese (Traditional), Dutch, English, Finnish, French, German, Hebrew, Hindi, Hungarian, Indonesian, Italian, Japanese, Korean, Malay, Norwegian, Polish, Portuguese, Romanian, Russian, Spanish, Swedish, Thai, Turkish, Ukrainian and Vietnamese.",
-      "ru": "UScale доступен на 27 языках: арабском, упрощённом и традиционном китайском, нидерландском, английском, финском, французском, немецком, иврите, хинди, венгерском, индонезийском, итальянском, японском, корейском, малайском, норвежском, польском, португальском, румынском, русском, испанском, шведском, тайском, турецком, украинском и вьетнамском."
+      "ru": "UScale доступен на 27 языках: арабском, упрощённом и традиционном китайском, нидерландском, английском, финском, французском, немецком, иврите, хинди, венгерском, индонезийском, итальянском, японском, корейском, малайском, норвежском, польском, португальском, румынском, русском, испанском, шведском, тайском, турецком, украинском и вьетнамском.",
+      "de": "UScale ist in 27 Sprachen verfügbar: Arabisch, Chinesisch (vereinfacht), Chinesisch (traditionell), Niederländisch, Englisch, Finnisch, Französisch, Deutsch, Hebräisch, Hindi, Ungarisch, Indonesisch, Italienisch, Japanisch, Koreanisch, Malaiisch, Norwegisch, Polnisch, Portugiesisch, Rumänisch, Russisch, Spanisch, Schwedisch, Thailändisch, Türkisch, Ukrainisch und Vietnamesisch."
     }
   },
   "faq.items.1.href": {
@@ -967,13 +1095,15 @@
   "faq.items.2.q": {
     "localizations": {
       "en": "How does UScale use my data?",
-      "ru": "Как UScale использует мои данные?"
+      "ru": "Как UScale использует мои данные?",
+      "de": "Wie verwendet UScale meine Daten?"
     }
   },
   "faq.items.2.a": {
     "localizations": {
       "en": "Enhance, unblur, upscale, brighten, face restoration and slow motion run on your device, so those photos never leave your phone. Creative Upscale and advanced restoration are processed on our servers, and only when you pick them: the result stays available for download for a limited time and is then deleted. There is no account and no sign-up.",
-      "ru": "Устранение размытия, увеличение, осветление, улучшение лиц и замедление видео выполняются на устройстве, поэтому эти файлы не покидают iPhone или iPad. Creative Upscale и продвинутое восстановление обрабатываются на сервере, и только когда вы сами их выбираете. Результат хранится ограниченное время, затем удаляется. Регистрация не требуется."
+      "ru": "Устранение размытия, увеличение, осветление, улучшение лиц и замедление видео выполняются на устройстве, поэтому эти файлы не покидают iPhone или iPad. «Креативное увеличение» и продвинутое восстановление обрабатываются на сервере, и только когда вы сами их выбираете. Результат хранится ограниченное время, затем удаляется. Регистрация не требуется.",
+      "de": "Verbessern, Schärfen, Hochskalieren, Aufhellen, Gesichtsrestaurierung und Zeitlupe laufen auf deinem Gerät. Deshalb verlassen diese Fotos dein Smartphone nie. „Kreatives Hochskalieren“ und die erweiterte Restaurierung werden nur dann auf unseren Servern verarbeitet, wenn du sie auswählst. Das Ergebnis steht für begrenzte Zeit zum Herunterladen bereit und wird anschließend gelöscht. Es gibt kein Konto und keine Anmeldung."
     }
   },
   "faq.items.2.href": {
@@ -986,13 +1116,15 @@
   "faq.items.3.q": {
     "localizations": {
       "en": "Is my iPhone or iPad compatible?",
-      "ru": "Подходит ли мой iPhone или iPad?"
+      "ru": "Подходит ли мой iPhone или iPad?",
+      "de": "Ist mein iPhone oder iPad kompatibel?"
     }
   },
   "faq.items.3.a": {
     "localizations": {
       "en": "UScale needs iOS {minimum_ios} or later and runs on iPhone and iPad. On iPad the before and after are shown side by side.",
-      "ru": "UScale требует iOS {minimum_ios} или новее и работает на iPhone и iPad. На iPad изображения до и после показываются рядом."
+      "ru": "UScale требует iOS {minimum_ios} или новее и работает на iPhone и iPad. На iPad изображения до и после показываются рядом.",
+      "de": "UScale benötigt iOS {minimum_ios} oder neuer und läuft auf iPhone und iPad. Auf dem iPad werden Vorher und Nachher nebeneinander angezeigt."
     },
     "comment": "Preserve every {placeholder} exactly."
   },
@@ -1006,13 +1138,15 @@
   "faq.items.4.q": {
     "localizations": {
       "en": "Does UScale work without an internet connection?",
-      "ru": "Работает ли UScale без интернет-соединения?"
+      "ru": "Работает ли UScale без интернет-соединения?",
+      "de": "Funktioniert UScale ohne Internetverbindung?"
     }
   },
   "faq.items.4.a": {
     "localizations": {
       "en": "Yes. The on-device tools work in airplane mode. Only Creative Upscale and advanced restoration need a connection.",
-      "ru": "Да. Инструменты на устройстве работают в авиарежиме. Только Creative Upscale и продвинутое восстановление требуют подключения к интернету."
+      "ru": "Да. Инструменты на устройстве работают в авиарежиме. Только «Креативное увеличение» и продвинутое восстановление требуют подключения к интернету.",
+      "de": "Ja. Die Werkzeuge auf dem Gerät funktionieren im Flugmodus. Nur „Kreatives Hochskalieren“ und die erweiterte Restaurierung benötigen eine Verbindung."
     }
   },
   "faq.items.4.href": {
@@ -1025,13 +1159,15 @@
   "faq.items.5.q": {
     "localizations": {
       "en": "How do I cancel my subscription?",
-      "ru": "Как отменить подписку?"
+      "ru": "Как отменить подписку?",
+      "de": "Wie kündige ich mein Abonnement?"
     }
   },
   "faq.items.5.a": {
     "localizations": {
       "en": "Subscriptions are handled by Apple. Open the App Store, tap your profile picture, choose Subscriptions, select UScale and cancel it there. If you were charged by mistake, the refund is requested from Apple at reportaproblem.apple.com.",
-      "ru": "Подписками управляет Apple. Откройте App Store, нажмите фотографию профиля, выберите «Подписки», найдите UScale и отмените подписку. Если списание произошло по ошибке, запросите возврат на reportaproblem.apple.com."
+      "ru": "Подписками управляет Apple. Откройте App Store, нажмите фотографию профиля, выберите «Подписки», найдите UScale и отмените подписку. Если списание произошло по ошибке, запросите возврат на reportaproblem.apple.com.",
+      "de": "Abonnements werden von Apple verwaltet. Öffne den App Store, tippe auf dein Profilbild, wähle „Abonnements“, dann UScale und kündige es dort. Wenn dir versehentlich etwas berechnet wurde, beantragst du die Erstattung bei Apple unter reportaproblem.apple.com."
     }
   },
   "faq.items.5.href": {
@@ -1044,90 +1180,120 @@
   "faq.items.5.cta": {
     "localizations": {
       "en": "Manage subscriptions on apple.com",
-      "ru": "Управлять подписками на apple.com"
+      "ru": "Управлять подписками на apple.com",
+      "de": "Abonnements auf apple.com verwalten"
     }
   },
   "sale.title": {
     "localizations": {
       "en": "UScale Premium Sale — {off} off",
-      "ru": "Скидка на UScale Premium — {off}"
+      "ru": "Скидка на UScale Premium — {off}",
+      "de": "UScale Premium-Angebot – {off} Rabatt"
     },
     "comment": "Page or section title; preserve product names. Preserve every {placeholder} exactly."
   },
   "sale.description": {
     "localizations": {
       "en": "Unlock UScale Premium with {off} off. Open the app from this link and the discount is active for one hour on your device.",
-      "ru": "Откройте UScale по этой ссылке и активируйте скидку {off} на Premium."
+      "ru": "Откройте UScale по этой ссылке и активируйте скидку {off} на Premium.",
+      "de": "Sichere dir UScale Premium mit {off} Rabatt. Öffne die App über diesen Link; der Rabatt ist auf deinem Gerät eine Stunde lang aktiv."
     },
     "comment": "Description copy; keep factual claims unchanged. Preserve every {placeholder} exactly."
   },
   "sale.pill": {
     "localizations": {
       "en": "Limited-time offer",
-      "ru": "Ограниченное предложение"
+      "ru": "Ограниченное предложение",
+      "de": "Zeitlich begrenztes Angebot"
     }
   },
   "sale.off": {
     "localizations": {
       "en": "{off} OFF",
-      "ru": "СКИДКА {off}"
+      "ru": "СКИДКА {off}",
+      "de": "{off} RABATT"
     },
     "comment": "Preserve every {placeholder} exactly."
   },
   "sale.h1": {
     "localizations": {
       "en": "Save <em>{off}</em> on Premium",
-      "ru": "Получите <em>скидку {off}</em> на Premium"
+      "ru": "Получите <em>скидку {off}</em> на Premium",
+      "de": "Spare <em>{off}</em> bei Premium"
     },
     "comment": "Preserve every {placeholder} exactly. Contains HTML; translate visible text and preserve tags, attributes, and URLs."
   },
   "sale.sub": {
     "localizations": {
       "en": "Open this link in UScale to unlock the discounted Premium price for one hour.",
-      "ru": "Откройте приложение по этой ссылке — цена со скидкой будет доступна в течение часа."
+      "ru": "Откройте приложение по этой ссылке — цена со скидкой будет доступна в течение часа.",
+      "de": "Öffne diesen Link in UScale, um den rabattierten Premium-Preis für eine Stunde freizuschalten."
     }
   },
   "sale.promo": {
     "localizations": {
       "en": "Promo code",
-      "ru": "Промокод"
+      "ru": "Промокод",
+      "de": "Aktionscode"
     }
   },
   "sale.open": {
     "localizations": {
       "en": "Open in app",
-      "ru": "Открыть в приложении"
+      "ru": "Открыть в приложении",
+      "de": "In App öffnen"
     }
   },
   "sale.note": {
     "localizations": {
       "en": "Already installed? iOS opens UScale straight from this link. No app yet? Install it and reopen the same link.",
-      "ru": "UScale уже установлен? iOS сразу откроет его. Если нет — установите и снова откройте эту ссылку."
+      "ru": "UScale уже установлен? iOS сразу откроет его. Если нет — установите и снова откройте эту ссылку.",
+      "de": "Schon installiert? iOS öffnet UScale direkt über diesen Link. Noch keine App? Installiere sie und öffne denselben Link erneut."
     }
   },
   "sale.badge": {
     "localizations": {
       "en": "Best value",
-      "ru": "Лучшая цена"
+      "ru": "Лучшая цена",
+      "de": "Bestes Angebot"
     }
   },
   "sale.image_alt": {
     "localizations": {
       "en": "UScale Premium in the app",
-      "ru": "UScale Premium в приложении"
+      "ru": "UScale Premium в приложении",
+      "de": "UScale Premium in der App"
     },
     "comment": "Accessibility text describing an image."
   },
   "sale.cta_h": {
     "localizations": {
       "en": "App not opening yet?",
-      "ru": "Приложение не открылось?"
+      "ru": "Приложение не открылось?",
+      "de": "App öffnet sich noch nicht?"
     }
   },
   "sale.cta_p": {
     "localizations": {
       "en": "Install UScale from the App Store, then open this same sale link again — the promo code stays attached.",
-      "ru": "Установите UScale из App Store, затем снова откройте эту ссылку — промокод сохранится."
+      "ru": "Установите UScale из App Store, затем снова откройте эту ссылку — промокод сохранится.",
+      "de": "Installiere UScale aus dem App Store und öffne denselben Angebotslink erneut – der Aktionscode bleibt verknüpft."
     }
+  },
+  "faq.items.6.q": {
+    "localizations": {
+      "ru": "Как улучшить качество фото на айфоне?"
+    },
+    "locales": [
+      "ru"
+    ]
+  },
+  "faq.items.6.a": {
+    "localizations": {
+      "ru": "Откройте UScale, выберите снимок и режим обработки: «Обычное увеличение» и «Улучшить лица» работают прямо на айфоне и никуда не отправляют фото, а «Креативное увеличение» дорисовывает детали и поднимает разрешение до 4K в облаке. Бесплатный лимит — {free_photos_per_day} фото в день."
+    },
+    "locales": [
+      "ru"
+    ]
   }
 }
