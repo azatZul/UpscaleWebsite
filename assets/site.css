@@ -479,9 +479,12 @@ html:lang(ja) h1,html:lang(ja) h2,html:lang(ja) h3,html:lang(ja) h4{
   text-shadow:0 1px 10px rgba(0,0,0,.75),0 0 2px rgba(0,0,0,.5)}
 .cmp-lb.l{right:calc(100% + var(--sh)*.05)}
 .cmp-lb.r{left:calc(100% + var(--sh)*.05)}
-/* Keep page dots on the visible half of the device. */
-.phone-dots{position:absolute;z-index:6;bottom:clamp(10px,calc(var(--sh)*.05),30px);
-  left:clamp(12px,calc(var(--sh)*.06),36px);display:flex;align-items:center;
+/* Keep page dots on the visible half of the device. The frame-relative offsets
+   account for the transparent screen inset now that the controls sit beside
+   .phone-body instead of inside its clipped screen. */
+.phone-dots{position:absolute;z-index:6;
+  bottom:calc(4.8722% + clamp(10px,calc(var(--sh)*.05),30px));
+  left:calc(2.1193% + clamp(12px,calc(var(--sh)*.06),36px));display:flex;align-items:center;
   gap:clamp(1px,calc(var(--sh)*.006),5px);padding:clamp(2px,calc(var(--sh)*.008),6px);
   border-radius:99px;background:rgba(8,10,16,.42);backdrop-filter:blur(10px);
   box-shadow:0 2px 14px rgba(0,0,0,.4),inset 0 0 0 1px rgba(255,255,255,.14)}
@@ -890,9 +893,10 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:64px 0 34
   .hero-lead .hero-chips{grid-row:2}
   .hero-lead .hero-stage{grid-row:3}
   .cmp{max-width:520px;margin:0 auto}
-  .hero-stage{min-height:calc(48vw + 24px)}
-  .hero-stage .phone{--pw:min(104vw,720px);left:50%;transform:translate(-50%,-50%)}
-  .phone-dots{left:50%;transform:translateX(-50%)}
+  .hero-stage{min-height:max(calc(48vw + 24px),min(calc(51.2vw + 64px),418px))}
+  .hero-stage .phone{--pw:min(104vw,720px);left:50%;top:0;transform:translateX(-50%)}
+  .phone-dots{top:calc(100% + 8px);bottom:auto;left:50%;transform:translateX(-50%)}
+  .cmp-tab.dot{min-width:44px;min-height:44px;align-items:center;justify-content:center;padding:0}
   .cmp-wide{--cmp-h:540px}
   .split{grid-template-columns:minmax(0,1fr);gap:34px;padding:38px 28px}
   .steps{grid-template-columns:repeat(2,1fr)}
@@ -932,7 +936,6 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:64px 0 34
   .cmp-tab.lg{flex:0 0 auto}
   .cmp-tab.lg .cmp-thumb{width:88px}
   .cmp-cap{font-size:11.5px;max-width:92px}
-  .cmp-tab.dot{min-width:44px;min-height:44px;align-items:center;justify-content:center;padding:0}
   .art h2{margin-top:40px}
   .opt-switch{padding:13px 15px;gap:12px;flex-wrap:wrap}
   .opt-txt{flex:1 1 140px}

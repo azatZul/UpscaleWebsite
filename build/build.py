@@ -310,10 +310,10 @@ def hero_phone(c, h):
               <img class="b" src="{s['before']}" width="{s['bw']}" height="{s['bh']}" style="object-position:{s['pos']}" alt="{esc(h['before_alt'])}" fetchpriority="high" decoding="async">
               <span class="cmp-bar" aria-label="{esc(h['drag'])}"><b class="cmp-lb l">{esc(h['before'])}</b><b class="cmp-lb r">{esc(h['after'])}</b></span>
             </div>
-            {switch}
           </div>
           <img class="phone-frame" src="{f['src']}" width="{f['w']}" height="{f['h']}" alt="" aria-hidden="true" fetchpriority="high" decoding="async">
         </div>
+        {switch}
       </div>
     </div>"""
 
