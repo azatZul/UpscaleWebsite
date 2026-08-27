@@ -66,8 +66,9 @@ The 12 locales use *native* keywords pulled from their own store — not machine
 ### 🇧🇷 Portuguese (`/pt/`) — stores br, pt
 `melhorar qualidade da foto` (p57, d67) · `aprimorar foto` (p48, d59) · `qualidade da foto` (p48) · `melhorar qualidade de vídeo` (p29, d55) · `limpar foto` (p26, d72) · `restaurar fotos antigas` (p6→d52) · `melhorar foto antiga` (p5, **d5** — easy win) · `realçador de fotos` (p5, d50) · `aprimorar qualidade foto grátis` (p5, d17)
 
-### 🇫🇷 French (`/fr/`)
-`améliorer la qualité photo` (p47, d46) · `unblur photo` (p35, d42) · `améliorer la qualité vidéo` (p15, d54) · `déflouter des images` (p12, **d19**) · `améliorer photo` (p9, d57) · `netteté photo` (p6) · `restaurer & améliorer photos` (p5, d23) · `agrandisseur` (p5, **d5**) · `amélioration qualité photos ia` (p7, d23)
+### 🇫🇷 French (`/fr/`) — live
+
+→ **[`localization/keywords/fr.md`](localization/keywords/fr.md)** — ASO, web demand, traps, copy rules and the placement map.
 
 ### 🇩🇪 German (`/de/`) — live
 
@@ -113,7 +114,7 @@ The 12 locales use *native* keywords pulled from their own store — not machine
 /sale.html                         "uscale discount / lifetime deal"    (kept, redesigned)
 ```
 
-Current indexable set: **48 pages** — English, German and Russian versions of the landing, guide hub, 10 guides, comparison, support, terms and privacy pages. `/sale.html` is `noindex,follow` in every locale and stays out of the sitemap. A locale joins the indexable `hreflang` cluster automatically once it is translated in every section file under `localization/`; locales without translated content cannot be built.
+Current indexable set: **80 pages** — English, German, Russian, Japanese and French versions of the landing, guide hub, 10 guides, comparison, support, terms and privacy pages. `/sale.html` is `noindex,follow` in every locale and stays out of the sitemap. A locale joins the indexable `hreflang` cluster automatically once it is translated in every section file under `localization/`; locales without translated content cannot be built.
 
 ## 5. On-page SEO checklist applied to every generated page
 

@@ -391,6 +391,9 @@ CURRENCIES = {
 # Decimal and thousands separators, and whether a percent sign is spaced off.
 NUMBER_FORMATS = {
     "en": (".", ",", ""),
+    # French groups with a no-break space and spaces the percent sign off, the
+    # same convention the French copy already uses before ":" and inside "\u00ab \u00bb".
+    "fr": (",", "\u00a0", "\u00a0"),
     "de": (",", ".", "\u00a0"),
     "ru": (",", "\u00a0", ""),
 }
@@ -648,10 +651,17 @@ def appstore_btn(c, cls=""):
     are emitted so the theme can cross-fade between them the way the rest of the
     palette does. The accessible name still has to be built here, and Japanese
     inverts the lockup — the "App Store" service mark leads and the translated
-    modifier follows, which is the order the phrase reads in."""
+    modifier follows, which is the order the phrase reads in. French elides its
+    article onto the mark ("Télécharger dans l’App Store"), so a lead ending in
+    an apostrophe joins with no space, the way Apple's own artwork sets it."""
     lang = c["lang"]
     lead, mark = c["ui"]["download_on"], c["ui"]["app_store"]
-    label = esc(f"{mark}{lead}" if lang in MARK_FIRST_LOCALES else f"{lead} {mark}")
+    if lang in MARK_FIRST_LOCALES:
+        label = f"{mark}{lead}"
+    else:
+        gap = "" if lead.endswith(("’", "'")) else " "
+        label = f"{lead}{gap}{mark}"
+    label = esc(label)
     width = badge_width(lang)
     art = "".join(
         f'<img class="badge-{colour}" src="/resources/appstore/badges/{lang}-{colour}.svg" '

@@ -24,7 +24,7 @@ class CatalogTests(unittest.TestCase):
         self.assertEqual(len(records), len(owners))
 
     def test_renderer_payloads_are_complete(self):
-        for locale in ("en", "ru", "de", "ja"):
+        for locale in ("en", "ru", "de", "ja", "fr"):
             data = catalog.load_locale(locale)
             self.assertEqual(data["lang"], locale)
             self.assertEqual(len(data["guide_pages"]), 10)
@@ -53,11 +53,16 @@ class CatalogTests(unittest.TestCase):
         # facts file and assert only the grouping separator each locale uses.
         digits = str(site_build.RATING_COUNT)
         self.assertEqual(len(digits), 4, "regroup the expectations below")
-        grouped = {"en": ",", "de": ".", "ru": "\u00a0", "ja": ","}
+        grouped = {"en": ",", "fr": "\u00a0", "de": ".", "ru": "\u00a0", "ja": ","}
         template = "{rating_count} · {annual_price} · {off}"
         self.assertEqual(
             site_build.inject_facts(template, "en"),
             f"{digits[0]}{grouped['en']}{digits[1:]} · $39.99 · 25%",
+        )
+        # France and Germany share the euro tier but not the grouping mark.
+        self.assertEqual(
+            site_build.inject_facts(template, "fr"),
+            f"{digits[0]}{grouped['fr']}{digits[1:]} · 44,99\u00a0\u20ac · 25\u00a0%",
         )
         self.assertEqual(
             site_build.inject_facts(template, "de"),
@@ -76,14 +81,33 @@ class CatalogTests(unittest.TestCase):
     def test_rating_uses_the_locale_decimal_mark(self):
         self.assertEqual(site_build.rating_text("en"), "4.6")
         self.assertEqual(site_build.rating_text("ja"), "4.6")
+        self.assertEqual(site_build.rating_text("fr"), "4,6")
         self.assertEqual(site_build.rating_text("de"), "4,6")
         self.assertEqual(site_build.rating_text("ru"), "4,6")
 
     def test_locale_without_own_prices_falls_back_to_the_reference_currency(self):
-        self.assertEqual(site_build.locale_pricing("fr"), site_build._PRICING["default"])
+        self.assertEqual(site_build.locale_pricing("es"), site_build._PRICING["default"])
+
+    def test_app_store_badge_reads_the_way_apple_sets_the_phrase(self):
+        """The badge artwork carries no text, so this is its accessible name.
+
+        Japanese leads with the service mark, and French elides the article onto
+        it — "Télécharger dans l’ App Store" would be read out with a gap that
+        Apple's own artwork does not have.
+        """
+        expected = {
+            "en": "Download on the App Store",
+            "fr": "Télécharger dans l’App Store",
+            "de": "Laden im App Store",
+            "ru": "Загрузите в App Store",
+            "ja": "App Storeからダウンロード",
+        }
+        for locale, label in expected.items():
+            button = site_build.appstore_btn(catalog.load_locale(locale))
+            self.assertIn(f'aria-label="{label}"', button, locale)
 
     def test_translations_name_app_features_in_their_own_language(self):
-        """Guides must not tell a German, Russian or Japanese reader to tap an English label.
+        """Guides must not tell a translated reader to tap an English label.
 
         Every one of these is localized in the app itself
         (Upscaler/Upscaler/Resources/Localizable.xcstrings), so quoting the
@@ -103,7 +127,7 @@ class CatalogTests(unittest.TestCase):
             f"{key}[{locale}]: {label}"
             for key, record in records.items()
             for locale, text in record["localizations"].items()
-            if locale in ("de", "ru", "ja") and isinstance(text, str)
+            if locale in ("de", "ru", "ja", "fr") and isinstance(text, str)
             for label in english_only
             if re.search(rf"(?<![\w\u201e\u00ab-]){re.escape(label)}(?![\w\u201c\u00bb])", text)
         ]
@@ -163,7 +187,7 @@ class CatalogTests(unittest.TestCase):
 
     def test_export_rejects_unknown_or_target_source_languages(self):
         with self.assertRaises(catalog.CatalogError):
-            localize._validate_language_selection("de", ("fr",))
+            localize._validate_language_selection("de", ("xx",))
         with self.assertRaises(catalog.CatalogError):
             localize._validate_language_selection("de", ("en", "de"))
 

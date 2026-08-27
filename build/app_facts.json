@@ -18,6 +18,10 @@
       "annual": 39.99,
       "annual_sale": 29.99
     },
+    "fr": {
+      "currency": "EUR",
+      "annual": 44.99
+    },
     "de": {
       "currency": "EUR",
       "annual": 44.99

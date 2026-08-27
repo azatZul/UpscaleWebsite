@@ -4,7 +4,8 @@
       "en": "AI Photo & Video Enhancer",
       "ru": "Улучшение качества фото и видео",
       "de": "KI-Verbesserung für Fotos und Videos",
-      "ja": "AIで写真・動画を高画質化"
+      "ja": "AIで写真・動画を高画質化",
+      "fr": "Amélioration photo et vidéo par IA"
     }
   },
   "nav.menu": {
@@ -12,7 +13,8 @@
       "en": "Menu",
       "ru": "Меню",
       "de": "Menü",
-      "ja": "メニュー"
+      "ja": "メニュー",
+      "fr": "Menu"
     }
   },
   "nav.features": {
@@ -20,7 +22,8 @@
       "en": "Features",
       "ru": "Функции",
       "de": "Funktionen",
-      "ja": "機能"
+      "ja": "機能",
+      "fr": "Fonctions"
     }
   },
   "nav.screens": {
@@ -28,7 +31,8 @@
       "en": "Examples",
       "ru": "Примеры",
       "de": "Beispiele",
-      "ja": "使用例"
+      "ja": "使用例",
+      "fr": "Exemples"
     }
   },
   "nav.how": {
@@ -36,7 +40,8 @@
       "en": "How it works",
       "ru": "Как это работает",
       "de": "So funktioniert’s",
-      "ja": "使い方"
+      "ja": "使い方",
+      "fr": "Fonctionnement"
     }
   },
   "nav.guides": {
@@ -44,7 +49,8 @@
       "en": "Guides",
       "ru": "Руководства",
       "de": "Anleitungen",
-      "ja": "ガイド"
+      "ja": "ガイド",
+      "fr": "Guides"
     }
   },
   "nav.faq": {
@@ -52,7 +58,8 @@
       "en": "FAQ",
       "ru": "Часто задаваемые вопросы",
       "de": "FAQ",
-      "ja": "よくある質問"
+      "ja": "よくある質問",
+      "fr": "FAQ"
     }
   },
   "nav.compare": {
@@ -60,7 +67,8 @@
       "en": "Comparison",
       "ru": "Сравнение",
       "de": "Vergleich",
-      "ja": "比較"
+      "ja": "比較",
+      "fr": "Comparatif"
     }
   },
   "nav.cta": {
@@ -68,7 +76,8 @@
       "en": "Get UScale",
       "ru": "Скачать UScale",
       "de": "UScale laden",
-      "ja": "UScaleを入手"
+      "ja": "UScaleを入手",
+      "fr": "Obtenir UScale"
     }
   },
   "ui.download_on": {
@@ -76,7 +85,8 @@
       "en": "Download on the",
       "ru": "Загрузите в",
       "de": "Laden im",
-      "ja": "からダウンロード"
+      "ja": "からダウンロード",
+      "fr": "Télécharger dans l’"
     }
   },
   "ui.app_store": {
@@ -84,7 +94,8 @@
       "en": "App Store",
       "ru": "App Store",
       "de": "App Store",
-      "ja": "App Store"
+      "ja": "App Store",
+      "fr": "App Store"
     }
   },
   "ui.language": {
@@ -92,7 +103,8 @@
       "en": "Language",
       "ru": "Язык",
       "de": "Sprache",
-      "ja": "言語"
+      "ja": "言語",
+      "fr": "Langue"
     }
   },
   "ui.skip_to_content": {
@@ -100,7 +112,8 @@
       "en": "Skip to content",
       "ru": "Перейти к содержимому",
       "de": "Zum Inhalt springen",
-      "ja": "コンテンツへ移動"
+      "ja": "コンテンツへ移動",
+      "fr": "Aller au contenu"
     }
   },
   "ui.theme_light": {
@@ -108,7 +121,8 @@
       "en": "Switch to light theme",
       "ru": "Переключить на светлую тему",
       "de": "Zum hellen Design wechseln",
-      "ja": "ライトテーマに切り替える"
+      "ja": "ライトテーマに切り替える",
+      "fr": "Passer au thème clair"
     }
   },
   "ui.theme_dark": {
@@ -116,7 +130,8 @@
       "en": "Switch to dark theme",
       "ru": "Переключить на тёмную тему",
       "de": "Zum dunklen Design wechseln",
-      "ja": "ダークテーマに切り替える"
+      "ja": "ダークテーマに切り替える",
+      "fr": "Passer au thème sombre"
     }
   },
   "ui.icon_alt": {
@@ -124,7 +139,8 @@
       "en": "UScale AI photo enhancer app icon",
       "ru": "Значок приложения UScale для улучшения фотографий с помощью ИИ",
       "de": "App-Symbol von UScale zur KI-Fotoverbesserung",
-      "ja": "UScaleのAI写真高画質化アプリアイコン"
+      "ja": "UScaleのAI写真高画質化アプリアイコン",
+      "fr": "Icône de UScale, outil IA pour améliorer les photos"
     },
     "comment": "Accessibility text describing an image."
   },
@@ -133,7 +149,8 @@
       "en": "Home",
       "ru": "Главная",
       "de": "Startseite",
-      "ja": "ホーム"
+      "ja": "ホーム",
+      "fr": "Accueil"
     }
   },
   "ui.updated": {
@@ -141,7 +158,8 @@
       "en": "Updated",
       "ru": "Обновлено",
       "de": "Aktualisiert",
-      "ja": "更新日"
+      "ja": "更新日",
+      "fr": "Mis à jour"
     }
   },
   "ui.by": {
@@ -149,7 +167,8 @@
       "en": "By the UScale team",
       "ru": "Команда UScale",
       "de": "Vom UScale-Team",
-      "ja": "UScaleチーム"
+      "ja": "UScaleチーム",
+      "fr": "Par l’équipe UScale"
     }
   },
   "ui.next_guide": {
@@ -157,7 +176,8 @@
       "en": "Next guide",
       "ru": "Следующее руководство",
       "de": "Nächste Anleitung",
-      "ja": "次のガイド"
+      "ja": "次のガイド",
+      "fr": "Guide suivant"
     }
   },
   "ui.keep_reading": {
@@ -165,7 +185,8 @@
       "en": "Keep reading",
       "ru": "Продолжить чтение",
       "de": "Weiterlesen",
-      "ja": "続きを読む"
+      "ja": "続きを読む",
+      "fr": "Continuer la lecture"
     }
   },
   "ui.sound_off": {
@@ -173,7 +194,8 @@
       "en": "Mute sound",
       "ru": "Выключить звук",
       "de": "Ton ausschalten",
-      "ja": "消音"
+      "ja": "消音",
+      "fr": "Couper le son"
     }
   },
   "ui.sound_on": {
@@ -181,7 +203,8 @@
       "en": "Play sound",
       "ru": "Включить звук",
       "de": "Ton einschalten",
-      "ja": "音声を再生"
+      "ja": "音声を再生",
+      "fr": "Activer le son"
     }
   },
   "ui.paused": {
@@ -189,7 +212,8 @@
       "en": "Paused",
       "ru": "Пауза",
       "de": "Pausiert",
-      "ja": "一時停止"
+      "ja": "一時停止",
+      "fr": "En pause"
     }
   },
   "ui.on_this_page": {
@@ -197,7 +221,8 @@
       "en": "On this page",
       "ru": "На этой странице",
       "de": "Auf dieser Seite",
-      "ja": "このページの内容"
+      "ja": "このページの内容",
+      "fr": "Sur cette page"
     }
   },
   "cta.h2": {
@@ -205,7 +230,8 @@
       "en": "Make your photos sharp again",
       "ru": "Сделайте свои фотографии чётче",
       "de": "Mach deine Fotos wieder scharf",
-      "ja": "写真をもう一度鮮明に"
+      "ja": "写真をもう一度鮮明に",
+      "fr": "Rendez vos photos nettes à nouveau"
     }
   },
   "cta.p": {
@@ -213,7 +239,8 @@
       "en": "Free to start, no account. On-device tools keep your pictures on your phone.",
       "ru": "Начните бесплатно — регистрация не требуется. При локальной обработке фотографии останутся на вашем устройстве.",
       "de": "Kostenlos starten, ohne Konto. Bei der Verarbeitung auf dem Gerät bleiben deine Bilder auf deinem iPhone.",
-      "ja": "無料で始められ、アカウントは不要です。デバイス上で処理するツールなら、写真はiPhoneの中に留まります。"
+      "ja": "無料で始められ、アカウントは不要です。デバイス上で処理するツールなら、写真はiPhoneの中に留まります。",
+      "fr": "Essayez gratuitement, sans compte. Les outils sur l’appareil gardent vos photos sur votre téléphone."
     }
   },
   "cta.note": {
@@ -221,7 +248,8 @@
       "en": "iPhone and iPad · iOS {minimum_ios} or later",
       "ru": "iPhone и iPad · iOS {minimum_ios} или новее",
       "de": "iPhone und iPad · iOS {minimum_ios} oder neuer",
-      "ja": "iPhoneとiPad · iOS {minimum_ios}以降"
+      "ja": "iPhoneとiPad · iOS {minimum_ios}以降",
+      "fr": "iPhone et iPad · iOS {minimum_ios} ou version ultérieure"
     },
     "comment": "Preserve every {placeholder} exactly."
   },
@@ -230,7 +258,8 @@
       "en": "AI photo and video enhancer for iPhone and iPad. Unblur and upscale on your device, restore old photos with cloud AI.",
       "ru": "Приложение для улучшения фото и видео с помощью ИИ на iPhone и iPad. Убирайте размытие и повышайте разрешение на устройстве, а старые снимки восстанавливайте с помощью облачного ИИ.",
       "de": "KI-Verbesserung für Fotos und Videos auf iPhone und iPad. Entferne Unschärfe und skaliere Fotos auf deinem Gerät hoch, restauriere alte Fotos mit Cloud-KI.",
-      "ja": "iPhoneとiPad向けのAI写真・動画高画質化アプリです。デバイス上でぼやけを鮮明にして解像度を上げ、古い写真はクラウドAIで修復します。"
+      "ja": "iPhoneとiPad向けのAI写真・動画高画質化アプリです。デバイス上でぼやけを鮮明にして解像度を上げ、古い写真はクラウドAIで修復します。",
+      "fr": "Outil IA pour améliorer les photos et vidéos sur iPhone et iPad. Défloutez et agrandissez sur votre appareil, restaurez les photos anciennes avec l’IA dans le cloud."
     }
   },
   "footer.product": {
@@ -238,7 +267,8 @@
       "en": "Product",
       "ru": "Продукт",
       "de": "Produkt",
-      "ja": "製品"
+      "ja": "製品",
+      "fr": "Produit"
     }
   },
   "footer.reviews": {
@@ -246,7 +276,8 @@
       "en": "Reviews",
       "ru": "Отзывы",
       "de": "Bewertungen",
-      "ja": "レビュー"
+      "ja": "レビュー",
+      "fr": "Avis"
     }
   },
   "footer.all_guides": {
@@ -254,7 +285,8 @@
       "en": "All guides",
       "ru": "Все руководства",
       "de": "Alle Anleitungen",
-      "ja": "ガイド一覧"
+      "ja": "ガイド一覧",
+      "fr": "Tous les guides"
     }
   },
   "footer.support": {
@@ -262,7 +294,8 @@
       "en": "Support",
       "ru": "Поддержка",
       "de": "Support",
-      "ja": "サポート"
+      "ja": "サポート",
+      "fr": "Assistance"
     }
   },
   "footer.help": {
@@ -270,7 +303,8 @@
       "en": "Help & support",
       "ru": "Помощь и поддержка",
       "de": "Hilfe und Support",
-      "ja": "ヘルプとサポート"
+      "ja": "ヘルプとサポート",
+      "fr": "Aide et assistance"
     }
   },
   "footer.privacy": {
@@ -278,7 +312,8 @@
       "en": "Privacy Policy",
       "ru": "Политика конфиденциальности",
       "de": "Datenschutzerklärung",
-      "ja": "プライバシーポリシー"
+      "ja": "プライバシーポリシー",
+      "fr": "Politique de confidentialité"
     }
   },
   "footer.terms": {
@@ -286,7 +321,8 @@
       "en": "Terms of Use",
       "ru": "Условия использования",
       "de": "Nutzungsbedingungen",
-      "ja": "利用規約"
+      "ja": "利用規約",
+      "fr": "Conditions d’utilisation"
     }
   },
   "footer.appstore": {
@@ -294,7 +330,8 @@
       "en": "App Store page",
       "ru": "Страница в App Store",
       "de": "Seite im App Store",
-      "ja": "App Storeページ"
+      "ja": "App Storeページ",
+      "fr": "Page App Store"
     }
   },
   "footer.rights": {
@@ -302,7 +339,8 @@
       "en": "All rights reserved.",
       "ru": "Все права защищены.",
       "de": "Alle Rechte vorbehalten.",
-      "ja": "すべての権利を留保します。"
+      "ja": "すべての権利を留保します。",
+      "fr": "Tous droits réservés."
     }
   },
   "footer.made": {
@@ -310,7 +348,8 @@
       "en": "Made for the photos worth keeping.",
       "ru": "Создано для тех, кто ценит свои фотографии.",
       "de": "Für Fotos, die es wert sind, bewahrt zu werden.",
-      "ja": "残しておきたい写真のために作りました。"
+      "ja": "残しておきたい写真のために作りました。",
+      "fr": "Pour les photos qui méritent d’être gardées."
     }
   },
   "ui.breadcrumb": {
@@ -318,7 +357,8 @@
       "en": "Breadcrumb",
       "ru": "Навигационная цепочка",
       "de": "Brotkrümelnavigation",
-      "ja": "パンくずリスト"
+      "ja": "パンくずリスト",
+      "fr": "Fil d’Ariane"
     }
   }
 }
