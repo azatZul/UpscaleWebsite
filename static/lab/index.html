@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#07080d">
+  <title>Private browser upscaler — UScale lab</title>
+  <meta name="description" content="Prototype UScale image processing that runs privately in your browser.">
+  <link rel="icon" type="image/png" sizes="512x512" href="/resources/appstore/icon_512.png">
+  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="stylesheet" href="/assets/lab.css">
+</head>
+<body class="lab-page">
+  <div class="glow" aria-hidden="true"></div>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="nav">
+    <div class="wrap nav-in">
+      <a class="brand" href="/">
+        <img src="/resources/appstore/icon_180.png" width="34" height="34" alt="UScale app icon">
+        <span>UScale<small>Browser processing lab</small></span>
+      </a>
+      <span class="lab-badge">Prototype</span>
+      <a class="lab-back" href="/">Back to website</a>
+    </div>
+  </header>
+
+  <main id="main-content" tabindex="-1">
+    <section class="lab-hero wrap">
+      <div class="lab-intro">
+        <span class="eyebrow">Runs on this device</span>
+        <h1>Improve a photo without uploading it.</h1>
+        <p>Your browser downloads the same enhancement models used by UScale and processes the image locally. Close the page and the photo is gone.</p>
+        <ul class="lab-promises" aria-label="Privacy and processing details">
+          <li><span>✓</span> No upload</li>
+          <li><span>✓</span> No account</li>
+          <li><span>✓</span> GPU when available</li>
+        </ul>
+      </div>
+
+      <div class="lab-card" id="tool-card">
+        <div class="lab-step">
+          <span>1</span>
+          <div><b>Choose an enhancement</b><small>You can change this before processing.</small></div>
+        </div>
+        <div class="mode-grid" role="radiogroup" aria-label="Enhancement mode">
+          <button class="mode-choice active" type="button" role="radio" aria-checked="true" data-mode="upscale">
+            <span class="mode-mark">2×</span>
+            <b>Regular upscale</b>
+            <small>Sharper, twice the size</small>
+          </button>
+          <button class="mode-choice" type="button" role="radio" aria-checked="false" data-mode="face">
+            <span class="mode-mark face-mark">☺</span>
+            <b>Face enhancement</b>
+            <small>GFPGAN faces + 2× background</small>
+          </button>
+        </div>
+
+        <div class="lab-step">
+          <span>2</span>
+          <div><b>Choose a photo</b><small>JPEG, PNG or WebP. Nothing is sent away.</small></div>
+        </div>
+        <label class="drop-zone" id="drop-zone">
+          <input id="photo-input" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+          <span class="drop-icon" aria-hidden="true">＋</span>
+          <b>Drop a photo here</b>
+          <small>or tap to browse</small>
+        </label>
+
+        <div class="selected-photo" id="selected-photo" hidden>
+          <img id="source-thumb" alt="Selected photo preview">
+          <div><b id="source-name"></b><small id="source-size"></small></div>
+          <button type="button" id="change-photo">Change</button>
+        </div>
+
+        <details class="lab-settings">
+          <summary>Processing settings</summary>
+          <label for="backend">Hardware</label>
+          <select id="backend">
+            <option value="auto">Automatic</option>
+            <option value="webgpu">GPU</option>
+            <option value="wasm">CPU</option>
+          </select>
+        </details>
+
+        <button class="btn btn-p btn-xl lab-run" type="button" id="process-button" disabled>
+          <span>Choose a photo to begin</span><span class="arrow" aria-hidden="true">→</span>
+        </button>
+        <div class="lab-status" id="status" role="status" aria-live="polite" hidden>
+          <div class="status-line"><b id="status-title">Preparing…</b><span id="status-value">0%</span></div>
+          <div class="status-track"><span id="status-progress"></span></div>
+          <p id="status-detail"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lab-results wrap" id="results" hidden>
+      <div class="head">
+        <span class="eyebrow">Finished locally</span>
+        <h2 class="h2">Your enhanced photo</h2>
+        <p class="lead" id="result-summary"></p>
+      </div>
+      <div class="result-stage">
+        <figure><img id="result-image" alt="Enhanced result"><figcaption>Enhanced</figcaption></figure>
+      </div>
+      <div class="result-actions">
+        <a class="btn btn-p" id="download-result" download="uscale-enhanced.jpg">Download image</a>
+        <button class="btn btn-g" id="process-another" type="button">Process another</button>
+      </div>
+      <dl class="run-facts" id="run-facts"></dl>
+    </section>
+
+    <section class="benchmark-panel wrap" id="benchmark-panel" hidden>
+      <div class="head">
+        <span class="eyebrow">Engineering check</span>
+        <h2 class="h2">Browser benchmark</h2>
+        <p class="lead">Runs the browser models over the same test pictures and compares every pixel with the iOS Core ML result.</p>
+      </div>
+      <div class="benchmark-actions">
+        <button class="btn btn-p" type="button" id="benchmark-upscale">Benchmark Regular 2×</button>
+        <button class="btn btn-g" type="button" id="benchmark-face">Benchmark GFPGAN</button>
+      </div>
+      <pre id="benchmark-output">Add ?benchmark=1 to the page address to show this panel.</pre>
+    </section>
+  </main>
+
+  <footer class="lab-footer">
+    <div class="wrap"><span>UScale browser processing experiment</span><span>Photos stay on this device</span></div>
+  </footer>
+  <script type="importmap">
+    {"imports":{"onnxruntime-web/webgpu":"/assets/lab/vendor/ort.webgpu.min.mjs","@mediapipe/tasks-vision":"/assets/lab/vendor/vision_bundle.mjs"}}
+  </script>
+  <script type="module" src="/assets/lab/lab.js"></script>
+</body>
+</html>

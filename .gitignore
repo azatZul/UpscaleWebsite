@@ -5,6 +5,9 @@ dist/
 __pycache__/
 *.pyc
 
+# javascript
+node_modules/
+
 # editors / OS
 .DS_Store
 ._*
@@ -17,3 +20,11 @@ Thumbs.db
 
 # temporary source/target packages created by build/localize.py
 localization_work/
+
+# Local browser-ML artifacts. Recreate with scripts/prepare_web_models.py;
+# the face model is ~86 MB and belongs in model hosting rather than Git.
+static/models/*.onnx
+static/models/*.ort
+static/models/*.task
+assets/lab/
+.web-model-work/

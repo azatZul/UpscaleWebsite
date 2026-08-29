@@ -1,0 +1,308 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-08-28T15:50:18.168827+00:00",
+  "model": "face",
+  "reference": "coreml",
+  "candidate": "onnx:/tmp/uscale-web-models.AdFV7Q/face_512.onnx",
+  "forced_input_size": null,
+  "benchmark_runs_per_case": 1,
+  "candidate_sha256": "7333260230803fbff15b60f3eaf4cee12bb85bf978f92b72c7dc86d99418bf2f",
+  "thresholds": {
+    "psnr_min": 45.0,
+    "ssim_min": 0.995,
+    "mae_max": 0.008,
+    "edge_mae_max": 0.018
+  },
+  "passed": true,
+  "aggregate": {
+    "case_count": 12,
+    "minimum_psnr": 58.449113887934516,
+    "minimum_ssim": 0.9970934130940564,
+    "maximum_mae": 0.0010081003806078218,
+    "maximum_edge_mae": 0.0015033218764143597,
+    "candidate_latency_ms_p50": 1265.8048959856387,
+    "candidate_latency_ms_p95": 1334.8521436360897
+  },
+  "cases": [
+    {
+      "name": "black",
+      "input_size": [
+        512,
+        512
+      ],
+      "candidate_latency_ms": {
+        "runs": 1,
+        "median": 1310.9237500466406,
+        "minimum": 1310.9237500466406,
+        "maximum": 1310.9237500466406
+      },
+      "metrics": {
+        "mae": 0.0010081003806078218,
+        "rmse": 0.0011575095860721692,
+        "max_error": 0.0020430320873856544,
+        "psnr": 58.729508072532674,
+        "ssim": 0.9970934130940564,
+        "edge_mae": 0.0013331412177067876
+      },
+      "passed": true,
+      "failures": []
+    },
+    {
+      "name": "white",
+      "input_size": [
+        512,
+        512
+      ],
+      "candidate_latency_ms": {
+        "runs": 1,
+        "median": 1364.0979580231942,
+        "minimum": 1364.0979580231942,
+        "maximum": 1364.0979580231942
+      },
+      "metrics": {
+        "mae": 0.00010991308780224547,
+        "rmse": 0.0003780835551937811,
+        "max_error": 0.0056056976318359375,
+        "psnr": 68.44824423872726,
+        "ssim": 0.9998678674714555,
+        "edge_mae": 0.00018149894424094115
+      },
+      "passed": true,
+      "failures": []
+    },
+    {
+      "name": "gray",
+      "input_size": [
+        512,
+        512
+      ],
+      "candidate_latency_ms": {
+        "runs": 1,
+        "median": 1264.355124963913,
+        "minimum": 1264.355124963913,
+        "maximum": 1264.355124963913
+      },
+      "metrics": {
+        "mae": 0.0009836180048428862,
+        "rmse": 0.001137317564849287,
+        "max_error": 0.005076766014099121,
+        "psnr": 58.88236507027045,
+        "ssim": 0.998985189084226,
+        "edge_mae": 0.0013911070668686971
+      },
+      "passed": true,
+      "failures": []
+    },
+    {
+      "name": "gradient",
+      "input_size": [
+        512,
+        512
+      ],
+      "candidate_latency_ms": {
+        "runs": 1,
+        "median": 1282.8789170016535,
+        "minimum": 1282.8789170016535,
+        "maximum": 1282.8789170016535
+      },
+      "metrics": {
+        "mae": 0.000973055591554884,
+        "rmse": 0.0011954854797991425,
+        "max_error": 0.018411070108413696,
+        "psnr": 58.449113887934516,
+        "ssim": 0.9990564901583122,
+        "edge_mae": 0.0013460654016202646
+      },
+      "passed": true,
+      "failures": []
+    },
+    {
+      "name": "checker",
+      "input_size": [
+        512,
+        512
+      ],
+      "candidate_latency_ms": {
+        "runs": 1,
+        "median": 1275.8703749859706,
+        "minimum": 1275.8703749859706,
+        "maximum": 1275.8703749859706
+      },
+      "metrics": {
+        "mae": 0.0009826700218506328,
+        "rmse": 0.0011367294594735093,
+        "max_error": 0.0024926364421844482,
+        "psnr": 58.886857693728814,
+        "ssim": 0.999410998005771,
+        "edge_mae": 0.0015033218764143597
+      },
+      "passed": true,
+      "failures": []
+    },
+    {
+      "name": "impulse",
+      "input_size": [
+        512,
+        512
+      ],
+      "candidate_latency_ms": {
+        "runs": 1,
+        "median": 1260.2569999871776,
+        "minimum": 1260.2569999871776,
+        "maximum": 1260.2569999871776
+      },
+      "metrics": {
+        "mae": 0.0010078568183529936,
+        "rmse": 0.0011568923906337654,
+        "max_error": 0.0020436299964785576,
+        "psnr": 58.73414070907907,
+        "ssim": 0.9970999864439892,
+        "edge_mae": 0.0013343386938627078
+      },
+      "passed": true,
+      "failures": []
+    },
+    {
+      "name": "noise_seed_c0de",
+      "input_size": [
+        512,
+        512
+      ],
+      "candidate_latency_ms": {
+        "runs": 1,
+        "median": 1279.2972499737516,
+        "minimum": 1279.2972499737516,
+        "maximum": 1279.2972499737516
+      },
+      "metrics": {
+        "mae": 0.0009850953719781803,
+        "rmse": 0.0011400797340333539,
+        "max_error": 0.0060065388679504395,
+        "psnr": 58.86129548485332,
+        "ssim": 0.9994728377654427,
+        "edge_mae": 0.0013418775196882818
+      },
+      "passed": true,
+      "failures": []
+    },
+    {
+      "name": "asset_face_preview_blured_2",
+      "input_size": [
+        512,
+        512
+      ],
+      "candidate_latency_ms": {
+        "runs": 1,
+        "median": 1255.2126250229776,
+        "minimum": 1255.2126250229776,
+        "maximum": 1255.2126250229776
+      },
+      "metrics": {
+        "mae": 0.000980780951030269,
+        "rmse": 0.0011332511012092366,
+        "max_error": 0.0024326443672180176,
+        "psnr": 58.91347700507907,
+        "ssim": 0.9993760909987094,
+        "edge_mae": 0.001349580941720419
+      },
+      "passed": true,
+      "failures": []
+    },
+    {
+      "name": "asset_face_preview_original",
+      "input_size": [
+        512,
+        512
+      ],
+      "candidate_latency_ms": {
+        "runs": 1,
+        "median": 1260.1917919819243,
+        "minimum": 1260.1917919819243,
+        "maximum": 1260.1917919819243
+      },
+      "metrics": {
+        "mae": 0.0009821496608187392,
+        "rmse": 0.001135054740589642,
+        "max_error": 0.0032044649124145508,
+        "psnr": 58.89966386258471,
+        "ssim": 0.9991899192710335,
+        "edge_mae": 0.001424165642453711
+      },
+      "passed": true,
+      "failures": []
+    },
+    {
+      "name": "asset_snejana_blured",
+      "input_size": [
+        512,
+        512
+      ],
+      "candidate_latency_ms": {
+        "runs": 1,
+        "median": 1260.9359999769367,
+        "minimum": 1260.9359999769367,
+        "maximum": 1260.9359999769367
+      },
+      "metrics": {
+        "mae": 0.0009803801787982753,
+        "rmse": 0.001132739310443494,
+        "max_error": 0.002436727285385132,
+        "psnr": 58.917400550528995,
+        "ssim": 0.9991849361349271,
+        "edge_mae": 0.0013770050451835894
+      },
+      "passed": true,
+      "failures": []
+    },
+    {
+      "name": "asset_girls_blured",
+      "input_size": [
+        512,
+        512
+      ],
+      "candidate_latency_ms": {
+        "runs": 1,
+        "median": 1267.2546670073643,
+        "minimum": 1267.2546670073643,
+        "maximum": 1267.2546670073643
+      },
+      "metrics": {
+        "mae": 0.0009817837901774744,
+        "rmse": 0.0011342915176150569,
+        "max_error": 0.00261843204498291,
+        "psnr": 58.905506312367294,
+        "ssim": 0.9992163641726205,
+        "edge_mae": 0.0013702066886560353
+      },
+      "passed": true,
+      "failures": []
+    },
+    {
+      "name": "asset_japan_blured",
+      "input_size": [
+        512,
+        512
+      ],
+      "candidate_latency_ms": {
+        "runs": 1,
+        "median": 1251.4951660414226,
+        "minimum": 1251.4951660414226,
+        "maximum": 1251.4951660414226
+      },
+      "metrics": {
+        "mae": 0.0009284196852902522,
+        "rmse": 0.0011051654443216155,
+        "max_error": 0.0033257007598876953,
+        "psnr": 59.13145405627337,
+        "ssim": 0.9991948349559351,
+        "edge_mae": 0.0013306987413069437
+      },
+      "passed": true,
+      "failures": []
+    }
+  ],
+  "environment": {
+    "python": "3.12.13 (main, Aug  7 2026, 02:15:23) [Clang 22.1.3 ]",
+    "platform": "macOS-27.0-arm64-arm-64bit"
+  }
+}

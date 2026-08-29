@@ -6,6 +6,21 @@
 /resources/*
   Cache-Control: public, max-age=604800
 
+# Optional multi-core WebAssembly requires an isolated page. All lab
+# dependencies are served from this site, so these headers stay self-contained.
+/lab/*
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+  Cache-Control: no-store
+
+/models/*
+  Cache-Control: public, max-age=31536000, immutable
+  Cross-Origin-Resource-Policy: same-origin
+
+/benchmarks/*
+  Cache-Control: public, max-age=604800
+  Cross-Origin-Resource-Policy: same-origin
+
 # Keep Apple association files fresh and correctly typed.
 /.well-known/apple-app-site-association
   Content-Type: application/json

@@ -1,0 +1,17 @@
+{
+  "name": "uscale-website-browser-lab",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:lab": "vite build --config vite.lab.config.js && node scripts/copy_lab_runtime.mjs",
+    "build": "npm run build:lab && python3.12 build/build.py",
+    "preview:lab": "node scripts/serve_lab.mjs"
+  },
+  "dependencies": {
+    "@mediapipe/tasks-vision": "1.0.1",
+    "onnxruntime-web": "1.23.2"
+  },
+  "devDependencies": {
+    "vite": "8.2.2"
+  }
+}

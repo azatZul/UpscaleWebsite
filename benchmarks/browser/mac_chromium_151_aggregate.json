@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-08-29T10:52:29.038Z",
+  "device": {
+    "browser": "Chromium 151 (Codex in-app browser)",
+    "operatingSystem": "macOS",
+    "logicalCores": 10,
+    "deviceMemoryGb": 32,
+    "webgpu": true,
+    "cpuWorkers": 1
+  },
+  "reference": "iOS Core ML PNG corpus",
+  "thresholds": {
+    "psnrMin": 42,
+    "ssimMin": 0.995,
+    "maeMax": 0.008,
+    "edgeMaeMax": 0.018
+  },
+  "modelBenchmarks": [
+    {
+      "model": "Regular 2x",
+      "backend": "WebGPU",
+      "cases": 17,
+      "passed": true,
+      "latencyMsP50": 513.24,
+      "latencyMsP95": 531.322,
+      "minimumPsnr": 57.279557,
+      "minimumSsim": 0.998649,
+      "maximumMae": 0.001314,
+      "maximumEdgeMae": 0.001718
+    },
+    {
+      "model": "Regular 2x",
+      "backend": "WASM CPU",
+      "cases": 17,
+      "passed": true,
+      "latencyMsP50": 3894.725,
+      "latencyMsP95": 3958.278,
+      "minimumPsnr": 57.279574,
+      "minimumSsim": 0.998649,
+      "maximumMae": 0.001314,
+      "maximumEdgeMae": 0.001718
+    },
+    {
+      "model": "GFPGAN 1.4 face",
+      "backend": "WebGPU",
+      "cases": 12,
+      "passed": true,
+      "latencyMsP50": 708.31,
+      "latencyMsP95": 725.321,
+      "minimumPsnr": 58.448244,
+      "minimumSsim": 0.997156,
+      "maximumMae": 0.001008,
+      "maximumEdgeMae": 0.001503
+    },
+    {
+      "model": "GFPGAN 1.4 face",
+      "backend": "WASM CPU",
+      "cases": 12,
+      "passed": true,
+      "latencyMsP50": 9749.555,
+      "latencyMsP95": 10183.069,
+      "minimumPsnr": 58.449667,
+      "minimumSsim": 0.997156,
+      "maximumMae": 0.001008,
+      "maximumEdgeMae": 0.001503
+    }
+  ],
+  "endToEndChecks": [
+    {
+      "mode": "Regular 2x",
+      "input": "840x560",
+      "output": "1680x1120",
+      "work": "12 overlapping tiles",
+      "backend": "WebGPU",
+      "modelWorkMs": 6020,
+      "totalMs": 6420,
+      "passed": true
+    },
+    {
+      "mode": "Face enhancement",
+      "input": "400x360",
+      "output": "800x720",
+      "work": "4 overlapping background tiles and 1 face",
+      "backend": "WebGPU",
+      "modelWorkMs": 3070,
+      "totalMs": 9400,
+      "passed": true
+    }
+  ],
+  "notes": [
+    "CPU uses one worker because this was the reliable cross-browser baseline in the embedded Chromium test browser.",
+    "Model download times are excluded from the comparison because the local server and browser cache do not represent a real internet connection.",
+    "Each model benchmark compares browser output directly against PNGs produced by the iOS Core ML model."
+  ]
+}
