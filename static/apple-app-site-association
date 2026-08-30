@@ -8,7 +8,7 @@
         "components": [
           {
             "/": "/sale.html",
-            "comment": "Open sale landing page in the app when UpScale is installed."
+            "comment": "Open sale landing page in the app when UScale is installed."
           }
         ]
       }

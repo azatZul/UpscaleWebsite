@@ -83,10 +83,23 @@ class CatalogTests(unittest.TestCase):
         self.assertEqual(site_build.rating_text("ja"), "4.6")
         self.assertEqual(site_build.rating_text("fr"), "4,6")
         self.assertEqual(site_build.rating_text("de"), "4,6")
+        self.assertEqual(site_build.rating_text("es"), "4,6")
         self.assertEqual(site_build.rating_text("ru"), "4,6")
 
     def test_locale_without_own_prices_falls_back_to_the_reference_currency(self):
-        self.assertEqual(site_build.locale_pricing("es"), site_build._PRICING["default"])
+        """Pick the locale by absence, not by name.
+
+        This used to name "es", which then acquired its own euro price and made
+        the test assert the opposite of what it describes.
+        """
+        unpriced = next(
+            code
+            for code in ("pt", "it", "ko", "zh", "hi", "tr")
+            if code not in site_build._PRICING
+        )
+        self.assertEqual(
+            site_build.locale_pricing(unpriced), site_build._PRICING["default"]
+        )
 
     def test_app_store_badge_reads_the_way_apple_sets_the_phrase(self):
         """The badge artwork carries no text, so this is its accessible name.

@@ -391,6 +391,9 @@ CURRENCIES = {
 # Decimal and thousands separators, and whether a percent sign is spaced off.
 NUMBER_FORMATS = {
     "en": (".", ",", ""),
+    # Spanish prices are quoted in euros, so the copy follows the RAE
+    # convention the euro is written with rather than the Mexican one.
+    "es": (",", ".", "\u00a0"),
     # French groups with a no-break space and spaces the percent sign off, the
     # same convention the French copy already uses before ":" and inside "\u00ab \u00bb".
     "fr": (",", "\u00a0", "\u00a0"),

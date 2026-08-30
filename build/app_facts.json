@@ -7,7 +7,7 @@
   "minimum_ios": "16",
   "rating": {
     "value": 4.6,
-    "count": 1580
+    "count": 1582
   },
   "free_limits": {
     "photos_per_day": 2
@@ -17,6 +17,10 @@
       "currency": "USD",
       "annual": 39.99,
       "annual_sale": 29.99
+    },
+    "es": {
+      "currency": "EUR",
+      "annual": 44.99
     },
     "fr": {
       "currency": "EUR",
