@@ -96,10 +96,6 @@
             return;
         }
 
-        if (response.status === 410) {
-            showError("This result has expired", "Its images have reached the end of their sharing period.");
-            return;
-        }
         if (response.status === 404) {
             showError("This result wasn’t found", "It may have expired, or the link may be incomplete.");
             return;
