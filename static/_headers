@@ -14,3 +14,10 @@
 /apple-app-site-association
   Content-Type: application/json
   Cache-Control: public, max-age=0, must-revalidate
+
+# Shared processing results are private-by-link and must not be indexed or embedded.
+/results/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+  Referrer-Policy: no-referrer
+  X-Content-Type-Options: nosniff
+  Content-Security-Policy: default-src 'self'; connect-src 'self' https://auralens-406817559814.us-central1.run.app; img-src 'self' data: https://auralens-406817559814.us-central1.run.app; style-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
