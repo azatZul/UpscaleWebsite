@@ -229,7 +229,28 @@
   font-size: 14px;
 }
 
-.result-upsell .btn {
+.result-upsell-store {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.result-appstore {
+  width: 149.5px;
+  height: 50px;
+  border-radius: 10.5px;
+}
+
+.result-upsell-store > span {
+  color: var(--tx-3);
+  font-size: 11.5px;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.result-upsell .appstore {
   flex: 0 0 auto;
 }
 
@@ -325,8 +346,8 @@
     padding: 17px;
   }
 
-  .result-upsell .btn {
-    width: 100%;
+  .result-upsell-store {
+    align-items: flex-start;
   }
 }
 
