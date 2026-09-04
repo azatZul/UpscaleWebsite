@@ -32,9 +32,10 @@ python3 scripts/upscale_result/upscale_result.py \
   --flow photo-restoration \
   --output-format jpg \
   --safety-tolerance 2 \
+  --seed 42 \
   --retention 7
 ```
 
-Photo Restoration supports `--output-format jpg|png|webp` and `--safety-tolerance 0|1|2`, where `0` is strictest and `2` is most permissive. Creative Upscale remains the default flow and supports `--creativity -2..2` and `--resolution 2k|4k|8k`.
+Photo Restoration supports `--output-format jpg|png|webp`, `--safety-tolerance 0|1|2`, where `0` is strictest and `2` is most permissive, and an optional integer `--seed` for reproducible output. Creative Upscale remains the default flow and supports `--creativity -2..2` and `--resolution 2k|4k|8k`.
 
 HTTP URLs are rejected by default. `--allow-http` exists only for local development.

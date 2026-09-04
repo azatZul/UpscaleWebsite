@@ -170,6 +170,7 @@ def test_create_share_url_runs_photo_restoration_with_model_parameters():
         flow="photo-restoration",
         output_format="png",
         safety_tolerance=1,
+        seed=8675309,
     )
 
     assert result_url.endswith("2d51c93a-af14-4ca8-a216-650885fd76bf")
@@ -181,6 +182,7 @@ def test_create_share_url_runs_photo_restoration_with_model_parameters():
     assert restore_request["data"] == {
         "output_format": "png",
         "safety_tolerance": "1",
+        "seed": "8675309",
     }
     assert restore_request["headers"] == {"Authorization": "Bearer secret"}
     assert publish_url.endswith("/internal/v1/results")
@@ -189,6 +191,7 @@ def test_create_share_url_runs_photo_restoration_with_model_parameters():
         "processing_kind": "photo_restoration",
         "output_format": "png",
         "safety_tolerance": "1",
+        "seed": "8675309",
     }
     assert publish_request["files"]["after"][0] == "after.png"
     assert publish_request["files"]["after"][2] == "image/png"

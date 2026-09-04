@@ -185,6 +185,7 @@ def create_share_url(
     flow: str = "creative-upscale",
     output_format: str = "jpg",
     safety_tolerance: int = 2,
+    seed: Optional[int] = None,
 ) -> str:
     if flow not in {"creative-upscale", "photo-restoration"}:
         raise ToolError("Flow must be creative-upscale or photo-restoration")
@@ -256,14 +257,17 @@ def create_share_url(
         download_label = "upscaled"
     else:
         print("Starting Photo Restoration…", file=sys.stderr)
+        restoration_data = {
+            "output_format": output_format,
+            "safety_tolerance": str(safety_tolerance),
+        }
+        if seed is not None:
+            restoration_data["seed"] = str(seed)
         try:
             response = session.post(
                 f"{api_base_url}/internal/v1/photo-restoration-jobs",
                 headers=headers,
-                data={
-                    "output_format": output_format,
-                    "safety_tolerance": str(safety_tolerance),
-                },
+                data=restoration_data,
                 files={"image": ("source.jpg", before_data, "image/jpeg")},
                 timeout=(10, max(90.0, poll_timeout)),
             )
@@ -278,6 +282,8 @@ def create_share_url(
             "output_format": output_format,
             "safety_tolerance": str(safety_tolerance),
         }
+        if seed is not None:
+            processing_data["seed"] = str(seed)
         idempotency_prefix = "restore"
         download_label = "restored"
 
@@ -370,6 +376,12 @@ def _parser() -> argparse.ArgumentParser:
         help="Photo Restoration safety tolerance: 0 strict to 2 permissive (default: 2)",
     )
     parser.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="Optional Photo Restoration seed for reproducible output",
+    )
+    parser.add_argument(
         "--poll-interval",
         type=float,
         default=None,
@@ -412,6 +424,7 @@ def main() -> int:
             flow=args.flow,
             output_format=args.output_format,
             safety_tolerance=args.safety_tolerance,
+            seed=args.seed,
         )
     except ToolError as error:
         print(f"Error: {error}", file=sys.stderr)
