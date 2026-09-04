@@ -200,6 +200,17 @@ def create_share_url(
     session.max_redirects = MAX_REDIRECTS
     headers = {"Authorization": f"Bearer {api_key}"}
 
+    print("Checking AuraLens access…", file=sys.stderr)
+    try:
+        response = session.get(
+            f"{api_base_url}/internal/v1/tool-access",
+            headers=headers,
+            timeout=(10, 30),
+        )
+    except requests.RequestException as error:
+        raise ToolError(f"Could not check AuraLens access: {error}") from error
+    _json_response(response, "Checking AuraLens access")
+
     print("Downloading and preparing the source image…", file=sys.stderr)
     before_data = _normalize_jpeg(
         _download_bounded(session, image_url, allow_http=allow_http)

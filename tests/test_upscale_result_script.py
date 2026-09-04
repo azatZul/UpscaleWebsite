@@ -61,10 +61,14 @@ class FakeSession:
         self.before = before
         self.after = after
         self.posts = []
+        self.requests = []
         self.poll_count = 0
         self.max_redirects = None
 
     def get(self, url, **kwargs):
+        self.requests.append(("GET", url))
+        if url.endswith("/internal/v1/tool-access"):
+            return FakeResponse(payload={"status": "ok"}, url=url)
         if url == "https://images.example/source.jpg":
             return FakeResponse(content=self.before, url=url)
         if url == "https://provider.example/upscaled.jpg":
@@ -86,6 +90,7 @@ class FakeSession:
         raise AssertionError(f"Unexpected GET {url}")
 
     def post(self, url, **kwargs):
+        self.requests.append(("POST", url))
         self.posts.append((url, kwargs))
         if url.endswith("/internal/v1/creative-upscale-jobs"):
             return FakeResponse(
@@ -138,6 +143,10 @@ def test_create_share_url_runs_one_whole_image_job_and_publishes_pair():
 
     assert result_url.endswith("2d51c93a-af14-4ca8-a216-650885fd76bf")
     assert session.max_redirects == 5
+    assert session.requests[:2] == [
+        ("GET", "https://api.example/internal/v1/tool-access"),
+        ("GET", "https://images.example/source.jpg"),
+    ]
     assert len(session.posts) == 2
     create_url, create_request = session.posts[0]
     publish_url, publish_request = session.posts[1]
@@ -175,6 +184,10 @@ def test_create_share_url_runs_photo_restoration_with_model_parameters():
 
     assert result_url.endswith("2d51c93a-af14-4ca8-a216-650885fd76bf")
     assert session.poll_count == 0
+    assert session.requests[:2] == [
+        ("GET", "https://api.example/internal/v1/tool-access"),
+        ("GET", "https://images.example/source.jpg"),
+    ]
     assert len(session.posts) == 2
     restore_url, restore_request = session.posts[0]
     publish_url, publish_request = session.posts[1]
@@ -211,6 +224,38 @@ def test_create_share_url_requires_https_by_default():
             poll_timeout=1,
             session=FakeSession(b"", b""),
         )
+
+
+def test_create_share_url_checks_auth_before_downloading_source():
+    class RejectedSession(FakeSession):
+        def get(self, url, **kwargs):
+            self.requests.append(("GET", url))
+            if url.endswith("/internal/v1/tool-access"):
+                return FakeResponse(
+                    status_code=401,
+                    payload={"detail": "Invalid tool API key"},
+                    url=url,
+                )
+            raise AssertionError("The source must not be fetched before authentication")
+
+    session = RejectedSession(before=b"", after=b"")
+
+    with pytest.raises(ToolError, match="Invalid tool API key"):
+        create_share_url(
+            image_url="https://images.example/source.jpg",
+            retention_days=3,
+            creativity=0,
+            target_resolution="4k",
+            api_base_url="https://api.example",
+            api_key="wrong-secret",
+            allow_http=False,
+            poll_timeout=1,
+            session=session,
+        )
+
+    assert session.requests == [
+        ("GET", "https://api.example/internal/v1/tool-access")
+    ]
 
 
 def test_load_env_file_does_not_override_existing_values(tmp_path, monkeypatch):
