@@ -22,7 +22,7 @@ import localization_catalog
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIST = os.path.join(ROOT, "dist")
 STATIC = os.path.join(ROOT, "static")
-COPY_DIRS = ["assets", "resources"]
+COPY_DIRS = ["assets", "resources", "results"]
 
 with open(os.path.join(ROOT, "build", "app_facts.json"), encoding="utf-8") as f:
     APP_FACTS = json.load(f)
@@ -582,6 +582,14 @@ def copy_static():
         shutil.copytree(os.path.join(ROOT, name), os.path.join(DIST, name),
                         ignore=IGNORE, dirs_exist_ok=True)
     shutil.copytree(STATIC, DIST, ignore=IGNORE, dirs_exist_ok=True)
+    result_index = os.path.join(DIST, "results", "index.html")
+    if os.path.isfile(result_index):
+        with open(result_index, encoding="utf-8") as f:
+            result_html = f.read()
+        result_html = result_html.replace("__SITE_CSS_VERSION__", CSS_V)
+        result_html = result_html.replace("__SITE_JS_VERSION__", JS_V)
+        with open(result_index, "w", encoding="utf-8") as f:
+            f.write(result_html)
 
 # Shared markup
 def head(c, lang, title, desc, canonical, path="", og_image=None, extra_ld=None, robots=None,

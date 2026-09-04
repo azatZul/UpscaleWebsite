@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Upscale Result | UScale</title>
+  <meta name="description" content="Compare and download an Upscale result from UScale.">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#07080d">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://auralens-406817559814.us-central1.run.app http://127.0.0.1:8000 http://localhost:8000; img-src 'self' data: https://auralens-406817559814.us-central1.run.app http://127.0.0.1:8000 http://localhost:8000; style-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+  <link rel="icon" type="image/png" sizes="512x512" href="/resources/appstore/icon_512.png">
+  <link rel="apple-touch-icon" href="/resources/appstore/icon_180.png">
+  <link rel="preload" as="image" href="/resources/appstore/icon_180.png">
+  <script src="/results/theme.js"></script>
+  <link rel="stylesheet" href="/assets/site.css?v=__SITE_CSS_VERSION__">
+  <link rel="stylesheet" href="/results/results.css">
+  <script src="/results/results.js" defer></script>
+</head>
+<body>
+<div class="glow" aria-hidden="true"></div>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/">
+      <img src="/resources/appstore/icon_180.png" width="34" height="34" alt="UScale AI photo enhancer app icon">
+      <span>UScale<small>AI Photo &amp; Video Enhancer</small></span>
+    </a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="primary-navigation"
+            aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    <nav class="nav-links" id="primary-navigation" aria-label="Menu">
+      <a href="/#examples">Examples</a>
+      <a href="/#comparison">Comparison</a>
+      <a href="/#guides">Guides</a>
+      <a href="/#faq">FAQ</a>
+    </nav>
+    <button class="theme-btn" type="button" aria-pressed="false" data-light="Switch to light theme" data-dark="Switch to dark theme" aria-label="Switch to light theme" title="Switch to light theme"><svg class="theme-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><mask id="theme-cut"><rect width="24" height="24" fill="#fff"/><circle class="cut" cx="17" cy="7" r="7" fill="#000"/></mask><circle class="orb" cx="12" cy="12" r="6.2" mask="url(#theme-cut)"/><g class="rays" stroke-width="1.7" stroke-linecap="round"><line x1="12" y1="3.4" x2="12" y2="1"/><line x1="18.1" y1="5.9" x2="19.8" y2="4.2"/><line x1="20.6" y1="12" x2="23" y2="12"/><line x1="18.1" y1="18.1" x2="19.8" y2="19.8"/><line x1="12" y1="20.6" x2="12" y2="23"/><line x1="5.9" y1="18.1" x2="4.2" y2="19.8"/><line x1="3.4" y1="12" x2="1" y2="12"/><line x1="5.9" y1="5.9" x2="4.2" y2="4.2"/></g></svg></button>
+    <div class="lang">
+      <button class="lang-btn" type="button" aria-expanded="false" aria-controls="language-links" aria-label="Language">
+        <img class="flag" src="/resources/flags/us.png" width="18" height="18" alt=""><span>English</span>
+      </button>
+      <div class="lang-menu" id="language-links">
+        <a href="/" hreflang="en" lang="en" aria-current="true"><img class="flag" src="/resources/flags/us.png" width="20" height="20" alt="">English</a>
+        <a href="/es/" hreflang="es" lang="es"><img class="flag" src="/resources/flags/es.png" width="20" height="20" alt="">Español</a>
+        <a href="/fr/" hreflang="fr" lang="fr"><img class="flag" src="/resources/flags/fr.png" width="20" height="20" alt="">Français</a>
+        <a href="/de/" hreflang="de" lang="de"><img class="flag" src="/resources/flags/de.png" width="20" height="20" alt="">Deutsch</a>
+        <a href="/ja/" hreflang="ja" lang="ja"><img class="flag" src="/resources/flags/jp.png" width="20" height="20" alt="">日本語</a>
+        <a href="/ru/" hreflang="ru" lang="ru"><img class="flag" src="/resources/flags/ru.png" width="20" height="20" alt="">Русский</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="main-content" class="wrap result-main" tabindex="-1">
+  <section class="result-intro" aria-labelledby="page-title">
+    <p id="result-eyebrow" class="result-eyebrow">Upscale result</p>
+    <h1 id="page-title">Your <em>enhanced</em> image</h1>
+    <p id="page-description" class="result-lead">Loading your before and after result…</p>
+  </section>
+
+  <section id="loading-state" class="result-state-card" aria-live="polite">
+    <span class="result-spinner" aria-hidden="true"></span>
+    <div>
+      <h2>Getting your result ready</h2>
+      <p>This should only take a moment.</p>
+    </div>
+  </section>
+
+  <section id="result-state" class="result-content" hidden>
+    <div id="comparison-frame" class="cmp result-compare">
+      <img id="after-image" class="result-image" alt="Upscaled image">
+      <div id="before-layer" class="result-before-layer">
+        <img id="before-image" class="result-image" alt="Original image">
+      </div>
+      <span class="cmp-tag l">Before</span>
+      <span class="cmp-tag r">After</span>
+      <div id="divider" class="result-divider" aria-hidden="true"></div>
+      <input id="comparison-slider" class="result-slider" type="range" min="0" max="100" value="50" aria-label="Reveal before or after image">
+    </div>
+
+    <p class="result-slider-hint">Drag the slider to compare</p>
+
+    <div class="result-actions">
+      <ul class="chips result-chips" aria-label="Result details">
+        <li id="creativity-detail"></li>
+        <li id="resolution-detail"></li>
+      </ul>
+      <a id="download-button" class="btn btn-p result-download" href="#" download>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 5-5m-5 5-5-5M5 21h14"/></svg>
+        Download result
+      </a>
+    </div>
+    <div class="result-upsell">
+      <div>
+        <strong>Make your photos sharp again</strong>
+        <p>Try more photo and video enhancements in UScale.</p>
+      </div>
+      <div class="result-upsell-store">
+        <a class="appstore result-appstore" href="https://apps.apple.com/app/id6736931330" target="_blank" rel="noopener" data-cta="appstore" aria-label="Download on the App Store">
+          <img class="badge-black" src="/resources/appstore/badges/en-black.svg" width="167.5" height="56" alt="" decoding="async">
+          <img class="badge-white" src="/resources/appstore/badges/en-white.svg" width="167.5" height="56" alt="" decoding="async">
+        </a>
+        <span>iPhone and iPad · iOS 16 or later</span>
+      </div>
+    </div>
+    <p id="privacy-note" class="result-privacy"></p>
+  </section>
+
+  <section id="error-state" class="result-state-card result-error" aria-live="assertive" hidden>
+    <span class="result-error-icon" aria-hidden="true">!</span>
+    <div>
+      <h2 id="error-title">This result isn’t available</h2>
+      <p id="error-message">Check the link and try again.</p>
+      <a href="/">Visit UScale</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div class="fbrand">
+        <a class="brand" href="/">
+          <img src="/resources/appstore/icon_180.png" width="34" height="34" alt="UScale AI photo enhancer app icon">
+          <span>UScale<small>AI Photo &amp; Video Enhancer</small></span>
+        </a>
+        <p>AI photo and video enhancer for iPhone and iPad. Unblur and upscale on your device, restore old photos with cloud AI.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="/#examples">Examples</a></li>
+          <li><a href="/#how">How it works</a></li>
+          <li><a href="/#reviews">Reviews</a></li>
+          <li><a href="/compare.html">Comparison</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Guides</h4>
+        <ul>
+          <li><a href="/guides/unblur-photo-iphone.html">Unblur a photo</a></li>
+          <li><a href="/guides/restore-old-photos.html">Restore old photos</a></li>
+          <li><a href="/guides/upscale-image-4k.html">Upscale to 4K</a></li>
+          <li><a href="/guides/">All guides</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <ul>
+          <li><a href="/support_page.html">Help &amp; support</a></li>
+          <li><a href="/privacy_policy.html">Privacy Policy</a></li>
+          <li><a href="/terms.html">Terms of Use</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="fbot">
+      <span>© 2026 UScale · All rights reserved.</span>
+      <span>Made for the photos worth keeping.</span>
+    </div>
+  </div>
+</footer>
+<script src="/assets/site.js?v=__SITE_JS_VERSION__" defer></script>
+</body>
+</html>
