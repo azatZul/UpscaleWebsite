@@ -18,6 +18,12 @@ def _jpeg(size, color):
     return output.getvalue()
 
 
+def _png(size, color):
+    output = BytesIO()
+    Image.new("RGB", size, color).save(output, format="PNG")
+    return output.getvalue()
+
+
 class FakeResponse:
     def __init__(self, *, status_code=200, payload=None, content=b"", url="https://api.example"):
         self.status_code = status_code
@@ -63,6 +69,8 @@ class FakeSession:
             return FakeResponse(content=self.before, url=url)
         if url == "https://provider.example/upscaled.jpg":
             return FakeResponse(content=self.after, url=url)
+        if url == "https://provider.example/restored.png":
+            return FakeResponse(content=self.after, url=url)
         if url.endswith("/internal/v1/creative-upscale-jobs/job-123"):
             self.poll_count += 1
             if self.poll_count == 1:
@@ -86,6 +94,14 @@ class FakeSession:
                     "prediction_id": "job-123",
                     "status": "created",
                     "poll_after_seconds": 0,
+                },
+                url=url,
+            )
+        if url.endswith("/internal/v1/photo-restoration-jobs"):
+            return FakeResponse(
+                payload={
+                    "status": "completed",
+                    "output_url": "https://provider.example/restored.png",
                 },
                 url=url,
             )
@@ -131,7 +147,52 @@ def test_create_share_url_runs_one_whole_image_job_and_publishes_pair():
     assert publish_url.endswith("/internal/v1/results")
     assert set(publish_request["files"]) == {"before", "after"}
     assert publish_request["data"]["retention_days"] == "7"
+    assert publish_request["data"]["processing_kind"] == "creative_upscale"
     assert publish_request["headers"]["Idempotency-Key"].startswith("upscale-")
+
+
+def test_create_share_url_runs_photo_restoration_with_model_parameters():
+    session = FakeSession(
+        before=_jpeg((32, 20), (30, 60, 90)),
+        after=_png((32, 20), (40, 90, 150)),
+    )
+
+    result_url = create_share_url(
+        image_url="https://images.example/source.jpg",
+        retention_days=3,
+        creativity=0,
+        target_resolution="4k",
+        api_base_url="https://api.example",
+        api_key="secret",
+        allow_http=False,
+        poll_timeout=2,
+        session=session,
+        flow="photo-restoration",
+        output_format="png",
+        safety_tolerance=1,
+    )
+
+    assert result_url.endswith("2d51c93a-af14-4ca8-a216-650885fd76bf")
+    assert session.poll_count == 0
+    assert len(session.posts) == 2
+    restore_url, restore_request = session.posts[0]
+    publish_url, publish_request = session.posts[1]
+    assert restore_url.endswith("/internal/v1/photo-restoration-jobs")
+    assert restore_request["data"] == {
+        "output_format": "png",
+        "safety_tolerance": "1",
+    }
+    assert restore_request["headers"] == {"Authorization": "Bearer secret"}
+    assert publish_url.endswith("/internal/v1/results")
+    assert publish_request["data"] == {
+        "retention_days": "3",
+        "processing_kind": "photo_restoration",
+        "output_format": "png",
+        "safety_tolerance": "1",
+    }
+    assert publish_request["files"]["after"][0] == "after.png"
+    assert publish_request["files"]["after"][2] == "image/png"
+    assert publish_request["headers"]["Idempotency-Key"].startswith("restore-")
 
 
 def test_create_share_url_requires_https_by_default():

@@ -23,6 +23,11 @@ MAX_IMAGE_PIXELS = 100_000_000
 MAX_REDIRECTS = 5
 TERMINAL_STATUSES = {"completed", "failed", "cancelled", "timeout"}
 ENV_KEY = re.compile(r"[A-Za-z_][A-Za-z0-9_]*")
+PROVIDER_IMAGE_FORMATS = {
+    "JPEG": ("image/jpeg", "jpg"),
+    "PNG": ("image/png", "png"),
+    "WEBP": ("image/webp", "webp"),
+}
 
 
 class ToolError(Exception):
@@ -122,6 +127,26 @@ def _normalize_jpeg(data: bytes) -> bytes:
         raise ToolError("URL did not return a supported image") from error
 
 
+def _validated_provider_image(data: bytes) -> tuple[bytes, str, str]:
+    try:
+        with Image.open(BytesIO(data)) as image:
+            image.verify()
+        with Image.open(BytesIO(data)) as image:
+            image_format = (image.format or "").upper()
+            if image.width * image.height > MAX_IMAGE_PIXELS:
+                raise ToolError("Provider image exceeds the 100 megapixel limit")
+    except ToolError:
+        raise
+    except Exception as error:
+        raise ToolError("Provider returned an invalid image") from error
+
+    details = PROVIDER_IMAGE_FORMATS.get(image_format)
+    if details is None:
+        raise ToolError("Provider returned an unsupported image format")
+    content_type, extension = details
+    return data, content_type, extension
+
+
 def _api_error(response: requests.Response, action: str) -> ToolError:
     detail: Any = None
     try:
@@ -157,7 +182,17 @@ def create_share_url(
     poll_timeout: float,
     poll_interval: Optional[float] = None,
     session: Optional[requests.Session] = None,
+    flow: str = "creative-upscale",
+    output_format: str = "jpg",
+    safety_tolerance: int = 2,
 ) -> str:
+    if flow not in {"creative-upscale", "photo-restoration"}:
+        raise ToolError("Flow must be creative-upscale or photo-restoration")
+    if output_format not in {"jpg", "png", "webp"}:
+        raise ToolError("Restoration output format must be jpg, png, or webp")
+    if safety_tolerance not in {0, 1, 2}:
+        raise ToolError("Restoration safety tolerance must be between 0 and 2")
+
     api_base_url = api_base_url.rstrip("/")
     _validate_url(api_base_url, allow_http=allow_http)
     session = session or requests.Session()
@@ -169,51 +204,85 @@ def create_share_url(
         _download_bounded(session, image_url, allow_http=allow_http)
     )
 
-    print("Starting one whole-image Upscale job…", file=sys.stderr)
-    try:
-        response = session.post(
-            f"{api_base_url}/internal/v1/creative-upscale-jobs",
-            headers=headers,
-            data={
-                "creativity": str(creativity),
-                "target_resolution": target_resolution,
-            },
-            files={"image": ("source.jpg", before_data, "image/jpeg")},
-            timeout=(10, 90),
-        )
-    except requests.RequestException as error:
-        raise ToolError(f"Could not start upscale: {error}") from error
-    job = _json_response(response, "Starting upscale")
-    prediction_id = job.get("prediction_id")
-    if not isinstance(prediction_id, str) or not prediction_id:
-        raise ToolError("Starting upscale returned no prediction id")
-
-    deadline = time.monotonic() + poll_timeout
-    while job.get("status") not in TERMINAL_STATUSES:
-        if time.monotonic() >= deadline:
-            raise ToolError("Upscale timed out while waiting for the provider")
-        server_delay = float(job.get("poll_after_seconds", 2))
-        delay = poll_interval if poll_interval is not None else server_delay
-        time.sleep(max(0.01, min(delay, 10.0)))
+    if flow == "creative-upscale":
+        print("Starting one whole-image Upscale job…", file=sys.stderr)
         try:
-            response = session.get(
-                f"{api_base_url}/internal/v1/creative-upscale-jobs/{prediction_id}",
+            response = session.post(
+                f"{api_base_url}/internal/v1/creative-upscale-jobs",
                 headers=headers,
-                timeout=(10, 45),
+                data={
+                    "creativity": str(creativity),
+                    "target_resolution": target_resolution,
+                },
+                files={"image": ("source.jpg", before_data, "image/jpeg")},
+                timeout=(10, 90),
             )
         except requests.RequestException as error:
-            raise ToolError(f"Could not check upscale status: {error}") from error
-        job = _json_response(response, "Checking upscale")
+            raise ToolError(f"Could not start upscale: {error}") from error
+        job = _json_response(response, "Starting upscale")
+        prediction_id = job.get("prediction_id")
+        if not isinstance(prediction_id, str) or not prediction_id:
+            raise ToolError("Starting upscale returned no prediction id")
 
-    if job.get("status") != "completed":
-        detail = job.get("error") or f"provider status was {job.get('status')}"
-        raise ToolError(f"Upscale failed: {detail}")
-    output_url = job.get("output_url")
-    if not isinstance(output_url, str) or not output_url:
-        raise ToolError("Completed upscale returned no output URL")
+        deadline = time.monotonic() + poll_timeout
+        while job.get("status") not in TERMINAL_STATUSES:
+            if time.monotonic() >= deadline:
+                raise ToolError("Upscale timed out while waiting for the provider")
+            server_delay = float(job.get("poll_after_seconds", 2))
+            delay = poll_interval if poll_interval is not None else server_delay
+            time.sleep(max(0.01, min(delay, 10.0)))
+            try:
+                response = session.get(
+                    f"{api_base_url}/internal/v1/creative-upscale-jobs/{prediction_id}",
+                    headers=headers,
+                    timeout=(10, 45),
+                )
+            except requests.RequestException as error:
+                raise ToolError(f"Could not check upscale status: {error}") from error
+            job = _json_response(response, "Checking upscale")
 
-    print("Downloading the upscaled image…", file=sys.stderr)
-    after_data = _normalize_jpeg(
+        if job.get("status") != "completed":
+            detail = job.get("error") or f"provider status was {job.get('status')}"
+            raise ToolError(f"Upscale failed: {detail}")
+        output_url = job.get("output_url")
+        if not isinstance(output_url, str) or not output_url:
+            raise ToolError("Completed upscale returned no output URL")
+        processing_data = {
+            "processing_kind": "creative_upscale",
+            "creativity": str(creativity),
+            "target_resolution": target_resolution,
+        }
+        idempotency_prefix = "upscale"
+        download_label = "upscaled"
+    else:
+        print("Starting Photo Restoration…", file=sys.stderr)
+        try:
+            response = session.post(
+                f"{api_base_url}/internal/v1/photo-restoration-jobs",
+                headers=headers,
+                data={
+                    "output_format": output_format,
+                    "safety_tolerance": str(safety_tolerance),
+                },
+                files={"image": ("source.jpg", before_data, "image/jpeg")},
+                timeout=(10, max(90.0, poll_timeout)),
+            )
+        except requests.RequestException as error:
+            raise ToolError(f"Could not restore photo: {error}") from error
+        restoration = _json_response(response, "Restoring photo")
+        output_url = restoration.get("output_url")
+        if not isinstance(output_url, str) or not output_url:
+            raise ToolError("Photo Restoration returned no output URL")
+        processing_data = {
+            "processing_kind": "photo_restoration",
+            "output_format": output_format,
+            "safety_tolerance": str(safety_tolerance),
+        }
+        idempotency_prefix = "restore"
+        download_label = "restored"
+
+    print(f"Downloading the {download_label} image…", file=sys.stderr)
+    after_data, after_content_type, after_extension = _validated_provider_image(
         _download_bounded(session, output_url, allow_http=allow_http)
     )
 
@@ -223,16 +292,19 @@ def create_share_url(
             f"{api_base_url}/internal/v1/results",
             headers={
                 **headers,
-                "Idempotency-Key": f"upscale-{uuid.uuid4()}",
+                "Idempotency-Key": f"{idempotency_prefix}-{uuid.uuid4()}",
             },
             data={
                 "retention_days": str(retention_days),
-                "creativity": str(creativity),
-                "target_resolution": target_resolution,
+                **processing_data,
             },
             files={
                 "before": ("before.jpg", before_data, "image/jpeg"),
-                "after": ("after.jpg", after_data, "image/jpeg"),
+                "after": (
+                    f"after.{after_extension}",
+                    after_data,
+                    after_content_type,
+                ),
             },
             timeout=(10, 120),
         )
@@ -247,9 +319,15 @@ def create_share_url(
 
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Run one whole-image Upscale job and print its share URL."
+        description="Run an image enhancement flow and print its share URL."
     )
     parser.add_argument("image_url", help="URL of the source image")
+    parser.add_argument(
+        "--flow",
+        choices=("creative-upscale", "photo-restoration"),
+        default="creative-upscale",
+        help="Enhancement flow to run (default: creative-upscale)",
+    )
     parser.add_argument(
         "--retention",
         dest="retention_days",
@@ -277,6 +355,19 @@ def _parser() -> argparse.ArgumentParser:
         type=float,
         default=360.0,
         help="Maximum provider wait in seconds (default: 360)",
+    )
+    parser.add_argument(
+        "--output-format",
+        choices=("jpg", "png", "webp"),
+        default="jpg",
+        help="Photo Restoration output format (default: jpg)",
+    )
+    parser.add_argument(
+        "--safety-tolerance",
+        type=int,
+        choices=(0, 1, 2),
+        default=2,
+        help="Photo Restoration safety tolerance: 0 strict to 2 permissive (default: 2)",
     )
     parser.add_argument(
         "--poll-interval",
@@ -318,6 +409,9 @@ def main() -> int:
             allow_http=args.allow_http,
             poll_timeout=args.poll_timeout,
             poll_interval=args.poll_interval,
+            flow=args.flow,
+            output_format=args.output_format,
+            safety_tolerance=args.safety_tolerance,
         )
     except ToolError as error:
         print(f"Error: {error}", file=sys.stderr)

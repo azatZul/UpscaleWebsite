@@ -11,6 +11,7 @@
     const resultState = document.querySelector("#result-state");
     const errorState = document.querySelector("#error-state");
     const description = document.querySelector("#page-description");
+    const eyebrow = document.querySelector("#result-eyebrow");
     const frame = document.querySelector("#comparison-frame");
     const beforeImage = document.querySelector("#before-image");
     const afterImage = document.querySelector("#after-image");
@@ -119,15 +120,23 @@
             return;
         }
 
-        document.querySelector("#creativity-detail").textContent = `${creativityName(data.processing.creativity)} style`;
-        document.querySelector("#resolution-detail").textContent = String(data.processing.target_resolution).toUpperCase();
+        if (data.processing.kind === "photo_restoration") {
+            eyebrow.textContent = "Photo restoration result";
+            document.querySelector("#creativity-detail").textContent = "Photo restoration";
+            document.querySelector("#resolution-detail").textContent = `${String(data.processing.output_format).toUpperCase()} · Safety ${data.processing.safety_tolerance}`;
+            description.textContent = "Slide between the original and the restored result.";
+        } else {
+            eyebrow.textContent = "Upscale result";
+            document.querySelector("#creativity-detail").textContent = `${creativityName(data.processing.creativity)} style`;
+            document.querySelector("#resolution-detail").textContent = String(data.processing.target_resolution).toUpperCase();
+            description.textContent = "Slide between the original and the Upscale result.";
+        }
         document.querySelector("#download-button").href = data.download_url;
         document.querySelector("#privacy-note").textContent = `These images are available until ${readableDate(data.expires_at)}.`;
 
         loadingState.hidden = true;
         errorState.hidden = true;
         resultState.hidden = false;
-        description.textContent = "Slide between the original and the Upscale result.";
         fitFrame(data.after.width, data.after.height);
         window.addEventListener("resize", () => fitFrame(data.after.width, data.after.height));
         updateSlider();
