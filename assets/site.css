@@ -76,6 +76,7 @@
   --vio:#6e7cf6; --vio-2:#a48bff;
   --vio-soft:rgba(110,124,246,.14); --vio-line:rgba(110,124,246,.28);
   --ok:#3ddc97; --ok-soft:rgba(61,220,151,.14); --ok-line:rgba(61,220,151,.45);
+  --warn:#ff7a6e;
   --wash-v:rgba(110,124,246,.1); --wash-v2:rgba(110,124,246,.16);
   --wash-a:rgba(255,214,33,.05); --wash-a2:rgba(255,214,33,.09);
   --nav:rgba(7,8,13,.72); --nav-2:rgba(7,8,13,.9);
@@ -106,6 +107,7 @@
   --vio:#5566e8; --vio-2:#6f4ff0;
   --vio-soft:rgba(85,102,232,.13); --vio-line:rgba(85,102,232,.3);
   --ok:#12a06b; --ok-soft:rgba(18,160,107,.14); --ok-line:rgba(18,160,107,.45);
+  --warn:#d92d20;
   --wash-v:rgba(85,102,232,.14); --wash-v2:rgba(85,102,232,.2);
   --wash-a:rgba(247,189,0,.14); --wash-a2:rgba(247,189,0,.2);
   --nav:rgba(243,246,254,.76); --nav-2:rgba(243,246,254,.92);
@@ -331,7 +333,9 @@ html:lang(ja) h1,html:lang(ja) h2,html:lang(ja) h3,html:lang(ja) h4{
 .cmp{position:relative;width:100%;aspect-ratio:4/3;overflow:hidden;border-radius:var(--r-l);
   border:1px solid var(--line-2);box-shadow:var(--shadow);user-select:none;-webkit-user-select:none;
   touch-action:pan-y;background:#000}
-.cmp img,.cmp video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+/* Dragging a comparison is our gesture, not the browser's "drag this image away" one. */
+.cmp img,.cmp video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  -webkit-user-drag:none}
 .cmp .b{clip-path:inset(0 50% 0 0);z-index:2}
 .cmp-bar{position:absolute;top:0;bottom:0;left:50%;width:3px;background:var(--acc);z-index:4;
   cursor:col-resize;transform:translateX(-1.5px)}
@@ -648,6 +652,150 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:64px 0 34
 .fbrand p{color:var(--tx-3);font-size:14.5px;margin-top:14px;max-width:34ch}
 .fbot{margin-top:26px;padding-top:22px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;
   gap:12px;justify-content:space-between;color:var(--tx-3);font-size:13.5px}
+
+/* ---------- shared result albums ---------- */
+.album-page,.gallery-page{padding-bottom:10px}
+.album-head,.gallery-head{max-width:760px;margin:0 auto 40px;padding-top:34px;text-align:center}
+/* Centred heads drop the eyebrow dash, exactly like .head.center on the marketing pages. */
+.album-head .eyebrow::before,.gallery-head .eyebrow::before{display:none}
+.album-head h1,.gallery-head h1{font-size:clamp(31px,4.6vw,47px);letter-spacing:-.032em;text-wrap:balance}
+.album-head .lead,.gallery-head .lead{margin:16px auto 0;text-wrap:balance}
+.album-locked{max-width:620px;margin:22px auto 0;padding:15px 22px;border:1px solid var(--acc-line);
+  border-radius:var(--r-m);background:var(--acc-soft);color:var(--tx-2);font-size:14.5px;line-height:1.6}
+.album-locked strong{color:var(--tx)}
+
+.album-viewer{max-width:1000px;margin:0 auto;padding:18px 18px 22px;
+  background:linear-gradient(180deg,var(--surface),var(--bg-2));border:1px solid var(--line);
+  border-radius:var(--r-l);box-shadow:var(--shadow)}
+/* One frame for the whole album that shares the card's background: it spans the card and
+   photos are fitted inside it, so stepping through never resizes anything. Narrow screens
+   fall back to the album ratio (--album-ar is the median photo ratio) instead of banding
+   a landscape photo with empty background. */
+.album-stage{--album-h:min(76vh,700px);position:relative;margin:0 auto;
+  width:100%;height:var(--album-h)}
+.album-slides,.album-slide,.album-slide .cmp-wrap{position:absolute;inset:0}
+.album-slide[hidden]{display:none}
+/* The photo is fitted inside the frame: the box matches the photo, so the divider and the
+   labels never run out over the empty background. --stage-ar is measured in site.js. */
+.album-slide .cmp-wrap{display:grid;place-items:center}
+.album-slide .cmp{height:auto;max-height:100%;background:none;border-radius:var(--r-m);
+  width:min(100%,calc(100% * var(--photo-ar,1.3333) / var(--stage-ar,1.3333)));
+  aspect-ratio:var(--photo-ar,1.3333)}
+
+.album-ctl{position:absolute;z-index:6;display:grid;place-items:center;width:42px;height:42px;
+  padding:0;border:0;border-radius:50%;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);
+  color:#fff;opacity:.92;transition:background .2s,opacity .2s}
+.album-ctl svg{display:block;width:20px;height:20px}
+.album-ctl:hover{background:rgba(0,0,0,.8);opacity:1}
+.album-ctl:disabled{opacity:0;pointer-events:none}
+.album-prev{left:12px;top:50%;transform:translateY(-50%)}
+.album-next{right:12px;top:50%;transform:translateY(-50%)}
+.album-zoom{right:12px;bottom:12px}
+.album-close{right:12px;top:12px}
+.album-ctl[hidden]{display:none}
+
+.album-controls{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:16px}
+.album-page-control{display:flex;align-items:center;justify-content:center;gap:2px;
+  max-width:min(42vw,320px);overflow-x:auto;scrollbar-width:none}
+.album-page-control::-webkit-scrollbar{display:none}
+.album-dot{display:grid;place-items:center;width:20px;height:20px;min-width:20px;padding:0;
+  border:0;background:none}
+.album-dot::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--line-2);
+  transition:transform .2s,background .2s}
+.album-dot:hover::before{background:var(--tx-3)}
+.album-dot.is-active::before{background:var(--acc);transform:scale(1.25)}
+.album-counter{color:var(--tx-3);font-size:13px;font-variant-numeric:tabular-nums}
+
+.album-details{margin-top:18px;text-align:center}
+.album-detail[hidden]{display:none}
+.album-detail h2{font-size:19px;letter-spacing:-.02em}
+.album-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+.album-actions .btn{font-size:14px;padding:11px 18px;border-radius:12px;gap:8px}
+.album-actions .btn svg{width:17px;height:17px;flex:0 0 auto}
+.album-foot{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px;
+  max-width:1000px;margin:26px auto 0}
+.album-more{grid-column:2;display:inline-flex;align-items:center;gap:8px;font-size:13.5px;
+  color:var(--tx-3);transition:color .2s}
+.album-more svg{width:16px;height:16px;flex:0 0 auto}
+.album-more:hover{color:var(--acc-tx)}
+.album-date{grid-column:1;justify-self:start;display:inline-flex;align-items:center;gap:7px;
+  font-size:13px;color:var(--tx-3);font-variant-numeric:tabular-nums}
+.album-date svg{width:15px;height:15px;flex:0 0 auto}
+.album-remove{grid-column:3;justify-self:end;display:inline-flex;align-items:center;gap:7px;
+  font-size:13px;color:var(--tx-3);transition:color .2s}
+.album-remove svg{width:15px;height:15px;flex:0 0 auto}
+.album-remove:hover{color:var(--warn)}
+
+/* Expanded fills the browser window, not the whole screen, and keeps only the close button,
+   paging and the counter so nothing competes with the photo. */
+.album-viewer.is-expanded{position:fixed;z-index:1000;inset:0;box-sizing:border-box;
+  width:100%;max-width:none;height:100%;margin:0;padding:0;border:0;border-radius:0;
+  background:var(--bg);box-shadow:none;display:flex;flex-direction:column;overflow:hidden}
+.album-viewer.is-expanded .album-stage{--album-h:none;width:100%;height:100%;flex:1 1 auto;
+  aspect-ratio:auto;touch-action:none;overflow:hidden;cursor:grab}
+.album-viewer.is-expanded .album-stage.is-panning{cursor:grabbing}
+.album-viewer.is-expanded .album-details{display:none}
+.album-viewer.is-expanded .album-page-control{display:none}
+.album-viewer.is-expanded .album-controls{margin:0;padding:14px 0 18px}
+.album-viewer.is-expanded .album-slide .cmp{border-radius:0}
+/* Once the reader zooms in, the labels stop competing with the detail they came for. */
+.album-viewer.is-expanded.is-zoomed .cmp-tag{display:none}
+/* Zoom scales the whole comparison, so the divider is counter-scaled to keep its own size. */
+.album-viewer.is-expanded .album-slide .cmp{transform:translate(var(--pan-x,0px),var(--pan-y,0px)) scale(var(--album-zoom,1))}
+/* Zoomed in, the divider is the only thing still draggable, so it gets a grab strip that
+   keeps its on-screen size, and its handle is held in view against the pan. */
+.album-viewer.is-expanded .cmp-bar{--bar-grab:calc(34px / var(--album-zoom,1));
+  width:var(--bar-grab);background:none;transform:translateX(calc(var(--bar-grab) / -2))}
+.album-viewer.is-expanded .cmp-bar::before{content:"";position:absolute;top:0;bottom:0;left:50%;
+  width:calc(3px / var(--album-zoom,1));transform:translateX(-50%);background:var(--acc)}
+.album-viewer.is-expanded .cmp-bar::after{
+  transform:translate(-50%,-50%) translateY(calc(-1 * var(--pan-y,0px) / var(--album-zoom,1)))
+            scale(calc(1 / var(--album-zoom,1)))}
+/* Zoomed in, dragging the photo is what a reader reaches for first, so the full-height line
+   stops taking pointers and only the round handle still moves the split. */
+.album-viewer.is-expanded.is-zoomed .cmp-bar{pointer-events:none}
+.album-viewer.is-expanded.is-zoomed .cmp-bar::after{pointer-events:auto;cursor:col-resize}
+.album-expanded-lock{overflow:hidden}
+
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;
+  max-width:1120px;margin:0 auto}
+.gallery-card{display:block;overflow:hidden;background:linear-gradient(180deg,var(--surface),var(--bg-2));
+  border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--shadow);transition:.2s}
+/* Large cards stay put; the preview inside them is what moves. */
+.gallery-card:hover{border-color:var(--acc)}
+.gallery-card>img,.gallery-pair{display:block;transition:transform .45s cubic-bezier(.4,0,.2,1)}
+.gallery-card>img{width:100%;aspect-ratio:1200/630;object-fit:cover;background:#000}
+.gallery-card>.gallery-preview{aspect-ratio:4/3}
+/* The card previews the album the way it opens: damaged original left, restoration right. */
+.gallery-pair{display:grid;grid-template-columns:1fr 1fr;gap:2px;aspect-ratio:4/3;background:var(--line-2)}
+.gallery-pair img{display:block;width:100%;height:100%;min-width:0;object-fit:cover;background:#000}
+@media (hover:hover){
+  .gallery-card:hover>img,.gallery-card:focus-visible>img,
+  .gallery-card:hover .gallery-pair,.gallery-card:focus-visible .gallery-pair{transform:scale(1.045)}
+}
+@media (prefers-reduced-motion:reduce){.gallery-card>img,.gallery-pair{transition:none}}
+.gallery-card-copy{display:block;padding:18px 20px 21px}
+.gallery-card h2{font-size:18px;letter-spacing:-.018em}
+.gallery-card p{color:var(--tx-3);font-size:14px;margin-top:7px}
+/* The card's meta line reads count first, date last, so dates line up down the grid. */
+.gallery-meta{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.gallery-meta time{flex:0 0 auto;white-space:nowrap;font-variant-numeric:tabular-nums}
+.gallery-empty{padding:70px 24px;text-align:center;border:1px dashed var(--line-2);
+  border-radius:var(--r-l);color:var(--tx-3)}
+@media(max-width:1000px){.gallery-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.gallery-grid{grid-template-columns:1fr}}
+@media(max-width:700px){
+  .album-viewer{padding:12px 12px 18px}
+  .album-stage{--album-h:min(62vh,520px);
+    height:min(var(--album-h),calc((100vw - 48px) / var(--album-ar,1.3333)))}
+  .album-ctl{width:38px;height:38px}
+  .album-ctl svg{width:18px;height:18px}
+  .album-prev{left:8px} .album-next{right:8px}
+  .album-zoom{right:8px;bottom:8px} .album-close{right:8px;top:8px}
+  .album-actions .btn{width:100%;justify-content:center}
+  .album-foot{grid-template-columns:1fr;justify-items:center;gap:18px}
+  .album-more,.album-remove,.album-date{grid-column:1;justify-self:center}
+}
 
 /* ---------- article (guides + legal) ---------- */
 .crumbs{display:flex;gap:8px;align-items:center;font-size:13.5px;color:var(--tx-3);

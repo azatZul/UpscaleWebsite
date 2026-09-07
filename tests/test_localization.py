@@ -349,6 +349,32 @@ class CatalogTests(unittest.TestCase):
             finally:
                 catalog.CATALOG_DIR = original_catalog_dir
 
+    def test_album_shell_has_one_marker_of_each_kind(self):
+        shell = site_build.render_album_shell()
+        self.assertEqual(shell.count("<!--HEAD-->"), 1)
+        self.assertEqual(shell.count("<!--BODY-->"), 1)
+        self.assertIn('/assets/site.css?v=', shell)
+        self.assertIn('/assets/site.js?v=', shell)
+        self.assertIn('href="/gallery"', shell)
+
+    def test_gallery_is_a_single_non_localized_sitemap_entry(self):
+        sitemap = site_build.render_sitemap()
+        self.assertEqual(sitemap.count("<loc>https://upscales.app/gallery</loc>"), 1)
+        gallery_entry = sitemap.split("<loc>https://upscales.app/gallery</loc>", 1)[1].split("</url>", 1)[0]
+        self.assertNotIn("hreflang", gallery_entry)
+
+    def test_every_known_locale_has_a_gallery_footer_label(self):
+        record = catalog.section_records("common.json")["footer.gallery"]["localizations"]
+        self.assertEqual(set(record), set(site_build.BY_CODE))
+
+    def test_non_follow_sliders_use_pointer_capture_without_global_drag_listeners(self):
+        javascript = (ROOT / "assets" / "site.js").read_text(encoding="utf-8")
+        comparison = javascript.split("/* Before/after comparisons */", 1)[1]
+        self.assertIn("cmp.setPointerCapture", comparison)
+        self.assertIn("cmp.addEventListener('pointermove', move)", comparison)
+        self.assertNotIn("window.addEventListener('mousemove', move)", comparison)
+        self.assertNotIn("window.addEventListener('touchmove', move)", comparison)
+
 
 if __name__ == "__main__":
     unittest.main()

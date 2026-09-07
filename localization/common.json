@@ -311,6 +311,22 @@
       "es": "Reseñas"
     }
   },
+  "footer.gallery": {
+    "localizations": {
+      "en": "Gallery",
+      "ru": "Галерея",
+      "de": "Galerie",
+      "ja": "ギャラリー",
+      "fr": "Galerie",
+      "es": "Galería",
+      "pt": "Galeria",
+      "it": "Galleria",
+      "ko": "갤러리",
+      "zh": "图库",
+      "hi": "गैलरी",
+      "tr": "Galeri"
+    }
+  },
   "footer.all_guides": {
     "localizations": {
       "en": "All guides",

@@ -17,3 +17,13 @@ Thumbs.db
 
 # temporary source/target packages created by build/localize.py
 localization_work/
+
+# album publishing CLI state and local secrets
+.env
+.dev.vars
+.album-state.json
+.album-work/
+.wrangler/
+worker/node_modules/
+worker/.wrangler/
+tools/album/.venv/

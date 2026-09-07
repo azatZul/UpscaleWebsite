@@ -1,0 +1,25 @@
+{
+  "title": "Restored family photos",
+  "note": null,
+  "source_url": "https://www.reddit.com/",
+  "featured": false,
+  "rights_confirmed": true,
+  "photos": [
+    {
+      "before": "01.jpg",
+      "after": "01-restored.jpg",
+      "alt": "Restored family portrait"
+    },
+    {
+      "before": "02.jpg",
+      "flow": "restore-and-upscale",
+      "params": {
+        "additional_prompt": "Dark brown hair",
+        "crop_mode": "none",
+        "target_resolution": "4k",
+        "creativity": 0
+      },
+      "alt": "Restored wedding photograph"
+    }
+  ]
+}

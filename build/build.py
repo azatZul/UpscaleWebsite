@@ -585,7 +585,7 @@ def copy_static():
 
 # Shared markup
 def head(c, lang, title, desc, canonical, path="", og_image=None, extra_ld=None, robots=None,
-         alternates=True):
+         alternates=True, dynamic_meta=False):
     L = BY_CODE[lang]
     og_image = og_image or f"{SITE}{SCREENSHOTS[0]}"
     alts = ""
@@ -595,23 +595,12 @@ def head(c, lang, title, desc, canonical, path="", og_image=None, extra_ld=None,
             for l in LOCALIZED_CODES
         ) + f'\n  <link rel="alternate" hreflang="x-default" href="{url("en", path)}">' 
     copy_locale = BY_CODE[content_lang(c, lang)]
-    return f"""<!doctype html>
-<html lang="{copy_locale[4]}" dir="{c.get('dir','ltr')}">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>{esc(title)}</title>
+    metadata = "<!--HEAD-->" if dynamic_meta else f"""<title>{esc(title)}</title>
   <meta name="description" content="{esc(desc)}">
   <link rel="canonical" href="{canonical}">
   {alts}
-  <meta name="robots" content="{robots or 'index,follow,max-image-preview:large,max-snippet:-1'}">
-  <meta name="theme-color" content="#07080d">
-  {THEME_BOOT}
-  <meta name="apple-itunes-app" content="app-id=6736931330">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="UScale">
-  <meta property="og:locale" content="{copy_locale[5]}">
-  <meta property="og:title" content="{esc(title)}">
+  <meta name="robots" content="{robots or 'index,follow,max-image-preview:large,max-snippet:-1'}">"""
+    social = "" if dynamic_meta else f"""<meta property="og:title" content="{esc(title)}">
   <meta property="og:description" content="{esc(desc)}">
   <meta property="og:url" content="{canonical}">
   <meta property="og:image" content="{og_image}">
@@ -619,7 +608,20 @@ def head(c, lang, title, desc, canonical, path="", og_image=None, extra_ld=None,
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{esc(title)}">
   <meta name="twitter:description" content="{esc(desc)}">
-  <meta name="twitter:image" content="{og_image}">
+  <meta name="twitter:image" content="{og_image}">"""
+    return f"""<!doctype html>
+<html lang="{copy_locale[4]}" dir="{c.get('dir','ltr')}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  {metadata}
+  <meta name="theme-color" content="#07080d">
+  {THEME_BOOT}
+  <meta name="apple-itunes-app" content="app-id=6736931330">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="UScale">
+  <meta property="og:locale" content="{copy_locale[5]}">
+  {social}
   <link rel="icon" type="image/png" sizes="512x512" href="/resources/appstore/icon_512.png">
   <link rel="apple-touch-icon" href="/resources/appstore/icon_180.png">
   <link rel="preload" as="image" href="/resources/appstore/icon_180.png">
@@ -826,6 +828,7 @@ def footer(c, lang, home_prefix, path=""):
           <li><a href="{home_prefix}#how">{esc(c['nav']['how'])}</a></li>
           <li><a href="{home_prefix}#reviews">{esc(f['reviews'])}</a></li>
           <li><a href="{rel_url(lang, 'compare')}">{esc(c['nav'].get('compare', 'Comparison'))}</a></li>
+          <li><a href="/gallery">{esc(f['gallery'])}</a></li>
         </ul>
       </div>
       <div>
@@ -851,6 +854,16 @@ def footer(c, lang, home_prefix, path=""):
 </body>
 </html>
 """
+
+
+def render_album_shell():
+    """Shared English chrome for Worker-rendered gallery and album pages."""
+    c = inject_facts(localization_catalog.load_locale("en", require_complete=True), "en")
+    return (head(c, "en", "", "", "", alternates=False, dynamic_meta=True)
+            + nav(c, "en", "/")
+            + "<!--BODY-->"
+            + download_cta(c, sect_cls="sect-tight")
+            + footer(c, "en", "/"))
 
 def compare_teaser(c, lang):
     """Banner under the home examples: the same photos, run through the rival apps."""
@@ -1703,6 +1716,10 @@ def render_sitemap():
             entries.append(
                 f'  <url>\n    <loc>{url(code, p)}</loc>\n    <lastmod>{updated_for(p)}</lastmod>'
                 f'\n    <changefreq>weekly</changefreq>\n    <priority>{prio}</priority>{alts}\n  </url>')
+    entries.append(
+        f'  <url>\n    <loc>{SITE}/gallery</loc>\n    <lastmod>{updated_for("gallery")}</lastmod>'
+        '\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>'
+    )
     # sale.html is noindex and intentionally omitted.
     return ('<?xml version="1.0" encoding="UTF-8"?>\n'
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n'
@@ -1714,6 +1731,19 @@ Allow: /
 
 Sitemap: {SITE}/sitemap.xml
 """
+
+def render_static_redirects():
+    """Preserve canonical .html pages and directory indexes with html_handling=none."""
+    rules = []
+    for code in LOCALIZED_CODES:
+        segment = BY_CODE[code][1]
+        base = f"/{segment}/" if segment else "/"
+        for directory in (base, base + "guides/"):
+            rules.append(f"{directory} {directory}index.html 200")
+            if directory != "/":
+                rules.append(f"{directory.rstrip('/')} {directory} 301")
+    return "\n".join(rules) + "\n"
+
 
 # Build entry point
 def main():
@@ -1749,7 +1779,9 @@ def main():
         print(f"  ✓ {code}")
     write("sitemap.xml", render_sitemap())
     write("robots.txt", ROBOTS)
+    write("_shell/album.html", render_album_shell())
     copy_static()
+    write("_redirects", render_static_redirects())
     if UNKNOWN_FACTS:
         print(f"  ! unknown fact placeholders left as-is: {sorted(UNKNOWN_FACTS)}")
     if MISSING_DATES:

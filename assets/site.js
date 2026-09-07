@@ -411,9 +411,7 @@
        The badge sits on the drag surface, so its own gestures stop at the badge. */
     if (badge) {
       var closeTip = function () { badge.classList.remove('tip-on'); };
-      ['mousedown', 'touchstart'].forEach(function (ev) {
-        badge.addEventListener(ev, function (e) { e.stopPropagation(); }, { passive: true });
-      });
+      badge.addEventListener('pointerdown', function (e) { e.stopPropagation(); });
       badge.addEventListener('click', function (e) {
         e.stopPropagation();
         badge.classList.toggle('tip-on');
@@ -459,12 +457,17 @@
 
     function pointerPos(e) {
       var r = cmp.getBoundingClientRect();
-      var x = (e.touches ? e.touches[0].clientX : e.clientX) - r.left;
+      var x = e.clientX - r.left;
       return Math.max(0, Math.min(100, (x / r.width) * 100));
     }
     function start(e) {
-      if (playing()) return;
+      if (playing() || (typeof e.button === 'number' && e.button !== 0)) return;
+      /* Inside an expanded album the drag surface belongs to pan/zoom; only the
+         divider handle still moves the split. */
+      if (cmp.closest('.album-viewer.is-expanded') &&
+          !(e.target.closest && e.target.closest('.cmp-bar'))) return;
       dragging = true;
+      if (cmp.setPointerCapture) cmp.setPointerCapture(e.pointerId);
       aim = pointerPos(e);
       if (!follow) setPos(aim);
     }
@@ -474,18 +477,19 @@
       if (!follow) setPos(aim);
       if (e.cancelable) e.preventDefault();
     }
-    function end() {
+    function end(e) {
       if (!dragging) return;
       dragging = false;
+      if (cmp.releasePointerCapture && cmp.hasPointerCapture && cmp.hasPointerCapture(e.pointerId)) {
+        cmp.releasePointerCapture(e.pointerId);
+      }
       hold = now() + 4000;
     }
 
-    cmp.addEventListener('mousedown', start);
-    window.addEventListener('mousemove', move);
-    window.addEventListener('mouseup', end);
-    cmp.addEventListener('touchstart', start, { passive: true });
-    window.addEventListener('touchmove', move, { passive: false });
-    window.addEventListener('touchend', end);
+    cmp.addEventListener('pointerdown', start);
+    cmp.addEventListener('pointermove', move);
+    cmp.addEventListener('pointerup', end);
+    cmp.addEventListener('pointercancel', end);
 
     bar.setAttribute('tabindex', '0');
     bar.setAttribute('role', 'slider');
@@ -530,20 +534,19 @@
         run();
       });
 
-      /* Track the pointer against the overflowing comparison bounds. */
-      var box = cmp.getBoundingClientRect();
-      var remeasure = function () { box = cmp.getBoundingClientRect(); };
+      /* Hero-only pointer tracking stays local to its comparison surface. */
       if (fine) {
-        window.addEventListener('mousemove', function (e) {
-          var over = e.clientX >= box.left && e.clientX <= box.right &&
-                     e.clientY >= box.top && e.clientY <= box.bottom;
-          hover = over;
-          if (!over) return;
+        cmp.addEventListener('pointerenter', function (e) {
+          hover = true;
           aim = pointerPos(e);
           run();
         }, { passive: true });
-        window.addEventListener('scroll', remeasure, { passive: true });
-        window.addEventListener('resize', remeasure);
+        cmp.addEventListener('pointermove', function (e) {
+          if (!hover || dragging) return;
+          aim = pointerPos(e);
+          run();
+        }, { passive: true });
+        cmp.addEventListener('pointerleave', function () { hover = false; }, { passive: true });
       }
       if (window.IntersectionObserver) {
         new IntersectionObserver(function (entries) {
@@ -554,13 +557,12 @@
       }
       var rest = function () {
         fit();
-        remeasure();
         if (!hover && !dragging) { setPos(midPct); }
         t0 = 0;
         run();
       };
-      window.addEventListener('resize', rest);
-      window.addEventListener('load', rest);
+      if (window.ResizeObserver) new ResizeObserver(rest).observe(cmp);
+      else window.addEventListener('resize', rest);
       run();
     }
 
@@ -678,5 +680,171 @@
       if (document.readyState === 'complete') setTimeout(warm, 500);
       else window.addEventListener('load', function () { setTimeout(warm, 500); });
     }
+  });
+
+  /* Shared result album carousel. All slides are server-rendered so direct links,
+     accessibility tools and crawlers see the complete immutable album. */
+  document.querySelectorAll('[data-album-carousel]').forEach(function (root) {
+    var slides = Array.prototype.slice.call(root.querySelectorAll('[data-album-slide]'));
+    var details = Array.prototype.slice.call(root.querySelectorAll('[data-album-detail]'));
+    var dots = Array.prototype.slice.call(root.querySelectorAll('[data-album-dot]'));
+    var previous = root.querySelector('[data-album-previous]');
+    var next = root.querySelector('[data-album-next]');
+    var counter = root.querySelector('[data-album-counter]');
+    var stage = root.querySelector('[data-album-stage]');
+    var expand = root.querySelector('[data-album-expand]');
+    var collapse = root.querySelector('[data-album-collapse]');
+    var active = 0, touch = null, expanded = false;
+    var zoom = 1, panX = 0, panY = 0, pan = null;
+    var MAX_ZOOM = 6;
+    if (!slides.length) return;
+
+    function measureStage() {
+      if (!stage) return;
+      var box = stage.getBoundingClientRect();
+      if (box.width > 0 && box.height > 0) {
+        stage.style.setProperty('--stage-ar', box.width / box.height);
+      }
+    }
+    function applyView() {
+      root.style.setProperty('--album-zoom', zoom);
+      root.style.setProperty('--pan-x', panX + 'px');
+      root.style.setProperty('--pan-y', panY + 'px');
+      root.classList.toggle('is-zoomed', zoom > 1.01);
+    }
+    /* Like a phone's scroll view: the photo cannot be dragged past its own edges, and one
+       smaller than the frame stays centred. offsetWidth ignores the zoom transform. */
+    function clampPan() {
+      if (!stage) return;
+      var box = stage.getBoundingClientRect();
+      var photo = slides[active] && slides[active].querySelector('.cmp');
+      var width = photo ? photo.offsetWidth : box.width;
+      var height = photo ? photo.offsetHeight : box.height;
+      var limitX = Math.max(0, (width * zoom - box.width) / 2);
+      var limitY = Math.max(0, (height * zoom - box.height) / 2);
+      panX = Math.max(-limitX, Math.min(limitX, panX));
+      panY = Math.max(-limitY, Math.min(limitY, panY));
+    }
+    function resetView() {
+      zoom = 1; panX = 0; panY = 0;
+      applyView();
+    }
+
+    function show(index) {
+      active = (index + slides.length) % slides.length;
+      slides.forEach(function (slide, current) { slide.hidden = current !== active; });
+      details.forEach(function (detail, current) { detail.hidden = current !== active; });
+      dots.forEach(function (dot, current) {
+        var selected = current === active;
+        dot.classList.toggle('is-active', selected);
+        dot.setAttribute('aria-pressed', selected ? 'true' : 'false');
+      });
+      if (counter) counter.textContent = (active + 1) + ' / ' + slides.length;
+      if (dots[active] && dots[active].scrollIntoView) {
+        dots[active].scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      }
+      resetView();
+    }
+    /* Expanding fills the browser window rather than taking over the whole screen,
+       so the page chrome stays where the reader left it. */
+    function setExpanded(on) {
+      var leaving = expanded && !on;
+      expanded = on;
+      /* The carousel owns the pointer while expanded and the comparison code keeps only the
+         divider, which is why that code tests for this class before starting a drag. */
+      root.classList.toggle('is-expanded', on);
+      document.documentElement.classList.toggle('album-expanded-lock', on);
+      if (expand) expand.hidden = on;
+      if (collapse) collapse.hidden = !on;
+      resetView();
+      measureStage();
+      if (on) root.focus();
+      else if (leaving && expand && root.contains(document.activeElement)) expand.focus();
+    }
+
+    if (previous) previous.addEventListener('click', function () { show(active - 1); });
+    if (next) next.addEventListener('click', function () { show(active + 1); });
+    dots.forEach(function (dot, index) { dot.addEventListener('click', function () { show(index); }); });
+    root.addEventListener('keydown', function (event) {
+      if (event.target && event.target.closest && event.target.closest('.cmp-bar')) return;
+      if (event.key === 'ArrowLeft') { show(active - 1); event.preventDefault(); }
+      if (event.key === 'ArrowRight') { show(active + 1); event.preventDefault(); }
+    });
+    /* Escape listens on the document: expanded covers the window, and by then the focus may
+       sit on the divider handle or have been dropped by the hidden expand button. */
+    document.addEventListener('keydown', function (event) {
+      if (!expanded || event.key !== 'Escape') return;
+      setExpanded(false);
+      event.preventDefault();
+    });
+    root.addEventListener('touchstart', function (event) {
+      if (expanded || event.touches.length !== 1) return;
+      if (event.target.closest && event.target.closest('.cmp')) return;
+      touch = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+    }, { passive: true });
+    root.addEventListener('touchend', function (event) {
+      if (!touch || !event.changedTouches.length) return;
+      var dx = event.changedTouches[0].clientX - touch.x;
+      var dy = event.changedTouches[0].clientY - touch.y;
+      touch = null;
+      if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.25) show(active + (dx < 0 ? 1 : -1));
+    }, { passive: true });
+    if (expand) expand.addEventListener('click', function () { setExpanded(true); });
+    if (collapse) collapse.addEventListener('click', function () { setExpanded(false); });
+
+    if (stage) {
+      /* Wheel zooms around the cursor so the pixel under it stays put. */
+      stage.addEventListener('wheel', function (event) {
+        if (!expanded) return;
+        event.preventDefault();
+        var box = stage.getBoundingClientRect();
+        var cx = box.left + box.width / 2, cy = box.top + box.height / 2;
+        var offsetX = (event.clientX - cx - panX) / zoom;
+        var offsetY = (event.clientY - cy - panY) / zoom;
+        var step = Math.exp(-event.deltaY * (event.deltaMode === 1 ? 0.02 : 0.0015));
+        zoom = Math.max(1, Math.min(MAX_ZOOM, zoom * step));
+        panX = event.clientX - cx - zoom * offsetX;
+        panY = event.clientY - cy - zoom * offsetY;
+        clampPan();
+        applyView();
+      }, { passive: false });
+
+      /* Firefox has no -webkit-user-drag, so the image drag is cancelled here too. */
+      stage.addEventListener('dragstart', function (event) {
+        if (expanded) event.preventDefault();
+      });
+      stage.addEventListener('pointerdown', function (event) {
+        if (!expanded || event.button !== 0) return;
+        if (event.target.closest && event.target.closest('.cmp-bar')) return;
+        if (event.target.closest && event.target.closest('.album-ctl')) return;
+        pan = { x: event.clientX, y: event.clientY, panX: panX, panY: panY };
+        stage.classList.add('is-panning');
+        if (event.cancelable) event.preventDefault();
+        if (stage.setPointerCapture) stage.setPointerCapture(event.pointerId);
+      });
+      stage.addEventListener('pointermove', function (event) {
+        if (!pan) return;
+        panX = pan.panX + (event.clientX - pan.x);
+        panY = pan.panY + (event.clientY - pan.y);
+        clampPan();
+        applyView();
+      });
+      ['pointerup', 'pointercancel'].forEach(function (name) {
+        stage.addEventListener(name, function (event) {
+          if (!pan) return;
+          pan = null;
+          stage.classList.remove('is-panning');
+          if (stage.releasePointerCapture && stage.hasPointerCapture && stage.hasPointerCapture(event.pointerId)) {
+            stage.releasePointerCapture(event.pointerId);
+          }
+        });
+      });
+    }
+
+    measureStage();
+    if (window.ResizeObserver && stage) new ResizeObserver(measureStage).observe(stage);
+    else window.addEventListener('resize', measureStage);
+    show(0);
+    setExpanded(false);
   });
 })();
