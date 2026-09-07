@@ -1,7 +1,5 @@
 const ALBUM_ID = "[0-9A-HJKMNP-TV-Z]{26}";
 const ALBUM_PATH = new RegExp(`^/gallery/(${ALBUM_ID})$`);
-// Albums shared before the move to /gallery/<id>.
-const LEGACY_ALBUM_PATH = new RegExp(`^/a/(${ALBUM_ID})$`);
 const COVER_PATH = new RegExp(`^/media/(${ALBUM_ID})/cover\\.jpg$`);
 const GALLERY_MEDIA_PATH = new RegExp(`^/media/(${ALBUM_ID})/gallery\\.jpg$`);
 const MEDIA_PATH = new RegExp(`^/media/(${ALBUM_ID})/(${ALBUM_ID})/(before|after)\\.webp$`);
@@ -26,33 +24,24 @@ type AlbumRow = {
   title: string;
   note: string | null;
   state: AlbumState;
-  featured: number;
-  price_cents: number;
-  currency: string;
   photo_count: number;
-  cover_photo_id: string;
-  cover_key: string;
   cover_mime: string;
   cover_width: number;
   cover_height: number;
-  cover_bytes: number;
-  gallery_key: string | null;
-  gallery_mime: string | null;
-  gallery_width: number | null;
-  gallery_height: number | null;
-  gallery_bytes: number | null;
   zip_key: string | null;
-  zip_bytes: number | null;
   created_at: number;
 };
 
-/* A gallery row carries the cover photo's own dimensions so the card can show the pair.
-   The join is a LEFT one, so those four widen to null even though cover_photo_id cannot. */
-type GalleryRow = AlbumRow & {
-  before_width: number | null;
-  before_height: number | null;
-  after_width: number | null;
-  after_height: number | null;
+type GalleryRow = {
+  id: string;
+  title: string;
+  state: AlbumState;
+  price_cents: number;
+  currency: string;
+  photo_count: number;
+  gallery_width: number | null;
+  gallery_height: number | null;
+  created_at: number;
 };
 
 type PhotoRow = {
@@ -199,25 +188,19 @@ function albumStageRatio(photos: PhotoRow[]): string {
 
 async function getAlbum(env: Env, id: string): Promise<AlbumRow | null> {
   return env.DB.prepare(
-    `SELECT id, title, note, state, featured, price_cents, currency, photo_count,
-            cover_photo_id, cover_key, cover_mime, cover_width, cover_height,
-            cover_bytes, gallery_key, gallery_mime, gallery_width, gallery_height,
-            gallery_bytes, zip_key, zip_bytes, created_at
+    `SELECT id, title, note, state, photo_count, cover_mime, cover_width,
+            cover_height, zip_key, created_at
        FROM albums WHERE id = ?1`,
   ).bind(id).first<AlbumRow>();
 }
 
 async function renderGallery(request: Request, env: Env): Promise<Response> {
   const result = await env.DB.prepare(
-    `SELECT a.id, a.title, a.note, a.state, a.featured, a.price_cents, a.currency, a.photo_count,
-            a.cover_photo_id, a.cover_key, a.cover_mime, a.cover_width, a.cover_height,
-            a.cover_bytes, a.gallery_key, a.gallery_mime, a.gallery_width,
-            a.gallery_height, a.gallery_bytes, a.zip_key, a.zip_bytes, a.created_at,
-            p.before_width, p.before_height, p.after_width, p.after_height
-       FROM albums a
-       LEFT JOIN photos p ON p.album_id = a.id AND p.id = a.cover_photo_id
-      WHERE a.featured = 1 AND a.state IN ('locked', 'unlocked')
-      ORDER BY a.created_at DESC LIMIT 100`,
+    `SELECT id, title, state, price_cents, currency, photo_count,
+            gallery_width, gallery_height, created_at
+       FROM albums
+      WHERE featured = 1 AND state IN ('locked', 'unlocked') AND gallery_key IS NOT NULL
+      ORDER BY created_at DESC LIMIT 100`,
   ).all<GalleryRow>();
   const cards = result.results.map((album) => {
     const status = album.state === "locked"
@@ -225,22 +208,14 @@ async function renderGallery(request: Request, env: Env): Promise<Response> {
       : "";
     const title = escapeHtml(album.title);
     const date = albumDate(album.created_at);
-    /* The cover photo is shown as the pair it is: damaged original on the left, restoration on
-       the right. Albums published before the prepared JPEG existed still render as that pair. */
-    const preview = album.gallery_key
-      ? `<img class="gallery-preview" src="/media/${album.id}/gallery.jpg" width="${album.gallery_width ?? 1280}" height="${album.gallery_height ?? 960}" loading="lazy" decoding="async" alt="Before and after: ${title}">`
-      : `<span class="gallery-pair">
-        <img src="/media/${album.id}/${album.cover_photo_id}/before.webp" width="${album.before_width ?? ""}" height="${album.before_height ?? ""}" loading="lazy" decoding="async" alt="Original scan: ${title}">
-        <img src="/media/${album.id}/${album.cover_photo_id}/after.webp" width="${album.after_width ?? ""}" height="${album.after_height ?? ""}" loading="lazy" decoding="async" alt="Restored: ${title}">
-      </span>`;
     return `<a class="gallery-card" href="/gallery/${album.id}">
-      ${preview}
+      <img class="gallery-preview" src="/media/${album.id}/gallery.jpg" width="${album.gallery_width ?? 1280}" height="${album.gallery_height ?? 960}" loading="lazy" decoding="async" alt="Before and after: ${title}">
       <span class="gallery-card-copy"><h2>${title}</h2><p class="gallery-meta"><span>${album.photo_count} ${album.photo_count === 1 ? "photo" : "photos"}${status}</span>${date ? `<time datetime="${date.iso}">${date.label}</time>` : ""}</p></span>
     </a>`;
   }).join("");
   const body = `<main class="wrap gallery-page" id="main-content" tabindex="-1">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>&rsaquo;</span><span>Gallery</span></nav>
-    <header class="gallery-head"><span class="eyebrow">Before &amp; after</span><h1>Restoration gallery</h1><p class="lead">Real photo restorations and upscales created with UScale.</p></header>
+    <header class="head center gallery-head"><span class="eyebrow">Before &amp; after</span><h1>Restoration gallery</h1><p class="lead">Real photo restorations and upscales created with UScale.</p></header>
     ${cards ? `<div class="gallery-grid">${cards}</div>` : '<div class="gallery-empty">No featured albums yet.</div>'}
   </main>`;
   const canonical = `${new URL(request.url).origin}/gallery`;
@@ -279,7 +254,6 @@ async function handleAlbum(request: Request, env: Env, albumId: string): Promise
   }
 
   const unlocked = album.state === "unlocked";
-  // The whole album shares one frame, so stepping through photos never resizes the stage.
   const stageRatio = albumStageRatio(photos.results);
   const slides = photos.results.map((photo, index) => {
     const sized = photo.after_width > 0 && photo.after_height > 0;
@@ -319,7 +293,7 @@ async function handleAlbum(request: Request, env: Env, albumId: string): Promise
   const removalBody = encodeURIComponent(`Please remove https://upscales.app/gallery/${album.id}`);
   const body = `<main class="wrap album-page" id="main-content" tabindex="-1">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>&rsaquo;</span><a href="/gallery">Gallery</a><span>&rsaquo;</span><span>${escapeHtml(album.title)}</span></nav>
-    <header class="album-head"><span class="eyebrow">Before &amp; after</span><h1>These photos were restored and enhanced with UScale.</h1>${locked}</header>
+    <header class="head center album-head"><span class="eyebrow">Before &amp; after</span><h1>These photos were restored and enhanced with UScale.</h1>${locked}</header>
     <section class="album-viewer" data-album-carousel tabindex="0" aria-label="Photo album">
       <div class="album-stage" data-album-stage style="--album-ar:${stageRatio}">
         <div class="album-slides">${slides}</div>
@@ -499,19 +473,11 @@ async function handleDownload(request: Request, env: Env, albumId: string, photo
 async function route(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
   const url = new URL(request.url);
   const isRead = request.method === "GET" || request.method === "HEAD";
-  const dynamic = url.pathname === "/gallery" || url.pathname.startsWith("/gallery/") || url.pathname.startsWith("/a/") || url.pathname.startsWith("/media/") || url.pathname.startsWith("/download/") || url.pathname.startsWith("/api/") || url.pathname.startsWith("/_shell/");
+  const dynamic = url.pathname === "/gallery" || url.pathname.startsWith("/gallery/") || url.pathname.startsWith("/media/") || url.pathname.startsWith("/download/") || url.pathname.startsWith("/api/") || url.pathname.startsWith("/_shell/");
   if (dynamic && !isRead) return plain("Method not allowed", 405, { Allow: "GET, HEAD" });
   if (url.pathname.startsWith("/_shell/")) return plain("Not found", 404);
   if (url.pathname.startsWith("/api/")) return plain("Not found", 404);
   if (url.pathname === "/gallery") return handleGallery(request, env, ctx);
-
-  const legacy = LEGACY_ALBUM_PATH.exec(url.pathname);
-  if (legacy?.[1]) {
-    return new Response(null, {
-      status: 301,
-      headers: { Location: `${url.origin}/gallery/${legacy[1]}`, "Cache-Control": "public, max-age=86400" },
-    });
-  }
 
   const album = ALBUM_PATH.exec(url.pathname);
   if (album?.[1]) return handleAlbum(request, env, album[1]);

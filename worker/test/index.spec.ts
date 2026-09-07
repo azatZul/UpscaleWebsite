@@ -7,9 +7,8 @@ const FEATURED = "01JZZZZZZZZZZZZZZZZZZZZZZZ";
 const PRIVATE = "02JZZZZZZZZZZZZZZZZZZZZZZZ";
 const DELETED = "03JZZZZZZZZZZZZZZZZZZZZZZZ";
 const PHOTO = "04JZZZZZZZZZZZZZZZZZZZZZZZ";
-const LEGACY = "06JZZZZZZZZZZZZZZZZZZZZZZZ";
 
-async function insertAlbum(id: string, state: "locked" | "unlocked" | "deleted", featured: boolean, withGallery = true): Promise<void> {
+async function insertAlbum(id: string, state: "locked" | "unlocked" | "deleted", featured: boolean): Promise<void> {
   const coverKey = `albums/${id}/cover.jpg`;
   const galleryKey = `albums/${id}/gallery-v1.jpg`;
   const beforeKey = `albums/${id}/${PHOTO}/before.webp`;
@@ -22,10 +21,8 @@ async function insertAlbum(id: string, state: "locked" | "unlocked" | "deleted",
     env.MEDIA.put(afterKey, new Uint8Array([20, 21, 22]), { httpMetadata: { contentType: "image/webp" } }),
     env.MEDIA.put(cleanKey, new Uint8Array([30, 31, 32, 33]), { httpMetadata: { contentType: "image/jpeg" } }),
     env.MEDIA.put(zipKey, new Uint8Array([40, 41, 42, 43, 44]), { httpMetadata: { contentType: "application/zip" } }),
-  ];
-  if (withGallery) uploads.push(
     env.MEDIA.put(galleryKey, new Uint8Array([50, 51, 52]), { httpMetadata: { contentType: "image/jpeg" } }),
-  );
+  ];
   await Promise.all(uploads);
   await env.DB.batch([
     env.DB.prepare(
@@ -38,8 +35,7 @@ async function insertAlbum(id: string, state: "locked" | "unlocked" | "deleted",
                 ?7, ?8, ?9, ?10, ?11, ?12, 5, NULL, ?13, ?14)`,
     ).bind(
       id, `<Album ${id.slice(0, 2)}>`, state, featured ? 1 : 0, PHOTO, coverKey,
-      withGallery ? galleryKey : null, withGallery ? "image/jpeg" : null,
-      withGallery ? 1280 : null, withGallery ? 960 : null, withGallery ? 3 : null,
+      galleryKey, "image/jpeg", 1280, 960, 3,
       zipKey, Date.now(), state === "deleted" ? Date.now() : null,
     ),
     env.DB.prepare(
@@ -75,7 +71,6 @@ describe.sequential("album worker", () => {
 
   it("serves a featured gallery but does not leak unfeatured albums", async () => {
     await insertAlbum(FEATURED, "locked", true);
-    await insertAlbum(LEGACY, "unlocked", true, false);
     await insertAlbum(PRIVATE, "unlocked", false);
     await env.DB.prepare("UPDATE albums SET price_cents=0 WHERE id=?1").bind(FEATURED).run();
     const response = await fetchWorker("/gallery");
@@ -87,13 +82,9 @@ describe.sequential("album worker", () => {
     expect(html).toContain("&lt;Album 01&gt;");
     expect(html).not.toContain("<Album 01>");
     expect(html).toContain("Watermarked preview");
-    // New cards use one prepared JPEG; albums from before the migration retain their pair.
     expect(html).toContain('class="gallery-preview"');
     expect(html).toContain(`/media/${FEATURED}/gallery.jpg`);
     expect(html).not.toContain(`/media/${FEATURED}/${PHOTO}/before.webp`);
-    expect(html).toContain('class="gallery-pair"');
-    expect(html).toContain(`/media/${LEGACY}/${PHOTO}/before.webp`);
-    expect(html).toContain(`/media/${LEGACY}/${PHOTO}/after.webp`);
   });
 
   it("streams the prepared gallery JPEG through the private R2 binding", async () => {
@@ -121,12 +112,6 @@ describe.sequential("album worker", () => {
     expect(html).not.toContain('data-album-counter');
     expect(html).toContain("Portrait &lt;01&gt;");
     expect(html).not.toContain("Download full resolution");
-  });
-
-  it("redirects album links shared under the old /a/ path", async () => {
-    const response = await fetchWorker(`/a/${FEATURED}`, { redirect: "manual" });
-    expect(response.status).toBe(301);
-    expect(response.headers.get("Location")).toContain(`/gallery/${FEATURED}`);
   });
 
   it("renders a zero-price locked album as a watermarked preview", async () => {

@@ -682,8 +682,8 @@
     }
   });
 
-  /* Shared result album carousel. All slides are server-rendered so direct links,
-     accessibility tools and crawlers see the complete immutable album. */
+  /* Shared result album carousel. Every slide is already in the markup, so the album
+     works without this script and only the paging and zoom are added here. */
   document.querySelectorAll('[data-album-carousel]').forEach(function (root) {
     var slides = Array.prototype.slice.call(root.querySelectorAll('[data-album-slide]'));
     var details = Array.prototype.slice.call(root.querySelectorAll('[data-album-detail]'));

@@ -26,27 +26,23 @@ python3 tools/album/album.py validate /path/to/album
 python3 tools/album/album.py publish /path/to/album --unlocked
 python3 tools/album/album.py resume /path/to/album --unlocked
 python3 tools/album/album.py publish /path/to/album --json --unlocked
-python3 tools/album/album.py backfill-gallery /path/to/published/album --json
 ```
 
 Set `ALBUM_ENVIRONMENT=staging` and `ALBUM_BASE_URL=https://<your-worker>.workers.dev`
 for staging; production uses `ALBUM_ENVIRONMENT=production` and defaults to
 `ALBUM_BASE_URL=https://upscales.app`. A locked album can be published with
 `--price-usd 0` and later opened with `album unlock <id>`; no checkout is exposed.
-Use `--json` for machine-readable integration output.
+Use `--json` for machine-readable integration output. `unlock`, `feature` and
+`unfeature` are no-ops when the album is already in that state.
 
 The same folder can be published to staging and production without rerunning AI:
 each account/database/bucket combination has its own publication state and URL.
 Keep the manifest, input files, --unlocked and price unchanged during a retry.
 Both before and after hashes are checked. Prepared media and ZIP are reused and
-verified; restore any missing/corrupt work files before resuming. Legacy state with
-uploads but no destination identity must be reconciled manually, not guessed.
+verified; restore any missing/corrupt work files before resuming.
 
-Every new album also uploads a versioned `gallery-v1.jpg`: one 1280×960 JPEG made
-from two centered 640×960 aspect-fill crops at quality 80. `backfill-gallery` adds
-that asset and its D1 metadata to an existing published album without changing its
-public URL. It is idempotent and requires the original `.album-state.json`, prepared
-media, publication destination environment and Cloudflare credentials.
+Every album also uploads a versioned `gallery-v1.jpg` for its `/gallery` card: one
+1280×960 JPEG made from two centered 640×960 aspect-fill crops at quality 80.
 
 The CLI writes `.album-state.json` and `.album-work/` inside the album folder. Keep
 both until publication completes: they make retries idempotent. R2 credentials should

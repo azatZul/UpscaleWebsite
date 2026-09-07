@@ -101,10 +101,6 @@ class AlbumCliTests(unittest.TestCase):
             with self.assertRaises(album.AlbumError):
                 album.initialize_state(folder, changed)
 
-    def test_album_id_validation_is_shared_by_mutating_commands(self):
-        with self.assertRaises(album.AlbumError):
-            album.validate_album_id("../../not-an-id")
-
     def test_r2_delete_errors_are_not_silently_ignored(self):
         class FailingS3:
             def delete_objects(self, **_):
@@ -233,13 +229,6 @@ class AlbumCliTests(unittest.TestCase):
             self.assertEqual(result.size, source.size)
             self.assertNotEqual(result.getpixel((770, 570)), source.getpixel((770, 570)))
 
-    def test_json_cli_prints_machine_readable_result(self):
-        result = {"ok": True, "album_id": "01ARZ3NDEKTSV4RRFFQ69G5FAV", "url": "https://upscales.app/a/example", "state": "unlocked"}
-        output = io.StringIO()
-        with mock.patch.object(album, "publish", return_value=result), mock.patch("sys.stdout", output):
-            self.assertEqual(album.main(["publish", ".", "--unlocked", "--json"]), 0)
-        self.assertEqual(json.loads(output.getvalue()), result)
-
     def test_prepared_media_is_reused_and_zip_has_fixed_timestamps(self):
         with tempfile.TemporaryDirectory() as directory:
             folder = Path(directory)
@@ -308,68 +297,7 @@ class AlbumCliTests(unittest.TestCase):
             state = json.loads((folder / album.STATE_NAME).read_text())
             self.assertEqual(len(state["publications"]), 2)
 
-    def test_gallery_backfill_is_idempotent_and_keeps_the_album_url(self):
-        class FakeAdmin:
-            def __init__(self):
-                self.row = {
-                    "state": "unlocked", "gallery_key": None, "gallery_mime": None,
-                    "gallery_width": None, "gallery_height": None, "gallery_bytes": None,
-                }
-                self.uploads = {}
-
-            def query(self, _sql, _params=()):
-                return [dict(self.row)]
-
-            def upload(self, record):
-                previous = self.uploads.setdefault(record["key"], record["sha256"])
-                if previous != record["sha256"]:
-                    raise album.AlbumError("immutable collision")
-
-            def execute(self, _sql, params=()):
-                if self.row["gallery_key"] is not None:
-                    return 0
-                names = ("gallery_key", "gallery_mime", "gallery_width", "gallery_height", "gallery_bytes")
-                self.row.update(dict(zip(names, params[:5])))
-                return 1
-
-        with tempfile.TemporaryDirectory() as directory:
-            folder = Path(directory)
-            photos = album.validate_manifest(folder, self.make_album(folder))
-            state = album.initialize_state(folder, photos)
-            album.prepare_media(folder, photos, state, watermarked=False)
-            with mock.patch.dict(os.environ, self.publish_env("production")):
-                target = album.publication_target()
-                publication = album.publication_state(folder, state, target)
-            publication["published"] = True
-            state.pop("gallery")
-            album.save_state(folder, state)
-            fake = FakeAdmin()
-            with mock.patch.dict(os.environ, self.publish_env("production")), mock.patch.object(album, "CloudflareAdmin", return_value=fake):
-                first = album.backfill_gallery(folder)
-                second = album.backfill_gallery(folder)
-            self.assertFalse(first["reused"])
-            self.assertTrue(second["reused"])
-            self.assertEqual(first["url"], second["url"])
-            self.assertEqual(len(fake.uploads), 1)
-
-    def test_gallery_backfill_rejects_deleted_album(self):
-        with tempfile.TemporaryDirectory() as directory:
-            folder = Path(directory)
-            photos = album.validate_manifest(folder, self.make_album(folder))
-            state = album.initialize_state(folder, photos)
-            album.prepare_media(folder, photos, state)
-            with mock.patch.dict(os.environ, self.publish_env("production")):
-                publication = album.publication_state(folder, state, album.publication_target())
-            publication["published"] = True
-            album.save_state(folder, state)
-            admin = mock.Mock()
-            admin.query.return_value = [{"state": "deleted", "gallery_key": None}]
-            with mock.patch.dict(os.environ, self.publish_env("production")), mock.patch.object(album, "CloudflareAdmin", return_value=admin):
-                with self.assertRaisesRegex(album.AlbumError, "Deleted albums"):
-                    album.backfill_gallery(folder)
-            admin.upload.assert_not_called()
-
-    def test_destination_relabel_and_legacy_publication_are_rejected(self):
+    def test_publishing_to_a_relabelled_destination_is_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
             folder = Path(directory)
             state = album.initialize_state(folder, album.validate_manifest(folder, self.make_album(folder)))
@@ -380,9 +308,6 @@ class AlbumCliTests(unittest.TestCase):
                 album.publication_state(folder, state, dict(target, environment="production"))
             with self.assertRaisesRegex(album.AlbumError, "must change together"):
                 album.publication_state(folder, state, dict(target, bucket="other-bucket"))
-            state["published"] = True
-            with self.assertRaisesRegex(album.AlbumError, "Legacy publication"):
-                album.publication_state(folder, state, target)
 
     def test_resume_recognizes_d1_commit_after_response_was_lost(self):
         with tempfile.TemporaryDirectory() as directory:

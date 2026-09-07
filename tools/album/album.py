@@ -44,7 +44,6 @@ PREFERRED_RESOLUTIONS = (
     (1184, 880), (1248, 832), (1328, 800), (1392, 752), (1456, 720),
     (1504, 688), (1568, 672),
 )
-# Bumped whenever the shape of .album-state.json changes.
 STATE_SCHEMA_VERSION = 4
 STATE_NAME = ".album-state.json"
 WORK_NAME = ".album-work"
@@ -227,11 +226,8 @@ def initialize_state(folder: Path, photos: Sequence[Dict[str, Any]]) -> Dict[str
             "schema_version": STATE_SCHEMA_VERSION,
             "album_id": crockford_id(),
             "created_at": int(time.time()),
-            "published": False,
             "photos": [],
-            "uploads": {},
         }
-    state.setdefault("uploads", {})
     existing = state.get("photos")
     if not isinstance(existing, list):
         raise AlbumError("Invalid photos in state file")
@@ -258,7 +254,6 @@ def initialize_state(folder: Path, photos: Sequence[Dict[str, Any]]) -> Dict[str
                 "media": {},
             })
         atomic_json(state_path, state)
-    state_changed = False
     for index, photo in enumerate(photos):
         photo_state = state["photos"][index]
         if photo_state.get("before_sha256") != photo["before"].sha256:
@@ -266,30 +261,10 @@ def initialize_state(folder: Path, photos: Sequence[Dict[str, Any]]) -> Dict[str
         if photo_state.get("flow") != photo["flow"]:
             raise AlbumError(f"photos[{index + 1}] flow changed after state was created")
         after_hash = photo["after"].sha256 if photo["after"] else None
-        if "after_sha256" not in photo_state:
-            if after_hash and photo_state.get("media"):
-                raise AlbumError("Legacy prepared state cannot verify the after source; retain its files and use a new album folder")
-            photo_state["after_sha256"] = after_hash
-            state_changed = True
-        elif photo_state["after_sha256"] != after_hash:
+        if photo_state.get("after_sha256") != after_hash:
             raise AlbumError(f"photos[{index + 1}] after changed after state was created")
-        params_sha256 = sha256_json(photo["params"])
-        existing_params_sha256 = photo_state.get("params_sha256")
-        if existing_params_sha256 is None:
-            if photo_state.get("job_id") or photo_state.get("processed_path"):
-                raise AlbumError(f"photos[{index + 1}] uses legacy state that cannot verify processing params; start in a new folder")
-            photo_state["params_sha256"] = params_sha256
-            if photo["flow"]:
-                photo_state["idempotency_key"] = (
-                    f"{state['album_id']}:{photo_state['id']}:{photo['before'].sha256}:"
-                    f"{params_sha256}:{photo['flow']}:{PROCESSING_PROFILE_VERSION}"
-                )
-            state_changed = True
-        elif existing_params_sha256 != params_sha256:
+        if photo_state.get("params_sha256") != sha256_json(photo["params"]):
             raise AlbumError(f"photos[{index + 1}] params changed after state was created; start in a new folder")
-    if state_changed:
-        state["schema_version"] = STATE_SCHEMA_VERSION
-        atomic_json(state_path, state)
     return state
 
 
@@ -454,7 +429,6 @@ def ensure_gallery_preview(folder: Path, state: Dict[str, Any], media: Dict[str,
     make_gallery_preview(media[first_id], destination)
     record = file_record(inspect_image(destination), expected_key)
     state["gallery"] = record
-    state["schema_version"] = max(STATE_SCHEMA_VERSION, int(state.get("schema_version", 0)))
     save_state(folder, state)
     return record
 
@@ -701,8 +675,6 @@ def publication_target() -> Dict[str, str]:
 
 
 def publication_state(folder: Path, state: Dict[str, Any], target: Dict[str, str]) -> Dict[str, Any]:
-    if state.get("published") or state.get("uploads"):
-        raise AlbumError("Legacy publication has no destination identity; reconcile its D1/R2 destination before migrating state")
     publications = state.setdefault("publications", {})
     for publication in publications.values():
         previous = publication["target"]
@@ -929,81 +901,6 @@ def publish(folder: Path, unlocked: bool, price_override: Optional[str]) -> Dict
             "state": "unlocked" if unlocked else "locked", "reused": False}
 
 
-def backfill_gallery(folder: Path) -> Dict[str, Any]:
-    photos = validate_manifest(folder, load_manifest(folder))
-    target = publication_target()
-    state = initialize_state(folder, photos)
-    publication = publication_state(folder, state, target)
-    if not publication.get("published"):
-        raise AlbumError("Album is not recorded as published to this destination")
-
-    media: Dict[str, Dict[str, Any]] = {}
-    for index, photo_state in enumerate(state["photos"]):
-        prepared = photo_state.get("media")
-        if not isinstance(prepared, dict) or any(name not in prepared for name in ("before", "after", "clean")):
-            raise AlbumError(f"Photo {index + 1} has no prepared published media")
-        for name in ("before", "after", "clean"):
-            verify_record(prepared[name])
-        media[photo_state["id"]] = prepared
-
-    gallery = ensure_gallery_preview(folder, state, media)
-    admin = CloudflareAdmin()
-    rows = admin.query(
-        """SELECT state,gallery_key,gallery_mime,gallery_width,gallery_height,gallery_bytes
-             FROM albums WHERE id=?1""",
-        (state["album_id"],),
-    )
-    if not rows:
-        raise AlbumError("Published album is missing from this database")
-    row = rows[0]
-    if row.get("state") == "deleted":
-        raise AlbumError("Deleted albums cannot be backfilled")
-
-    expected = {
-        "gallery_key": gallery["key"],
-        "gallery_mime": gallery["content_type"],
-        "gallery_width": gallery["width"],
-        "gallery_height": gallery["height"],
-        "gallery_bytes": gallery["bytes"],
-    }
-
-    def metadata_matches(candidate: Dict[str, Any]) -> bool:
-        return all(candidate.get(name) == value for name, value in expected.items())
-
-    if row.get("gallery_key") and not metadata_matches(row):
-        raise AlbumError("Album already references a different gallery preview")
-
-    admin.upload(gallery)
-    publication["uploads"][gallery["key"]] = gallery["sha256"]
-    save_state(folder, state)
-    reused = metadata_matches(row)
-    if not reused:
-        changes = admin.execute(
-            """UPDATE albums SET gallery_key=?1,gallery_mime=?2,gallery_width=?3,
-                       gallery_height=?4,gallery_bytes=?5
-                 WHERE id=?6 AND state!='deleted' AND gallery_key IS NULL""",
-            (*expected.values(), state["album_id"]),
-        )
-        if changes != 1:
-            latest = admin.query(
-                """SELECT state,gallery_key,gallery_mime,gallery_width,gallery_height,gallery_bytes
-                     FROM albums WHERE id=?1""",
-                (state["album_id"],),
-            )
-            if not latest or latest[0].get("state") == "deleted" or not metadata_matches(latest[0]):
-                raise AlbumError("Album changed while its gallery preview was being backfilled")
-            reused = True
-    return {
-        "ok": True,
-        "action": "backfill-gallery",
-        "album_id": state["album_id"],
-        "url": f"{target['base_url']}/gallery/{state['album_id']}",
-        "gallery_key": gallery["key"],
-        "gallery_bytes": gallery["bytes"],
-        "reused": reused,
-    }
-
-
 def validate_command(folder: Path) -> None:
     photos = validate_manifest(folder, load_manifest(folder))
     print(f"Valid album with {len(photos)} photo{'s' if len(photos) != 1 else ''}")
@@ -1011,26 +908,29 @@ def validate_command(folder: Path) -> None:
 
 def update_album(album_id: str, action: str) -> Dict[str, Any]:
     validate_album_id(album_id)
+    # Read before writing: a missing base URL must not leave the album mutated in D1.
+    base_url = required_env("ALBUM_BASE_URL").rstrip("/")
     admin = CloudflareAdmin()
     if action == "unlock":
         changes = admin.execute("UPDATE albums SET state='unlocked', unlocked_at=?1 WHERE id=?2 AND state='locked'", (int(time.time()), album_id))
+        settled = ("state", "unlocked")
     elif action == "feature":
         changes = admin.execute("UPDATE albums SET featured=1 WHERE id=?1 AND state!='deleted' AND featured=0", (album_id,))
+        settled = ("featured", 1)
     elif action == "unfeature":
         changes = admin.execute("UPDATE albums SET featured=0 WHERE id=?1 AND featured=1", (album_id,))
+        settled = ("featured", 0)
     else:
         raise AlbumError(f"Unsupported action: {action}")
+    # Every one of these commands is a no-op on repeat, so re-reading the column tells an
+    # already-applied change apart from a wrong ID or a deleted album.
     reused = False
     if changes != 1:
-        if action == "unlock":
-            rows = admin.query("SELECT state FROM albums WHERE id=?1", (album_id,))
-            if rows and rows[0].get("state") == "unlocked":
-                reused = True
-            else:
-                raise AlbumError(f"Album was not changed; check its ID and current state ({action})")
-        else:
+        column, expected = settled
+        rows = admin.query("SELECT state,featured FROM albums WHERE id=?1", (album_id,))
+        if not rows or rows[0].get("state") == "deleted" or rows[0].get(column) != expected:
             raise AlbumError(f"Album was not changed; check its ID and current state ({action})")
-    base_url = required_env("ALBUM_BASE_URL").rstrip("/")
+        reused = True
     state = "unlocked" if action == "unlock" else action
     return {"ok": True, "album_id": album_id, "url": f"{base_url}/gallery/{album_id}",
             "state": state, "action": action, "reused": reused}
@@ -1109,9 +1009,6 @@ def parser() -> argparse.ArgumentParser:
     resume.add_argument("--unlocked", action="store_true")
     resume.add_argument("--price-usd")
     resume.add_argument("--json", action="store_true")
-    backfill = sub.add_parser("backfill-gallery")
-    backfill.add_argument("folder", type=Path)
-    backfill.add_argument("--json", action="store_true")
     for action in ("unlock", "feature", "unfeature", "delete"):
         command = sub.add_parser(action)
         command.add_argument("album_id")
@@ -1131,8 +1028,6 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             validate_command(args.folder.resolve())
         elif args.command in {"publish", "resume"}:
             result = publish(args.folder.resolve(), args.unlocked, args.price_usd)
-        elif args.command == "backfill-gallery":
-            result = backfill_gallery(args.folder.resolve())
         elif args.command in {"unlock", "feature", "unfeature"}:
             result = update_album(args.album_id, args.command)
         elif args.command == "delete":

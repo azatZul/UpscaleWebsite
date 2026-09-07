@@ -18,15 +18,20 @@ npm run check
 npx wrangler dev
 ```
 
-`wrangler.jsonc` contains separate local, staging and production bindings. The three
-zero UUIDs are deliberate placeholders. Create both remote D1 databases and R2
-buckets, replace only the staging/production D1 IDs, then apply migrations before
-deploying. The `upscales.app/*` route exists only in the production environment.
+`wrangler.jsonc` contains separate local, staging and production bindings. The local
+database ID is a deliberate zero-UUID placeholder; staging and production point at
+real D1 databases. The `upscales.app/*` route exists only in the production
+environment.
 
 From the repository root, `scripts/deploy-cloudflare.sh staging` runs the build,
-Python tests, Worker checks, remote D1 migration and deploy as one sequence. Replace
-and verify the IDs before the script will run. Use `production` only after the
-staging smoke test; the Netlify deploy remains available as rollback during rollout.
+Python tests, Worker checks, remote D1 migration and deploy as one sequence. Use
+`production` only after the staging smoke test; the Netlify deploy remains available
+as rollback.
+
+Migration `0001` also creates `checkouts`, `payment_events` and `refund_jobs`. Nothing
+reads them yet: they are reserved for the paid-unlock stage and are deliberately kept
+rather than dropped, because the migration is already applied to both remote
+databases.
 
 Run `npm run types` whenever a binding changes. Do not add provider or Cloudflare API
 tokens to this Worker: administrative writes are performed by the local album CLI.

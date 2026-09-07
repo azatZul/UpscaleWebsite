@@ -3,7 +3,6 @@
   "name": "uscale-site",
   "main": "src/index.ts",
   "compatibility_date": "2026-09-04",
-  "compatibility_flags": ["nodejs_compat"],
   "workers_dev": true,
   "assets": {
     "directory": "../dist",
@@ -12,7 +11,6 @@
     "run_worker_first": [
       "/gallery",
       "/gallery/*",
-      "/a/*",
       "/media/*",
       "/download/*",
       "/api/*",
@@ -33,9 +31,6 @@
       "bucket_name": "uscale-albums-local"
     }
   ],
-  "vars": {
-    "ENVIRONMENT": "development"
-  },
   "observability": {
     "enabled": true,
     "logs": { "head_sampling_rate": 1 },
@@ -55,8 +50,7 @@
       ],
       "r2_buckets": [
         { "binding": "MEDIA", "bucket_name": "uscale-albums-staging" }
-      ],
-      "vars": { "ENVIRONMENT": "staging" }
+      ]
     },
     "production": {
       "name": "uscale-site",
@@ -74,8 +68,7 @@
       ],
       "r2_buckets": [
         { "binding": "MEDIA", "bucket_name": "uscale-albums" }
-      ],
-      "vars": { "ENVIRONMENT": "production" }
+      ]
     }
   }
 }

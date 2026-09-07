@@ -655,11 +655,8 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:64px 0 34
 
 /* ---------- shared result albums ---------- */
 .album-page,.gallery-page{padding-bottom:10px}
-.album-head,.gallery-head{max-width:760px;margin:0 auto 40px;padding-top:34px;text-align:center}
-/* Centred heads drop the eyebrow dash, exactly like .head.center on the marketing pages. */
-.album-head .eyebrow::before,.gallery-head .eyebrow::before{display:none}
+.album-head,.gallery-head{max-width:760px;margin:0 auto 40px;padding-top:34px}
 .album-head h1,.gallery-head h1{font-size:clamp(31px,4.6vw,47px);letter-spacing:-.032em;text-wrap:balance}
-.album-head .lead,.gallery-head .lead{margin:16px auto 0;text-wrap:balance}
 .album-locked{max-width:620px;margin:22px auto 0;padding:15px 22px;border:1px solid var(--acc-line);
   border-radius:var(--r-m);background:var(--acc-soft);color:var(--tx-2);font-size:14.5px;line-height:1.6}
 .album-locked strong{color:var(--tx)}
@@ -763,17 +760,13 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:64px 0 34
   border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--shadow);transition:.2s}
 /* Large cards stay put; the preview inside them is what moves. */
 .gallery-card:hover{border-color:var(--acc)}
-.gallery-card>img,.gallery-pair{display:block;transition:transform .45s cubic-bezier(.4,0,.2,1)}
-.gallery-card>img{width:100%;aspect-ratio:1200/630;object-fit:cover;background:#000}
-.gallery-card>.gallery-preview{aspect-ratio:4/3}
 /* The card previews the album the way it opens: damaged original left, restoration right. */
-.gallery-pair{display:grid;grid-template-columns:1fr 1fr;gap:2px;aspect-ratio:4/3;background:var(--line-2)}
-.gallery-pair img{display:block;width:100%;height:100%;min-width:0;object-fit:cover;background:#000}
+.gallery-preview{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#000;
+  transition:transform .45s cubic-bezier(.4,0,.2,1)}
 @media (hover:hover){
-  .gallery-card:hover>img,.gallery-card:focus-visible>img,
-  .gallery-card:hover .gallery-pair,.gallery-card:focus-visible .gallery-pair{transform:scale(1.045)}
+  .gallery-card:hover .gallery-preview,.gallery-card:focus-visible .gallery-preview{transform:scale(1.045)}
 }
-@media (prefers-reduced-motion:reduce){.gallery-card>img,.gallery-pair{transition:none}}
+@media (prefers-reduced-motion:reduce){.gallery-preview{transition:none}}
 .gallery-card-copy{display:block;padding:18px 20px 21px}
 .gallery-card h2{font-size:18px;letter-spacing:-.018em}
 .gallery-card p{color:var(--tx-3);font-size:14px;margin-top:7px}

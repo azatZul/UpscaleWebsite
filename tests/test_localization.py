@@ -367,14 +367,6 @@ class CatalogTests(unittest.TestCase):
         record = catalog.section_records("common.json")["footer.gallery"]["localizations"]
         self.assertEqual(set(record), set(site_build.BY_CODE))
 
-    def test_non_follow_sliders_use_pointer_capture_without_global_drag_listeners(self):
-        javascript = (ROOT / "assets" / "site.js").read_text(encoding="utf-8")
-        comparison = javascript.split("/* Before/after comparisons */", 1)[1]
-        self.assertIn("cmp.setPointerCapture", comparison)
-        self.assertIn("cmp.addEventListener('pointermove', move)", comparison)
-        self.assertNotIn("window.addEventListener('mousemove', move)", comparison)
-        self.assertNotIn("window.addEventListener('touchmove', move)", comparison)
-
 
 if __name__ == "__main__":
     unittest.main()

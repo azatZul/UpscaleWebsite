@@ -15,13 +15,13 @@
 
 | # | Решение |
 |---|---|
-| D1 | Worker живёт на зоне `upscales.app` поверх текущего Netlify-origin. Домен уже проксируется Cloudflare (NS `*.ns.cloudflare.com`), отдельного деплоя статики не требуется. |
-| D2 | Route patterns **только** новые пути. Никакого `upscales.app/*`. Существующие маршруты и SEO-страницы Worker не видит вообще. |
+| D1 | Worker живёт на зоне `upscales.app` и сам отдаёт статику из `dist/` через Static Assets. Домен уже проксируется Cloudflare (NS `*.ns.cloudflare.com`); Netlify остаётся запасным деплоем той же сборки. |
+| D2 | Worker стоит на `upscales.app/*` и отдаёт весь сайт через Cloudflare Static Assets (`html_handling=none`, `run_worker_first` только на альбомных путях). Существующие `.html`-адреса и индексы каталогов сохраняются сгенерированным `_redirects`. |
 | D3 | Обвязку страниц (`<head>`, шапка, подвал, тема, хеши CSS/JS) генерирует `build.py` в виде shell-шаблона; Worker подставляет в него контент. Разметку в TS не дублируем. |
 | D4 | Страницы альбомов и `/gallery` — **только на английском**. Локалепрефиксы (`/ru/gallery`) Worker не обслуживает. |
 | D5 | `/gallery` индексируется, попадает в `sitemap.xml`, без hreflang-альтернатив. Страницы альбомов — `noindex, nofollow`. |
 | D6 | ID альбомов и фото — криптослучайные, Crockford base32, 26 символов (130 бит). Слаги не используем. |
-| D7 | Удаления по времени нет. Колонка `expires_at` есть, по умолчанию `NULL`; Cron Trigger добавляется позже, если понадобится. |
+| D7 | Удаления по времени нет. Колонка `expires_at` есть, по умолчанию `NULL`; Cron Trigger добавляется позже, если понадобится. Таблицы `checkouts`, `payment_events`, `refund_jobs` из миграции `0001` тоже зарезервированы под этап 2 и пока не читаются. |
 | D8 | Публичного admin API нет. CLI пишет напрямую в R2 (S3-совместимый API) и D1 (REST API) по scoped-токенам Cloudflare. У Worker нет ни одного write-эндпоинта, кроме будущего webhook. |
 | D9 | Чистые файлы отдаёт Worker стримом из приватного R2. Presigned-URL не используем — после unlock доступ и так публичный, а так проще инвалидировать. |
 | D10 | R2-объекты иммутабельны: ключ содержит случайный ID и никогда не перезаписывается. Перепубликация = новый альбом. Отсюда `immutable`-кэш на preview. |
@@ -34,12 +34,15 @@
 ```
 Reddit / браузер
       │
-Cloudflare (зона upscales.app)
-      ├── маршруты альбомов ──► Worker (TS)
-      │                           ├─ D1  (метаданные, состояние, платежи)
-      │                           ├─ R2  (приватный бакет: preview, cover, clean, zip)
-      │                           └─ fetch shell ──► Netlify origin (напрямую по origin-хосту)
-      └── всё остальное ────────► Netlify (dist/, собранный build.py)
+Cloudflare (зона upscales.app, весь трафик)
+      └── Worker (TS)
+            ├─ альбомные маршруты
+            │     ├─ D1  (метаданные и состояние; таблицы платежей зарезервированы)
+            │     ├─ R2  (приватный бакет: preview, cover, clean, zip)
+            │     └─ shell ──► env.ASSETS (dist/_shell/album.html)
+            └─ всё остальное ──► env.ASSETS (dist/, собранный build.py)
+
+Netlify остаётся запасным деплоем той же самой dist/.
 
 Локально: CLI (Python) ──► R2 S3 API + D1 REST API
 ```
@@ -51,10 +54,10 @@ Cloudflare (зона upscales.app)
 | Маршрут | Ответ |
 |---|---|
 | `GET /gallery` | SSR-список публичных альбомов, новые сверху. Индексируется. |
-| `GET /gallery/:albumId` | SSR-страница альбома; старый `/a/:albumId` отвечает 301 на неё. |
+| `GET /gallery/:albumId` | SSR-страница альбома. |
 | `GET /media/:albumId/:photoId/:variant` | `before` / `after` — watermarked preview из R2. |
 | `GET /media/:albumId/cover.jpg` | OG-cover 1200×630, watermarked. Должен отдаваться крауле­рам без кук и редиректов. |
-| `GET /media/:albumId/gallery.jpg` | Сжатая before/after-карточка 1280×960 для `/gallery`; для старых альбомов разметка временно использует обычные preview. |
+| `GET /media/:albumId/gallery.jpg` | Сжатая before/after-карточка 1280×960 для `/gallery`. Альбом без неё в галерею не попадает. |
 | `GET /download/:albumId/:photoId` | Полноразмерный чистый файл. Только при `state='unlocked'`, иначе 403. |
 | `GET /download/:albumId/all.zip` | Заранее собранный ZIP. Те же условия. |
 | `POST /api/albums/:albumId/checkout` | Этап 2. |
@@ -115,8 +118,8 @@ payment_events(id, provider, external_id UNIQUE, album_id, type, amount_cents, c
 Решение:
 
 1. `build.py` дополнительно пишет `dist/_shell/album.html` — обычную страницу сайта (английская локаль) с маркерами `<!--HEAD-->` и `<!--BODY-->` вместо мета-тегов и контента.
-2. Worker фетчит shell **напрямую с Netlify-origin по его хосту** (переменная `ORIGIN`), а не через `https://upscales.app` — так исключён и цикл через свой же route, и зависимость от edge-кэша зоны.
-3. Shell кладётся в Cache API на 300 с. Если origin недоступен — используется минимальный inline-фоллбек, вшитый в бандл Worker.
+2. Worker читает shell через `env.ASSETS` — то же самое `dist/`, что отдаётся посетителям, без обращения к внешнему origin и без цикла через собственный route.
+3. Если shell недоступен или в нём не ровно по одному маркеру, Worker отвечает `503` с `Retry-After`, а не отдаёт полупустую страницу.
 4. Worker подставляет в `<!--HEAD-->` уникальные `og:title` / `og:description` / `og:image` / `og:image:width|height` / `twitter:card` / `robots`, в `<!--BODY-->` — контент альбома. Никакого JS-заполнения метаданных.
 
 Из этого же следует, что слайдеры бесплатны: страница альбома выдаёт ту же разметку `.cmp-wrap`, что и `compare_slider()` (`build/build.py:1433`), и её подхватывает существующий код `assets/site.js:353`.
@@ -135,7 +138,7 @@ album delete <id>
 album list
 ```
 
-Локально CLI: валидирует пары и форматы → снимает EXIF/GPS (и в preview, и в clean, и в ZIP) → делает preview WebP → накладывает watermark → собирает cover 1200×630 и gallery JPEG 1280×960 → собирает ZIP → грузит в R2 → вставляет строки в D1 → печатает готовую ссылку. Для ранее опубликованного альбома `album backfill-gallery <folder>` идемпотентно добавляет только gallery JPEG и его D1-метаданные, не меняя публичный URL.
+Локально CLI: валидирует пары и форматы → снимает EXIF/GPS (и в preview, и в clean, и в ZIP) → делает preview WebP → накладывает watermark → собирает cover 1200×630 и gallery JPEG 1280×960 → собирает ZIP → грузит в R2 → вставляет строки в D1 → печатает готовую ссылку.
 
 Автоцена: 1 фото — $3, 2–4 — $5, 5–20 — $8. `--price-usd` переопределяет цену; только `--unlocked` публикует сразу разблокированным. `--price-usd 0` без `--unlocked` создаёт ручной locked-альбом без checkout.
 
@@ -183,9 +186,9 @@ UPDATE albums SET state='unlocked', unlocked_at=? WHERE id=? AND state='locked'
 
 ## 10. Dev, деплой, секреты
 
-- Прод: `wrangler deploy` вручную на этапе 1, GitHub Action позже. Статика продолжает деплоиться Netlify отдельно.
-- Правка шапки/CSS требует сначала деплоя Netlify; Worker подхватит новый shell сам в течение 5 минут (D3).
-- Локально: `python3 build/build.py && python3 -m http.server 4173 -d dist` (существующий `.claude/launch.json`) + `wrangler dev` с `ORIGIN=http://localhost:4173`, локальными D1/R2 и скриптом-фикстурой на пару альбомов.
+- Прод: `scripts/deploy-cloudflare.sh production` — сборка, тесты, `npm run check`, remote-миграция D1 и `wrangler deploy` одной командой.
+- Правка шапки/CSS уезжает тем же деплоем: shell лежит в той же `dist/`, что и статика.
+- Локально: `python3 build/build.py`, затем `wrangler dev` (конфигурация `albums-worker` в `.claude/launch.json`) с локальными D1/R2.
 - SSL режим зоны — Full (strict), как сейчас.
 - Наблюдаемость: включить Workers Logs (`observability.enabled`).
 
@@ -207,20 +210,20 @@ TS (`vitest` + `@cloudflare/vitest-pool-workers`, локальные D1/R2):
 - 403 на `/download/*` до unlock, 200 после — для любого посетителя;
 - ZIP и сохранение порядка фотографий;
 - уникальные OG/Twitter-теги присутствуют в исходном HTML (regex по тексту ответа, не по DOM);
-- неверная и повторная webhook-подпись; два одновременных платежа → один unlock, второй возврат;
 - `deleted` → 410;
 - снятие EXIF/GPS (unit-тест CLI);
 - фоллбек при недоступном origin-shell;
 - `Range` на `/download`;
 - `noindex` на альбоме и его отсутствие на `/gallery`;
+- `/`, `/ru/`, `/guides/`, `/compare.html` продолжают отдаваться из Static Assets без редиректов;
 - смоук после деплоя: `/`, `/ru/`, `/compare.html`, `/sitemap.xml`, `/robots.txt` не изменились.
+
+Тесты вебхуков и конкурентных платежей появятся вместе с этапом 2.
 
 ## 13. Открытые вопросы
 
-1. Origin-хост Netlify для переменной `ORIGIN`.
-2. Юрисдикция и платёжный провайдер понадобятся только для будущей автоматической платной разблокировки; ручные locked-альбомы уже поддерживаются.
-3. Нужен ли ZIP уже на этапе 1 или достаточно отдельных загрузок.
-4. Индексируемая `/gallery` делает чужие восстановленные фото находимыми в поиске. Альбомы при этом `noindex`. Если это нежелательно — `/gallery` тоже закрывается, и раздел теряет SEO-смысл.
+1. Юрисдикция и платёжный провайдер понадобятся только для будущей автоматической платной разблокировки; ручные locked-альбомы уже поддерживаются.
+2. Индексируемая `/gallery` делает чужие восстановленные фото находимыми в поиске. Альбомы при этом `noindex`. Если это нежелательно — `/gallery` тоже закрывается, и раздел теряет SEO-смысл.
 
 ## 14. Критерий готовности этапа 1
 
