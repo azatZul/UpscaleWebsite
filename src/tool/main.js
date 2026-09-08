@@ -1,10 +1,14 @@
 import {checkBrowser, devicePolicy, durationLabel} from './capability.js';
+import {createComparison} from './comparison.js';
 
 const $ = id => document.getElementById(id);
-const elements = Object.fromEntries(['photo-input', 'choose-photo', 'sample-photo', 'drop-zone', 'selected-photo', 'source-thumb',
-  'source-name', 'source-size', 'change-photo', 'status', 'status-title', 'status-detail', 'progress', 'status-value',
+const elements = Object.fromEntries(['photo-input', 'choose-photo', 'drop-zone', 'selected-photo', 'source-thumb',
+  'source-name', 'source-size', 'status', 'status-title', 'status-detail', 'progress', 'status-value',
   'process-photo', 'cancel', 'retry', 'cpu-retry', 'app-fallback', 'results', 'result-image', 'result-summary',
-  'download-result', 'another-photo', 'limit-note', 'interrupted', 'visibility-note'].map(id => [id, $(id)]));
+  'download-result', 'another-photo', 'start-over', 'limit-note', 'interrupted', 'visibility-note', 'photo-stage',
+  'stage-title', 'tool-footnote', 'step-choose', 'step-upscale', 'step-compare', 'before-image', 'result-comparison',
+  'comparison-handle'].map(id => [id, $(id)]));
+const comparison = createComparison(elements['result-comparison'], elements['before-image'], elements['comparison-handle']);
 const environment = {userAgent: navigator.userAgent, platform: navigator.platform,
   maxTouchPoints: navigator.maxTouchPoints, deviceMemory: navigator.deviceMemory};
 const marker = 'uscale-preview-active-v1';
@@ -16,10 +20,11 @@ let retriedGpu = false;
 let generation = 0;
 let thumbnailUrl;
 let resultUrl;
+let originalUrl;
 let timer;
 let wakeLock;
 let supported = true;
-let loadingSample = false;
+let errorCode;
 const busy = () => ['checking', 'processing'].includes(phase);
 
 function remember(active) {
@@ -36,15 +41,31 @@ function setStatus(title, detail, progress) {
 }
 
 function refreshControls() {
-  elements['photo-input'].disabled = busy() || !supported;
-  elements['choose-photo'].disabled = busy() || !supported;
-  elements['sample-photo'].disabled = busy() || loadingSample || !supported;
-  elements['change-photo'].disabled = busy();
+  const selecting = phase === 'idle';
+  document.body.classList.toggle('has-photo', Boolean(file));
+  const failed = phase === 'error';
+  const appOnly = ['browser', 'size', 'format'].includes(errorCode);
+  elements['photo-stage'].hidden = phase === 'done';
+  elements['drop-zone'].hidden = !selecting || !supported;
+  elements['selected-photo'].hidden = !file || phase === 'done';
+  elements['stage-title'].textContent = file ? 'Your photo' : 'Choose a photo';
+  elements['tool-footnote'].hidden = !selecting;
+  elements['photo-input'].disabled = !selecting || !supported;
+  elements['choose-photo'].disabled = !selecting || !supported;
   elements['process-photo'].hidden = phase !== 'ready';
   elements.cancel.hidden = !busy();
-  elements.retry.hidden = !file || !['error', 'cancelled'].includes(phase) || !supported;
+  const cpuRetry = failed && errorCode === 'gpu' && !forceCpu;
+  elements['cpu-retry'].hidden = !cpuRetry;
+  elements.retry.hidden = !file || !failed || appOnly || cpuRetry || !supported;
+  elements['app-fallback'].hidden = !failed || errorCode === 'download';
+  elements['start-over'].hidden = !failed || !file;
   elements['visibility-note'].hidden = !busy() || !document.hidden;
-  elements['drop-zone'].setAttribute('aria-disabled', String(busy() || !supported));
+  elements['drop-zone'].setAttribute('aria-disabled', String(!selecting || !supported));
+  const currentStep = selecting || !file ? 0 : phase === 'done' ? 2 : 1;
+  ['step-choose', 'step-upscale', 'step-compare'].forEach((id, index) => {
+    index === currentStep ? elements[id].setAttribute('aria-current', 'step') : elements[id].removeAttribute('aria-current');
+    elements[id].classList.toggle('complete', index < currentStep);
+  });
 }
 
 async function keepAwake() {
@@ -75,9 +96,13 @@ function watchdog() {
 function clearOutput() {
   elements.results.hidden = true;
   elements['result-image'].removeAttribute('src');
+  elements['before-image'].removeAttribute('src');
   elements['download-result'].removeAttribute('href');
   if (resultUrl) URL.revokeObjectURL(resultUrl);
+  if (originalUrl) URL.revokeObjectURL(originalUrl);
   resultUrl = undefined;
+  originalUrl = undefined;
+  comparison.reset();
 }
 
 function fail(code, message) {
@@ -89,13 +114,11 @@ function fail(code, message) {
   }
   stopWorker();
   phase = 'error';
+  errorCode = code;
   if (!thumbnailUrl && file) elements['source-size'].textContent = 'Photo not processed';
   const cannotProcess = ['browser', 'size', 'format'].includes(code);
   setStatus(cannotProcess ? 'Try this photo in the app' : 'Couldn’t finish this photo', message);
-  elements['app-fallback'].hidden = false;
-  elements['cpu-retry'].hidden = code !== 'gpu' || forceCpu;
   refreshControls();
-  if (cannotProcess) elements.retry.hidden = true;
 }
 
 function onMessage(data, current) {
@@ -115,9 +138,7 @@ function onMessage(data, current) {
     remember(false); clearTimeout(timer);
     wakeLock?.release().catch(() => {}); wakeLock = null;
     setStatus(data.slow ? 'This photo may take a while' : 'Ready to upscale',
-      `Estimated time: ${durationLabel(data.milliseconds)}. ${data.slow ? 'Keep this page open, or use the app instead.' : 'Your photo will be processed on this device.'}`);
-    elements['process-photo'].textContent = data.slow ? 'Continue in browser · 2×' : 'Upscale photo · 2×';
-    elements['app-fallback'].hidden = !data.slow;
+      `Estimated time: ${durationLabel(data.milliseconds)}. ${data.slow ? 'Keep this page open while it processes.' : 'Ready when you are.'}`);
     refreshControls();
   } else if (data.type === 'error') {
     fail(data.code, data.message);
@@ -125,13 +146,17 @@ function onMessage(data, current) {
     stopWorker(); phase = 'done';
     clearOutput();
     resultUrl = URL.createObjectURL(data.blob);
+    // Decode the original for comparison only after inference has finished.
+    // A thumbnail here would make the "before" side artificially blurry.
+    originalUrl = URL.createObjectURL(file);
     elements['result-image'].src = resultUrl;
+    elements['before-image'].src = originalUrl;
+    elements['result-comparison'].style.aspectRatio = `${data.plan.width} / ${data.plan.height}`;
+    elements['result-comparison'].style.setProperty('--photo-ratio', data.plan.width / data.plan.height);
     elements['download-result'].href = resultUrl;
     elements['download-result'].download = `${file.name.replace(/\.[^.]+$/, '') || 'photo'}-uscale-2x.jpg`;
-    elements['result-summary'].textContent = `${data.plan.width} × ${data.plan.height} → ${data.plan.outputWidth} × ${data.plan.outputHeight}. Saved as JPEG. Your photo was never uploaded.`;
-    setStatus('Your photo is ready', 'Download the full-size result below.', 1);
+    elements['result-summary'].textContent = `${data.plan.width} × ${data.plan.height} → ${data.plan.outputWidth} × ${data.plan.outputHeight} · JPEG`;
     elements.results.hidden = false;
-    elements['app-fallback'].hidden = true;
     refreshControls();
     elements.results.focus({preventScroll: true});
     elements.results.scrollIntoView({behavior: 'smooth', block: 'start'});
@@ -144,9 +169,8 @@ function prepare(cpu = false) {
   forceCpu = cpu;
   clearOutput();
   phase = 'checking';
+  errorCode = undefined;
   elements.interrupted.hidden = true;
-  elements['app-fallback'].hidden = true;
-  elements['cpu-retry'].hidden = true;
   setStatus(cpu ? 'Trying another processing method' : 'Checking this browser and photo',
     cpu ? 'Checking the CPU option. It may take longer.' : 'A small test will estimate how long your photo will take.');
   refreshControls();
@@ -163,70 +187,62 @@ function prepare(cpu = false) {
 }
 
 function chooseFile(next) {
-  if (!next || busy() || !supported) return;
+  if (!next || phase !== 'idle' || !supported) return;
   file = next; retriedGpu = false;
   if (thumbnailUrl) URL.revokeObjectURL(thumbnailUrl);
   thumbnailUrl = undefined;
   elements['source-thumb'].removeAttribute('src');
   elements['source-name'].textContent = file.name;
   elements['source-size'].textContent = 'Checking image dimensions…';
-  elements['selected-photo'].hidden = false;
   prepare();
 }
 
 elements['choose-photo'].addEventListener('click', () => elements['photo-input'].click());
-elements['change-photo'].addEventListener('click', () => { elements['photo-input'].value = ''; elements['photo-input'].click(); });
 elements['photo-input'].addEventListener('change', () => chooseFile(elements['photo-input'].files[0]));
-elements['sample-photo'].addEventListener('click', async () => {
-  if (busy() || loadingSample) return;
-  const current = generation;
-  loadingSample = true; refreshControls();
-  try {
-    const response = await fetch('/resources/before_after/hero_girls_play_before.jpg');
-    if (!response.ok) throw new Error('Sample unavailable');
-    const blob = await response.blob();
-    if (!busy() && current === generation) chooseFile(new File([blob], 'uscale-sample.jpg', {type: 'image/jpeg'}));
-  } catch {
-    if (current === generation) setStatus('The sample couldn’t load', 'Check your connection, or choose a photo from your device.');
-  } finally { loadingSample = false; refreshControls(); }
-});
 elements['process-photo'].addEventListener('click', () => {
   if (phase !== 'ready' || !worker) return;
   phase = 'processing'; remember(true); refreshControls(); watchdog(); keepAwake();
   worker.postMessage({type: 'process'});
 });
 elements.cancel.addEventListener('click', () => {
-  stopWorker(); phase = 'cancelled';
-  setStatus('Processing cancelled', 'Your photo stayed on this device. You can retry or choose another photo.');
-  refreshControls();
+  reset();
+  setStatus('Processing cancelled', 'Your photo stayed on this device. Choose a photo when you’re ready.');
 });
 elements.retry.addEventListener('click', () => { retriedGpu = false; prepare(forceCpu); });
 elements['cpu-retry'].addEventListener('click', () => prepare(true));
-elements['another-photo'].addEventListener('click', () => {
+function reset() {
   stopWorker(); phase = 'idle'; file = null;
+  errorCode = undefined;
   clearOutput(); elements.status.hidden = true; elements['selected-photo'].hidden = true;
   elements['photo-input'].value = '';
   if (thumbnailUrl) URL.revokeObjectURL(thumbnailUrl);
   thumbnailUrl = undefined; elements['source-thumb'].removeAttribute('src');
-  refreshControls(); elements['choose-photo'].focus();
-});
+  refreshControls(); elements['choose-photo'].focus({preventScroll: true});
+  elements['photo-stage'].scrollIntoView({behavior: 'smooth', block: 'start'});
+}
+elements['another-photo'].addEventListener('click', reset);
+elements['start-over'].addEventListener('click', reset);
 for (const eventName of ['dragenter', 'dragover']) elements['drop-zone'].addEventListener(eventName, event => {
-  event.preventDefault(); if (!busy()) elements['drop-zone'].classList.add('dragging');
+  event.preventDefault(); if (phase === 'idle') elements['drop-zone'].classList.add('dragging');
 });
 for (const eventName of ['dragleave', 'drop']) elements['drop-zone'].addEventListener(eventName, event => {
   event.preventDefault(); elements['drop-zone'].classList.remove('dragging');
-  if (eventName === 'drop') chooseFile(event.dataTransfer.files[0]);
+  if (eventName === 'drop') {
+    if (event.dataTransfer.files.length > 1) setStatus('Choose one photo at a time', 'Drop a single photo to get started.');
+    else chooseFile(event.dataTransfer.files[0]);
+  }
 });
 document.addEventListener('visibilitychange', () => { refreshControls(); watchdog(); keepAwake(); });
 window.addEventListener('pagehide', () => {
   const interrupted = busy();
   stopWorker(); if (interrupted) remember(true);
-  phase = 'cancelled';
+  if (phase !== 'done') phase = 'cancelled';
 });
 window.addEventListener('pageshow', event => {
   if (event.persisted) {
-    setStatus('Check your photo again', 'The previous processing task ended when you left this page.');
-    refreshControls();
+    if (phase === 'done') return;
+    reset();
+    setStatus('Choose your photo again', 'The previous processing task ended when you left this page.');
   }
 });
 

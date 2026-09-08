@@ -6,6 +6,15 @@ device. It exports JPEG at twice the original width and height; transparency is
 flattened onto white. Face enhancement, video, animated images and HEIC are
 referred to the existing iPhone/iPad app.
 
+The flow handles one photo at a time: choose, check, upscale, then compare.
+Once selected, the picker disappears and the ready state has one Upscale
+button. The finished state replaces the processing card with the website's
+before/after divider, a download action and an option to start over. The divider
+supports dragging and Arrow Left/Right, Home and End. It resets to the middle
+for every new photo. The before side uses the original file, not its thumbnail;
+both sides show the entire image at the same aspect ratio. Original-file decoding
+for the comparison happens only after the processing Worker has finished.
+
 ## Capability guard
 
 The guard combines required browser features, file dimensions, conservative
@@ -31,7 +40,7 @@ in this first preview. No automatic shrinking or lower-quality model substitutio
 is performed.
 
 After the probe, the user sees a time estimate and explicitly starts processing.
-Estimates over a minute offer the app alongside a continue button. Cancel
+Estimates over a minute warn about the duration before the Upscale button. Cancel
 terminates the Worker, including an in-progress inference. Failed GPU processing
 offers a CPU retry; stalled tasks time out. A timestamp in local storage allows
 an interruption hint on the next visit; no image or filename is stored there.

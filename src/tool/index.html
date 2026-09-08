@@ -23,24 +23,27 @@
   <main class="tool-wrap" id="main-content" tabindex="-1">
     <div class="tool-heading">
       <span class="eyebrow">On your device. Just your photo.</span>
-      <h1>Give your photo a closer look.</h1>
-      <p>Upscale to twice the width and height. We’ll check your browser and estimate the time before you start.</p>
+      <h1>Upscale your photo.</h1>
+      <p>Choose a photo. Make it 2× larger. See the difference.</p>
     </div>
+    <ol class="tool-steps" aria-label="Photo upscaling steps">
+      <li id="step-choose" aria-current="step"><span>1</span>Choose</li>
+      <li id="step-upscale"><span>2</span>Upscale</li>
+      <li id="step-compare"><span>3</span>Compare</li>
+    </ol>
     <p class="notice" id="interrupted" hidden>Your last session may have been interrupted. Choose the photo again, try a smaller image, or use the app.</p>
-    <section class="tool-card" aria-label="Upscale a photo">
-      <div class="tool-card-heading"><h2>Try 2× photo upscaling</h2><span class="private-note">No upload</span></div>
+    <section class="tool-card" id="photo-stage" aria-label="Upscale a photo">
+      <div class="tool-card-heading"><h2 id="stage-title">Choose a photo</h2><span class="private-note">No upload</span></div>
+      <input id="photo-input" type="file" accept="image/*" hidden>
       <div id="drop-zone" class="photo-drop">
         <span class="upload-mark" aria-hidden="true">＋</span>
-        <p>Drop a photo here</p>
-        <input id="photo-input" type="file" accept="image/*" hidden>
+        <p>Drop one photo here</p>
         <button id="choose-photo" class="btn btn-p" type="button">Choose a photo <span aria-hidden="true">→</span></button>
         <span id="limit-note">JPEG, PNG or WebP</span>
-        <button id="sample-photo" class="text-button" type="button">Or try a sample photo</button>
       </div>
       <div id="selected-photo" class="photo-selection" hidden>
         <img id="source-thumb" alt="Selected photo preview">
         <div><b id="source-name"></b><span id="source-size"></span></div>
-        <button id="change-photo" class="text-button" type="button">Change</button>
       </div>
       <div class="tool-status" id="status" role="status" aria-live="polite" aria-atomic="true" hidden>
         <div><b id="status-title"></b><span id="status-value"></span></div>
@@ -50,27 +53,35 @@
       <p id="visibility-note" class="notice" hidden>Return to this page to keep processing. Your browser may pause work in the background.</p>
       <div class="tool-actions">
         <button id="process-photo" class="btn btn-p" type="button" hidden>Upscale photo · 2×</button>
-        <button id="cancel" class="btn btn-g" type="button" hidden>Cancel</button>
-        <button id="retry" class="btn btn-g" type="button" hidden>Check again</button>
-        <button id="cpu-retry" class="btn btn-g" type="button" hidden>Try another processing method</button>
+        <button id="cancel" class="text-button" type="button" hidden>Cancel</button>
+        <button id="retry" class="btn btn-p" type="button" hidden>Try again</button>
+        <button id="cpu-retry" class="btn btn-p" type="button" hidden>Try another processing method</button>
       </div>
       <div class="app-fallback" id="app-fallback" hidden>
         <p>For larger photos, face enhancement and video, try UScale on iPhone or iPad.</p>
         <a class="btn btn-p" href="https://apps.apple.com/app/id6736931330" target="_blank" rel="noopener">Get the iPhone &amp; iPad app <span aria-hidden="true">↗</span></a>
       </div>
-      <p class="tool-footnote">The first check downloads the upscaler. Photos stay on this device. Transparent areas are saved on white in the JPEG result.</p>
+      <button id="start-over" class="text-button" type="button" hidden>Choose another photo</button>
+      <p id="tool-footnote" class="tool-footnote">Your photo stays on this device. The first check downloads the upscaler. Results are saved as JPEG, with transparent areas on white.</p>
     </section>
     <section class="tool-results" id="results" tabindex="-1" hidden>
       <span class="eyebrow">Finished on your device</span>
-      <h2>Your upscaled photo</h2>
+      <h2>See the difference.</h2>
       <p id="result-summary"></p>
-      <div class="result-picture"><img id="result-image" alt="Your photo upscaled to twice its original width and height"></div>
+      <div class="cmp-wrap result-comparison">
+        <div class="cmp" id="result-comparison" role="group" aria-label="Before and after photo comparison">
+          <img class="a-img" id="result-image" alt="Your photo upscaled to twice its original width and height" draggable="false">
+          <img class="b" id="before-image" alt="Your original photo" draggable="false">
+          <span class="cmp-tag l">Before</span><span class="cmp-tag r">After · 2×</span>
+          <span class="cmp-bar" id="comparison-handle" role="slider" tabindex="0" aria-label="Before and after separator" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-describedby="comparison-hint"></span>
+        </div>
+      </div>
+      <p id="comparison-hint" class="comparison-hint">Drag the separator to compare. You can also use the arrow keys.</p>
       <div class="tool-actions">
         <a id="download-result" class="btn btn-p" download="uscale-2x.jpg">Download photo <span aria-hidden="true">↓</span></a>
-        <button id="another-photo" class="btn btn-g" type="button">Try another photo</button>
+        <button id="another-photo" class="text-button" type="button">Upscale another photo</button>
       </div>
     </section>
-    <div class="tool-bottom"><p>Want to enhance faces or videos?</p><a href="https://apps.apple.com/app/id6736931330" target="_blank" rel="noopener">Explore the iPhone &amp; iPad app ↗</a></div>
     <noscript><div class="notice">Enable JavaScript to process photos in your browser, or <a href="https://apps.apple.com/app/id6736931330">download UScale for iPhone and iPad</a>.</div></noscript>
   </main>
   <script type="module" src="__TOOL_SCRIPT__"></script>
