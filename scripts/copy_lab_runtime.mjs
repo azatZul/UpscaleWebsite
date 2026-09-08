@@ -17,6 +17,14 @@ await cp(
   new URL('vendor/ort.webgpu.min.mjs', output),
 );
 await cp(
+  new URL('../node_modules/onnxruntime-web/dist/ort.wasm.min.mjs', import.meta.url),
+  new URL('vendor/ort.wasm.min.mjs', output),
+);
+await cp(
+  new URL('../node_modules/onnxruntime-web/dist/ort.all.min.mjs', import.meta.url),
+  new URL('vendor/ort.all.min.mjs', output),
+);
+await cp(
   new URL('../node_modules/@mediapipe/tasks-vision/vision_bundle.mjs', import.meta.url),
   new URL('vendor/vision_bundle.mjs', output),
 );
@@ -25,6 +33,8 @@ await mkdir(new URL('ort/', output), {recursive: true});
 for (const fileName of [
   'ort-wasm-simd-threaded.asyncify.mjs',
   'ort-wasm-simd-threaded.asyncify.wasm',
+  'ort-wasm-simd-threaded.mjs',
+  'ort-wasm-simd-threaded.wasm',
 ]) {
   await cp(
     new URL(`../node_modules/onnxruntime-web/dist/${fileName}`, import.meta.url),
@@ -35,5 +45,11 @@ for (const fileName of [
 await copyMatching(
   new URL('../node_modules/@mediapipe/tasks-vision/wasm/', import.meta.url),
   new URL('mediapipe/', output),
+  (name) => name.endsWith('.wasm') || name.endsWith('.js'),
+);
+
+await copyMatching(
+  new URL('../node_modules/@litertjs/core/wasm/', import.meta.url),
+  new URL('litert/', output),
   (name) => name.endsWith('.wasm') || name.endsWith('.js'),
 );

@@ -1,4 +1,4 @@
-import * as ort from 'onnxruntime-web/webgpu';
+import * as ort from 'onnxruntime-web/all';
 import {FaceLandmarker, FilesetResolver} from '@mediapipe/tasks-vision';
 
 const MODEL_URLS = {
@@ -8,6 +8,7 @@ const MODEL_URLS = {
     // into the GPU path.
     wasm: '/models/normal_2x_web.ort',
     webgpu: '/models/normal_2x_web.onnx',
+    webgl: '/models/normal_2x_webgl.onnx',
   },
   face: '/models/face_512.onnx',
 };
@@ -72,6 +73,7 @@ async function fetchModel(url, onProgress = () => {}) {
 
 function providerOrder(requested) {
   if (requested === 'wasm') return ['wasm'];
+  if (requested === 'webgl') return ['webgl'];
   if (requested === 'webgpu') {
     if (!navigator.gpu) throw new Error('This browser does not make its GPU available to web pages.');
     return ['webgpu'];
@@ -81,6 +83,8 @@ function providerOrder(requested) {
 
 export async function createModelSession(kind, requestedBackend = 'auto', onProgress = () => {}) {
   configureRuntime();
+  // Lets a benchmark run compare ORT graph optimization levels without a rebuild.
+  const optLevel = new URLSearchParams(location.search).get('opt') || 'disabled';
   const modelUrls = MODEL_URLS[kind];
   if (!modelUrls) throw new Error(`Unknown model ${kind}`);
   const providers = providerOrder(requestedBackend);
@@ -89,13 +93,25 @@ export async function createModelSession(kind, requestedBackend = 'auto', onProg
   const downloadStarted = performance.now();
   const bytes = await fetchModel(url, onProgress);
   const downloadMs = performance.now() - downloadStarted;
+  // `warmup=1` creates and discards a session first, so the timing below
+  // measures a second session in the same page rather than ORT's one-time init.
+  if (new URLSearchParams(location.search).get('warmup') === '1') {
+    const throwaway = await ort.InferenceSession.create(bytes, {
+      executionProviders: providers,
+      graphOptimizationLevel: optLevel,
+      executionMode: 'sequential',
+      enableCpuMemArena: true,
+      enableMemPattern: true,
+    });
+    throwaway.release();
+  }
   const compileStarted = performance.now();
   let session;
   let backend = providers[0];
   try {
     session = await ort.InferenceSession.create(bytes, {
       executionProviders: providers,
-      graphOptimizationLevel: 'disabled',
+      graphOptimizationLevel: optLevel,
       executionMode: 'sequential',
       enableCpuMemArena: true,
       enableMemPattern: true,
@@ -105,7 +121,7 @@ export async function createModelSession(kind, requestedBackend = 'auto', onProg
     backend = 'wasm';
     session = await ort.InferenceSession.create(bytes, {
       executionProviders: ['wasm'],
-      graphOptimizationLevel: 'disabled',
+      graphOptimizationLevel: optLevel,
       executionMode: 'sequential',
       enableCpuMemArena: true,
       enableMemPattern: true,

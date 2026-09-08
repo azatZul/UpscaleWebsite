@@ -8,6 +8,7 @@
     "preview:lab": "node scripts/serve_lab.mjs"
   },
   "dependencies": {
+    "@litertjs/core": "^2.5.3",
     "@mediapipe/tasks-vision": "1.0.1",
     "onnxruntime-web": "1.23.2"
   },

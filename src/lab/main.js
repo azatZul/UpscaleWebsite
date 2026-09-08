@@ -1,4 +1,5 @@
 import {runBenchmark} from './benchmark.js';
+import {runLiteRtBenchmark} from './litert_benchmark.js';
 import {decodeFile, processPhoto} from './image_pipeline.js';
 import {configureRuntime, hardwareSummary} from './runtime.js';
 
@@ -164,13 +165,14 @@ for (const eventName of ['dragleave', 'drop']) {
 }
 elements.dropZone.addEventListener('drop', (event) => chooseFile(event.dataTransfer?.files?.[0]).catch(showError));
 
-async function displayBenchmark(kind, backend = elements.backend.value, runs = 1) {
+async function displayBenchmark(kind, backend = elements.backend.value, runs = 1, caseLimit) {
   elements.benchmarkOutput.textContent = 'Starting…';
   elements.benchmarkUpscale.disabled = true;
   elements.benchmarkFace.disabled = true;
   try {
     const report = await runBenchmark(kind, backend, {
       runs,
+      caseLimit,
       onProgress: (message) => { elements.benchmarkOutput.textContent = message; },
     });
     elements.benchmarkOutput.textContent = JSON.stringify(report, null, 2);
@@ -194,3 +196,46 @@ if (new URLSearchParams(location.search).has('benchmark')) {
 }
 elements.benchmarkUpscale.addEventListener('click', () => displayBenchmark('upscale').catch(console.error));
 elements.benchmarkFace.addEventListener('click', () => displayBenchmark('face').catch(console.error));
+
+async function runAutomatedBenchmark() {
+  const parameters = new URLSearchParams(location.search);
+  const kind = parameters.get('autobenchmark');
+  if (!['upscale', 'face', 'litert-upscale'].includes(kind)) return;
+  const backend = parameters.get('backend') || 'auto';
+  const runs = Math.max(1, Math.min(5, Number(parameters.get('runs')) || 1));
+  const caseLimit = Math.max(1, Math.min(100, Number(parameters.get('cases')) || 100));
+  const reportId = parameters.get('report');
+  let payload;
+  try {
+    if (kind === 'litert-upscale') {
+      elements.benchmarkOutput.textContent = 'Starting LiteRT…';
+      payload = await runLiteRtBenchmark(backend === 'auto' ? 'webgpu' : backend, {
+        caseLimit,
+        onProgress: (message) => { elements.benchmarkOutput.textContent = message; },
+      });
+      elements.benchmarkOutput.textContent = JSON.stringify(payload, null, 2);
+    } else {
+      payload = await displayBenchmark(kind, backend, runs, caseLimit);
+    }
+  } catch (error) {
+    payload = {
+      schemaVersion: 1,
+      createdAt: new Date().toISOString(),
+      model: kind,
+      requestedBackend: backend,
+      passed: false,
+      error: `${error?.name || 'Error'}: ${error?.message || String(error)}\n${error?.stack || ''}`,
+      environment: {userAgent: navigator.userAgent, hardware: hardwareSummary()},
+    };
+  }
+  window.__automatedBenchmarkComplete = payload;
+  if (reportId) {
+    await fetch(`/__lab_report/${encodeURIComponent(reportId)}`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload),
+    });
+  }
+}
+
+runAutomatedBenchmark().catch(console.error);

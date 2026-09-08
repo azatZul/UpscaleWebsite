@@ -169,6 +169,7 @@ async function runOnce(session, inputImage) {
 export async function runBenchmark(kind, backend = 'auto', options = {}) {
   const onProgress = options.onProgress || (() => {});
   const benchmarkRuns = options.runs || 1;
+  const caseLimit = Math.max(1, Math.min(options.caseLimit || Number.POSITIVE_INFINITY, 100));
   const corpusUrl = CORPORA[kind];
   if (!corpusUrl) throw new Error(`Unknown benchmark ${kind}`);
   const corpus = await (await fetch(corpusUrl)).json();
@@ -185,9 +186,10 @@ export async function runBenchmark(kind, backend = 'auto', options = {}) {
     onProgress('Warming up the browser engine…');
     await runOnce(runtime.session, warmupImage);
 
-    for (let caseIndex = 0; caseIndex < corpus.cases.length; caseIndex += 1) {
-      const entry = corpus.cases[caseIndex];
-      onProgress(`Case ${caseIndex + 1} of ${corpus.cases.length}: ${entry.name}`);
+    const benchmarkCases = corpus.cases.slice(0, caseLimit);
+    for (let caseIndex = 0; caseIndex < benchmarkCases.length; caseIndex += 1) {
+      const entry = benchmarkCases[caseIndex];
+      onProgress(`Case ${caseIndex + 1} of ${benchmarkCases.length}: ${entry.name}`);
       const [input, referenceImage] = await Promise.all([
         loadImageData(base + entry.input),
         loadImageData(base + entry.reference),

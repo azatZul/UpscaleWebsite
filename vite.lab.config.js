@@ -12,7 +12,7 @@ export default defineConfig({
       fileName: () => 'lab.js',
     },
     rolldownOptions: {
-      external: ['onnxruntime-web/webgpu', '@mediapipe/tasks-vision'],
+      external: ['onnxruntime-web/all', 'onnxruntime-web/wasm', 'onnxruntime-web/webgpu', '@mediapipe/tasks-vision'],
       output: {
         codeSplitting: false,
       },

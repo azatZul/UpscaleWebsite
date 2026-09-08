@@ -10,6 +10,8 @@ The prototype expects:
   used by WebGPU.
 - `normal_2x_web.ort` — the same Regular 2× graph prepared for the browser CPU
   fallback so it starts without a long optimization pause.
+- `normal_2x_litert.tflite` — the exact Regular 2× weights rebuilt in the
+  browser-native channel-last layout for the LiteRT.js WebKit/iOS runtime.
 - `face_512.onnx` — the exact quantized GFPGAN 1.4 graph used for face
   enhancement, exported from the seven-bit Core ML source without expanding
   the weights to FP32.

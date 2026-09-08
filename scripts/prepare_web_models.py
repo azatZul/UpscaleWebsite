@@ -69,6 +69,16 @@ def main() -> int:
         (ort_output / "normal_2x_web.ort").read_bytes(),
     )
 
+    # LiteRT.js performs best with browser-native channel-last tensors. Rebuild
+    # the same Core ML weights in that layout so the entire graph can stay on
+    # WebGPU instead of bouncing between the GPU and WASM.
+    run(
+        str(PYTHON), str(PORT / "scripts" / "export_nhwc_tflite.py"),
+        "--coreml", str(IOS / "UpscalePackage/Sources/Processor/models/normal_2x_dsize.mlmodel"),
+        "--output", str(OUTPUT / "normal_2x_litert.tflite"),
+        "--tile-size", "256", "--scale", "2", "--fp16-weights",
+    )
+
     landmark_path = OUTPUT / "face_landmarker.task"
     if not landmark_path.exists():
         urllib.request.urlretrieve(
