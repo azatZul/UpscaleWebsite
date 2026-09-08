@@ -1,8 +1,9 @@
 import {createReadStream, mkdirSync, statSync, writeFileSync} from 'node:fs';
 import {createServer} from 'node:http';
-import {extname, join, normalize} from 'node:path';
+import {extname, join, resolve, relative, sep} from 'node:path';
 
-const root = new URL('../dist/', import.meta.url).pathname;
+const preview = process.env.USCALE_SERVE_PREVIEW === '1';
+const root = new URL(preview ? '../.preview-dist/' : '../dist/', import.meta.url).pathname;
 const port = Number(process.env.USCALE_LAB_PORT || 4173);
 const types = {
   '.css': 'text/css; charset=utf-8',
@@ -22,9 +23,11 @@ const types = {
 };
 
 createServer((request, response) => {
-  const pathname = decodeURIComponent(new URL(request.url, `http://${request.headers.host}`).pathname);
+  let pathname;
+  try { pathname = decodeURIComponent(new URL(request.url, 'http://localhost').pathname); }
+  catch { response.writeHead(400).end('Invalid URL'); return; }
   const reportMatch = pathname.match(/^\/__lab_report\/([a-zA-Z0-9._-]+)$/);
-  if (request.method === 'POST' && reportMatch) {
+  if (!preview && request.method === 'POST' && reportMatch) {
     const chunks = [];
     request.on('data', (chunk) => chunks.push(chunk));
     request.on('end', () => {
@@ -40,35 +43,49 @@ createServer((request, response) => {
     });
     return;
   }
-  let file = normalize(join(root, pathname));
-  if (!file.startsWith(root)) {
+  if (!['GET', 'HEAD'].includes(request.method)) {
+    response.writeHead(405, {Allow: 'GET, HEAD'}).end('Method not allowed');
+    return;
+  }
+  let file = resolve(root, `.${pathname}`);
+  const pathFromRoot = relative(root, file);
+  if (pathFromRoot === '..' || pathFromRoot.startsWith(`..${sep}`) || pathname.includes('\0')) {
     response.writeHead(403).end('Forbidden');
     return;
   }
   try {
     if (statSync(file).isDirectory()) file = join(file, 'index.html');
+    if (!statSync(file).isFile()) throw new Error('Not a file');
   } catch {
     response.writeHead(404).end('Not found');
     return;
   }
   response.setHeader('Content-Type', types[extname(file).toLowerCase()] || 'application/octet-stream');
   response.setHeader('Content-Length', statSync(file).size);
-  if (pathname.startsWith('/lab/')) {
+  response.setHeader('Cache-Control', 'no-cache');
+  if (preview) response.setHeader('X-Robots-Tag', 'noindex, nofollow');
+  if (pathname.startsWith('/lab/') || pathname.startsWith('/upscale/')) {
     response.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
     response.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
     response.setHeader('Cache-Control', 'no-store');
   }
-  if (pathname.startsWith('/models/') || pathname.startsWith('/benchmarks/') || pathname.startsWith('/assets/lab/')) {
+  if (pathname.startsWith('/models/') || pathname.startsWith('/benchmarks/') || pathname.startsWith('/assets/lab/') || pathname.startsWith('/assets/processor/')) {
     response.setHeader('Cross-Origin-Resource-Policy', 'same-origin');
+  }
+  if (pathname.startsWith('/assets/processor/')) {
+    response.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
   }
   // Immutable payloads: the model files and the ORT engine binaries. Without
   // this the browser refetches ~86 MB + ~24 MB on every run, which dominates
   // and distorts every startup measurement.
   if (pathname.startsWith('/models/') || pathname.startsWith('/assets/lab/ort/')
-      || pathname.startsWith('/assets/lab/vendor/')) {
+      || pathname.startsWith('/assets/lab/vendor/') || pathname.startsWith('/assets/processor/')) {
     response.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
   }
-  createReadStream(file).pipe(response);
+  if (request.method === 'HEAD') { response.writeHead(200).end(); return; }
+  const stream = createReadStream(file);
+  stream.on('error', () => response.destroy());
+  stream.pipe(response);
 }).listen(port, '127.0.0.1', () => {
-  console.log(`UScale browser lab: http://localhost:${port}/lab/`);
+  console.log(`UScale browser ${preview ? 'preview' : 'lab'}: http://localhost:${port}/${preview ? 'upscale' : 'lab'}/`);
 });

@@ -1,5 +1,6 @@
 import * as ort from 'onnxruntime-web/all';
 import {FaceLandmarker, FilesetResolver} from '@mediapipe/tasks-vision';
+import {isAppleMobile} from '../tool/capability.js';
 
 const MODEL_URLS = {
   upscale: {
@@ -71,7 +72,10 @@ async function fetchModel(url, onProgress = () => {}) {
   return result;
 }
 
-function providerOrder(requested) {
+function providerOrder(requested, kind) {
+  // Avoid the observed iPhone face/WebGPU crash before session creation.
+  // Explicit benchmark overrides still allow testing future runtime fixes.
+  if (requested === 'auto' && kind === 'face' && isAppleMobile(navigator)) return ['wasm'];
   if (requested === 'wasm') return ['wasm'];
   if (requested === 'webgl') return ['webgl'];
   if (requested === 'webgpu') {
@@ -87,7 +91,7 @@ export async function createModelSession(kind, requestedBackend = 'auto', onProg
   const optLevel = new URLSearchParams(location.search).get('opt') || 'disabled';
   const modelUrls = MODEL_URLS[kind];
   if (!modelUrls) throw new Error(`Unknown model ${kind}`);
-  const providers = providerOrder(requestedBackend);
+  const providers = providerOrder(requestedBackend, kind);
   const url = typeof modelUrls === 'string' ? modelUrls : modelUrls[providers[0]];
 
   const downloadStarted = performance.now();

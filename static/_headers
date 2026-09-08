@@ -1,7 +1,3 @@
-# Fingerprinted CSS and JS can be cached permanently.
-/assets/*
-  Cache-Control: public, max-age=31536000, immutable
-
 # Unfingerprinted media uses a shorter cache.
 /resources/*
   Cache-Control: public, max-age=604800
@@ -16,6 +12,25 @@
 /models/*
   Cache-Control: public, max-age=31536000, immutable
   Cross-Origin-Resource-Policy: same-origin
+
+# The public demo and its versioned engine use a worker on this origin.
+/upscale/*
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+  Cache-Control: no-cache
+  X-Robots-Tag: noindex, nofollow
+
+/assets/processor/*
+  Cache-Control: public, max-age=31536000, immutable
+  Cross-Origin-Resource-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+
+# These stylesheets use stable names, so revalidate after a deployment.
+/assets/site.css
+  Cache-Control: no-cache
+
+/assets/upscale.css
+  Cache-Control: no-cache
 
 /benchmarks/*
   Cache-Control: public, max-age=604800

@@ -7,6 +7,7 @@ __pycache__/
 
 # javascript
 node_modules/
+node_modules
 
 # editors / OS
 .DS_Store
@@ -28,3 +29,10 @@ static/models/*.ort
 static/models/*.task
 assets/lab/
 .web-model-work/
+static/models/*.tflite
+assets/processor/
+src/tool/assets.generated.js
+static/upscale/index.html
+.preview-dist/
+.wrangler/
+.dev.vars

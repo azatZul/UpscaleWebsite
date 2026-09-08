@@ -791,12 +791,21 @@ def nav(c, lang, home_prefix, path="", on_home=False):
       <a href="{compare_href}">{esc(n.get('compare', 'Comparison'))}</a>
       <a href="{guides_href}">{esc(n['guides'])}</a>
       <a href="{home_prefix}#faq">{esc(n['faq'])}</a>
+      {browser_tool_link()}
     </nav>
     {theme_toggle(c)}
     {lang_switcher(c, lang, path)}
   </div>
 </header>
 """
+
+def browser_tool_link(hero=False):
+    """Only advertise the optional tool when its separate build is present."""
+    if not os.path.isfile(os.path.join(STATIC, "upscale", "index.html")):
+        return ""
+    if hero:
+        return '<a class="btn btn-g" href="/upscale/" lang="en">Try photo upscaling online <span aria-hidden="true">→</span></a>'
+    return '<a href="/upscale/" lang="en">Try online</a>'
 
 def footer(c, lang, home_prefix, path=""):
     f = c["footer"]
@@ -934,6 +943,7 @@ def render_home(c, lang):
       <h1>{h['h1']}</h1>
       <p class="hero-sub">{esc(h['sub'])}</p>
       <div class="hero-cta stores">{store_badge(appstore_btn(c), h['note'])}</div>
+      {browser_tool_link(hero=True)}
     </div>
     {hero_phone(c, h)}
     <ul class="chips hero-chips">{chips}</ul>
