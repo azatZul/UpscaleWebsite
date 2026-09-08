@@ -2,9 +2,10 @@
 .tool-page{min-height:100vh}
 .tool-page .nav-in{justify-content:flex-start;gap:16px}
 .preview-badge{font-size:14px;color:var(--vio-2);padding:5px 10px;border:1px solid var(--vio-line);border-radius:999px;background:var(--vio-soft)}
-.back-link{margin-left:auto;font-size:14px;color:var(--tx-2)}
-.back-link:hover{color:var(--tx)}
 .tool-wrap{width:min(100% - 40px,760px);margin:0 auto;padding:54px 0 56px}
+/* Apple's dark badge reads better than the white one on this always-dark page. */
+.tool-page .appstore .badge-black{opacity:1}
+.tool-page .appstore .badge-white{opacity:0}
 .tool-heading{margin-bottom:28px}
 .tool-heading h1{font-size:clamp(32px,5vw,48px);letter-spacing:-.04em;line-height:1.12;margin:12px 0 16px}
 .tool-heading>p{font-size:18px;line-height:1.55;max-width:60ch;color:var(--tx-2)}
@@ -12,17 +13,19 @@
 .tool-page.has-photo .tool-heading{margin-bottom:20px}
 .tool-page.has-photo .tool-heading .eyebrow,.tool-page.has-photo .tool-heading>p{display:none}
 .tool-page.has-photo .tool-heading h1{font-size:28px;margin:0}
-.tool-steps{display:flex;align-items:center;gap:20px;list-style:none;padding:0;margin:0 0 24px;color:var(--tx-3)}
+.tool-steps{display:flex;align-items:center;gap:14px;list-style:none;padding:0;margin:0 0 24px;color:var(--tx-3)}
 .tool-steps li{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600}
-.tool-steps li+li::before{content:"";width:24px;height:1px;background:var(--line-2);margin-right:12px}
-.tool-steps span{display:grid;place-items:center;width:28px;height:28px;border:1px solid var(--line-2);border-radius:50%;font-size:13px}
+.tool-steps li+li{flex:1;min-width:0}
+.tool-steps li+li::before{content:"";flex:1;min-width:16px;height:2px;background:var(--line-2);margin-right:10px;border-radius:2px}
+.tool-steps li.complete+li::before,.tool-steps li[aria-current]+li::before{background:var(--acc)}
+.tool-steps span{display:grid;place-items:center;width:28px;height:28px;flex-shrink:0;border:1px solid var(--line-2);border-radius:50%;font-size:13px}
 .tool-steps [aria-current]{color:var(--tx)}
 .tool-steps [aria-current] span{background:var(--acc);border-color:var(--acc);color:#0a0b11}
-.tool-steps .complete span{color:var(--acc);border-color:var(--acc-line)}
+.tool-steps .complete span{color:var(--acc);border-color:var(--acc);background:var(--acc-soft)}
 .tool-card{padding:28px;border:1px solid var(--line-2);border-radius:24px;background:var(--surface);box-shadow:var(--shadow)}
 .tool-card-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}
 .tool-card-heading h2{font-size:19px;letter-spacing:-.02em}
-.private-note{color:var(--ok);font-size:14px;white-space:nowrap}
+.private-note{color:var(--acc-tx);font-size:14px;white-space:nowrap}
 .photo-drop{border:1px dashed var(--line-2);border-radius:16px;background:var(--bg-2);display:flex;flex-direction:column;align-items:center;gap:14px;padding:26px 18px;text-align:center}
 .photo-drop.dragging{border-color:var(--acc);background:var(--acc-soft)}
 .photo-drop>p{font-size:18px;font-weight:650}
@@ -50,8 +53,9 @@
 .tool-actions:has(>:not([hidden])) .text-button{margin:auto}
 .tool-actions:not(:has(> :not([hidden]))){display:none}
 .tool-page button:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
-.app-fallback{border-top:1px solid var(--line);margin-top:20px;padding-top:20px}
-.app-fallback p{font-size:16px;color:var(--tx-2);line-height:1.6;margin-bottom:16px}
+.tool-upsell{display:flex;align-items:center;justify-content:space-between;gap:14px;border-top:1px solid var(--line);margin-top:18px;padding-top:16px}
+.tool-upsell p{font-size:14px;font-weight:650;color:var(--tx-2);white-space:nowrap}
+.tool-upsell .appstore.sm{width:120px;height:40px;border-radius:8.4px;flex-shrink:0}
 .tool-footnote{margin-top:18px;font-size:14px;color:var(--tx-2);line-height:1.6}
 .tool-results,.tool-card{scroll-margin-top:100px}
 .tool-results{outline:0}
@@ -67,24 +71,34 @@
 .album-ctl svg{width:20px;height:20px}
 .album-ctl:hover{background:rgba(0,0,0,.85)}
 .album-zoom{right:12px;bottom:12px}.album-close{right:12px;top:12px}
-.album-details{margin-top:18px;text-align:center}
-.album-details h2{font-size:19px;letter-spacing:-.02em;margin:0 0 8px}
-.album-details p{font-size:14px;color:var(--tx-2);line-height:1.6}
-.album-details .comparison-hint{margin-top:8px;font-size:13px}
-.album-actions{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;align-items:center;margin-top:16px}
+.album-details{margin-top:14px;text-align:center}
+.album-details h2{font-size:19px;letter-spacing:-.02em;margin:0 0 6px}
+.album-details p{font-size:14px;color:var(--tx-2);line-height:1.5}
+.album-details .comparison-hint{margin-top:6px;font-size:13px}
+.album-actions{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;align-items:center;margin-top:12px}
 .album-actions .btn{font-size:14px;padding:11px 18px;border-radius:12px;gap:8px}
 .album-actions .btn svg{width:17px;height:17px}
 .album-viewer.is-expanded{position:fixed;inset:0;z-index:1000;width:100%;height:100dvh;padding:0;border:0;border-radius:0;background:var(--bg)}
 .album-viewer.is-expanded .album-stage{height:100%}
 .album-viewer.is-expanded .album-details{display:none}
 .album-expanded-lock{overflow:hidden}
-.result-app{margin-top:40px}
+.result-app{margin-top:20px}
+/* Squeeze the app-CTA card so "Download this photo" and "Download the app"
+   read as one decision instead of two separate sections. */
+.tool-page .final{padding:28px 24px}
+.tool-page .final-app{gap:10px;margin-bottom:12px}
+.tool-page .final img.ic{width:46px;height:46px;border-radius:13px}
+.tool-page .final-name{font-size:19px}
+.tool-page .final-name small{font-size:12px;margin-top:2px}
+.tool-page .final h2{font-size:clamp(20px,4vw,26px)}
+.tool-page .final .hero-cta{margin-top:16px}
+.tool-page .final .hero-note{margin-top:10px}
 .face-option{display:flex;align-items:flex-start;gap:10px;margin-top:18px;font-size:15px;color:var(--tx)}
 .face-option input{width:20px;height:20px;margin-top:2px;accent-color:var(--acc)}
 .face-option small{display:block;color:var(--tx-2);font-size:13px;line-height:1.5;margin-top:4px}
 .notice{padding:16px;border:1px solid var(--acc-line);border-radius:14px;background:var(--acc-soft);color:var(--tx);font-size:15px;line-height:1.6;margin:18px 0}
 .tool-page :focus-visible{outline:2px solid var(--acc);outline-offset:4px}
-@media(max-width:540px){.tool-wrap{width:calc(100% - 28px);padding-top:30px}.tool-card{padding:18px;border-radius:20px}.tool-heading>p{font-size:16px}.tool-card-heading h2{font-size:17px}.tool-page .nav-in{gap:10px}.preview-badge{display:none}.back-link{font-size:14px}.photo-selection{gap:12px;padding:12px}.photo-selection img{width:72px;max-height:96px}.tool-actions .btn,.app-fallback .btn{width:100%;font-size:15px}.photo-drop{padding:22px 14px}.tool-steps{justify-content:space-between;gap:6px}.tool-steps li{gap:6px}.tool-steps li+li::before{display:none}.result-comparison .cmp-tag{top:10px;font-size:12px;padding:5px 8px}.result-comparison .cmp-tag.l{left:10px}.result-comparison .cmp-tag.r{right:10px}}
+@media(max-width:540px){.tool-wrap{width:calc(100% - 28px);padding-top:30px}.tool-card{padding:18px;border-radius:20px}.tool-heading>p{font-size:16px}.tool-card-heading h2{font-size:17px}.tool-page .nav-in{gap:10px}.preview-badge{display:none}.photo-selection{gap:12px;padding:12px}.photo-selection img{width:72px;max-height:96px}.tool-actions .btn{width:100%;font-size:15px}.photo-drop{padding:22px 14px}.tool-steps{gap:8px}.tool-steps li{gap:6px}.tool-upsell{flex-wrap:wrap}.result-comparison .cmp-tag{top:10px;font-size:12px;padding:5px 8px}.result-comparison .cmp-tag.l{left:10px}.result-comparison .cmp-tag.r{right:10px}}
 @media(prefers-reduced-motion:reduce){.tool-page *{scroll-behavior:auto!important;transition:none!important}}
 
 @media(max-width:540px){.tool-page.has-result .tool-wrap{width:calc(100% - 28px)}.tool-steps li{font-size:12px}.tool-steps span{width:24px;height:24px;flex-shrink:0}.album-viewer{padding:10px 10px 18px}.album-stage{height:min(55vh,500px)}.result-app{margin-top:24px}}

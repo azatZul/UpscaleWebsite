@@ -5,7 +5,7 @@ import {createComparison} from './comparison.js';
 const $ = id => document.getElementById(id);
 const elements = Object.fromEntries(['photo-input', 'choose-photo', 'drop-zone', 'selected-photo', 'source-thumb',
   'source-name', 'source-size', 'status', 'status-title', 'status-detail', 'progress', 'status-value',
-  'process-photo', 'cancel', 'retry', 'cpu-retry', 'app-fallback', 'results', 'result-image', 'result-summary',
+  'process-photo', 'cancel', 'retry', 'cpu-retry', 'results', 'result-image', 'result-summary',
   'download-result', 'another-photo', 'start-over', 'limit-note', 'interrupted', 'visibility-note', 'photo-stage',
   'stage-title', 'tool-footnote', 'step-choose', 'step-upscale', 'step-compare', 'before-image', 'result-comparison',
   'comparison-handle', 'face-option', 'enhance-faces', 'face-summary', 'result-viewer', 'result-stage', 'expand-result', 'close-result'].map(id => [id, $(id)]));
@@ -99,7 +99,6 @@ function refreshControls() {
   const cpuRetry = failed && errorCode === 'gpu' && !forceCpu;
   elements['cpu-retry'].hidden = !cpuRetry;
   elements.retry.hidden = !file || !failed || appOnly || cpuRetry || !supported;
-  elements['app-fallback'].hidden = !failed || errorCode === 'download';
   elements['start-over'].hidden = !failed || !file;
   elements['visibility-note'].hidden = !busy() || !document.hidden;
   elements['drop-zone'].setAttribute('aria-disabled', String(!selecting || !supported));
