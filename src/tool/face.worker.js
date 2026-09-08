@@ -1,0 +1,62 @@
+import {ASSETS} from './assets.generated.js';
+import {faceGeometry} from './face-geometry.js';
+import {loadRuntime} from './runtime.js';
+import {assessPhoto, devicePolicy, isAppleMobile, PhotoError} from './capability.js';
+import {inspectFile} from './image-info.js';
+const status = message => self.postMessage({type: 'status', ...message});
+let busy = false;
+self.onmessage = async ({data: {file, environment, forceCpu}}) => {
+  if (busy) return;
+  busy = true;
+  let bitmap, detector, runtime;
+  try {
+    const info = await inspectFile(file);
+    const policy = devicePolicy(environment);
+    assessPhoto(info, policy);
+    // Conservative face admission: its 86 MB model has a much larger working
+    // set than Regular 2×. This is a preview limit, not a free-RAM measurement.
+    const limit = policy.mobile || environment.deviceMemory <= 4 ? 2_000_000 : 8_000_000;
+    if (info.width * info.height > limit) throw new PhotoError('face', `Separate face enhancement is limited to ${limit / 1_000_000} MP on this device. Turn it off to upscale this photo, or try the app.`);
+    bitmap = await createImageBitmap(file, {imageOrientation: 'from-image'});
+    status({title: 'Finding faces', detail: 'Checking your photo on this device.'});
+    const {FaceLandmarker, FilesetResolver} = await import(/* @vite-ignore */ `${ASSETS.vision}/vision_bundle.mjs`);
+    detector = await FaceLandmarker.createFromOptions(await FilesetResolver.forVisionTasks(`${ASSETS.vision}/wasm`), {
+      baseOptions: {modelAssetPath: ASSETS.faceDetector, delegate: 'CPU'},
+      runningMode: 'IMAGE', numFaces: 8,
+      minFaceDetectionConfidence: .5, minFacePresenceConfidence: .5,
+    });
+    const ratio = Math.min(1, 1280 / Math.max(bitmap.width, bitmap.height));
+    const detectionImage = new OffscreenCanvas(Math.round(bitmap.width * ratio), Math.round(bitmap.height * ratio));
+    detectionImage.getContext('2d').drawImage(bitmap, 0, 0, detectionImage.width, detectionImage.height);
+    const detection = detector.detect(detectionImage);
+    const transforms = detection.faceLandmarks.map(points => faceGeometry(points, bitmap.width, bitmap.height)).filter(Boolean);
+    const detectedCount = detection.faceLandmarks.length;
+    detector.close(); detector = null;
+    detectionImage.width = detectionImage.height = 1;
+    const faces = [];
+    if (transforms.length) {
+      // Apple devices use CPU here: the exact GFPGAN graph crashed WebGPU in
+      // physical-device tests. A separate worker releases this heap before 2×.
+      runtime = await loadRuntime(forceCpu || isAppleMobile(environment), status, true);
+      const canvas = new OffscreenCanvas(512, 512);
+      const ctx = canvas.getContext('2d', {willReadFrequently: true});
+      for (let i = 0; i < transforms.length; i++) {
+        status({title: `Enhancing face ${i + 1} of ${transforms.length}`, detail: 'Restoring facial detail with a separate model. Keep this page open.', progress: i / transforms.length});
+        ctx.resetTransform(); ctx.fillStyle = '#000'; ctx.fillRect(0, 0, 512, 512);
+        const t = transforms[i]; ctx.setTransform(t.a, t.b, t.c, t.d, t.e, t.f);
+        ctx.drawImage(bitmap, 0, 0); ctx.resetTransform();
+        const rgba = ctx.getImageData(0, 0, 512, 512).data;
+        const plane = 512 * 512;
+        const input = new Float32Array(plane * 3);
+        // App model includes normalization; input is RGB [0, 1].
+        for (let p = 0; p < plane; p++) for (let c = 0; c < 3; c++) input[c * plane + p] = rgba[p * 4 + c] / 255;
+        faces.push({pixels: await runtime.run(input), transform: t});
+      }
+      canvas.width = canvas.height = 1;
+      await runtime.release(); runtime = null;
+    }
+    self.postMessage({type: 'faces', faces, detectedCount}, faces.map(face => face.pixels.buffer));
+  } catch (error) {
+    self.postMessage({type: 'error', code: error.code || 'face', message: error.code === 'download' ? error.message : error.code === 'face' ? error.message : 'Face enhancement couldn’t finish in this browser. Try again, turn off face enhancement, or use the app.'});
+  } finally { bitmap?.close(); detector?.close(); await runtime?.release().catch(() => {}); }
+};

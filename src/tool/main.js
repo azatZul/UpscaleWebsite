@@ -7,7 +7,7 @@ const elements = Object.fromEntries(['photo-input', 'choose-photo', 'drop-zone',
   'process-photo', 'cancel', 'retry', 'cpu-retry', 'app-fallback', 'results', 'result-image', 'result-summary',
   'download-result', 'another-photo', 'start-over', 'limit-note', 'interrupted', 'visibility-note', 'photo-stage',
   'stage-title', 'tool-footnote', 'step-choose', 'step-upscale', 'step-compare', 'before-image', 'result-comparison',
-  'comparison-handle'].map(id => [id, $(id)]));
+  'comparison-handle', 'face-option', 'enhance-faces', 'face-summary', 'result-viewer', 'result-stage', 'expand-result', 'close-result'].map(id => [id, $(id)]));
 const comparison = createComparison(elements['result-comparison'], elements['before-image'], elements['comparison-handle']);
 const environment = {userAgent: navigator.userAgent, platform: navigator.platform,
   maxTouchPoints: navigator.maxTouchPoints, deviceMemory: navigator.deviceMemory};
@@ -25,6 +25,32 @@ let timer;
 let wakeLock;
 let supported = true;
 let errorCode;
+let runningFaces = false;
+let expanded = false;
+const stageObserver = new ResizeObserver(entries => {
+  const {width, height} = entries[0].contentRect;
+  if (height) elements['result-comparison'].style.setProperty('--stage-ratio', width / height);
+});
+stageObserver.observe(elements['result-stage']);
+function expandResult(value) {
+  expanded = value;
+  elements['result-viewer'].classList.toggle('is-expanded', value);
+  document.body.classList.toggle('album-expanded-lock', value);
+  elements['expand-result'].hidden = value; elements['close-result'].hidden = !value;
+  // Hide the rest of the page from keyboard and assistive navigation while expanded.
+  for (const node of document.querySelectorAll('.nav, .tool-heading, .tool-steps, .result-app')) node.inert = value;
+  (value ? elements['close-result'] : elements['expand-result']).focus({preventScroll: true});
+}
+elements['expand-result'].addEventListener('click', () => expandResult(true));
+elements['close-result'].addEventListener('click', () => expandResult(false));
+document.addEventListener('keydown', event => {
+  if (!expanded) return;
+  if (event.key === 'Escape') expandResult(false);
+  if (event.key === 'Tab') {
+    event.preventDefault();
+    (document.activeElement === elements['close-result'] ? elements['comparison-handle'] : elements['close-result']).focus();
+  }
+});
 const busy = () => ['checking', 'processing'].includes(phase);
 
 function remember(active) {
@@ -43,6 +69,9 @@ function setStatus(title, detail, progress) {
 function refreshControls() {
   const selecting = phase === 'idle';
   document.body.classList.toggle('has-photo', Boolean(file));
+  document.body.classList.toggle('has-result', phase === 'done');
+  elements['face-option'].hidden = !file || !['ready', 'error'].includes(phase);
+  elements['enhance-faces'].disabled = busy();
   const failed = phase === 'error';
   const appOnly = ['browser', 'size', 'format'].includes(errorCode);
   elements['photo-stage'].hidden = phase === 'done';
@@ -94,6 +123,7 @@ function watchdog() {
 }
 
 function clearOutput() {
+  if (expanded) expandResult(false);
   elements.results.hidden = true;
   elements['result-image'].removeAttribute('src');
   elements['before-image'].removeAttribute('src');
@@ -107,6 +137,8 @@ function clearOutput() {
 
 function fail(code, message) {
   const duringCheck = phase === 'checking';
+  if (runningFaces && code === 'gpu' && !forceCpu) { startFaces(true); return; }
+  if (runningFaces && code !== 'download') code = 'face';
   if (code === 'gpu' && duringCheck && !forceCpu && !retriedGpu) {
     retriedGpu = true;
     prepare(true);
@@ -138,8 +170,11 @@ function onMessage(data, current) {
     remember(false); clearTimeout(timer);
     wakeLock?.release().catch(() => {}); wakeLock = null;
     setStatus(data.slow ? 'This photo may take a while' : 'Ready to upscale',
-      `Estimated time: ${durationLabel(data.milliseconds)}. ${data.slow ? 'Keep this page open while it processes.' : 'Ready when you are.'}`);
+      `Photo upscaling: ${durationLabel(data.milliseconds)}. Separate face enhancement adds time when enabled.`);
     refreshControls();
+  } else if (data.type === 'faces') {
+    runningFaces = false;
+    prepare(forceCpu, true, data);
   } else if (data.type === 'error') {
     fail(data.code, data.message);
   } else if (data.type === 'done') {
@@ -156,6 +191,10 @@ function onMessage(data, current) {
     elements['download-result'].href = resultUrl;
     elements['download-result'].download = `${file.name.replace(/\.[^.]+$/, '') || 'photo'}-uscale-2x.jpg`;
     elements['result-summary'].textContent = `${data.plan.width} × ${data.plan.height} → ${data.plan.outputWidth} × ${data.plan.outputHeight} · JPEG`;
+    elements['face-summary'].textContent = data.faceEnabled
+      ? data.faceCount ? `${data.faceCount} face${data.faceCount === 1 ? '' : 's'} enhanced separately${data.detectedCount > data.faceCount ? ' · Some faces could not be enhanced' : ''}`
+        : data.detectedCount ? 'No suitable faces for separate enhancement · Photo upscaled 2×' : 'No faces detected · Photo upscaled 2×'
+      : 'Photo upscaled 2× · Separate face enhancement off';
     elements.results.hidden = false;
     refreshControls();
     elements.results.focus({preventScroll: true});
@@ -163,12 +202,13 @@ function onMessage(data, current) {
   }
 }
 
-function prepare(cpu = false) {
+function prepare(cpu = false, autoStart = false, faceResults) {
   if (!file || !supported) return;
   stopWorker();
   forceCpu = cpu;
   clearOutput();
-  phase = 'checking';
+  runningFaces = false;
+  phase = autoStart ? 'processing' : 'checking';
   errorCode = undefined;
   elements.interrupted.hidden = true;
   setStatus(cpu ? 'Trying another processing method' : 'Checking this browser and photo',
@@ -181,9 +221,23 @@ function prepare(cpu = false) {
     worker.onerror = event => { event.preventDefault(); if (current === generation) fail('runtime', 'The processing task stopped. Try again or use the app.'); };
     worker.onmessageerror = () => { if (current === generation) fail('runtime', 'The browser couldn’t read the processing result. Try the app.'); };
     remember(true);
-    worker.postMessage({type: 'prepare', file, environment, forceCpu});
+    worker.postMessage({type: 'prepare', file, environment, forceCpu, autoStart, faceResults}, faceResults?.faces.map(face => face.pixels.buffer) || []);
     watchdog(); keepAwake();
   } catch { fail('browser', 'This browser couldn’t start a processing task. Try a current browser or get the app.'); }
+}
+
+function startFaces(cpu = false) {
+  stopWorker(); forceCpu = cpu; runningFaces = true; phase = 'processing';
+  const current = generation;
+  setStatus('Finding faces', 'Face enhancement runs separately, on this device.');
+  refreshControls(); remember(true); watchdog(); keepAwake();
+  try {
+    worker = new Worker(new URL('./face.worker.js', import.meta.url));
+    worker.onmessage = event => onMessage(event.data, current);
+    worker.onerror = event => { event.preventDefault(); if (current === generation) fail('face', 'Face enhancement stopped. Turn it off and try again, or use the app.'); };
+    worker.onmessageerror = () => { if (current === generation) fail('face', 'Face enhancement stopped. Turn it off and try again, or use the app.'); };
+    worker.postMessage({file, environment, forceCpu});
+  } catch { fail('face', 'This browser couldn’t start face enhancement. Turn it off and try again, or use the app.'); }
 }
 
 function chooseFile(next) {
@@ -201,6 +255,7 @@ elements['choose-photo'].addEventListener('click', () => elements['photo-input']
 elements['photo-input'].addEventListener('change', () => chooseFile(elements['photo-input'].files[0]));
 elements['process-photo'].addEventListener('click', () => {
   if (phase !== 'ready' || !worker) return;
+  if (elements['enhance-faces'].checked) { startFaces(forceCpu); return; }
   phase = 'processing'; remember(true); refreshControls(); watchdog(); keepAwake();
   worker.postMessage({type: 'process'});
 });

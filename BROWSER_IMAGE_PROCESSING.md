@@ -66,3 +66,39 @@ The full numbers are in `benchmarks/browser/mac_chromium_151_aggregate.json`.
 
 The model files are deliberately not committed. For a public experiment they
 should live behind the same site or a model CDN with long-lived caching.
+
+## Public single-photo preview (September 2026)
+
+`/upscale/` keeps one photo at a time: choose, upscale, compare and save. Its
+result viewer follows the gallery at main commit `1baa444`: fitted comparison,
+expand/close controls, downloads below, and the shared app promotion styling.
+
+Separate face enhancement is enabled by default and can be turned off before
+processing. MediaPipe finds up to eight faces; the app-parity alignment checks
+select suitable faces. Only then is the exact quantized GFPGAN 1.4 model loaded.
+512×512 restored patches are feathered into the Regular 2× result. Photos with
+no suitable faces still receive normal 2× processing, with an explicit result
+summary. AI face restoration can change facial details.
+
+The face worker finishes and is terminated before the regular worker starts,
+so their inference heaps are not intentionally kept resident together. Apple
+mobile devices always use the CPU face backend because the physical iPhone
+findings recorded a WebGPU failure for that graph. Other devices try WebGPU
+and retry face processing in a new CPU worker on GPU failure. Face processing
+has a conservative 2 MP mobile/low-memory limit and an 8 MP desktop limit,
+in addition to the regular photo guards. A failure offers retry, the option
+to turn off face enhancement, and the app; it never reports a face pass as
+successful when it failed. These limits cannot measure actual free RAM.
+
+`npm run build:preview` requires the approved `face_512.onnx` and
+`face_landmarker.task` artifacts alongside the existing regular models. The
+face model is split into content-addressed parts below Cloudflare Pages'
+25 MiB per-file limit and streamed into one preallocated buffer. Generated
+weights and runtime assets are ignored by Git and cached with immutable URLs.
+
+Validation: 11 processing tests, a 900×1200 portrait with one separate face
+restored and a verified 1800×2400 JPEG result, CPU face inference, no-face
+handling without a GFPGAN download, mobile face admission rejection, optional
+face-off processing, keyboard comparison, expanded view, and a 390px layout.
+The new complete flow still needs testing on physical iPhones and Android
+phones; the iOS backend choice uses the earlier real-device findings.

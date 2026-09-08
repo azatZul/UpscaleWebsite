@@ -6,7 +6,8 @@ const preview = join(root, '.preview-dist');
 await rm(preview, {recursive: true, force: true});
 await mkdir(preview, {recursive: true});
 // Include the website and the public photo tool; private benchmark fixtures,
-// alternate experimental models and the 86 MB face model are not preview assets.
+// alternate experimental models are excluded. Approved models are versioned
+// under assets/processor, with the face model split below the per-file limit.
 for (const entry of await readdir(dist)) {
   if (['models', 'benchmarks', 'lab', 'assets'].includes(entry)) continue;
   await cp(join(dist, entry), join(preview, entry), {recursive: true});

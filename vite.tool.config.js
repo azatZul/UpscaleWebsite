@@ -10,5 +10,5 @@ export default defineConfig({
       output: {entryFileNames: '[name]-[hash].js', chunkFileNames: '[name]-[hash].js'},
     },
   },
-  worker: {format: 'es'},
+  worker: {format: 'iife'},
 });

@@ -2,23 +2,25 @@ import {ASSETS} from './assets.generated.js';
 import {PhotoError, TILE_SIZE} from './capability.js';
 import {tensorPixels} from './tile-pipeline.js';
 
-export async function loadRuntime(forceCpu, progress) {
+export async function loadRuntime(forceCpu, progress, face = false) {
   let backend = 'wasm';
   if (!forceCpu && navigator.gpu) {
     try { if (await navigator.gpu.requestAdapter()) backend = 'webgpu'; } catch { /* CPU remains available. */ }
   }
   const engine = backend === 'webgpu' ? 'ort.webgpu.min.mjs' : 'ort.wasm.min.mjs';
   const model = backend === 'webgpu' ? ASSETS.modelGpu : ASSETS.modelCpu;
+  const modelTitle = face ? 'Loading face enhancement' : 'Loading the upscaler';
   let session;
   let ort;
   try {
-    progress({phase: 'download', title: 'Loading the upscaler', detail: 'The processing files are saved by your browser for future visits.'});
+    progress({phase: 'download', title: modelTitle, detail: 'The processing files are saved by your browser for future visits.'});
     ort = await import(/* @vite-ignore */ `${ASSETS.runtime}/${engine}`);
     ort.env.wasm.wasmPaths = `${ASSETS.runtime}/`;
     ort.env.wasm.numThreads = 1;
     ort.env.wasm.proxy = false;
     ort.env.logLevel = 'error';
-    const modelBytes = await download(model, fraction => progress({phase: 'download', progress: fraction * .45, title: 'Loading the upscaler', detail: 'Your photo stays on this device.'}));
+    const report = fraction => progress({phase: 'download', progress: fraction * .45, title: modelTitle, detail: 'Your photo stays on this device.'});
+    const modelBytes = face ? await downloadFace(report) : await download(model, report);
     const binary = backend === 'webgpu' ? 'ort-wasm-simd-threaded.asyncify.wasm' : 'ort-wasm-simd-threaded.wasm';
     // Fetch separately to report download progress instead of presenting it as
     // model compilation. ORT reads the identical versioned URL from HTTP cache.
@@ -35,7 +37,7 @@ export async function loadRuntime(forceCpu, progress) {
   return {
     backend,
     async run(values) {
-      const input = new ort.Tensor('float32', values, [1, 3, TILE_SIZE, TILE_SIZE]);
+      const input = new ort.Tensor('float32', values, [1, 3, face ? 512 : TILE_SIZE, face ? 512 : TILE_SIZE]);
       let output;
       try {
         const outputs = await session.run({[session.inputNames[0]]: input});
@@ -74,4 +76,28 @@ async function download(url, onProgress, retain = true) {
   let offset = 0;
   for (const chunk of chunks) { result.set(chunk, offset); offset += chunk.length; }
   return result;
+}
+
+async function downloadFace(onProgress) {
+  const bytes = new Uint8Array(ASSETS.faceModel.bytes);
+  let offset = 0;
+  try {
+    for (const part of ASSETS.faceModel.parts) {
+      const response = await fetch(part.url);
+      if (!response.ok || !response.body) throw new Error('Missing model part');
+      const reader = response.body.getReader();
+      let received = 0;
+      while (true) {
+        const {done, value} = await reader.read();
+        if (done) break;
+        if (received + value.length > part.bytes) throw new Error('Oversized model part');
+        bytes.set(value, offset + received);
+        received += value.length;
+        onProgress((offset + received) / bytes.length);
+      }
+      if (received !== part.bytes) throw new Error('Incomplete model part');
+      offset += received;
+    }
+    return bytes;
+  } catch { throw new PhotoError('download', 'The face model download was interrupted. Check your connection and try again.'); }
 }

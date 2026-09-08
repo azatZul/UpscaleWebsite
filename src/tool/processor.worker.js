@@ -1,6 +1,7 @@
 import {assessPhoto, devicePolicy, estimateDuration, PhotoError, TILE_SIZE} from './capability.js';
 import {inspectFile, parseImageHeader} from './image-info.js';
 import {assembleTiles, makeCanvas, sampleTile, thumbnail} from './tile-pipeline.js';
+import {inverseTransform} from './face-geometry.js';
 import {loadRuntime} from './runtime.js';
 
 const send = message => self.postMessage(message);
@@ -10,6 +11,9 @@ let runtime;
 let plan;
 let busy = false;
 let ready = false;
+let faces = [];
+let detectedCount = 0;
+let faceEnabled = false;
 
 async function release() {
   source?.close(); source = null;
@@ -17,8 +21,11 @@ async function release() {
   try { await active?.release(); } catch { /* Worker termination is the final cleanup. */ }
 }
 
-async function prepare({file, environment, forceCpu = false}) {
+async function prepare({file, environment, forceCpu = false, autoStart = false, faceResults}) {
   ready = false;
+  faces = faceResults?.faces || [];
+  detectedCount = faceResults?.detectedCount || 0;
+  faceEnabled = Boolean(faceResults);
   await release();
   status({phase: 'inspect', title: 'Checking your photo', detail: 'Reading its dimensions before loading the full image.'});
   const policy = devicePolicy(environment);
@@ -30,6 +37,7 @@ async function prepare({file, environment, forceCpu = false}) {
   plan = assessPhoto({width: source.width, height: source.height, size: file.size}, policy);
   send({type: 'photo', plan, thumbnail: await thumbnail(source)});
   runtime = await loadRuntime(forceCpu, status);
+  if (autoStart) { ready = true; await process(); return; }
   status({phase: 'probe', title: 'Measuring processing speed', detail: 'Trying a small part of your photo before starting the full image.'});
   const x = Math.max(0, Math.floor((source.width - TILE_SIZE) / 2));
   const y = Math.max(0, Math.floor((source.height - TILE_SIZE) / 2));
@@ -67,13 +75,27 @@ async function process() {
     source.close(); source = null;
     // Release model memory before asking the encoder for a full-size export.
     await runtime.release(); runtime = null;
-    status({phase: 'encode', progress: .97, title: 'Preparing your download', detail: 'Saving the finished photo on this device.'});
+    for (const face of faces) {
+      const patch = new OffscreenCanvas(512, 512);
+      const ctx = patch.getContext('2d');
+      ctx.putImageData(new ImageData(face.pixels, 512, 512), 0, 0);
+      ctx.globalCompositeOperation = 'destination-in';
+      const mask = ctx.createRadialGradient(256, 256, 220, 256, 256, 255);
+      mask.addColorStop(0, '#fff'); mask.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = mask; ctx.fillRect(0, 0, 512, 512);
+      const t = inverseTransform(face.transform, 2);
+      context.setTransform(t.a, t.b, t.c, t.d, t.e, t.f);
+      context.drawImage(patch, 0, 0); context.resetTransform();
+      patch.width = patch.height = 1;
+    }
+    const faceCount = faces.length; faces = [];
+    status({phase: 'encode' , progress: .97, title: 'Preparing your download', detail: 'Saving the finished photo on this device.'});
     const blob = await canvas.convertToBlob({type: 'image/jpeg', quality: .96});
     if (!blob.size) throw new Error('No image was encoded');
     // Verify that export preserved the requested dimensions.
     const result = parseImageHeader(await blob.slice(0, 2 * 1024 * 1024).arrayBuffer());
     if (result.width !== plan.outputWidth || result.height !== plan.outputHeight) throw new Error('Wrong export size');
-    send({type: 'done', blob, plan, totalMs: performance.now() - started});
+    send({type: 'done', blob, plan, faceCount, detectedCount, faceEnabled, totalMs: performance.now() - started});
   } catch (error) {
     if (error instanceof PhotoError) throw error;
     throw new PhotoError('export', 'This browser couldn’t save the full-size result. Try a smaller photo or use the app.');
