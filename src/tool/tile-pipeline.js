@@ -30,8 +30,11 @@ export function sampleTile(bitmap, x = 0, y = 0) {
   return values;
 }
 
-export function tensorPixels(values) {
-  const plane = (TILE_SIZE * SCALE) ** 2;
+// outputSide is the model's actual output width/height for one tile: for the
+// upscaler that is TILE_SIZE * scale, for the fixed-size face model it is 512
+// regardless of the photo's overall scale.
+export function tensorPixels(values, outputSide = TILE_SIZE * SCALE) {
+  const plane = outputSide ** 2;
   if (values.length !== plane * 3) throw new PhotoError('runtime', 'The upscaler returned an unexpected image size.');
   const pixels = new Uint8ClampedArray(plane * 4);
   for (let i = 0; i < plane; i++) {
@@ -49,29 +52,29 @@ function blend(a, b, weight) { return Math.round(a * (1 - weight) + b * weight);
 
 // Same horizontal-then-vertical overlap and rounding as the lab tiler, with
 // at most two row bands in JS memory instead of a complete output ImageData.
-export async function assembleTiles(width, height, runTile, writeBand, onProgress = () => {}) {
-  const outputWidth = width * SCALE;
+export async function assembleTiles(width, height, runTile, writeBand, onProgress = () => {}, scale = SCALE) {
+  const outputWidth = width * scale;
   const columns = Math.ceil(width / STRIDE);
   const rows = Math.ceil(height / STRIDE);
-  const seam = OVERLAP * SCALE * 2;
+  const seam = OVERLAP * scale * 2;
   let previous;
   let completed = 0;
   for (let row = 0; row < rows; row++) {
     const coreY = row * STRIDE;
     const tileY = coreY - (row ? OVERLAP : 0);
     const rowTo = Math.min(coreY + STRIDE + OVERLAP, height);
-    const bandHeight = (rowTo - tileY) * SCALE;
+    const bandHeight = (rowTo - tileY) * scale;
     const band = new Uint8ClampedArray(outputWidth * bandHeight * 4);
     for (let column = 0; column < columns; column++) {
       const coreX = column * STRIDE;
       const tileX = coreX - (column ? OVERLAP : 0);
       const columnTo = Math.min(coreX + STRIDE + OVERLAP, width);
-      const regionWidth = (columnTo - tileX) * SCALE;
+      const regionWidth = (columnTo - tileX) * scale;
       const pixels = await runTile(tileX, tileY);
       for (let y = 0; y < bandHeight; y++) {
         for (let x = 0; x < regionWidth; x++) {
-          const source = (y * TILE_SIZE * SCALE + x) * 4;
-          const target = (y * outputWidth + tileX * SCALE + x) * 4;
+          const source = (y * TILE_SIZE * scale + x) * 4;
+          const target = (y * outputWidth + tileX * scale + x) * 4;
           for (let c = 0; c < 3; c++) {
             band[target + c] = column && x < seam
               ? blend(band[target + c], pixels[source + c], (x + .5) / seam)
@@ -84,7 +87,7 @@ export async function assembleTiles(width, height, runTile, writeBand, onProgres
     }
     if (previous) {
       const overlapRows = Math.min(seam, bandHeight);
-      const previousStart = (tileY * SCALE - previous.y) * outputWidth * 4;
+      const previousStart = (tileY * scale - previous.y) * outputWidth * 4;
       for (let y = 0; y < overlapRows; y++) {
         const weight = (y + .5) / seam;
         for (let x = 0; x < outputWidth; x++) {
@@ -93,8 +96,8 @@ export async function assembleTiles(width, height, runTile, writeBand, onProgres
         }
       }
     }
-    await writeBand(band, outputWidth, bandHeight, tileY * SCALE);
-    previous = {data: band, y: tileY * SCALE};
+    await writeBand(band, outputWidth, bandHeight, tileY * scale);
+    previous = {data: band, y: tileY * scale};
   }
 }
 

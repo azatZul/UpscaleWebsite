@@ -39,6 +39,10 @@
         <p>Drop one photo here</p>
         <button id="choose-photo" class="btn btn-p" type="button">Choose a photo <span aria-hidden="true">→</span></button>
         <span id="limit-note">JPEG, PNG or WebP</span>
+        <div id="scale-option" class="scale-option" role="group" aria-label="Upscale amount" hidden>
+          <button id="scale-2x" type="button" aria-pressed="true">2×</button>
+          <button id="scale-4x" type="button" aria-pressed="false">4×</button>
+        </div>
       </div>
       <div id="selected-photo" class="photo-selection" hidden>
         <img id="source-thumb" alt="Selected photo preview">
@@ -71,7 +75,7 @@
         <div class="cmp" id="result-comparison" role="group" aria-label="Before and after photo comparison">
           <img class="a-img" id="result-image" alt="Your photo upscaled to twice its original width and height" draggable="false">
           <img class="b" id="before-image" alt="Your original photo" draggable="false">
-          <span class="cmp-tag l">Original</span><span class="cmp-tag r">Result · 2×</span>
+          <span class="cmp-tag l">Original</span><span class="cmp-tag r" id="result-tag">Result · 2×</span>
           <span class="cmp-bar" id="comparison-handle" role="slider" tabindex="0" aria-label="Before and after separator" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-describedby="comparison-hint"></span>
         </div>
       </div>

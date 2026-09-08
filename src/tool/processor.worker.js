@@ -1,4 +1,4 @@
-import {assessPhoto, devicePolicy, estimateDuration, PhotoError, TILE_SIZE} from './capability.js';
+import {assessPhoto, devicePolicy, estimateDuration, PhotoError, SCALE, TILE_SIZE} from './capability.js';
 import {inspectFile, parseImageHeader} from './image-info.js';
 import {assembleTiles, makeCanvas, sampleTile, thumbnail} from './tile-pipeline.js';
 import {inverseTransform} from './face-geometry.js';
@@ -21,21 +21,21 @@ async function release() {
   try { await active?.release(); } catch { /* Worker termination is the final cleanup. */ }
 }
 
-async function prepare({file, environment, forceCpu = false, autoStart = false, faceResults}) {
+async function prepare({file, environment, forceCpu = false, autoStart = false, faceResults, scale = SCALE}) {
   ready = false;
   faces = faceResults?.faces || [];
   detectedCount = faceResults?.detectedCount || 0;
   faceEnabled = Boolean(faceResults);
   await release();
   const policy = devicePolicy(environment);
-  plan = assessPhoto(await inspectFile(file), policy);
+  plan = assessPhoto(await inspectFile(file), policy, scale);
   try { source = await createImageBitmap(file, {imageOrientation: 'from-image'}); }
   catch { throw new PhotoError('format', 'This browser couldn’t open the photo. Try another image or get the app.'); }
   // Decoders apply EXIF orientation. Trust actual decoded dimensions only
   // after checking the header, and enforce the same policy again.
-  plan = assessPhoto({width: source.width, height: source.height, size: file.size}, policy);
+  plan = assessPhoto({width: source.width, height: source.height, size: file.size}, policy, scale);
   send({type: 'photo', plan, thumbnail: await thumbnail(source)});
-  runtime = await loadRuntime(forceCpu, status);
+  runtime = await loadRuntime(forceCpu, status, false, scale);
   if (autoStart) { ready = true; await process(); return; }
   status({phase: 'probe', title: 'Measuring processing speed', detail: 'Trying a small part of your photo before starting the full image.'});
   const x = Math.max(0, Math.floor((source.width - TILE_SIZE) / 2));
@@ -70,7 +70,7 @@ async function process() {
       (data, width, height, y) => context.putImageData(new ImageData(data, width, height), 0, y),
       (completed, total) => status({phase: 'process', progress: completed / total * .94,
         title: 'Upscaling your photo', remainingMs: (performance.now() - started) / completed * (total - completed),
-        detail: 'Keep this page open. You can cancel at any time.'}));
+        detail: 'Keep this page open. You can cancel at any time.'}), plan.scale);
     // Tile time alone drives the next photo's estimate. Face compositing and
     // the export are excluded so a small photo does not inflate the figure.
     const tilesMs = performance.now() - started;
@@ -85,7 +85,7 @@ async function process() {
       const mask = ctx.createRadialGradient(256, 256, 220, 256, 256, 255);
       mask.addColorStop(0, '#fff'); mask.addColorStop(1, 'rgba(255,255,255,0)');
       ctx.fillStyle = mask; ctx.fillRect(0, 0, 512, 512);
-      const t = inverseTransform(face.transform, 2);
+      const t = inverseTransform(face.transform, plan.scale);
       context.setTransform(t.a, t.b, t.c, t.d, t.e, t.f);
       context.drawImage(patch, 0, 0); context.resetTransform();
       patch.width = patch.height = 1;

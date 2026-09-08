@@ -1,4 +1,4 @@
-import {assessPhoto, checkBrowser, DEFAULT_TILE_MS, devicePolicy, durationLabel, estimateDuration} from './capability.js';
+import {assessPhoto, checkBrowser, DEFAULT_TILE_MS, devicePolicy, durationLabel, estimateDuration, maxInputPixelsForScale, supportsScale} from './capability.js';
 import {inspectFile} from './image-info.js';
 import {createComparison} from './comparison.js';
 
@@ -8,7 +8,8 @@ const elements = Object.fromEntries(['photo-input', 'choose-photo', 'drop-zone',
   'process-photo', 'cancel', 'retry', 'cpu-retry', 'results', 'result-image', 'result-summary',
   'download-result', 'another-photo', 'start-over', 'limit-note', 'interrupted', 'visibility-note', 'photo-stage',
   'stage-title', 'tool-footnote', 'step-choose', 'step-upscale', 'step-compare', 'before-image', 'result-comparison',
-  'comparison-handle', 'face-option', 'enhance-faces', 'face-summary', 'result-viewer', 'result-stage', 'expand-result', 'close-result'].map(id => [id, $(id)]));
+  'comparison-handle', 'face-option', 'enhance-faces', 'face-summary', 'result-viewer', 'result-stage', 'expand-result', 'close-result',
+  'scale-option', 'scale-2x', 'scale-4x', 'result-tag'].map(id => [id, $(id)]));
 const comparison = createComparison(elements['result-comparison'], elements['before-image'], elements['comparison-handle']);
 const environment = {userAgent: navigator.userAgent, platform: navigator.platform,
   maxTouchPoints: navigator.maxTouchPoints, deviceMemory: navigator.deviceMemory};
@@ -27,6 +28,7 @@ function rememberTileMs(ms) {
 }
 let worker;
 let file;
+let scale = 2;
 let phase = 'idle';
 let forceCpu = false;
 let retriedGpu = false;
@@ -202,13 +204,16 @@ function onMessage(data, current) {
     elements['before-image'].src = originalUrl;
     elements['result-comparison'].style.aspectRatio = `${data.plan.width} / ${data.plan.height}`;
     elements['result-comparison'].style.setProperty('--photo-ratio', data.plan.width / data.plan.height);
+    const resultScale = data.plan.scale;
+    elements['result-image'].alt = `Your photo upscaled to ${resultScale} times its original width and height`;
+    if (elements['result-tag']) elements['result-tag'].textContent = `Result · ${resultScale}×`;
     elements['download-result'].href = resultUrl;
-    elements['download-result'].download = `${file.name.replace(/\.[^.]+$/, '') || 'photo'}-uscale-2x.jpg`;
+    elements['download-result'].download = `${file.name.replace(/\.[^.]+$/, '') || 'photo'}-uscale-${resultScale}x.jpg`;
     elements['result-summary'].textContent = `${data.plan.width} × ${data.plan.height} → ${data.plan.outputWidth} × ${data.plan.outputHeight} · JPEG`;
     elements['face-summary'].textContent = data.faceEnabled
       ? data.faceCount ? `${data.faceCount} face${data.faceCount === 1 ? '' : 's'} enhanced separately${data.detectedCount > data.faceCount ? ' · Some faces could not be enhanced' : ''}`
-        : data.detectedCount ? 'No suitable faces for separate enhancement · Photo upscaled 2×' : 'No faces detected · Photo upscaled 2×'
-      : 'Photo upscaled 2× · Separate face enhancement off';
+        : data.detectedCount ? `No suitable faces for separate enhancement · Photo upscaled ${resultScale}×` : `No faces detected · Photo upscaled ${resultScale}×`
+      : `Photo upscaled ${resultScale}× · Separate face enhancement off`;
     elements.results.hidden = false;
     refreshControls();
     elements.results.focus({preventScroll: true});
@@ -235,7 +240,7 @@ function prepare(cpu = false, autoStart = false, faceResults) {
     worker.onerror = event => { event.preventDefault(); if (current === generation) fail('runtime', 'The processing task stopped. Try again or use the app.'); };
     worker.onmessageerror = () => { if (current === generation) fail('runtime', 'The browser couldn’t read the processing result. Try the app.'); };
     remember(true);
-    worker.postMessage({type: 'prepare', file, environment, forceCpu, autoStart, faceResults}, faceResults?.faces.map(face => face.pixels.buffer) || []);
+    worker.postMessage({type: 'prepare', file, environment, forceCpu, autoStart, faceResults, scale}, faceResults?.faces.map(face => face.pixels.buffer) || []);
     watchdog(); keepAwake();
   } catch { fail('browser', 'This browser couldn’t start a processing task. Try a current browser or get the app.'); }
 }
@@ -254,6 +259,20 @@ function startFaces(cpu = false) {
   } catch { fail('face', 'This browser couldn’t start face enhancement. Turn it off and try again, or use the app.'); }
 }
 
+function setScale(value) {
+  scale = value;
+  elements['scale-2x'].setAttribute('aria-pressed', String(value === 2));
+  elements['scale-4x'].setAttribute('aria-pressed', String(value === 4));
+  elements['limit-note'].textContent =
+    `JPEG, PNG or WebP · up to ${maxInputPixelsForScale(policy, scale) / 1_000_000} MP at ${scale}× on this device · 50 MB maximum`;
+  elements['process-photo'].textContent = `Upscale photo · ${scale}×`;
+}
+if (elements['scale-option'] && supportsScale(policy, 4)) {
+  elements['scale-option'].hidden = false;
+  elements['scale-2x'].addEventListener('click', () => setScale(2));
+  elements['scale-4x'].addEventListener('click', () => setScale(4));
+}
+
 async function chooseFile(next) {
   if (!next || phase !== 'idle' || !supported) return;
   file = next; retriedGpu = false;
@@ -266,7 +285,7 @@ async function chooseFile(next) {
   // A photo this device cannot take is refused straight away rather than after
   // a download and a speed test.
   let plan;
-  try { plan = assessPhoto(await inspectFile(next), policy); }
+  try { plan = assessPhoto(await inspectFile(next), policy, scale); }
   catch (error) {
     elements['source-size'].textContent = 'Photo not processed';
     fail(error.code || 'format', error.message);
@@ -335,7 +354,7 @@ try {
   elements.interrupted.hidden = !(pending > 0 && Date.now() - pending < 24 * 60 * 60 * 1000);
   remember(false);
 } catch { /* Browser storage is optional. */ }
-elements['limit-note'].textContent = `JPEG, PNG or WebP · up to ${policy.maxInputPixels / 1_000_000} MP on this device · 50 MB maximum`;
+setScale(2);
 try {
   checkBrowser({secure: isSecureContext, worker: typeof Worker === 'function', wasm: typeof WebAssembly === 'object',
     bitmap: typeof createImageBitmap === 'function', offscreen: typeof OffscreenCanvas === 'function'});

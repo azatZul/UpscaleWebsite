@@ -50,6 +50,20 @@ def main() -> int:
         "onnx.checker.check_model(onnx.load(p),full_check=True)"
     ))
 
+    # Same graph family as the 2× export above, at the app's separate 4×
+    # model. desktop-only in the tool (see capability.js): a 4× output canvas
+    # is 4x the linear size of 2×'s for the same photo, so it is offered only
+    # where the measured canvas/memory headroom covers that.
+    run(str(PYTHON), "-c", (
+        "from pathlib import Path; import torch, onnx;"
+        "from model_port.srvgg import load_exact_coreml_srvgg;"
+        f"m,_=load_exact_coreml_srvgg(Path({str(IOS / 'UpscalePackage/Sources/Processor/models/normal_4x_dsize.mlmodel')!r}),4);"
+        f"p={str(OUTPUT / 'normal_4x_web.onnx')!r};"
+        "torch.onnx.export(m,torch.rand(1,3,256,256),p,input_names=['image'],output_names=['output'],"
+        "opset_version=17,do_constant_folding=True,dynamo=False);"
+        "onnx.checker.check_model(onnx.load(p),full_check=True)"
+    ))
+
     run(str(PYTHON), "-m", "model_port", "export-gfpgan", "--repo", str(IOS),
         "--model", "face", "--output", str(OUTPUT / "face_512.onnx"), "--opset", "18")
 
@@ -58,16 +72,17 @@ def main() -> int:
     # layout optimizations are not portable to the GPU backend.
     ort_output = WORK / "ort-normal"
     ort_output.mkdir(parents=True, exist_ok=True)
-    run(
-        str(PYTHON), "-m", "onnxruntime.tools.convert_onnx_models_to_ort",
-        str(OUTPUT / "normal_2x_web.onnx"),
-        "--output_dir", str(ort_output),
-        "--optimization_style", "Fixed",
-        "--target_platform", "amd64",
-    )
-    (OUTPUT / "normal_2x_web.ort").write_bytes(
-        (ort_output / "normal_2x_web.ort").read_bytes(),
-    )
+    for name in ("normal_2x_web", "normal_4x_web"):
+        run(
+            str(PYTHON), "-m", "onnxruntime.tools.convert_onnx_models_to_ort",
+            str(OUTPUT / f"{name}.onnx"),
+            "--output_dir", str(ort_output),
+            "--optimization_style", "Fixed",
+            "--target_platform", "amd64",
+        )
+        (OUTPUT / f"{name}.ort").write_bytes(
+            (ort_output / f"{name}.ort").read_bytes(),
+        )
 
     # LiteRT.js performs best with browser-native channel-last tensors. Rebuild
     # the same Core ML weights in that layout so the entire graph can stay on

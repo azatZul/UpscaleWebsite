@@ -34,6 +34,29 @@ test('bounded row assembly matches the original overlapping tiler byte for byte'
   }
 });
 
+function modelOutput4x(index, side = 1024) {
+  const plane = side * side;
+  const values = new Float32Array(plane * 3);
+  for (let c = 0; c < 3; c++) for (let p = 0; p < plane; p++) values[c * plane + p] = ((p * 7 + Math.floor(p / side) * 11 + index * 37 + c * 19) % 256) / 255;
+  return values;
+}
+
+test('4x assembly produces a 4x canvas with no corrupt or discontinuous seams', async () => {
+  for (const [width, height] of [[257, 449], [500, 470], [840, 560]]) {
+    let index = 0;
+    const outputWidth = width * 4, outputHeight = height * 4;
+    const actual = new Uint8ClampedArray(outputWidth * outputHeight * 4);
+    let count = 0, coveredRows = 0;
+    await assembleTiles(width, height, async () => tensorPixels(modelOutput4x(index++), 1024),
+      (band, w, h, y) => { assert.equal(w, outputWidth); actual.set(band, y * w * 4); coveredRows += h; },
+      () => count++, 4);
+    // Every output pixel got a defined, fully-opaque value — no gaps.
+    for (let i = 3; i < actual.length; i += 4) assert.equal(actual[i], 255);
+    assert.ok(coveredRows >= outputHeight);
+    assert.equal(count, Math.ceil(width / 224) * Math.ceil(height / 224));
+  }
+});
+
 test('invalid inference output is rejected instead of saving corrupt pixels', () => {
   assert.throws(()=>tensorPixels(new Float32Array(1)),{code:'runtime'});
   const values=modelOutput(0);values[27]=NaN;

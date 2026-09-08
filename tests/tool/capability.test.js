@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {assessPhoto, checkBrowser, devicePolicy, estimateDuration, faceLimit, isAppleMobile} from '../../src/tool/capability.js';
+import {assessPhoto, checkBrowser, devicePolicy, estimateDuration, faceLimit, isAppleMobile, maxInputPixelsForScale, supportsScale} from '../../src/tool/capability.js';
 import {inspectFile, parseImageHeader} from '../../src/tool/image-info.js';
 
 test('mobile size policy admits a 12 MP camera photo and still rejects oversized work', () => {
@@ -24,6 +24,27 @@ test('face admission follows the photo policy instead of a separate 2 MP cap', (
   assert.ok(4032 * 3024 <= faceLimit(iphone));
   // Devices reporting 4 GB or less remain unmeasured, so they stay conservative.
   assert.equal(faceLimit(devicePolicy({deviceMemory: 2})), 4_000_000);
+});
+
+test('4x is desktop-only and keeps the same output-canvas area as 2x', () => {
+  const desktop = devicePolicy();
+  const iphone = devicePolicy({userAgent: 'iPhone'});
+  assert.ok(supportsScale(desktop, 2) && supportsScale(desktop, 4));
+  assert.ok(supportsScale(iphone, 2) && !supportsScale(iphone, 4));
+  // input_cap(4) * 4^2 must equal input_cap(2) * 2^2 (same output pixel budget).
+  const cap2 = maxInputPixelsForScale(desktop, 2);
+  const cap4 = maxInputPixelsForScale(desktop, 4);
+  assert.equal(cap2, desktop.maxInputPixels);
+  assert.equal(cap2 * 4, cap4 * 16);
+  // A photo the desktop 4x cap admits produces the same plan.tileCount as at 2x
+  // (tiling only depends on input size) but 2x the output side.
+  const plan2 = assessPhoto({width: 2000, height: 1500}, desktop, 2);
+  const plan4 = assessPhoto({width: 2000, height: 1500}, desktop, 4);
+  assert.equal(plan2.tileCount, plan4.tileCount);
+  assert.equal(plan4.outputWidth, plan2.outputWidth * 2);
+  assert.equal(plan4.scale, 4);
+  // Requesting 4x on a mobile policy is refused even for a tiny photo.
+  assert.throws(() => assessPhoto({width: 100, height: 100}, iphone, 4), {code: 'size'});
 });
 
 test('missing memory data is not treated as zero and iPad desktop UA is recognized', () => {

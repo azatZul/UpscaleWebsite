@@ -1,15 +1,16 @@
 import {ASSETS} from './assets.generated.js';
-import {PhotoError, TILE_SIZE} from './capability.js';
+import {PhotoError, SCALE, TILE_SIZE} from './capability.js';
 import {tensorPixels} from './tile-pipeline.js';
 
-export async function loadRuntime(forceCpu, progress, face = false) {
+export async function loadRuntime(forceCpu, progress, face = false, scale = SCALE) {
   let backend = 'wasm';
   if (!forceCpu && navigator.gpu) {
     try { if (await navigator.gpu.requestAdapter()) backend = 'webgpu'; } catch { /* CPU remains available. */ }
   }
   const engine = backend === 'webgpu' ? 'ort.webgpu.min.mjs' : 'ort.wasm.min.mjs';
-  const model = backend === 'webgpu' ? ASSETS.modelGpu : ASSETS.modelCpu;
+  const model = face ? undefined : ASSETS.models[scale][backend === 'webgpu' ? 'gpu' : 'cpu'];
   const modelTitle = face ? 'Loading face enhancement' : 'Loading the upscaler';
+  const outputSide = face ? 512 : TILE_SIZE * scale;
   let session;
   let ort;
   try {
@@ -42,8 +43,8 @@ export async function loadRuntime(forceCpu, progress, face = false) {
       try {
         const outputs = await session.run({[session.inputNames[0]]: input});
         output = outputs[session.outputNames[0]];
-        if (output.dims.join(',') !== '1,3,512,512') throw new Error('Unexpected output dimensions');
-        return tensorPixels(await output.getData());
+        if (output.dims.join(',') !== `1,3,${outputSide},${outputSide}`) throw new Error('Unexpected output dimensions');
+        return tensorPixels(await output.getData(), outputSide);
       } catch {
         throw new PhotoError(backend === 'webgpu' ? 'gpu' : 'runtime', 'This browser couldn’t finish the image processing.');
       } finally { input.dispose(); output?.dispose(); }

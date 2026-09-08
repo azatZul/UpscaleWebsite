@@ -15,14 +15,17 @@ for (const name of ['ort.webgpu.min.mjs', 'ort.wasm.min.mjs',
   'ort-wasm-simd-threaded.mjs', 'ort-wasm-simd-threaded.wasm']) {
   await cp(join(root, 'node_modules/onnxruntime-web/dist', name), join(root, runtime, name));
 }
-const assets = {runtime};
-for (const [key, file] of [['modelGpu', 'normal_2x_web.onnx'], ['modelCpu', 'normal_2x_web.ort']]) {
-  let bytes;
-  try { bytes = await readFile(join(root, 'static/models', file)); }
-  catch { throw new Error(`Missing ${file}. Restore the approved model artifacts described in BROWSER_IMAGE_PROCESSING.md before building the preview.`); }
-  const hash = createHash('sha256').update(bytes).digest('hex').slice(0,16);
-  assets[key] = `/assets/processor/${hash}-${file}`;
-  await writeFile(join(root, assets[key]), bytes);
+const assets = {runtime, models: {}};
+for (const scale of [2, 4]) {
+  assets.models[scale] = {};
+  for (const [key, file] of [['gpu', `normal_${scale}x_web.onnx`], ['cpu', `normal_${scale}x_web.ort`]]) {
+    let bytes;
+    try { bytes = await readFile(join(root, 'static/models', file)); }
+    catch { throw new Error(`Missing ${file}. Restore the approved model artifacts described in BROWSER_IMAGE_PROCESSING.md before building the preview.`); }
+    const hash = createHash('sha256').update(bytes).digest('hex').slice(0,16);
+    assets.models[scale][key] = `/assets/processor/${hash}-${file}`;
+    await writeFile(join(root, assets.models[scale][key]), bytes);
+  }
 }
 // Pages serves files up to 25 MiB. Reassemble the exact face model in the worker.
 const faceBytes = await readFile(join(root, 'static/models/face_512.onnx'));
