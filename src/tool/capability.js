@@ -20,15 +20,29 @@ export function isAppleMobile(env = {}) {
 export function devicePolicy(env = {}) {
   const mobile = isAppleMobile(env) || /Android|Mobile/.test(env.userAgent || '');
   const lowMemory = Number.isFinite(env.deviceMemory) && env.deviceMemory <= 4;
-  // Admission limits, not measurements of free RAM. Keep the first mobile
-  // preview below large camera-photo sizes until end-to-end device testing.
+  // Admission limits, not measurements of free RAM. The mobile numbers come
+  // from an iPhone 13 Pro (iOS 27): an 8064x6048 canvas and a JPEG export of
+  // it both succeeded, and the tab touched 1536 MB without throwing. A 12 MP
+  // camera photo therefore fits; 8192 output side already allows it. Devices
+  // reporting 4 GB or less stay conservative because they are unmeasured.
   return {
-    maxInputPixels: lowMemory ? 4_000_000 : mobile ? 8_000_000 : 20_000_000,
+    maxInputPixels: lowMemory ? 4_000_000 : mobile ? 16_000_000 : 40_000_000,
     maxOutputSide: mobile ? 8192 : 16384,
-    memoryBudgetBytes: (lowMemory ? 256 : mobile ? 384 : 1024) * 1024 * 1024,
+    memoryBudgetBytes: (lowMemory ? 256 : mobile ? 900 : 2048) * 1024 * 1024,
     mobile,
+    lowMemory,
   };
 }
+
+// Separate face enhancement works on 512x512 crops, so the source size barely
+// changes its working set. It only needs the same admission as the photo.
+export function faceLimit(policy = devicePolicy()) {
+  return policy.lowMemory ? 4_000_000 : policy.maxInputPixels;
+}
+
+// Used for the up-front estimate before any engine download. Replaced by a
+// measured per-device value once a photo has been processed.
+export const DEFAULT_TILE_MS = {mobile: 2000, desktop: 700};
 
 export function assessPhoto({width, height, size = 0}, policy = devicePolicy()) {
   if (![width, height].every(n => Number.isSafeInteger(n) && n > 0)) {

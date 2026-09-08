@@ -27,7 +27,6 @@ async function prepare({file, environment, forceCpu = false, autoStart = false, 
   detectedCount = faceResults?.detectedCount || 0;
   faceEnabled = Boolean(faceResults);
   await release();
-  status({phase: 'inspect', title: 'Checking your photo', detail: 'Reading its dimensions before loading the full image.'});
   const policy = devicePolicy(environment);
   plan = assessPhoto(await inspectFile(file), policy);
   try { source = await createImageBitmap(file, {imageOrientation: 'from-image'}); }
@@ -72,6 +71,9 @@ async function process() {
       (completed, total) => status({phase: 'process', progress: completed / total * .94,
         title: 'Upscaling your photo', remainingMs: (performance.now() - started) / completed * (total - completed),
         detail: 'Keep this page open. You can cancel at any time.'}));
+    // Tile time alone drives the next photo's estimate. Face compositing and
+    // the export are excluded so a small photo does not inflate the figure.
+    const tilesMs = performance.now() - started;
     source.close(); source = null;
     // Release model memory before asking the encoder for a full-size export.
     await runtime.release(); runtime = null;
@@ -95,7 +97,7 @@ async function process() {
     // Verify that export preserved the requested dimensions.
     const result = parseImageHeader(await blob.slice(0, 2 * 1024 * 1024).arrayBuffer());
     if (result.width !== plan.outputWidth || result.height !== plan.outputHeight) throw new Error('Wrong export size');
-    send({type: 'done', blob, plan, faceCount, detectedCount, faceEnabled, totalMs: performance.now() - started});
+    send({type: 'done', blob, plan, faceCount, detectedCount, faceEnabled, tilesMs, totalMs: performance.now() - started});
   } catch (error) {
     if (error instanceof PhotoError) throw error;
     throw new PhotoError('export', 'This browser couldn’t save the full-size result. Try a smaller photo or use the app.');

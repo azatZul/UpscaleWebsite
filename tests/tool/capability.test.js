@@ -1,20 +1,33 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {assessPhoto, checkBrowser, devicePolicy, estimateDuration, isAppleMobile} from '../../src/tool/capability.js';
+import {assessPhoto, checkBrowser, devicePolicy, estimateDuration, faceLimit, isAppleMobile} from '../../src/tool/capability.js';
 import {inspectFile, parseImageHeader} from '../../src/tool/image-info.js';
 
-test('mobile size policy rejects large photos without claiming a lack of GPU support', () => {
+test('mobile size policy admits a 12 MP camera photo and still rejects oversized work', () => {
   const iphone = devicePolicy({userAgent: 'iPhone'});
-  assert.throws(() => assessPhoto({width: 4032, height: 3024}, iphone), {code: 'size'});
+  // Measured on an iPhone 13 Pro (iOS 27): an 8064x6048 canvas and a JPEG
+  // export of it both succeed, so a 12 MP camera photo is admitted.
+  assert.equal(assessPhoto({width: 4032, height: 3024}, iphone).tileCount, 252);
   assert.equal(assessPhoto({width: 2000, height: 1500}, iphone).tileCount, 63);
   assert.equal(assessPhoto({width: 4032, height: 3024}, devicePolicy()).tileCount, 252);
+  // Beyond the measured envelope it must still refuse rather than crash.
+  assert.throws(() => assessPhoto({width: 6000, height: 4000}, iphone), {code: 'size'});
   assert.throws(() => assessPhoto({width: 5000, height: 20}, iphone), {code: 'size'});
   assert.throws(() => assessPhoto({width: -1, height: 100}), {code: 'format'});
   assert.throws(() => assessPhoto({width: Infinity, height: 100}), {code: 'format'});
 });
 
+test('face admission follows the photo policy instead of a separate 2 MP cap', () => {
+  const iphone = devicePolicy({userAgent: 'iPhone'});
+  assert.equal(faceLimit(iphone), iphone.maxInputPixels);
+  // A 12 MP photo must not be refused for faces when the photo itself is fine.
+  assert.ok(4032 * 3024 <= faceLimit(iphone));
+  // Devices reporting 4 GB or less remain unmeasured, so they stay conservative.
+  assert.equal(faceLimit(devicePolicy({deviceMemory: 2})), 4_000_000);
+});
+
 test('missing memory data is not treated as zero and iPad desktop UA is recognized', () => {
-  assert.equal(devicePolicy({deviceMemory: undefined}).maxInputPixels, 20_000_000);
+  assert.equal(devicePolicy({deviceMemory: undefined}).maxInputPixels, 40_000_000);
   assert.equal(devicePolicy({deviceMemory: 2}).maxInputPixels, 4_000_000);
   assert.ok(isAppleMobile({userAgent: 'Macintosh', platform: 'MacIntel', maxTouchPoints: 5}));
   assert.equal(isAppleMobile({userAgent: 'Macintosh', platform: 'MacIntel', maxTouchPoints: 0}), false);

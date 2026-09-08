@@ -1,7 +1,7 @@
 import {ASSETS} from './assets.generated.js';
 import {faceGeometry} from './face-geometry.js';
 import {loadRuntime} from './runtime.js';
-import {assessPhoto, devicePolicy, isAppleMobile, PhotoError} from './capability.js';
+import {assessPhoto, devicePolicy, faceLimit, isAppleMobile, PhotoError} from './capability.js';
 import {inspectFile} from './image-info.js';
 const status = message => self.postMessage({type: 'status', ...message});
 let busy = false;
@@ -13,9 +13,9 @@ self.onmessage = async ({data: {file, environment, forceCpu}}) => {
     const info = await inspectFile(file);
     const policy = devicePolicy(environment);
     assessPhoto(info, policy);
-    // Conservative face admission: its 86 MB model has a much larger working
-    // set than Regular 2×. This is a preview limit, not a free-RAM measurement.
-    const limit = policy.mobile || environment.deviceMemory <= 4 ? 2_000_000 : 8_000_000;
+    // Face work happens on 512x512 crops, so the source size barely changes its
+    // working set. It only needs the same admission as the photo itself.
+    const limit = faceLimit(policy);
     if (info.width * info.height > limit) throw new PhotoError('face', `Separate face enhancement is limited to ${limit / 1_000_000} MP on this device. Turn it off to upscale this photo, or try the app.`);
     bitmap = await createImageBitmap(file, {imageOrientation: 'from-image'});
     status({title: 'Finding faces', detail: 'Checking your photo on this device.'});

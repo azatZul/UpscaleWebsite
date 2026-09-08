@@ -1,4 +1,5 @@
-import {checkBrowser, devicePolicy, durationLabel} from './capability.js';
+import {assessPhoto, checkBrowser, DEFAULT_TILE_MS, devicePolicy, durationLabel, estimateDuration} from './capability.js';
+import {inspectFile} from './image-info.js';
 import {createComparison} from './comparison.js';
 
 const $ = id => document.getElementById(id);
@@ -12,6 +13,18 @@ const comparison = createComparison(elements['result-comparison'], elements['bef
 const environment = {userAgent: navigator.userAgent, platform: navigator.platform,
   maxTouchPoints: navigator.maxTouchPoints, deviceMemory: navigator.deviceMemory};
 const marker = 'uscale-preview-active-v1';
+const tileKey = 'uscale-tile-ms-v1';
+const policy = devicePolicy(environment);
+
+// Estimating before any download needs a per-tile figure. Use the measured one
+// from this device's last run, otherwise a conservative default.
+function knownTileMs() {
+  try { const stored = Number(localStorage.getItem(tileKey)); if (stored > 0) return stored; } catch { /* Storage is optional. */ }
+  return policy.mobile ? DEFAULT_TILE_MS.mobile : DEFAULT_TILE_MS.desktop;
+}
+function rememberTileMs(ms) {
+  try { if (ms > 0 && Number.isFinite(ms)) localStorage.setItem(tileKey, String(Math.round(ms))); } catch { /* Storage is optional. */ }
+}
 let worker;
 let file;
 let phase = 'idle';
@@ -136,12 +149,11 @@ function clearOutput() {
 }
 
 function fail(code, message) {
-  const duringCheck = phase === 'checking';
   if (runningFaces && code === 'gpu' && !forceCpu) { startFaces(true); return; }
   if (runningFaces && code !== 'download') code = 'face';
-  if (code === 'gpu' && duringCheck && !forceCpu && !retriedGpu) {
+  if (code === 'gpu' && !forceCpu && !retriedGpu) {
     retriedGpu = true;
-    prepare(true);
+    prepare(true, true);
     return;
   }
   stopWorker();
@@ -179,6 +191,9 @@ function onMessage(data, current) {
     fail(data.code, data.message);
   } else if (data.type === 'done') {
     stopWorker(); phase = 'done';
+    // Only learn from a run long enough to amortise first-inference shader
+    // setup. A four-tile photo would otherwise teach a badly pessimistic rate.
+    if (data.plan?.tileCount >= 16 && data.tilesMs) rememberTileMs(data.tilesMs / data.plan.tileCount);
     clearOutput();
     resultUrl = URL.createObjectURL(data.blob);
     // Decode the original for comparison only after inference has finished.
@@ -211,8 +226,8 @@ function prepare(cpu = false, autoStart = false, faceResults) {
   phase = autoStart ? 'processing' : 'checking';
   errorCode = undefined;
   elements.interrupted.hidden = true;
-  setStatus(cpu ? 'Trying another processing method' : 'Checking this browser and photo',
-    cpu ? 'Checking the CPU option. It may take longer.' : 'A small test will estimate how long your photo will take.');
+  setStatus(cpu ? 'Trying another processing method' : 'Preparing',
+    cpu ? 'Checking the CPU option. It may take longer.' : 'Loading the upscaler. Your photo stays on this device.');
   refreshControls();
   const current = generation;
   try {
@@ -240,31 +255,46 @@ function startFaces(cpu = false) {
   } catch { fail('face', 'This browser couldn’t start face enhancement. Turn it off and try again, or use the app.'); }
 }
 
-function chooseFile(next) {
+async function chooseFile(next) {
   if (!next || phase !== 'idle' || !supported) return;
   file = next; retriedGpu = false;
   if (thumbnailUrl) URL.revokeObjectURL(thumbnailUrl);
-  thumbnailUrl = undefined;
-  elements['source-thumb'].removeAttribute('src');
+  thumbnailUrl = URL.createObjectURL(file);
+  elements['source-thumb'].src = thumbnailUrl;
   elements['source-name'].textContent = file.name;
   elements['source-size'].textContent = 'Checking image dimensions…';
-  prepare();
+  // Decide from the file header alone, before downloading an engine or model.
+  // A photo this device cannot take is refused straight away rather than after
+  // a download and a speed test.
+  let plan;
+  try { plan = assessPhoto(await inspectFile(next), policy); }
+  catch (error) {
+    elements['source-size'].textContent = 'Photo not processed';
+    fail(error.code || 'format', error.message);
+    return;
+  }
+  const {milliseconds, slow} = estimateDuration(knownTileMs(), plan.tileCount);
+  phase = 'ready'; errorCode = undefined;
+  elements['source-size'].textContent = `${plan.width} × ${plan.height} → ${plan.outputWidth} × ${plan.outputHeight}`;
+  setStatus(slow ? `This photo takes ${durationLabel(milliseconds)} on this device` : 'Ready to upscale',
+    slow ? 'Large photos are slow in a browser. You can still upscale it here, or get full speed in the app.'
+      : `Takes ${durationLabel(milliseconds)}. Your photo stays on this device.`);
+  refreshControls();
 }
 
 elements['choose-photo'].addEventListener('click', () => elements['photo-input'].click());
-elements['photo-input'].addEventListener('change', () => chooseFile(elements['photo-input'].files[0]));
+elements['photo-input'].addEventListener('change', () => { chooseFile(elements['photo-input'].files[0]).catch(() => fail('format', 'We couldn’t read this photo. Try a JPEG, PNG or WebP image.')); });
 elements['process-photo'].addEventListener('click', () => {
-  if (phase !== 'ready' || !worker) return;
+  if (phase !== 'ready' || !file) return;
   if (elements['enhance-faces'].checked) { startFaces(forceCpu); return; }
-  phase = 'processing'; remember(true); refreshControls(); watchdog(); keepAwake();
-  worker.postMessage({type: 'process'});
+  prepare(forceCpu, true);
 });
 elements.cancel.addEventListener('click', () => {
   reset();
   setStatus('Processing cancelled', 'Your photo stayed on this device. Choose a photo when you’re ready.');
 });
-elements.retry.addEventListener('click', () => { retriedGpu = false; prepare(forceCpu); });
-elements['cpu-retry'].addEventListener('click', () => prepare(true));
+elements.retry.addEventListener('click', () => { retriedGpu = false; prepare(forceCpu, true); });
+elements['cpu-retry'].addEventListener('click', () => prepare(true, true));
 function reset() {
   stopWorker(); phase = 'idle'; file = null;
   errorCode = undefined;
@@ -284,7 +314,7 @@ for (const eventName of ['dragleave', 'drop']) elements['drop-zone'].addEventLis
   event.preventDefault(); elements['drop-zone'].classList.remove('dragging');
   if (eventName === 'drop') {
     if (event.dataTransfer.files.length > 1) setStatus('Choose one photo at a time', 'Drop a single photo to get started.');
-    else chooseFile(event.dataTransfer.files[0]);
+    else chooseFile(event.dataTransfer.files[0]).catch(() => fail('format', 'We couldn’t read this photo. Try a JPEG, PNG or WebP image.'));
   }
 });
 document.addEventListener('visibilitychange', () => { refreshControls(); watchdog(); keepAwake(); });
@@ -306,7 +336,7 @@ try {
   elements.interrupted.hidden = !(pending > 0 && Date.now() - pending < 24 * 60 * 60 * 1000);
   remember(false);
 } catch { /* Browser storage is optional. */ }
-elements['limit-note'].textContent = `JPEG, PNG or WebP · up to ${devicePolicy(environment).maxInputPixels / 1_000_000} MP on this device · 50 MB maximum`;
+elements['limit-note'].textContent = `JPEG, PNG or WebP · up to ${policy.maxInputPixels / 1_000_000} MP on this device · 50 MB maximum`;
 try {
   checkBrowser({secure: isSecureContext, worker: typeof Worker === 'function', wasm: typeof WebAssembly === 'object',
     bitmap: typeof createImageBitmap === 'function', offscreen: typeof OffscreenCanvas === 'function'});
