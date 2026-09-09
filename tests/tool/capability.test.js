@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {assessPhoto, checkBrowser, devicePolicy, estimateDuration, faceLimit, isAppleMobile, maxInputPixelsForScale, supportsScale} from '../../src/tool/capability.js';
+import {assessPhoto, checkBrowser, devicePolicy, estimateDuration, faceLimit, isAppleMobile, isIPad, maxInputPixelsForScale, supportsScale} from '../../src/tool/capability.js';
 import {inspectFile, parseImageHeader} from '../../src/tool/image-info.js';
 
 test('mobile size policy admits a 12 MP camera photo and still rejects oversized work', () => {
@@ -45,6 +45,19 @@ test('4x is desktop-only and keeps the same output-canvas area as 2x', () => {
   assert.equal(plan4.scale, 4);
   // Requesting 4x on a mobile policy is refused even for a tiny photo.
   assert.throws(() => assessPhoto({width: 100, height: 100}, iphone, 4), {code: 'size'});
+});
+
+test('iPad is carved out of the phone-only 4x restriction, both UA shapes', () => {
+  // Legacy iPadOS UA and the modern "request desktop site" Mac+touch UA.
+  for (const env of [{userAgent: 'iPad'}, {userAgent: 'Macintosh', platform: 'MacIntel', maxTouchPoints: 5}]) {
+    const ipad = devicePolicy(env);
+    assert.ok(ipad.iPad, `expected iPad:true for ${JSON.stringify(env)}`);
+    assert.ok(ipad.mobile, 'iPad keeps the conservative mobile input/memory numbers');
+    assert.ok(supportsScale(ipad, 4), '4x must be offered on iPad');
+    assert.equal(ipad.maxInputPixels, devicePolicy({userAgent: 'iPhone'}).maxInputPixels);
+  }
+  assert.equal(isIPad({userAgent: 'iPhone'}), false);
+  assert.equal(isIPad({userAgent: 'Android'}), false);
 });
 
 test('missing memory data is not treated as zero and iPad desktop UA is recognized', () => {

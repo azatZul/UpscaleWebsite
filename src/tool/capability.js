@@ -18,6 +18,15 @@ export function isAppleMobile(env = {}) {
     (/Mac/.test(env.platform || '') && env.maxTouchPoints > 1);
 }
 
+// iPad specifically: the "iPad" UA token (classic Safari UA), or the "Mac +
+// touch" signature Safari reports in its default desktop-site request mode.
+// That second form is indistinguishable from "MacBook with a touchscreen",
+// which does not exist, so it safely means iPad.
+export function isIPad(env = {}) {
+  return /iPad/.test(env.userAgent || '') ||
+    (/Mac/.test(env.platform || '') && env.maxTouchPoints > 1);
+}
+
 export function devicePolicy(env = {}) {
   const mobile = isAppleMobile(env) || /Android|Mobile/.test(env.userAgent || '');
   const lowMemory = Number.isFinite(env.deviceMemory) && env.deviceMemory <= 4;
@@ -26,12 +35,15 @@ export function devicePolicy(env = {}) {
   // it both succeeded, and the tab touched 1536 MB without throwing. A 12 MP
   // camera photo therefore fits; 8192 output side already allows it. Devices
   // reporting 4 GB or less stay conservative because they are unmeasured.
+  // iPad keeps these same conservative numbers -- only supportsScale() below
+  // treats it differently, since nothing here has been measured on iPad.
   return {
     maxInputPixels: lowMemory ? 4_000_000 : mobile ? 16_000_000 : 40_000_000,
     maxOutputSide: mobile ? 8192 : 16384,
     memoryBudgetBytes: (lowMemory ? 256 : mobile ? 900 : 2048) * 1024 * 1024,
     mobile,
     lowMemory,
+    iPad: isIPad(env),
   };
 }
 
@@ -44,10 +56,13 @@ export function faceLimit(policy = devicePolicy()) {
 // 4x is desktop-only: its output canvas is 4x the linear size of 2x's for the
 // same photo (16x the area), and only the desktop canvas/memory headroom
 // measured this session covers that. The app also sells 4x as a Pro feature;
-// keeping it off mobile here also keeps this preview from undercutting that
-// on the devices most likely to be comparing the two.
+// keeping it off phones here also keeps this preview from undercutting that
+// on the device most likely to be comparing the two. iPad is carved out of
+// that phone-shaped restriction -- its screen and RAM sit closer to a laptop
+// -- while still using the same conservative (iPhone-measured) input/memory
+// numbers above, since those specifically haven't been measured on iPad.
 export function supportsScale(policy, scale) {
-  return scale === 2 || (scale === 4 && !policy.mobile);
+  return scale === 2 || (scale === 4 && (!policy.mobile || policy.iPad));
 }
 
 // maxInputPixels is calibrated for 2x. A larger scale must admit fewer input
