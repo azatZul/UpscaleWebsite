@@ -39,6 +39,13 @@ export function devicePolicy(env = {}) {
   // treats it differently, since nothing here has been measured on iPad.
   return {
     maxInputPixels: lowMemory ? 4_000_000 : mobile ? 16_000_000 : 40_000_000,
+    // 4x's own ceiling, not derived from the 2x number above: a real 4032x3024
+    // (12.19 MP) camera photo at 4x is a 195 MP / 578 MB canvas, which is 73%
+    // of the 268 MP Mac canvas measured safe this session and 28% of the
+    // memory budget below -- real margin, not just area-parity with 2x.
+    // Mobile/iPad have no such measurement, so they fall back to the
+    // conservative area-parity figure in maxInputPixelsForScale().
+    maxInputPixels4x: mobile ? undefined : 13_000_000,
     maxOutputSide: mobile ? 8192 : 16384,
     memoryBudgetBytes: (lowMemory ? 256 : mobile ? 900 : 2048) * 1024 * 1024,
     mobile,
@@ -65,10 +72,11 @@ export function supportsScale(policy, scale) {
   return scale === 2 || (scale === 4 && (!policy.mobile || policy.iPad));
 }
 
-// maxInputPixels is calibrated for 2x. A larger scale must admit fewer input
-// pixels so the OUTPUT canvas — the thing actually measured against hardware
-// limits — stays the same area: input_cap(scale) = input_cap(2) * 4 / scale^2.
+// maxInputPixels is calibrated for 2x. Where a scale has no directly measured
+// figure of its own (policy.maxInputPixels4x, desktop-only), fall back to an
+// output-area-parity estimate: input_cap(scale) = input_cap(2) * 4 / scale^2.
 export function maxInputPixelsForScale(policy, scale) {
+  if (scale === 4 && policy.maxInputPixels4x) return policy.maxInputPixels4x;
   return Math.floor(policy.maxInputPixels * 4 / (scale * scale));
 }
 

@@ -9,7 +9,7 @@ const elements = Object.fromEntries(['photo-input', 'choose-photo', 'drop-zone',
   'download-result', 'another-photo', 'start-over', 'limit-note', 'interrupted', 'visibility-note', 'photo-stage',
   'stage-title', 'tool-footnote', 'step-choose', 'step-upscale', 'step-compare', 'before-image', 'result-comparison',
   'comparison-handle', 'face-option', 'enhance-faces', 'face-summary', 'result-viewer', 'result-stage', 'expand-result', 'close-result',
-  'scale-option', 'scale-2x', 'scale-4x', 'result-tag'].map(id => [id, $(id)]));
+  'scale-option', 'scale-2x', 'scale-4x', 'result-tag', 'try-2x'].map(id => [id, $(id)]));
 const comparison = createComparison(elements['result-comparison'], elements['before-image'], elements['comparison-handle']);
 const environment = {userAgent: navigator.userAgent, platform: navigator.platform,
   maxTouchPoints: navigator.maxTouchPoints, deviceMemory: navigator.deviceMemory};
@@ -40,6 +40,7 @@ let timer;
 let wakeLock;
 let supported = true;
 let errorCode;
+let scaleFallback = false;
 let runningFaces = false;
 let expanded = false;
 const stageObserver = new ResizeObserver(entries => {
@@ -101,6 +102,7 @@ function refreshControls() {
   const cpuRetry = failed && errorCode === 'gpu' && !forceCpu;
   elements['cpu-retry'].hidden = !cpuRetry;
   elements.retry.hidden = !file || !failed || appOnly || cpuRetry || !supported;
+  elements['try-2x'].hidden = !(failed && scaleFallback);
   elements['start-over'].hidden = !failed || !file;
   elements['visibility-note'].hidden = !busy() || !document.hidden;
   elements['drop-zone'].setAttribute('aria-disabled', String(!selecting || !supported));
@@ -149,7 +151,7 @@ function clearOutput() {
   comparison.reset();
 }
 
-function fail(code, message) {
+function fail(code, message, offerScaleFallback = false) {
   if (runningFaces && code === 'gpu' && !forceCpu) { startFaces(true); return; }
   if (runningFaces && code !== 'download') code = 'face';
   if (code === 'gpu' && !forceCpu && !retriedGpu) {
@@ -160,6 +162,7 @@ function fail(code, message) {
   stopWorker();
   phase = 'error';
   errorCode = code;
+  scaleFallback = offerScaleFallback;
   if (!thumbnailUrl && file) elements['source-size'].textContent = 'Photo not processed';
   const cannotProcess = ['browser', 'size', 'format'].includes(code);
   setStatus(cannotProcess ? 'Try this photo in the app' : 'Couldn’t finish this photo', message);
@@ -273,6 +276,37 @@ if (elements['scale-option'] && supportsScale(policy, 4)) {
   elements['scale-4x'].addEventListener('click', () => setScale(4));
 }
 
+// Decide from the file header alone, before downloading an engine or model.
+// A photo this device cannot take is refused straight away rather than after
+// a download and a speed test. Shared by chooseFile (a new photo) and the
+// "Upscale at 2×" fallback button (the same photo, a smaller scale).
+async function assessCurrentFile() {
+  elements['source-size'].textContent = 'Checking image dimensions…';
+  let plan, info;
+  try {
+    info = await inspectFile(file);
+    plan = assessPhoto(info, policy, scale);
+  } catch (error) {
+    elements['source-size'].textContent = 'Photo not processed';
+    // Only 4x can be too big while 2x of the same photo would still fit --
+    // that is the one case worth offering a one-click way out of, instead of
+    // just "choose a different photo".
+    let offerScaleFallback = false;
+    if (scale === 4 && error.code === 'size' && info) {
+      try { assessPhoto(info, policy, 2); offerScaleFallback = true; } catch { /* Still too big at 2x either. */ }
+    }
+    fail(error.code || 'format', error.message, offerScaleFallback);
+    return;
+  }
+  const {milliseconds, slow} = estimateDuration(knownTileMs(), plan.tileCount);
+  phase = 'ready'; errorCode = undefined; scaleFallback = false;
+  elements['source-size'].textContent = `${plan.width} × ${plan.height} → ${plan.outputWidth} × ${plan.outputHeight}`;
+  setStatus(slow ? `This photo takes ${durationLabel(milliseconds)} on this device` : 'Ready to upscale',
+    slow ? 'Large photos are slow in a browser. You can still upscale it here, or get full speed in the app.'
+      : `Takes ${durationLabel(milliseconds)}. Your photo stays on this device.`);
+  refreshControls();
+}
+
 async function chooseFile(next) {
   if (!next || phase !== 'idle' || !supported) return;
   file = next; retriedGpu = false;
@@ -280,24 +314,7 @@ async function chooseFile(next) {
   thumbnailUrl = URL.createObjectURL(file);
   elements['source-thumb'].src = thumbnailUrl;
   elements['source-name'].textContent = file.name;
-  elements['source-size'].textContent = 'Checking image dimensions…';
-  // Decide from the file header alone, before downloading an engine or model.
-  // A photo this device cannot take is refused straight away rather than after
-  // a download and a speed test.
-  let plan;
-  try { plan = assessPhoto(await inspectFile(next), policy, scale); }
-  catch (error) {
-    elements['source-size'].textContent = 'Photo not processed';
-    fail(error.code || 'format', error.message);
-    return;
-  }
-  const {milliseconds, slow} = estimateDuration(knownTileMs(), plan.tileCount);
-  phase = 'ready'; errorCode = undefined;
-  elements['source-size'].textContent = `${plan.width} × ${plan.height} → ${plan.outputWidth} × ${plan.outputHeight}`;
-  setStatus(slow ? `This photo takes ${durationLabel(milliseconds)} on this device` : 'Ready to upscale',
-    slow ? 'Large photos are slow in a browser. You can still upscale it here, or get full speed in the app.'
-      : `Takes ${durationLabel(milliseconds)}. Your photo stays on this device.`);
-  refreshControls();
+  await assessCurrentFile();
 }
 
 elements['choose-photo'].addEventListener('click', () => elements['photo-input'].click());
@@ -313,9 +330,10 @@ elements.cancel.addEventListener('click', () => {
 });
 elements.retry.addEventListener('click', () => { retriedGpu = false; prepare(forceCpu, true); });
 elements['cpu-retry'].addEventListener('click', () => prepare(true, true));
+elements['try-2x'].addEventListener('click', () => { setScale(2); assessCurrentFile(); });
 function reset() {
   stopWorker(); phase = 'idle'; file = null;
-  errorCode = undefined;
+  errorCode = undefined; scaleFallback = false;
   clearOutput(); elements.status.hidden = true; elements['selected-photo'].hidden = true;
   elements['photo-input'].value = '';
   if (thumbnailUrl) URL.revokeObjectURL(thumbnailUrl);
