@@ -73,9 +73,18 @@
 .album-viewer{padding:18px 18px 22px;background:linear-gradient(180deg,var(--surface),var(--bg-2));border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--shadow)}
 .album-stage{position:relative;width:100%;height:min(64vh,640px)}
 .result-comparison{position:absolute;inset:0;display:grid;place-items:center}
-.result-comparison .cmp{height:auto;max-height:100%;width:min(100%,calc(100% * var(--photo-ratio,1.3333) / var(--stage-ratio,1.3333)));border-radius:var(--r-m)}
-.result-comparison .cmp img{object-fit:contain;background:#fff}
+/* The hairline is an outline, not a border, and the images no longer paint a
+   backdrop. aspect-ratio applies to the border box, so a 1px border left the
+   content box — which the inset:0 images fill — at a slightly different ratio
+   than the photo. object-fit:contain then letterboxed by about a pixel and the
+   image's own white background painted that sliver as a line down each edge. */
+.result-comparison .cmp{height:auto;max-height:100%;width:min(100%,calc(100% * var(--photo-ratio,1.3333) / var(--stage-ratio,1.3333)));border:0;outline:1px solid var(--line-2);outline-offset:-1px;border-radius:var(--r-m)}
+.result-comparison .cmp img{object-fit:contain;background:transparent}
 .result-comparison .cmp-tag{pointer-events:none}
+/* The shared focus ring is a rectangle around the full-height 3px separator,
+   which reads as two extra separator lines. Ring the round handle instead. */
+.tool-page .cmp-bar:focus-visible{outline:none}
+.tool-page .cmp-bar:focus-visible::after{box-shadow:0 6px 22px rgba(0,0,0,.55),0 0 0 3px var(--ink),0 0 0 6px var(--acc)}
 .album-ctl{position:absolute;z-index:6;display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;border-radius:50%;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);color:#fff;cursor:pointer}
 .album-ctl svg{width:20px;height:20px}
 .album-ctl:hover{background:rgba(0,0,0,.85)}
