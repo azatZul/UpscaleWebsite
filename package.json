@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build:lab": "vite build --config vite.lab.config.js && node scripts/copy_lab_runtime.mjs",
-    "build:tool": "node scripts/prepare_tool_assets.mjs && vite build --config vite.tool.config.js && node scripts/finish_tool_build.mjs",
+    "build:tool": "node scripts/prepare_tool_assets.mjs && vite build --config vite.tool.config.js",
     "build": "npm run build:lab && npm run build:tool && python3.12 build/build.py",
     "build:preview": "npm run build:tool && python3.12 build/build.py && node scripts/package_preview.mjs",
     "test:tool": "node --test tests/tool/*.test.js",

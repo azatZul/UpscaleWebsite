@@ -9,31 +9,31 @@ export async function loadRuntime(forceCpu, progress, face = false, scale = SCAL
   }
   const engine = backend === 'webgpu' ? 'ort.webgpu.min.mjs' : 'ort.wasm.min.mjs';
   const model = face ? undefined : ASSETS.models[scale][backend === 'webgpu' ? 'gpu' : 'cpu'];
-  const modelTitle = face ? 'Loading face enhancement' : 'Loading the upscaler';
+  const modelTitle = face ? 'loading_faces' : 'loading_upscaler';
   const outputSide = face ? 512 : TILE_SIZE * scale;
   let session;
   let ort;
   try {
-    progress({phase: 'download', title: modelTitle, detail: 'The processing files are saved by your browser for future visits.'});
+    progress({phase: 'download', title: modelTitle, detail: 'loading_cached_detail'});
     ort = await import(/* @vite-ignore */ `${ASSETS.runtime}/${engine}`);
     ort.env.wasm.wasmPaths = `${ASSETS.runtime}/`;
     ort.env.wasm.numThreads = 1;
     ort.env.wasm.proxy = false;
     ort.env.logLevel = 'error';
-    const report = fraction => progress({phase: 'download', progress: fraction * .45, title: modelTitle, detail: 'Your photo stays on this device.'});
+    const report = fraction => progress({phase: 'download', progress: fraction * .45, title: modelTitle, detail: 'stays_on_device'});
     const modelBytes = face ? await downloadFace(report) : await download(model, report);
     const binary = backend === 'webgpu' ? 'ort-wasm-simd-threaded.asyncify.wasm' : 'ort-wasm-simd-threaded.wasm';
     // Fetch separately to report download progress instead of presenting it as
     // model compilation. ORT reads the identical versioned URL from HTTP cache.
-    await download(`${ASSETS.runtime}/${binary}`, fraction => progress({phase: 'download', progress: .45 + fraction * .55, title: 'Loading the processing engine', detail: 'This first visit may take longer. The engine is cached for next time.'}), false);
-    progress({phase: 'initialize', title: 'Preparing the upscaler', detail: 'Checking that the model can run in this browser.'});
+    await download(`${ASSETS.runtime}/${binary}`, fraction => progress({phase: 'download', progress: .45 + fraction * .55, title: 'loading_engine', detail: 'loading_engine_detail'}), false);
+    progress({phase: 'initialize', title: 'initializing', detail: 'initializing_detail'});
     session = await ort.InferenceSession.create(modelBytes, {
       executionProviders: [backend], graphOptimizationLevel: 'disabled',
       executionMode: 'sequential', enableCpuMemArena: true, enableMemPattern: true,
     });
   } catch (error) {
     if (error.code === 'download') throw error;
-    throw new PhotoError(backend === 'webgpu' ? 'gpu' : 'runtime', 'The upscaler couldn’t start in this browser.');
+    throw new PhotoError(backend === 'webgpu' ? 'gpu' : 'runtime', 'err_engine_start');
   }
   return {
     backend,
@@ -46,7 +46,7 @@ export async function loadRuntime(forceCpu, progress, face = false, scale = SCAL
         if (output.dims.join(',') !== `1,3,${outputSide},${outputSide}`) throw new Error('Unexpected output dimensions');
         return tensorPixels(await output.getData(), outputSide);
       } catch {
-        throw new PhotoError(backend === 'webgpu' ? 'gpu' : 'runtime', 'This browser couldn’t finish the image processing.');
+        throw new PhotoError(backend === 'webgpu' ? 'gpu' : 'runtime', 'err_processing');
       } finally { input.dispose(); output?.dispose(); }
     },
     async release() { await session.release(); },
@@ -55,8 +55,8 @@ export async function loadRuntime(forceCpu, progress, face = false, scale = SCAL
 
 async function download(url, onProgress, retain = true) {
   let response;
-  try { response = await fetch(url); } catch { throw new PhotoError('download', 'The processing files couldn’t be downloaded. Check your connection and try again.'); }
-  if (!response.ok) throw new PhotoError('download', 'The processing files are unavailable. Please try again shortly.');
+  try { response = await fetch(url); } catch { throw new PhotoError('download', 'err_download'); }
+  if (!response.ok) throw new PhotoError('download', 'err_unavailable');
   const total = Number(response.headers.get('content-length'));
   if (!response.body) return retain ? new Uint8Array(await response.arrayBuffer()) : undefined;
   const reader = response.body.getReader();
@@ -70,7 +70,7 @@ async function download(url, onProgress, retain = true) {
       if (retain) chunks.push(value);
       onProgress(total > 0 ? Math.min(1, received / total) : 0);
     }
-  } catch { throw new PhotoError('download', 'The download was interrupted. Check your connection and try again.'); }
+  } catch { throw new PhotoError('download', 'err_interrupted'); }
   onProgress(1);
   if (!retain) return;
   const result = new Uint8Array(received);
@@ -100,5 +100,5 @@ async function downloadFace(onProgress) {
       offset += received;
     }
     return bytes;
-  } catch { throw new PhotoError('download', 'The face model download was interrupted. Check your connection and try again.'); }
+  } catch { throw new PhotoError('download', 'err_face_download'); }
 }

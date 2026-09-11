@@ -32,7 +32,6 @@ assets/lab/
 static/models/*.tflite
 assets/processor/
 src/tool/assets.generated.js
-static/upscale/index.html
 .preview-dist/
 
 # album publishing CLI state and local secrets

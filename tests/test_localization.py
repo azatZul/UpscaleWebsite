@@ -31,6 +31,36 @@ class CatalogTests(unittest.TestCase):
             self.assertEqual(len(data["docs"]), 3)
             self.assertIn("sale", data)
             self.assertIn("compare", data)
+            self.assertIn("tool", data)
+
+    def test_browser_tool_copy_is_complete_in_every_locale(self):
+        """The tool's runtime strings reach the page as one JSON table, so a
+        locale missing a key would show the raw key to the visitor."""
+        english = catalog.load_locale("en")["tool"]
+        for locale in site_build.LOCALIZED_CODES:
+            tool = catalog.load_locale(locale)["tool"]
+            self.assertEqual(set(tool["js"]), set(english["js"]), locale)
+            self.assertEqual(set(tool["home"]), set(english["home"]), locale)
+
+    def test_browser_tool_page_carries_its_locale_and_strings(self):
+        original = site_build.TOOL_SCRIPT
+        site_build.TOOL_SCRIPT = "/assets/processor/app/main-test.js"
+        try:
+            for locale in site_build.LOCALIZED_CODES:
+                c = site_build.inject_facts(catalog.load_locale(locale), locale)
+                html = site_build.render_tool(c, locale)
+                match = re.search(r'<script type="application/json" id="tool-strings">(.*?)</script>', html, re.S)
+                strings = json.loads(match.group(1))
+                # Runtime placeholders survive the build's fact injection.
+                self.assertIn("{scale}", strings["upscale_button"], locale)
+                self.assertIn(f'<link rel="canonical" href="{site_build.url(locale, "free-upscale")}">', html)
+                self.assertIn('src="/assets/processor/app/main-test.js"', html)
+                self.assertIn("uscale-theme", html)  # the shared theme boot
+                self.assertIn('class="theme-btn"', html)
+                self.assertIn(f'href="{site_build.rel_url(locale, "free-upscale")}"', site_build.nav(c, locale, "/"))
+            self.assertIn("/upscale/ /free-upscale/ 301", site_build.render_static_redirects())
+        finally:
+            site_build.TOOL_SCRIPT = original
 
     def test_export_is_flat_and_contains_selected_sources_comment_and_empty_target(self):
         exported = localize._export_records("de", ("en", "ru"), ("home.json",))

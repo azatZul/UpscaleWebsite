@@ -1,15 +1,22 @@
 # Guarded browser photo preview
 
-The website's **Try online** link opens `/upscale/`. This preview runs the existing
-Regular 2× model on JPEG, PNG and still WebP photos, entirely on the visitor's
-device. It exports JPEG at twice the original width and height; transparency is
-flattened onto white. Face enhancement, video, animated images and HEIC are
+The website's **Try online** link, the hero link and the home banner open
+`/free-upscale/` (`/<locale>/free-upscale/` on localized pages; the old
+`/upscale/` redirects). `build/build.py` renders the page with the site's head,
+theme, navigation and footer, and localizes it from `localization/tool.json`.
+The tool's runtime messages travel as one JSON table in `#tool-strings`; workers
+post message keys and `src/tool/i18n.js` words them, with durations pluralized by
+`Intl`. This preview runs the existing Regular 2× and 4× models on JPEG, PNG and
+still WebP photos, entirely on the visitor's device. It exports JPEG;
+transparency is flattened onto white. Video, animated images and HEIC are
 referred to the existing iPhone/iPad app.
 
 The flow handles one photo at a time: choose, check, upscale, then compare.
-Once selected, the picker disappears and the ready state has one Upscale
-button. The finished state replaces the processing card with the website's
-before/after divider, a download action and an option to start over. The divider
+The card keeps one layout throughout: the drop zone shows the chosen photo and
+still accepts a replacement (dropped or picked), and the 2×/4× switch and the
+face option stay below it, so changing either re-checks the same photo. The
+finished state adds the website's before/after divider under the card, with a
+download action and an option to start over. The divider
 supports dragging and Arrow Left/Right, Home and End. It resets to the middle
 for every new photo. The before side uses the original file, not its thumbnail;
 both sides show the entire image at the same aspect ratio. Original-file decoding
@@ -60,15 +67,17 @@ them with `scripts/prepare_web_models.py` as described in
 remain outside Git.
 
 - `npm run build:preview` creates `.preview-dist` for Cloudflare Pages.
-- `npm run preview:tool` serves it at `http://127.0.0.1:4175/upscale/`.
+- `npm run preview:tool` serves it at `http://127.0.0.1:4175/free-upscale/`.
+  The `free-upscale` entry in `.claude/launch.json` builds and serves in one step.
 - `npm run test:tool` verifies header guards, device policy, and pixel-exact
   stitching against the original tiler, including overlap and edge cases.
 - `python3.12 -m unittest discover -s tests` runs the existing site tests.
 - `npm run build` also builds the separate engineering lab into `dist`.
 
-The Python-only site build still works without model artifacts. It only includes
-the new navigation/hero link when the generated tool page exists. The preview
-page is English, including when reached from a localized site page.
+The Python-only site build still works without model artifacts. It only renders
+the tool page, its navigation/hero links and the home banner when the Vite
+manifest from `npm run build:tool` exists. The page stays `noindex` and out of
+the sitemap while the tool is a preview.
 
 ## Cloudflare deployment
 

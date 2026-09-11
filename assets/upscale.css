@@ -1,76 +1,105 @@
-.tool-page [hidden]{display:none!important}
-.tool-page{min-height:100vh}
-.tool-page .nav-in{justify-content:flex-start;gap:16px}
-.preview-badge{font-size:14px;color:var(--vio-2);padding:5px 10px;border:1px solid var(--vio-line);border-radius:999px;background:var(--vio-soft)}
-.tool-wrap{width:min(100% - 40px,760px);margin:0 auto;padding:54px 0 56px}
-/* Apple's dark badge reads better than the white one on this always-dark page. */
-.tool-page .appstore .badge-black{opacity:1}
-.tool-page .appstore .badge-white{opacity:0}
-.tool-heading{margin-bottom:28px}
-.tool-heading h1{font-size:clamp(32px,5vw,48px);letter-spacing:-.04em;line-height:1.12;margin:12px 0 16px}
-.tool-heading>p{font-size:18px;line-height:1.55;max-width:60ch;color:var(--tx-2)}
-.tool-page.has-photo .tool-wrap{padding-top:28px}
-.tool-page.has-photo .tool-heading{margin-bottom:20px}
-.tool-page.has-photo .tool-heading .eyebrow,.tool-page.has-photo .tool-heading>p{display:none}
-.tool-page.has-photo .tool-heading h1{font-size:28px;margin:0}
-.tool-steps{display:flex;align-items:center;gap:14px;list-style:none;padding:0;margin:0 0 24px;color:var(--tx-3)}
-.tool-steps li{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600}
+/* Browser photo tool (/free-upscale/). Scoped to main.tool; the palette, theme,
+   nav, buttons and footer all come from site.css. */
+.tool [hidden]{display:none!important}
+.tool-wrap{max-width:1000px;padding-top:46px;padding-bottom:10px}
+.tool-heading,.tool-steps,.tool-card,.tool .notice{max-width:760px;margin-left:auto;margin-right:auto}
+.tool-heading{text-align:center;margin-bottom:28px}
+.tool-heading .eyebrow::before{display:none}
+.tool-heading h1{font-size:clamp(32px,5vw,50px);letter-spacing:-.035em;text-wrap:balance}
+.tool-heading .lead{margin:14px auto 0;max-width:54ch;text-wrap:balance}
+
+.tool-steps{display:flex;align-items:center;gap:14px;list-style:none;padding:0;margin-bottom:22px;color:var(--tx-3)}
+.tool-steps li{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:650}
 .tool-steps li+li{flex:1;min-width:0}
 .tool-steps li+li::before{content:"";flex:1;min-width:16px;height:2px;background:var(--line-2);margin-right:10px;border-radius:2px}
 .tool-steps li.complete+li::before,.tool-steps li[aria-current]+li::before{background:var(--acc)}
 .tool-steps span{display:grid;place-items:center;width:28px;height:28px;flex-shrink:0;border:1px solid var(--line-2);border-radius:50%;font-size:13px}
 .tool-steps [aria-current]{color:var(--tx)}
-.tool-steps [aria-current] span{background:var(--acc);border-color:var(--acc);color:#0a0b11}
-.tool-steps .complete span{color:var(--acc);border-color:var(--acc);background:var(--acc-soft)}
-.tool-card{padding:28px;border:1px solid var(--line-2);border-radius:24px;background:var(--surface);box-shadow:var(--shadow)}
-.tool-card-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}
+.tool-steps [aria-current] span{background:var(--acc);border-color:var(--acc);color:var(--ink)}
+.tool-steps .complete span{color:var(--acc-tx);border-color:var(--acc-line);background:var(--acc-soft)}
+
+.tool-card{padding:26px;border:1px solid var(--line-2);border-radius:var(--r-l);
+  background:linear-gradient(180deg,var(--surface),var(--bg-2));box-shadow:var(--shadow);scroll-margin-top:100px}
+.tool-card-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
 .tool-card-heading h2{font-size:19px;letter-spacing:-.02em}
-/* Mirrors the app's own on-device/cloud badge (VerifiedView): a neutral pill
-   with a shield-check icon, not a colored status label. */
-.private-badge{display:inline-flex;align-items:center;gap:8px;flex-shrink:0;
-  padding:8px 12px;border-radius:32px;font-size:13px;font-weight:600;white-space:nowrap;
-  color:var(--tx);background:linear-gradient(180deg,var(--surface),var(--bg-2));
-  border:1px solid var(--line-2);box-shadow:0 6px 14px -8px rgba(0,0,0,.5)}
+/* Mirrors the app's own on-device badge (VerifiedView): a neutral pill with a
+   shield-check icon, not a coloured status label. */
+.private-badge{display:inline-flex;align-items:center;gap:8px;flex-shrink:0;padding:7px 12px;border-radius:32px;
+  font-size:13px;font-weight:650;white-space:nowrap;color:var(--tx);background:var(--tint);border:1px solid var(--line-2)}
 .private-badge svg{width:15px;height:15px;flex-shrink:0}
-.photo-drop{border:1px dashed var(--line-2);border-radius:16px;background:var(--bg-2);display:flex;flex-direction:column;align-items:center;gap:14px;padding:26px 18px;text-align:center}
+
+/* The drop zone keeps its size with or without a photo, and stays a drop target
+   for the next one. */
+.photo-drop{position:relative;display:grid;place-items:center;min-height:292px;padding:24px;
+  border:1.5px dashed var(--line-2);border-radius:var(--r-m);background:var(--tint);text-align:center;cursor:pointer;
+  transition:border-color .2s,background .2s}
+.photo-drop:hover{border-color:var(--acc-line)}
 .photo-drop.dragging{border-color:var(--acc);background:var(--acc-soft)}
-.photo-drop>p{font-size:18px;font-weight:650}
-.upload-mark{display:grid;place-items:center;width:42px;height:42px;border:1px solid var(--line);border-radius:12px;font-size:26px;color:var(--acc)}
-#limit-note{font-size:14px;line-height:1.5;color:var(--tx-2)}
-.scale-option{display:flex;gap:4px;padding:3px;border:1px solid var(--line-2);border-radius:11px;background:var(--bg-2);margin-top:2px}
-.scale-option button{font:inherit;font-size:14px;font-weight:700;padding:7px 18px;border:0;border-radius:8px;background:none;color:var(--tx-2);cursor:pointer}
+.photo-drop[aria-disabled="true"]{cursor:default;border-color:var(--line-2)}
+.drop-empty{display:flex;flex-direction:column;align-items:center;gap:14px}
+.drop-target{display:flex;flex-direction:column;align-items:center;gap:12px}
+.upload-mark{display:grid;place-items:center;width:54px;height:54px;border-radius:16px;
+  color:var(--acc-tx);background:var(--acc-soft);border:1px solid var(--acc-line);transition:transform .25s cubic-bezier(.2,.8,.25,1)}
+.upload-mark svg{width:24px;height:24px}
+.photo-drop:hover .upload-mark,.photo-drop.dragging .upload-mark{transform:translateY(-3px)}
+.drop-title{font-size:19px;font-weight:750;letter-spacing:-.015em;line-height:1.3}
+.drop-or{display:flex;align-items:center;gap:12px;width:min(260px,100%);font-size:13px;color:var(--tx-3)}
+.drop-or::before,.drop-or::after{content:"";flex:1;height:1px;background:var(--line-2)}
+.drop-empty .btn{min-height:48px}
+.limit-note{font-size:12.5px;line-height:1.5;color:var(--tx-3);max-width:44ch}
+.drop-selected{display:flex;align-items:center;gap:22px;width:100%;text-align:left}
+.drop-selected img{width:220px;height:220px;flex:0 0 auto;object-fit:contain;border-radius:12px;background:var(--tint-2)}
+.drop-selected img:not([src]){visibility:hidden}
+.selected-meta{min-width:0;display:flex;flex-direction:column;gap:4px}
+.selected-meta b{font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#source-size{font-size:14px;color:var(--tx-2);font-variant-numeric:tabular-nums}
+.selected-change{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 6px;margin-top:10px;font-size:13px;color:var(--tx-3)}
+.selected-change .text-button{font-size:13px;padding:12px 0;margin:-12px 0;min-height:0}
+.drop-release{position:absolute;inset:0;display:grid;place-items:center;padding:20px;border-radius:inherit;
+  font-size:17px;font-weight:750;color:var(--acc-tx);background:color-mix(in srgb,var(--surface) 90%,transparent);
+  opacity:0;pointer-events:none;transition:opacity .15s}
+.photo-drop.dragging .drop-release{opacity:1}
+
+.tool-options{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 24px;margin-top:18px}
+.scale-field{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px}
+.option-label{font-size:14px;font-weight:650;color:var(--tx-2)}
+.scale-option{display:inline-flex;gap:4px;padding:3px;border:1px solid var(--line-2);border-radius:12px;background:var(--tint)}
+.scale-option button{font:inherit;font-size:14px;font-weight:700;min-width:58px;min-height:36px;padding:6px 16px;border:0;border-radius:9px;
+  background:none;color:var(--tx-2);cursor:pointer;transition:background .15s,color .15s}
+.scale-option button:hover:not(:disabled){color:var(--tx)}
 .scale-option button[aria-pressed="true"]{background:var(--acc);color:var(--ink)}
-.text-button{font:inherit;font-size:14px;font-weight:650;color:var(--acc-tx);background:none;border:0;padding:10px;min-height:44px;cursor:pointer;text-underline-offset:4px}
-.text-button:hover{text-decoration:underline}
-.photo-selection{display:flex;align-items:center;gap:14px;border:1px solid var(--line);border-radius:14px;padding:14px}
-.photo-selection img{display:block;width:112px;max-height:130px;object-fit:contain;border-radius:8px;background:var(--tint)}
-.photo-selection img:not([src]){display:none}
-.photo-selection div{min-width:0;display:flex;flex-direction:column;gap:6px}
-.photo-selection b{font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.photo-selection span{font-size:14px;color:var(--tx-2);line-height:1.45}
-.tool-status{padding:18px;background:var(--tint);border:1px solid var(--line);border-radius:14px;margin-top:18px}
-.tool-status>div{display:flex;align-items:baseline;justify-content:space-between;gap:10px;font-size:16px}
-.tool-status #status-value{font-size:14px;color:var(--acc);font-variant-numeric:tabular-nums}
-.tool-status p{font-size:15px;line-height:1.6;color:var(--tx-2);margin-top:8px}
-.tool-status progress{display:block;width:100%;height:8px;margin-top:14px;border:0;border-radius:8px;overflow:hidden;accent-color:var(--acc);background:var(--line)}
+.scale-note{font-size:12.5px;color:var(--tx-3)}
+.face-option{display:flex;align-items:center;gap:10px;cursor:pointer}
+.face-option input{width:20px;height:20px;margin:0;flex:0 0 auto;accent-color:var(--acc)}
+.face-option span{font-size:14.5px;font-weight:650;line-height:1.3}
+.face-option:has(input:disabled){cursor:default}
+
+.tool-status{display:grid;gap:6px;margin-top:18px;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--tint)}
+.status-head{display:flex;align-items:baseline;gap:10px}
+.status-head:has(#status-title[hidden]):has(#status-value:empty){display:none}
+#status-title{font-size:15.5px;line-height:1.4}
+#status-value{margin-left:auto;font-size:14px;color:var(--acc-tx);font-variant-numeric:tabular-nums}
+#status-detail{font-size:14px;line-height:1.55;color:var(--tx-2)}
+.tool-status progress{display:block;width:100%;height:8px;margin:4px 0 2px;border:0;border-radius:8px;overflow:hidden;
+  accent-color:var(--acc);background:var(--line);-webkit-appearance:none;appearance:none}
 .tool-status progress::-webkit-progress-bar{background:var(--line);border-radius:8px}
 .tool-status progress::-webkit-progress-value{background:var(--acc);border-radius:8px}
 .tool-status progress::-moz-progress-bar{background:var(--acc)}
-.tool-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
-.tool-actions:has(>:not([hidden])){margin-bottom:10px}
-.tool-actions:has(>:not([hidden])) .btn{min-height:48px;flex:1}
-.tool-actions:has(>:not([hidden])) .text-button{margin:auto}
-.tool-actions:not(:has(> :not([hidden]))){display:none}
-.tool-page button:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
-.tool-upsell{display:flex;align-items:center;justify-content:space-between;gap:14px;border-top:1px solid var(--line);margin-top:18px;padding-top:16px}
-.tool-upsell p{font-size:14px;font-weight:650;color:var(--tx-2);white-space:nowrap}
-.tool-upsell .appstore.sm{width:120px;height:40px;border-radius:8.4px;flex-shrink:0}
-.tool-footnote{margin-top:18px;font-size:14px;color:var(--tx-2);line-height:1.6}
-.tool-results,.tool-card{scroll-margin-top:100px}
-.tool-results{outline:0}
-/* Single-photo version of the latest gallery album viewer (main 1baa444). */
-.tool-page.has-result .tool-wrap{width:min(100% - 40px,1000px)}
-.album-viewer{padding:18px 18px 22px;background:linear-gradient(180deg,var(--surface),var(--bg-2));border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--shadow)}
+
+.tool-actions{display:flex;gap:12px;margin-top:16px}
+.tool-actions .btn{flex:1;min-height:52px;font-size:16px}
+.tool .btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.text-button{font:inherit;font-size:14px;font-weight:650;color:var(--acc-tx);background:none;border:0;padding:10px;min-height:44px;
+  cursor:pointer;text-underline-offset:4px}
+.text-button:hover:not(:disabled){text-decoration:underline}
+.text-button:disabled{color:var(--tx-3);cursor:default}
+.tool .notice{padding:14px 16px;border:1px solid var(--acc-line);border-radius:14px;background:var(--acc-soft);
+  color:var(--tx);font-size:15px;line-height:1.6;margin-top:16px;margin-bottom:16px}
+
+/* Single-photo version of the gallery album viewer. */
+.tool-results{margin-top:32px;outline:0;scroll-margin-top:90px}
+.album-viewer{padding:18px 18px 22px;background:linear-gradient(180deg,var(--surface),var(--bg-2));
+  border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--shadow)}
 .album-stage{position:relative;width:100%;height:min(64vh,640px)}
 .result-comparison{position:absolute;inset:0;display:grid;place-items:center}
 /* The hairline is an outline, not a border, and the images no longer paint a
@@ -78,45 +107,56 @@
    content box — which the inset:0 images fill — at a slightly different ratio
    than the photo. object-fit:contain then letterboxed by about a pixel and the
    image's own white background painted that sliver as a line down each edge. */
-.result-comparison .cmp{height:auto;max-height:100%;width:min(100%,calc(100% * var(--photo-ratio,1.3333) / var(--stage-ratio,1.3333)));border:0;outline:1px solid var(--line-2);outline-offset:-1px;border-radius:var(--r-m)}
+.result-comparison .cmp{height:auto;max-height:100%;width:min(100%,calc(100% * var(--photo-ratio,1.3333) / var(--stage-ratio,1.3333)));
+  border:0;outline:1px solid var(--line-2);outline-offset:-1px;border-radius:var(--r-m)}
 .result-comparison .cmp img{object-fit:contain;background:transparent}
 .result-comparison .cmp-tag{pointer-events:none}
 /* The shared focus ring is a rectangle around the full-height 3px separator,
    which reads as two extra separator lines. Ring the round handle instead. */
-.tool-page .cmp-bar:focus-visible{outline:none}
-.tool-page .cmp-bar:focus-visible::after{box-shadow:0 6px 22px rgba(0,0,0,.55),0 0 0 3px var(--ink),0 0 0 6px var(--acc)}
-.album-ctl{position:absolute;z-index:6;display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;border-radius:50%;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);color:#fff;cursor:pointer}
+.tool .cmp-bar:focus-visible{outline:none}
+.tool .cmp-bar:focus-visible::after{box-shadow:0 6px 22px rgba(0,0,0,.55),0 0 0 3px var(--ink),0 0 0 6px var(--acc)}
+.album-ctl{position:absolute;z-index:6;display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;border-radius:50%;
+  background:rgba(0,0,0,.6);backdrop-filter:blur(8px);color:#fff;cursor:pointer}
 .album-ctl svg{width:20px;height:20px}
 .album-ctl:hover{background:rgba(0,0,0,.85)}
 .album-zoom{right:12px;bottom:12px}.album-close{right:12px;top:12px}
 .album-details{margin-top:14px;text-align:center}
 .album-details h2{font-size:19px;letter-spacing:-.02em;margin:0 0 6px}
 .album-details p{font-size:14px;color:var(--tx-2);line-height:1.5}
-.album-details .comparison-hint{margin-top:6px;font-size:13px}
-.album-actions{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;align-items:center;margin-top:12px}
-.album-actions .btn{font-size:14px;padding:11px 18px;border-radius:12px;gap:8px}
+.album-details p:empty{display:none}
+.album-actions{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;align-items:center;margin-top:14px}
+.album-actions .btn{font-size:15px;padding:12px 20px;border-radius:12px;gap:8px}
 .album-actions .btn svg{width:17px;height:17px}
 .album-viewer.is-expanded{position:fixed;inset:0;z-index:1000;width:100%;height:100dvh;padding:0;border:0;border-radius:0;background:var(--bg)}
 .album-viewer.is-expanded .album-stage{height:100%}
 .album-viewer.is-expanded .album-details{display:none}
+/* Pan and zoom (src/tool/pan-zoom.js) scale the whole comparison, as in the gallery; a
+   hairline or rounded corner would scale with it, so the expanded photo has neither. */
+.album-viewer.is-expanded .result-comparison .cmp{outline:0;border-radius:0;
+  transform:translate(var(--pan-x,0px),var(--pan-y,0px)) scale(var(--album-zoom,1))}
 .album-expanded-lock{overflow:hidden}
-.result-app{margin-top:20px}
-/* Squeeze the app-CTA card so "Download this photo" and "Download the app"
-   read as one decision instead of two separate sections. */
-.tool-page .final{padding:28px 24px}
-.tool-page .final-app{gap:10px;margin-bottom:12px}
-.tool-page .final img.ic{width:46px;height:46px;border-radius:13px}
-.tool-page .final-name{font-size:19px}
-.tool-page .final-name small{font-size:12px;margin-top:2px}
-.tool-page .final h2{font-size:clamp(20px,4vw,26px)}
-.tool-page .final .hero-cta{margin-top:16px}
-.tool-page .final .hero-note{margin-top:10px}
-.face-option{display:flex;align-items:flex-start;gap:10px;margin-top:18px;font-size:15px;color:var(--tx)}
-.face-option input{width:20px;height:20px;margin-top:2px;accent-color:var(--acc)}
-.face-option small{display:block;color:var(--tx-2);font-size:13px;line-height:1.5;margin-top:4px}
-.notice{padding:16px;border:1px solid var(--acc-line);border-radius:14px;background:var(--acc-soft);color:var(--tx);font-size:15px;line-height:1.6;margin:18px 0}
-.tool-page :focus-visible{outline:2px solid var(--acc);outline-offset:4px}
-@media(max-width:540px){.tool-wrap{width:calc(100% - 28px);padding-top:30px}.tool-card{padding:18px;border-radius:20px}.tool-heading>p{font-size:16px}.tool-card-heading h2{font-size:17px}.tool-page .nav-in{gap:10px}.preview-badge{display:none}.photo-selection{gap:12px;padding:12px}.photo-selection img{width:72px;max-height:96px}.tool-actions .btn{width:100%;font-size:15px}.photo-drop{padding:22px 14px}.tool-steps{gap:8px}.tool-steps li{gap:6px}.tool-upsell{flex-wrap:wrap}.result-comparison .cmp-tag{top:10px;font-size:12px;padding:5px 8px}.result-comparison .cmp-tag.l{left:10px}.result-comparison .cmp-tag.r{right:10px}}
-@media(prefers-reduced-motion:reduce){.tool-page *{scroll-behavior:auto!important;transition:none!important}}
+.tool .inline-cta{max-width:760px;margin:32px auto 0}
 
-@media(max-width:540px){.tool-page.has-result .tool-wrap{width:calc(100% - 28px)}.tool-steps li{font-size:12px}.tool-steps span{width:24px;height:24px;flex-shrink:0}.album-viewer{padding:10px 10px 18px}.album-stage{height:min(55vh,500px)}.result-app{margin-top:24px}}
+@media(max-width:640px){
+  .tool-wrap{padding-top:28px}
+  .tool-card{padding:16px;border-radius:20px}
+  .tool-card-heading h2{font-size:17px}
+  .private-badge{padding:6px 10px;font-size:12px}
+  .tool-steps{gap:8px}
+  .tool-steps li{gap:6px;font-size:12.5px}
+  .tool-steps span{width:24px;height:24px}
+  /* Tall enough for either state in every locale, so a photo never resizes it. */
+  .photo-drop{min-height:304px;padding:18px 14px}
+  .drop-selected{flex-direction:column;gap:12px;text-align:center}
+  .drop-selected img{width:100%;height:140px}
+  .selected-meta{align-items:center;max-width:100%}
+  .selected-change{justify-content:center;margin-top:4px}
+  .tool-options{flex-direction:column;align-items:flex-start}
+  .tool-results{margin-top:24px}
+  .album-viewer{padding:10px 10px 18px}
+  .album-stage{height:min(55vh,500px)}
+  .result-comparison .cmp-tag{top:10px;font-size:12px;padding:5px 8px}
+  .result-comparison .cmp-tag.l{left:10px}
+  .result-comparison .cmp-tag.r{right:10px}
+}
+@media(prefers-reduced-motion:reduce){.tool *{scroll-behavior:auto!important;transition:none!important}}

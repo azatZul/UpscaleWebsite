@@ -64,7 +64,7 @@ createServer((request, response) => {
   response.setHeader('Content-Length', statSync(file).size);
   response.setHeader('Cache-Control', 'no-cache');
   if (preview) response.setHeader('X-Robots-Tag', 'noindex, nofollow');
-  if (pathname.startsWith('/lab/') || pathname.startsWith('/upscale/')) {
+  if (pathname.startsWith('/lab/') || /^\/([a-z]{2}\/)?free-upscale\//.test(pathname)) {
     response.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
     response.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
     response.setHeader('Cache-Control', 'no-store');
@@ -87,5 +87,5 @@ createServer((request, response) => {
   stream.on('error', () => response.destroy());
   stream.pipe(response);
 }).listen(port, '127.0.0.1', () => {
-  console.log(`UScale browser ${preview ? 'preview' : 'lab'}: http://localhost:${port}/${preview ? 'upscale' : 'lab'}/`);
+  console.log(`UScale browser ${preview ? 'preview' : 'lab'}: http://localhost:${port}/${preview ? 'free-upscale' : 'lab'}/`);
 });

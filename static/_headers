@@ -13,8 +13,15 @@
   Cache-Control: public, max-age=31536000, immutable
   Cross-Origin-Resource-Policy: same-origin
 
-# The public demo and its versioned engine use a worker on this origin.
-/upscale/*
+# The browser tool and its versioned engine use a worker on this origin. The
+# page exists at /free-upscale/ and under every locale prefix.
+/free-upscale/*
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+  Cache-Control: no-cache
+  X-Robots-Tag: noindex, nofollow
+
+/:lang/free-upscale/*
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Embedder-Policy: require-corp
   Cache-Control: no-cache

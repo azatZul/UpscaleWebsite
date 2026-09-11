@@ -5,11 +5,15 @@ export const SCALE = 2;
 export const SCALES = [2, 4];
 export const MAX_FILE_BYTES = 50 * 1024 * 1024;
 
+// `key` names the message in the page's string table (see i18n.js); workers
+// pass it back to the page, which words it in the visitor's language.
 export class PhotoError extends Error {
-  constructor(code, message) {
-    super(message);
+  constructor(code, key, params) {
+    super(key);
     this.name = 'PhotoError';
     this.code = code;
+    this.key = key;
+    this.params = params;
   }
 }
 
@@ -86,10 +90,10 @@ export const DEFAULT_TILE_MS = {mobile: 2000, desktop: 700};
 
 export function assessPhoto({width, height, size = 0}, policy = devicePolicy(), scale = SCALE) {
   if (![width, height].every(n => Number.isSafeInteger(n) && n > 0)) {
-    throw new PhotoError('format', 'We couldn’t read this photo. Try a JPEG, PNG or WebP image.');
+    throw new PhotoError('format', 'err_unreadable');
   }
-  if (size > MAX_FILE_BYTES) throw new PhotoError('size', 'This file exceeds the browser preview’s 50 MB limit. Try it in the app.');
-  if (!supportsScale(policy, scale)) throw new PhotoError('size', '4x upscaling needs a desktop browser. Try 2x here, or use the app.');
+  if (size > MAX_FILE_BYTES) throw new PhotoError('size', 'err_file_size');
+  if (!supportsScale(policy, scale)) throw new PhotoError('size', 'err_4x_device');
   const pixels = width * height;
   const outputWidth = width * scale;
   const outputHeight = height * scale;
@@ -99,7 +103,7 @@ export function assessPhoto({width, height, size = 0}, policy = devicePolicy(), 
   const estimatedPeakBytes = pixels * 36 + 96 * 1024 * 1024 + outputWidth * 512 * 8;
   if (pixels > maxInputPixels || Math.max(outputWidth, outputHeight) > policy.maxOutputSide ||
       estimatedPeakBytes > policy.memoryBudgetBytes) {
-    throw new PhotoError('size', `This photo is too large for this browser preview. Its limit on this device at ${scale}x is ${maxInputPixels / 1_000_000} megapixels, with extra limits for very wide photos. Try the full-size photo in the app.`);
+    throw new PhotoError('size', 'err_too_large', {scale, mp: maxInputPixels / 1_000_000});
   }
   return {width, height, outputWidth, outputHeight, scale,
     tileCount: Math.ceil(width / STRIDE) * Math.ceil(height / STRIDE), estimatedPeakBytes};
@@ -107,21 +111,15 @@ export function assessPhoto({width, height, size = 0}, policy = devicePolicy(), 
 
 export function estimateDuration(tileMs, tileCount) {
   if (!Number.isFinite(tileMs) || tileMs <= 0 || !Number.isSafeInteger(tileCount) || tileCount < 1) {
-    throw new PhotoError('runtime', 'The browser speed check did not finish. Please try again.');
+    throw new PhotoError('runtime', 'err_speed');
   }
   const milliseconds = Math.ceil(tileMs * tileCount * 1.25 + 3000);
   return {milliseconds, slow: milliseconds >= 60_000};
 }
 
-export function durationLabel(ms) {
-  if (ms < 60_000) return `about ${Math.max(5, Math.ceil(ms / 5000) * 5)} seconds`;
-  const minutes = Math.ceil(ms / 60_000);
-  return `about ${minutes} minute${minutes === 1 ? '' : 's'}`;
-}
-
 export function checkBrowser(env) {
-  if (!env.secure) throw new PhotoError('browser', 'Open this page over HTTPS to use browser processing.');
+  if (!env.secure) throw new PhotoError('browser', 'err_https');
   if (!env.worker || !env.wasm || !env.bitmap || !env.offscreen) {
-    throw new PhotoError('browser', 'This browser doesn’t support the features needed to upscale photos here. Try a current browser or get the app.');
+    throw new PhotoError('browser', 'err_browser');
   }
 }

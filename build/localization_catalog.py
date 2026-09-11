@@ -21,6 +21,7 @@ SECTION_FILES = (
     "compare.json",
     "legal.json",
     "support.json",
+    "tool.json",
 )
 
 

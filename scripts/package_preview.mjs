@@ -20,7 +20,7 @@ for (const entry of await readdir(join(dist, 'assets'))) {
 const headers = await readFile(join(preview, '_headers'), 'utf8');
 await writeFile(join(preview, '_headers'), `/*\n  X-Robots-Tag: noindex, nofollow\n\n${headers}`);
 await writeFile(join(preview, 'robots.txt'), 'User-agent: *\nDisallow: /\n');
-await writeFile(join(preview, '404.html'), '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Page not found — UScale preview</title><h1>Page not found</h1><p><a href="/upscale/">Try the photo upscaler</a></p></html>');
+await writeFile(join(preview, '404.html'), '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Page not found — UScale preview</title><h1>Page not found</h1><p><a href="/free-upscale/">Try the photo upscaler</a></p></html>');
 async function validate(directory) {
   for (const entry of await readdir(directory, {withFileTypes: true})) {
     const path = join(directory, entry.name);

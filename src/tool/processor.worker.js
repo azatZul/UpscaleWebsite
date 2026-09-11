@@ -30,14 +30,14 @@ async function prepare({file, environment, forceCpu = false, autoStart = false, 
   const policy = devicePolicy(environment);
   plan = assessPhoto(await inspectFile(file), policy, scale);
   try { source = await createImageBitmap(file, {imageOrientation: 'from-image'}); }
-  catch { throw new PhotoError('format', 'This browser couldn’t open the photo. Try another image or get the app.'); }
+  catch { throw new PhotoError('format', 'err_open'); }
   // Decoders apply EXIF orientation. Trust actual decoded dimensions only
   // after checking the header, and enforce the same policy again.
   plan = assessPhoto({width: source.width, height: source.height, size: file.size}, policy, scale);
   send({type: 'photo', plan, thumbnail: await thumbnail(source)});
   runtime = await loadRuntime(forceCpu, status, false, scale);
   if (autoStart) { ready = true; await process(); return; }
-  status({phase: 'probe', title: 'Measuring processing speed', detail: 'Trying a small part of your photo before starting the full image.'});
+  status({phase: 'probe', title: 'measuring', detail: 'measuring_detail'});
   const x = Math.max(0, Math.floor((source.width - TILE_SIZE) / 2));
   const y = Math.max(0, Math.floor((source.height - TILE_SIZE) / 2));
   const values = sampleTile(source, x, y);
@@ -50,27 +50,27 @@ async function prepare({file, environment, forceCpu = false, autoStart = false, 
     context.putImageData(new ImageData(pixels, 512, 512), 0, 0);
     const blob = await canvas.convertToBlob({type: 'image/jpeg', quality: .96});
     if (!blob.size) throw new Error('No output');
-  } catch { throw new PhotoError('export', 'This browser couldn’t prepare an image download. Try the app.'); }
+  } catch { throw new PhotoError('export', 'err_export_probe'); }
   finally { canvas.width = canvas.height = 1; }
   ready = true;
   send({type: 'ready', plan, backend: runtime.backend, tileMs, ...estimateDuration(tileMs, plan.tileCount)});
 }
 
 async function process() {
-  if (!ready || !source || !runtime) throw new PhotoError('runtime', 'Choose a photo and check it again.');
+  if (!ready || !source || !runtime) throw new PhotoError('runtime', 'err_check_again');
   ready = false;
   let output;
   const started = performance.now();
   try {
-    status({phase: 'process', progress: 0, title: 'Upscaling your photo', detail: 'Keep this page open while it processes.'});
+    status({phase: 'process', progress: 0, title: 'upscaling', detail: 'upscaling_detail'});
     const {canvas, context} = makeCanvas(plan.outputWidth, plan.outputHeight);
     output = canvas;
     await assembleTiles(source.width, source.height,
       async (x, y) => runtime.run(sampleTile(source, x, y)),
       (data, width, height, y) => context.putImageData(new ImageData(data, width, height), 0, y),
       (completed, total) => status({phase: 'process', progress: completed / total * .94,
-        title: 'Upscaling your photo', remainingMs: (performance.now() - started) / completed * (total - completed),
-        detail: 'Keep this page open. You can cancel at any time.'}), plan.scale);
+        title: 'upscaling', remainingMs: (performance.now() - started) / completed * (total - completed),
+        detail: 'upscaling_cancel_detail'}), plan.scale);
     // Tile time alone drives the next photo's estimate. Face compositing and
     // the export are excluded so a small photo does not inflate the figure.
     const tilesMs = performance.now() - started;
@@ -91,7 +91,7 @@ async function process() {
       patch.width = patch.height = 1;
     }
     const faceCount = faces.length; faces = [];
-    status({phase: 'encode' , progress: .97, title: 'Preparing your download', detail: 'Saving the finished photo on this device.'});
+    status({phase: 'encode' , progress: .97, title: 'encoding', detail: 'encoding_detail'});
     const blob = await canvas.convertToBlob({type: 'image/jpeg', quality: .96});
     if (!blob.size) throw new Error('No image was encoded');
     // Verify that export preserved the requested dimensions.
@@ -100,7 +100,7 @@ async function process() {
     send({type: 'done', blob, plan, faceCount, detectedCount, faceEnabled, tilesMs, totalMs: performance.now() - started});
   } catch (error) {
     if (error instanceof PhotoError) throw error;
-    throw new PhotoError('export', 'This browser couldn’t save the full-size result. Try a smaller photo or use the app.');
+    throw new PhotoError('export', 'err_save');
   } finally {
     if (output) output.width = output.height = 1;
     await release();
@@ -113,7 +113,7 @@ self.onmessage = async ({data}) => {
   try { data.type === 'prepare' ? await prepare(data) : await process(); }
   catch (error) {
     ready = false;
-    send({type: 'error', code: error.code || 'runtime', message: error.message || 'This browser couldn’t finish the photo.'});
+    send({type: 'error', code: error.code || 'runtime', key: error.key || 'err_finish', params: error.params});
     await release();
   } finally { busy = false; }
 };

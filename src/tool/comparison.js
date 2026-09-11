@@ -1,6 +1,6 @@
 // Uses the website's .cmp/.cmp-bar presentation with pointer and keyboard
 // controls. One instance is reused and reset between single-photo sessions.
-export function createComparison(frame, before, handle) {
+export function createComparison(frame, before, handle, valueText = value => `${value}%`) {
   let position = 50;
   let pointer;
   function setPosition(value) {
@@ -8,7 +8,7 @@ export function createComparison(frame, before, handle) {
     handle.style.left = `${position}%`;
     before.style.clipPath = `inset(0 ${100 - position}% 0 0)`;
     handle.setAttribute('aria-valuenow', String(Math.round(position)));
-    handle.setAttribute('aria-valuetext', `${Math.round(position)}% original photo`);
+    handle.setAttribute('aria-valuetext', valueText(Math.round(position)));
   }
   function move(event) {
     const bounds = frame.getBoundingClientRect();
@@ -16,6 +16,8 @@ export function createComparison(frame, before, handle) {
   }
   frame.addEventListener('pointerdown', event => {
     if (!event.isPrimary || event.button !== 0) return;
+    // Expanded, the photo surface belongs to pan/zoom; only the divider moves the split.
+    if (frame.closest('.album-viewer.is-expanded') && !event.target.closest('.cmp-bar')) return;
     pointer = event.pointerId;
     frame.setPointerCapture(pointer);
     handle.focus({preventScroll: true});

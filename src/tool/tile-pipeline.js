@@ -3,7 +3,7 @@ import {TILE_SIZE, STRIDE, OVERLAP, SCALE, PhotoError} from './capability.js';
 export function makeCanvas(width, height) {
   const canvas = new OffscreenCanvas(width, height);
   const context = canvas.getContext('2d', {willReadFrequently: true});
-  if (!context) throw new PhotoError('browser', 'This browser couldn’t create an image surface. Try the app.');
+  if (!context) throw new PhotoError('browser', 'err_surface');
   return {canvas, context};
 }
 
@@ -35,12 +35,12 @@ export function sampleTile(bitmap, x = 0, y = 0) {
 // regardless of the photo's overall scale.
 export function tensorPixels(values, outputSide = TILE_SIZE * SCALE) {
   const plane = outputSide ** 2;
-  if (values.length !== plane * 3) throw new PhotoError('runtime', 'The upscaler returned an unexpected image size.');
+  if (values.length !== plane * 3) throw new PhotoError('runtime', 'err_output_size');
   const pixels = new Uint8ClampedArray(plane * 4);
   for (let i = 0; i < plane; i++) {
     for (let c = 0; c < 3; c++) {
       const value = values[c * plane + i];
-      if (!Number.isFinite(value)) throw new PhotoError('runtime', 'The browser returned an invalid image.');
+      if (!Number.isFinite(value)) throw new PhotoError('runtime', 'err_invalid_output');
       pixels[i * 4 + c] = Math.round(Math.max(0, Math.min(1, value)) * 255);
     }
     pixels[i * 4 + 3] = 255;

@@ -1,6 +1,7 @@
 import {MAX_FILE_BYTES, PhotoError} from './capability.js';
 
-const invalid = () => new PhotoError('format', 'Choose a JPEG, PNG or WebP photo. For HEIC, video or other formats, try the app.');
+const invalid = () => new PhotoError('format', 'err_format');
+const animated = () => new PhotoError('format', 'err_animated');
 const text = (bytes, offset, length) => String.fromCharCode(...bytes.subarray(offset, offset + length));
 
 export function parseImageHeader(buffer) {
@@ -9,7 +10,7 @@ export function parseImageHeader(buffer) {
   if (b.length >= 24 && b[0] === 137 && text(b, 1, 7) === 'PNG\r\n\x1a\n' && text(b, 12, 4) === 'IHDR') {
     for (let p = 8; p + 12 <= b.length;) {
       const type = text(b, p + 4, 4);
-      if (type === 'acTL') throw new PhotoError('format', 'Animated images aren’t supported in this photo preview. Choose a still photo.');
+      if (type === 'acTL') throw animated();
       if (type === 'IDAT') break;
       const length = v.getUint32(p);
       p += length + 12;
@@ -57,7 +58,7 @@ export function parseImageHeader(buffer) {
     const u24 = p => b[p] + b[p + 1] * 256 + b[p + 2] * 65536;
     const type = text(b, 12, 4);
     if (type === 'VP8X') {
-      if (b[20] & 2) throw new PhotoError('format', 'Animated images aren’t supported in this photo preview. Choose a still photo.');
+      if (b[20] & 2) throw animated();
       return {width: u24(24) + 1, height: u24(27) + 1, format: 'webp'};
     }
     if (type === 'VP8 ' && b[23] === 157 && b[24] === 1 && b[25] === 42) {
@@ -73,7 +74,7 @@ export function parseImageHeader(buffer) {
 
 export async function inspectFile(file) {
   if (!file || !file.size) throw invalid();
-  if (file.size > MAX_FILE_BYTES) throw new PhotoError('size', 'This file exceeds the browser preview’s 50 MB limit. Try it in the app.');
+  if (file.size > MAX_FILE_BYTES) throw new PhotoError('size', 'err_file_size');
   // Metadata only. Reject an unreadable header rather than decoding an image
   // with unknown dimensions. File bytes never leave the worker.
   return {...parseImageHeader(await file.slice(0, 2 * 1024 * 1024).arrayBuffer()), size: file.size};

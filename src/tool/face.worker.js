@@ -16,9 +16,9 @@ self.onmessage = async ({data: {file, environment, forceCpu}}) => {
     // Face work happens on 512x512 crops, so the source size barely changes its
     // working set. It only needs the same admission as the photo itself.
     const limit = faceLimit(policy);
-    if (info.width * info.height > limit) throw new PhotoError('face', `Separate face enhancement is limited to ${limit / 1_000_000} MP on this device. Turn it off to upscale this photo, or try the app.`);
+    if (info.width * info.height > limit) throw new PhotoError('face', 'err_face_limit', {mp: limit / 1_000_000});
     bitmap = await createImageBitmap(file, {imageOrientation: 'from-image'});
-    status({title: 'Finding faces', detail: 'Checking your photo on this device.'});
+    status({title: 'finding_faces', detail: 'finding_faces_check'});
     const {FaceLandmarker, FilesetResolver} = await import(/* @vite-ignore */ `${ASSETS.vision}/vision_bundle.mjs`);
     detector = await FaceLandmarker.createFromOptions(await FilesetResolver.forVisionTasks(`${ASSETS.vision}/wasm`), {
       baseOptions: {modelAssetPath: ASSETS.faceDetector, delegate: 'CPU'},
@@ -41,7 +41,7 @@ self.onmessage = async ({data: {file, environment, forceCpu}}) => {
       const canvas = new OffscreenCanvas(512, 512);
       const ctx = canvas.getContext('2d', {willReadFrequently: true});
       for (let i = 0; i < transforms.length; i++) {
-        status({title: `Enhancing face ${i + 1} of ${transforms.length}`, detail: 'Restoring facial detail with a separate model. Keep this page open.', progress: i / transforms.length});
+        status({title: 'enhancing_face', detail: 'enhancing_face_detail', params: {current: i + 1, total: transforms.length}, progress: i / transforms.length});
         ctx.resetTransform(); ctx.fillStyle = '#000'; ctx.fillRect(0, 0, 512, 512);
         const t = transforms[i]; ctx.setTransform(t.a, t.b, t.c, t.d, t.e, t.f);
         ctx.drawImage(bitmap, 0, 0); ctx.resetTransform();
@@ -57,6 +57,7 @@ self.onmessage = async ({data: {file, environment, forceCpu}}) => {
     }
     self.postMessage({type: 'faces', faces, detectedCount}, faces.map(face => face.pixels.buffer));
   } catch (error) {
-    self.postMessage({type: 'error', code: error.code || 'face', message: error.code === 'download' ? error.message : error.code === 'face' ? error.message : 'Face enhancement couldn’t finish in this browser. Try again, turn off face enhancement, or use the app.'});
+    const own = ['download', 'face'].includes(error.code);
+    self.postMessage({type: 'error', code: error.code || 'face', key: own ? error.key : 'err_face', params: own ? error.params : undefined});
   } finally { bitmap?.close(); detector?.close(); await runtime?.release().catch(() => {}); }
 };
