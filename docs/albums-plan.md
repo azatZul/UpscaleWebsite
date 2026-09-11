@@ -57,7 +57,7 @@ Netlify остаётся запасным деплоем той же самой 
 | `GET /gallery/:albumId` | SSR-страница альбома. |
 | `GET /media/:albumId/:photoId/:variant` | `before` / `after` — watermarked preview из R2. |
 | `GET /media/:albumId/cover.jpg` | OG-cover 1200×630, watermarked. Должен отдаваться крауле­рам без кук и редиректов. |
-| `GET /media/:albumId/gallery.jpg` | Сжатая before/after-карточка 1280×960 для `/gallery`. Альбом без неё в галерею не попадает. |
+| `GET /media/:albumId/gallery.jpg` | Сжатая before/after-карточка 960×720 для `/gallery`. Альбом без неё в галерею не попадает. |
 | `GET /download/:albumId/:photoId` | Полноразмерный чистый файл. Только при `state='unlocked'`, иначе 403. |
 | `GET /download/:albumId/all.zip` | Заранее собранный ZIP. Те же условия. |
 | `POST /api/albums/:albumId/checkout` | Этап 2. |
@@ -74,7 +74,7 @@ Route patterns в `wrangler.jsonc`: `upscales.app/gallery`, `upscales.app/galler
 
 ```
 albums/<albumId>/cover.jpg                    1200×630, watermark
-albums/<albumId>/gallery-v1.jpg               gallery card, 2 × 640×960 aspect-fill, JPEG 80
+albums/<albumId>/gallery-v2.jpg               gallery card, 2 × 480×720 aspect-fill, JPEG 70
 albums/<albumId>/<photoId>/before.webp        preview, длинная сторона ≤ 1600
 albums/<albumId>/<photoId>/after-wm.webp      preview + заметный watermark
 albums/<albumId>/<photoId>/clean.<ext>        полный результат, EXIF/GPS сняты
@@ -138,7 +138,7 @@ album delete <id>
 album list
 ```
 
-Локально CLI: валидирует пары и форматы → снимает EXIF/GPS (и в preview, и в clean, и в ZIP) → делает preview WebP → накладывает watermark → собирает cover 1200×630 и gallery JPEG 1280×960 → собирает ZIP → грузит в R2 → вставляет строки в D1 → печатает готовую ссылку.
+Локально CLI: валидирует пары и форматы → снимает EXIF/GPS (и в preview, и в clean, и в ZIP) → делает preview WebP → накладывает watermark → собирает cover 1200×630 и gallery JPEG 960×720 → собирает ZIP → грузит в R2 → вставляет строки в D1 → печатает готовую ссылку.
 
 Автоцена: 1 фото — $3, 2–4 — $5, 5–20 — $8. `--price-usd` переопределяет цену; только `--unlocked` публикует сразу разблокированным. `--price-usd 0` без `--unlocked` создаёт ручной locked-альбом без checkout.
 

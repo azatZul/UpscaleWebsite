@@ -32,8 +32,21 @@ Set `ALBUM_ENVIRONMENT=staging` and `ALBUM_BASE_URL=https://<your-worker>.worker
 for staging; production uses `ALBUM_ENVIRONMENT=production` and defaults to
 `ALBUM_BASE_URL=https://upscales.app`. A locked album can be published with
 `--price-usd 0` and later opened with `album unlock <id>`; no checkout is exposed.
-Use `--json` for machine-readable integration output. `unlock`, `feature` and
-`unfeature` are no-ops when the album is already in that state.
+Use `--json` for machine-readable integration output. `unlock`, `feature`,
+`unfeature` and `rename` are no-ops when the album is already in that state.
+
+```bash
+python3 tools/album/album.py list --json
+python3 tools/album/album.py rename <id> --title 'New album title' --json
+python3 tools/album/album.py unfeature <id> --json
+python3 tools/album/album.py migrate-gallery --all --dry-run --json
+python3 tools/album/album.py migrate-gallery --all --json
+```
+
+`unfeature` removes the album from `/gallery` while its direct
+`/gallery/<id>` link keeps working; the gallery listing is edge-cached for a
+minute, so the change appears there shortly after. `rename` updates the album
+title in D1 only (1–160 characters); published media is untouched.
 
 The same folder can be published to staging and production without rerunning AI:
 each account/database/bucket combination has its own publication state and URL.
@@ -41,8 +54,16 @@ Keep the manifest, input files, --unlocked and price unchanged during a retry.
 Both before and after hashes are checked. Prepared media and ZIP are reused and
 verified; restore any missing/corrupt work files before resuming.
 
-Every album also uploads a versioned `gallery-v1.jpg` for its `/gallery` card: one
-1280×960 JPEG made from two centered 640×960 aspect-fill crops at quality 80.
+Every album also uploads a versioned `gallery-v2.jpg` for its `/gallery` card: one
+960×720 JPEG made from two centered 480×720 aspect-fill crops at quality 70. The
+stable public `gallery.jpg` route uses the versioned R2 key as its cache identity.
+
+`migrate-gallery` converts published v1 cards to v2 without needing the original
+album folders. Pass either one album ID or `--all`; the latter includes every
+non-deleted album, not just featured ones. `--dry-run` downloads and encodes the
+cards to report their expected sizes but does not upload objects or change D1.
+Migration uploads each immutable `gallery-v2.jpg` before conditionally moving its
+D1 pointer. Repeated runs are safe, and v1 objects remain in R2 for rollback.
 
 The CLI writes `.album-state.json` and `.album-work/` inside the album folder. Keep
 both until publication completes: they make retries idempotent. R2 credentials should

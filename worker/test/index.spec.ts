@@ -83,7 +83,7 @@ describe.sequential("album worker", () => {
     expect(html).not.toContain("<Album 01>");
     expect(html).toContain("Watermarked preview");
     expect(html).toContain('class="gallery-preview"');
-    expect(html).toContain(`/media/${FEATURED}/gallery.jpg`);
+    expect(html).toContain(`/media/${FEATURED}/gallery.jpg?v=gallery-v1.jpg`);
     expect(html).not.toContain(`/media/${FEATURED}/${PHOTO}/before.webp`);
   });
 
@@ -92,6 +92,21 @@ describe.sequential("album worker", () => {
     expect(response.status).toBe(200);
     expect(response.headers.get("Content-Type")).toBe("image/jpeg");
     expect([...new Uint8Array(await response.arrayBuffer())]).toEqual([50, 51, 52]);
+  });
+
+  it("changes the media cache entry when the D1 gallery object key changes", async () => {
+    const galleryPath = `/media/${PRIVATE}/gallery.jpg`;
+    const first = await fetchWorker(galleryPath);
+    expect([...new Uint8Array(await first.arrayBuffer())]).toEqual([50, 51, 52]);
+
+    const galleryV2 = `albums/${PRIVATE}/gallery-v2.jpg`;
+    await env.MEDIA.put(galleryV2, new Uint8Array([60, 61, 62, 63]), { httpMetadata: { contentType: "image/jpeg" } });
+    await env.DB.prepare(
+      "UPDATE albums SET gallery_key=?2,gallery_width=960,gallery_height=720,gallery_bytes=4 WHERE id=?1",
+    ).bind(PRIVATE, galleryV2).run();
+
+    const second = await fetchWorker(galleryPath);
+    expect([...new Uint8Array(await second.arrayBuffer())]).toEqual([60, 61, 62, 63]);
   });
 
   it("renders the album heading, ordered compare markup and noindex", async () => {

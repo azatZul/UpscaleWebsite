@@ -31,10 +31,12 @@ MAX_IMAGE_BYTES = 100 * 1024 * 1024
 MAX_IMAGE_PIXELS = 100_000_000
 MAX_ZIP_BYTES = 500 * 1024 * 1024
 PREVIEW_EDGE = 1600
-GALLERY_HALF_SIZE = (640, 960)
-GALLERY_SIZE = (1280, 960)
-GALLERY_QUALITY = 80
-GALLERY_VERSION = "v1"
+GALLERY_HALF_SIZE = (480, 720)
+GALLERY_SIZE = (960, 720)
+GALLERY_QUALITY = 70
+GALLERY_VERSION = "v2"
+LEGACY_GALLERY_SIZE = (1280, 960)
+LEGACY_GALLERY_VERSION = "v1"
 PROCESSING_PROFILE_VERSION = "1"
 ALLOWED_FLOWS = {"photo-restoration", "creative-upscale", "restore-and-upscale"}
 ALLOWED_FORMATS = {"JPEG": ("jpg", "image/jpeg"), "PNG": ("png", "image/png"), "WEBP": ("webp", "image/webp")}
@@ -91,6 +93,13 @@ def validate_album_id(album_id: str) -> str:
     if len(album_id) != ALBUM_ID_LENGTH or any(char not in CROCKFORD for char in album_id):
         raise AlbumError("Invalid album ID")
     return album_id
+
+
+def validate_album_title(title: Any) -> str:
+    # Keep in sync with the albums.title CHECK constraint.
+    if not isinstance(title, str) or not (1 <= len(title.strip()) <= 160):
+        raise AlbumError("title must contain 1–160 characters")
+    return title.strip()
 
 
 def resolve_file(folder: Path, raw: str) -> Path:
@@ -415,16 +424,30 @@ def make_gallery_preview(media: Dict[str, Any], destination: Path) -> None:
     save_image(combined, destination, "JPEG", quality=GALLERY_QUALITY)
 
 
+def resize_gallery_preview(source: Path, destination: Path) -> None:
+    """Convert a published legacy gallery card to the current delivery profile."""
+    image = open_normalized(source).convert("RGB")
+    if image.size != LEGACY_GALLERY_SIZE:
+        raise AlbumError(
+            f"Legacy gallery preview must be {LEGACY_GALLERY_SIZE[0]}x{LEGACY_GALLERY_SIZE[1]}: {source}"
+        )
+    resized = image.resize(GALLERY_SIZE, Image.Resampling.LANCZOS)
+    save_image(resized, destination, "JPEG", quality=GALLERY_QUALITY)
+
+
 def ensure_gallery_preview(folder: Path, state: Dict[str, Any], media: Dict[str, Dict[str, Any]]) -> Dict[str, Any]:
     destination = folder / WORK_NAME / f"gallery-{GALLERY_VERSION}.jpg"
     expected_key = f"albums/{state['album_id']}/gallery-{GALLERY_VERSION}.jpg"
     existing = state.get("gallery")
     if existing:
         verify_record(existing)
-        if (existing.get("key") != expected_key or existing.get("content_type") != "image/jpeg"
-                or (existing.get("width"), existing.get("height")) != GALLERY_SIZE):
+        if (existing.get("key") == expected_key and existing.get("content_type") == "image/jpeg"
+                and (existing.get("width"), existing.get("height")) == GALLERY_SIZE):
+            return existing
+        legacy_key = f"albums/{state['album_id']}/gallery-{LEGACY_GALLERY_VERSION}.jpg"
+        if (existing.get("key") != legacy_key or existing.get("content_type") != "image/jpeg"
+                or (existing.get("width"), existing.get("height")) != LEGACY_GALLERY_SIZE):
             raise AlbumError("Prepared gallery preview does not match the current profile; start in a new folder")
-        return existing
     first_id = state["photos"][0]["id"]
     make_gallery_preview(media[first_id], destination)
     record = file_record(inspect_image(destination), expected_key)
@@ -784,11 +807,21 @@ class CloudflareAdmin:
         else:
             if existing.get("Metadata", {}).get("sha256") == record["sha256"]:
                 return
+            if not existing.get("Metadata", {}).get("sha256"):
+                with tempfile.TemporaryDirectory(prefix="album-r2-verify-") as directory:
+                    downloaded = Path(directory) / "object"
+                    self.download(record["key"], downloaded)
+                    if sha256_file(downloaded) == record["sha256"]:
+                        return
             raise AlbumError(f"Immutable R2 key already exists with different content: {record['key']}")
         self.s3.upload_file(
             record["path"], self.bucket, record["key"],
             ExtraArgs={"ContentType": record["content_type"], "Metadata": {"sha256": record["sha256"]}},
         )
+
+    def download(self, key: str, destination: Path) -> None:
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        self.s3.download_file(self.bucket, key, str(destination))
 
     def delete_keys(self, keys: Iterable[str]) -> None:
         objects = [{"Key": key} for key in keys]
@@ -906,12 +939,19 @@ def validate_command(folder: Path) -> None:
     print(f"Valid album with {len(photos)} photo{'s' if len(photos) != 1 else ''}")
 
 
-def update_album(album_id: str, action: str) -> Dict[str, Any]:
+def update_album(album_id: str, action: str, title: Optional[str] = None) -> Dict[str, Any]:
     validate_album_id(album_id)
     # Read before writing: a missing base URL must not leave the album mutated in D1.
     base_url = required_env("ALBUM_BASE_URL").rstrip("/")
+    new_title = validate_album_title(title) if action == "rename" else None
     admin = CloudflareAdmin()
-    if action == "unlock":
+    if action == "rename":
+        changes = admin.execute(
+            "UPDATE albums SET title=?1 WHERE id=?2 AND state!='deleted' AND title!=?1",
+            (new_title, album_id),
+        )
+        settled = ("title", new_title)
+    elif action == "unlock":
         changes = admin.execute("UPDATE albums SET state='unlocked', unlocked_at=?1 WHERE id=?2 AND state='locked'", (int(time.time()), album_id))
         settled = ("state", "unlocked")
     elif action == "feature":
@@ -927,13 +967,16 @@ def update_album(album_id: str, action: str) -> Dict[str, Any]:
     reused = False
     if changes != 1:
         column, expected = settled
-        rows = admin.query("SELECT state,featured FROM albums WHERE id=?1", (album_id,))
+        rows = admin.query("SELECT state,featured,title FROM albums WHERE id=?1", (album_id,))
         if not rows or rows[0].get("state") == "deleted" or rows[0].get(column) != expected:
             raise AlbumError(f"Album was not changed; check its ID and current state ({action})")
         reused = True
     state = "unlocked" if action == "unlock" else action
-    return {"ok": True, "album_id": album_id, "url": f"{base_url}/gallery/{album_id}",
-            "state": state, "action": action, "reused": reused}
+    result = {"ok": True, "album_id": album_id, "url": f"{base_url}/gallery/{album_id}",
+              "state": state, "action": action, "reused": reused}
+    if new_title is not None:
+        result["title"] = new_title
+    return result
 
 
 def delete_album(album_id: str) -> Dict[str, Any]:
@@ -958,13 +1001,127 @@ def delete_album(album_id: str) -> Dict[str, Any]:
     return {"ok": True, "album_id": album_id, "state": "deleted", "action": "delete", "deleted_objects": len(keys)}
 
 
-def list_albums() -> None:
+def list_albums(as_json: bool = False) -> Optional[Dict[str, Any]]:
     rows = CloudflareAdmin().query(
         "SELECT id,title,state,featured,photo_count,created_at FROM albums ORDER BY created_at DESC LIMIT 200"
     )
+    if not as_json:
+        for row in rows:
+            featured = " featured" if row.get("featured") else ""
+            print(f"{row['id']}  {row['state']}{featured}  {row['photo_count']}  {row['title']}")
+        return None
+    base_url = required_env("ALBUM_BASE_URL").rstrip("/")
+    albums = [
+        {
+            "id": row["id"],
+            "title": row["title"],
+            "state": row["state"],
+            "featured": bool(row.get("featured")),
+            "photo_count": row.get("photo_count"),
+            "created_at": row.get("created_at"),
+            "url": f"{base_url}/gallery/{row['id']}",
+            "gallery_url": f"{base_url}/media/{row['id']}/gallery.jpg",
+        }
+        for row in rows
+        if row.get("state") != "deleted"
+    ]
+    return {"ok": True, "albums": albums}
+
+
+def migrate_gallery(album_id: Optional[str], all_albums: bool, dry_run: bool) -> Dict[str, Any]:
+    if bool(album_id) == bool(all_albums):
+        raise AlbumError("migrate-gallery requires either an album ID or --all")
+    params: Sequence[Any] = ()
+    where = "state IN ('locked','unlocked') AND gallery_key IS NOT NULL"
+    if album_id:
+        validate_album_id(album_id)
+        where += " AND id=?1"
+        params = (album_id,)
+    admin = CloudflareAdmin()
+    rows = admin.query(
+        f"""SELECT id,state,gallery_key,gallery_mime,gallery_width,gallery_height,gallery_bytes
+              FROM albums WHERE {where} ORDER BY created_at""",
+        params,
+    )
+    if album_id and not rows:
+        raise AlbumError("Active album with a gallery preview was not found")
+
+    results: List[Dict[str, Any]] = []
     for row in rows:
-        featured = " featured" if row.get("featured") else ""
-        print(f"{row['id']}  {row['state']}{featured}  {row['photo_count']}  {row['title']}")
+        current_key = row.get("gallery_key")
+        target_key = f"albums/{row['id']}/gallery-{GALLERY_VERSION}.jpg"
+        current_profile = (
+            current_key == target_key
+            and row.get("gallery_mime") == "image/jpeg"
+            and (row.get("gallery_width"), row.get("gallery_height")) == GALLERY_SIZE
+        )
+        if current_profile:
+            results.append({
+                "album_id": row["id"], "status": "reused", "old_key": current_key,
+                "new_key": target_key, "before_bytes": row.get("gallery_bytes"),
+                "after_bytes": row.get("gallery_bytes"),
+            })
+            continue
+
+        expected_legacy_key = f"albums/{row['id']}/gallery-{LEGACY_GALLERY_VERSION}.jpg"
+        if (current_key != expected_legacy_key or row.get("gallery_mime") != "image/jpeg"
+                or (row.get("gallery_width"), row.get("gallery_height")) != LEGACY_GALLERY_SIZE):
+            raise AlbumError(f"Album {row['id']} gallery preview does not match the v1 or v2 profile")
+
+        with tempfile.TemporaryDirectory(prefix=f"gallery-{row['id']}-") as directory:
+            source = Path(directory) / f"gallery-{LEGACY_GALLERY_VERSION}.jpg"
+            destination = Path(directory) / f"gallery-{GALLERY_VERSION}.jpg"
+            admin.download(current_key, source)
+            source_info = inspect_image(source)
+            if source_info.image_format != "JPEG" or (source_info.width, source_info.height) != LEGACY_GALLERY_SIZE:
+                raise AlbumError(f"Album {row['id']} R2 gallery object does not match its D1 metadata")
+            resize_gallery_preview(source, destination)
+            record = file_record(inspect_image(destination), target_key)
+            status = "would_migrate" if dry_run else "migrated"
+            if not dry_run:
+                admin.upload(record)
+                changes = admin.execute(
+                    """UPDATE albums
+                          SET gallery_key=?1,gallery_mime=?2,gallery_width=?3,gallery_height=?4,gallery_bytes=?5
+                        WHERE id=?6 AND state IN ('locked','unlocked') AND gallery_key=?7""",
+                    (
+                        record["key"], record["content_type"], record["width"], record["height"],
+                        record["bytes"], row["id"], current_key,
+                    ),
+                )
+                if changes != 1:
+                    settled = admin.query(
+                        """SELECT state,gallery_key,gallery_mime,gallery_width,gallery_height,gallery_bytes
+                              FROM albums WHERE id=?1""",
+                        (row["id"],),
+                    )
+                    already_current = bool(settled) and settled[0].get("state") in {"locked", "unlocked"} and (
+                        settled[0].get("gallery_key") == record["key"]
+                        and settled[0].get("gallery_mime") == record["content_type"]
+                        and (settled[0].get("gallery_width"), settled[0].get("gallery_height")) == GALLERY_SIZE
+                        and settled[0].get("gallery_bytes") == record["bytes"]
+                    )
+                    if not already_current:
+                        raise AlbumError(f"Album {row['id']} changed while its gallery preview was being migrated")
+                    status = "reused"
+            results.append({
+                "album_id": row["id"], "status": status, "old_key": current_key,
+                "new_key": record["key"], "before_bytes": source_info.size,
+                "after_bytes": record["bytes"],
+            })
+
+    return {
+        "ok": True,
+        "action": "migrate-gallery",
+        "dry_run": dry_run,
+        "scanned": len(results),
+        "migrated": sum(item["status"] == "migrated" for item in results),
+        "would_migrate": sum(item["status"] == "would_migrate" for item in results),
+        "reused": sum(item["status"] == "reused" for item in results),
+        "before_bytes": sum(item["before_bytes"] or 0 for item in results),
+        "after_bytes": sum(item["after_bytes"] or 0 for item in results),
+        "albums": results,
+    }
 
 
 def gc_albums(delete: bool) -> None:
@@ -1012,9 +1169,18 @@ def parser() -> argparse.ArgumentParser:
     for action in ("unlock", "feature", "unfeature", "delete"):
         command = sub.add_parser(action)
         command.add_argument("album_id")
-        if action in {"unlock", "delete"}:
-            command.add_argument("--json", action="store_true")
-    sub.add_parser("list")
+        command.add_argument("--json", action="store_true")
+    rename = sub.add_parser("rename")
+    rename.add_argument("album_id")
+    rename.add_argument("--title", required=True)
+    rename.add_argument("--json", action="store_true")
+    listing = sub.add_parser("list")
+    listing.add_argument("--json", action="store_true")
+    gallery_migration = sub.add_parser("migrate-gallery")
+    gallery_migration.add_argument("album_id", nargs="?")
+    gallery_migration.add_argument("--all", action="store_true", dest="all_albums")
+    gallery_migration.add_argument("--dry-run", action="store_true")
+    gallery_migration.add_argument("--json", action="store_true")
     gc = sub.add_parser("gc")
     gc.add_argument("--delete", action="store_true", help="Delete listed orphan objects")
     return root
@@ -1030,15 +1196,25 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             result = publish(args.folder.resolve(), args.unlocked, args.price_usd)
         elif args.command in {"unlock", "feature", "unfeature"}:
             result = update_album(args.album_id, args.command)
+        elif args.command == "rename":
+            result = update_album(args.album_id, args.command, args.title)
         elif args.command == "delete":
             result = delete_album(args.album_id)
         elif args.command == "list":
-            list_albums()
+            result = list_albums(args.json)
+        elif args.command == "migrate-gallery":
+            result = migrate_gallery(args.album_id, args.all_albums, args.dry_run)
         elif args.command == "gc":
             gc_albums(args.delete)
         if result is not None:
             if getattr(args, "json", False):
                 print(json.dumps(result, ensure_ascii=False, separators=(",", ":")))
+            elif args.command == "list":
+                pass
+            elif args.command == "migrate-gallery":
+                changed = result["would_migrate"] if result["dry_run"] else result["migrated"]
+                prefix = "gallery migration dry run" if result["dry_run"] else "gallery migration"
+                print(f"{prefix}: {changed} changed, {result['reused']} current, {result['scanned']} scanned")
             elif args.command in {"publish", "resume"}:
                 print(result["url"])
             else:

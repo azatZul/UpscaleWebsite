@@ -39,6 +39,7 @@ type GalleryRow = {
   price_cents: number;
   currency: string;
   photo_count: number;
+  gallery_key: string;
   gallery_width: number | null;
   gallery_height: number | null;
   created_at: number;
@@ -197,7 +198,7 @@ async function getAlbum(env: Env, id: string): Promise<AlbumRow | null> {
 async function renderGallery(request: Request, env: Env): Promise<Response> {
   const result = await env.DB.prepare(
     `SELECT id, title, state, price_cents, currency, photo_count,
-            gallery_width, gallery_height, created_at
+            gallery_key, gallery_width, gallery_height, created_at
        FROM albums
       WHERE featured = 1 AND state IN ('locked', 'unlocked') AND gallery_key IS NOT NULL
       ORDER BY created_at DESC LIMIT 100`,
@@ -208,8 +209,9 @@ async function renderGallery(request: Request, env: Env): Promise<Response> {
       : "";
     const title = escapeHtml(album.title);
     const date = albumDate(album.created_at);
+    const galleryVersion = encodeURIComponent(album.gallery_key.split("/").pop() ?? album.gallery_key);
     return `<a class="gallery-card" href="/gallery/${album.id}">
-      <img class="gallery-preview" src="/media/${album.id}/gallery.jpg" width="${album.gallery_width ?? 1280}" height="${album.gallery_height ?? 960}" loading="lazy" decoding="async" alt="Before and after: ${title}">
+      <img class="gallery-preview" src="/media/${album.id}/gallery.jpg?v=${galleryVersion}" width="${album.gallery_width ?? 960}" height="${album.gallery_height ?? 720}" loading="lazy" decoding="async" alt="Before and after: ${title}">
       <span class="gallery-card-copy"><h2>${title}</h2><p class="gallery-meta"><span>${album.photo_count} ${album.photo_count === 1 ? "photo" : "photos"}${status}</span>${date ? `<time datetime="${date.iso}">${date.label}</time>` : ""}</p></span>
     </a>`;
   }).join("");
@@ -360,9 +362,10 @@ async function handleMedia(
   if (!row) return plain("Media not found", 404, { "X-Robots-Tag": "noindex, nofollow" });
   if (row.state === "deleted") return plain("Album removed", 410, { "X-Robots-Tag": "noindex, nofollow" });
 
-  const cleanUrl = new URL(request.url);
-  cleanUrl.search = "";
-  const cacheKey = new Request(cleanUrl, { method: "GET" });
+  const cacheUrl = new URL(request.url);
+  cacheUrl.search = "";
+  cacheUrl.searchParams.set("__r2", row.object_key);
+  const cacheKey = new Request(cacheUrl, { method: "GET" });
   if (request.method === "GET") {
     const cached = await caches.default.match(cacheKey);
     if (cached) {

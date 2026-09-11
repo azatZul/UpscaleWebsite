@@ -696,6 +696,7 @@
     var collapse = root.querySelector('[data-album-collapse]');
     var active = 0, touch = null, expanded = false;
     var zoom = 1, panX = 0, panY = 0, pan = null;
+    var resetGesture = function () {};
     var MAX_ZOOM = 6;
     if (!slides.length) return;
 
@@ -726,6 +727,7 @@
       panY = Math.max(-limitY, Math.min(limitY, panY));
     }
     function resetView() {
+      resetGesture();
       zoom = 1; panX = 0; panY = 0;
       applyView();
     }
@@ -813,30 +815,106 @@
       stage.addEventListener('dragstart', function (event) {
         if (expanded) event.preventDefault();
       });
-      stage.addEventListener('pointerdown', function (event) {
-        if (!expanded || event.button !== 0) return;
-        if (event.target.closest && event.target.closest('.cmp-bar')) return;
-        if (event.target.closest && event.target.closest('.album-ctl')) return;
-        pan = { x: event.clientX, y: event.clientY, panX: panX, panY: panY };
+      /* Track touch points because the expanded stage disables native gestures. */
+      var points = [], pinch = null, barPoint = null;
+      function pointAt(id) {
+        for (var i = 0; i < points.length; i++) if (points[i].id === id) return points[i];
+        return null;
+      }
+      function dropPoint(id) {
+        for (var i = 0; i < points.length; i++) {
+          if (points[i].id === id) { points.splice(i, 1); return; }
+        }
+      }
+      function pinchState() {
+        var a = points[0], b = points[1];
+        return {
+          dist: Math.max(1, Math.hypot(b.x - a.x, b.y - a.y)),
+          mx: (a.x + b.x) / 2,
+          my: (a.y + b.y) / 2,
+        };
+      }
+      function startPan(point) {
+        pan = { x: point.x, y: point.y, panX: panX, panY: panY };
         stage.classList.add('is-panning');
+      }
+      function endPan() {
+        pan = null;
+        stage.classList.remove('is-panning');
+      }
+      resetGesture = function () {
+        points = [];
+        pinch = null;
+        barPoint = null;
+        endPan();
+      };
+      /* Transfer an active divider pointer to the pinch gesture. */
+      function adoptBarPoint() {
+        var adopted = barPoint;
+        barPoint = null;
+        if (adopted.target) {
+          adopted.target.dispatchEvent(new PointerEvent('pointercancel', {
+            pointerId: adopted.id, bubbles: true,
+          }));
+        }
+        if (stage.setPointerCapture) stage.setPointerCapture(adopted.id);
+        points.push({ id: adopted.id, x: adopted.x, y: adopted.y });
+      }
+      /* Capture phase keeps the second pointer out of the comparison drag handler. */
+      stage.addEventListener('pointerdown', function (event) {
+        if (!expanded || (event.pointerType === 'mouse' && event.button !== 0)) return;
+        if (event.target.closest && event.target.closest('.album-ctl')) return;
+        if (!points.length && !barPoint && event.target.closest && event.target.closest('.cmp-bar')) {
+          barPoint = { id: event.pointerId, x: event.clientX, y: event.clientY, target: event.target };
+          return;
+        }
+        if (barPoint) adoptBarPoint();
+        points.push({ id: event.pointerId, x: event.clientX, y: event.clientY });
         if (event.cancelable) event.preventDefault();
         if (stage.setPointerCapture) stage.setPointerCapture(event.pointerId);
-      });
+        if (points.length >= 2) { endPan(); pinch = pinchState(); event.stopPropagation(); }
+        else startPan(points[0]);
+      }, true);
       stage.addEventListener('pointermove', function (event) {
+        if (barPoint && barPoint.id === event.pointerId) {
+          barPoint.x = event.clientX; barPoint.y = event.clientY;
+        }
+        var point = pointAt(event.pointerId);
+        if (point) { point.x = event.clientX; point.y = event.clientY; }
+        if (pinch && points.length >= 2) {
+          var now = pinchState();
+          var box = stage.getBoundingClientRect();
+          var cx = box.left + box.width / 2, cy = box.top + box.height / 2;
+          /* Keep the midpoint anchored while zooming. */
+          var offsetX = (pinch.mx - cx - panX) / zoom;
+          var offsetY = (pinch.my - cy - panY) / zoom;
+          zoom = Math.max(1, Math.min(MAX_ZOOM, zoom * (now.dist / pinch.dist)));
+          panX = now.mx - cx - zoom * offsetX;
+          panY = now.my - cy - zoom * offsetY;
+          pinch = now;
+          clampPan();
+          applyView();
+          event.stopPropagation();
+          return;
+        }
         if (!pan) return;
         panX = pan.panX + (event.clientX - pan.x);
         panY = pan.panY + (event.clientY - pan.y);
         clampPan();
         applyView();
-      });
+      }, true);
       ['pointerup', 'pointercancel'].forEach(function (name) {
         stage.addEventListener(name, function (event) {
-          if (!pan) return;
-          pan = null;
-          stage.classList.remove('is-panning');
+          if (barPoint && barPoint.id === event.pointerId) barPoint = null;
+          var tracked = pointAt(event.pointerId);
+          dropPoint(event.pointerId);
           if (stage.releasePointerCapture && stage.hasPointerCapture && stage.hasPointerCapture(event.pointerId)) {
             stage.releasePointerCapture(event.pointerId);
           }
+          if (!tracked) return;
+          pinch = null;
+          if (points.length === 1) startPan(points[0]);
+          else if (!points.length) endPan();
         });
       });
     }
