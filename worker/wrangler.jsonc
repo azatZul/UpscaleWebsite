@@ -1,0 +1,74 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "uscale-site",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-04",
+  "workers_dev": true,
+  "assets": {
+    "directory": "../dist",
+    "binding": "ASSETS",
+    "html_handling": "none",
+    "run_worker_first": [
+      "/gallery",
+      "/gallery/*",
+      "/media/*",
+      "/download/*",
+      "/api/*",
+      "/_shell/*"
+    ]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "uscale-albums-local",
+      "database_id": "00000000-0000-0000-0000-000000000001",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "uscale-albums-local"
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "logs": { "head_sampling_rate": 1 },
+    "traces": { "enabled": true, "head_sampling_rate": 0.01 }
+  },
+  "env": {
+    "staging": {
+      "name": "uscale-site-staging",
+      "workers_dev": true,
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "uscale-albums-staging",
+          "database_id": "2474db2f-ed01-4d36-b86b-64ff50f8c963",
+          "migrations_dir": "migrations"
+        }
+      ],
+      "r2_buckets": [
+        { "binding": "MEDIA", "bucket_name": "uscale-albums-staging" }
+      ]
+    },
+    "production": {
+      "name": "uscale-site",
+      "workers_dev": false,
+      "routes": [
+        { "pattern": "upscales.app/*", "zone_name": "upscales.app" }
+      ],
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "uscale-albums",
+          "database_id": "2f4cbed2-d191-4dce-8c98-0f56e036cd95",
+          "migrations_dir": "migrations"
+        }
+      ],
+      "r2_buckets": [
+        { "binding": "MEDIA", "bucket_name": "uscale-albums" }
+      ]
+    }
+  }
+}

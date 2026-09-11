@@ -34,5 +34,14 @@ assets/processor/
 src/tool/assets.generated.js
 static/upscale/index.html
 .preview-dist/
-.wrangler/
+
+# album publishing CLI state and local secrets
+.env
 .dev.vars
+.album-state.json
+.album-work/
+.wrangler/
+worker/node_modules/
+worker/.wrangler/
+tools/album/.venv/
+

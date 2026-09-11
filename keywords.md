@@ -1,6 +1,6 @@
 # UScale — Keyword Research & SEO Map
 
-Date: **2026-08-21** · Domain: **upscales.app** · App: **AI Photo Enhancer, UScale** (id 6736931330)
+Date: **2026-08-21** · Domain: **upscales.app** · App: **Enhance Photo Quality, UScale** (id 6736931330)
 
 **Data sources**
 1. **AstroMCP** (`http://127.0.0.1:8089/mcp`) — 583 tracked App Store keywords for this app across 28 stores, with `popularity` (0–100 Apple search-volume proxy), `difficulty` (0–100) and live ranking. This is *real* demand data for the exact audience that installs apps, so it drives the head-term choice in every locale.
@@ -60,8 +60,9 @@ Each guide carries: a direct answer paragraph (featured-snippet shaped, 40–55 
 
 The 12 locales use *native* keywords pulled from their own store — not machine translations of the English terms. `p` = Apple popularity, `d` = difficulty.
 
-### 🇪🇸 Spanish (`/es/`) — stores es, mx
-`mejorar calidad de fotos` (p56 mx / p51 es, d52) · `mejorar fotos` (p45, d65) · `mejorar calidad de videos` (p45 mx / p22 es, d44) · `aclarar fotos` (p23, d55) · `arreglar fotos` (p21, d72) · `mejorador de fotos` (p20, d56) · `calidad fotos` (p18) · `mejorar fotos con ia` (p5) · `restaurar fotos antiguas`
+### 🇪🇸 Spanish (`/es/`) — researched
+
+→ **[`localization/keywords/es.md`](localization/keywords/es.md)** — ASO, web demand, traps, copy rules and the placement map.
 
 ### 🇧🇷 Portuguese (`/pt/`) — stores br, pt
 `melhorar qualidade da foto` (p57, d67) · `aprimorar foto` (p48, d59) · `qualidade da foto` (p48) · `melhorar qualidade de vídeo` (p29, d55) · `limpar foto` (p26, d72) · `restaurar fotos antigas` (p6→d52) · `melhorar foto antiga` (p5, **d5** — easy win) · `realçador de fotos` (p5, d50) · `aprimorar qualidade foto grátis` (p5, d17)
