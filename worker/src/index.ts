@@ -1,5 +1,7 @@
 import { bearerToken, verifyIdToken, type VerifiedIdentity } from "./auth";
-import { creditBalance, getOrCreateAccount } from "./accounts";
+import { creditBalance, getOrCreateAccount, recordPurchase, setStripeCustomerId, type Account } from "./accounts";
+import { CREDIT_PACKS, OPERATION_CREDITS, packById } from "./pricing";
+import { StripeError, createCheckoutSession, createCustomer, verifyWebhook } from "./stripe";
 
 const ALBUM_ID = "[0-9A-HJKMNP-TV-Z]{26}";
 const ALBUM_PATH = new RegExp(`^/gallery/(${ALBUM_ID})$`);
@@ -480,6 +482,132 @@ function json(body: unknown, status = 200): Response {
   });
 }
 
+function stripeConfig(env: Env): { secretKey: string } | null {
+  const secretKey = env.STRIPE_SECRET_KEY;
+  // Staging can run without Stripe configured; say so plainly rather than
+  // failing inside the client with a 401 from Stripe.
+  return secretKey ? { secretKey } : null;
+}
+
+/** Ensure the account has a Stripe customer, creating one on first purchase. */
+async function ensureCustomer(env: Env, config: { secretKey: string }, account: Account): Promise<string> {
+  if (account.stripeCustomerId) return account.stripeCustomerId;
+  const customer = await createCustomer(config, { accountId: account.id, email: account.email });
+  await setStripeCustomerId(env.ACCOUNTS_DB, account.id, customer.id);
+  // Re-read rather than trusting the write: setStripeCustomerId only fills a
+  // NULL, so a concurrent checkout may have won and stored a different id.
+  const stored = await getOrCreateAccount(env.ACCOUNTS_DB, account.googleSub, account.email);
+  return stored.stripeCustomerId ?? customer.id;
+}
+
+async function handleCheckout(request: Request, env: Env, identity: VerifiedIdentity): Promise<Response> {
+  const config = stripeConfig(env);
+  if (!config) return json({ error: "billing_unavailable" }, 503);
+
+  let packId: unknown;
+  try {
+    packId = ((await request.json()) as { packId?: unknown })?.packId;
+  } catch {
+    return json({ error: "invalid_body" }, 400);
+  }
+  const pack = typeof packId === "string" ? packById(packId) : undefined;
+  if (!pack) return json({ error: "unknown_pack" }, 400);
+
+  const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+  const origin = new URL(request.url).origin;
+  try {
+    const customerId = await ensureCustomer(env, config, account);
+    const session = await createCheckoutSession(config, {
+      accountId: account.id,
+      customerId,
+      packId: pack.id,
+      credits: pack.credits,
+      priceCents: pack.priceCents,
+      productName: `UScale ${pack.label}`,
+      successUrl: `${origin}/account/?purchase=success&session_id={CHECKOUT_SESSION_ID}`,
+      cancelUrl: `${origin}/account/?purchase=cancelled`,
+    });
+    return json({ url: session.url });
+  } catch (error) {
+    console.error(JSON.stringify({
+      event: "checkout_failed",
+      accountId: account.id,
+      packId: pack.id,
+      detail: error instanceof Error ? error.message : "unknown",
+    }));
+    return json({ error: "checkout_failed" }, 502);
+  }
+}
+
+/** Credit a completed Checkout session.
+ *
+ *  Stripe is authenticated by signature, not by bearer token, so this runs
+ *  outside the /api auth gate. Everything that decides how many credits to
+ *  grant comes from our own pricing table; the event supplies only which pack
+ *  and whose account, and the amount is re-checked against it. */
+async function handleStripeWebhook(request: Request, env: Env): Promise<Response> {
+  const secret = env.STRIPE_WEBHOOK_SECRET;
+  if (!secret) return json({ error: "billing_unavailable" }, 503);
+
+  let event: any;
+  try {
+    // Signature covers the exact bytes sent, so read text and never re-encode.
+    event = await verifyWebhook(await request.text(), request.headers.get("Stripe-Signature"), secret);
+  } catch (error) {
+    console.warn(JSON.stringify({
+      event: "stripe_webhook_rejected",
+      detail: error instanceof StripeError ? error.message : "unknown",
+    }));
+    return json({ error: "invalid_signature" }, 400);
+  }
+
+  // Anything else is acknowledged, not retried: Stripe resends non-2xx for days
+  // and an unhandled type is not a failure.
+  if (event?.type !== "checkout.session.completed") {
+    return json({ received: true, ignored: event?.type ?? null });
+  }
+
+  const session = event.data?.object ?? {};
+  const accountId = session.metadata?.account_id ?? session.client_reference_id;
+  const pack = packById(session.metadata?.pack_id ?? "");
+  if (typeof accountId !== "string" || !accountId || !pack) {
+    console.error(JSON.stringify({ event: "stripe_session_unattributable", sessionId: session.id ?? null }));
+    // 200: retrying cannot fix a session we cannot attribute. It needs a human.
+    return json({ received: true, error: "unattributable" });
+  }
+  if (session.payment_status !== "paid") {
+    return json({ received: true, ignored: "unpaid" });
+  }
+  // Guard against a session whose total does not match the pack it claims --
+  // a mismatch means our pricing changed mid-flight or the session was not ours,
+  // and either way granting the pack's credits would be wrong.
+  if (session.amount_total !== pack.priceCents || String(session.currency).toLowerCase() !== "usd") {
+    console.error(JSON.stringify({
+      event: "stripe_amount_mismatch",
+      sessionId: session.id ?? null,
+      expected: pack.priceCents,
+      got: session.amount_total ?? null,
+      currency: session.currency ?? null,
+    }));
+    return json({ received: true, error: "amount_mismatch" });
+  }
+
+  const { applied, balance } = await recordPurchase(env.ACCOUNTS_DB, {
+    accountId,
+    packId: pack.id,
+    credits: pack.credits,
+    amountCents: pack.priceCents,
+    currency: "usd",
+    stripeSessionId: String(session.id),
+    stripePaymentIntent: typeof session.payment_intent === "string" ? session.payment_intent : null,
+  });
+  console.log(JSON.stringify({
+    event: applied ? "credits_purchased" : "credits_purchase_replayed",
+    accountId, packId: pack.id, credits: pack.credits, balance,
+  }));
+  return json({ received: true, applied, balance });
+}
+
 async function handleApi(request: Request, env: Env): Promise<Response> {
   const url = new URL(request.url);
   const token = bearerToken(request);
@@ -507,6 +635,19 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
     return json({ accountId: account.id, email: account.email, credits: await creditBalance(env.ACCOUNTS_DB, account.id) });
   }
 
+  // The price list the account page renders. Served from the same table the
+  // webhook credits from, so the page cannot advertise a stale price.
+  if (url.pathname === "/api/billing/packs" && request.method === "GET") {
+    return json({
+      packs: CREDIT_PACKS.map(pack => ({ id: pack.id, credits: pack.credits, priceCents: pack.priceCents, label: pack.label })),
+      operations: OPERATION_CREDITS,
+    });
+  }
+
+  if (url.pathname === "/api/billing/checkout" && request.method === "POST") {
+    return handleCheckout(request, env, identity);
+  }
+
   return json({ error: "not_found" }, 404);
 }
 
@@ -520,6 +661,12 @@ async function route(request: Request, env: Env, ctx: ExecutionContext): Promise
     return plain("Method not allowed", 405, { Allow: "GET, HEAD" });
   }
   if (url.pathname.startsWith("/_shell/")) return plain("Not found", 404);
+  // Ahead of handleApi: Stripe authenticates with a body signature and has no
+  // bearer token to send, so it must bypass that gate.
+  if (url.pathname === "/api/webhooks/stripe") {
+    if (request.method !== "POST") return plain("Method not allowed", 405, { Allow: "POST" });
+    return handleStripeWebhook(request, env);
+  }
   if (url.pathname.startsWith("/api/")) return handleApi(request, env);
   if (url.pathname === "/gallery") return handleGallery(request, env, ctx);
 

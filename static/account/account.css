@@ -28,3 +28,21 @@
 .account-page button:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
 .account-page :focus-visible{outline:2px solid var(--acc);outline-offset:3px}
 @media(max-width:540px){.account-page main{width:calc(100% - 28px);padding-top:40px}.account-card{padding:22px;border-radius:20px}}
+
+.credit-balance{display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  margin-top:20px;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--tint)}
+.credit-balance b{font-size:28px;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.account-confirm{margin-top:14px;padding:14px 16px;font-size:14px;line-height:1.55;
+  border:1px solid var(--acc-line);border-radius:12px;background:var(--acc-soft);color:var(--tx)}
+.credit-packs{margin-top:24px}
+.credit-packs h2{font-size:17px;letter-spacing:-.02em;margin-bottom:12px}
+.pack-list{display:grid;gap:10px}
+.pack{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;
+  font:inherit;text-align:left;padding:14px 16px;cursor:pointer;
+  border:1px solid var(--line-2);border-radius:14px;background:var(--bg-2);color:var(--tx)}
+.pack:hover:not(:disabled){border-color:var(--acc-line);background:var(--acc-soft)}
+.pack:disabled{opacity:.5;cursor:not-allowed}
+.pack-credits{display:flex;flex-direction:column;gap:3px}
+.pack-credits b{font-size:16px}
+.pack-credits small{font-size:13px;color:var(--tx-2)}
+.pack-price{font-size:17px;font-weight:700;letter-spacing:-.02em;white-space:nowrap}
