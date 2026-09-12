@@ -18,13 +18,27 @@ const ERROR_CODES = {
   'auth/cancelled-popup-request': 'cancelled',
   'auth/user-cancelled': 'cancelled',
   'auth/network-request-failed': 'network',
+  // Configuration faults, kept distinct from transient ones: telling someone to
+  // try again when the host they are on will never be allowed to sign in wastes
+  // their time and hides the actual cause from whoever has to fix it.
+  'auth/unauthorized-domain': 'domain-not-allowed',
+  'auth/operation-not-allowed': 'provider-disabled',
+  'auth/invalid-api-key': 'misconfigured',
+  'auth/api-key-not-valid': 'misconfigured',
 };
 
 export function mapErrorCode(providerCode) {
   return ERROR_CODES[providerCode] || 'unknown';
 }
 
-export function messageForCode(code) {
+// Every code messageForCode must answer for. Exported so the tests cover the
+// whole set rather than a list that drifts behind it.
+export const IDENTITY_ERROR_CODES = Object.freeze([...new Set(Object.values(ERROR_CODES)), 'unknown']);
+
+/** @param code one of IDENTITY_ERROR_CODES
+ *  @param hostname the current host, supplied by the caller -- this module
+ *         stays free of DOM globals so it can be tested in plain node. */
+export function messageForCode(code, hostname) {
   switch (code) {
     case 'popup-blocked':
       return 'Your browser blocked the sign-in window. Allow pop-ups for this site, then try again.';
@@ -32,6 +46,12 @@ export function messageForCode(code) {
       return 'Sign-in was cancelled.';
     case 'network':
       return 'Could not reach the sign-in service. Check your connection and try again.';
+    case 'domain-not-allowed':
+      return `Sign-in is not enabled for ${hostname || 'this address'}. The host has to be added to the project's authorized domains.`;
+    case 'provider-disabled':
+      return 'Google sign-in is switched off for this project.';
+    case 'misconfigured':
+      return 'Sign-in is misconfigured for this site. This needs a fix on our side, not a retry.';
     default:
       return 'Sign-in could not be completed. Please try again.';
   }

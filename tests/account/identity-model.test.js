@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {IdentityError, mapErrorCode, messageForCode, toIdentity} from '../../static/account/identity-model.js';
+import {IdentityError, mapErrorCode, messageForCode, toIdentity, IDENTITY_ERROR_CODES} from '../../static/account/identity-model.js';
 
 const googleUser = {
   uid: 'FIREBASE_UID_MUST_NOT_BE_USED',
@@ -60,8 +60,10 @@ test('provider error codes collapse to our own set, unknown ones included', () =
 });
 
 test('every mapped code has a human message', () => {
-  for (const code of ['popup-blocked', 'cancelled', 'network', 'unknown']) {
-    assert.match(messageForCode(code), /\S/);
+  // Iterates the exported set, not a copy of it: a new code added to the map
+  // without a message would otherwise pass unnoticed.
+  for (const code of IDENTITY_ERROR_CODES) {
+    assert.match(messageForCode(code, 'example.test'), /\S/, `no message for ${code}`);
   }
   assert.equal(messageForCode('not-a-real-code'), messageForCode('unknown'));
 });
@@ -71,4 +73,21 @@ test('IdentityError carries a code', () => {
   assert.equal(error.code, 'network');
   assert.equal(error.name, 'IdentityError');
   assert.ok(error instanceof Error);
+});
+
+test('configuration faults do not collapse into the generic retry message', () => {
+  // An unauthorized host is the single most likely first-deploy failure, and
+  // "please try again" is the one answer that is certainly wrong for it.
+  assert.equal(mapErrorCode('auth/unauthorized-domain'), 'domain-not-allowed');
+  assert.equal(mapErrorCode('auth/operation-not-allowed'), 'provider-disabled');
+  assert.equal(mapErrorCode('auth/api-key-not-valid'), 'misconfigured');
+  for (const code of ['provider-disabled', 'misconfigured']) {
+    assert.doesNotMatch(messageForCode(code), /try again/i, `${code} must not suggest a retry`);
+  }
+});
+
+test('names the host in the unauthorized-domain message, without reading the DOM', () => {
+  assert.match(messageForCode('domain-not-allowed', 'staging.example.test'), /staging\.example\.test/);
+  // No hostname supplied is still a sentence, not "undefined".
+  assert.doesNotMatch(messageForCode('domain-not-allowed'), /undefined/);
 });
