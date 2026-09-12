@@ -36,7 +36,7 @@ function sdk() {
 function asIdentityError(error) {
   if (error instanceof IdentityError) return error;
   const code = mapErrorCode(error && error.code);
-  return new IdentityError(code, messageForCode(code));
+  return new IdentityError(code, messageForCode(code, location.hostname));
 }
 
 function publish(identity) {
