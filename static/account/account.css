@@ -34,6 +34,8 @@
 .credit-balance b{font-size:28px;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
 .account-confirm{margin-top:14px;padding:14px 16px;font-size:14px;line-height:1.55;
   border:1px solid var(--acc-line);border-radius:12px;background:var(--acc-soft);color:var(--tx)}
+/* A cancelled checkout is neither success nor error -- neutral, not accented. */
+.account-confirm[data-outcome="cancelled"]{border-color:var(--line);background:var(--tint);color:var(--tx-2)}
 .credit-packs{margin-top:24px}
 .credit-packs h2{font-size:17px;letter-spacing:-.02em;margin-bottom:12px}
 .pack-list{display:grid;gap:10px}

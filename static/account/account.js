@@ -126,8 +126,14 @@ async function loadBilling() {
 /** After returning from Stripe, the webhook may not have landed yet. Re-read the
  *  balance until it rises above what it was before checkout, rather than showing
  *  a stale figure to someone who has just paid. */
-async function settlePurchase() {
+function showPurchaseNotice(outcome, message) {
+  purchaseConfirmed.textContent = message;
+  purchaseConfirmed.dataset.outcome = outcome;
   purchaseConfirmed.hidden = false;
+}
+
+async function settlePurchase() {
+  showPurchaseNotice('success', 'Payment received. Your credits have been added.');
   const before = takeRememberedBalance();
   // Without a remembered balance there is nothing to compare against, so the
   // reload that already happened is as good as it gets.
@@ -141,7 +147,7 @@ async function settlePurchase() {
     // Backs off, because the wait is for Stripe's webhook, not for us.
     await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1)));
   }
-  purchaseConfirmed.textContent = 'Payment received. Credits can take a moment to appear — reload this page shortly.';
+  showPurchaseNotice('success', 'Payment received. Credits can take a moment to appear — reload this page shortly.');
 }
 
 function handleReturnFromStripe() {
@@ -166,6 +172,12 @@ onIdentityChanged(identity => {
   if (!identity) return;
   loadBilling().then(() => {
     if (purchaseOutcome === 'success') return settlePurchase();
+    if (purchaseOutcome === 'cancelled') {
+      // Coming back from an abandoned checkout with no acknowledgement reads as
+      // if the payment silently failed. Say plainly that nothing was charged.
+      takeRememberedBalance();
+      showPurchaseNotice('cancelled', 'Checkout was cancelled. Nothing was charged.');
+    }
   });
 });
 
