@@ -14,13 +14,19 @@ the page does not upload it.
 - Exact Regular 2× weights from the iOS model.
 - Exact quantized GFPGAN 1.4 face model used by the apps.
 - 256-pixel overlapping tiles for normal upscaling.
-- The same face alignment target, acceptance checks, and soft circular blend
-  used by Android.
+- The same face alignment target and soft circular blend used by Android, and
+  its size checks; the rotation check is deliberately looser here.
 - GPU processing when the browser makes it available, with a CPU fallback.
 - A hidden engineering benchmark at `/lab/?benchmark=1` that compares browser
   output pixel-by-pixel with iOS Core ML reference images.
 
-The browser uses MediaPipe to find face landmarks. Android uses ML Kit for that
+YuNet (OpenCV Zoo, MIT) finds the faces and MediaPipe then places its
+landmarks on a crop around each one. MediaPipe's own bundled detector only sees
+faces that fill much of the frame, so group and full-length photos used to find
+no faces at all. The detector runs at 1280 px on desktop and 640 px on phones,
+measured at 56 ms and 16 ms on an M4 Pro; a physical iPhone (iOS 27, Chrome)
+measured 0.9 s at 640 against 3.6 s at 1280 and found the same faces.
+Android uses ML Kit for that
 step, so face detection can choose slightly different points even though the
 enhancement model and blending rules are the same.
 
@@ -74,8 +80,14 @@ result viewer follows the gallery at main commit `1baa444`: fitted comparison,
 expand/close controls and downloads below; the app card sits under the tool.
 
 Separate face enhancement is enabled by default and can be turned off before
-processing. MediaPipe finds up to eight faces; the app-parity alignment checks
-select suitable faces. Only then is the exact quantized GFPGAN 1.4 model loaded.
+processing. The detector returns up to eight faces; alignment checks select
+suitable ones. The apps skip a face whose nose sits 140 or further from the
+eye-to-mouth line, measured from the centroid of Vision's nose region; the web
+measures the same average over the mesh's nose but allows 300, because
+enhancing the most turned faces of a 45-photo sample by hand showed the 512
+model stays faithful on three-quarter views, which score 190 to 290. A family
+photo of five people kept only one of its three usable faces at 140.
+Only then is the exact quantized GFPGAN 1.4 model loaded.
 512×512 restored patches are feathered into the Regular 2× result. Photos with
 no suitable faces still receive normal 2× processing, with an explicit result
 summary. AI face restoration can change facial details.
@@ -90,8 +102,8 @@ in addition to the regular photo guards. A failure offers retry, the option
 to turn off face enhancement, and the app; it never reports a face pass as
 successful when it failed. These limits cannot measure actual free RAM.
 
-`npm run build:preview` requires the approved `face_512.onnx` and
-`face_landmarker.task` artifacts alongside the existing regular models. The
+`npm run build:preview` requires the approved `face_512.onnx`,
+`face_detector_yunet.onnx` and `face_landmarker.task` artifacts alongside the existing regular models. The
 face model is split into content-addressed parts below Cloudflare Pages'
 25 MiB per-file limit and streamed into one preallocated buffer. Generated
 weights and runtime assets are ignored by Git and cached with immutable URLs.

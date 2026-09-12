@@ -8,6 +8,14 @@ const IDEAL_POINTS = [
   {x: 311, y: 371},
 ];
 
+// The app rejects at 140, which costs this model more than it protects it.
+// Measured across 45 photos: near-frontal faces already reach 150, the
+// three-quarter views a family photo is full of land between 190 and 290, and
+// only true profiles pass 300. Enhancing the fifteen most turned of them by
+// hand showed the 512 face model stays faithful the whole way, so the limit
+// only has to keep the alignment off faces it cannot square up at all.
+const ROTATION_LIMIT = 300;
+
 function distance(a, b) {
   return Math.hypot(a.x - b.x, a.y - b.y);
 }
@@ -22,6 +30,15 @@ function centroid(points) {
 const IDEAL_PERIMETER = [IDEAL_POINTS[0], IDEAL_POINTS[1], IDEAL_POINTS[4], IDEAL_POINTS[3], IDEAL_POINTS[0]]
   .slice(0, -1)
   .reduce((sum, point, index) => sum + distance(point, [IDEAL_POINTS[1], IDEAL_POINTS[4], IDEAL_POINTS[3], IDEAL_POINTS[0]][index]), 0);
+
+// The rotation check below measures how far the nose sits from the line
+// between the eyes and the mouth. The app reads that from the centroid of
+// Vision's whole nose region, so the web has to average the mesh's nose too:
+// the tip alone sticks out of the face in 3D and swings away from the line
+// much faster than the head actually turns. Measured on the app's own face
+// benchmarks, which the app enhances: the tip scores 180 and 181, the region
+// 127 and 129. Bridge midline plus both nostril wings.
+const NOSE_POINTS = [168, 6, 197, 195, 5, 4, 1, 98, 327];
 
 function pointAverage(landmarks, indices, width, height) {
   return {
@@ -46,12 +63,14 @@ export function faceGeometry(landmarks, width, height) {
   const dx = mouthCenter.x - eyeCenter.x;
   const dy = mouthCenter.y - eyeCenter.y;
   const lineLength = Math.max(0.001, Math.hypot(dx, dy));
+  // Alignment keeps using the tip; only the rotation gauge averages the nose.
+  const nose = pointAverage(landmarks, NOSE_POINTS, width, height);
   const noseDistance = Math.abs(
-    dy * points[2].x - dx * points[2].y + mouthCenter.x * eyeCenter.y - mouthCenter.y * eyeCenter.x,
+    dy * nose.x - dx * nose.y + mouthCenter.x * eyeCenter.y - mouthCenter.y * eyeCenter.x,
   ) / lineLength;
-  const cross = dx * (points[2].y - eyeCenter.y) - dy * (points[2].x - eyeCenter.x);
+  const cross = dx * (nose.y - eyeCenter.y) - dy * (nose.x - eyeCenter.x);
   const noseOffset = noseDistance * (cross > 0 ? -1 : 1) * FACE_SIZE * 5 / perimeter;
-  if (distance(points[0], points[1]) <= 8 || perimeter >= 1500 || Math.abs(noseOffset) >= 140) return null;
+  if (distance(points[0], points[1]) <= 8 || perimeter >= 1500 || Math.abs(noseOffset) >= ROTATION_LIMIT) return null;
 
   const sourceCenter = centroid(points);
   const targetCenter = centroid(IDEAL_POINTS);

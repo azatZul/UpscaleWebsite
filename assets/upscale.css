@@ -6,17 +6,28 @@
 .tool-heading{text-align:center;margin-bottom:28px}
 .tool-heading .eyebrow::before{display:none}
 .tool-heading h1{font-size:clamp(32px,5vw,50px);letter-spacing:-.035em;text-wrap:balance}
-.tool-heading .lead{margin:14px auto 0;max-width:54ch;text-wrap:balance}
+.tool-heading .lead{margin:14px auto 0;max-width:48ch;color:var(--tx-3);text-wrap:balance}
 
-.tool-steps{display:flex;align-items:center;gap:14px;list-style:none;padding:0;margin-bottom:22px;color:var(--tx-3)}
-.tool-steps li{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:650}
-.tool-steps li+li{flex:1;min-width:0}
-.tool-steps li+li::before{content:"";flex:1;min-width:16px;height:2px;background:var(--line-2);margin-right:10px;border-radius:2px}
-.tool-steps li.complete+li::before,.tool-steps li[aria-current]+li::before{background:var(--acc)}
-.tool-steps span{display:grid;place-items:center;width:28px;height:28px;flex-shrink:0;border:1px solid var(--line-2);border-radius:50%;font-size:13px}
-.tool-steps [aria-current]{color:var(--tx)}
-.tool-steps [aria-current] span{background:var(--acc);border-color:var(--acc);color:var(--ink)}
-.tool-steps .complete span{color:var(--acc-tx);border-color:var(--acc-line);background:var(--acc-soft)}
+/* A compact segmented pill in the scale toggle's style, sized to its content
+   rather than stretched: only the current step is lit, and a finished one
+   swaps its numeral for a check. */
+.tool-steps{display:flex;align-items:center;gap:2px;width:fit-content;max-width:100%;
+  margin:0 auto 24px;padding:4px;list-style:none;color:var(--tx-3);
+  border:1px solid var(--line-2);border-radius:999px;background:var(--tint)}
+.tool-steps li{display:flex;align-items:center;gap:9px;min-width:0;padding:5px 16px 5px 5px;
+  border-radius:999px;font-size:14px;font-weight:650;white-space:nowrap;
+  transition:color .2s,background .2s}
+.step-mark{display:grid;place-items:center;width:26px;height:26px;flex-shrink:0;
+  border:1px solid var(--line-2);border-radius:50%;font-size:13px;font-weight:700;
+  transition:color .2s,background .2s,border-color .2s}
+.step-mark i{font-style:normal}
+.step-mark svg{display:none;width:14px;height:14px}
+.tool-steps [aria-current]{color:var(--tx);background:var(--surface);box-shadow:var(--shadow)}
+.tool-steps [aria-current] .step-mark{background:var(--acc);border-color:var(--acc);color:var(--ink)}
+.tool-steps .complete{color:var(--tx-2)}
+.tool-steps .complete .step-mark{color:var(--acc-tx);border-color:var(--acc-line);background:var(--acc-soft)}
+.tool-steps .complete .step-mark i{display:none}
+.tool-steps .complete .step-mark svg{display:block}
 
 .tool-card{padding:26px;border:1px solid var(--line-2);border-radius:var(--r-l);
   background:linear-gradient(180deg,var(--surface),var(--bg-2));box-shadow:var(--shadow);scroll-margin-top:100px}
@@ -30,7 +41,8 @@
 
 /* The drop zone keeps its size with or without a photo, and stays a drop target
    for the next one. */
-.photo-drop{position:relative;display:grid;place-items:center;min-height:292px;padding:24px;
+.photo-drop{--drop-h:292px;--drop-pad:24px;position:relative;display:grid;grid-template-columns:minmax(0,1fr);
+  place-items:center;min-height:var(--drop-h);padding:var(--drop-pad);
   border:1.5px dashed var(--line-2);border-radius:var(--r-m);background:var(--tint);text-align:center;cursor:pointer;
   transition:border-color .2s,background .2s}
 .photo-drop:hover{border-color:var(--acc-line)}
@@ -47,8 +59,11 @@
 .drop-or::before,.drop-or::after{content:"";flex:1;height:1px;background:var(--line-2)}
 .drop-empty .btn{min-height:48px}
 .limit-note{font-size:12.5px;line-height:1.5;color:var(--tx-3);max-width:44ch}
-.drop-selected{display:flex;align-items:center;gap:22px;width:100%;text-align:left}
-.drop-selected img{width:220px;height:220px;flex:0 0 auto;object-fit:contain;border-radius:12px;background:var(--tint-2)}
+/* The square preview sits inside the zone's own padding, so the gap above, below
+   and to the left of it is the same. */
+.drop-selected{display:flex;align-items:center;gap:22px;width:100%;min-width:0;text-align:left}
+.drop-selected img{width:calc(var(--drop-h) - var(--drop-pad) * 2);height:calc(var(--drop-h) - var(--drop-pad) * 2);
+  flex:0 0 auto;object-fit:contain;border-radius:12px;background:var(--tint-2)}
 .drop-selected img:not([src]){visibility:hidden}
 .selected-meta{min-width:0;display:flex;flex-direction:column;gap:4px}
 .selected-meta b{font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -66,7 +81,7 @@
 .scale-option{display:inline-flex;gap:4px;padding:3px;border:1px solid var(--line-2);border-radius:12px;background:var(--tint)}
 .scale-option button{font:inherit;font-size:14px;font-weight:700;min-width:58px;min-height:36px;padding:6px 16px;border:0;border-radius:9px;
   background:none;color:var(--tx-2);cursor:pointer;transition:background .15s,color .15s}
-.scale-option button:hover:not(:disabled){color:var(--tx)}
+.scale-option button:hover:not(:disabled):not([aria-pressed="true"]){color:var(--tx)}
 .scale-option button[aria-pressed="true"]{background:var(--acc);color:var(--ink)}
 .scale-note{font-size:12.5px;color:var(--tx-3)}
 .face-option{display:flex;align-items:center;gap:10px;cursor:pointer}
@@ -142,11 +157,10 @@
   .tool-card{padding:16px;border-radius:20px}
   .tool-card-heading h2{font-size:17px}
   .private-badge{padding:6px 10px;font-size:12px}
-  .tool-steps{gap:8px}
-  .tool-steps li{gap:6px;font-size:12.5px}
-  .tool-steps span{width:24px;height:24px}
+  .tool-steps li{gap:7px;padding:5px 12px 5px 5px;font-size:13px}
+  .step-mark{width:24px;height:24px;font-size:12.5px}
   /* Tall enough for either state in every locale, so a photo never resizes it. */
-  .photo-drop{min-height:304px;padding:18px 14px}
+  .photo-drop{--drop-h:304px;--drop-pad:18px;padding:18px 14px}
   .drop-selected{flex-direction:column;gap:12px;text-align:center}
   .drop-selected img{width:100%;height:140px}
   .selected-meta{align-items:center;max-width:100%}

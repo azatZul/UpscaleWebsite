@@ -2,12 +2,26 @@ import {ASSETS} from './assets.generated.js';
 import {PhotoError, SCALE, TILE_SIZE} from './capability.js';
 import {tensorPixels} from './tile-pipeline.js';
 
-export async function loadRuntime(forceCpu, progress, face = false, scale = SCALE) {
-  let backend = 'wasm';
+// The face finder shares this choice, so both ONNX models in a face pass load
+// the same engine build instead of two separate wasm heaps.
+export async function selectBackend(forceCpu) {
   if (!forceCpu && navigator.gpu) {
-    try { if (await navigator.gpu.requestAdapter()) backend = 'webgpu'; } catch { /* CPU remains available. */ }
+    try { if (await navigator.gpu.requestAdapter()) return 'webgpu'; } catch { /* CPU remains available. */ }
   }
-  const engine = backend === 'webgpu' ? 'ort.webgpu.min.mjs' : 'ort.wasm.min.mjs';
+  return 'wasm';
+}
+
+export async function importOrt(backend) {
+  const ort = await import(/* @vite-ignore */ `${ASSETS.runtime}/${backend === 'webgpu' ? 'ort.webgpu.min.mjs' : 'ort.wasm.min.mjs'}`);
+  ort.env.wasm.wasmPaths = `${ASSETS.runtime}/`;
+  ort.env.wasm.numThreads = 1;
+  ort.env.wasm.proxy = false;
+  ort.env.logLevel = 'error';
+  return ort;
+}
+
+export async function loadRuntime(forceCpu, progress, face = false, scale = SCALE) {
+  const backend = await selectBackend(forceCpu);
   const model = face ? undefined : ASSETS.models[scale][backend === 'webgpu' ? 'gpu' : 'cpu'];
   const modelTitle = face ? 'loading_faces' : 'loading_upscaler';
   const outputSide = face ? 512 : TILE_SIZE * scale;
@@ -15,11 +29,7 @@ export async function loadRuntime(forceCpu, progress, face = false, scale = SCAL
   let ort;
   try {
     progress({phase: 'download', title: modelTitle, detail: 'loading_cached_detail'});
-    ort = await import(/* @vite-ignore */ `${ASSETS.runtime}/${engine}`);
-    ort.env.wasm.wasmPaths = `${ASSETS.runtime}/`;
-    ort.env.wasm.numThreads = 1;
-    ort.env.wasm.proxy = false;
-    ort.env.logLevel = 'error';
+    ort = await importOrt(backend);
     const report = fraction => progress({phase: 'download', progress: fraction * .45, title: modelTitle, detail: 'stays_on_device'});
     const modelBytes = face ? await downloadFace(report) : await download(model, report);
     const binary = backend === 'webgpu' ? 'ort-wasm-simd-threaded.asyncify.wasm' : 'ort-wasm-simd-threaded.wasm';

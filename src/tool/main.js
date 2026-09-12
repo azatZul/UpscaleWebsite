@@ -12,7 +12,7 @@ const elements = Object.fromEntries(['photo-input', 'choose-photo', 'replace-pho
   'download-result', 'another-photo', 'limit-note', 'interrupted', 'visibility-note', 'photo-stage', 'stage-title',
   'step-choose', 'step-upscale', 'step-compare', 'before-image', 'result-comparison', 'comparison-handle', 'enhance-faces',
   'face-summary', 'result-viewer', 'result-stage', 'expand-result', 'close-result', 'scale-2x', 'scale-4x', 'scale-note',
-  'result-tag'].map(id => [id, $(id)]));
+  'result-tag', 'result-title'].map(id => [id, $(id)]));
 const comparison = createComparison(elements['result-comparison'], elements['before-image'], elements['comparison-handle'],
   value => t('slider_value', {value}));
 const environment = {userAgent: navigator.userAgent, platform: navigator.platform,
@@ -225,11 +225,15 @@ function onMessage(data, current) {
     elements['result-tag'].textContent = t('result_tag', {scale: resultScale});
     elements['download-result'].href = resultUrl;
     elements['download-result'].download = `${file.name.replace(/\.[^.]+$/, '') || 'photo'}-uscale-${resultScale}x.jpg`;
-    elements['result-summary'].textContent = `${dimensions(data.plan)} · JPEG`;
+    // The scale is the headline; the size, format and face count read as one
+    // subtitle under it, and the partial-faces caveat stays its own line.
     const faces = !data.faceEnabled ? t('faces_off')
-      : data.faceCount ? t('faces_enhanced', {count: data.faceCount}) + (data.detectedCount > data.faceCount ? ` · ${t('faces_partial')}` : '')
+      : data.faceCount ? t('faces_enhanced', {count: data.faceCount})
         : t(data.detectedCount ? 'faces_none_suitable' : 'faces_none');
-    elements['face-summary'].textContent = `${t('upscaled', {scale: resultScale})} · ${faces}`;
+    elements['result-title'].textContent = t('upscaled', {scale: resultScale});
+    elements['result-summary'].textContent = `${dimensions(data.plan)} · JPEG; ${faces}`;
+    elements['face-summary'].textContent =
+      data.faceCount && data.detectedCount > data.faceCount ? t('faces_partial') : '';
     setStatus(t('done_title'), t('done_detail'));
     elements.results.hidden = false;
     refreshControls();

@@ -1741,6 +1741,8 @@ SHIELD_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
               '<path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z"/><path d="M9 12l2 2 4-4"/></svg>')
 EXPAND_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">'
               '<path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5"/></svg>')
+CHECK_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" '
+             'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7"/></svg>')
 
 
 def tool_cta(c, lang):
@@ -1803,9 +1805,9 @@ def render_tool(c, lang):
       <p class="lead">{esc(tl['sub'])}</p>
     </div>
     <ol class="tool-steps" aria-label="{esc(tl['steps_label'])}">
-      <li id="step-choose" aria-current="step"><span>1</span>{esc(tl['step_choose'])}</li>
-      <li id="step-upscale"><span>2</span>{esc(tl['step_upscale'])}</li>
-      <li id="step-compare"><span>3</span>{esc(tl['step_save'])}</li>
+      <li id="step-choose" aria-current="step"><span class="step-mark"><i>1</i>{CHECK_SVG}</span>{esc(tl['step_choose'])}</li>
+      <li id="step-upscale"><span class="step-mark"><i>2</i>{CHECK_SVG}</span>{esc(tl['step_upscale'])}</li>
+      <li id="step-compare"><span class="step-mark"><i>3</i>{CHECK_SVG}</span>{esc(tl['step_save'])}</li>
     </ol>
     <p class="notice" id="interrupted" hidden>{esc(tl['interrupted'])}</p>
     <section class="tool-card" id="photo-stage" aria-labelledby="stage-title">
@@ -1874,7 +1876,7 @@ def render_tool(c, lang):
           <button id="close-result" class="album-ctl album-close" type="button" aria-label="{esc(tl['close'])}" hidden>✕</button>
         </div>
         <div class="album-details">
-          <h2 id="result-title">{esc(tl['result_h2'])}</h2>
+          <h2 id="result-title">{first(js['upscaled'])}</h2>
           <p id="result-summary"></p>
           <p id="face-summary"></p>
           <div class="album-actions">

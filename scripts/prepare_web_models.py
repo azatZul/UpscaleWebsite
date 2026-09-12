@@ -94,6 +94,17 @@ def main() -> int:
         "--tile-size", "256", "--scale", "2", "--fp16-weights",
     )
 
+    # YuNet finds the faces the landmark bundle's own BlazeFace misses: it
+    # reads faces down to about 10 px, where BlazeFace short-range needs a face
+    # filling much of the frame. OpenCV Zoo publishes it under the MIT license.
+    yunet_path = OUTPUT / "face_detector_yunet.onnx"
+    if not yunet_path.exists():
+        urllib.request.urlretrieve(
+            "https://github.com/opencv/opencv_zoo/raw/main/models/"
+            "face_detection_yunet/face_detection_yunet_2026may.onnx",
+            yunet_path,
+        )
+
     landmark_path = OUTPUT / "face_landmarker.task"
     if not landmark_path.exists():
         urllib.request.urlretrieve(

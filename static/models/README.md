@@ -15,8 +15,12 @@ The prototype expects:
 - `face_512.onnx` — the exact quantized GFPGAN 1.4 graph used for face
   enhancement, exported from the seven-bit Core ML source without expanding
   the weights to FP32.
-- `face_landmarker.task` — MediaPipe face landmarks used only to align and
-  composite faces. It is not the enhancement model.
+- `face_detector_yunet.onnx` — YuNet from the OpenCV Zoo (MIT), which finds
+  the faces. The landmark bundle's own BlazeFace detector only sees faces that
+  fill much of the frame, so group and full-length photos found none at all.
+- `face_landmarker.task` — MediaPipe face landmarks, placed on a crop around
+  each face YuNet found, used only to align and composite faces. It is not the
+  enhancement model.
 
 The benchmark corpus under `static/benchmarks/ios/` is generated directly from
 the Core ML models and records hashes for every input and reference image.

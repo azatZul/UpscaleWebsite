@@ -2,13 +2,15 @@ import {ASSETS} from './assets.generated.js';
 import {faceGeometry} from './face-geometry.js';
 import {loadRuntime} from './runtime.js';
 import {assessPhoto, devicePolicy, faceLimit, isAppleMobile, PhotoError} from './capability.js';
+import {cropRegion, detectionSide} from './face-detect.js';
+import {loadFaceFinder} from './face-finder.js';
 import {inspectFile} from './image-info.js';
 const status = message => self.postMessage({type: 'status', ...message});
 let busy = false;
 self.onmessage = async ({data: {file, environment, forceCpu}}) => {
   if (busy) return;
   busy = true;
-  let bitmap, detector, runtime;
+  let bitmap, finder, landmarker, runtime;
   try {
     const info = await inspectFile(file);
     const policy = devicePolicy(environment);
@@ -19,25 +21,45 @@ self.onmessage = async ({data: {file, environment, forceCpu}}) => {
     if (info.width * info.height > limit) throw new PhotoError('face', 'err_face_limit', {mp: limit / 1_000_000});
     bitmap = await createImageBitmap(file, {imageOrientation: 'from-image'});
     status({title: 'finding_faces', detail: 'finding_faces_check'});
-    const {FaceLandmarker, FilesetResolver} = await import(/* @vite-ignore */ `${ASSETS.vision}/vision_bundle.mjs`);
-    detector = await FaceLandmarker.createFromOptions(await FilesetResolver.forVisionTasks(`${ASSETS.vision}/wasm`), {
-      baseOptions: {modelAssetPath: ASSETS.faceDetector, delegate: 'CPU'},
-      runningMode: 'IMAGE', numFaces: 8,
-      minFaceDetectionConfidence: .5, minFacePresenceConfidence: .5,
-    });
-    const ratio = Math.min(1, 1280 / Math.max(bitmap.width, bitmap.height));
-    const detectionImage = new OffscreenCanvas(Math.round(bitmap.width * ratio), Math.round(bitmap.height * ratio));
-    detectionImage.getContext('2d').drawImage(bitmap, 0, 0, detectionImage.width, detectionImage.height);
-    const detection = detector.detect(detectionImage);
-    const transforms = detection.faceLandmarks.map(points => faceGeometry(points, bitmap.width, bitmap.height)).filter(Boolean);
-    const detectedCount = detection.faceLandmarks.length;
-    detector.close(); detector = null;
-    detectionImage.width = detectionImage.height = 1;
+    // Apple devices use CPU for the models here: the exact GFPGAN graph crashed
+    // WebGPU in physical-device tests. A separate worker releases this heap
+    // before 2x.
+    const cpuOnly = forceCpu || isAppleMobile(environment);
+    finder = await loadFaceFinder(cpuOnly);
+    const found = await finder.find(bitmap, detectionSide(policy));
+    const detectedCount = found.length;
+    // Free the detector's arena before GFPGAN, which reuses the same engine.
+    await finder.release(); finder = null;
+    const transforms = [];
+    if (found.length) {
+      const {FaceLandmarker, FilesetResolver} = await import(/* @vite-ignore */ `${ASSETS.vision}/vision_bundle.mjs`);
+      landmarker = await FaceLandmarker.createFromOptions(await FilesetResolver.forVisionTasks(`${ASSETS.vision}/wasm`), {
+        baseOptions: {modelAssetPath: ASSETS.faceDetector, delegate: 'CPU'},
+        runningMode: 'IMAGE', numFaces: 1,
+        minFaceDetectionConfidence: .5, minFacePresenceConfidence: .5,
+      });
+      const cropCanvas = new OffscreenCanvas(512, 512);
+      const cropContext = cropCanvas.getContext('2d', {willReadFrequently: true});
+      for (const face of found) {
+        const {x, y, side} = cropRegion(face);
+        cropContext.fillStyle = '#000'; cropContext.fillRect(0, 0, 512, 512);
+        cropContext.drawImage(bitmap, x, y, side, side, 0, 0, 512, 512);
+        const points = landmarker.detect(cropCanvas).faceLandmarks[0];
+        if (!points) continue;
+        // Landmarks arrive relative to the crop; the alignment checks and the
+        // transform both work in the photo's own normalized coordinates.
+        const transform = faceGeometry(points.map(point => ({
+          x: (x + point.x * side) / bitmap.width,
+          y: (y + point.y * side) / bitmap.height,
+        })), bitmap.width, bitmap.height);
+        if (transform) transforms.push(transform);
+      }
+      landmarker.close(); landmarker = null;
+      cropCanvas.width = cropCanvas.height = 1;
+    }
     const faces = [];
     if (transforms.length) {
-      // Apple devices use CPU here: the exact GFPGAN graph crashed WebGPU in
-      // physical-device tests. A separate worker releases this heap before 2×.
-      runtime = await loadRuntime(forceCpu || isAppleMobile(environment), status, true);
+      runtime = await loadRuntime(cpuOnly, status, true);
       const canvas = new OffscreenCanvas(512, 512);
       const ctx = canvas.getContext('2d', {willReadFrequently: true});
       for (let i = 0; i < transforms.length; i++) {
@@ -59,5 +81,9 @@ self.onmessage = async ({data: {file, environment, forceCpu}}) => {
   } catch (error) {
     const own = ['download', 'face'].includes(error.code);
     self.postMessage({type: 'error', code: error.code || 'face', key: own ? error.key : 'err_face', params: own ? error.params : undefined});
-  } finally { bitmap?.close(); detector?.close(); await runtime?.release().catch(() => {}); }
+  } finally {
+    bitmap?.close(); landmarker?.close();
+    await finder?.release().catch(() => {});
+    await runtime?.release().catch(() => {});
+  }
 };
