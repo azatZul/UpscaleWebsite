@@ -1732,6 +1732,24 @@ Allow: /
 Sitemap: {SITE}/sitemap.xml
 """
 
+def static_index_directories():
+    """Directories under static/ that hold an index.html.
+
+    These are copied verbatim, so unlike rendered pages they contribute no
+    rules of their own -- and without one, /account/ is a 404 while
+    /account/index.html works, which is exactly the kind of difference nobody
+    notices until a payment redirect lands on it."""
+    found = []
+    for dirpath, _dirnames, filenames in os.walk(STATIC):
+        if "index.html" not in filenames:
+            continue
+        relative = os.path.relpath(dirpath, STATIC)
+        if relative == ".":
+            continue
+        found.append("/" + relative.replace(os.sep, "/") + "/")
+    return sorted(found)
+
+
 def render_static_redirects():
     """Preserve canonical .html pages and directory indexes with html_handling=none."""
     rules = []
@@ -1742,6 +1760,9 @@ def render_static_redirects():
             rules.append(f"{directory} {directory}index.html 200")
             if directory != "/":
                 rules.append(f"{directory.rstrip('/')} {directory} 301")
+    for directory in static_index_directories():
+        rules.append(f"{directory} {directory}index.html 200")
+        rules.append(f"{directory.rstrip('/')} {directory} 301")
     return "\n".join(rules) + "\n"
 
 
