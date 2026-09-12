@@ -1,3 +1,6 @@
+import { bearerToken, verifyIdToken, type VerifiedIdentity } from "./auth";
+import { creditBalance, getOrCreateAccount } from "./accounts";
+
 const ALBUM_ID = "[0-9A-HJKMNP-TV-Z]{26}";
 const ALBUM_PATH = new RegExp(`^/gallery/(${ALBUM_ID})$`);
 const COVER_PATH = new RegExp(`^/media/(${ALBUM_ID})/cover\\.jpg$`);
@@ -470,13 +473,54 @@ async function handleDownload(request: Request, env: Env, albumId: string, photo
   return new Response(object.body, { status: range ? 206 : 200, headers });
 }
 
+function json(body: unknown, status = 200): Response {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" },
+  });
+}
+
+async function handleApi(request: Request, env: Env): Promise<Response> {
+  const url = new URL(request.url);
+  const token = bearerToken(request);
+  if (!token) return json({ error: "unauthorized" }, 401);
+
+  let identity: VerifiedIdentity;
+  try {
+    identity = await verifyIdToken(token, env.FIREBASE_PROJECT_ID);
+  } catch (error) {
+    // Never echo the verification detail back: it tells an attacker which part
+    // of a forged token failed.
+    console.warn(JSON.stringify({ event: "token_rejected", reason: error instanceof Error ? error.message : "unknown" }));
+    return json({ error: "unauthorized" }, 401);
+  }
+
+  // Called once after sign-in, then idempotent. Creating the row here rather
+  // than lazily means later endpoints can assume an account exists.
+  if (url.pathname === "/api/auth/session" && request.method === "POST") {
+    const account = await getOrCreateAccount(env.DB, identity.googleSub, identity.email);
+    return json({ accountId: account.id, email: account.email, credits: await creditBalance(env.DB, account.id) });
+  }
+
+  if (url.pathname === "/api/me" && request.method === "GET") {
+    const account = await getOrCreateAccount(env.DB, identity.googleSub, identity.email);
+    return json({ accountId: account.id, email: account.email, credits: await creditBalance(env.DB, account.id) });
+  }
+
+  return json({ error: "not_found" }, 404);
+}
+
 async function route(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
   const url = new URL(request.url);
   const isRead = request.method === "GET" || request.method === "HEAD";
   const dynamic = url.pathname === "/gallery" || url.pathname.startsWith("/gallery/") || url.pathname.startsWith("/media/") || url.pathname.startsWith("/download/") || url.pathname.startsWith("/api/") || url.pathname.startsWith("/_shell/");
-  if (dynamic && !isRead) return plain("Method not allowed", 405, { Allow: "GET, HEAD" });
+  // /api/ is the one dynamic prefix that accepts writes: sign-in creates an
+  // account row, and Stripe will POST webhooks here.
+  if (dynamic && !isRead && !url.pathname.startsWith("/api/")) {
+    return plain("Method not allowed", 405, { Allow: "GET, HEAD" });
+  }
   if (url.pathname.startsWith("/_shell/")) return plain("Not found", 404);
-  if (url.pathname.startsWith("/api/")) return plain("Not found", 404);
+  if (url.pathname.startsWith("/api/")) return handleApi(request, env);
   if (url.pathname === "/gallery") return handleGallery(request, env, ctx);
 
   const album = ALBUM_PATH.exec(url.pathname);

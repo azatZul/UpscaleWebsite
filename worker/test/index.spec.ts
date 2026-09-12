@@ -147,7 +147,15 @@ describe.sequential("album worker", () => {
     await insertAlbum(DELETED, "deleted", false);
     expect((await fetchWorker(`/gallery/${DELETED}`)).status).toBe(410);
     expect((await fetchWorker("/_shell/album.html")).status).toBe(404);
-    expect((await fetchWorker("/api/admin", { method: "POST" })).status).toBe(405);
+    // /api/ accepts POST now (sign-in, and Stripe webhooks later), so an
+    // unauthenticated write is 401 rather than the old blanket 405. Auth is
+    // checked before routing on purpose: an unknown /api path answers 401 too,
+    // so callers without a token cannot enumerate which endpoints exist.
+    const unauthenticated = await fetchWorker("/api/admin", { method: "POST" });
+    expect(unauthenticated.status).toBe(401);
+    expect(await unauthenticated.text()).toBe(JSON.stringify({ error: "unauthorized" }));
+    // Non-/api dynamic paths keep rejecting writes outright.
+    expect((await fetchWorker("/gallery", { method: "POST" })).status).toBe(405);
   });
 
   it("renders twenty comparisons in position order with lazy loading and no hero-follow", async () => {
