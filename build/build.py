@@ -1995,6 +1995,24 @@ Allow: /
 Sitemap: {SITE}/sitemap.xml
 """
 
+def static_index_directories():
+    """Directories under static/ that hold an index.html.
+
+    These are copied verbatim, so unlike rendered pages they contribute no
+    rules of their own -- and without one, /account/ is a 404 while
+    /account/index.html works, which is exactly the kind of difference nobody
+    notices until a payment redirect lands on it."""
+    found = []
+    for dirpath, _dirnames, filenames in os.walk(STATIC):
+        if "index.html" not in filenames:
+            continue
+        relative = os.path.relpath(dirpath, STATIC)
+        if relative == ".":
+            continue
+        found.append("/" + relative.replace(os.sep, "/") + "/")
+    return sorted(found)
+
+
 def render_static_redirects():
     """Preserve canonical .html pages and directory indexes with html_handling=none."""
     rules = []
@@ -2009,6 +2027,14 @@ def render_static_redirects():
     if TOOL_SCRIPT:
         # The preview first shipped at /upscale/.
         rules += [f"/upscale/ /{TOOL_PATH}/ 301", f"/upscale /{TOOL_PATH}/ 301"]
+    # Pages copied verbatim from static/ contribute no rules of their own; skip
+    # any directory a rendered page already claimed.
+    claimed = {rule.split(" ", 1)[0] for rule in rules}
+    for directory in static_index_directories():
+        if directory in claimed:
+            continue
+        rules.append(f"{directory} {directory}index.html 200")
+        rules.append(f"{directory.rstrip('/')} {directory} 301")
     return "\n".join(rules) + "\n"
 
 
