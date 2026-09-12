@@ -498,13 +498,13 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   // Called once after sign-in, then idempotent. Creating the row here rather
   // than lazily means later endpoints can assume an account exists.
   if (url.pathname === "/api/auth/session" && request.method === "POST") {
-    const account = await getOrCreateAccount(env.DB, identity.googleSub, identity.email);
-    return json({ accountId: account.id, email: account.email, credits: await creditBalance(env.DB, account.id) });
+    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+    return json({ accountId: account.id, email: account.email, credits: await creditBalance(env.ACCOUNTS_DB, account.id) });
   }
 
   if (url.pathname === "/api/me" && request.method === "GET") {
-    const account = await getOrCreateAccount(env.DB, identity.googleSub, identity.email);
-    return json({ accountId: account.id, email: account.email, credits: await creditBalance(env.DB, account.id) });
+    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+    return json({ accountId: account.id, email: account.email, credits: await creditBalance(env.ACCOUNTS_DB, account.id) });
   }
 
   return json({ error: "not_found" }, 404);

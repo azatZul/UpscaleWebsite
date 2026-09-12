@@ -9,6 +9,7 @@ export default defineConfig({
       miniflare: {
         bindings: {
           TEST_MIGRATIONS: await readD1Migrations(path.join(import.meta.dirname, "migrations")),
+          TEST_ACCOUNTS_MIGRATIONS: await readD1Migrations(path.join(import.meta.dirname, "migrations-accounts")),
         },
       },
     })),

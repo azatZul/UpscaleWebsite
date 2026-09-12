@@ -26,6 +26,12 @@
       "database_name": "uscale-albums-local",
       "database_id": "00000000-0000-0000-0000-000000000001",
       "migrations_dir": "migrations"
+    },
+    {
+      "binding": "ACCOUNTS_DB",
+      "database_name": "uscale-accounts-local",
+      "database_id": "00000000-0000-0000-0000-000000000002",
+      "migrations_dir": "migrations-accounts"
     }
   ],
   "r2_buckets": [
@@ -50,6 +56,12 @@
           "database_name": "uscale-albums-staging",
           "database_id": "2474db2f-ed01-4d36-b86b-64ff50f8c963",
           "migrations_dir": "migrations"
+        },
+        {
+          "binding": "ACCOUNTS_DB",
+          "database_name": "uscale-accounts-staging",
+          "database_id": "055ab5c5-504a-4602-a422-9d43478cf9a9",
+          "migrations_dir": "migrations-accounts"
         }
       ],
       "r2_buckets": [
@@ -69,6 +81,12 @@
           "database_name": "uscale-albums",
           "database_id": "2f4cbed2-d191-4dce-8c98-0f56e036cd95",
           "migrations_dir": "migrations"
+        },
+        {
+          "binding": "ACCOUNTS_DB",
+          "database_name": "uscale-accounts",
+          "database_id": "e600d54b-d5db-4cd0-88a2-5b8bd3a5ba5f",
+          "migrations_dir": "migrations-accounts"
         }
       ],
       "r2_buckets": [
