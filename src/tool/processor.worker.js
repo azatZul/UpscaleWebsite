@@ -14,6 +14,7 @@ let ready = false;
 let faces = [];
 let detectedCount = 0;
 let faceEnabled = false;
+let modelKind = 'photo';
 
 async function release() {
   source?.close(); source = null;
@@ -21,8 +22,10 @@ async function release() {
   try { await active?.release(); } catch { /* Worker termination is the final cleanup. */ }
 }
 
-async function prepare({file, environment, forceCpu = false, autoStart = false, faceResults, scale = SCALE}) {
+async function prepare({file, environment, forceCpu = false, autoStart = false, faceResults, scale = SCALE,
+  modelKind: requestedModelKind = 'photo'}) {
   ready = false;
+  modelKind = requestedModelKind;
   faces = faceResults?.faces || [];
   detectedCount = faceResults?.detectedCount || 0;
   faceEnabled = Boolean(faceResults);
@@ -35,7 +38,7 @@ async function prepare({file, environment, forceCpu = false, autoStart = false, 
   // after checking the header, and enforce the same policy again.
   plan = assessPhoto({width: source.width, height: source.height, size: file.size}, policy, scale);
   send({type: 'photo', plan, thumbnail: await thumbnail(source)});
-  runtime = await loadRuntime(forceCpu, status, false, scale);
+  runtime = await loadRuntime(forceCpu, status, false, scale, modelKind);
   if (autoStart) { ready = true; await process(); return; }
   status({phase: 'probe', title: 'measuring', detail: 'measuring_detail'});
   const x = Math.max(0, Math.floor((source.width - TILE_SIZE) / 2));
@@ -97,7 +100,8 @@ async function process() {
     // Verify that export preserved the requested dimensions.
     const result = parseImageHeader(await blob.slice(0, 2 * 1024 * 1024).arrayBuffer());
     if (result.width !== plan.outputWidth || result.height !== plan.outputHeight) throw new Error('Wrong export size');
-    send({type: 'done', blob, plan, faceCount, detectedCount, faceEnabled, tilesMs, totalMs: performance.now() - started});
+    send({type: 'done', blob, plan, modelKind, faceCount, detectedCount, faceEnabled, tilesMs,
+      totalMs: performance.now() - started});
   } catch (error) {
     if (error instanceof PhotoError) throw error;
     throw new PhotoError('export', 'err_save');

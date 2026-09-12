@@ -29,4 +29,4 @@ async function validate(directory) {
   }
 }
 await validate(preview);
-console.log('Cloudflare preview ready in .preview-dist (noindex, photo-only model assets).');
+console.log('Cloudflare preview ready in .preview-dist (noindex, photo and drawing model assets).');

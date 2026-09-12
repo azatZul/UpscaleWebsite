@@ -2,8 +2,9 @@
 
 ## Short answer
 
-Yes. Regular 2× upscaling and the same GFPGAN face enhancement model can run
-entirely in a browser. The tested GPU path is fast enough to feel practical.
+Yes. Regular photo and Real-ESRGAN/SRVGG drawing upscaling at 2× and 4×, plus
+the same GFPGAN face enhancement model for photos, can run entirely in a
+browser. The tested GPU path is fast enough to feel practical.
 The CPU fallback works, but face enhancement is slow.
 
 The prototype is a separate page at `/lab/`. A photo stays in the browser tab;
@@ -65,9 +66,10 @@ The full numbers are in `benchmarks/browser/mac_chromium_151_aggregate.json`.
 ## Running it locally
 
 1. Run `python3 scripts/prepare_web_models.py` once. It recreates the ignored
-   model files from the sibling iOS and Android repositories.
-2. Run `npm install` and `npm run build` (the existing site builder needs
-   Python 3.12).
+   model files from the sibling iOS and Android repositories. Non-standard
+   checkout locations can be supplied with `USCALE_IOS_REPO` and
+   `USCALE_MODEL_PORT`.
+2. Run `npm install` and `npm run build` (the site builder needs Python 3).
 3. Run `npm run preview:lab` and open `http://127.0.0.1:4173/lab/`.
 
 The model files are deliberately not committed. For a public experiment they
@@ -91,6 +93,11 @@ Only then is the exact quantized GFPGAN 1.4 model loaded.
 512×512 restored patches are feathered into the Regular 2× result. Photos with
 no suitable faces still receive normal 2× processing, with an explicit result
 summary. AI face restoration can change facial details.
+
+The tool defaults to Photo and keeps the selected image type until the page is
+reloaded. Drawing uses the exact iOS `anime_2x_dsize` or `anime_4x_dsize`
+Real-ESRGAN/SRVGG model; face enhancement is hidden and never loaded in that
+mode. Model assets are selected independently for WebGPU and the WASM fallback.
 
 The face worker finishes and is terminated before the regular worker starts,
 so their inference heaps are not intentionally kept resident together. Apple

@@ -1739,8 +1739,11 @@ PLUS_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-w
             'stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>')
 SHIELD_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">'
               '<path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z"/><path d="M9 12l2 2 4-4"/></svg>')
-EXPAND_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">'
-              '<path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5"/></svg>')
+# Viewer controls (.album-ctl in site.css); keep in sync with ICON_EXPAND/ICON_CLOSE in worker/src/index.ts.
+EXPAND_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" '
+              'stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>')
+CLOSE_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" '
+             'aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>')
 CHECK_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" '
              'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7"/></svg>')
 
@@ -1837,15 +1840,22 @@ def render_tool(c, lang):
         <span class="drop-release" aria-hidden="true">{esc(tl['drop_release'])}</span>
       </div>
       <div class="tool-options">
+        <div class="model-field">
+          <span class="option-label" id="model-label">{esc(tl['model_label'])}</span>
+          <span class="segment-option model-option" role="group" aria-labelledby="model-label">
+            <button id="model-photo" type="button" aria-pressed="true">{esc(tl['model_photo'])}</button>
+            <button id="model-drawing" type="button" aria-pressed="false">{esc(tl['model_drawing'])}</button>
+          </span>
+        </div>
         <div class="scale-field">
           <span class="option-label" id="scale-label">{esc(tl['scale_label'])}</span>
-          <span class="scale-option" role="group" aria-labelledby="scale-label">
+          <span class="segment-option scale-option" role="group" aria-labelledby="scale-label">
             <button id="scale-2x" type="button" aria-pressed="true">{esc(tl['x2'])}</button>
             <button id="scale-4x" type="button" aria-pressed="false" aria-describedby="scale-note">{esc(tl['x4'])}</button>
           </span>
           <span id="scale-note" class="scale-note" hidden>{esc(tl['scale_note'])}</span>
         </div>
-        <label class="face-option"><input id="enhance-faces" type="checkbox" checked><span>{esc(tl['faces'])}</span></label>
+        <label class="face-option" id="face-option"><input id="enhance-faces" type="checkbox" checked><span>{esc(tl['faces'])}</span></label>
       </div>
       <div class="tool-status" id="status" role="status" aria-live="polite" aria-atomic="true">
         <div class="status-head"><b id="status-title" hidden></b><span id="status-value"></span></div>
@@ -1873,7 +1883,7 @@ def render_tool(c, lang):
             </div>
           </div>
           <button id="expand-result" class="album-ctl album-zoom" type="button" aria-label="{esc(tl['expand'])}">{EXPAND_SVG}</button>
-          <button id="close-result" class="album-ctl album-close" type="button" aria-label="{esc(tl['close'])}" hidden>✕</button>
+          <button id="close-result" class="album-ctl album-close" type="button" aria-label="{esc(tl['close'])}" hidden>{CLOSE_SVG}</button>
         </div>
         <div class="album-details">
           <h2 id="result-title">{first(js['upscaled'])}</h2>

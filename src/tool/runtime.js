@@ -1,5 +1,6 @@
 import {ASSETS} from './assets.generated.js';
 import {PhotoError, SCALE, TILE_SIZE} from './capability.js';
+import {resolveModelAsset} from './model-selection.js';
 import {tensorPixels} from './tile-pipeline.js';
 
 // The face finder shares this choice, so both ONNX models in a face pass load
@@ -20,9 +21,11 @@ export async function importOrt(backend) {
   return ort;
 }
 
-export async function loadRuntime(forceCpu, progress, face = false, scale = SCALE) {
+export async function loadRuntime(forceCpu, progress, face = false, scale = SCALE, modelKind = 'photo') {
   const backend = await selectBackend(forceCpu);
-  const model = face ? undefined : ASSETS.models[scale][backend === 'webgpu' ? 'gpu' : 'cpu'];
+  let model;
+  try { model = face ? undefined : resolveModelAsset(ASSETS.models, modelKind, scale, backend); }
+  catch { throw new PhotoError('runtime', 'err_engine_start'); }
   const modelTitle = face ? 'loading_faces' : 'loading_upscaler';
   const outputSide = face ? 512 : TILE_SIZE * scale;
   let session;

@@ -75,16 +75,16 @@
   opacity:0;pointer-events:none;transition:opacity .15s}
 .photo-drop.dragging .drop-release{opacity:1}
 
-.tool-options{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 24px;margin-top:18px}
-.scale-field{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px}
+.tool-options{display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px;margin-top:18px}
+.model-field,.scale-field{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px}
 .option-label{font-size:14px;font-weight:650;color:var(--tx-2)}
-.scale-option{display:inline-flex;gap:4px;padding:3px;border:1px solid var(--line-2);border-radius:12px;background:var(--tint)}
-.scale-option button{font:inherit;font-size:14px;font-weight:700;min-width:58px;min-height:36px;padding:6px 16px;border:0;border-radius:9px;
+.segment-option{display:inline-flex;gap:4px;padding:3px;border:1px solid var(--line-2);border-radius:12px;background:var(--tint)}
+.segment-option button{font:inherit;font-size:14px;font-weight:700;min-width:58px;min-height:36px;padding:6px 16px;border:0;border-radius:9px;
   background:none;color:var(--tx-2);cursor:pointer;transition:background .15s,color .15s}
-.scale-option button:hover:not(:disabled):not([aria-pressed="true"]){color:var(--tx)}
-.scale-option button[aria-pressed="true"]{background:var(--acc);color:var(--ink)}
+.segment-option button:hover:not(:disabled):not([aria-pressed="true"]){color:var(--tx)}
+.segment-option button[aria-pressed="true"]{background:var(--acc);color:var(--ink)}
 .scale-note{font-size:12.5px;color:var(--tx-3)}
-.face-option{display:flex;align-items:center;gap:10px;cursor:pointer}
+.face-option{display:flex;align-items:center;gap:10px;margin-left:auto;cursor:pointer}
 .face-option input{width:20px;height:20px;margin:0;flex:0 0 auto;accent-color:var(--acc)}
 .face-option span{font-size:14.5px;font-weight:650;line-height:1.3}
 .face-option:has(input:disabled){cursor:default}
@@ -130,11 +130,7 @@
    which reads as two extra separator lines. Ring the round handle instead. */
 .tool .cmp-bar:focus-visible{outline:none}
 .tool .cmp-bar:focus-visible::after{box-shadow:0 6px 22px rgba(0,0,0,.55),0 0 0 3px var(--ink),0 0 0 6px var(--acc)}
-.album-ctl{position:absolute;z-index:6;display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;border-radius:50%;
-  background:rgba(0,0,0,.6);backdrop-filter:blur(8px);color:#fff;cursor:pointer}
-.album-ctl svg{width:20px;height:20px}
-.album-ctl:hover{background:rgba(0,0,0,.85)}
-.album-zoom{right:12px;bottom:12px}.album-close{right:12px;top:12px}
+.tool .album-ctl{width:44px;height:44px}
 .album-details{margin-top:14px;text-align:center}
 .album-details h2{font-size:19px;letter-spacing:-.02em;margin:0 0 6px}
 .album-details p{font-size:14px;color:var(--tx-2);line-height:1.5}
@@ -157,7 +153,9 @@
   .tool-card{padding:16px;border-radius:20px}
   .tool-card-heading h2{font-size:17px}
   .private-badge{padding:6px 10px;font-size:12px}
-  .tool-steps li{gap:7px;padding:5px 12px 5px 5px;font-size:13px}
+  .tool-steps{width:100%}
+  .tool-steps li{flex:1;justify-content:center;gap:7px;padding:5px 8px 5px 5px;
+    font-size:13px;white-space:normal;text-align:center}
   .step-mark{width:24px;height:24px;font-size:12.5px}
   /* Tall enough for either state in every locale, so a photo never resizes it. */
   .photo-drop{--drop-h:304px;--drop-pad:18px;padding:18px 14px}
@@ -166,11 +164,15 @@
   .selected-meta{align-items:center;max-width:100%}
   .selected-change{justify-content:center;margin-top:4px}
   .tool-options{flex-direction:column;align-items:flex-start}
+  .face-option{margin-left:0}
   .tool-results{margin-top:24px}
   .album-viewer{padding:10px 10px 18px}
   .album-stage{height:min(55vh,500px)}
   .result-comparison .cmp-tag{top:10px;font-size:12px;padding:5px 8px}
   .result-comparison .cmp-tag.l{left:10px}
   .result-comparison .cmp-tag.r{right:10px}
+}
+@media(max-width:420px){
+  .tool-steps li{flex-direction:column;gap:4px;padding:7px 4px;line-height:1.15}
 }
 @media(prefers-reduced-motion:reduce){.tool *{scroll-behavior:auto!important;transition:none!important}}

@@ -57,6 +57,10 @@ class CatalogTests(unittest.TestCase):
                 self.assertIn('src="/assets/processor/app/main-test.js"', html)
                 self.assertIn("uscale-theme", html)  # the shared theme boot
                 self.assertIn('class="theme-btn"', html)
+                self.assertIn('id="model-photo"', html)
+                self.assertIn('id="model-drawing"', html)
+                self.assertIn(f'>{c["tool"]["model_photo"]}</button>', html)
+                self.assertIn(f'>{c["tool"]["model_drawing"]}</button>', html)
                 self.assertIn(f'href="{site_build.rel_url(locale, "free-upscale")}"', site_build.nav(c, locale, "/"))
             self.assertIn("/upscale/ /free-upscale/ 301", site_build.render_static_redirects())
         finally:

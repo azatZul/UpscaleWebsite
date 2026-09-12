@@ -10,6 +10,12 @@ The prototype expects:
   used by WebGPU.
 - `normal_2x_web.ort` — the same Regular 2× graph prepared for the browser CPU
   fallback so it starts without a long optimization pause.
+- `normal_4x_web.onnx` and `normal_4x_web.ort` — the equivalent Regular 4×
+  WebGPU and CPU artifacts.
+- `anime_2x_web.onnx` and `anime_2x_web.ort` — exact iOS
+  `anime_2x_dsize` Real-ESRGAN/SRVGG weights for Drawing 2×.
+- `anime_4x_web.onnx` and `anime_4x_web.ort` — exact iOS
+  `anime_4x_dsize` Real-ESRGAN/SRVGG weights for Drawing 4×.
 - `normal_2x_litert.tflite` — the exact Regular 2× weights rebuilt in the
   browser-native channel-last layout for the LiteRT.js WebKit/iOS runtime.
 - `face_512.onnx` — the exact quantized GFPGAN 1.4 graph used for face
@@ -22,5 +28,5 @@ The prototype expects:
   each face YuNet found, used only to align and composite faces. It is not the
   enhancement model.
 
-The benchmark corpus under `static/benchmarks/ios/` is generated directly from
-the Core ML models and records hashes for every input and reference image.
+The benchmark corpora under `static/benchmarks/ios/` are generated directly
+from the Core ML models and record hashes for every input and reference image.

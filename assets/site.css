@@ -681,7 +681,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:64px 0 34
 
 .album-ctl{position:absolute;z-index:6;display:grid;place-items:center;width:42px;height:42px;
   padding:0;border:0;border-radius:50%;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);
-  color:#fff;opacity:.92;transition:background .2s,opacity .2s}
+  color:#fff;opacity:.92;cursor:pointer;transition:background .2s,opacity .2s}
 .album-ctl svg{display:block;width:20px;height:20px}
 .album-ctl:hover{background:rgba(0,0,0,.8);opacity:1}
 .album-ctl:disabled{opacity:0;pointer-events:none}

@@ -3,6 +3,7 @@ import {inspectFile} from './image-info.js';
 import {createComparison} from './comparison.js';
 import {createPanZoom} from './pan-zoom.js';
 import {pageTranslator} from './i18n.js';
+import {shouldEnhanceFaces, tileMetricKey} from './model-selection.js';
 
 const {t, duration} = pageTranslator(document);
 const $ = id => document.getElementById(id);
@@ -12,27 +13,30 @@ const elements = Object.fromEntries(['photo-input', 'choose-photo', 'replace-pho
   'download-result', 'another-photo', 'limit-note', 'interrupted', 'visibility-note', 'photo-stage', 'stage-title',
   'step-choose', 'step-upscale', 'step-compare', 'before-image', 'result-comparison', 'comparison-handle', 'enhance-faces',
   'face-summary', 'result-viewer', 'result-stage', 'expand-result', 'close-result', 'scale-2x', 'scale-4x', 'scale-note',
-  'result-tag', 'result-title'].map(id => [id, $(id)]));
+  'result-tag', 'result-title', 'model-photo', 'model-drawing', 'face-option'].map(id => [id, $(id)]));
 const comparison = createComparison(elements['result-comparison'], elements['before-image'], elements['comparison-handle'],
   value => t('slider_value', {value}));
 const environment = {userAgent: navigator.userAgent, platform: navigator.platform,
   maxTouchPoints: navigator.maxTouchPoints, deviceMemory: navigator.deviceMemory};
 const marker = 'uscale-preview-active-v1';
-const tileKey = 'uscale-tile-ms-v1';
 const policy = devicePolicy(environment);
 
 // Estimating before any download needs a per-tile figure. Use the measured one
 // from this device's last run, otherwise a conservative default.
 function knownTileMs() {
-  try { const stored = Number(localStorage.getItem(tileKey)); if (stored > 0) return stored; } catch { /* Storage is optional. */ }
+  try { const stored = Number(localStorage.getItem(tileMetricKey(modelKind, scale))); if (stored > 0) return stored; }
+  catch { /* Storage is optional. */ }
   return policy.mobile ? DEFAULT_TILE_MS.mobile : DEFAULT_TILE_MS.desktop;
 }
-function rememberTileMs(ms) {
-  try { if (ms > 0 && Number.isFinite(ms)) localStorage.setItem(tileKey, String(Math.round(ms))); } catch { /* Storage is optional. */ }
+function rememberTileMs(ms, kind, factor) {
+  try {
+    if (ms > 0 && Number.isFinite(ms)) localStorage.setItem(tileMetricKey(kind, factor), String(Math.round(ms)));
+  } catch { /* Storage is optional. */ }
 }
 let worker;
 let file;
 let scale = 2;
+let modelKind = 'photo';
 // idle (no photo) → assessing → ready → checking/processing → done, or error.
 let phase = 'idle';
 let forceCpu = false;
@@ -105,8 +109,10 @@ function refreshControls() {
   elements['selected-photo'].hidden = !hasFile;
   elements['stage-title'].textContent = t(hasFile ? 'your_photo' : 'choose_title');
   elements['drop-zone'].setAttribute('aria-disabled', String(locked));
-  for (const id of ['photo-input', 'choose-photo', 'replace-photo', 'scale-2x', 'enhance-faces']) elements[id].disabled = locked;
+  for (const id of ['photo-input', 'choose-photo', 'replace-photo', 'model-photo', 'model-drawing', 'scale-2x',
+    'enhance-faces']) elements[id].disabled = locked;
   elements['scale-4x'].disabled = locked || !supportsScale(policy, 4);
+  elements['face-option'].hidden = modelKind !== 'photo';
   const appOnly = ['browser', 'size', 'format'].includes(errorCode);
   const cpuRetry = failed && errorCode === 'gpu' && !forceCpu;
   const tryTwo = failed && scaleFallback;
@@ -210,7 +216,9 @@ function onMessage(data, current) {
     stopWorker(); phase = 'done';
     // Only learn from a run long enough to amortise first-inference shader
     // setup. A four-tile photo would otherwise teach a badly pessimistic rate.
-    if (data.plan?.tileCount >= 16 && data.tilesMs) rememberTileMs(data.tilesMs / data.plan.tileCount);
+    if (data.plan?.tileCount >= 16 && data.tilesMs) {
+      rememberTileMs(data.tilesMs / data.plan.tileCount, data.modelKind, data.plan.scale);
+    }
     clearOutput();
     resultUrl = URL.createObjectURL(data.blob);
     // Decode the original for comparison only after inference has finished.
@@ -227,11 +235,11 @@ function onMessage(data, current) {
     elements['download-result'].download = `${file.name.replace(/\.[^.]+$/, '') || 'photo'}-uscale-${resultScale}x.jpg`;
     // The scale is the headline; the size, format and face count read as one
     // subtitle under it, and the partial-faces caveat stays its own line.
-    const faces = !data.faceEnabled ? t('faces_off')
+    const faces = data.modelKind === 'drawing' ? '' : !data.faceEnabled ? t('faces_off')
       : data.faceCount ? t('faces_enhanced', {count: data.faceCount})
         : t(data.detectedCount ? 'faces_none_suitable' : 'faces_none');
     elements['result-title'].textContent = t('upscaled', {scale: resultScale});
-    elements['result-summary'].textContent = `${dimensions(data.plan)} · JPEG; ${faces}`;
+    elements['result-summary'].textContent = `${dimensions(data.plan)} · JPEG${faces ? `; ${faces}` : ''}`;
     elements['face-summary'].textContent =
       data.faceCount && data.detectedCount > data.faceCount ? t('faces_partial') : '';
     setStatus(t('done_title'), t('done_detail'));
@@ -259,7 +267,8 @@ function prepare(cpu = false, autoStart = false, faceResults) {
     worker.onerror = event => { event.preventDefault(); if (current === generation) fail('runtime', 'err_task_stopped'); };
     worker.onmessageerror = () => { if (current === generation) fail('runtime', 'err_result_read'); };
     remember(true);
-    worker.postMessage({type: 'prepare', file, environment, forceCpu, autoStart, faceResults, scale}, faceResults?.faces.map(face => face.pixels.buffer) || []);
+    worker.postMessage({type: 'prepare', file, environment, forceCpu, autoStart, faceResults, scale, modelKind},
+      faceResults?.faces.map(face => face.pixels.buffer) || []);
     watchdog(); keepAwake();
   } catch { fail('browser', 'err_worker_start'); }
 }
@@ -283,7 +292,7 @@ function startFaces(cpu = false) {
 function start() {
   if (!file || !supported || busy()) return;
   retriedGpu = false;
-  if (elements['enhance-faces'].checked) startFaces(forceCpu);
+  if (shouldEnhanceFaces(modelKind, elements['enhance-faces'].checked)) startFaces(forceCpu);
   else prepare(forceCpu, true);
 }
 
@@ -342,6 +351,18 @@ function setScale(value) {
   elements['limit-note'].textContent = t('limit_note', {mp: maxInputPixelsForScale(policy, scale) / 1_000_000, scale});
   elements['process-photo'].textContent = t('upscale_button', {scale});
 }
+function setModelKind(value) {
+  modelKind = value;
+  elements['model-photo'].setAttribute('aria-pressed', String(value === 'photo'));
+  elements['model-drawing'].setAttribute('aria-pressed', String(value === 'drawing'));
+  refreshControls();
+}
+elements['model-photo'].addEventListener('click', () => {
+  if (modelKind !== 'photo') { setModelKind('photo'); assessCurrentFile(); }
+});
+elements['model-drawing'].addEventListener('click', () => {
+  if (modelKind !== 'drawing') { setModelKind('drawing'); assessCurrentFile(); }
+});
 elements['scale-2x'].addEventListener('click', () => { if (scale !== 2) { setScale(2); assessCurrentFile(); } });
 elements['scale-4x'].addEventListener('click', () => { if (scale !== 4) { setScale(4); assessCurrentFile(); } });
 elements['scale-note'].hidden = supportsScale(policy, 4);
@@ -417,8 +438,10 @@ try {
   const pending = Number(localStorage.getItem(marker));
   elements.interrupted.hidden = !(pending > 0 && Date.now() - pending < 24 * 60 * 60 * 1000);
   remember(false);
+  localStorage.removeItem('uscale-tile-ms-v1');
 } catch { /* Browser storage is optional. */ }
 setScale(2);
+setModelKind('photo');
 idleStatus();
 try {
   checkBrowser({secure: isSecureContext, worker: typeof Worker === 'function', wasm: typeof WebAssembly === 'object',
