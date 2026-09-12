@@ -17,6 +17,9 @@
       "/_shell/*"
     ]
   },
+  "vars": {
+    "FIREBASE_PROJECT_ID": "upscaler-e9010"
+  },
   "d1_databases": [
     {
       "binding": "DB",
@@ -40,6 +43,7 @@
     "staging": {
       "name": "uscale-site-staging",
       "workers_dev": true,
+      "vars": { "FIREBASE_PROJECT_ID": "upscaler-e9010" },
       "d1_databases": [
         {
           "binding": "DB",
@@ -55,6 +59,7 @@
     "production": {
       "name": "uscale-site",
       "workers_dev": false,
+      "vars": { "FIREBASE_PROJECT_ID": "upscaler-e9010" },
       "routes": [
         { "pattern": "upscales.app/*", "zone_name": "upscales.app" }
       ],
