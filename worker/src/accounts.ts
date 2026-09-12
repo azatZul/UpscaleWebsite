@@ -98,3 +98,47 @@ export async function spendCredits(
   const applied = (result.meta.changes ?? 0) > 0;
   return { applied, reason: applied ? "ok" : "insufficient", balance: await creditBalance(db, input.accountId) };
 }
+
+export interface PurchaseInput {
+  accountId: string;
+  packId: string;
+  credits: number;
+  amountCents: number;
+  currency: string;
+  stripeSessionId: string;
+  stripePaymentIntent: string | null;
+}
+
+/** Record a completed Stripe purchase and credit it, as one atomic step.
+ *
+ *  The two writes go in a single D1 batch so there is no window in which money
+ *  is recorded but uncredited (a customer who paid and got nothing) or credited
+ *  but unrecorded (credits with no receipt behind them). Both inserts are
+ *  OR IGNORE, so Stripe's webhook retries -- which are routine, not
+ *  exceptional -- land as no-ops rather than a second grant. */
+export async function recordPurchase(
+  db: D1Database,
+  input: PurchaseInput,
+): Promise<{ applied: boolean; balance: number }> {
+  if (!Number.isSafeInteger(input.credits) || input.credits <= 0) throw new Error("Purchase credits must be a positive integer");
+  const idempotencyKey = `stripe:checkout:${input.stripeSessionId}`;
+  const now = Date.now();
+  const results = await db.batch([
+    db.prepare(
+      `INSERT OR IGNORE INTO purchases
+         (stripe_session_id, stripe_payment_intent, account_id, pack_id, credits, amount_cents, currency, created_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+    ).bind(
+      input.stripeSessionId, input.stripePaymentIntent, input.accountId, input.packId,
+      input.credits, input.amountCents, input.currency, now,
+    ),
+    db.prepare(
+      `INSERT OR IGNORE INTO credit_entries (account_id, delta, reason, idempotency_key, created_at)
+       VALUES (?, ?, 'purchase', ?, ?)`,
+    ).bind(input.accountId, input.credits, idempotencyKey, now),
+  ]);
+  // The credit row is the one that decides: the purchase row may already exist
+  // from a retry that failed midway, but the ledger is what the customer sees.
+  const applied = (results[1]?.meta.changes ?? 0) > 0;
+  return { applied, balance: await creditBalance(db, input.accountId) };
+}

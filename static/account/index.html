@@ -46,7 +46,21 @@
             <span id="email" class="account-muted"></span>
           </div>
         </div>
-        <p class="account-note">Signed in. Credits and billing are not built yet — this page will grow into the account home once they are.</p>
+        <div class="credit-balance">
+          <span class="account-muted">Credits</span>
+          <b id="credit-count" aria-live="polite">—</b>
+        </div>
+
+        <p id="purchase-confirmed" class="account-confirm" role="status" hidden>Payment received. Your credits have been added.</p>
+
+        <section class="credit-packs" aria-labelledby="packs-heading">
+          <h2 id="packs-heading">Top up</h2>
+          <div id="pack-list" class="pack-list">
+            <p class="account-muted">Loading packs…</p>
+          </div>
+          <p id="credit-costs" class="account-note"></p>
+        </section>
+
         <button id="sign-out" class="btn btn-g" type="button">Sign out</button>
       </div>
 
