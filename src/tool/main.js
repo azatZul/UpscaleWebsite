@@ -622,6 +622,13 @@ elements['model-drawing'].addEventListener('click', () => {
   if (modelKind !== 'drawing') { setModelKind('drawing'); assessCurrentFile(); }
 });
 elements['scale-2x'].addEventListener('click', () => { if (scale !== 2) { setScale(2); assessCurrentFile(); } });
+// Wrapping depends on the width and on the locale's words, so it is measured
+// rather than tied to a breakpoint.
+new ResizeObserver(() => {
+  const face = elements['face-option'];
+  const firstRow = elements['tool-options'].firstElementChild.offsetTop;
+  face.classList.toggle('is-wrapped', !face.hidden && face.offsetTop > firstRow + 4);
+}).observe(elements['tool-options']);
 elements['scale-4x'].addEventListener('click', () => {
   const reason = blocked4x();
   if (reason) { showScalePopover(t(reason)); return; }

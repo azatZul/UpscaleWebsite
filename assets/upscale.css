@@ -94,8 +94,11 @@
 .scale-popover{position:absolute;z-index:20;top:calc(100% + 8px);left:0;width:max-content;max-width:min(300px,80vw);
   padding:10px 12px;border:1px solid var(--line-2);border-radius:12px;background:var(--surface-2);box-shadow:var(--shadow);
   font-size:13.5px;line-height:1.45;color:var(--tx)}
-/* Type and size share a line; the face toggle gets its own line below them. */
-.face-option{display:flex;align-items:center;gap:10px;flex-basis:100%;cursor:pointer}
+/* The face toggle shares the line with type and size, pushed to its end. When
+   it doesn't fit (narrow screens, longer locales) main.js marks it wrapped: it
+   then starts its own line and keeps some space from the status box below. */
+.face-option{display:flex;align-items:center;gap:10px;margin-left:auto;cursor:pointer}
+.face-option.is-wrapped{margin-left:0;padding-bottom:8px}
 .face-option input{width:20px;height:20px;margin:0;flex:0 0 auto;accent-color:var(--acc)}
 .face-option span{font-size:14.5px;font-weight:650;line-height:1.3}
 .face-option:has(input:disabled){cursor:default}
