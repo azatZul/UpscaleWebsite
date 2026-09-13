@@ -7,6 +7,7 @@ import {boxPercent} from './face-detect.js';
 import {pendingEnhancements, sameSelection, selectedPatches} from './face-selection.js';
 import {createOverlay} from './overlay.js';
 import {shouldEnhanceFaces, tileMetricKey} from './model-selection.js';
+import {AnalyticsAction, AnalyticsEvent, SCREEN, initAnalytics, modeValue} from './analytics.js';
 
 const {t, duration} = pageTranslator(document);
 const $ = id => document.getElementById(id);
@@ -25,6 +26,8 @@ const environment = {userAgent: navigator.userAgent, platform: navigator.platfor
   maxTouchPoints: navigator.maxTouchPoints, deviceMemory: navigator.deviceMemory};
 const marker = 'uscale-preview-active-v1';
 const policy = devicePolicy(environment);
+const analytics = initAnalytics();
+const trackTap = (element, properties) => analytics.trackAction(AnalyticsAction.tap, element, SCREEN, properties);
 
 // Estimating before any download needs a per-tile figure. Use the measured one
 // from this device's last run, otherwise a conservative default.
@@ -59,6 +62,12 @@ let errorCode;
 let scaleFallback = false;
 // The current photo fits at 2× but not at 4×, so 4× is shown as unavailable.
 let tooLargeFor4x = false;
+// Analytics for one processing run and one imported photo; nothing about the image itself.
+let importSource;
+let lastInfo;
+let processingStartedAt;
+let outcomeTracked = true;
+let runProgress = 0;
 let popoverTimer;
 let runningFaces = false;
 let expanded = false;
@@ -91,7 +100,7 @@ function expandResult(value) {
   elements['expand-result'].hidden = value; elements['close-result'].hidden = !value;
   (value ? elements['close-result'] : elements['expand-result']).focus({preventScroll: true});
 }
-elements['expand-result'].addEventListener('click', () => expandResult(true));
+elements['expand-result'].addEventListener('click', () => { trackTap('expand_result'); expandResult(true); });
 elements['close-result'].addEventListener('click', () => expandResult(false));
 
 // Full-screen picker over the original photo.
@@ -318,7 +327,7 @@ function setStatus(title, detail, progress) {
   elements['status-title'].hidden = !title;
   elements['status-detail'].textContent = detail;
   elements.progress.hidden = progress === undefined;
-  if (progress !== undefined) elements.progress.value = progress;
+  if (progress !== undefined) runProgress = Math.round((elements.progress.value = progress) * 100) / 100;
   elements['status-value'].textContent = progress === undefined ? '' : `${Math.round(progress * 100)}%`;
 }
 const idleStatus = () => setStatus('', t('idle_detail'));
@@ -420,6 +429,11 @@ function fail(code, key, params, offerScaleFallback = false) {
     prepare(true, true);
     return;
   }
+  if (importSource) {
+    analytics.trackEvent(AnalyticsEvent.mediaImportFailed, {source: importSource, count: 1, error_type: code, message: key});
+    importSource = undefined;
+  }
+  if (busy()) trackOutcome('failed', {error_type: code, message: key});
   stopWorker();
   phase = 'error';
   errorCode = code;
@@ -456,6 +470,8 @@ function onMessage(data, current) {
   } else if (data.type === 'error') {
     fail(data.code, data.key, data.params);
   } else if (data.type === 'done') {
+    trackOutcome('success', {progress: 1, face_count: data.faceCount || 0, detected_faces: data.detectedCount || 0,
+      tile_count: data.plan.tileCount, output_size: `${data.plan.outputWidth}x${data.plan.outputHeight}`});
     stopWorker(); phase = 'done';
     // Only learn from a run long enough to amortise first-inference shader
     // setup. A four-tile photo would otherwise teach a badly pessimistic rate.
@@ -528,8 +544,24 @@ function startFaces(cpu = false) {
   } catch { fail('face', 'err_face_start'); }
 }
 
+// Same keys as the apps' processingOutcomeProperties, for the web's single photo.
+function runProperties() {
+  return {screen: SCREEN, mode: modeValue(modelKind, scale), scale, model: modelKind,
+    face: shouldEnhanceFaces(modelKind, elements['enhance-faces'].checked), custom_model: false, media: 'images',
+    batch_count: 1, size: lastInfo ? `${lastInfo.width}x${lastInfo.height}` : '-', cpu_fallback: forceCpu,
+    device_class: policy.mobile ? (policy.iPad ? 'ipad' : 'mobile') : 'desktop'};
+}
+function trackOutcome(result, extra) {
+  if (outcomeTracked) return;
+  outcomeTracked = true;
+  analytics.trackEvent(AnalyticsEvent.processingCompleted, {...runProperties(), result, progress: runProgress,
+    duration_sec: Math.round((performance.now() - processingStartedAt) / 100) / 10, ...extra});
+}
+
 function start() {
   if (!file || !supported || locked()) return;
+  trackTap('start_processing', runProperties());
+  processingStartedAt = performance.now(); outcomeTracked = false; runProgress = 0;
   retriedGpu = false;
   if (shouldEnhanceFaces(modelKind, elements['enhance-faces'].checked)) startFaces(forceCpu);
   else prepare(forceCpu, true);
@@ -550,6 +582,12 @@ async function assessCurrentFile() {
   try {
     info = await inspectFile(file);
     if (current !== selection) return;
+    lastInfo = info;
+    if (importSource) {
+      analytics.trackEvent(AnalyticsEvent.mediaImportSuccess, {source: importSource, media: 'images', count: 1,
+        size: `${info.width}x${info.height}`, megapixels: Math.round(info.width * info.height / 100_000) / 10});
+      importSource = undefined;
+    }
     tooLargeFor4x = supportsScale(policy, 4) && fits(info, 2) && !fits(info, 4);
     plan = assessPhoto(info, policy, scale);
   } catch (error) {
@@ -561,6 +599,11 @@ async function assessCurrentFile() {
     let offerScaleFallback = false;
     if (scale === 4 && error.code === 'size' && info) {
       try { assessPhoto(info, policy, 2); offerScaleFallback = true; } catch { /* Still too big at 2x either. */ }
+    }
+    if (info) {
+      analytics.trackEvent(AnalyticsEvent.photoRejected, {reason: error.code || 'format', message: error.key, scale,
+        mode: modeValue(modelKind, scale), size: `${info.width}x${info.height}`, offered_2x: offerScaleFallback,
+        device_class: policy.mobile ? (policy.iPad ? 'ipad' : 'mobile') : 'desktop'});
     }
     fail(error.code || 'format', error.key || 'err_unreadable', error.params, offerScaleFallback);
     return;
@@ -591,10 +634,11 @@ function showScalePopover(text) {
   popoverTimer = setTimeout(hideScalePopover, 4000);
 }
 
-async function chooseFile(next) {
+async function chooseFile(next, source = 'picker') {
   if (!next || locked() || !supported) return;
   stopWorker();
   file = next; retriedGpu = false; forceCpu = false; tooLargeFor4x = false;
+  importSource = source; lastInfo = undefined;
   if (thumbnailUrl) URL.revokeObjectURL(thumbnailUrl);
   thumbnailUrl = URL.createObjectURL(file);
   elements['source-thumb'].src = thumbnailUrl;
@@ -616,12 +660,17 @@ function setModelKind(value) {
   refreshControls();
 }
 elements['model-photo'].addEventListener('click', () => {
+  trackTap('model', {value: 'photo'});
   if (modelKind !== 'photo') { setModelKind('photo'); assessCurrentFile(); }
 });
 elements['model-drawing'].addEventListener('click', () => {
+  trackTap('model', {value: 'drawing'});
   if (modelKind !== 'drawing') { setModelKind('drawing'); assessCurrentFile(); }
 });
-elements['scale-2x'].addEventListener('click', () => { if (scale !== 2) { setScale(2); assessCurrentFile(); } });
+elements['scale-2x'].addEventListener('click', () => {
+  trackTap('scale', {value: 2, available: true});
+  if (scale !== 2) { setScale(2); assessCurrentFile(); }
+});
 // Wrapping depends on the width and on the locale's words, so it is measured
 // rather than tied to a breakpoint.
 new ResizeObserver(() => {
@@ -631,6 +680,7 @@ new ResizeObserver(() => {
 }).observe(elements['tool-options']);
 elements['scale-4x'].addEventListener('click', () => {
   const reason = blocked4x();
+  trackTap('scale', {value: 4, available: !reason, reason: reason === 'err_4x_device' ? 'device' : reason ? 'too_large' : 'none'});
   if (reason) { showScalePopover(t(reason)); return; }
   if (scale !== 4) { setScale(4); assessCurrentFile(); }
 });
@@ -639,26 +689,44 @@ document.addEventListener('pointerdown', event => {
 });
 document.addEventListener('keydown', event => { if (event.key === 'Escape') hideScalePopover(); });
 // A finished or failed photo gets a fresh check, so the other setting can run.
-elements['enhance-faces'].addEventListener('change', () => { if (['done', 'error'].includes(phase)) assessCurrentFile(); });
+elements['enhance-faces'].addEventListener('change', () => {
+  trackTap('enhance_faces', {value: elements['enhance-faces'].checked});
+  if (['done', 'error'].includes(phase)) assessCurrentFile();
+});
 
 const readFailure = () => fail('format', 'err_unreadable');
 const openPicker = () => { if (!locked() && supported) elements['photo-input'].click(); };
-elements['choose-photo'].addEventListener('click', openPicker);
-elements['choose-another'].addEventListener('click', openPicker);
-elements['remove-photo'].addEventListener('click', event => { event.stopPropagation(); if (!locked()) reset(); });
+elements['choose-photo'].addEventListener('click', () => { trackTap('choose_photo'); openPicker(); });
+elements['choose-another'].addEventListener('click', () => { trackTap('choose_another', {reason: errorCode}); openPicker(); });
+elements['remove-photo'].addEventListener('click', event => {
+  event.stopPropagation();
+  if (locked()) return;
+  trackTap('remove_photo', {phase});
+  reset();
+});
 // The empty zone is a click target; its button stays the keyboard path. With a
 // photo in place, removing it is explicit, so a stray tap doesn't open the picker.
-elements['drop-zone'].addEventListener('click', event => { if (!file && !event.target.closest('button')) openPicker(); });
+elements['drop-zone'].addEventListener('click', event => {
+  if (file || event.target.closest('button')) return;
+  trackTap('drop_zone');
+  openPicker();
+});
 elements['photo-input'].addEventListener('change', () => {
   const next = elements['photo-input'].files[0];
   elements['photo-input'].value = '';
-  chooseFile(next).catch(readFailure);
+  chooseFile(next, 'picker').catch(readFailure);
 });
 elements['process-photo'].addEventListener('click', () => { if (phase === 'ready') start(); });
-elements.retry.addEventListener('click', start);
-elements['cpu-retry'].addEventListener('click', () => prepare(true, true));
-elements['try-2x'].addEventListener('click', () => { setScale(2); assessCurrentFile(); });
+elements.retry.addEventListener('click', () => { trackTap('retry', {reason: errorCode}); start(); });
+elements['cpu-retry'].addEventListener('click', () => {
+  trackTap('cpu_retry');
+  processingStartedAt = performance.now(); outcomeTracked = false;
+  prepare(true, true);
+});
+elements['try-2x'].addEventListener('click', () => { trackTap('try_2x'); setScale(2); assessCurrentFile(); });
 elements.cancel.addEventListener('click', () => {
+  trackTap('cancel', {progress: runProgress});
+  trackOutcome('cancelled');
   stopWorker(); clearOutput();
   phase = 'ready';
   setStatus(t('cancelled'), t('cancelled_detail'));
@@ -675,9 +743,15 @@ function reset() {
   refreshControls(); elements['choose-photo'].focus({preventScroll: true});
   elements['photo-stage'].scrollIntoView({behavior: 'smooth', block: 'start'});
 }
-elements['another-photo'].addEventListener('click', reset);
-elements['choose-faces'].addEventListener('click', openFaces);
-elements['face-apply'].addEventListener('click', applyFaces);
+elements['another-photo'].addEventListener('click', () => { trackTap('another_photo'); reset(); });
+elements['choose-faces'].addEventListener('click', () => {
+  trackTap('choose_faces', {faces: faceEdit?.faces.length || 0});
+  openFaces();
+});
+elements['face-apply'].addEventListener('click', () => {
+  trackTap('face_apply', {selected: faceChoice?.filter(Boolean).length || 0, total: faceEdit?.faces.length || 0});
+  applyFaces();
+});
 elements['face-cancel'].addEventListener('click', () => closeFaces());
 elements['face-close'].addEventListener('click', () => closeFaces());
 
@@ -694,7 +768,7 @@ elements['drop-zone'].addEventListener('drop', event => {
   event.preventDefault(); elements['drop-zone'].classList.remove('dragging');
   if (locked() || !supported) return;
   if (event.dataTransfer.files.length > 1) setStatus(t('one_at_a_time'), t('one_at_a_time_detail'));
-  else chooseFile(event.dataTransfer.files[0]).catch(readFailure);
+  else chooseFile(event.dataTransfer.files[0], 'drop').catch(readFailure);
 });
 // A photo dropped beside the zone would otherwise open in the tab and end the session.
 for (const eventName of ['dragover', 'drop']) window.addEventListener(eventName, event => { if (hasFiles(event)) event.preventDefault(); });
@@ -702,6 +776,8 @@ for (const eventName of ['dragover', 'drop']) window.addEventListener(eventName,
 document.addEventListener('visibilitychange', () => { refreshControls(); watchdog(); applyWatchdog(); keepAwake(); });
 window.addEventListener('pagehide', () => {
   const interrupted = busy();
+  if (interrupted) trackOutcome('interrupted');
+  analytics.flush();
   stopWorker(); if (interrupted) remember(true);
   // A result survives in the back/forward cache; an Apply in flight does not.
   if (applying) applyFailed('err_face_apply');
@@ -729,3 +805,17 @@ try {
     bitmap: typeof createImageBitmap === 'function', offscreen: typeof OffscreenCanvas === 'function'});
 } catch (error) { supported = false; fail(error.code, error.key); }
 refreshControls();
+
+analytics.trackScreen(SCREEN);
+if (!supported) analytics.trackEvent('browser_unsupported', {screen: SCREEN, error_type: errorCode});
+// Saving on the web is a download link, so a click is the closest to the apps' save success.
+elements['download-result'].addEventListener('click', () => {
+  analytics.trackEvent(AnalyticsEvent.resultSaveSuccess, {screen: SCREEN, save_to_gallery: false, is_video: false,
+    batch_count: 1, method: 'download', scale: lastResult?.plan.scale, mode: lastResult ? modeValue(lastResult.modelKind, lastResult.plan.scale) : undefined,
+    faces_edited: Boolean(faceEdit?.changed)});
+});
+// App Store badges carry data-cta; one listener covers every placement on the page.
+document.addEventListener('click', event => {
+  const cta = event.target.closest('a[data-cta]');
+  if (cta) trackTap(cta.dataset.cta, {placement: cta.closest('.inline-cta') ? 'inline_banner' : 'page', phase});
+});

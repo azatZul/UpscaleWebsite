@@ -12,6 +12,7 @@
     "preview:tool": "USCALE_SERVE_PREVIEW=1 USCALE_LAB_PORT=4175 node scripts/serve_lab.mjs"
   },
   "dependencies": {
+    "@amplitude/analytics-browser": "^2.45.8",
     "@litertjs/core": "^2.5.3",
     "@mediapipe/tasks-vision": "1.0.1",
     "onnxruntime-web": "1.23.2"
