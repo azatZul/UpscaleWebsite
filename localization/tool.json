@@ -63,7 +63,7 @@
   "tool.sub": {
     "localizations": {
       "en": "Make it 2× or 4× larger. The photo never leaves your device.",
-      "ru": "Увеличьте его в 2 или 4 раза. Фото не покидает ваше устройство.",
+      "ru": "В 2 или 4 раза больше. Фото не покидает ваше устройство.",
       "de": "Mach es 2× oder 4× größer. Das Foto verlässt dein Gerät nie.",
       "ja": "2倍・4倍に拡大。写真がデバイスの外に出ることはありません。",
       "fr": "Agrandissez-la 2× ou 4×. La photo ne quitte jamais votre appareil.",
@@ -73,7 +73,7 @@
   "tool.steps_label": {
     "localizations": {
       "en": "Photo upscaling steps",
-      "ru": "Этапы улучшения фото",
+      "ru": "Этапы увеличения фото",
       "de": "Schritte zum Vergrößern",
       "ja": "高画質化の手順",
       "fr": "Étapes de l’agrandissement",
@@ -93,11 +93,11 @@
   "tool.step_upscale": {
     "localizations": {
       "en": "Upscale",
-      "ru": "Улучшить",
-      "de": "Verbessern",
-      "ja": "アップスケール",
-      "fr": "Améliorer",
-      "es": "Mejorar"
+      "ru": "Увеличить",
+      "de": "Vergrößern",
+      "ja": "高画質化",
+      "fr": "Agrandir",
+      "es": "Ampliar"
     }
   },
   "tool.step_save": {
@@ -112,7 +112,7 @@
   },
   "tool.private": {
     "localizations": {
-      "en": "Private Processing",
+      "en": "Private processing",
       "ru": "Приватная обработка",
       "de": "Private Verarbeitung",
       "ja": "プライベート処理",
@@ -323,7 +323,7 @@
   "tool.try_2x": {
     "localizations": {
       "en": "Upscale at 2× instead",
-      "ru": "Увеличить в 2× вместо этого",
+      "ru": "Увеличить в 2 раза",
       "de": "Stattdessen 2× verwenden",
       "ja": "代わりに2倍で高画質化",
       "fr": "Agrandir en 2× à la place",
@@ -403,7 +403,7 @@
   "tool.another": {
     "localizations": {
       "en": "Upscale another photo",
-      "ru": "Улучшить другое фото",
+      "ru": "Увеличить другое фото",
       "de": "Weiteres Foto vergrößern",
       "ja": "別の写真を高画質化",
       "fr": "Agrandir une autre photo",
@@ -414,7 +414,7 @@
     "localizations": {
       "en": "Tap a face to turn enhancement on or off. Pinch or scroll to zoom.",
       "ru": "Нажмите на лицо, чтобы включить или выключить улучшение. Масштаб — щипком или колёсиком.",
-      "de": "Tippen Sie auf ein Gesicht, um die Verbesserung ein- oder auszuschalten. Zum Zoomen aufziehen oder scrollen.",
+      "de": "Tippe auf ein Gesicht, um die Verbesserung ein- oder auszuschalten. Zum Zoomen aufziehen oder scrollen.",
       "ja": "顔をタップすると強調のオン・オフを切り替えられます。ピンチまたはスクロールで拡大できます。",
       "fr": "Touchez un visage pour activer ou désactiver l’amélioration. Pincez ou faites défiler pour zoomer.",
       "es": "Toca un rostro para activar o desactivar la mejora. Pellizca o desplázate para ampliar."
@@ -454,7 +454,7 @@
     "localizations": {
       "en": "Your original photo with the faces we found outlined",
       "ru": "Исходное фото с отмеченными лицами",
-      "de": "Ihr Originalfoto mit markierten Gesichtern",
+      "de": "Dein Originalfoto mit markierten Gesichtern",
       "ja": "見つかった顔を枠で囲んだ元の写真",
       "fr": "Votre photo d’origine avec les visages trouvés encadrés",
       "es": "Tu foto original con los rostros encontrados marcados"
@@ -505,7 +505,7 @@
   "tool.home.cta": {
     "localizations": {
       "en": "Upscale a photo",
-      "ru": "Улучшить фото",
+      "ru": "Увеличить фото",
       "de": "Foto vergrößern",
       "ja": "写真を高画質化",
       "fr": "Agrandir une photo",
@@ -581,12 +581,12 @@
   },
   "tool.js.choose_title": {
     "localizations": {
-      "en": "Choose a photo",
-      "ru": "Выберите фото",
-      "de": "Foto auswählen",
-      "ja": "写真を選択",
-      "fr": "Choisissez une photo",
-      "es": "Elige una foto"
+      "en": "Add a photo",
+      "ru": "Добавьте фото",
+      "de": "Foto hinzufügen",
+      "ja": "写真を追加",
+      "fr": "Ajoutez une photo",
+      "es": "Añade una foto"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -626,7 +626,7 @@
   "tool.js.ready": {
     "localizations": {
       "en": "Ready to upscale",
-      "ru": "Всё готово к улучшению",
+      "ru": "Всё готово к увеличению",
       "de": "Bereit zum Vergrößern",
       "ja": "高画質化の準備ができました",
       "fr": "Prête à être agrandie",
@@ -670,7 +670,7 @@
   "tool.js.probe_detail": {
     "localizations": {
       "en": "Upscaling: {time}. Face enhancement adds time when enabled.",
-      "ru": "Улучшение: {time}. Улучшение лиц займёт дополнительное время.",
+      "ru": "Увеличение: {time}. Улучшение лиц займёт дополнительное время.",
       "de": "Vergrößern: {time}. Die Gesichtsverbesserung dauert zusätzlich.",
       "ja": "高画質化：{time}。顔の強調を有効にすると時間が延びます。",
       "fr": "Agrandissement : {time}. L’amélioration des visages ajoute du temps.",
@@ -912,7 +912,7 @@
   "tool.js.upscaling": {
     "localizations": {
       "en": "Upscaling your photo",
-      "ru": "Улучшаем фото",
+      "ru": "Увеличиваем фото",
       "de": "Dein Foto wird vergrößert",
       "ja": "写真を高画質化しています",
       "fr": "Agrandissement en cours",
@@ -1066,7 +1066,7 @@
   "tool.js.upscale_button": {
     "localizations": {
       "en": "Upscale photo · {scale}×",
-      "ru": "Улучшить фото · {scale}×",
+      "ru": "Увеличить фото · {scale}×",
       "de": "Foto vergrößern · {scale}×",
       "ja": "高画質化・{scale}倍",
       "fr": "Agrandir la photo · {scale}×",
@@ -1088,7 +1088,7 @@
   "tool.js.result_alt": {
     "localizations": {
       "en": "Your photo upscaled {scale}×",
-      "ru": "Ваше фото после увеличения ×{scale}",
+      "ru": "Ваше фото, увеличенное в {scale} раза",
       "de": "Dein Foto, {scale}× vergrößert",
       "ja": "{scale}倍に高画質化した写真",
       "fr": "Votre photo agrandie {scale}×",
@@ -1099,7 +1099,7 @@
   "tool.js.upscaled": {
     "localizations": {
       "en": "Upscaled {scale}×",
-      "ru": "Увеличено ×{scale}",
+      "ru": "Увеличено в {scale} раза",
       "de": "{scale}× vergrößert",
       "ja": "{scale}倍に高画質化",
       "fr": "Agrandie {scale}×",
@@ -1131,13 +1131,14 @@
   },
   "tool.js.choose_faces": {
     "localizations": {
-      "en": "Choose faces ({count} of {total})",
-      "ru": "Выбрать лица ({count} из {total})",
-      "de": "Gesichter auswählen ({count} von {total})",
-      "ja": "顔を選ぶ（{count}/{total}）",
-      "fr": "Choisir les visages ({count} sur {total})",
-      "es": "Elegir rostros ({count} de {total})"
-    }
+      "en": "Faces enhanced: {count} of {total}",
+      "ru": "Улучшено лиц: {count} из {total}",
+      "de": "Verbesserte Gesichter: {count} von {total}",
+      "ja": "強調した顔：{count}/{total}",
+      "fr": "Visages améliorés : {count} sur {total}",
+      "es": "Rostros mejorados: {count} de {total}"
+    },
+    "comment": "Result button that opens face selection; shows how many faces are enhanced. Preserve {placeholders}."
   },
   "tool.js.face_editor_title": {
     "localizations": {
@@ -1147,7 +1148,8 @@
       "ja": "強調する顔を選ぶ（{count}/{total}）",
       "fr": "Visages à améliorer ({count} sur {total})",
       "es": "Rostros que mejorar ({count} de {total})"
-    }
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
   "tool.js.face_toggle": {
     "localizations": {
@@ -1175,7 +1177,7 @@
     "localizations": {
       "en": "Couldn’t update the faces. Your previous result is still here — try again.",
       "ru": "Не удалось обновить лица. Прежний результат сохранён — попробуйте ещё раз.",
-      "de": "Die Gesichter konnten nicht aktualisiert werden. Ihr bisheriges Ergebnis bleibt erhalten – versuchen Sie es erneut.",
+      "de": "Die Gesichter konnten nicht aktualisiert werden. Dein bisheriges Ergebnis bleibt erhalten – versuch es erneut.",
       "ja": "顔を更新できませんでした。前の結果はそのままです。もう一度お試しください。",
       "fr": "Impossible de mettre à jour les visages. Le résultat précédent est conservé — réessayez.",
       "es": "No se pudieron actualizar los rostros. Tu resultado anterior sigue aquí; inténtalo de nuevo."
@@ -1233,7 +1235,7 @@
       "de": "Wähle ein Foto im Format JPEG, PNG oder WebP. Für HEIC, Videos und andere Formate nutze die App.",
       "ja": "JPEG、PNG、WebPの写真を選んでください。HEICや動画などの形式はアプリをご利用ください。",
       "fr": "Choisissez une photo JPEG, PNG ou WebP. Pour le HEIC, les vidéos ou d’autres formats, utilisez l’app.",
-      "es": "Elige una foto JPEG, PNG o WebP. Para HEIC, video u otros formatos, usa la app."
+      "es": "Elige una foto JPEG, PNG o WebP. Para HEIC, vídeo u otros formatos, usa la app."
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },

@@ -982,8 +982,7 @@ def render_home(c, lang):
         <span><b>{rating}</b> \u00b7 {esc(h['rating_note'])}</span></div>
       <h1>{h['h1']}</h1>
       <p class="hero-sub">{esc(h['sub'])}</p>
-      <div class="hero-cta stores">{store_badge(appstore_btn(c), h['note'])}</div>
-      {browser_tool_link(c, lang, hero=True)}
+      <div class="hero-cta stores{' with-tool' if TOOL_SCRIPT else ''}">{store_badge(appstore_btn(c), h['note'])}{browser_tool_link(c, lang, hero=True)}</div>
     </div>
     {hero_phone(c, h)}
     <ul class="chips hero-chips">{chips}</ul>
