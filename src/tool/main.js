@@ -10,15 +10,15 @@ import {shouldEnhanceFaces, tileMetricKey} from './model-selection.js';
 
 const {t, duration} = pageTranslator(document);
 const $ = id => document.getElementById(id);
-const elements = Object.fromEntries(['photo-input', 'choose-photo', 'replace-photo', 'drop-zone', 'drop-empty',
+const elements = Object.fromEntries(['photo-input', 'choose-photo', 'remove-photo', 'drop-zone', 'drop-empty',
   'selected-photo', 'source-thumb', 'source-name', 'source-size', 'status-title', 'status-detail', 'progress',
   'status-value', 'process-photo', 'cancel', 'retry', 'cpu-retry', 'try-2x', 'results', 'result-image', 'result-summary',
   'download-result', 'another-photo', 'limit-note', 'interrupted', 'visibility-note', 'photo-stage', 'stage-title',
   'step-choose', 'step-upscale', 'step-compare', 'before-image', 'result-comparison', 'comparison-handle', 'enhance-faces',
-  'face-summary', 'result-viewer', 'result-stage', 'expand-result', 'close-result', 'scale-2x', 'scale-4x', 'scale-note',
+  'face-summary', 'result-viewer', 'result-stage', 'expand-result', 'close-result', 'scale-2x', 'scale-4x', 'scale-popover',
   'result-tag', 'result-title', 'model-photo', 'model-drawing', 'face-option', 'choose-faces', 'face-editor', 'face-stage',
   'face-frame', 'face-photo', 'face-marks', 'face-apply', 'face-cancel', 'face-close', 'face-editor-title',
-  'face-status', 'face-progress'].map(id => [id, $(id)]));
+  'face-status', 'face-progress', 'photo-error', 'status', 'tool-options', 'choose-another'].map(id => [id, $(id)]));
 const comparison = createComparison(elements['result-comparison'], elements['before-image'], elements['comparison-handle'],
   value => t('slider_value', {value}));
 const environment = {userAgent: navigator.userAgent, platform: navigator.platform,
@@ -57,6 +57,9 @@ let wakeLock;
 let supported = true;
 let errorCode;
 let scaleFallback = false;
+// The current photo fits at 2× but not at 4×, so 4× is shown as unavailable.
+let tooLargeFor4x = false;
+let popoverTimer;
 let runningFaces = false;
 let expanded = false;
 let lastResult;
@@ -330,9 +333,14 @@ function refreshControls() {
   elements['selected-photo'].hidden = !hasFile;
   elements['stage-title'].textContent = t(hasFile ? 'your_photo' : 'choose_title');
   elements['drop-zone'].setAttribute('aria-disabled', String(locked));
-  for (const id of ['photo-input', 'choose-photo', 'replace-photo', 'model-photo', 'model-drawing', 'scale-2x',
-    'enhance-faces']) elements[id].disabled = locked;
-  elements['scale-4x'].disabled = locked || !supportsScale(policy, 4);
+  for (const id of ['photo-input', 'choose-photo', 'remove-photo', 'model-photo', 'model-drawing', 'scale-2x',
+    'scale-4x', 'enhance-faces']) elements[id].disabled = locked;
+  // Unavailable 4× stays tappable so it can explain why, instead of silently disabled.
+  elements['scale-4x'].setAttribute('aria-disabled', String(Boolean(blocked4x())));
+  // A photo already processing can't take new options or be removed; Cancel stays.
+  elements['tool-options'].hidden = busy();
+  elements['remove-photo'].hidden = busy();
+  if (busy()) hideScalePopover();
   elements['face-option'].hidden = modelKind !== 'photo';
   elements['choose-faces'].hidden = !faceEdit || phase !== 'done';
   elements['choose-faces'].disabled = applying;
@@ -340,14 +348,22 @@ function refreshControls() {
   const cpuRetry = failed && errorCode === 'gpu' && !forceCpu;
   const tryTwo = failed && scaleFallback;
   const retry = hasFile && failed && !appOnly && !cpuRetry && !tryTwo && supported;
-  elements['process-photo'].hidden = busy() || cpuRetry || tryTwo || retry;
+  // A photo this device can't take is explained under the photo itself, where it
+  // stays in view on a phone, and the main button offers a different photo.
+  const photoError = hasFile && failed && ['size', 'format'].includes(errorCode);
+  const chooseAnother = photoError && !tryTwo;
+  elements['photo-error'].hidden = !photoError;
+  elements.status.hidden = photoError;
+  elements['choose-another'].hidden = !chooseAnother;
+  elements['process-photo'].hidden = busy() || cpuRetry || tryTwo || retry || chooseAnother;
   elements['process-photo'].disabled = phase !== 'ready';
   elements.cancel.hidden = !busy();
   elements['cpu-retry'].hidden = !cpuRetry;
   elements.retry.hidden = !retry;
   elements['try-2x'].hidden = !tryTwo;
   elements['visibility-note'].hidden = !busy() || !document.hidden;
-  const currentStep = !hasFile ? 0 : phase === 'done' ? 2 : 1;
+  // "Upscale" lights up when processing starts, not when a photo is chosen.
+  const currentStep = phase === 'done' ? 2 : busy() ? 1 : 0;
   ['step-choose', 'step-upscale', 'step-compare'].forEach((id, index) => {
     index === currentStep ? elements[id].setAttribute('aria-current', 'step') : elements[id].removeAttribute('aria-current');
     elements[id].classList.toggle('complete', index < currentStep);
@@ -411,6 +427,7 @@ function fail(code, key, params, offerScaleFallback = false) {
   if (!thumbnailUrl && file) elements['source-size'].textContent = t('not_processed');
   const cannotProcess = ['browser', 'size', 'format'].includes(code);
   setStatus(t(cannotProcess ? 'cannot_title' : 'failed_title'), t(key, params));
+  elements['photo-error'].textContent = t(key, params);
   refreshControls();
 }
 
@@ -533,10 +550,11 @@ async function assessCurrentFile() {
   try {
     info = await inspectFile(file);
     if (current !== selection) return;
+    tooLargeFor4x = supportsScale(policy, 4) && fits(info, 2) && !fits(info, 4);
     plan = assessPhoto(info, policy, scale);
   } catch (error) {
     if (current !== selection) return;
-    elements['source-size'].textContent = t('not_processed');
+    elements['source-size'].textContent = info ? `${info.width} × ${info.height}` : t('not_processed');
     // Only 4x can be too big while 2x of the same photo would still fit --
     // that is the one case worth offering a one-click way out of, instead of
     // just "choose a different photo".
@@ -555,10 +573,28 @@ async function assessCurrentFile() {
   refreshControls();
 }
 
+const fits = (info, factor) => { try { assessPhoto(info, policy, factor); return true; } catch { return false; } };
+
+// Why 4× can't run for this device or photo, or '' when it can.
+function blocked4x() {
+  if (!supportsScale(policy, 4)) return 'err_4x_device';
+  return tooLargeFor4x ? 'err_4x_too_large' : '';
+}
+function hideScalePopover() {
+  clearTimeout(popoverTimer);
+  elements['scale-popover'].hidden = true;
+}
+function showScalePopover(text) {
+  elements['scale-popover'].textContent = text;
+  elements['scale-popover'].hidden = false;
+  clearTimeout(popoverTimer);
+  popoverTimer = setTimeout(hideScalePopover, 4000);
+}
+
 async function chooseFile(next) {
   if (!next || locked() || !supported) return;
   stopWorker();
-  file = next; retriedGpu = false; forceCpu = false;
+  file = next; retriedGpu = false; forceCpu = false; tooLargeFor4x = false;
   if (thumbnailUrl) URL.revokeObjectURL(thumbnailUrl);
   thumbnailUrl = URL.createObjectURL(file);
   elements['source-thumb'].src = thumbnailUrl;
@@ -586,17 +622,26 @@ elements['model-drawing'].addEventListener('click', () => {
   if (modelKind !== 'drawing') { setModelKind('drawing'); assessCurrentFile(); }
 });
 elements['scale-2x'].addEventListener('click', () => { if (scale !== 2) { setScale(2); assessCurrentFile(); } });
-elements['scale-4x'].addEventListener('click', () => { if (scale !== 4) { setScale(4); assessCurrentFile(); } });
-elements['scale-note'].hidden = supportsScale(policy, 4);
+elements['scale-4x'].addEventListener('click', () => {
+  const reason = blocked4x();
+  if (reason) { showScalePopover(t(reason)); return; }
+  if (scale !== 4) { setScale(4); assessCurrentFile(); }
+});
+document.addEventListener('pointerdown', event => {
+  if (!elements['scale-popover'].hidden && !event.target.closest('#scale-4x, #scale-popover')) hideScalePopover();
+});
+document.addEventListener('keydown', event => { if (event.key === 'Escape') hideScalePopover(); });
 // A finished or failed photo gets a fresh check, so the other setting can run.
 elements['enhance-faces'].addEventListener('change', () => { if (['done', 'error'].includes(phase)) assessCurrentFile(); });
 
 const readFailure = () => fail('format', 'err_unreadable');
 const openPicker = () => { if (!locked() && supported) elements['photo-input'].click(); };
 elements['choose-photo'].addEventListener('click', openPicker);
-elements['replace-photo'].addEventListener('click', openPicker);
-// The whole zone is a click target; its buttons stay the keyboard path.
-elements['drop-zone'].addEventListener('click', event => { if (!event.target.closest('button')) openPicker(); });
+elements['choose-another'].addEventListener('click', openPicker);
+elements['remove-photo'].addEventListener('click', event => { event.stopPropagation(); if (!locked()) reset(); });
+// The empty zone is a click target; its button stays the keyboard path. With a
+// photo in place, removing it is explicit, so a stray tap doesn't open the picker.
+elements['drop-zone'].addEventListener('click', event => { if (!file && !event.target.closest('button')) openPicker(); });
 elements['photo-input'].addEventListener('change', () => {
   const next = elements['photo-input'].files[0];
   elements['photo-input'].value = '';
@@ -614,7 +659,8 @@ elements.cancel.addEventListener('click', () => {
 });
 function reset() {
   stopWorker(); selection++; phase = 'idle'; file = null;
-  errorCode = undefined; scaleFallback = false; forceCpu = false;
+  errorCode = undefined; scaleFallback = false; forceCpu = false; tooLargeFor4x = false;
+  hideScalePopover();
   clearOutput(); idleStatus();
   elements['photo-input'].value = '';
   if (thumbnailUrl) URL.revokeObjectURL(thumbnailUrl);

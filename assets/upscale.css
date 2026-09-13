@@ -59,17 +59,23 @@
 .drop-or::before,.drop-or::after{content:"";flex:1;height:1px;background:var(--line-2)}
 .drop-empty .btn{min-height:48px}
 .limit-note{font-size:12.5px;line-height:1.5;color:var(--tx-3);max-width:44ch}
-/* The square preview sits inside the zone's own padding, so the gap above, below
-   and to the left of it is the same. */
-.drop-selected{display:flex;align-items:center;gap:22px;width:100%;min-width:0;text-align:left}
-.drop-selected img{width:calc(var(--drop-h) - var(--drop-pad) * 2);height:calc(var(--drop-h) - var(--drop-pad) * 2);
-  flex:0 0 auto;object-fit:contain;border-radius:12px;background:var(--tint-2)}
-.drop-selected img:not([src]){visibility:hidden}
+/* The square preview slot sits inside the zone's own padding, so the gap above,
+   below and to the left of it is the same. The photo is centred in the slot at
+   its own proportions, so the remove button can sit on the photo's corner. */
+.drop-selected{--thumb:calc(var(--drop-h) - var(--drop-pad) * 2);display:flex;align-items:center;gap:22px;width:100%;min-width:0;text-align:left;cursor:default}
+.selected-frame{display:grid;place-items:center;flex:0 0 auto;width:var(--thumb);height:var(--thumb)}
+.selected-thumb{position:relative;display:inline-block;max-width:100%;line-height:0}
+.selected-thumb img{display:block;max-width:100%;max-height:var(--thumb);width:auto;height:auto;border-radius:12px;background:var(--tint-2)}
+.selected-thumb img:not([src]){visibility:hidden}
+.remove-photo{position:absolute;top:-10px;right:-10px;display:grid;place-items:center;width:30px;height:30px;padding:0;
+  border:1px solid var(--line-2);border-radius:50%;color:var(--tx);background:var(--surface-2);box-shadow:0 4px 14px rgba(0,0,0,.35);cursor:pointer}
+.remove-photo::before{content:"";position:absolute;inset:-8px}
+.remove-photo svg{width:14px;height:14px}
+.remove-photo:hover{color:var(--warn)}
 .selected-meta{min-width:0;display:flex;flex-direction:column;gap:4px}
 .selected-meta b{font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #source-size{font-size:14px;color:var(--tx-2);font-variant-numeric:tabular-nums}
-.selected-change{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 6px;margin-top:10px;font-size:13px;color:var(--tx-3)}
-.selected-change .text-button{font-size:13px;padding:12px 0;margin:-12px 0;min-height:0}
+.photo-error{margin:6px 0 0;font-size:13.5px;line-height:1.45;color:var(--warn)}
 .drop-release{position:absolute;inset:0;display:grid;place-items:center;padding:20px;border-radius:inherit;
   font-size:17px;font-weight:750;color:var(--acc-tx);background:color-mix(in srgb,var(--surface) 90%,transparent);
   opacity:0;pointer-events:none;transition:opacity .15s}
@@ -81,9 +87,13 @@
 .segment-option{display:inline-flex;gap:4px;padding:3px;border:1px solid var(--line-2);border-radius:12px;background:var(--tint)}
 .segment-option button{font:inherit;font-size:14px;font-weight:700;min-width:58px;min-height:36px;padding:6px 16px;border:0;border-radius:9px;
   background:none;color:var(--tx-2);cursor:pointer;transition:background .15s,color .15s}
-.segment-option button:hover:not(:disabled):not([aria-pressed="true"]){color:var(--tx)}
+.segment-option button:hover:not(:disabled):not([aria-pressed="true"]):not([aria-disabled="true"]){color:var(--tx)}
+.segment-option button[aria-disabled="true"]:not([aria-pressed="true"]){color:var(--tx-4);cursor:help}
 .segment-option button[aria-pressed="true"]{background:var(--acc);color:var(--ink)}
-.scale-note{font-size:12.5px;color:var(--tx-3)}
+.scale-field{position:relative}
+.scale-popover{position:absolute;z-index:20;top:calc(100% + 8px);left:0;width:max-content;max-width:min(300px,80vw);
+  padding:10px 12px;border:1px solid var(--line-2);border-radius:12px;background:var(--surface-2);box-shadow:var(--shadow);
+  font-size:13.5px;line-height:1.45;color:var(--tx)}
 .face-option{display:flex;align-items:center;gap:10px;margin-left:auto;cursor:pointer}
 .face-option input{width:20px;height:20px;margin:0;flex:0 0 auto;accent-color:var(--acc)}
 .face-option span{font-size:14.5px;font-weight:650;line-height:1.3}
@@ -160,9 +170,9 @@
   /* Tall enough for either state in every locale, so a photo never resizes it. */
   .photo-drop{--drop-h:304px;--drop-pad:18px;padding:18px 14px}
   .drop-selected{flex-direction:column;gap:12px;text-align:center}
-  .drop-selected img{width:100%;height:140px}
+  .selected-frame{width:100%;height:140px}
+  .selected-thumb img{max-height:140px}
   .selected-meta{align-items:center;max-width:100%}
-  .selected-change{justify-content:center;margin-top:4px}
   .tool-options{flex-direction:column;align-items:flex-start}
   .face-option{margin-left:0}
   .tool-results{margin-top:24px}
@@ -171,6 +181,13 @@
   .result-comparison .cmp-tag{top:10px;font-size:12px;padding:5px 8px}
   .result-comparison .cmp-tag.l{left:10px}
   .result-comparison .cmp-tag.r{right:10px}
+  /* App banner: small icon beside the title and line, badge underneath. */
+  .tool .inline-cta{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:14px 12px;
+    padding:16px;margin:24px auto 0}
+  .tool .inline-cta>img{width:44px;height:44px;border-radius:11px}
+  .tool .inline-cta h3{font-size:16px;margin-bottom:2px}
+  .tool .inline-cta p{font-size:13.5px;line-height:1.4}
+  .tool .inline-cta>.appstore{grid-column:1/-1}
 }
 @media(max-width:420px){
   .tool-steps li{flex-direction:column;gap:4px;padding:7px 4px;line-height:1.15}

@@ -170,24 +170,14 @@
       "es": "Foto seleccionada"
     }
   },
-  "tool.replace": {
+  "tool.remove": {
     "localizations": {
-      "en": "Replace photo",
-      "ru": "Заменить фото",
-      "de": "Foto ersetzen",
-      "ja": "写真を変更",
-      "fr": "Remplacer la photo",
-      "es": "Cambiar foto"
-    }
-  },
-  "tool.drop_another": {
-    "localizations": {
-      "en": "or drop another one here",
-      "ru": "или перетащите другое сюда",
-      "de": "oder ein anderes hierher ziehen",
-      "ja": "または別の写真をここにドロップ",
-      "fr": "ou déposez-en une autre ici",
-      "es": "o suelta otra aquí"
+      "en": "Remove photo",
+      "ru": "Удалить фото",
+      "de": "Foto entfernen",
+      "ja": "写真を削除",
+      "fr": "Retirer la photo",
+      "es": "Quitar foto"
     }
   },
   "tool.drop_release": {
@@ -258,16 +248,6 @@
       "ja": "4倍",
       "fr": "4×",
       "es": "4×"
-    }
-  },
-  "tool.scale_note": {
-    "localizations": {
-      "en": "4× on computers and iPad",
-      "ru": "4× — на компьютере и iPad",
-      "de": "4× auf Computer und iPad",
-      "ja": "4倍はパソコンとiPadで利用可能",
-      "fr": "4× sur ordinateur et iPad",
-      "es": "4× en ordenador e iPad"
     }
   },
   "tool.faces": {
@@ -1280,6 +1260,17 @@
       "ja": "4倍にはパソコンまたはiPadが必要です。ここでは2倍をお試しいただくか、アプリをご利用ください。",
       "fr": "Le 4× nécessite un ordinateur ou un iPad. Essayez le 2× ici ou utilisez l’app.",
       "es": "El 4× necesita un ordenador o un iPad. Prueba 2× aquí o usa la app."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_4x_too_large": {
+    "localizations": {
+      "en": "This photo is too large for 4× on this device. 2× works.",
+      "ru": "Для 4× это фото слишком большое на этом устройстве. 2× подойдёт.",
+      "de": "Für 4× ist dieses Foto auf diesem Gerät zu groß. 2× funktioniert.",
+      "ja": "この写真はこのデバイスで4倍にするには大きすぎます。2倍なら利用できます。",
+      "fr": "Cette photo est trop grande pour le 4× sur cet appareil. Le 2× fonctionne.",
+      "es": "Esta foto es demasiado grande para 4× en este dispositivo. 2× sí funciona."
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },

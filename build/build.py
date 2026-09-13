@@ -1829,16 +1829,21 @@ def render_tool(c, lang):
           <span id="limit-note" class="limit-note">{esc(tl['formats'])}</span>
         </div>
         <div id="selected-photo" class="drop-selected" hidden>
-          <img id="source-thumb" alt="{esc(tl['thumb_alt'])}">
+          <div class="selected-frame">
+            <span class="selected-thumb">
+              <img id="source-thumb" alt="{esc(tl['thumb_alt'])}">
+              <button id="remove-photo" class="remove-photo" type="button" aria-label="{esc(tl['remove'])}">{CLOSE_SVG}</button>
+            </span>
+          </div>
           <div class="selected-meta">
             <b id="source-name"></b>
             <span id="source-size"></span>
-            <span class="selected-change"><button id="replace-photo" class="text-button" type="button">{esc(tl['replace'])}</button><span>{esc(tl['drop_another'])}</span></span>
+            <p id="photo-error" class="photo-error" role="alert" hidden></p>
           </div>
         </div>
         <span class="drop-release" aria-hidden="true">{esc(tl['drop_release'])}</span>
       </div>
-      <div class="tool-options">
+      <div class="tool-options" id="tool-options">
         <div class="model-field">
           <span class="option-label" id="model-label">{esc(tl['model_label'])}</span>
           <span class="segment-option model-option" role="group" aria-labelledby="model-label">
@@ -1850,9 +1855,9 @@ def render_tool(c, lang):
           <span class="option-label" id="scale-label">{esc(tl['scale_label'])}</span>
           <span class="segment-option scale-option" role="group" aria-labelledby="scale-label">
             <button id="scale-2x" type="button" aria-pressed="true">{esc(tl['x2'])}</button>
-            <button id="scale-4x" type="button" aria-pressed="false" aria-describedby="scale-note">{esc(tl['x4'])}</button>
+            <button id="scale-4x" type="button" aria-pressed="false">{esc(tl['x4'])}</button>
           </span>
-          <span id="scale-note" class="scale-note" hidden>{esc(tl['scale_note'])}</span>
+          <span id="scale-popover" class="scale-popover" role="status" aria-live="polite" hidden></span>
         </div>
         <label class="face-option" id="face-option"><input id="enhance-faces" type="checkbox" checked><span>{esc(tl['faces'])}</span></label>
       </div>
@@ -1867,6 +1872,7 @@ def render_tool(c, lang):
         <button id="retry" class="btn btn-p" type="button" hidden>{esc(tl['retry'])}</button>
         <button id="cpu-retry" class="btn btn-p" type="button" hidden>{esc(tl['cpu_retry'])}</button>
         <button id="try-2x" class="btn btn-p" type="button" hidden>{esc(tl['try_2x'])}</button>
+        <button id="choose-another" class="btn btn-p" type="button" hidden>{esc(tl['choose'])}</button>
         <button id="cancel" class="btn btn-g" type="button" hidden>{esc(tl['cancel'])}</button>
       </div>
     </section>
