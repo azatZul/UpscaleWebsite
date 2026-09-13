@@ -416,5 +416,126 @@
       "fr": "Fil d’Ariane",
       "es": "Ruta de navegación"
     }
+  },
+  "consent.title": {
+    "localizations": {
+      "en": "Cookies and analytics",
+      "ru": "Файлы cookie и аналитика",
+      "de": "Cookies und Analyse",
+      "ja": "Cookieと分析",
+      "fr": "Cookies et mesure d’audience",
+      "es": "Cookies y analítica"
+    },
+    "comment": "Heading of the site-wide consent banner."
+  },
+  "consent.body": {
+    "localizations": {
+      "en": "We use essential storage to run the site and, with your permission, analytics to understand how it’s used and improve it. Your photos are never sent or tracked.",
+      "ru": "Мы используем необходимое хранилище для работы сайта и, с вашего разрешения, аналитику, чтобы понимать, как им пользуются, и улучшать его. Ваши фото никуда не отправляются и не отслеживаются.",
+      "de": "Wir nutzen notwendigen Speicher für den Betrieb der Website und, mit deiner Erlaubnis, Analysen, um zu verstehen, wie sie genutzt wird, und sie zu verbessern. Deine Fotos werden nie gesendet oder erfasst.",
+      "ja": "サイトの動作に必要なストレージを使用し、許可いただいた場合は利用状況を把握して改善するための分析も行います。写真が送信・追跡されることはありません。",
+      "fr": "Nous utilisons un stockage essentiel au fonctionnement du site et, avec votre accord, la mesure d’audience pour comprendre son utilisation et l’améliorer. Vos photos ne sont jamais envoyées ni suivies.",
+      "es": "Usamos almacenamiento esencial para que el sitio funcione y, con tu permiso, analítica para entender cómo se usa y mejorarlo. Tus fotos nunca se envían ni se rastrean."
+    },
+    "comment": "Consent banner text; followed by a link to the Privacy Policy. Photos are processed on-device, so the last sentence must stay true."
+  },
+  "consent.accept": {
+    "localizations": {
+      "en": "Accept all",
+      "ru": "Принять все",
+      "de": "Alle akzeptieren",
+      "ja": "すべて許可",
+      "fr": "Tout accepter",
+      "es": "Aceptar todo"
+    },
+    "comment": "Consent button; same prominence as Reject all."
+  },
+  "consent.reject": {
+    "localizations": {
+      "en": "Reject all",
+      "ru": "Отклонить все",
+      "de": "Alle ablehnen",
+      "ja": "すべて拒否",
+      "fr": "Tout refuser",
+      "es": "Rechazar todo"
+    },
+    "comment": "Consent button; allows only necessary storage."
+  },
+  "consent.settings": {
+    "localizations": {
+      "en": "Settings",
+      "ru": "Настройки",
+      "de": "Einstellungen",
+      "ja": "設定",
+      "fr": "Personnaliser",
+      "es": "Configurar"
+    },
+    "comment": "Consent button that reveals per-category toggles."
+  },
+  "consent.save": {
+    "localizations": {
+      "en": "Save choices",
+      "ru": "Сохранить выбор",
+      "de": "Auswahl speichern",
+      "ja": "選択を保存",
+      "fr": "Enregistrer mes choix",
+      "es": "Guardar selección"
+    },
+    "comment": "Consent button that saves the toggles."
+  },
+  "consent.necessary": {
+    "localizations": {
+      "en": "Necessary",
+      "ru": "Необходимые",
+      "de": "Notwendig",
+      "ja": "必須",
+      "fr": "Nécessaires",
+      "es": "Necesarias"
+    },
+    "comment": "Consent category that cannot be turned off."
+  },
+  "consent.necessary_desc": {
+    "localizations": {
+      "en": "Remembers your theme and these choices. Always on.",
+      "ru": "Запоминают тему оформления и этот выбор. Всегда включены.",
+      "de": "Speichern dein Design und diese Auswahl. Immer aktiv.",
+      "ja": "テーマとこの選択を保存します。常にオン。",
+      "fr": "Mémorisent votre thème et ces choix. Toujours actifs.",
+      "es": "Recuerdan tu tema y esta selección. Siempre activas."
+    },
+    "comment": "Description of the necessary category."
+  },
+  "consent.analytics": {
+    "localizations": {
+      "en": "Analytics",
+      "ru": "Аналитика",
+      "de": "Analyse",
+      "ja": "分析",
+      "fr": "Mesure d’audience",
+      "es": "Analítica"
+    },
+    "comment": "Optional consent category."
+  },
+  "consent.analytics_desc": {
+    "localizations": {
+      "en": "Usage statistics via Amplitude, such as which buttons are used and whether upscaling succeeds.",
+      "ru": "Статистика использования через Amplitude: например, какие кнопки нажимают и успешно ли проходит улучшение.",
+      "de": "Nutzungsstatistik über Amplitude, z. B. welche Schaltflächen genutzt werden und ob das Hochskalieren klappt.",
+      "ja": "Amplitudeによる利用統計（使われたボタンや高画質化の成否など）。",
+      "fr": "Statistiques d’utilisation via Amplitude, comme les boutons utilisés et la réussite de l’agrandissement.",
+      "es": "Estadísticas de uso con Amplitude, como qué botones se usan y si el escalado funciona."
+    },
+    "comment": "Description of the analytics category. Amplitude is the vendor name; do not translate."
+  },
+  "consent.footer_link": {
+    "localizations": {
+      "en": "Cookie settings",
+      "ru": "Настройки cookie",
+      "de": "Cookie-Einstellungen",
+      "ja": "Cookie設定",
+      "fr": "Paramètres des cookies",
+      "es": "Configuración de cookies"
+    },
+    "comment": "Footer link that reopens the consent settings."
   }
 }

@@ -836,6 +836,28 @@ def browser_tool_link(c, lang, hero=False):
                 f'<span class="arrow" aria-hidden="true">→</span></a>')
     return f'<a href="{href}">{esc(c["tool"]["nav"])}</a>'
 
+# Site-wide consent. Hidden until site.js finds no saved choice; Accept and Reject
+# share one style so neither is nudged. Analytics code reads the same choice.
+def consent_banner(c, lang):
+    k = c["consent"]
+    def row(name, desc, control):
+        return (f'<label class="consent-row"><span><b>{esc(name)}</b><small>{esc(desc)}</small></span>'
+                f'{control}<i class="consent-switch" aria-hidden="true"></i></label>')
+    return f"""<section class="consent" id="consent" aria-labelledby="consent-title" hidden>
+  <h2 id="consent-title">{esc(k['title'])}</h2>
+  <p>{esc(k['body'])} <a href="{rel_url(lang, 'privacy_policy')}">{esc(c['footer']['privacy'])}</a></p>
+  <div class="consent-prefs" id="consent-prefs" hidden>
+    {row(k['necessary'], k['necessary_desc'], '<input type="checkbox" checked disabled>')}
+    {row(k['analytics'], k['analytics_desc'], '<input type="checkbox" id="consent-analytics">')}
+  </div>
+  <div class="consent-actions">
+    <button class="btn btn-g" type="button" data-consent="reject">{esc(k['reject'])}</button>
+    <button class="btn btn-g" type="button" data-consent="accept">{esc(k['accept'])}</button>
+    <button class="btn btn-p" type="button" data-consent="save" hidden>{esc(k['save'])}</button>
+    <button class="consent-link" type="button" data-consent="settings">{esc(k['settings'])}</button>
+  </div>
+</section>"""
+
 def footer(c, lang, home_prefix, path=""):
     f = c["footer"]
     guide_links = "".join(
@@ -872,6 +894,7 @@ def footer(c, lang, home_prefix, path=""):
           <li><a href="{rel_url(lang, 'support_page')}">{esc(f['help'])}</a></li>
           <li><a href="{rel_url(lang, 'privacy_policy')}">{esc(f['privacy'])}</a></li>
           <li><a href="{rel_url(lang, 'terms')}">{esc(f['terms'])}</a></li>
+          <li><button class="consent-link" type="button" data-consent-open>{esc(c['consent']['footer_link'])}</button></li>
         </ul>
       </div>
     </div>
@@ -881,6 +904,7 @@ def footer(c, lang, home_prefix, path=""):
     </div>
   </div>
 </footer>
+{consent_banner(c, lang)}
 <script src="/assets/site.js?v={JS_V}" defer></script>
 </body>
 </html>
