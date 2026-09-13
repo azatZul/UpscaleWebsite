@@ -3,6 +3,9 @@ import {inspectFile} from './image-info.js';
 import {createComparison} from './comparison.js';
 import {createPanZoom} from './pan-zoom.js';
 import {pageTranslator} from './i18n.js';
+import {boxPercent} from './face-detect.js';
+import {pendingEnhancements, sameSelection, selectedPatches} from './face-selection.js';
+import {createOverlay} from './overlay.js';
 import {shouldEnhanceFaces, tileMetricKey} from './model-selection.js';
 
 const {t, duration} = pageTranslator(document);
@@ -13,7 +16,9 @@ const elements = Object.fromEntries(['photo-input', 'choose-photo', 'replace-pho
   'download-result', 'another-photo', 'limit-note', 'interrupted', 'visibility-note', 'photo-stage', 'stage-title',
   'step-choose', 'step-upscale', 'step-compare', 'before-image', 'result-comparison', 'comparison-handle', 'enhance-faces',
   'face-summary', 'result-viewer', 'result-stage', 'expand-result', 'close-result', 'scale-2x', 'scale-4x', 'scale-note',
-  'result-tag', 'result-title', 'model-photo', 'model-drawing', 'face-option'].map(id => [id, $(id)]));
+  'result-tag', 'result-title', 'model-photo', 'model-drawing', 'face-option', 'choose-faces', 'face-editor', 'face-stage',
+  'face-frame', 'face-photo', 'face-marks', 'face-apply', 'face-cancel', 'face-close', 'face-editor-title',
+  'face-status', 'face-progress'].map(id => [id, $(id)]));
 const comparison = createComparison(elements['result-comparison'], elements['before-image'], elements['comparison-handle'],
   value => t('slider_value', {value}));
 const environment = {userAgent: navigator.userAgent, platform: navigator.platform,
@@ -54,6 +59,16 @@ let errorCode;
 let scaleFallback = false;
 let runningFaces = false;
 let expanded = false;
+let lastResult;
+// Picker state stays transferable: a faceless base plus cached face patches.
+let faceEdit;
+let faceChoice;
+let faceOpen = false;
+let applying = false;
+let applyToken = 0;
+let applyTimer;
+let applyWorker;
+let applyForceCpu = false;
 const panZoom = createPanZoom({root: elements['result-viewer'], stage: elements['result-stage'],
   frame: elements['result-comparison'], active: () => expanded});
 const stageObserver = new ResizeObserver(entries => {
@@ -62,27 +77,233 @@ const stageObserver = new ResizeObserver(entries => {
   panZoom.clamp();
 });
 stageObserver.observe(elements['result-stage']);
+const resultOverlay = createOverlay({root: elements['result-viewer'],
+  regions: '.nav, .skip-link, .tool-heading, .tool-steps, #photo-stage, .inline-cta, footer',
+  onClose: () => expandResult(false)});
 function expandResult(value) {
   expanded = value;
   elements['result-viewer'].classList.toggle('is-expanded', value);
   panZoom.reset();
-  document.body.classList.toggle('album-expanded-lock', value);
+  value ? resultOverlay.open() : resultOverlay.close();
   elements['expand-result'].hidden = value; elements['close-result'].hidden = !value;
-  // Hide the rest of the page from keyboard and assistive navigation while expanded.
-  for (const node of document.querySelectorAll('.nav, .skip-link, .tool-heading, .tool-steps, #photo-stage, .inline-cta, footer')) node.inert = value;
   (value ? elements['close-result'] : elements['expand-result']).focus({preventScroll: true});
 }
 elements['expand-result'].addEventListener('click', () => expandResult(true));
 elements['close-result'].addEventListener('click', () => expandResult(false));
-document.addEventListener('keydown', event => {
-  if (!expanded) return;
-  if (event.key === 'Escape') expandResult(false);
-  if (event.key === 'Tab') {
-    event.preventDefault();
-    (document.activeElement === elements['close-result'] ? elements['comparison-handle'] : elements['close-result']).focus();
-  }
+
+// Full-screen picker over the original photo.
+const faceOverlay = createOverlay({root: elements['face-editor'], regions: '#main-content, .nav, .skip-link, footer',
+  onClose: () => closeFaces()});
+// pan-zoom captures the pointer on the stage, so a mark never receives the
+// pointer's click. Taps are read here instead, in the capture phase, which
+// still runs when pan-zoom stops a pinch from propagating.
+let tap;
+elements['face-stage'].addEventListener('pointerdown', event => {
+  if (!faceOpen) return;
+  if (tap) { tap.multi = true; return; }
+  tap = {id: event.pointerId, x: event.clientX, y: event.clientY, moved: false, multi: false,
+    mark: event.target.closest('.face-mark')};
+}, true);
+elements['face-stage'].addEventListener('pointermove', event => {
+  if (tap?.id === event.pointerId && Math.hypot(event.clientX - tap.x, event.clientY - tap.y) > 6) tap.moved = true;
+}, true);
+for (const name of ['pointerup', 'pointercancel']) elements['face-stage'].addEventListener(name, event => {
+  if (tap?.id !== event.pointerId) return;
+  const {mark, moved, multi} = tap;
+  tap = null;
+  if (name !== 'pointerup' || !mark || moved || multi || (event.pointerType === 'mouse' && event.button !== 0)) return;
+  toggleFace(Number(mark.dataset.index));
+  mark.focus({preventScroll: true});
+}, true);
+const facePanZoom = createPanZoom({root: elements['face-editor'], stage: elements['face-stage'],
+  frame: elements['face-frame'], active: () => faceOpen});
+new ResizeObserver(entries => {
+  const {width, height} = entries[0].contentRect;
+  if (height) elements['face-frame'].style.setProperty('--stage-ratio', width / height);
+  facePanZoom.clamp();
+}).observe(elements['face-stage']);
+// Keyboard path: Enter and Space give a click with detail 0; a pointer click
+// never does, so the two paths cannot both toggle.
+elements['face-marks'].addEventListener('click', event => {
+  const mark = event.target.closest('.face-mark');
+  if (mark && event.detail === 0) toggleFace(Number(mark.dataset.index));
 });
+
+function setFaceStatus(text, progress, error = false) {
+  elements['face-status'].textContent = text;
+  elements['face-status'].hidden = !text;
+  elements['face-status'].classList.toggle('is-error', error);
+  elements['face-progress'].hidden = progress === undefined;
+  if (progress !== undefined) elements['face-progress'].value = progress;
+}
+
+function refreshFaceEditor() {
+  if (!faceEdit || !faceChoice) return;
+  const {faces} = faceEdit;
+  for (const mark of elements['face-marks'].children) {
+    mark.setAttribute('aria-pressed', String(Boolean(faceChoice[mark.dataset.index])));
+    mark.disabled = applying;
+  }
+  elements['face-editor-title'].textContent = t('face_editor_title', {count: faceChoice.filter(Boolean).length, total: faces.length});
+  elements['face-apply'].disabled = applying;
+}
+
+function toggleFace(index) {
+  if (applying || !faceChoice || !(index in faceChoice)) return;
+  faceChoice[index] = !faceChoice[index];
+  refreshFaceEditor();
+}
+
+function openFaces() {
+  if (!faceEdit || !originalUrl || applying || busy()) return;
+  if (expanded) expandResult(false);
+  const {plan, faces} = faceEdit;
+  faceChoice = faceEdit.applied.slice();
+  elements['face-photo'].src = originalUrl;
+  elements['face-frame'].style.aspectRatio = `${plan.width} / ${plan.height}`;
+  elements['face-frame'].style.setProperty('--photo-ratio', plan.width / plan.height);
+  elements['face-marks'].replaceChildren(...faces.map((face, index) => {
+    const rect = boxPercent(face.box, plan.width, plan.height);
+    const mark = document.createElement('button');
+    mark.type = 'button';
+    mark.className = 'face-mark';
+    mark.dataset.index = index;
+    Object.assign(mark.style, {left: `${rect.left}%`, top: `${rect.top}%`, width: `${rect.width}%`, height: `${rect.height}%`});
+    mark.setAttribute('aria-label', t('face_toggle', {index: index + 1}));
+    const badge = document.createElement('span');
+    badge.className = 'face-mark-badge';
+    badge.setAttribute('aria-hidden', 'true');
+    badge.textContent = index + 1;
+    mark.append(badge);
+    return mark;
+  }));
+  setFaceStatus('');
+  refreshFaceEditor();
+  elements['face-editor'].hidden = false;
+  faceOpen = true;
+  faceOverlay.open();
+  facePanZoom.reset();
+  elements['face-close'].focus({preventScroll: true});
+}
+
+function closeFaces(restoreFocus = true) {
+  if (!faceOpen) return;
+  if (applying) { stopApply(); refreshControls(); }
+  faceOpen = false; tap = null;
+  faceOverlay.close();
+  elements['face-editor'].hidden = true;
+  elements['face-marks'].replaceChildren();
+  elements['face-photo'].removeAttribute('src');
+  faceChoice = undefined;
+  if (restoreFocus && !elements['choose-faces'].hidden) elements['choose-faces'].focus({preventScroll: true});
+}
+
+function stopApply() {
+  applyToken++;
+  applyWorker?.terminate(); applyWorker = null;
+  clearTimeout(applyTimer);
+  applying = false;
+  if (!busy()) { wakeLock?.release().catch(() => {}); wakeLock = null; }
+}
+
+// Apply failures preserve the previous result and stay local to the picker.
+function applyFailed(key, params) {
+  stopApply();
+  setFaceStatus(t(key, params), undefined, true);
+  refreshFaceEditor();
+  refreshControls();
+}
+
+function applyWatchdog() {
+  clearTimeout(applyTimer);
+  if (!applying || document.hidden) return;
+  applyTimer = setTimeout(() => applyFailed('err_timeout'), 120_000);
+}
+
+function wireApplyWorker(active, token, onData) {
+  applyWorker?.terminate();
+  applyWorker = active;
+  active.onmessage = event => { if (token === applyToken) { applyWatchdog(); onData(event.data); } };
+  active.onerror = event => { event.preventDefault(); if (token === applyToken) applyFailed('err_face_apply'); };
+  active.onmessageerror = () => { if (token === applyToken) applyFailed('err_face_apply'); };
+  return active;
+}
+
+function applyFaces() {
+  if (!faceEdit || !faceChoice || applying) return;
+  if (sameSelection(faceChoice, faceEdit.applied)) { closeFaces(); return; }
+  const token = ++applyToken;
+  const choice = faceChoice.slice();
+  applying = true; applyForceCpu = forceCpu;
+  setFaceStatus(t('applying_faces'));
+  refreshFaceEditor(); refreshControls(); applyWatchdog(); keepAwake();
+  const missing = pendingEnhancements(faceEdit.faces, choice);
+  missing.length ? enhanceMissing(token, choice, missing) : rebuildResult(token, choice);
+}
+
+function enhanceMissing(token, choice, missing) {
+  try {
+    const active = wireApplyWorker(new Worker(new URL('./face.worker.js', import.meta.url)), token, data => {
+      if (data.type === 'status') setFaceStatus(t(data.title, data.params), data.progress);
+      else if (data.type === 'error') {
+        // Same GPU fallback as the first face pass, kept local so the upscaler
+        // is not pinned to CPU for the next photo.
+        if (data.code === 'gpu' && !applyForceCpu) { applyForceCpu = true; enhanceMissing(token, choice, missing); }
+        else applyFailed(data.key === 'err_face' ? 'err_face_apply' : data.key, data.params);
+      } else if (data.type === 'enhanced') {
+        active.terminate(); applyWorker = null;
+        for (const {index, patch} of data.faces) faceEdit.faces[index].patch = patch;
+        rebuildResult(token, choice);
+      }
+    });
+    active.postMessage({mode: 'enhance', file, environment, forceCpu: applyForceCpu,
+      faces: missing.map(index => ({index, transform: faceEdit.faces[index].transform}))});
+  } catch { applyFailed('err_face_apply'); }
+}
+
+function rebuildResult(token, choice) {
+  try {
+    const active = wireApplyWorker(new Worker(new URL('./face-edit.worker.js', import.meta.url), {type: 'module'}), token, data => {
+      if (data.type === 'status') setFaceStatus(t(data.title, data.params));
+      else if (data.type === 'error') applyFailed(data.key, data.params);
+      else if (data.type === 'applied') {
+        stopApply();
+        faceEdit.applied = choice; faceEdit.changed = true;
+        setResultBlob(data.blob);
+        renderSummary();
+        setStatus(t('done_title'), t('done_detail'));
+        // Re-enable Choose faces first, so closing can hand focus back to it.
+        refreshControls();
+        closeFaces();
+      }
+    });
+    active.postMessage({type: 'apply', base: faceEdit.baseBlob, plan: faceEdit.plan,
+      faces: selectedPatches(faceEdit.faces, choice)});
+  } catch { applyFailed('err_face_apply'); }
+}
+
+function setResultBlob(blob) {
+  const previous = resultUrl;
+  resultUrl = URL.createObjectURL(blob);
+  elements['result-image'].src = resultUrl;
+  elements['download-result'].href = resultUrl;
+  if (previous) elements['result-image'].decode().catch(() => {}).finally(() => URL.revokeObjectURL(previous));
+}
+
+// With the picker available, its button owns the face count.
+function renderSummary() {
+  const {plan, modelKind: kind, faceEnabled, detectedCount, faceCount} = lastResult;
+  const faces = faceEdit || kind === 'drawing' ? '' : !faceEnabled ? t('faces_off')
+    : faceCount ? t('faces_enhanced', {count: faceCount}) : t(detectedCount ? 'faces_none_suitable' : 'faces_none');
+  elements['result-summary'].textContent = `${dimensions(plan)} · JPEG${faces ? `; ${faces}` : ''}`;
+  elements['face-summary'].textContent = !faceEdit && faceCount && detectedCount > faceCount ? t('faces_partial') : '';
+  if (faceEdit) {
+    elements['choose-faces'].textContent = t('choose_faces', {count: faceEdit.applied.filter(Boolean).length, total: faceEdit.faces.length});
+  }
+}
+
 const busy = () => ['checking', 'processing'].includes(phase);
+const locked = () => busy() || applying;
 const dimensions = plan => `${plan.width} × ${plan.height} → ${plan.outputWidth} × ${plan.outputHeight}`;
 
 function remember(active) {
@@ -103,7 +324,7 @@ const idleStatus = () => setStatus('', t('idle_detail'));
 // drop zone swaps its contents, and the options and main button stay put.
 function refreshControls() {
   const hasFile = Boolean(file);
-  const locked = busy() || !supported;
+  const locked = busy() || applying || !supported;
   const failed = phase === 'error';
   elements['drop-empty'].hidden = hasFile;
   elements['selected-photo'].hidden = !hasFile;
@@ -113,6 +334,8 @@ function refreshControls() {
     'enhance-faces']) elements[id].disabled = locked;
   elements['scale-4x'].disabled = locked || !supportsScale(policy, 4);
   elements['face-option'].hidden = modelKind !== 'photo';
+  elements['choose-faces'].hidden = !faceEdit || phase !== 'done';
+  elements['choose-faces'].disabled = applying;
   const appOnly = ['browser', 'size', 'format'].includes(errorCode);
   const cpuRetry = failed && errorCode === 'gpu' && !forceCpu;
   const tryTwo = failed && scaleFallback;
@@ -132,11 +355,11 @@ function refreshControls() {
 }
 
 async function keepAwake() {
-  if (document.hidden || !navigator.wakeLock || wakeLock || !busy()) return;
+  if (document.hidden || !navigator.wakeLock || wakeLock || !locked()) return;
   const current = generation;
   try {
     const lock = await navigator.wakeLock.request('screen');
-    if (current !== generation || !busy() || wakeLock) { await lock.release(); return; }
+    if (current !== generation || !locked() || wakeLock) { await lock.release(); return; }
     wakeLock = lock;
     lock.addEventListener('release', () => { if (wakeLock === lock) wakeLock = null; });
   } catch { /* Optional convenience only. */ }
@@ -159,6 +382,9 @@ function watchdog() {
 
 function clearOutput() {
   if (expanded) expandResult(false);
+  closeFaces(false); stopApply();
+  faceEdit = undefined; lastResult = undefined;
+  elements['choose-faces'].hidden = true;
   elements.results.hidden = true;
   elements['result-image'].removeAttribute('src');
   elements['before-image'].removeAttribute('src');
@@ -233,15 +459,12 @@ function onMessage(data, current) {
     elements['result-tag'].textContent = t('result_tag', {scale: resultScale});
     elements['download-result'].href = resultUrl;
     elements['download-result'].download = `${file.name.replace(/\.[^.]+$/, '') || 'photo'}-uscale-${resultScale}x.jpg`;
-    // The scale is the headline; the size, format and face count read as one
-    // subtitle under it, and the partial-faces caveat stays its own line.
-    const faces = data.modelKind === 'drawing' ? '' : !data.faceEnabled ? t('faces_off')
-      : data.faceCount ? t('faces_enhanced', {count: data.faceCount})
-        : t(data.detectedCount ? 'faces_none_suitable' : 'faces_none');
+    lastResult = {plan: data.plan, modelKind: data.modelKind, faceEnabled: data.faceEnabled,
+      detectedCount: data.detectedCount, faceCount: data.faceCount};
+    faceEdit = data.canEdit && data.faces?.length ? {baseBlob: data.baseBlob, plan: data.plan, faces: data.faces,
+      applied: data.faces.map(face => Boolean(face.patch)), changed: false} : undefined;
     elements['result-title'].textContent = t('upscaled', {scale: resultScale});
-    elements['result-summary'].textContent = `${dimensions(data.plan)} · JPEG${faces ? `; ${faces}` : ''}`;
-    elements['face-summary'].textContent =
-      data.faceCount && data.detectedCount > data.faceCount ? t('faces_partial') : '';
+    renderSummary();
     setStatus(t('done_title'), t('done_detail'));
     elements.results.hidden = false;
     refreshControls();
@@ -267,8 +490,7 @@ function prepare(cpu = false, autoStart = false, faceResults) {
     worker.onerror = event => { event.preventDefault(); if (current === generation) fail('runtime', 'err_task_stopped'); };
     worker.onmessageerror = () => { if (current === generation) fail('runtime', 'err_result_read'); };
     remember(true);
-    worker.postMessage({type: 'prepare', file, environment, forceCpu, autoStart, faceResults, scale, modelKind},
-      faceResults?.faces.map(face => face.pixels.buffer) || []);
+    worker.postMessage({type: 'prepare', file, environment, forceCpu, autoStart, faceResults, scale, modelKind});
     watchdog(); keepAwake();
   } catch { fail('browser', 'err_worker_start'); }
 }
@@ -290,7 +512,7 @@ function startFaces(cpu = false) {
 }
 
 function start() {
-  if (!file || !supported || busy()) return;
+  if (!file || !supported || locked()) return;
   retriedGpu = false;
   if (shouldEnhanceFaces(modelKind, elements['enhance-faces'].checked)) startFaces(forceCpu);
   else prepare(forceCpu, true);
@@ -301,7 +523,7 @@ function start() {
 // a download and a speed test. Runs for a new photo and again whenever the
 // scale or face option changes for the photo already in the drop zone.
 async function assessCurrentFile() {
-  if (!file || busy()) return;
+  if (!file || locked()) return;
   const current = ++selection;
   clearOutput();
   phase = 'assessing'; errorCode = undefined; scaleFallback = false;
@@ -334,7 +556,7 @@ async function assessCurrentFile() {
 }
 
 async function chooseFile(next) {
-  if (!next || busy() || !supported) return;
+  if (!next || locked() || !supported) return;
   stopWorker();
   file = next; retriedGpu = false; forceCpu = false;
   if (thumbnailUrl) URL.revokeObjectURL(thumbnailUrl);
@@ -370,7 +592,7 @@ elements['scale-note'].hidden = supportsScale(policy, 4);
 elements['enhance-faces'].addEventListener('change', () => { if (['done', 'error'].includes(phase)) assessCurrentFile(); });
 
 const readFailure = () => fail('format', 'err_unreadable');
-const openPicker = () => { if (!busy() && supported) elements['photo-input'].click(); };
+const openPicker = () => { if (!locked() && supported) elements['photo-input'].click(); };
 elements['choose-photo'].addEventListener('click', openPicker);
 elements['replace-photo'].addEventListener('click', openPicker);
 // The whole zone is a click target; its buttons stay the keyboard path.
@@ -401,29 +623,35 @@ function reset() {
   elements['photo-stage'].scrollIntoView({behavior: 'smooth', block: 'start'});
 }
 elements['another-photo'].addEventListener('click', reset);
+elements['choose-faces'].addEventListener('click', openFaces);
+elements['face-apply'].addEventListener('click', applyFaces);
+elements['face-cancel'].addEventListener('click', () => closeFaces());
+elements['face-close'].addEventListener('click', () => closeFaces());
 
 const hasFiles = event => Array.from(event.dataTransfer?.types || []).includes('Files');
 for (const eventName of ['dragenter', 'dragover']) elements['drop-zone'].addEventListener(eventName, event => {
   if (!hasFiles(event)) return;
   event.preventDefault();
-  if (!busy() && supported) elements['drop-zone'].classList.add('dragging');
+  if (!locked() && supported) elements['drop-zone'].classList.add('dragging');
 });
 elements['drop-zone'].addEventListener('dragleave', event => {
   if (!elements['drop-zone'].contains(event.relatedTarget)) elements['drop-zone'].classList.remove('dragging');
 });
 elements['drop-zone'].addEventListener('drop', event => {
   event.preventDefault(); elements['drop-zone'].classList.remove('dragging');
-  if (busy() || !supported) return;
+  if (locked() || !supported) return;
   if (event.dataTransfer.files.length > 1) setStatus(t('one_at_a_time'), t('one_at_a_time_detail'));
   else chooseFile(event.dataTransfer.files[0]).catch(readFailure);
 });
 // A photo dropped beside the zone would otherwise open in the tab and end the session.
 for (const eventName of ['dragover', 'drop']) window.addEventListener(eventName, event => { if (hasFiles(event)) event.preventDefault(); });
 
-document.addEventListener('visibilitychange', () => { refreshControls(); watchdog(); keepAwake(); });
+document.addEventListener('visibilitychange', () => { refreshControls(); watchdog(); applyWatchdog(); keepAwake(); });
 window.addEventListener('pagehide', () => {
   const interrupted = busy();
   stopWorker(); if (interrupted) remember(true);
+  // A result survives in the back/forward cache; an Apply in flight does not.
+  if (applying) applyFailed('err_face_apply');
   if (phase !== 'done') phase = 'cancelled';
 });
 window.addEventListener('pageshow', event => {

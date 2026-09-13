@@ -109,3 +109,23 @@ export function faceFinderInput(rgba, {padWidth, padHeight}) {
   }
   return values;
 }
+
+// The picker frames the head, not the detector's tight box: wider and taller
+// above it, since YuNet clips the hair.
+export const HEAD_FACTOR = 1.45;
+export const MIN_HEAD_BOX = 24;
+export function headBox(face, width, height, factor = HEAD_FACTOR) {
+  const boxWidth = Math.min(width, Math.max(MIN_HEAD_BOX, (face.x2 - face.x1) * factor));
+  const boxHeight = Math.min(height, Math.max(MIN_HEAD_BOX, (face.y2 - face.y1) * factor));
+  const centerX = (face.x1 + face.x2) / 2, centerY = (face.y1 + face.y2) / 2 - boxHeight * .06;
+  const x = Math.max(0, Math.min(width - boxWidth, centerX - boxWidth / 2));
+  const y = Math.max(0, Math.min(height - boxHeight, centerY - boxHeight / 2));
+  return {x, y, width: boxWidth, height: boxHeight};
+}
+
+// Percentages of the photo box. The frame keeps the photo's aspect ratio, so
+// each axis can use its own denominator and a square stays square.
+export function boxPercent(box, width, height) {
+  return {left: box.x / width * 100, top: box.y / height * 100,
+    width: box.width / width * 100, height: box.height / height * 100};
+}

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {faceGeometry, inverseTransform} from '../../src/tool/face-geometry.js';
+import {alignmentPoints, alignmentQuality, faceGeometry, inverseTransform, isAligned, keypointPoints, similarity} from '../../src/tool/face-geometry.js';
 
 const targets = [{x:193,y:240},{x:319,y:240},{x:256,y:314},{x:201,y:371},{x:311,y:371}];
 const apply = (t,p) => ({x:t.a*p.x+t.c*p.y+t.e, y:t.b*p.x+t.d*p.y+t.f});
@@ -39,4 +39,40 @@ test('tiny faces and faces outside app alignment acceptance are skipped',()=>{
   assert.ok(faceGeometry(landmarks(turned,512,512),512,512));
   const further=targets.map(p=>({...p}));further[2].x+=65;
   assert.equal(faceGeometry(landmarks(further,512,512),512,512),null);
+});
+test('a face outside the limits still gets an exact transform; only the suitability check refuses it',()=>{
+  const profile=targets.map(p=>({...p}));profile[2].x+=180;
+  const {points,nose}=alignmentPoints(landmarks(profile,512,512),512,512);
+  assert.equal(isAligned(alignmentQuality(points,nose)),false);
+  const t=similarity(points);
+  assert.ok(t);
+  // The moved nose shifts the centroid, but scale and rotation come from the
+  // eyes and the perimeter, so the eye and mouth spans still land exactly.
+  const span=(from,to)=>{const a=apply(t,points[from]),b=apply(t,points[to]);return {x:b.x-a.x,y:b.y-a.y};};
+  for (const [from,to] of [[0,1],[3,4]]) {
+    const got=span(from,to);
+    assert.ok(Math.abs(got.x-(targets[to].x-targets[from].x))<1e-8);
+    assert.ok(Math.abs(got.y-(targets[to].y-targets[from].y))<1e-8);
+  }
+  const inverse=inverseTransform(t,2);
+  assert.ok([inverse.a,inverse.b,inverse.c,inverse.d,inverse.e,inverse.f].every(Number.isFinite));
+});
+test('YuNet keypoints give the same transform in either pair order',()=>{
+  const angle=-.2, scale=1.3;
+  const s={a:Math.cos(angle)*scale,b:Math.sin(angle)*scale,c:-Math.sin(angle)*scale,d:Math.cos(angle)*scale,e:40,f:60};
+  const source=targets.map(p=>apply(s,p));
+  const swapped=[source[1],source[0],source[2],source[4],source[3]];
+  assert.deepEqual(similarity(keypointPoints(source)),similarity(keypointPoints(swapped)));
+  const t=similarity(keypointPoints(swapped));
+  source.forEach((p,i)=>{
+    const aligned=apply(t,p);
+    assert.ok(Math.abs(aligned.x-targets[i].x)<1e-8);
+    assert.ok(Math.abs(aligned.y-targets[i].y)<1e-8);
+  });
+});
+test('points that cannot define a face give no transform',()=>{
+  const collapsed=targets.map(()=>({x:10,y:10}));
+  assert.equal(similarity(collapsed),null);
+  const eyes=targets.map(p=>({...p}));eyes[1]={x:eyes[0].x+.5,y:eyes[0].y};
+  assert.equal(similarity(eyes),null);
 });

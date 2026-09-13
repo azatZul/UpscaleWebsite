@@ -64,6 +64,13 @@ export function faceLimit(policy = devicePolicy()) {
   return policy.lowMemory ? 4_000_000 : policy.maxInputPixels;
 }
 
+// Changing the face selection decodes the faceless base and draws it into a
+// second canvas of the same size, a peak assessPhoto() does not model. Offer
+// the face picker only where both surfaces fit with real margin.
+export function faceEditFits(plan, policy = devicePolicy()) {
+  return plan.outputWidth * plan.outputHeight * 4 * 2 + 96 * 1024 * 1024 <= policy.memoryBudgetBytes * .75;
+}
+
 // 4x is desktop-only: its output canvas is 4x the linear size of 2x's for the
 // same photo (16x the area), and only the desktop canvas/memory headroom
 // measured this session covers that. The app also sells 4x as a Pro feature;

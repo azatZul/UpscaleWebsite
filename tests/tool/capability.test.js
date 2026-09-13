@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {assessPhoto, checkBrowser, devicePolicy, estimateDuration, faceLimit, isAppleMobile, isIPad, maxInputPixelsForScale, supportsScale} from '../../src/tool/capability.js';
+import {assessPhoto, checkBrowser, devicePolicy, estimateDuration, faceEditFits, faceLimit, isAppleMobile, isIPad, maxInputPixelsForScale, supportsScale} from '../../src/tool/capability.js';
 import {inspectFile, parseImageHeader} from '../../src/tool/image-info.js';
 
 test('mobile size policy admits a 12 MP camera photo and still rejects oversized work', () => {
@@ -124,4 +124,14 @@ test('oversized files are rejected before reading any bytes', async () => {
   const fake={size:60*1024*1024,slice(){read=true;throw new Error('Should not read');}};
   await assert.rejects(inspectFile(fake),{code:'size'});
   assert.equal(read,false);
+});
+
+test('the face picker is offered only where the base and a second canvas fit', () => {
+  const plan = (width, height, scale) => ({outputWidth: width * scale, outputHeight: height * scale});
+  const desktop = devicePolicy();
+  assert.equal(faceEditFits(plan(4032, 3024, 2), desktop), true);
+  assert.equal(faceEditFits(plan(3840, 2880, 4), desktop), true);
+  assert.equal(faceEditFits(plan(4160, 3120, 4), desktop), false);
+  assert.equal(faceEditFits(plan(4000, 4000, 2), devicePolicy({userAgent: 'iPhone'})), true);
+  assert.equal(faceEditFits(plan(2000, 2000, 2), devicePolicy({deviceMemory: 2})), false);
 });

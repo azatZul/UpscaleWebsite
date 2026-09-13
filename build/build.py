@@ -1891,6 +1891,7 @@ def render_tool(c, lang):
           <p id="face-summary"></p>
           <div class="album-actions">
             <a id="download-result" class="btn btn-p" download="uscale.jpg">{DOWN_SVG}{esc(tl['download'])}</a>
+            <button id="choose-faces" class="btn btn-g" type="button" hidden></button>
             <button id="another-photo" class="text-button" type="button">{esc(tl['another'])}</button>
           </div>
         </div>
@@ -1905,6 +1906,29 @@ def render_tool(c, lang):
     <noscript><p class="notice">{esc(tl['noscript'])}</p></noscript>
   </div>
 </main>
+<div class="face-editor" id="face-editor" role="dialog" aria-modal="true" aria-labelledby="face-editor-title" hidden>
+  <div class="face-editor-stage" id="face-stage">
+    <div class="face-editor-fit">
+      <div class="face-editor-frame" id="face-frame">
+        <img id="face-photo" alt="{esc(tl['face_editor_alt'])}" draggable="false">
+        <div class="face-editor-marks" id="face-marks" role="group" aria-label="{esc(tl['face_editor_group'])}"></div>
+      </div>
+    </div>
+  </div>
+  <button id="face-close" class="album-ctl album-close" type="button" aria-label="{esc(tl['face_editor_close'])}">{CLOSE_SVG}</button>
+  <div class="face-editor-bar">
+    <div class="face-editor-text">
+      <h2 id="face-editor-title"></h2>
+      <p class="face-editor-hint">{esc(tl['face_editor_hint'])}</p>
+      <p class="face-editor-status" id="face-status" role="status" aria-live="polite" hidden></p>
+      <progress id="face-progress" max="1" value="0" aria-label="{esc(tl['progress_label'])}" hidden></progress>
+    </div>
+    <div class="face-editor-actions">
+      <button id="face-cancel" class="btn btn-g" type="button">{esc(tl['face_editor_cancel'])}</button>
+      <button id="face-apply" class="btn btn-p" type="button">{esc(tl['face_editor_apply'])}</button>
+    </div>
+  </div>
+</div>
 <script type="application/json" id="tool-strings">{strings}</script>
 <script type="module" src="{TOOL_SCRIPT}"></script>
 """

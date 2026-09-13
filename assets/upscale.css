@@ -176,3 +176,54 @@
   .tool-steps li{flex-direction:column;gap:4px;padding:7px 4px;line-height:1.15}
 }
 @media(prefers-reduced-motion:reduce){.tool *{scroll-behavior:auto!important;transition:none!important}}
+
+/* The picker sits outside .tool; marks counter-scale to stay legible when zoomed. */
+.face-editor[hidden],.face-editor [hidden]{display:none!important}
+.face-editor{position:fixed;inset:0;z-index:1000;display:flex;flex-direction:column;height:100dvh;background:var(--bg);color:var(--tx)}
+.face-editor-stage{position:relative;flex:1 1 auto;min-height:0;overflow:hidden;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+.face-editor-stage.is-panning{cursor:grabbing}
+.face-editor-fit{position:absolute;inset:0;display:grid;place-items:center}
+.face-editor-frame{position:relative;height:auto;max-height:100%;
+  width:min(100%,calc(100% * var(--photo-ratio,1.3333) / var(--stage-ratio,1.3333)));
+  transform:translate(var(--pan-x,0px),var(--pan-y,0px)) scale(var(--album-zoom,1))}
+.face-editor-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;-webkit-user-drag:none}
+.face-editor-marks{position:absolute;inset:0}
+.face-mark{--mark:rgba(255,255,255,.9);position:absolute;min-width:24px;min-height:24px;margin:0;padding:0;
+  border:calc(2px / var(--album-zoom,1)) solid var(--mark);border-radius:calc(14px / var(--album-zoom,1));
+  background:rgba(0,0,0,.08);box-shadow:0 0 0 calc(1px / var(--album-zoom,1)) rgba(0,0,0,.4);
+  cursor:pointer;transition:border-color .18s,background .18s}
+.face-mark[aria-pressed="true"]{--mark:var(--acc);background:color-mix(in srgb,var(--acc) 14%,transparent)}
+.face-mark:disabled{cursor:default}
+.face-mark:focus-visible{outline:calc(2px / var(--album-zoom,1)) solid var(--acc-tx);outline-offset:calc(3px / var(--album-zoom,1))}
+.face-mark-badge{position:absolute;left:0;top:0;display:grid;place-items:center;min-width:22px;height:22px;padding:0 6px;
+  border-radius:11px;font-size:12px;font-weight:750;line-height:1;color:#0a0b11;background:#fff;
+  box-shadow:0 2px 8px rgba(0,0,0,.35);transform-origin:0 0;
+  transform:scale(calc(1 / var(--album-zoom,1))) translate(-35%,-35%);transition:transform .22s cubic-bezier(.2,.8,.25,1),background .18s}
+.face-mark[aria-pressed="true"] .face-mark-badge{background:var(--acc);color:var(--ink)}
+@media(hover:hover){.face-mark:hover:not(:disabled) .face-mark-badge{transform:scale(calc(1.18 / var(--album-zoom,1))) translate(-35%,-35%)}}
+.face-editor .album-ctl{width:44px;height:44px}
+.face-editor-bar{display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px;
+  padding:16px max(22px,env(safe-area-inset-right)) max(16px,env(safe-area-inset-bottom)) max(22px,env(safe-area-inset-left));
+  border-top:1px solid var(--line);background:linear-gradient(180deg,var(--surface),var(--bg-2))}
+.face-editor-text{flex:1 1 340px;min-width:0;display:grid;gap:3px}
+.face-editor-text h2{margin:0;font-size:17px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.face-editor-text p{margin:0;font-size:14px;line-height:1.5;color:var(--tx-2)}
+.face-editor-text p:empty{display:none}
+.face-editor-status.is-error{color:var(--warn)}
+.face-editor-text progress{display:block;width:100%;max-width:360px;height:6px;margin-top:4px;border:0;border-radius:6px;overflow:hidden;
+  accent-color:var(--acc);background:var(--line);-webkit-appearance:none;appearance:none}
+.face-editor-text progress::-webkit-progress-bar{background:var(--line);border-radius:6px}
+.face-editor-text progress::-webkit-progress-value{background:var(--acc);border-radius:6px}
+.face-editor-text progress::-moz-progress-bar{background:var(--acc)}
+.face-editor-actions{display:flex;gap:12px;flex:0 0 auto}
+.face-editor-actions .btn{min-width:124px;min-height:48px;font-size:15.5px}
+.face-editor .btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+@media(max-width:640px){
+  .face-editor-bar{gap:12px;padding:12px max(14px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))}
+  .face-editor-text{flex-basis:100%}
+  .face-editor-hint{display:none}
+  .face-editor-actions{width:100%}
+  .face-editor-actions .btn{flex:1;min-width:0}
+  .face-editor .album-ctl{width:40px;height:40px}
+}
+@media(prefers-reduced-motion:reduce){.face-editor *{transition:none!important}}

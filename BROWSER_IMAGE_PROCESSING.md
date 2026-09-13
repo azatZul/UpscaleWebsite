@@ -109,6 +109,21 @@ in addition to the regular photo guards. A failure offers retry, the option
 to turn off face enhancement, and the app; it never reports a face pass as
 successful when it failed. These limits cannot measure actual free RAM.
 
+After a photo with faces finishes, **Choose faces** opens the original full
+screen with an upright box over every face found, including the ones outside
+the limits above, which start unselected. The button carries the enhanced
+count. Every detected face keeps a
+transform: from the mesh, or from YuNet's own five points when the mesh cannot
+be placed. Apply never runs the 2× model again: the processor keeps a faceless
+JPEG of the upscaled photo, and `face-edit.worker.js` feathers the chosen
+patches onto it and re-encodes, so the background is re-encoded at most once
+however often the selection changes. The face model runs only for selected
+faces that were never enhanced; patches are kept as PNG blobs for the whole
+photo, so turning a face off and on again costs a re-blend. The picker is
+offered only where the base and a second full-size canvas fit
+(`faceEditFits`): all of 2× on desktop and phones, and 4× on desktop up to
+about 11 MP. A failed Apply keeps the previous result and its download.
+
 `npm run build:preview` requires the approved `face_512.onnx`,
 `face_detector_yunet.onnx` and `face_landmarker.task` artifacts alongside the existing regular models. The
 face model is split into content-addressed parts below Cloudflare Pages'

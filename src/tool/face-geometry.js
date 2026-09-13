@@ -47,7 +47,12 @@ function pointAverage(landmarks, indices, width, height) {
   };
 }
 
-export function faceGeometry(landmarks, width, height) {
+const perimeterOf = points =>
+  distance(points[0], points[1]) + distance(points[1], points[4]) + distance(points[4], points[3]) + distance(points[3], points[0]);
+
+// Eyes, nose tip, mouth corners in photo pixels, in IDEAL_POINTS order, plus
+// the averaged nose the rotation gauge reads.
+export function alignmentPoints(landmarks, width, height) {
   const eyes = [
     pointAverage(landmarks, [33, 133], width, height),
     pointAverage(landmarks, [362, 263], width, height),
@@ -56,22 +61,46 @@ export function faceGeometry(landmarks, width, height) {
     pointAverage(landmarks, [61], width, height),
     pointAverage(landmarks, [291], width, height),
   ].sort((a, b) => a.x - b.x);
-  const points = [eyes[0], eyes[1], pointAverage(landmarks, [1], width, height), mouths[0], mouths[1]];
-  const perimeter = distance(points[0], points[1]) + distance(points[1], points[4]) + distance(points[4], points[3]) + distance(points[3], points[0]);
+  return {
+    points: [eyes[0], eyes[1], pointAverage(landmarks, [1], width, height), mouths[0], mouths[1]],
+    nose: pointAverage(landmarks, NOSE_POINTS, width, height),
+  };
+}
+
+// YuNet's own five points, for a face the mesh could not be placed on. Same
+// roles as IDEAL_POINTS; pairs are sorted the way the mesh's are.
+export function keypointPoints(five) {
+  const eyes = [five[0], five[1]].sort((a, b) => a.x - b.x);
+  const mouths = [five[3], five[4]].sort((a, b) => a.x - b.x);
+  return [eyes[0], eyes[1], five[2], mouths[0], mouths[1]];
+}
+
+export function alignmentQuality(points, nose) {
+  const perimeter = perimeterOf(points);
   const eyeCenter = {x: (points[0].x + points[1].x) / 2, y: (points[0].y + points[1].y) / 2};
   const mouthCenter = {x: (points[3].x + points[4].x) / 2, y: (points[3].y + points[4].y) / 2};
   const dx = mouthCenter.x - eyeCenter.x;
   const dy = mouthCenter.y - eyeCenter.y;
   const lineLength = Math.max(0.001, Math.hypot(dx, dy));
-  // Alignment keeps using the tip; only the rotation gauge averages the nose.
-  const nose = pointAverage(landmarks, NOSE_POINTS, width, height);
   const noseDistance = Math.abs(
     dy * nose.x - dx * nose.y + mouthCenter.x * eyeCenter.y - mouthCenter.y * eyeCenter.x,
   ) / lineLength;
   const cross = dx * (nose.y - eyeCenter.y) - dy * (nose.x - eyeCenter.x);
-  const noseOffset = noseDistance * (cross > 0 ? -1 : 1) * FACE_SIZE * 5 / perimeter;
-  if (distance(points[0], points[1]) <= 8 || perimeter >= 1500 || Math.abs(noseOffset) >= ROTATION_LIMIT) return null;
+  const noseOffset = noseDistance * (cross > 0 ? -1 : 1) * FACE_SIZE * 5 / Math.max(0.001, perimeter);
+  return {eyeDistance: distance(points[0], points[1]), perimeter, noseOffset};
+}
 
+// The limits the page applies on its own. A visitor can still ask for a face
+// outside them from the face picker.
+export function isAligned({eyeDistance, perimeter, noseOffset}) {
+  return eyeDistance > 8 && perimeter < 1500 && Math.abs(noseOffset) < ROTATION_LIMIT;
+}
+
+// Photo pixels -> 512 aligned face. Null only when the points cannot define a
+// face at all, so inverseTransform never divides by zero.
+export function similarity(points) {
+  const perimeter = perimeterOf(points);
+  if (!(distance(points[0], points[1]) > 1) || !(perimeter > 0) || !Number.isFinite(perimeter)) return null;
   const sourceCenter = centroid(points);
   const targetCenter = centroid(IDEAL_POINTS);
   const scale = IDEAL_PERIMETER / perimeter;
@@ -87,6 +116,12 @@ export function faceGeometry(landmarks, width, height) {
   return {a, b, c, d, e, f};
 }
 
+export function faceGeometry(landmarks, width, height) {
+  // Alignment keeps using the tip; only the rotation gauge averages the nose.
+  const {points, nose} = alignmentPoints(landmarks, width, height);
+  return isAligned(alignmentQuality(points, nose)) ? similarity(points) : null;
+}
+
 export function inverseTransform(transform, scale) {
   const determinant = transform.a * transform.d - transform.b * transform.c;
   return {
@@ -98,4 +133,3 @@ export function inverseTransform(transform, scale) {
     f: (transform.b * transform.e - transform.a * transform.f) / determinant * scale,
   };
 }
-

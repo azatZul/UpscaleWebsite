@@ -1,7 +1,7 @@
-import {assessPhoto, devicePolicy, estimateDuration, PhotoError, SCALE, TILE_SIZE} from './capability.js';
+import {assessPhoto, devicePolicy, estimateDuration, faceEditFits, PhotoError, SCALE, TILE_SIZE} from './capability.js';
 import {inspectFile, parseImageHeader} from './image-info.js';
 import {assembleTiles, makeCanvas, sampleTile, thumbnail} from './tile-pipeline.js';
-import {inverseTransform} from './face-geometry.js';
+import {compositePatches} from './face-composite.js';
 import {loadRuntime} from './runtime.js';
 
 const send = message => self.postMessage(message);
@@ -9,6 +9,7 @@ const status = message => send({type: 'status', ...message});
 let source;
 let runtime;
 let plan;
+let policy;
 let busy = false;
 let ready = false;
 let faces = [];
@@ -30,7 +31,7 @@ async function prepare({file, environment, forceCpu = false, autoStart = false, 
   detectedCount = faceResults?.detectedCount || 0;
   faceEnabled = Boolean(faceResults);
   await release();
-  const policy = devicePolicy(environment);
+  policy = devicePolicy(environment);
   plan = assessPhoto(await inspectFile(file), policy, scale);
   try { source = await createImageBitmap(file, {imageOrientation: 'from-image'}); }
   catch { throw new PhotoError('format', 'err_open'); }
@@ -80,32 +81,33 @@ async function process() {
     source.close(); source = null;
     // Release model memory before asking the encoder for a full-size export.
     await runtime.release(); runtime = null;
-    for (const face of faces) {
-      const patch = new OffscreenCanvas(512, 512);
-      const ctx = patch.getContext('2d');
-      ctx.putImageData(new ImageData(face.pixels, 512, 512), 0, 0);
-      ctx.globalCompositeOperation = 'destination-in';
-      const mask = ctx.createRadialGradient(256, 256, 220, 256, 256, 255);
-      mask.addColorStop(0, '#fff'); mask.addColorStop(1, 'rgba(255,255,255,0)');
-      ctx.fillStyle = mask; ctx.fillRect(0, 0, 512, 512);
-      const t = inverseTransform(face.transform, plan.scale);
-      context.setTransform(t.a, t.b, t.c, t.d, t.e, t.f);
-      context.drawImage(patch, 0, 0); context.resetTransform();
-      patch.width = patch.height = 1;
+    // The face picker rebuilds the result from this faceless copy, so no model
+    // runs again for a new selection. Only kept where decoding it next to a
+    // second full-size canvas fits the device (see faceEditFits).
+    const canEdit = faceEnabled && faces.length > 0 && faceEditFits(plan, policy);
+    let baseBlob;
+    if (canEdit) {
+      status({phase: 'encode', progress: .95, title: 'encoding', detail: 'encoding_detail'});
+      baseBlob = await canvas.convertToBlob({type: 'image/jpeg', quality: .96});
+      if (!baseBlob.size) throw new Error('No base was encoded');
     }
-    const faceCount = faces.length; faces = [];
+    const enhanced = faces.filter(face => face.patch);
+    await compositePatches(context, enhanced, plan.scale);
+    const faceCount = enhanced.length;
     status({phase: 'encode' , progress: .97, title: 'encoding', detail: 'encoding_detail'});
     const blob = await canvas.convertToBlob({type: 'image/jpeg', quality: .96});
     if (!blob.size) throw new Error('No image was encoded');
     // Verify that export preserved the requested dimensions.
     const result = parseImageHeader(await blob.slice(0, 2 * 1024 * 1024).arrayBuffer());
     if (result.width !== plan.outputWidth || result.height !== plan.outputHeight) throw new Error('Wrong export size');
-    send({type: 'done', blob, plan, modelKind, faceCount, detectedCount, faceEnabled, tilesMs,
+    send({type: 'done', blob, plan, modelKind, faceCount, detectedCount, faceEnabled, tilesMs, canEdit, baseBlob,
+      faces: canEdit ? faces : undefined,
       totalMs: performance.now() - started});
   } catch (error) {
     if (error instanceof PhotoError) throw error;
     throw new PhotoError('export', 'err_save');
   } finally {
+    faces = [];
     if (output) output.width = output.height = 1;
     await release();
   }

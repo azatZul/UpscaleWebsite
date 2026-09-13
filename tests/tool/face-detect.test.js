@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {cropRegion, decodeYuNet, detectionGeometry, detectionSide, faceFinderInput, mergeFaces, sameFace} from '../../src/tool/face-detect.js';
+import {boxPercent, cropRegion, decodeYuNet, detectionGeometry, detectionSide, faceFinderInput, headBox, mergeFaces, MIN_HEAD_BOX, sameFace} from '../../src/tool/face-detect.js';
 import {devicePolicy} from '../../src/tool/capability.js';
 
 // Zeroed tensors for every stride, so only the cells a test fills can score.
@@ -96,4 +96,31 @@ test('canvas pixels are packed as the BGR planes YuNet was trained on', () => {
   // Two pixels: pure red, then pure blue.
   const values = faceFinderInput(new Uint8ClampedArray([255, 0, 0, 255, 0, 0, 255, 255]), geometry);
   assert.deepEqual([...values], [0, 255, 0, 0, 255, 0]);
+});
+
+test('the picker box frames the head: wider than the detector, raised for hair', () => {
+  const box = headBox({x1: 450, y1: 340, x2: 550, y2: 460}, 1000, 1000);
+  assert.ok(Math.abs(box.width - 145) < 1e-9);
+  assert.ok(Math.abs(box.height - 174) < 1e-9);
+  assert.ok(Math.abs(box.x + box.width / 2 - 500) < 1e-9);
+  assert.ok(Math.abs(box.y + box.height / 2 - (400 - 174 * .06)) < 1e-9);
+});
+
+test('the picker box stays inside the photo without collapsing at its edges', () => {
+  const corner = headBox({x1: -20, y1: -30, x2: 60, y2: 70}, 300, 200);
+  assert.equal(corner.x, 0); assert.equal(corner.y, 0);
+  const edge = headBox({x1: 260, y1: 150, x2: 320, y2: 230}, 300, 200);
+  assert.ok(edge.x + edge.width <= 300 + 1e-9);
+  assert.ok(edge.y + edge.height <= 200 + 1e-9);
+  assert.ok(edge.width >= MIN_HEAD_BOX && edge.height >= MIN_HEAD_BOX);
+  const outside = headBox({x1: 400, y1: 250, x2: 400, y2: 250}, 300, 200);
+  assert.deepEqual(outside, {x: 300 - MIN_HEAD_BOX, y: 200 - MIN_HEAD_BOX, width: MIN_HEAD_BOX, height: MIN_HEAD_BOX});
+});
+
+test('box percentages round-trip, and a square box renders square in a frame with the photo ratio', () => {
+  const box = {x: 120, y: 80, width: 240, height: 240};
+  const rect = boxPercent(box, 1200, 800);
+  assert.ok(Math.abs(rect.left * 12 - 120) < 1e-9);
+  assert.ok(Math.abs(rect.top * 8 - 80) < 1e-9);
+  assert.ok(Math.abs(rect.width / 100 * 1200 - rect.height / 100 * 800) < 1e-9);
 });
