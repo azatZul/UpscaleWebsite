@@ -162,20 +162,32 @@
 .album-expanded-lock{overflow:hidden}
 .tool .inline-cta{max-width:760px;margin:32px auto 0}
 
-/* Mode picker: one free on-device mode and two cloud modes that use credits.
-   Choosing a tile swaps the card's options in place and keeps the photo. */
-.mode-picker{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;max-width:760px;margin:0 auto 18px}
-.mode-tile{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-height:84px;padding:14px 16px;font:inherit;text-align:left;
-  color:var(--tx);cursor:pointer;border:1.5px solid var(--line-2);border-radius:16px;background:var(--tint);transition:border-color .15s,background .15s}
-.mode-tile:hover:not(:disabled){border-color:var(--acc-line)}
-.mode-tile[aria-checked="true"]{border-color:var(--acc);background:var(--acc-soft)}
-.mode-tile:disabled{opacity:.5;cursor:not-allowed}
-.mode-tile-head{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%}
-.mode-tile-head b{font-size:15.5px;letter-spacing:-.01em;line-height:1.25}
-.mode-tag{flex-shrink:0;padding:2px 8px;border-radius:999px;font-size:11.5px;font-weight:750;letter-spacing:.02em}
-.mode-tag.is-free{color:var(--ok);background:var(--ok-soft);border:1px solid var(--ok-line)}
-.mode-tag.is-pro{color:var(--vio-2);background:var(--vio-soft);border:1px solid var(--vio-line)}
-.mode-tile-sub{font-size:13px;line-height:1.4;color:var(--tx-2)}
+/* Mode picker, after the app's model picker: each mode's before/after photo
+   behind its name, a dark fade for the text, and a gold Pro badge. Selecting a
+   mode sweeps the divider once, as the app's preview does when it appears. */
+@property --split{syntax:"<percentage>";inherits:true;initial-value:50%}
+.mode-picker{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:760px;margin:0 auto 18px}
+.mode-tile{position:relative;display:block;height:188px;padding:0;overflow:hidden;font:inherit;text-align:left;color:#fff;cursor:pointer;
+  border:0;border-radius:16px;background:var(--tint);box-shadow:0 0 0 1px var(--line-2);transition:box-shadow .15s}
+.mode-tile:hover:not(:disabled){box-shadow:0 0 0 1px var(--acc-line)}
+.mode-tile[aria-checked="true"]{box-shadow:0 0 0 2.5px var(--acc),0 12px 30px -14px var(--acc-glow)}
+.mode-tile:disabled{cursor:not-allowed;opacity:.6}
+.mode-preview{--split:50%;position:absolute;inset:0}
+.mode-preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.mode-preview .mode-before{clip-path:inset(0 calc(100% - var(--split)) 0 0)}
+.mode-divider{position:absolute;top:0;bottom:0;left:var(--split);width:2px;margin-left:-1px;background:#fff;box-shadow:0 0 6px rgba(0,0,0,.45)}
+.mode-preview::after{content:"";position:absolute;inset:38% 0 0;background:linear-gradient(180deg,transparent,rgba(0,0,0,.78))}
+.mode-tile[aria-checked="true"] .mode-preview{animation:mode-split 2.4s cubic-bezier(.45,0,.2,1) 1}
+@keyframes mode-split{0%{--split:50%}30%{--split:88%}65%{--split:12%}100%{--split:50%}}
+.mode-tag{position:absolute;top:10px;right:10px;z-index:1;display:inline-flex;align-items:center;gap:4px;padding:3px 9px;
+  border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.01em;line-height:1.3}
+.mode-tag svg{width:13px;height:11px}
+.mode-tag.is-free{color:#0a0b11;background:rgba(255,255,255,.9)}
+.mode-tag.is-pro{color:#1b1406;background:linear-gradient(135deg,#f7d98b,#d4a03c);box-shadow:1px 1px 2px rgba(0,0,0,.35)}
+.mode-tile-text{position:absolute;left:0;right:0;bottom:0;z-index:1;display:grid;gap:2px;padding:12px 14px}
+.mode-tile-text b{font-size:18px;font-weight:800;letter-spacing:-.015em;line-height:1.2;text-shadow:0 1px 2px rgba(0,0,0,.7)}
+.mode-tile-sub{font-size:12.5px;line-height:1.35;color:rgba(255,255,255,.84);text-shadow:0 1px 2px rgba(0,0,0,.5)}
+@media(prefers-reduced-motion:reduce){.mode-tile[aria-checked="true"] .mode-preview{animation:none}}
 
 .card-badges{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .credit-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:32px;font-size:13.5px;font-weight:750;
@@ -188,15 +200,23 @@
 .range-field{display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px}
 .range-field input[type="range"]{flex:1 1 180px;min-width:140px;accent-color:var(--acc)}
 .range-value{min-width:11ch;font-size:14px;font-weight:700}
-.restore-modes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.restore-mode{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:3px;padding:11px 13px;font:inherit;text-align:left;
-  color:var(--tx);cursor:pointer;border:1.5px solid var(--line-2);border-radius:12px;background:var(--tint);transition:border-color .15s,background .15s}
+/* Restore modes, after the app's PhotoRestoreModePicker cards: the mode's
+   preview, its name and description, and a round selection indicator. */
+.restore-modes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.restore-mode{display:grid;grid-template-columns:64px minmax(0,1fr) 22px;align-items:center;gap:12px;padding:10px 12px 10px 10px;
+  font:inherit;text-align:left;color:var(--tx);cursor:pointer;border:1.5px solid var(--line-2);border-radius:18px;
+  background:linear-gradient(180deg,var(--tint-2),var(--tint));transition:border-color .15s,background .15s}
 .restore-mode:hover:not(:disabled){border-color:var(--acc-line)}
 .restore-mode[aria-checked="true"]{border-color:var(--acc);background:var(--acc-soft)}
 .restore-mode:disabled{cursor:default;opacity:.6}
-.restore-mode b{font-size:14.5px;padding-right:72px}
+.restore-mode-thumb{display:block;width:64px;height:64px;object-fit:cover;border-radius:12px;box-shadow:0 0 0 1px rgba(255,255,255,.12)}
+.restore-mode-text{display:grid;gap:2px;min-width:0}
+.restore-mode-text b{font-size:15px;font-weight:700;line-height:1.25}
 .restore-mode-sub{font-size:12.5px;line-height:1.35;color:var(--tx-2)}
-.restore-mode-price{position:absolute;top:11px;right:12px;font-style:normal;font-size:12px;font-weight:700;color:var(--tx-2);font-variant-numeric:tabular-nums}
+.restore-mode-price{margin-top:2px;font-style:normal;font-size:12px;font-weight:700;color:var(--acc-tx);font-variant-numeric:tabular-nums}
+.restore-mode-check{position:relative;width:22px;height:22px;border:2px solid var(--tx-3);border-radius:50%}
+.restore-mode[aria-checked="true"] .restore-mode-check{border-color:var(--acc)}
+.restore-mode[aria-checked="true"] .restore-mode-check::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--acc)}
 .restore-toggles{display:flex;flex-wrap:wrap;gap:10px 22px}
 .check-option{display:flex;align-items:center;gap:10px;cursor:pointer}
 .check-option input{width:20px;height:20px;margin:0;flex:0 0 auto;accent-color:var(--acc)}
@@ -227,8 +247,13 @@
   .tool-card{padding:16px;border-radius:20px}
   .tool-card-heading h2{font-size:17px}
   .private-badge{padding:6px 10px;font-size:12px}
-  .mode-picker{grid-template-columns:minmax(0,1fr);gap:8px;margin-bottom:14px}
-  .mode-tile{min-height:0;padding:11px 14px;gap:3px}
+  /* A swipeable row on phones, so three tall previews don't push the photo
+     card off the first screen. */
+  .mode-picker{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(220px,76%);gap:10px;
+    overflow-x:auto;scroll-snap-type:x mandatory;margin-bottom:14px;padding:3px 3px 6px;scrollbar-width:none}
+  .mode-picker::-webkit-scrollbar{display:none}
+  .mode-tile{height:150px;scroll-snap-align:start}
+  .mode-tile-text b{font-size:16.5px}
   .restore-modes{grid-template-columns:minmax(0,1fr)}
   .card-badges{gap:6px}
   .credit-chip{padding:5px 9px;font-size:12.5px}

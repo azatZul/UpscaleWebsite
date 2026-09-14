@@ -1778,6 +1778,22 @@ COIN_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-w
             'aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M14.6 9.4c-.4-.9-1.4-1.4-2.6-1.4-1.5 0-2.6.8-2.6 1.9 '
             '0 2.6 5.3 1.4 5.3 4.2 0 1.1-1.1 1.9-2.7 1.9-1.2 0-2.3-.5-2.7-1.4M12 6.5v1.5m0 8v1.5"/></svg>')
 
+CROWN_SVG = ('<svg viewBox="0 0 14 12" fill="currentColor" aria-hidden="true">'
+             '<path d="M1 3.4 4.1 6 7 1l2.9 5L13 3.4 11.8 11H2.2z"/></svg>')
+# Before/after pairs from the iOS app's model picker (ModelPickerViewModel):
+# the same photos the app shows behind each mode.
+TOOL_MODE_IMG = "/resources/tool_modes"
+TOOL_MODE_PREVIEWS = {
+    "device": ("upscale", 732, 494),
+    "creative": ("creative", 925, 704),
+    "restore": ("restore", 925, 704),
+}
+# The app's restore-mode thumbnails (PhotoRestoreModePicker previewImageName).
+RESTORE_MODE_THUMBS = {
+    "restore": "mode_restore", "colorization": "mode_colorize",
+    "colorization_pro": "mode_enhanced_colorize", "advanced_restoration": "mode_advanced_fix",
+}
+
 def tool_cta(c, lang):
     """Home banner for the browser tool, in the comparison teaser's card style.
 
@@ -1835,10 +1851,28 @@ def render_tool(c, lang):
     restore_modes = "".join(
         f'<button type="button" role="radio" class="restore-mode" data-restore-mode="{mode}" '
         f'aria-checked="{"true" if mode == "restore" else "false"}">'
-        f'<b>{esc(tl["restore_mode_" + mode])}</b>'
+        f'<img class="restore-mode-thumb" src="{MODES}/{RESTORE_MODE_THUMBS[mode]}.jpg" width="240" height="240" alt="" decoding="async">'
+        f'<span class="restore-mode-text"><b>{esc(tl["restore_mode_" + mode])}</b>'
         f'<span class="restore-mode-sub">{esc(tl["restore_mode_" + mode + "_sub"])}</span>'
-        f'<em class="restore-mode-price"></em></button>'
+        f'<em class="restore-mode-price"></em></span>'
+        f'<span class="restore-mode-check" aria-hidden="true"></span></button>'
         for mode in ("restore", "colorization", "colorization_pro", "advanced_restoration"))
+    def mode_tile(mode, title, sub, tag):
+        name, width, height = TOOL_MODE_PREVIEWS[mode]
+        checked = "true" if mode == "device" else "false"
+        badge = (f'<span class="mode-tag is-pro">{CROWN_SVG}{esc(tl["tag_pro"])}</span>' if tag == "pro"
+                 else f'<span class="mode-tag is-free">{esc(tl["tag_free"])}</span>')
+        return (f'<button type="button" role="radio" class="mode-tile" id="mode-{mode}" aria-checked="{checked}">'
+                f'<span class="mode-preview" aria-hidden="true">'
+                f'<img class="mode-after" src="{TOOL_MODE_IMG}/{name}_after.jpg" width="{width}" height="{height}" alt="" decoding="async">'
+                f'<img class="mode-before" src="{TOOL_MODE_IMG}/{name}_before.jpg" width="{width}" height="{height}" alt="" decoding="async">'
+                f'<i class="mode-divider"></i></span>{badge}'
+                f'<span class="mode-tile-text"><b>{title}</b><span class="mode-tile-sub">{sub}</span></span></button>')
+    mode_tiles = "".join([
+        mode_tile("device", esc(tl["mode_device"]), esc(tl["mode_device_sub"]), "free"),
+        mode_tile("creative", esc(tl["mode_creative"]), creative_sub, "pro"),
+        mode_tile("restore", esc(tl["mode_restore"]), restore_sub, "pro"),
+    ])
     return (head(c, lang, tl["meta"]["title"], tl["meta"]["description"], canonical, path=TOOL_PATH,
                  robots="noindex,follow", stylesheet="upscale.css")
             + nav(c, lang, home_prefix, TOOL_PATH)
@@ -1849,11 +1883,7 @@ def render_tool(c, lang):
       <h1>{esc(tl['h1'])}</h1>
       <p class="lead">{esc(tl['sub'])}</p>
     </div>
-    <div class="mode-picker" id="mode-picker" role="radiogroup" aria-label="{esc(tl['mode_label'])}">
-      <button type="button" role="radio" class="mode-tile" id="mode-device" aria-checked="true"><span class="mode-tile-head"><b>{esc(tl['mode_device'])}</b><span class="mode-tag is-free">{esc(tl['tag_free'])}</span></span><span class="mode-tile-sub">{esc(tl['mode_device_sub'])}</span></button>
-      <button type="button" role="radio" class="mode-tile" id="mode-creative" aria-checked="false"><span class="mode-tile-head"><b>{esc(tl['mode_creative'])}</b><span class="mode-tag is-pro">{esc(tl['tag_pro'])}</span></span><span class="mode-tile-sub">{creative_sub}</span></button>
-      <button type="button" role="radio" class="mode-tile" id="mode-restore" aria-checked="false"><span class="mode-tile-head"><b>{esc(tl['mode_restore'])}</b><span class="mode-tag is-pro">{esc(tl['tag_pro'])}</span></span><span class="mode-tile-sub">{restore_sub}</span></button>
-    </div>
+    <div class="mode-picker" id="mode-picker" role="radiogroup" aria-label="{esc(tl['mode_label'])}">{mode_tiles}</div>
     <ol class="tool-steps" aria-label="{esc(tl['steps_label'])}">
       <li id="step-choose" aria-current="step"><span class="step-mark"><i>1</i>{CHECK_SVG}</span>{esc(tl['step_choose'])}</li>
       <li id="step-upscale"><span class="step-mark"><i>2</i>{CHECK_SVG}</span>{esc(tl['step_upscale'])}</li>
