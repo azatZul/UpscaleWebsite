@@ -45,9 +45,50 @@ export function quoteCredits(amountCents, packs, limits) {
   };
 }
 
+export const RESTORE_MODE_LABELS = {
+  restore: 'Restore',
+  colorization: 'Restore & Colorize',
+  colorization_pro: 'Enhanced Colorize',
+  advanced_restoration: 'Advanced Fix',
+};
+
+/** A worker price key ("creative:8k", "restore:colorization+hires") as a label.
+ *  Falls back to the older operation names for ledger rows written before
+ *  option-based pricing. */
+export function describePriceKey(key) {
+  if (typeof key !== 'string') return null;
+  const creative = /^creative:(2k|4k|8k)$/.exec(key);
+  if (creative) return `Creative upscale · ${creative[1].toUpperCase()}`;
+  const restore = /^restore:([a-z_]+?)(\+hires)?$/.exec(key);
+  if (restore && RESTORE_MODE_LABELS[restore[1]]) {
+    return `${RESTORE_MODE_LABELS[restore[1]]}${restore[2] ? ' · increased resolution' : ''}`;
+  }
+  return OPERATION_LABELS[key] || null;
+}
+
+/** Rows for "What credits buy", from the worker's price table. */
+export function priceList(prices) {
+  if (!prices) return [];
+  const rows = [];
+  const {creative = {}, restore = {}} = prices;
+  if (creative['2k'] !== undefined && creative['2k'] === creative['4k']) {
+    rows.push({label: 'Creative upscale · 2K or 4K', credits: creative['4k']});
+  } else {
+    for (const resolution of ['2k', '4k']) {
+      if (creative[resolution] !== undefined) rows.push({label: `Creative upscale · ${resolution.toUpperCase()}`, credits: creative[resolution]});
+    }
+  }
+  if (creative['8k'] !== undefined) rows.push({label: 'Creative upscale · 8K', credits: creative['8k']});
+  for (const [mode, label] of Object.entries(RESTORE_MODE_LABELS)) {
+    if (restore[mode] !== undefined) rows.push({label, credits: restore[mode]});
+  }
+  if (prices.increaseResolution) rows.push({label: 'Increased resolution', credits: prices.increaseResolution, extra: true});
+  return rows;
+}
+
 /** A ledger row as a line of text for the activity list. */
 export function describeActivity(entry) {
-  const operation = OPERATION_LABELS[entry.detail] || 'Cloud enhancement';
+  const operation = describePriceKey(entry.detail) || 'Cloud enhancement';
   switch (entry.reason) {
     case 'purchase': return 'Credits added';
     case 'spend': return operation;

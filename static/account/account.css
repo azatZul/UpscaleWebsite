@@ -9,7 +9,11 @@
 .account-page button:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
 
 /* One attribute owns which view is visible; the controller only sets it. */
-.account-checking,.auth-card,.account-dash{display:none}
+.account-checking,.auth-card,.account-dash,.account-popup-done{display:none}
+.account-main[data-state="popup-done"] .account-popup-done{display:flex}
+.account-popup-done{flex-direction:column;align-items:center;gap:12px;padding:96px 20px;text-align:center}
+.account-popup-done h1{font-size:26px;letter-spacing:-.03em;margin:8px 0 0}
+.account-popup-done p{font-size:15.5px;color:var(--tx-2);max-width:34ch}
 .account-main[data-state="checking"] .account-checking{display:flex}
 .account-main[data-state="signed-out"] .auth-card{display:flex}
 .account-main[data-state="signed-in"] .account-dash{display:block}

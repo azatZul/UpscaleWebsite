@@ -30,15 +30,19 @@ export const getAccessToken = async () => 'fixture';
 export const fetchAccount = async () => ({accountId: 'fixture', email: identity.email, credits: empty ? 0 : 1_235});
 export const fetchPacks = async () => ({
   packs: PACKS,
-  operations: {upscale_standard: 5, restore: 20, upscale_ultimate: 25},
+  prices: {
+    creative: {'2k': 5, '4k': 5, '8k': 15},
+    restore: {restore: 15, colorization: 15, colorization_pro: 35, advanced_restoration: 20},
+    increaseResolution: 10,
+  },
   limits: {minCents: 500, maxCents: 50_000},
 });
 export const fetchActivity = async () => ({
   entries: empty ? [] : [
-    {id: 6, delta: -25, reason: 'spend', detail: 'upscale_ultimate', createdAt: now - 0.4 * hour},
-    {id: 5, delta: 20, reason: 'reversal', detail: 'restore', createdAt: now - 3 * hour},
-    {id: 4, delta: -20, reason: 'spend', detail: 'restore', createdAt: now - 3.1 * hour},
-    {id: 3, delta: -5, reason: 'spend', detail: 'upscale_standard', createdAt: now - 26 * hour},
+    {id: 6, delta: -45, reason: 'spend', detail: 'restore:colorization_pro+hires', createdAt: now - 0.4 * hour},
+    {id: 5, delta: 20, reason: 'reversal', detail: 'restore:advanced_restoration', createdAt: now - 3 * hour},
+    {id: 4, delta: -20, reason: 'spend', detail: 'restore:advanced_restoration', createdAt: now - 3.1 * hour},
+    {id: 3, delta: -15, reason: 'spend', detail: 'creative:8k', createdAt: now - 26 * hour},
     {id: 2, delta: 1_650, reason: 'purchase', detail: 'plus', createdAt: now - 50 * hour},
     {id: 1, delta: -385, reason: 'spend', detail: 'restore', createdAt: now - 400 * hour},
   ],

@@ -8,6 +8,7 @@ import {pendingEnhancements, sameSelection, selectedPatches} from './face-select
 import {createOverlay} from './overlay.js';
 import {shouldEnhanceFaces, tileMetricKey} from './model-selection.js';
 import {AnalyticsAction, AnalyticsEvent, SCREEN, initAnalytics, modeValue} from './analytics.js';
+import {createCloud} from './cloud.js';
 
 const {t, duration} = pageTranslator(document);
 const $ = id => document.getElementById(id);
@@ -19,7 +20,11 @@ const elements = Object.fromEntries(['photo-input', 'choose-photo', 'remove-phot
   'face-summary', 'result-viewer', 'result-stage', 'expand-result', 'close-result', 'scale-2x', 'scale-4x', 'scale-popover',
   'result-tag', 'result-title', 'model-photo', 'model-drawing', 'face-option', 'choose-faces', 'face-editor', 'face-stage',
   'face-frame', 'face-photo', 'face-marks', 'face-apply', 'face-cancel', 'face-close', 'face-editor-title',
-  'face-status', 'face-progress', 'photo-error', 'status', 'tool-options', 'choose-another'].map(id => [id, $(id)]));
+  'face-status', 'face-progress', 'photo-error', 'status', 'tool-options', 'choose-another', 'mode-device', 'mode-creative',
+  'mode-restore', 'credit-chip', 'credit-count', 'private-badge', 'cloud-badge', 'creative-options', 'creativity',
+  'creativity-value', 'restore-options', 'negative', 'increase-resolution', 'hires-note', 'prompt-field', 'restore-prompt',
+  'signin-panel', 'signin-status', 'cloud-signin', 'topup-panel', 'topup-title', 'topup-status', 'topup-amounts',
+  'topup-refresh', 'saved-note'].map(id => [id, $(id)]));
 const comparison = createComparison(elements['result-comparison'], elements['before-image'], elements['comparison-handle'],
   value => t('slider_value', {value}));
 const environment = {userAgent: navigator.userAgent, platform: navigator.platform,
@@ -45,6 +50,10 @@ let worker;
 let file;
 let scale = 2;
 let modelKind = 'photo';
+// 'device' runs the upscaler here; 'creative' and 'restore' send the photo to the
+// cloud for credits (cloud.js). The photo, status and result viewer are shared.
+let mode = 'device';
+let cloud;
 // idle (no photo) → assessing → ready → checking/processing → done, or error.
 let phase = 'idle';
 let forceCpu = false;
@@ -330,7 +339,7 @@ function setStatus(title, detail, progress) {
   if (progress !== undefined) runProgress = Math.round((elements.progress.value = progress) * 100) / 100;
   elements['status-value'].textContent = progress === undefined ? '' : `${Math.round(progress * 100)}%`;
 }
-const idleStatus = () => setStatus('', t('idle_detail'));
+const idleStatus = () => setStatus('', t(mode === 'device' ? 'idle_detail' : 'cloud_ready_detail'));
 
 // The card keeps one layout from the first visit to the finished photo: the
 // drop zone swaps its contents, and the options and main button stay put.
@@ -377,6 +386,19 @@ function refreshControls() {
     index === currentStep ? elements[id].setAttribute('aria-current', 'step') : elements[id].removeAttribute('aria-current');
     elements[id].classList.toggle('complete', index < currentStep);
   });
+  // Cloud modes share the photo, status, buttons and result viewer; only the
+  // on-device options and recovery paths stand down. A cloud job cannot be
+  // cancelled from here once uploaded, so Cancel is not offered.
+  if (mode !== 'device') {
+    elements['tool-options'].hidden = true;
+    elements['face-option'].hidden = true;
+    elements['choose-faces'].hidden = true;
+    elements['cpu-retry'].hidden = true;
+    elements['try-2x'].hidden = true;
+    elements.cancel.hidden = true;
+  }
+  for (const id of ['mode-device', 'mode-creative', 'mode-restore']) elements[id].disabled = locked;
+  cloud?.refresh({busy: busy(), locked});
 }
 
 async function keepAwake() {
@@ -401,7 +423,8 @@ function stopWorker() {
 
 function watchdog() {
   clearTimeout(timer);
-  if (document.hidden || !busy()) return;
+  // Cloud jobs report no progress to reset this, and may legitimately run longer.
+  if (document.hidden || !busy() || mode !== 'device') return;
   timer = setTimeout(() => fail('timeout', 'err_timeout'), 120_000);
 }
 
@@ -411,7 +434,9 @@ function clearOutput() {
   faceEdit = undefined; lastResult = undefined;
   elements['choose-faces'].hidden = true;
   elements.results.hidden = true;
+  elements['saved-note'].hidden = true;
   elements['result-image'].removeAttribute('src');
+  elements['result-image'].removeAttribute('crossorigin');
   elements['before-image'].removeAttribute('src');
   elements['download-result'].removeAttribute('href');
   if (resultUrl) URL.revokeObjectURL(resultUrl);
@@ -546,7 +571,7 @@ function startFaces(cpu = false) {
 
 // Same keys as the apps' processingOutcomeProperties, for the web's single photo.
 function runProperties() {
-  return {screen: SCREEN, mode: modeValue(modelKind, scale), scale, model: modelKind,
+  return {screen: SCREEN, mode: mode === 'device' ? modeValue(modelKind, scale) : mode, scale, model: modelKind,
     face: shouldEnhanceFaces(modelKind, elements['enhance-faces'].checked), custom_model: false, media: 'images',
     batch_count: 1, size: lastInfo ? `${lastInfo.width}x${lastInfo.height}` : '-', cpu_fallback: forceCpu,
     device_class: policy.mobile ? (policy.iPad ? 'ipad' : 'mobile') : 'desktop'};
@@ -561,6 +586,7 @@ function trackOutcome(result, extra) {
 function start() {
   if (!file || !supported || locked()) return;
   trackTap('start_processing', runProperties());
+  if (mode !== 'device') { cloud.start(); return; }
   processingStartedAt = performance.now(); outcomeTracked = false; runProgress = 0;
   retriedGpu = false;
   if (shouldEnhanceFaces(modelKind, elements['enhance-faces'].checked)) startFaces(forceCpu);
@@ -578,6 +604,7 @@ async function assessCurrentFile() {
   phase = 'assessing'; errorCode = undefined; scaleFallback = false;
   elements['source-size'].textContent = t('checking_size');
   refreshControls();
+  if (mode !== 'device') { await assessForCloud(current); return; }
   let plan, info;
   try {
     info = await inspectFile(file);
@@ -616,6 +643,31 @@ async function assessCurrentFile() {
   refreshControls();
 }
 
+// Cloud modes only need a readable photo within the upload limits: the device
+// policy and the speed estimate are about processing here, which they do not do.
+async function assessForCloud(current) {
+  let info;
+  try {
+    info = await inspectFile(file);
+    if (current !== selection) return;
+    lastInfo = info;
+    if (importSource) {
+      analytics.trackEvent(AnalyticsEvent.mediaImportSuccess, {source: importSource, media: 'images', count: 1,
+        size: `${info.width}x${info.height}`, megapixels: Math.round(info.width * info.height / 100_000) / 10});
+      importSource = undefined;
+    }
+  } catch (error) {
+    if (current !== selection) return;
+    elements['source-size'].textContent = t('not_processed');
+    fail(error.code || 'format', error.key || 'err_unreadable', error.params);
+    return;
+  }
+  phase = 'ready';
+  elements['source-size'].textContent = `${info.width} × ${info.height}`;
+  setStatus(t('cloud_ready'), t('cloud_ready_detail'));
+  refreshControls();
+}
+
 const fits = (info, factor) => { try { assessPhoto(info, policy, factor); return true; } catch { return false; } };
 
 // Why 4× can't run for this device or photo, or '' when it can.
@@ -650,6 +702,7 @@ function setScale(value) {
   scale = value;
   elements['scale-2x'].setAttribute('aria-pressed', String(value === 2));
   elements['scale-4x'].setAttribute('aria-pressed', String(value === 4));
+  if (mode !== 'device') return;
   elements['limit-note'].textContent = t('limit_note', {mp: maxInputPixelsForScale(policy, scale) / 1_000_000, scale});
   elements['process-photo'].textContent = t('upscale_button', {scale});
 }
@@ -693,6 +746,65 @@ elements['enhance-faces'].addEventListener('change', () => {
   trackTap('enhance_faces', {value: elements['enhance-faces'].checked});
   if (['done', 'error'].includes(phase)) assessCurrentFile();
 });
+
+/** Show a finished cloud result in the shared viewer. `before` is the exact
+ *  image that was uploaded, so the comparison lines up with what was processed
+ *  (restore modes crop to the model's shape). */
+function presentCloudResult({mode: kind, options, result, before, plan}) {
+  stopWorker();
+  phase = 'done';
+  clearOutput();
+  originalUrl = URL.createObjectURL(before);
+  elements['before-image'].src = originalUrl;
+  // Saved results come from this origin. An unsaved one is the provider's own
+  // link, which this cross-origin-isolated page can only show through CORS.
+  if (new URL(result.outputUrl, location.href).origin !== location.origin) elements['result-image'].crossOrigin = 'anonymous';
+  elements['result-image'].src = result.outputUrl;
+  elements['result-comparison'].style.aspectRatio = `${plan.width} / ${plan.height}`;
+  elements['result-comparison'].style.setProperty('--photo-ratio', plan.width / plan.height);
+  elements['result-image'].alt = t('result_alt_cloud');
+  elements['result-tag'].textContent = t('result_tag_cloud');
+  elements['download-result'].href = result.downloadUrl;
+  elements['download-result'].download = `${file.name.replace(/\.[^.]+$/, '') || 'photo'}-uscale.jpg`;
+  elements['result-title'].textContent = kind === 'restore'
+    ? t('restored_title') : t('creative_title', {resolution: options.resolution.toUpperCase()});
+  elements['result-summary'].textContent = '';
+  elements['face-summary'].textContent = result.saved ? '' : t('cloud_not_saved');
+  elements['saved-note'].hidden = !result.saved;
+  setStatus(t('done_title'), t(result.saved ? 'cloud_done_detail' : 'cloud_not_saved'));
+  elements.results.hidden = false;
+  refreshControls();
+  elements.results.focus({preventScroll: true});
+  elements.results.scrollIntoView({behavior: 'smooth', block: 'start'});
+}
+
+const MODES = ['device', 'creative', 'restore'];
+const MODE_KEY = 'uscale-tool-mode';
+function initialMode() {
+  const requested = new URLSearchParams(location.search).get('mode');
+  if (MODES.includes(requested)) return requested;
+  try {
+    const stored = localStorage.getItem(MODE_KEY);
+    if (MODES.includes(stored)) return stored;
+  } catch { /* Storage is optional. */ }
+  return 'device';
+}
+function setMode(value, {initial = false} = {}) {
+  if (!MODES.includes(value) || (value === mode && !initial) || locked()) return;
+  mode = value;
+  for (const id of MODES) elements[`mode-${id}`].setAttribute('aria-checked', String(id === value));
+  try { localStorage.setItem(MODE_KEY, value); } catch { /* Storage is optional. */ }
+  const url = new URL(location.href);
+  if (value === 'device') url.searchParams.delete('mode'); else url.searchParams.set('mode', value);
+  history.replaceState(history.state, '', url);
+  if (value === 'device') setScale(scale); else elements['limit-note'].textContent = formatsNote;
+  cloud.onMode(value);
+  if (file) assessCurrentFile(); else idleStatus();
+  refreshControls();
+}
+for (const id of MODES) {
+  elements[`mode-${id}`].addEventListener('click', () => { trackTap('mode', {value: id}); setMode(id); });
+}
 
 const readFailure = () => fail('format', 'err_unreadable');
 const openPicker = () => { if (!locked() && supported) elements['photo-input'].click(); };
@@ -797,8 +909,15 @@ try {
   remember(false);
   localStorage.removeItem('uscale-tile-ms-v1');
 } catch { /* Browser storage is optional. */ }
+// Captured before setScale replaces it with the on-device size limit.
+const formatsNote = elements['limit-note'].textContent;
+cloud = createCloud({elements, t, getMode: () => mode, getFile: () => file, getInfo: () => lastInfo, setStatus,
+  setPhase: value => { phase = value; }, refreshControls, fail, presentResult: presentCloudResult,
+  optionsChanged: () => { if (['done', 'error'].includes(phase)) assessCurrentFile(); },
+  analytics, trackTap, isLocked: () => busy() || applying || !supported});
 setScale(2);
 setModelKind('photo');
+setMode(initialMode(), {initial: true});
 idleStatus();
 try {
   checkBrowser({secure: isSecureContext, worker: typeof Worker === 'function', wasm: typeof WebAssembly === 'object',

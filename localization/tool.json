@@ -1559,5 +1559,731 @@
       "es": "Este navegador no pudo iniciar el procesamiento. Prueba un navegador actual o la app."
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.mode_label": {
+    "localizations": {
+      "en": "Choose how to enhance",
+      "ru": "Выберите способ улучшения",
+      "de": "Wähle, wie verbessert wird",
+      "ja": "高画質化の方法を選択",
+      "fr": "Choisissez comment améliorer",
+      "es": "Elige cómo mejorar"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.mode_device": {
+    "localizations": {
+      "en": "Upscale",
+      "ru": "Увеличение",
+      "de": "Vergrößern",
+      "ja": "高画質化",
+      "fr": "Agrandir",
+      "es": "Ampliar"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.mode_device_sub": {
+    "localizations": {
+      "en": "Free · runs on your device",
+      "ru": "Бесплатно · на вашем устройстве",
+      "de": "Kostenlos · auf deinem Gerät",
+      "ja": "無料・端末上で処理",
+      "fr": "Gratuit · sur votre appareil",
+      "es": "Gratis · en tu dispositivo"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.mode_creative": {
+    "localizations": {
+      "en": "Creative upscale",
+      "ru": "Креативное увеличение",
+      "de": "Kreatives Vergrößern",
+      "ja": "クリエイティブ高画質化",
+      "fr": "Agrandissement créatif",
+      "es": "Ampliación creativa"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.mode_creative_sub": {
+    "localizations": {
+      "en": "Adds natural detail · from {credits} credits",
+      "ru": "Добавляет естественные детали · от {credits} кредитов",
+      "de": "Ergänzt natürliche Details · ab {credits} Credits",
+      "ja": "自然なディテールを追加・{credits}クレジットから",
+      "fr": "Ajoute des détails naturels · dès {credits} crédits",
+      "es": "Añade detalle natural · desde {credits} créditos"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.mode_restore": {
+    "localizations": {
+      "en": "Restore",
+      "ru": "Реставрация",
+      "de": "Restaurieren",
+      "ja": "修復",
+      "fr": "Restaurer",
+      "es": "Restaurar"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.mode_restore_sub": {
+    "localizations": {
+      "en": "Old and damaged photos · from {credits} credits",
+      "ru": "Старые и повреждённые фото · от {credits} кредитов",
+      "de": "Alte und beschädigte Fotos · ab {credits} Credits",
+      "ja": "古い写真や傷んだ写真・{credits}クレジットから",
+      "fr": "Photos anciennes et abîmées · dès {credits} crédits",
+      "es": "Fotos antiguas y dañadas · desde {credits} créditos"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.tag_free": {
+    "localizations": {
+      "en": "Free",
+      "ru": "Бесплатно",
+      "de": "Kostenlos",
+      "ja": "無料",
+      "fr": "Gratuit",
+      "es": "Gratis"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.tag_pro": {
+    "localizations": {
+      "en": "Pro",
+      "ru": "Pro",
+      "de": "Pro",
+      "ja": "Pro",
+      "fr": "Pro",
+      "es": "Pro"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.cloud": {
+    "localizations": {
+      "en": "Cloud processing",
+      "ru": "Обработка в облаке",
+      "de": "Cloud-Verarbeitung",
+      "ja": "クラウド処理",
+      "fr": "Traitement dans le cloud",
+      "es": "Procesamiento en la nube"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.credits_label": {
+    "localizations": {
+      "en": "credits",
+      "ru": "кредитов",
+      "de": "Credits",
+      "ja": "クレジット",
+      "fr": "crédits",
+      "es": "créditos"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.creativity_label": {
+    "localizations": {
+      "en": "Creativity",
+      "ru": "Креативность",
+      "de": "Kreativität",
+      "ja": "創造性",
+      "fr": "Créativité",
+      "es": "Creatividad"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.resolution_label": {
+    "localizations": {
+      "en": "Resolution",
+      "ru": "Разрешение",
+      "de": "Auflösung",
+      "ja": "解像度",
+      "fr": "Résolution",
+      "es": "Resolución"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.restore_mode_label": {
+    "localizations": {
+      "en": "Restore mode",
+      "ru": "Режим реставрации",
+      "de": "Restaurierungsmodus",
+      "ja": "修復モード",
+      "fr": "Mode de restauration",
+      "es": "Modo de restauración"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.restore_mode_restore": {
+    "localizations": {
+      "en": "Restore",
+      "ru": "Реставрация",
+      "de": "Restaurieren",
+      "ja": "修復",
+      "fr": "Restaurer",
+      "es": "Restaurar"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.restore_mode_restore_sub": {
+    "localizations": {
+      "en": "Removes scratches, keeps the original colors",
+      "ru": "Убирает царапины, сохраняя исходные цвета",
+      "de": "Entfernt Kratzer, behält die Originalfarben",
+      "ja": "元の色を保ったまま傷を除去",
+      "fr": "Supprime les rayures, garde les couleurs d’origine",
+      "es": "Elimina rayones y conserva los colores originales"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.restore_mode_colorization": {
+    "localizations": {
+      "en": "Restore & Colorize",
+      "ru": "Реставрация и цвет",
+      "de": "Restaurieren & Kolorieren",
+      "ja": "修復＆カラー化",
+      "fr": "Restaurer et coloriser",
+      "es": "Restaurar y colorear"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.restore_mode_colorization_sub": {
+    "localizations": {
+      "en": "Restores and adds color",
+      "ru": "Реставрирует и раскрашивает фото",
+      "de": "Restauriert und koloriert das Foto",
+      "ja": "修復してカラー化",
+      "fr": "Restaure et colorise la photo",
+      "es": "Restaura y colorea la foto"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.restore_mode_colorization_pro": {
+    "localizations": {
+      "en": "Enhanced Colorize",
+      "ru": "Улучшенная раскраска",
+      "de": "Verbessertes Kolorieren",
+      "ja": "高精細カラー化",
+      "fr": "Colorisation avancée",
+      "es": "Coloreado mejorado"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.restore_mode_colorization_pro_sub": {
+    "localizations": {
+      "en": "Colorizes with improved sharpness",
+      "ru": "Раскрашивает с повышенной чёткостью",
+      "de": "Koloriert mit mehr Schärfe",
+      "ja": "よりシャープにカラー化",
+      "fr": "Colorise avec plus de netteté",
+      "es": "Colorea con mayor nitidez"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.restore_mode_advanced_restoration": {
+    "localizations": {
+      "en": "Advanced Fix",
+      "ru": "Глубокое восстановление",
+      "de": "Erweiterte Reparatur",
+      "ja": "高度な修復",
+      "fr": "Réparation avancée",
+      "es": "Reparación avanzada"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.restore_mode_advanced_restoration_sub": {
+    "localizations": {
+      "en": "Fixes severe damage and boosts quality",
+      "ru": "Исправляет сильные повреждения и улучшает качество",
+      "de": "Behebt starke Schäden und steigert die Qualität",
+      "ja": "ひどい損傷を修復し画質を向上",
+      "fr": "Répare les dégâts importants et améliore la qualité",
+      "es": "Repara daños graves y mejora la calidad"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.negative": {
+    "localizations": {
+      "en": "Negative",
+      "ru": "Негатив",
+      "de": "Negativ",
+      "ja": "ネガ",
+      "fr": "Négatif",
+      "es": "Negativo"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.increase_resolution": {
+    "localizations": {
+      "en": "Increased resolution",
+      "ru": "Повышенное разрешение",
+      "de": "Höhere Auflösung",
+      "ja": "高解像度",
+      "fr": "Résolution augmentée",
+      "es": "Mayor resolución"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.prompt_label": {
+    "localizations": {
+      "en": "Add details (optional)",
+      "ru": "Добавить детали (необязательно)",
+      "de": "Details angeben (optional)",
+      "ja": "詳細を追加（任意）",
+      "fr": "Ajouter des détails (facultatif)",
+      "es": "Añadir detalles (opcional)"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.prompt_placeholder": {
+    "localizations": {
+      "en": "Describe details to preserve or restore, e.g. eye color, clothing color, missing details.",
+      "ru": "Опишите детали, которые нужно сохранить или восстановить: цвет глаз, цвет одежды, утраченные фрагменты.",
+      "de": "Beschreibe Details, die erhalten oder wiederhergestellt werden sollen, z. B. Augenfarbe, Kleidungsfarbe, fehlende Stellen.",
+      "ja": "残したい・復元したい詳細を入力（例：目の色、服の色、欠けている部分）",
+      "fr": "Décrivez les détails à préserver ou restaurer : couleur des yeux, des vêtements, parties manquantes.",
+      "es": "Describe detalles que conservar o restaurar, p. ej. color de ojos, color de la ropa o partes que faltan."
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.signin_title": {
+    "localizations": {
+      "en": "Sign in to use Pro tools",
+      "ru": "Войдите, чтобы пользоваться Pro",
+      "de": "Melde dich an, um Pro-Tools zu nutzen",
+      "ja": "Proツールを使うにはログイン",
+      "fr": "Connectez-vous pour utiliser les outils Pro",
+      "es": "Inicia sesión para usar las herramientas Pro"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.signin_body": {
+    "localizations": {
+      "en": "Pro tools run in the cloud and use credits. Your photo stays selected.",
+      "ru": "Pro-инструменты работают в облаке и расходуют кредиты. Выбранное фото сохранится.",
+      "de": "Pro-Tools laufen in der Cloud und verbrauchen Credits. Dein Foto bleibt ausgewählt.",
+      "ja": "Proツールはクラウドで処理し、クレジットを使用します。選んだ写真はそのままです。",
+      "fr": "Les outils Pro fonctionnent dans le cloud et utilisent des crédits. Votre photo reste sélectionnée.",
+      "es": "Las herramientas Pro funcionan en la nube y usan créditos. Tu foto sigue seleccionada."
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.signin_button": {
+    "localizations": {
+      "en": "Continue with Google",
+      "ru": "Продолжить с Google",
+      "de": "Weiter mit Google",
+      "ja": "Googleで続ける",
+      "fr": "Continuer avec Google",
+      "es": "Continuar con Google"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.topup_body": {
+    "localizations": {
+      "en": "Checkout opens in a new tab. Your photo stays here.",
+      "ru": "Оплата откроется в новой вкладке. Фото останется здесь.",
+      "de": "Der Checkout öffnet sich in einem neuen Tab. Dein Foto bleibt hier.",
+      "ja": "決済は新しいタブで開きます。写真はこのままです。",
+      "fr": "Le paiement s’ouvre dans un nouvel onglet. Votre photo reste ici.",
+      "es": "El pago se abre en una pestaña nueva. Tu foto se queda aquí."
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.topup_refresh": {
+    "localizations": {
+      "en": "I’ve added credits",
+      "ru": "Я пополнил кредиты",
+      "de": "Ich habe Credits hinzugefügt",
+      "ja": "クレジットを追加しました",
+      "fr": "J’ai ajouté des crédits",
+      "es": "Ya añadí créditos"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.saved_note": {
+    "localizations": {
+      "en": "Saved to your history",
+      "ru": "Сохранено в истории",
+      "de": "Im Verlauf gespeichert",
+      "ja": "履歴に保存しました",
+      "fr": "Enregistré dans votre historique",
+      "es": "Guardado en tu historial"
+    },
+    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.js.creativity_0": {
+    "localizations": {
+      "en": "Conservative",
+      "ru": "Бережно",
+      "de": "Konservativ",
+      "ja": "控えめ",
+      "fr": "Conservateur",
+      "es": "Conservador"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.creativity_1": {
+    "localizations": {
+      "en": "Careful",
+      "ru": "Аккуратно",
+      "de": "Behutsam",
+      "ja": "慎重",
+      "fr": "Prudent",
+      "es": "Cuidadoso"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.creativity_2": {
+    "localizations": {
+      "en": "Balanced",
+      "ru": "Сбалансированно",
+      "de": "Ausgewogen",
+      "ja": "バランス",
+      "fr": "Équilibré",
+      "es": "Equilibrado"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.creativity_3": {
+    "localizations": {
+      "en": "Creative",
+      "ru": "Креативно",
+      "de": "Kreativ",
+      "ja": "クリエイティブ",
+      "fr": "Créatif",
+      "es": "Creativo"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.creativity_4": {
+    "localizations": {
+      "en": "Artistic",
+      "ru": "Художественно",
+      "de": "Künstlerisch",
+      "ja": "アーティスティック",
+      "fr": "Artistique",
+      "es": "Artístico"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.creative_button": {
+    "localizations": {
+      "en": "Creative upscale · {credits} credits",
+      "ru": "Креативное увеличение · {credits} кредитов",
+      "de": "Kreativ vergrößern · {credits} Credits",
+      "ja": "クリエイティブ高画質化・{credits}クレジット",
+      "fr": "Agrandir · {credits} crédits",
+      "es": "Ampliar · {credits} créditos"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.restore_button": {
+    "localizations": {
+      "en": "Restore · {credits} credits",
+      "ru": "Реставрировать · {credits} кредитов",
+      "de": "Restaurieren · {credits} Credits",
+      "ja": "修復・{credits}クレジット",
+      "fr": "Restaurer · {credits} crédits",
+      "es": "Restaurar · {credits} créditos"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.cloud_ready": {
+    "localizations": {
+      "en": "Ready to process",
+      "ru": "Всё готово к обработке",
+      "de": "Bereit zur Verarbeitung",
+      "ja": "処理の準備ができました",
+      "fr": "Prête à être traitée",
+      "es": "Lista para procesar"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.cloud_ready_detail": {
+    "localizations": {
+      "en": "Your photo is uploaded for processing and kept in your history until you delete it.",
+      "ru": "Фото загрузится для обработки и сохранится в истории, пока вы его не удалите.",
+      "de": "Dein Foto wird zur Verarbeitung hochgeladen und bleibt in deinem Verlauf, bis du es löschst.",
+      "ja": "写真は処理のためにアップロードされ、削除するまで履歴に保存されます。",
+      "fr": "Votre photo est envoyée pour traitement et conservée dans votre historique jusqu’à ce que vous la supprimiez.",
+      "es": "Tu foto se sube para procesarla y se guarda en tu historial hasta que la elimines."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.cloud_preparing": {
+    "localizations": {
+      "en": "Preparing your photo",
+      "ru": "Подготовка фото",
+      "de": "Foto wird vorbereitet",
+      "ja": "写真を準備しています",
+      "fr": "Préparation de la photo",
+      "es": "Preparando tu foto"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.cloud_processing": {
+    "localizations": {
+      "en": "Processing in the cloud",
+      "ru": "Обработка в облаке",
+      "de": "Verarbeitung in der Cloud",
+      "ja": "クラウドで処理中",
+      "fr": "Traitement dans le cloud",
+      "es": "Procesando en la nube"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.cloud_processing_detail": {
+    "localizations": {
+      "en": "Usually under a minute. Keep this page open.",
+      "ru": "Обычно меньше минуты. Не закрывайте страницу.",
+      "de": "Meist unter einer Minute. Lass diese Seite geöffnet.",
+      "ja": "通常1分以内です。このページを開いたままにしてください。",
+      "fr": "Généralement moins d’une minute. Gardez cette page ouverte.",
+      "es": "Suele tardar menos de un minuto. Mantén esta página abierta."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.cloud_elapsed": {
+    "localizations": {
+      "en": "{seconds} s",
+      "ru": "{seconds} с",
+      "de": "{seconds} s",
+      "ja": "{seconds}秒",
+      "fr": "{seconds} s",
+      "es": "{seconds} s"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.cloud_done_detail": {
+    "localizations": {
+      "en": "Saved to your history. Compare the result below and download it.",
+      "ru": "Сохранено в истории. Сравните результат ниже и скачайте его.",
+      "de": "Im Verlauf gespeichert. Vergleiche das Ergebnis unten und lade es herunter.",
+      "ja": "履歴に保存しました。下で結果を比べてダウンロードできます。",
+      "fr": "Enregistré dans votre historique. Comparez le résultat ci-dessous et téléchargez-le.",
+      "es": "Guardado en tu historial. Compara el resultado abajo y descárgalo."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.cloud_not_saved": {
+    "localizations": {
+      "en": "Download your result now: it couldn’t be saved to your history.",
+      "ru": "Скачайте результат сейчас: сохранить его в истории не удалось.",
+      "de": "Lade das Ergebnis jetzt herunter: Es konnte nicht im Verlauf gespeichert werden.",
+      "ja": "履歴に保存できなかったため、今すぐダウンロードしてください。",
+      "fr": "Téléchargez le résultat maintenant : il n’a pas pu être enregistré dans votre historique.",
+      "es": "Descarga el resultado ahora: no se pudo guardar en tu historial."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.cloud_failed_refunded": {
+    "localizations": {
+      "en": "The processing didn’t finish, and your {credits} credits were returned. Please try again.",
+      "ru": "Обработка не завершилась, {credits} кредитов возвращены. Попробуйте ещё раз.",
+      "de": "Die Verarbeitung wurde nicht abgeschlossen, deine {credits} Credits wurden erstattet. Bitte versuche es erneut.",
+      "ja": "処理が完了しなかったため、{credits}クレジットを返却しました。もう一度お試しください。",
+      "fr": "Le traitement n’a pas abouti et vos {credits} crédits ont été rendus. Veuillez réessayer.",
+      "es": "El procesamiento no terminó y se devolvieron tus {credits} créditos. Inténtalo de nuevo."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.cloud_failed": {
+    "localizations": {
+      "en": "The processing didn’t finish. Please try again.",
+      "ru": "Обработка не завершилась. Попробуйте ещё раз.",
+      "de": "Die Verarbeitung wurde nicht abgeschlossen. Bitte versuche es erneut.",
+      "ja": "処理が完了しませんでした。もう一度お試しください。",
+      "fr": "Le traitement n’a pas abouti. Veuillez réessayer.",
+      "es": "El procesamiento no terminó. Inténtalo de nuevo."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.cloud_too_many": {
+    "localizations": {
+      "en": "Other photos are still processing. Wait for them to finish, then try again.",
+      "ru": "Другие фото ещё обрабатываются. Дождитесь завершения и попробуйте снова.",
+      "de": "Andere Fotos werden noch verarbeitet. Warte, bis sie fertig sind, und versuche es dann erneut.",
+      "ja": "ほかの写真を処理中です。完了してからもう一度お試しください。",
+      "fr": "D’autres photos sont en cours de traitement. Attendez la fin, puis réessayez.",
+      "es": "Otras fotos se están procesando. Espera a que terminen e inténtalo de nuevo."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.cloud_history_full": {
+    "localizations": {
+      "en": "Your history is full. Delete saved photos in your account to continue.",
+      "ru": "История заполнена. Удалите сохранённые фото в аккаунте, чтобы продолжить.",
+      "de": "Dein Verlauf ist voll. Lösche gespeicherte Fotos in deinem Konto, um fortzufahren.",
+      "ja": "履歴がいっぱいです。続けるにはアカウントで保存済みの写真を削除してください。",
+      "fr": "Votre historique est plein. Supprimez des photos enregistrées dans votre compte pour continuer.",
+      "es": "Tu historial está lleno. Elimina fotos guardadas en tu cuenta para continuar."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.cloud_unavailable": {
+    "localizations": {
+      "en": "Cloud processing is unavailable right now. Please try again later.",
+      "ru": "Облачная обработка сейчас недоступна. Попробуйте позже.",
+      "de": "Die Cloud-Verarbeitung ist gerade nicht verfügbar. Bitte versuche es später erneut.",
+      "ja": "現在クラウド処理は利用できません。後でもう一度お試しください。",
+      "fr": "Le traitement dans le cloud est indisponible pour le moment. Réessayez plus tard.",
+      "es": "El procesamiento en la nube no está disponible ahora. Inténtalo más tarde."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.cloud_network": {
+    "localizations": {
+      "en": "Couldn’t reach UScale. Check your connection and try again.",
+      "ru": "Не удалось связаться с UScale. Проверьте подключение и попробуйте снова.",
+      "de": "UScale ist nicht erreichbar. Prüfe deine Verbindung und versuche es erneut.",
+      "ja": "UScaleに接続できませんでした。接続を確認してもう一度お試しください。",
+      "fr": "Impossible de joindre UScale. Vérifiez votre connexion et réessayez.",
+      "es": "No se pudo conectar con UScale. Revisa tu conexión e inténtalo de nuevo."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.cloud_too_large": {
+    "localizations": {
+      "en": "This photo is too large to upload. Choose one under 20 MB.",
+      "ru": "Фото слишком большое для загрузки. Выберите файл до 20 МБ.",
+      "de": "Dieses Foto ist zu groß zum Hochladen. Wähle eines unter 20 MB.",
+      "ja": "写真が大きすぎてアップロードできません。20MB未満の写真を選んでください。",
+      "fr": "Cette photo est trop lourde pour être envoyée. Choisissez-en une de moins de 20 Mo.",
+      "es": "Esta foto es demasiado grande para subirla. Elige una de menos de 20 MB."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.signin_waiting": {
+    "localizations": {
+      "en": "Finish signing in in the window that opened.",
+      "ru": "Завершите вход в открывшемся окне.",
+      "de": "Schließe die Anmeldung im geöffneten Fenster ab.",
+      "ja": "開いたウィンドウでログインを完了してください。",
+      "fr": "Terminez la connexion dans la fenêtre ouverte.",
+      "es": "Termina de iniciar sesión en la ventana que se abrió."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.signin_blocked": {
+    "localizations": {
+      "en": "Your browser blocked the sign-in window. Allow pop-ups for this site and try again.",
+      "ru": "Браузер заблокировал окно входа. Разрешите всплывающие окна для сайта и попробуйте снова.",
+      "de": "Dein Browser hat das Anmeldefenster blockiert. Erlaube Pop-ups für diese Seite und versuche es erneut.",
+      "ja": "ブラウザがログインウィンドウをブロックしました。このサイトのポップアップを許可して、もう一度お試しください。",
+      "fr": "Votre navigateur a bloqué la fenêtre de connexion. Autorisez les fenêtres pop-up pour ce site et réessayez.",
+      "es": "Tu navegador bloqueó la ventana de inicio de sesión. Permite las ventanas emergentes en este sitio e inténtalo de nuevo."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.topup_title": {
+    "localizations": {
+      "en": "This needs {credits} credits. You have {balance}.",
+      "ru": "Нужно {credits} кредитов, у вас {balance}.",
+      "de": "Dafür brauchst du {credits} Credits. Du hast {balance}.",
+      "ja": "{credits}クレジットが必要です。残高は{balance}です。",
+      "fr": "Il faut {credits} crédits. Vous en avez {balance}.",
+      "es": "Se necesitan {credits} créditos. Tienes {balance}."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.topup_amount": {
+    "localizations": {
+      "en": "{price} · {credits} credits",
+      "ru": "{price} · {credits} кредитов",
+      "de": "{price} · {credits} Credits",
+      "ja": "{price}・{credits}クレジット",
+      "fr": "{price} · {credits} crédits",
+      "es": "{price} · {credits} créditos"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.topup_opened": {
+    "localizations": {
+      "en": "Checkout opened in a new tab. Come back here when you’re done.",
+      "ru": "Оплата открылась в новой вкладке. Вернитесь сюда, когда закончите.",
+      "de": "Der Checkout wurde in einem neuen Tab geöffnet. Komm danach hierher zurück.",
+      "ja": "決済を新しいタブで開きました。完了したらこちらに戻ってください。",
+      "fr": "Le paiement s’est ouvert dans un nouvel onglet. Revenez ici une fois terminé.",
+      "es": "El pago se abrió en una pestaña nueva. Vuelve aquí cuando termines."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.restored_title": {
+    "localizations": {
+      "en": "Your photo is restored",
+      "ru": "Фото отреставрировано",
+      "de": "Dein Foto ist restauriert",
+      "ja": "写真を修復しました",
+      "fr": "Votre photo est restaurée",
+      "es": "Tu foto está restaurada"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.creative_title": {
+    "localizations": {
+      "en": "Creative upscale · {resolution}",
+      "ru": "Креативное увеличение · {resolution}",
+      "de": "Kreativ vergrößert · {resolution}",
+      "ja": "クリエイティブ高画質化・{resolution}",
+      "fr": "Agrandissement créatif · {resolution}",
+      "es": "Ampliación creativa · {resolution}"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.result_tag_cloud": {
+    "localizations": {
+      "en": "Result",
+      "ru": "Результат",
+      "de": "Ergebnis",
+      "ja": "結果",
+      "fr": "Résultat",
+      "es": "Resultado"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.result_alt_cloud": {
+    "localizations": {
+      "en": "Your enhanced photo",
+      "ru": "Улучшенное фото",
+      "de": "Dein verbessertes Foto",
+      "ja": "高画質化した写真",
+      "fr": "Votre photo améliorée",
+      "es": "Tu foto mejorada"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.hires_unavailable": {
+    "localizations": {
+      "en": "Not available with Advanced Fix",
+      "ru": "Недоступно для глубокого восстановления",
+      "de": "Nicht mit erweiterter Reparatur verfügbar",
+      "ja": "高度な修復では使用できません",
+      "fr": "Indisponible avec la réparation avancée",
+      "es": "No disponible con reparación avanzada"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.price_credits": {
+    "localizations": {
+      "en": "{credits} credits",
+      "ru": "{credits} кредитов",
+      "de": "{credits} Credits",
+      "ja": "{credits}クレジット",
+      "fr": "{credits} crédits",
+      "es": "{credits} créditos"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.step_process": {
+    "localizations": {
+      "en": "Enhance",
+      "ru": "Улучшение",
+      "de": "Verbessern",
+      "ja": "高画質化",
+      "fr": "Améliorer",
+      "es": "Mejorar"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   }
 }

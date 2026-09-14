@@ -6,7 +6,7 @@ const fixtureMode = ['localhost', '127.0.0.1'].includes(location.hostname)
 const {onIdentityChanged, signInWithGoogle, signOut} = await import(fixtureMode ? './dev-fixture.js' : './identity.js');
 const {fetchAccount, fetchActivity, fetchPacks, startCheckout} = await import(fixtureMode ? './dev-fixture.js' : './api.js');
 import {
-  OPERATION_LABELS, describeActivity, formatCredits, formatDelta, formatPrice, parseDollars, quoteCredits,
+  describeActivity, formatCredits, formatDelta, formatPrice, parseDollars, priceList, quoteCredits,
 } from './billing-format.js';
 
 const $ = id => document.getElementById(id);
@@ -76,26 +76,26 @@ function renderIdentity(identity) {
 function renderBalance(credits) {
   state.balance = credits;
   creditCount.textContent = formatCredits(credits);
-  const ops = state.catalogue?.operations;
-  if (!ops) return;
-  if (credits < ops.upscale_standard) {
+  const prices = state.catalogue?.prices;
+  if (!prices) return;
+  const upscale = prices.creative?.['4k'];
+  const restore = prices.restore?.restore;
+  if (!upscale || !restore) return;
+  if (credits < Math.min(upscale, restore)) {
     balanceHint.textContent = 'Add credits to start using cloud enhancements.';
   } else {
-    const upscales = Math.floor(credits / ops.upscale_standard);
-    const restores = Math.floor(credits / ops.restore);
-    balanceHint.textContent = `Enough for about ${formatCredits(upscales)} upscales or ${formatCredits(restores)} restorations.`;
+    balanceHint.textContent = `Enough for about ${formatCredits(Math.floor(credits / upscale))} creative upscales or ${formatCredits(Math.floor(credits / restore))} restorations.`;
   }
 }
 
-function renderOperationCosts(operations) {
+function renderOperationCosts(prices) {
   operationCosts.textContent = '';
-  for (const [operation, cost] of Object.entries(operations)) {
-    if (!OPERATION_LABELS[operation]) continue;
+  for (const row of priceList(prices)) {
     const item = document.createElement('li');
     const name = document.createElement('span');
-    name.textContent = OPERATION_LABELS[operation];
+    name.textContent = row.label;
     const price = document.createElement('b');
-    price.textContent = `${formatCredits(cost)} credits`;
+    price.textContent = `${row.extra ? '+' : ''}${formatCredits(row.credits)} credits`;
     item.append(name, price);
     operationCosts.append(item);
   }
@@ -241,7 +241,7 @@ async function loadDashboard() {
   try {
     const [account, catalogue] = await Promise.all([fetchAccount(), fetchPacks()]);
     state.catalogue = catalogue;
-    renderOperationCosts(catalogue.operations);
+    renderOperationCosts(catalogue.prices);
     renderAmountOptions();
     renderBalance(account.credits);
   } catch (error) {
@@ -288,7 +288,20 @@ function takeReturnOutcome() {
 const returnOutcome = takeReturnOutcome();
 let dashboardLoaded = false;
 
+// Opened by the upscaler page as its sign-in window. That page is
+// cross-origin isolated, which breaks Firebase's own popup there, so it opens
+// this page instead and picks up the signed-in state Firebase shares across
+// tabs of the same origin.
+const signInWindow = new URLSearchParams(window.location.search).get('popup') === '1';
+
 onIdentityChanged(identity => {
+  if (signInWindow && identity) {
+    main.dataset.state = 'popup-done';
+    renderIdentity(identity);
+    main.dataset.state = 'popup-done';
+    setTimeout(() => window.close(), 900);
+    return;
+  }
   showError('');
   signInButton.disabled = false;
   signOutButton.disabled = false;

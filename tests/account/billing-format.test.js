@@ -2,7 +2,8 @@ import assert from 'node:assert/strict';
 import {test} from 'node:test';
 
 import {
-  OPERATION_LABELS, describeActivity, formatCredits, formatDelta, formatPrice, parseDollars, quoteCredits,
+  OPERATION_LABELS, describeActivity, describePriceKey, formatCredits, formatDelta, formatPrice, parseDollars, priceList,
+  quoteCredits,
 } from '../../static/account/billing-format.js';
 
 // Mirrors worker/src/pricing.ts. The expectations below are the same numbers
@@ -58,3 +59,27 @@ test('labels every operation the worker reports', () => {
     assert.ok(OPERATION_LABELS[operation], `missing label for ${operation}`);
   }
 });
+
+test('names option-based price keys, and still names the older operations', () => {
+  assert.equal(describePriceKey('creative:8k'), 'Creative upscale · 8K');
+  assert.equal(describePriceKey('restore:colorization_pro+hires'), 'Enhanced Colorize · increased resolution');
+  assert.equal(describePriceKey('restore:advanced_restoration'), 'Advanced Fix');
+  assert.equal(describePriceKey('restore'), 'Restore');
+  assert.equal(describePriceKey('restore:bogus'), null);
+  assert.equal(describeActivity({reason: 'spend', detail: 'creative:4k'}), 'Creative upscale · 4K');
+  assert.equal(describeActivity({reason: 'reversal', detail: 'restore:colorization'}), 'Refund · Restore & Colorize failed');
+});
+
+test('lists what credits buy from the price table', () => {
+  const rows = priceList({
+    creative: {'2k': 5, '4k': 5, '8k': 15},
+    restore: {restore: 15, colorization: 15, colorization_pro: 35, advanced_restoration: 20},
+    increaseResolution: 10,
+  });
+  assert.deepEqual(rows.map(row => [row.label, row.credits]), [
+    ['Creative upscale · 2K or 4K', 5], ['Creative upscale · 8K', 15], ['Restore', 15], ['Restore & Colorize', 15],
+    ['Enhanced Colorize', 35], ['Advanced Fix', 20], ['Increased resolution', 10],
+  ]);
+  assert.deepEqual(priceList(null), []);
+});
+

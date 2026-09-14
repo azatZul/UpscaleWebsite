@@ -1774,6 +1774,10 @@ CHECK_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-
              'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7"/></svg>')
 
 
+COIN_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" '
+            'aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M14.6 9.4c-.4-.9-1.4-1.4-2.6-1.4-1.5 0-2.6.8-2.6 1.9 '
+            '0 2.6 5.3 1.4 5.3 4.2 0 1.1-1.1 1.9-2.7 1.9-1.2 0-2.3-.5-2.7-1.4M12 6.5v1.5m0 8v1.5"/></svg>')
+
 def tool_cta(c, lang):
     """Home banner for the browser tool, in the comparison teaser's card style.
 
@@ -1823,6 +1827,18 @@ def render_tool(c, lang):
     first = lambda text: esc(text.replace("{scale}", "2"))
     # "</" would end the script element early; JSON allows the escaped slash.
     strings = json.dumps(js, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    # Cloud modes. The "from N credits" figures mirror worker/src/pricing.ts
+    # (cheapest creative and restore prices); the page updates exact prices at
+    # runtime from the worker's own table.
+    creative_sub = esc(tl['mode_creative_sub'].replace('{credits}', '5'))
+    restore_sub = esc(tl['mode_restore_sub'].replace('{credits}', '15'))
+    restore_modes = "".join(
+        f'<button type="button" role="radio" class="restore-mode" data-restore-mode="{mode}" '
+        f'aria-checked="{"true" if mode == "restore" else "false"}">'
+        f'<b>{esc(tl["restore_mode_" + mode])}</b>'
+        f'<span class="restore-mode-sub">{esc(tl["restore_mode_" + mode + "_sub"])}</span>'
+        f'<em class="restore-mode-price"></em></button>'
+        for mode in ("restore", "colorization", "colorization_pro", "advanced_restoration"))
     return (head(c, lang, tl["meta"]["title"], tl["meta"]["description"], canonical, path=TOOL_PATH,
                  robots="noindex,follow", stylesheet="upscale.css")
             + nav(c, lang, home_prefix, TOOL_PATH)
@@ -1833,6 +1849,11 @@ def render_tool(c, lang):
       <h1>{esc(tl['h1'])}</h1>
       <p class="lead">{esc(tl['sub'])}</p>
     </div>
+    <div class="mode-picker" id="mode-picker" role="radiogroup" aria-label="{esc(tl['mode_label'])}">
+      <button type="button" role="radio" class="mode-tile" id="mode-device" aria-checked="true"><span class="mode-tile-head"><b>{esc(tl['mode_device'])}</b><span class="mode-tag is-free">{esc(tl['tag_free'])}</span></span><span class="mode-tile-sub">{esc(tl['mode_device_sub'])}</span></button>
+      <button type="button" role="radio" class="mode-tile" id="mode-creative" aria-checked="false"><span class="mode-tile-head"><b>{esc(tl['mode_creative'])}</b><span class="mode-tag is-pro">{esc(tl['tag_pro'])}</span></span><span class="mode-tile-sub">{creative_sub}</span></button>
+      <button type="button" role="radio" class="mode-tile" id="mode-restore" aria-checked="false"><span class="mode-tile-head"><b>{esc(tl['mode_restore'])}</b><span class="mode-tag is-pro">{esc(tl['tag_pro'])}</span></span><span class="mode-tile-sub">{restore_sub}</span></button>
+    </div>
     <ol class="tool-steps" aria-label="{esc(tl['steps_label'])}">
       <li id="step-choose" aria-current="step"><span class="step-mark"><i>1</i>{CHECK_SVG}</span>{esc(tl['step_choose'])}</li>
       <li id="step-upscale"><span class="step-mark"><i>2</i>{CHECK_SVG}</span>{esc(tl['step_upscale'])}</li>
@@ -1842,7 +1863,11 @@ def render_tool(c, lang):
     <section class="tool-card" id="photo-stage" aria-labelledby="stage-title">
       <div class="tool-card-heading">
         <h2 id="stage-title">{esc(js['choose_title'])}</h2>
-        <span class="private-badge">{SHIELD_SVG}{esc(tl['private'])}</span>
+        <div class="card-badges">
+          <a class="credit-chip" id="credit-chip" href="/account/" hidden>{COIN_SVG}<span id="credit-count">0</span><span class="visually-hidden"> {esc(tl['credits_label'])}</span></a>
+          <span class="private-badge" id="private-badge">{SHIELD_SVG}{esc(tl['private'])}</span>
+          <span class="private-badge cloud-badge" id="cloud-badge" hidden>{CLOUD_SVG}{esc(tl['cloud'])}</span>
+        </div>
       </div>
       <input id="photo-input" type="file" accept="image/*" hidden>
       <div id="drop-zone" class="photo-drop" aria-disabled="false">
@@ -1888,6 +1913,41 @@ def render_tool(c, lang):
         </div>
         <label class="face-option" id="face-option"><input id="enhance-faces" type="checkbox" checked><span>{esc(tl['faces'])}</span></label>
       </div>
+      <div class="cloud-options" id="creative-options" hidden>
+        <div class="range-field">
+          <label class="option-label" for="creativity">{esc(tl['creativity_label'])}</label>
+          <input id="creativity" type="range" min="-2" max="2" step="1" value="0">
+          <span class="range-value" id="creativity-value">{esc(js['creativity_2'])}</span>
+        </div>
+        <div class="scale-field">
+          <span class="option-label" id="resolution-label">{esc(tl['resolution_label'])}</span>
+          <span class="segment-option" role="group" aria-labelledby="resolution-label">
+            <button type="button" data-resolution="2k" aria-pressed="false">2K</button>
+            <button type="button" data-resolution="4k" aria-pressed="true">4K</button>
+            <button type="button" data-resolution="8k" aria-pressed="false">8K</button>
+          </span>
+        </div>
+      </div>
+      <div class="cloud-options" id="restore-options" hidden>
+        <div class="restore-modes" role="radiogroup" aria-label="{esc(tl['restore_mode_label'])}">{restore_modes}</div>
+        <div class="restore-toggles">
+          <label class="check-option"><input id="negative" type="checkbox"><span>{esc(tl['negative'])}</span></label>
+          <label class="check-option" id="hires-option"><input id="increase-resolution" type="checkbox"><span>{esc(tl['increase_resolution'])} <small id="hires-note" hidden>{esc(js['hires_unavailable'])}</small></span></label>
+        </div>
+        <details class="prompt-field" id="prompt-field">
+          <summary>{esc(tl['prompt_label'])}</summary>
+          <textarea id="restore-prompt" rows="3" maxlength="500" placeholder="{esc(tl['prompt_placeholder'])}"></textarea>
+        </details>
+      </div>
+      <div class="cloud-gate" id="signin-panel" hidden>
+        <div><b>{esc(tl['signin_title'])}</b><p>{esc(tl['signin_body'])}</p><p class="gate-status" id="signin-status" role="status" hidden></p></div>
+        <button id="cloud-signin" class="btn btn-p" type="button">{esc(tl['signin_button'])}</button>
+      </div>
+      <div class="cloud-gate" id="topup-panel" hidden>
+        <div><b id="topup-title"></b><p>{esc(tl['topup_body'])}</p><p class="gate-status" id="topup-status" role="status" hidden></p></div>
+        <div class="topup-amounts" id="topup-amounts"></div>
+        <button id="topup-refresh" class="text-button" type="button">{esc(tl['topup_refresh'])}</button>
+      </div>
       <div class="tool-status" id="status" role="status" aria-live="polite" aria-atomic="true">
         <div class="status-head"><b id="status-title" hidden></b><span id="status-value"></span></div>
         <progress id="progress" max="1" value="0" aria-label="{esc(tl['progress_label'])}" hidden></progress>
@@ -1921,6 +1981,7 @@ def render_tool(c, lang):
           <h2 id="result-title">{first(js['upscaled'])}</h2>
           <p id="result-summary"></p>
           <p id="face-summary"></p>
+          <p class="saved-note" id="saved-note" hidden><a href="/account/#history">{esc(tl['saved_note'])}</a></p>
           <div class="album-actions">
             <a id="download-result" class="btn btn-p" download="uscale.jpg">{DOWN_SVG}{esc(tl['download'])}</a>
             <button id="choose-faces" class="btn btn-g" type="button" hidden></button>
