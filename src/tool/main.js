@@ -803,10 +803,21 @@ function initialMode() {
   } catch { /* Storage is optional. */ }
   return 'device';
 }
+// On phones the tiles are a swipeable row, so a page opened straight into a cloud
+// mode would otherwise show the selected tile cut off at the edge. Scroll only the
+// row, never the page.
+function revealModeTile(value, smooth) {
+  const picker = elements['mode-device'].parentElement;
+  if (picker.scrollWidth <= picker.clientWidth) return;
+  const tile = elements[`mode-${value}`];
+  const left = Math.max(0, Math.min(tile.offsetLeft - picker.offsetLeft - 3, picker.scrollWidth - picker.clientWidth));
+  picker.scrollTo({left, behavior: smooth ? 'smooth' : 'auto'});
+}
 function setMode(value, {initial = false} = {}) {
   if (!MODES.includes(value) || (value === mode && !initial) || locked()) return;
   mode = value;
   for (const id of MODES) elements[`mode-${id}`].setAttribute('aria-checked', String(id === value));
+  revealModeTile(value, !initial);
   try { localStorage.setItem(MODE_KEY, value); } catch { /* Storage is optional. */ }
   const url = new URL(location.href);
   if (value === 'device') url.searchParams.delete('mode'); else url.searchParams.set('mode', value);
