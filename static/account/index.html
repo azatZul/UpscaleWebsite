@@ -90,6 +90,15 @@
         </section>
       </div>
 
+      <section class="dash-card history-card" id="history" aria-labelledby="history-heading">
+        <div class="history-head">
+          <h2 id="history-heading">History</h2>
+          <span id="history-usage" class="dash-muted"></span>
+        </div>
+        <ul id="history-grid" class="history-grid"></ul>
+        <p id="history-empty" class="activity-empty" hidden>No saved photos yet. Results from Creative upscale and Restore appear here and stay until you delete them. <a href="/free-upscale/?mode=restore">Try a Pro tool</a></p>
+      </section>
+
       <section class="dash-card activity-card" aria-labelledby="activity-heading">
         <h2 id="activity-heading">Activity</h2>
         <ol id="activity-list" class="activity-list" aria-live="polite"></ol>
@@ -99,6 +108,29 @@
 
     <p id="account-error" class="account-error" role="alert" hidden></p>
   </main>
+
+  <dialog id="history-viewer" class="history-viewer" aria-labelledby="viewer-title">
+    <div class="viewer-stage">
+      <div class="viewer-cmp">
+        <img id="viewer-result" alt="Result" draggable="false">
+        <img id="viewer-original" class="viewer-before" alt="Original" draggable="false">
+        <span class="viewer-divider" id="viewer-divider" aria-hidden="true"></span>
+        <span class="viewer-tag viewer-tag-l">Original</span><span class="viewer-tag viewer-tag-r">Result</span>
+        <input id="viewer-slider" class="viewer-slider" type="range" min="0" max="100" value="50" aria-label="Compare the original and the result">
+      </div>
+    </div>
+    <div class="viewer-bar">
+      <div class="viewer-text">
+        <h2 id="viewer-title"></h2>
+        <p id="viewer-meta"></p>
+      </div>
+      <div class="viewer-actions">
+        <a id="viewer-download" class="btn btn-p" download>Download</a>
+        <button id="viewer-delete" class="btn btn-g" type="button">Delete</button>
+        <button id="viewer-close" class="btn btn-g" type="button">Close</button>
+      </div>
+    </div>
+  </dialog>
 
   <script type="module" src="/account/account.js"></script>
 </body>

@@ -102,3 +102,27 @@ export function describeActivity(entry) {
 export function formatDelta(delta) {
   return `${delta > 0 ? '+' : '−'}${formatCredits(Math.abs(delta))}`;
 }
+
+/** A saved result's title: its mode and the option that changed its price. */
+export function describeHistoryItem(item) {
+  const options = item?.options || {};
+  if (item?.operation === 'creative') {
+    return `Creative upscale · ${String(options.resolution || '4k').toUpperCase()}`;
+  }
+  const mode = RESTORE_MODE_LABELS[options.mode] || 'Restore';
+  return options.increaseResolution ? `${mode} · increased resolution` : mode;
+}
+
+/** Storage sizes in the units people read them in: 340 KB, 12.5 MB, 2 GB. */
+export function formatBytes(bytes) {
+  const value = Math.max(0, Number(bytes) || 0);
+  const units = [['GB', 1024 ** 3], ['MB', 1024 ** 2], ['KB', 1024]];
+  for (const [unit, size] of units) {
+    if (value >= size) {
+      const amount = value / size;
+      return `${amount >= 10 || Number.isInteger(amount) ? Math.round(amount) : amount.toFixed(1)} ${unit}`;
+    }
+  }
+  return `${value} B`;
+}
+

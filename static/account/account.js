@@ -4,9 +4,11 @@
 const fixtureMode = ['localhost', '127.0.0.1'].includes(location.hostname)
   && new URLSearchParams(location.search).has('fixture');
 const {onIdentityChanged, signInWithGoogle, signOut} = await import(fixtureMode ? './dev-fixture.js' : './identity.js');
-const {fetchAccount, fetchActivity, fetchPacks, startCheckout} = await import(fixtureMode ? './dev-fixture.js' : './api.js');
+const {deleteHistoryItem, fetchAccount, fetchActivity, fetchHistory, fetchPacks, startCheckout} =
+  await import(fixtureMode ? './dev-fixture.js' : './api.js');
 import {
-  describeActivity, formatCredits, formatDelta, formatPrice, parseDollars, priceList, quoteCredits,
+  describeActivity, describeHistoryItem, formatBytes, formatCredits, formatDelta, formatPrice, parseDollars, priceList,
+  quoteCredits,
 } from './billing-format.js';
 
 const $ = id => document.getElementById(id);
@@ -26,6 +28,10 @@ const checkoutButton = $('checkout');
 const activityList = $('activity-list');
 const activityEmpty = $('activity-empty');
 const purchaseNotice = $('purchase-notice');
+const historyGrid = $('history-grid');
+const historyEmpty = $('history-empty');
+const historyUsage = $('history-usage');
+const viewer = $('history-viewer');
 
 // Read by site.js on every other page to draw the header account button
 // without loading the auth SDK there.
@@ -247,7 +253,7 @@ async function loadDashboard() {
   } catch (error) {
     showError(error.message);
   }
-  await loadActivity();
+  await Promise.all([loadActivity(), loadHistory()]);
 }
 
 function showNotice(outcome, message) {
@@ -338,3 +344,88 @@ customInput.addEventListener('keydown', event => {
   if (event.key === 'Enter' && !checkoutButton.disabled) checkout();
 });
 checkoutButton.addEventListener('click', checkout);
+
+// History: results kept from the paid cloud modes. Images load through
+// short-lived signed links the worker issues with the list.
+let viewing = null;
+
+function renderHistory({items, usedBytes, maxBytes}) {
+  historyGrid.textContent = '';
+  historyEmpty.hidden = items.length > 0;
+  historyUsage.textContent = items.length ? `${formatBytes(usedBytes)} of ${formatBytes(maxBytes)} used` : '';
+  const dateFormat = new Intl.DateTimeFormat(undefined, {dateStyle: 'medium'});
+  for (const item of items) {
+    const entry = document.createElement('li');
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'history-item';
+    const image = document.createElement('img');
+    image.src = item.resultUrl;
+    image.alt = '';
+    image.loading = 'lazy';
+    image.decoding = 'async';
+    const label = document.createElement('span');
+    label.className = 'history-label';
+    label.textContent = describeHistoryItem(item);
+    const time = document.createElement('time');
+    time.dateTime = new Date(item.createdAt).toISOString();
+    time.textContent = dateFormat.format(item.createdAt);
+    button.append(image, label, time);
+    button.addEventListener('click', () => openViewer(item));
+    entry.append(button);
+    historyGrid.append(entry);
+  }
+}
+
+async function loadHistory() {
+  try {
+    renderHistory(await fetchHistory());
+  } catch {
+    historyGrid.textContent = '';
+    historyUsage.textContent = '';
+    historyEmpty.textContent = 'Your history could not be loaded right now.';
+    historyEmpty.hidden = false;
+  }
+  if (window.location.hash === '#history') $('history').scrollIntoView({block: 'start'});
+}
+
+function setSplit(value) {
+  $('viewer-original').style.clipPath = `inset(0 ${100 - value}% 0 0)`;
+  $('viewer-divider').style.left = `${value}%`;
+}
+
+function openViewer(item) {
+  viewing = item;
+  $('viewer-title').textContent = describeHistoryItem(item);
+  const when = new Intl.DateTimeFormat(undefined, {dateStyle: 'medium', timeStyle: 'short'}).format(item.createdAt);
+  $('viewer-meta').textContent = `${when} · ${formatCredits(item.credits)} credits`;
+  $('viewer-result').src = item.resultUrl;
+  $('viewer-original').src = item.originalUrl;
+  $('viewer-download').href = item.downloadUrl;
+  $('viewer-slider').value = '50';
+  setSplit(50);
+  $('viewer-delete').disabled = false;
+  viewer.showModal();
+}
+
+$('viewer-slider').addEventListener('input', event => setSplit(Number(event.target.value)));
+$('viewer-close').addEventListener('click', () => viewer.close());
+viewer.addEventListener('close', () => {
+  $('viewer-result').removeAttribute('src');
+  $('viewer-original').removeAttribute('src');
+  viewing = null;
+});
+$('viewer-delete').addEventListener('click', async () => {
+  const item = viewing;
+  if (!item || !window.confirm('Delete this photo from your history? This can’t be undone.')) return;
+  $('viewer-delete').disabled = true;
+  try {
+    await deleteHistoryItem(item.id);
+    viewer.close();
+    await loadHistory();
+  } catch (error) {
+    $('viewer-delete').disabled = false;
+    showError(error.message);
+  }
+});
+

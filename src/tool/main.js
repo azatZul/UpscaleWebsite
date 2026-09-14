@@ -779,6 +779,20 @@ function presentCloudResult({mode: kind, options, result, before, plan}) {
 }
 
 const MODES = ['device', 'creative', 'restore'];
+// The heading describes the free on-device tool; cloud modes say what they are
+// instead, since "never leaves your device" is no longer true for them. The
+// on-device copy is read from the page, so it stays the locale's own.
+const heading = {
+  eyebrow: document.querySelector('.tool-heading .eyebrow'),
+  title: document.querySelector('.tool-heading h1'),
+  lead: document.querySelector('.tool-heading .lead'),
+};
+const deviceHeading = Object.fromEntries(Object.entries(heading).map(([key, node]) => [key, node?.textContent ?? '']));
+function renderHeading() {
+  const copy = mode === 'device' ? deviceHeading
+    : {eyebrow: t('eyebrow_cloud'), title: t(`h1_${mode}`), lead: t(`lead_${mode}`)};
+  for (const [key, node] of Object.entries(heading)) if (node) node.textContent = copy[key];
+}
 const MODE_KEY = 'uscale-tool-mode';
 function initialMode() {
   const requested = new URLSearchParams(location.search).get('mode');
@@ -798,6 +812,7 @@ function setMode(value, {initial = false} = {}) {
   if (value === 'device') url.searchParams.delete('mode'); else url.searchParams.set('mode', value);
   history.replaceState(history.state, '', url);
   if (value === 'device') setScale(scale); else elements['limit-note'].textContent = formatsNote;
+  renderHeading();
   cloud.onMode(value);
   if (file) assessCurrentFile(); else idleStatus();
   refreshControls();

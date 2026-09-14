@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {test} from 'node:test';
 
 import {
-  OPERATION_LABELS, describeActivity, describePriceKey, formatCredits, formatDelta, formatPrice, parseDollars, priceList,
+  OPERATION_LABELS, describeActivity, describeHistoryItem, describePriceKey, formatBytes, formatCredits, formatDelta, formatPrice, parseDollars, priceList,
   quoteCredits,
 } from '../../static/account/billing-format.js';
 
@@ -81,5 +81,20 @@ test('lists what credits buy from the price table', () => {
     ['Enhanced Colorize', 35], ['Advanced Fix', 20], ['Increased resolution', 10],
   ]);
   assert.deepEqual(priceList(null), []);
+});
+
+test('titles a saved result by its mode and price-changing option', () => {
+  assert.equal(describeHistoryItem({operation: 'creative', options: {resolution: '8k', creativity: 2}}), 'Creative upscale · 8K');
+  assert.equal(describeHistoryItem({operation: 'restore', options: {mode: 'colorization', increaseResolution: true}}),
+    'Restore & Colorize · increased resolution');
+  assert.equal(describeHistoryItem({operation: 'restore', options: {}}), 'Restore');
+});
+
+test('formats storage sizes the way people read them', () => {
+  assert.equal(formatBytes(512), '512 B');
+  assert.equal(formatBytes(340 * 1024), '340 KB');
+  assert.equal(formatBytes(1.5 * 1024 ** 2), '1.5 MB');
+  assert.equal(formatBytes(2 * 1024 ** 3), '2 GB');
+  assert.equal(formatBytes(-4), '0 B');
 });
 

@@ -107,7 +107,30 @@ improvement is a fraction of a cent).
 
 ## Progress
 
-- auralens PR #4: tool key accepted on `/creative-upscale`, `/restore-image`,
-  `/edit-flux-2-dev` and `/edit-flux-2-pro`.
-- R2 bucket `uscale-user-media-staging` created for history, public access off.
-  Production bucket to be created with the first backend deploy.
+Done on `web-cloud-tools`, deployed to staging only:
+
+1. **Backend**: option-based prices with an exhaustive 50% margin test;
+   `/api/cloud/creative` and `/api/cloud/restore` routed as the iOS app routes
+   them; results copied to the private `uscale-user-media` bucket; history list,
+   signed image links and delete; three running jobs and 2 GB of history per
+   account; a cron that refunds jobs whose request died.
+2. **Page**: mode picker (Upscale · Creative upscale · Restore) with shared
+   photo, status and result viewer; per-mode options, heading and badge;
+   priced button; in-card sign-in (via a window on `/account/`, since the
+   page's cross-origin isolation breaks Firebase's popup) and top-up (checkout
+   in a new tab, photo kept).
+3. **Account page**: option prices, price-key labels in activity, history grid
+   with a before/after viewer, download and delete; sign-in window mode.
+4. **Privacy policy**: history retention described in all six locales.
+5. **auralens** PR #4: tool key accepted on all four endpoints the modes use.
+
+## Remaining
+
+- Merge and deploy auralens PR #4; nothing cloud runs end to end until then.
+- End-to-end test on staging with a real sign-in, purchase and processing run
+  in each mode (needs a person to sign in).
+- Account deletion (the privacy policy promises it on request by email today).
+- Browser-side tiling for creative upscale of photos over 4096 px.
+- Recheck credit prices against WaveSpeed's per-job charges once traffic exists.
+- Production: create the `uscale-user-media` bucket, set `MEDIA_SIGNING_KEY`,
+  apply migration 0004, and decide when the screens ship.

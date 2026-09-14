@@ -2285,5 +2285,60 @@
       "es": "Mejorar"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.eyebrow_cloud": {
+    "localizations": {
+      "en": "Pro · In the cloud",
+      "ru": "Pro · В облаке",
+      "de": "Pro · In der Cloud",
+      "ja": "Pro・クラウド",
+      "fr": "Pro · Dans le cloud",
+      "es": "Pro · En la nube"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.h1_creative": {
+    "localizations": {
+      "en": "Upscale with natural detail",
+      "ru": "Увеличение с естественными деталями",
+      "de": "Vergrößern mit natürlichen Details",
+      "ja": "自然なディテールで高画質化",
+      "fr": "Agrandir avec des détails naturels",
+      "es": "Amplía con detalle natural"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.lead_creative": {
+    "localizations": {
+      "en": "Up to 8K with new, natural detail. Processed in the cloud with credits.",
+      "ru": "До 8K с новыми естественными деталями. Обработка в облаке за кредиты.",
+      "de": "Bis 8K mit neuen, natürlichen Details. In der Cloud verarbeitet, mit Credits.",
+      "ja": "新しい自然なディテールで最大8Kに。クレジットを使ってクラウドで処理します。",
+      "fr": "Jusqu’à 8K avec de nouveaux détails naturels. Traité dans le cloud avec des crédits.",
+      "es": "Hasta 8K con detalle nuevo y natural. Se procesa en la nube con créditos."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.h1_restore": {
+    "localizations": {
+      "en": "Restore old photos",
+      "ru": "Реставрация старых фото",
+      "de": "Alte Fotos restaurieren",
+      "ja": "古い写真を修復",
+      "fr": "Restaurer de vieilles photos",
+      "es": "Restaura fotos antiguas"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.lead_restore": {
+    "localizations": {
+      "en": "Remove scratches and damage, and bring back color. Processed in the cloud with credits.",
+      "ru": "Уберите царапины и повреждения, верните цвет. Обработка в облаке за кредиты.",
+      "de": "Entferne Kratzer und Schäden und bring Farbe zurück. In der Cloud verarbeitet, mit Credits.",
+      "ja": "傷や損傷を取り除き、色を取り戻します。クレジットを使ってクラウドで処理します。",
+      "fr": "Supprimez rayures et dégâts, et retrouvez les couleurs. Traité dans le cloud avec des crédits.",
+      "es": "Elimina rayones y daños, y recupera el color. Se procesa en la nube con créditos."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   }
 }

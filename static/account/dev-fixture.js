@@ -47,6 +47,25 @@ export const fetchActivity = async () => ({
     {id: 1, delta: -385, reason: 'spend', detail: 'restore', createdAt: now - 400 * hour},
   ],
 });
+const sample = '/resources/appstore/icon_512.png';
+let historyItems = empty ? [] : [
+  {id: 'fixture-1', operation: 'restore', options: {mode: 'colorization_pro', increaseResolution: true}, credits: 45,
+    createdAt: now - 0.4 * hour, resultBytes: 3_400_000},
+  {id: 'fixture-2', operation: 'creative', options: {creativity: 1, resolution: '8k'}, credits: 15,
+    createdAt: now - 26 * hour, resultBytes: 21_000_000},
+  {id: 'fixture-3', operation: 'restore', options: {mode: 'advanced_restoration'}, credits: 20,
+    createdAt: now - 400 * hour, resultBytes: 1_900_000},
+].map(item => ({...item, resultUrl: sample, originalUrl: sample, downloadUrl: sample}));
+export const fetchHistory = async () => ({
+  items: historyItems,
+  usedBytes: historyItems.reduce((sum, item) => sum + item.resultBytes * 1.3, 0),
+  maxBytes: 2 * 1024 ** 3,
+});
+export async function deleteHistoryItem(id) {
+  historyItems = historyItems.filter(item => item.id !== id);
+  return {deleted: true};
+}
+
 export async function startCheckout(amountCents) {
   await new Promise(resolve => setTimeout(resolve, 600));
   throw new Error(`Fixture mode: checkout for ${amountCents} cents would redirect to Stripe here.`);

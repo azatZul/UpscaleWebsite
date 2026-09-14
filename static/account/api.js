@@ -45,3 +45,5 @@ export const fetchAccount = () => call('/api/me');
 export const fetchPacks = () => call('/api/billing/packs');
 export const fetchActivity = () => call('/api/account/activity');
 export const startCheckout = amountCents => call('/api/billing/checkout', {method: 'POST', body: {amountCents}});
+export const fetchHistory = () => call('/api/history');
+export const deleteHistoryItem = id => call(`/api/history/${encodeURIComponent(id)}`, {method: 'DELETE'});
