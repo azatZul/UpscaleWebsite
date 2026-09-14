@@ -1,11 +1,14 @@
 import { bearerToken, verifyIdToken, type VerifiedIdentity } from "./auth";
 import {
-  completeCloudJob, creditBalance, failCloudJob, getOrCreateAccount, listActivity, recordPurchase,
-  setStripeCustomerId, startCloudJob, type Account,
+  completeCloudJob, countActiveJobs, creditBalance, deleteHistoryItem, failCloudJob, getHistoryItem,
+  getOrCreateAccount, historyBytes, listActivity, listHistory, recordPurchase, setStripeCustomerId, startCloudJob,
+  type Account, type StoredObject,
 } from "./accounts";
-import { AuralensError, runOperation } from "./auralens";
+import { AuralensError, runCloudRequest } from "./auralens";
+import { signMediaUrl, verifyMediaSignature, type MediaVariant } from "./media-signing";
 import {
-  CREDIT_PACKS, MAX_PURCHASE_CENTS, MIN_PURCHASE_CENTS, OPERATION_CREDITS, packById, quoteCredits, type Operation,
+  CREDIT_PACKS, CREDIT_PRICES, MAX_PURCHASE_CENTS, MIN_PURCHASE_CENTS, creditsFor, packById, parseCloudRequest,
+  priceKey, quoteCredits, type CloudKind,
 } from "./pricing";
 import { StripeError, createCheckoutSession, createCustomer, verifyWebhook } from "./stripe";
 
@@ -629,13 +632,78 @@ async function handleStripeWebhook(request: Request, env: Env): Promise<Response
   return json({ received: true, applied, balance });
 }
 
-const CLOUD_PATH = /^\/api\/cloud\/(upscale_standard|restore|upscale_ultimate)$/;
+const CLOUD_PATH = /^\/api\/cloud\/(creative|restore)$/;
+const HISTORY_ITEM_PATH = /^\/api\/history\/([0-9a-f-]{36})$/;
+const HISTORY_MEDIA_PATH = /^\/media\/history\/([0-9a-f-]{36})\/(original|result)$/;
 // Generous for a phone photo; the providers downscale anything larger anyway.
 const MAX_UPLOAD_BYTES = 20 * 1024 * 1024;
+// Largest result copied into history. 8K JPEGs run to tens of megabytes.
+const MAX_RESULT_BYTES = 80 * 1024 * 1024;
+// Per-account history cap: room for hundreds of results, and a ceiling on what
+// one account can put in the bucket.
+const MAX_HISTORY_BYTES = 2 * 1024 * 1024 * 1024;
+// Jobs one account may have running at once, counted over a window so a job the
+// worker never finished cannot block the account forever.
+const MAX_ACTIVE_JOBS = 3;
+const ACTIVE_JOB_WINDOW_MS = 10 * 60 * 1000;
 const REQUEST_ID = /^[A-Za-z0-9_-]{8,64}$/;
 const ACCEPTED_IMAGE = /^image\/(jpeg|png|webp|heic|heif)$/;
+const CLOUD_FIELDS = ["creativity", "resolution", "mode", "increaseResolution", "prompt"] as const;
 
-/** Charge credits, run one cloud operation, and refund if it fails.
+function mediaSigningKey(env: Env): string | null {
+  const secret = env.MEDIA_SIGNING_KEY;
+  return secret && secret.length >= 32 ? secret : null;
+}
+
+async function historyUrls(env: Env, jobId: string): Promise<{ originalUrl: string; resultUrl: string; downloadUrl: string } | null> {
+  const secret = mediaSigningKey(env);
+  if (!secret) return null;
+  const [originalUrl, resultUrl] = await Promise.all([
+    signMediaUrl(secret, jobId, "original"),
+    signMediaUrl(secret, jobId, "result"),
+  ]);
+  return { originalUrl, resultUrl, downloadUrl: `${resultUrl}&download=1` };
+}
+
+/** Copy a finished job's original and result into the account's history.
+ *
+ *  Provider result links expire (Replicate's within about an hour), so the
+ *  copy happens now, not when someone opens their history. Best effort: the
+ *  customer paid for a result and still gets the provider link if this fails,
+ *  the job just does not appear in history. */
+async function storeHistoryMedia(
+  env: Env,
+  accountId: string,
+  jobId: string,
+  image: File,
+  outputUrl: string,
+): Promise<{ original: StoredObject | null; result: StoredObject | null }> {
+  const base = `users/${accountId}/${jobId}`;
+  const originalKey = `${base}/original`;
+  const resultKey = `${base}/result`;
+  try {
+    const response = await fetch(outputUrl, { signal: AbortSignal.timeout(60_000) });
+    if (!response.ok) throw new Error(`result fetch returned ${response.status}`);
+    if (Number(response.headers.get("content-length") ?? 0) > MAX_RESULT_BYTES) throw new Error("result too large");
+    const resultMime = (response.headers.get("content-type") ?? "image/jpeg").split(";")[0]!.trim().toLowerCase();
+    if (!resultMime.startsWith("image/")) throw new Error(`result is ${resultMime}`);
+    const bytes = await response.arrayBuffer();
+    if (bytes.byteLength === 0 || bytes.byteLength > MAX_RESULT_BYTES) throw new Error("result size out of range");
+    await env.USER_MEDIA.put(originalKey, image, { httpMetadata: { contentType: image.type } });
+    await env.USER_MEDIA.put(resultKey, bytes, { httpMetadata: { contentType: resultMime } });
+    return {
+      original: { key: originalKey, mime: image.type, bytes: image.size },
+      result: { key: resultKey, mime: resultMime, bytes: bytes.byteLength },
+    };
+  } catch (error) {
+    console.error(JSON.stringify({ event: "history_store_failed", jobId, detail: error instanceof Error ? error.message : "unknown" }));
+    await env.USER_MEDIA.delete([originalKey, resultKey]).catch(() => undefined);
+    return { original: null, result: null };
+  }
+}
+
+/** Charge credits, run one cloud request, keep its result, and refund if it
+ *  fails.
  *
  *  The debit happens before the call so two tabs cannot both spend the same
  *  last credits on work that has already started. Anything short of a clean
@@ -645,7 +713,7 @@ async function handleCloudOperation(
   request: Request,
   env: Env,
   identity: VerifiedIdentity,
-  operation: Operation,
+  kind: CloudKind,
 ): Promise<Response> {
   const apiKey = env.UPSCALER_TOOL_API_KEY;
   if (!apiKey || !env.AURALENS_URL) return json({ error: "processing_unavailable" }, 503);
@@ -666,9 +734,27 @@ async function handleCloudOperation(
   if (!ACCEPTED_IMAGE.test(image.type)) return json({ error: "unsupported_image" }, 415);
   if (typeof requestId !== "string" || !REQUEST_ID.test(requestId)) return json({ error: "invalid_request_id" }, 400);
 
+  const fields: Record<string, string | undefined> = {};
+  for (const name of CLOUD_FIELDS) {
+    const value = form.get(name);
+    fields[name] = typeof value === "string" ? value : undefined;
+  }
+  const parsed = parseCloudRequest(kind, fields);
+  if ("error" in parsed) return json({ error: parsed.error }, 400);
+  const cost = creditsFor(parsed);
+  const key = priceKey(parsed);
+
   const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
-  const cost = OPERATION_CREDITS[operation];
-  const started = await startCloudJob(env.ACCOUNTS_DB, { accountId: account.id, requestId, operation, credits: cost });
+  if (await countActiveJobs(env.ACCOUNTS_DB, account.id, Date.now() - ACTIVE_JOB_WINDOW_MS) >= MAX_ACTIVE_JOBS) {
+    return json({ error: "too_many_active_jobs", maxActive: MAX_ACTIVE_JOBS }, 429);
+  }
+  if (await historyBytes(env.ACCOUNTS_DB, account.id) + image.size > MAX_HISTORY_BYTES) {
+    return json({ error: "history_full", maxBytes: MAX_HISTORY_BYTES }, 409);
+  }
+
+  const started = await startCloudJob(env.ACCOUNTS_DB, {
+    accountId: account.id, requestId, operation: parsed.kind, options: JSON.stringify(parsed), priceKey: key, credits: cost,
+  });
 
   if (started.kind === "insufficient") {
     return json({ error: "insufficient_credits", balance: started.balance, required: cost }, 402);
@@ -676,27 +762,132 @@ async function handleCloudOperation(
   if (started.kind === "duplicate") {
     // A retried upload with the same id is never charged twice.
     if (started.job.status === "succeeded") {
-      return json({ jobId: started.job.id, outputUrl: started.job.outputUrl, balance: started.balance, charged: 0, replayed: true });
+      const urls = started.job.resultKey ? await historyUrls(env, started.job.id) : null;
+      return json({
+        jobId: started.job.id,
+        outputUrl: urls?.resultUrl ?? started.job.outputUrl,
+        originalUrl: urls?.originalUrl ?? null,
+        downloadUrl: urls?.downloadUrl ?? started.job.outputUrl,
+        saved: Boolean(urls),
+        balance: started.balance,
+        charged: 0,
+        replayed: true,
+      });
     }
     return json({ error: started.job.status === "processing" ? "in_progress" : "already_failed", balance: started.balance }, 409);
   }
 
   let outputUrl: string;
   try {
-    ({ outputUrl } = await runOperation({ baseUrl: env.AURALENS_URL, apiKey }, operation, image, image.name || "photo.jpg"));
+    ({ outputUrl } = await runCloudRequest({ baseUrl: env.AURALENS_URL, apiKey }, parsed, image, image.name || "photo.jpg"));
   } catch (error) {
     const detail = error instanceof AuralensError ? error.message : "unknown";
     const { refunded, balance } = await failCloudJob(
-      env.ACCOUNTS_DB, { id: started.job.id, accountId: account.id, credits: cost, operation }, detail,
+      env.ACCOUNTS_DB, { id: started.job.id, accountId: account.id, credits: cost, priceKey: key }, detail,
     );
-    console.error(JSON.stringify({ event: "cloud_job_failed", jobId: started.job.id, operation, detail, refunded }));
+    console.error(JSON.stringify({ event: "cloud_job_failed", jobId: started.job.id, priceKey: key, detail, refunded }));
     return json({ error: "processing_failed", refunded, balance }, 502);
   }
-  // Outside the try on purpose: a failure recording success must not trigger a
-  // refund for work that was actually delivered.
-  await completeCloudJob(env.ACCOUNTS_DB, started.job.id, outputUrl);
-  console.log(JSON.stringify({ event: "cloud_job_succeeded", jobId: started.job.id, operation, charged: cost }));
-  return json({ jobId: started.job.id, outputUrl, balance: started.balance, charged: cost });
+  // Outside the try on purpose: nothing after a delivered result may trigger a
+  // refund, including a failure to keep a copy of it.
+  const media = await storeHistoryMedia(env, account.id, started.job.id, image, outputUrl);
+  await completeCloudJob(env.ACCOUNTS_DB, started.job.id, { outputUrl, original: media.original, result: media.result });
+  const urls = media.result ? await historyUrls(env, started.job.id) : null;
+  console.log(JSON.stringify({ event: "cloud_job_succeeded", jobId: started.job.id, priceKey: key, charged: cost, saved: Boolean(urls) }));
+  return json({
+    jobId: started.job.id,
+    outputUrl: urls?.resultUrl ?? outputUrl,
+    originalUrl: urls?.originalUrl ?? null,
+    downloadUrl: urls?.downloadUrl ?? outputUrl,
+    saved: Boolean(urls),
+    balance: started.balance,
+    charged: cost,
+  });
+}
+
+async function handleHistoryList(env: Env, identity: VerifiedIdentity): Promise<Response> {
+  if (!mediaSigningKey(env)) return json({ error: "history_unavailable" }, 503);
+  const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+  const items = await listHistory(env.ACCOUNTS_DB, account.id);
+  const withUrls = await Promise.all(items.map(async item => ({
+    id: item.id,
+    operation: item.operation,
+    options: item.options,
+    credits: item.credits,
+    createdAt: item.createdAt,
+    resultBytes: item.resultBytes,
+    ...(await historyUrls(env, item.id))!,
+  })));
+  return json({ items: withUrls, usedBytes: await historyBytes(env.ACCOUNTS_DB, account.id), maxBytes: MAX_HISTORY_BYTES });
+}
+
+async function handleHistoryDelete(env: Env, identity: VerifiedIdentity, jobId: string): Promise<Response> {
+  const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+  const removed = await deleteHistoryItem(env.ACCOUNTS_DB, account.id, jobId);
+  // Another account's item answers exactly like a missing one.
+  if (!removed) return json({ error: "not_found" }, 404);
+  const keys = [removed.originalKey, removed.resultKey].filter((key): key is string => Boolean(key));
+  try {
+    await env.USER_MEDIA.delete(keys);
+  } catch (error) {
+    // The row is already marked deleted, so the images are unreachable; log the
+    // orphans for cleanup rather than failing a deletion the user asked for.
+    console.error(JSON.stringify({ event: "history_media_delete_failed", jobId, keys, detail: error instanceof Error ? error.message : "unknown" }));
+  }
+  return json({ deleted: true });
+}
+
+/** Serve one history image, authorised by its signed link rather than a token. */
+async function handleHistoryMedia(request: Request, env: Env, jobId: string, variant: MediaVariant): Promise<Response> {
+  const noindex = { "X-Robots-Tag": "noindex, nofollow" };
+  const secret = mediaSigningKey(env);
+  if (!secret) return plain("Not found", 404, noindex);
+  const url = new URL(request.url);
+  const exp = url.searchParams.get("exp");
+  if (!(await verifyMediaSignature(secret, jobId, variant, exp, url.searchParams.get("sig")))) {
+    return plain("This link has expired or is not valid", 403, noindex);
+  }
+  const item = await getHistoryItem(env.ACCOUNTS_DB, jobId);
+  const key = variant === "original" ? item?.originalKey : item?.resultKey;
+  const mime = variant === "original" ? item?.originalMime : item?.resultMime;
+  if (!item || item.deletedAt !== null || !key || !mime) return plain("Not found", 404, noindex);
+
+  const headers = commonHeaders();
+  headers.set("Content-Type", mime);
+  headers.set("Accept-Ranges", "bytes");
+  headers.set("X-Robots-Tag", "noindex, nofollow");
+  // Private to this browser, and never cached past the link's own expiry.
+  const remaining = Math.max(0, Number(exp) - Math.floor(Date.now() / 1000));
+  headers.set("Cache-Control", `private, max-age=${Math.min(remaining, 3600)}`);
+  if (url.searchParams.get("download") === "1") {
+    const extension = mime === "image/png" ? "png" : mime === "image/webp" ? "webp" : "jpg";
+    headers.set("Content-Disposition", `attachment; filename="uscale-${variant}-${jobId.slice(0, 8)}.${extension}"`);
+  }
+
+  const head = await env.USER_MEDIA.head(key);
+  if (!head) return plain("Not found", 404, noindex);
+  headers.set("ETag", head.httpEtag);
+  if (request.method === "HEAD") {
+    headers.set("Content-Length", String(head.size));
+    return new Response(null, { headers });
+  }
+  const rangeHeader = request.headers.get("Range");
+  if (rangeHeader) {
+    const range = parseRange(rangeHeader, head.size);
+    if (!range) {
+      headers.set("Content-Range", `bytes */${head.size}`);
+      return new Response(null, { status: 416, headers });
+    }
+    const object = await env.USER_MEDIA.get(key, { range: { offset: range.offset, length: range.length } });
+    if (!object) return plain("Not found", 404, noindex);
+    headers.set("Content-Length", String(range.length));
+    headers.set("Content-Range", `bytes ${range.offset}-${range.end}/${head.size}`);
+    return new Response(object.body, { status: 206, headers });
+  }
+  const object = await env.USER_MEDIA.get(key);
+  if (!object) return plain("Not found", 404, noindex);
+  headers.set("Content-Length", String(object.size));
+  return new Response(object.body, { headers });
 }
 
 async function handleApi(request: Request, env: Env): Promise<Response> {
@@ -731,7 +922,7 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   if (url.pathname === "/api/billing/packs" && request.method === "GET") {
     return json({
       packs: CREDIT_PACKS.map(pack => ({ id: pack.id, credits: pack.credits, priceCents: pack.priceCents, label: pack.label })),
-      operations: OPERATION_CREDITS,
+      prices: CREDIT_PRICES,
       limits: { minCents: MIN_PURCHASE_CENTS, maxCents: MAX_PURCHASE_CENTS },
     });
   }
@@ -743,7 +934,15 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
 
   const cloud = CLOUD_PATH.exec(url.pathname);
   if (cloud?.[1] && request.method === "POST") {
-    return handleCloudOperation(request, env, identity, cloud[1] as Operation);
+    return handleCloudOperation(request, env, identity, cloud[1] as CloudKind);
+  }
+
+  if (url.pathname === "/api/history" && request.method === "GET") {
+    return handleHistoryList(env, identity);
+  }
+  const historyItem = HISTORY_ITEM_PATH.exec(url.pathname);
+  if (historyItem?.[1] && request.method === "DELETE") {
+    return handleHistoryDelete(env, identity, historyItem[1]);
   }
 
   if (url.pathname === "/api/billing/checkout" && request.method === "POST") {
@@ -778,6 +977,10 @@ async function route(request: Request, env: Env, ctx: ExecutionContext): Promise
   if (cover?.[1]) return handleMedia(request, env, ctx, cover[1], null, "cover");
   const galleryMedia = GALLERY_MEDIA_PATH.exec(url.pathname);
   if (galleryMedia?.[1]) return handleMedia(request, env, ctx, galleryMedia[1], null, "gallery");
+  const historyMedia = HISTORY_MEDIA_PATH.exec(url.pathname);
+  if (historyMedia?.[1] && (historyMedia[2] === "original" || historyMedia[2] === "result")) {
+    return handleHistoryMedia(request, env, historyMedia[1], historyMedia[2]);
+  }
   const media = MEDIA_PATH.exec(url.pathname);
   if (media?.[1] && media[2] && (media[3] === "before" || media[3] === "after")) {
     return handleMedia(request, env, ctx, media[1], media[2], media[3]);

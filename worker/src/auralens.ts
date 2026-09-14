@@ -3,7 +3,7 @@
 // Authenticates with a bearer tool key that only this worker holds -- never the
 // mobile apps' shared signing secret, which ships inside the app binaries.
 
-import type { Operation } from "./pricing";
+import type { CloudRequest, RestoreMode } from "./pricing";
 
 const TIMEOUT_MS = 180_000;
 
@@ -21,31 +21,59 @@ export interface AuralensConfig {
   timeoutMs?: number;
 }
 
-// Which endpoint and form fields each billable operation maps to. The two
-// upscales share an endpoint; `advanced` selects the ultimate model.
-export const OPERATION_ROUTES: Record<Operation, { path: string; fields: Record<string, string> }> = {
-  upscale_standard: { path: "/creative-upscale", fields: { advanced: "false" } },
-  upscale_ultimate: { path: "/creative-upscale", fields: { advanced: "true" } },
-  restore: { path: "/restore-image", fields: {} },
+// Copied from the iOS app's PhotoRestoreMode.prompt, so the website and the app
+// ask the model for the same restoration. Advanced Fix uses a dedicated model
+// and takes no prompt.
+export const RESTORE_PROMPTS: Record<Exclude<RestoreMode, "advanced_restoration">, string> = {
+  restore: "Remove scratches, dust, folds, and fix any torn or missing parts. Slightly enhance overall image quality while keeping original colors, faces, and lighting unchanged.",
+  colorization: "Fix cracks, folds, and scratches. Colorize. Remove any borders or blank edges and outpaint the image to full frame.",
+  colorization_pro: "Fix cracks, folds, and scratches. Colorize. Remove any borders or blank edges and outpaint the image to full frame.",
 };
 
-/** Run one operation and return the provider's output URL. Throws
- *  AuralensError on anything that is not a clean success, so the caller has a
- *  single failure path to refund on. */
-export async function runOperation(
+/** Endpoint and form for one request, following the routing the iOS app uses:
+ *  creative upscale on the WaveSpeed upscaler, Advanced Fix on restore-image,
+ *  and the other restore modes as Flux 2 edits (pro for Enhanced Colorize). */
+export function buildAuralensRequest(request: CloudRequest, image: Blob, filename: string): { path: string; form: FormData } {
+  const form = new FormData();
+  if (request.kind === "creative") {
+    form.append("image", image, filename);
+    form.append("creativity", String(request.creativity));
+    form.append("target_resolution", request.resolution);
+    form.append("output_format", "jpeg");
+    form.append("advanced", "false");
+    return { path: "/creative-upscale", form };
+  }
+  if (request.mode === "advanced_restoration") {
+    form.append("image", image, filename);
+    form.append("output_format", "jpg");
+    return { path: "/restore-image", form };
+  }
+  const mode = request.mode as Exclude<RestoreMode, "advanced_restoration">;
+  form.append("image1", image, filename);
+  form.append("prompt", RESTORE_PROMPTS[mode]);
+  if (request.prompt) {
+    form.append("user_prompt", request.prompt);
+    form.append("improve_user_prompt", "true");
+  }
+  form.append("increase_resolution", String(request.increaseResolution));
+  form.append("aspect_ratio", "match_input_image");
+  form.append("output_format", "jpg");
+  return { path: mode === "colorization_pro" ? "/edit-flux-2-pro" : "/edit-flux-2-dev", form };
+}
+
+/** Run one request and return the provider's output URL. Throws AuralensError
+ *  on anything that is not a clean success, so the caller has a single failure
+ *  path to refund on. */
+export async function runCloudRequest(
   config: AuralensConfig,
-  operation: Operation,
+  request: CloudRequest,
   image: Blob,
   filename: string,
 ): Promise<{ outputUrl: string }> {
-  const route = OPERATION_ROUTES[operation];
-  const form = new FormData();
-  form.append("image", image, filename);
-  for (const [name, value] of Object.entries(route.fields)) form.append(name, value);
-
+  const { path, form } = buildAuralensRequest(request, image, filename);
   let response: Response;
   try {
-    response = await (config.fetcher ?? fetch)(`${config.baseUrl.replace(/\/+$/, "")}${route.path}`, {
+    response = await (config.fetcher ?? fetch)(`${config.baseUrl.replace(/\/+$/, "")}${path}`, {
       method: "POST",
       headers: { Authorization: `Bearer ${config.apiKey}`, "app-id": "UScaleWeb" },
       body: form,

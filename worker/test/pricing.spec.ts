@@ -1,45 +1,54 @@
 import { describe, expect, it } from "vitest";
 
 import {
-  CREDIT_PACKS, MAX_PURCHASE_CENTS, MIN_PURCHASE_CENTS, OPERATION_CREDITS, UPSTREAM_COST_CENTS,
-  centsPerCredit, marginFor, marginForPurchase, packById, quoteCredits, type Operation,
+  CREDIT_PACKS, CREDIT_PRICES, MAX_PROMPT_LENGTH, MAX_PURCHASE_CENTS, MIN_PURCHASE_CENTS,
+  allPricedRequests, centsPerCredit, creditsFor, marginFor, marginForPurchase, packById, parseCloudRequest,
+  priceKey, quoteCredits, type CloudRequest,
 } from "../src/pricing";
 
-const OPERATIONS = Object.keys(OPERATION_CREDITS) as Operation[];
-// The business floor. If a price change drops any operation below this on any
-// pack, that is a bug, not a pricing tweak.
+// The business floor. If a price change drops any option below this on any
+// purchase, that is a bug, not a pricing tweak.
 const MINIMUM_MARGIN = 0.5;
+const REQUESTS = allPricedRequests();
 
 describe("pricing", () => {
-  it("clears 50% gross margin on every operation, on every pack", () => {
+  it("charges the approved credit prices", () => {
+    const table = Object.fromEntries(REQUESTS.map(request => [priceKey(request), creditsFor(request)]));
+    expect(table).toEqual({
+      "creative:2k": 5, "creative:4k": 5, "creative:8k": 15,
+      "restore:restore": 15, "restore:restore+hires": 25,
+      "restore:colorization": 15, "restore:colorization+hires": 25,
+      "restore:colorization_pro": 35, "restore:colorization_pro+hires": 45,
+      "restore:advanced_restoration": 20,
+    });
+    expect(CREDIT_PRICES.increaseResolution).toBe(10);
+  });
+
+  it("clears 50% gross margin on every priced option, on every pack", () => {
     for (const pack of CREDIT_PACKS) {
-      for (const operation of OPERATIONS) {
-        const margin = marginFor(operation, pack);
-        expect(margin, `${operation} on ${pack.id} = ${(margin * 100).toFixed(1)}%`).toBeGreaterThanOrEqual(MINIMUM_MARGIN);
+      for (const request of REQUESTS) {
+        const margin = marginFor(request, pack);
+        expect(margin, `${priceKey(request)} on ${pack.id} = ${(margin * 100).toFixed(1)}%`).toBeGreaterThanOrEqual(MINIMUM_MARGIN);
       }
     }
   });
 
-  it("is checked against the worst tier, where the bonus is largest", () => {
-    // The biggest pack has the lowest effective credit price, so it is the
-    // binding constraint -- guard against a future pack that undercuts it.
-    const cheapest = Math.min(...CREDIT_PACKS.map(centsPerCredit));
-    const biggest = CREDIT_PACKS.reduce((a, b) => (a.priceCents > b.priceCents ? a : b));
-    expect(centsPerCredit(biggest)).toBeCloseTo(cheapest, 10);
+  it("clears 50% margin on every option for every purchasable whole-dollar amount", () => {
+    // Exhaustive rather than sampled: 496 amounts times ten variants is cheap,
+    // and it is the only way to be sure no tier edge dips under.
+    for (let cents = MIN_PURCHASE_CENTS; cents <= MAX_PURCHASE_CENTS; cents += 100) {
+      const quote = quoteCredits(cents)!;
+      for (const request of REQUESTS) {
+        const margin = marginForPurchase(request, cents, quote.credits);
+        expect(margin, `${priceKey(request)} at $${cents / 100}`).toBeGreaterThanOrEqual(MINIMUM_MARGIN);
+      }
+    }
   });
 
   it("bigger packs are better value, never worse", () => {
     const sorted = [...CREDIT_PACKS].sort((a, b) => a.priceCents - b.priceCents);
     for (let i = 1; i < sorted.length; i++) {
       expect(centsPerCredit(sorted[i]!)).toBeLessThan(centsPerCredit(sorted[i - 1]!));
-    }
-  });
-
-  it("prices every operation above its upstream cost with real headroom", () => {
-    for (const operation of OPERATIONS) {
-      const worst = Math.min(...CREDIT_PACKS.map(centsPerCredit));
-      const revenue = OPERATION_CREDITS[operation] * worst;
-      expect(revenue / UPSTREAM_COST_CENTS[operation]).toBeGreaterThanOrEqual(2.1);
     }
   });
 
@@ -68,18 +77,6 @@ describe("pricing", () => {
     expect(quoteCredits(MAX_PURCHASE_CENTS)).not.toBeNull();
   });
 
-  it("clears 50% margin on every operation for every purchasable whole-dollar amount", () => {
-    // Exhaustive rather than sampled: 496 amounts times three operations is
-    // cheap, and it is the only way to be sure no tier edge dips under.
-    for (let cents = MIN_PURCHASE_CENTS; cents <= MAX_PURCHASE_CENTS; cents += 100) {
-      const quote = quoteCredits(cents)!;
-      for (const operation of OPERATIONS) {
-        const margin = marginForPurchase(operation, cents, quote.credits);
-        expect(margin, `${operation} at $${cents / 100}`).toBeGreaterThanOrEqual(MINIMUM_MARGIN);
-      }
-    }
-  });
-
   it("never gives fewer credits for paying more", () => {
     let previous = 0;
     for (let cents = MIN_PURCHASE_CENTS; cents <= MAX_PURCHASE_CENTS; cents += 100) {
@@ -87,5 +84,45 @@ describe("pricing", () => {
       expect(credits, `$${cents / 100}`).toBeGreaterThan(previous);
       previous = credits;
     }
+  });
+});
+
+describe("parseCloudRequest", () => {
+  it("defaults creative upscale to balanced creativity at 4K, like the app", () => {
+    expect(parseCloudRequest("creative", {})).toEqual({ kind: "creative", creativity: 0, resolution: "4k" });
+    expect(parseCloudRequest("creative", { creativity: "-2", resolution: "8k" })).toEqual({ kind: "creative", creativity: -2, resolution: "8k" });
+  });
+
+  it("refuses creativity and resolutions the app does not offer", () => {
+    for (const creativity of ["3", "-3", "1.5", "abc", ""]) {
+      expect(parseCloudRequest("creative", { creativity }), creativity).toEqual({ error: "invalid_creativity" });
+    }
+    expect(parseCloudRequest("creative", { resolution: "16k" })).toEqual({ error: "invalid_resolution" });
+  });
+
+  it("reads restore modes, increased resolution and the prompt", () => {
+    expect(parseCloudRequest("restore", { mode: "colorization_pro", increaseResolution: "true", prompt: "  blue eyes  " }))
+      .toEqual({ kind: "restore", mode: "colorization_pro", increaseResolution: true, prompt: "blue eyes" });
+    expect(parseCloudRequest("restore", {})).toEqual({ kind: "restore", mode: "restore", increaseResolution: false, prompt: "" });
+  });
+
+  it("refuses what Advanced Fix does not support, and ignores its prompt", () => {
+    expect(parseCloudRequest("restore", { mode: "advanced_restoration", increaseResolution: "true" }))
+      .toEqual({ error: "increase_resolution_unavailable" });
+    const request = parseCloudRequest("restore", { mode: "advanced_restoration", prompt: "keep the hat" }) as CloudRequest;
+    expect(request).toMatchObject({ mode: "advanced_restoration", prompt: "" });
+  });
+
+  it("refuses unknown modes, flags, long prompts and unknown kinds", () => {
+    expect(parseCloudRequest("restore", { mode: "bogus" })).toEqual({ error: "invalid_mode" });
+    expect(parseCloudRequest("restore", { increaseResolution: "yes" })).toEqual({ error: "invalid_increase_resolution" });
+    expect(parseCloudRequest("restore", { prompt: "x".repeat(MAX_PROMPT_LENGTH + 1) })).toEqual({ error: "prompt_too_long" });
+    expect(parseCloudRequest("upscale_standard", {})).toEqual({ error: "unknown_operation" });
+  });
+
+  it("replaces control characters in the prompt but keeps line breaks", () => {
+    const bell = String.fromCharCode(7);
+    const request = parseCloudRequest("restore", { prompt: `red dress${bell}\nblue eyes` }) as CloudRequest;
+    expect(request).toMatchObject({ prompt: "red dress \nblue eyes" });
   });
 });

@@ -39,6 +39,10 @@
     {
       "binding": "MEDIA",
       "bucket_name": "uscale-albums-local"
+    },
+    {
+      "binding": "USER_MEDIA",
+      "bucket_name": "uscale-user-media-local"
     }
   ],
   "observability": {
@@ -66,7 +70,8 @@
         }
       ],
       "r2_buckets": [
-        { "binding": "MEDIA", "bucket_name": "uscale-albums-staging" }
+        { "binding": "MEDIA", "bucket_name": "uscale-albums-staging" },
+        { "binding": "USER_MEDIA", "bucket_name": "uscale-user-media-staging" }
       ]
     },
     "production": {
@@ -91,7 +96,8 @@
         }
       ],
       "r2_buckets": [
-        { "binding": "MEDIA", "bucket_name": "uscale-albums" }
+        { "binding": "MEDIA", "bucket_name": "uscale-albums" },
+        { "binding": "USER_MEDIA", "bucket_name": "uscale-user-media" }
       ]
     }
   }

@@ -235,7 +235,11 @@ describe.sequential("billing endpoints", () => {
     const body = await response.json() as any;
     expect(body.packs).toHaveLength(3);
     expect(body.packs[0]).toMatchObject({ id: "starter", credits: 500, priceCents: 500 });
-    expect(body.operations).toMatchObject({ upscale_standard: 5, restore: 20, upscale_ultimate: 25 });
+    expect(body.prices).toMatchObject({
+      creative: { "2k": 5, "4k": 5, "8k": 15 },
+      restore: { restore: 15, colorization: 15, colorization_pro: 35, advanced_restoration: 20 },
+      increaseResolution: 10,
+    });
     expect(body.limits).toEqual({ minCents: 500, maxCents: 50_000 });
   });
 

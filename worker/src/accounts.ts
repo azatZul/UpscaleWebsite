@@ -164,12 +164,21 @@ export async function listActivity(db: D1Database, accountId: string, limit = 50
   }));
 }
 
+export interface StoredObject {
+  key: string;
+  mime: string;
+  bytes: number;
+}
+
 export interface CloudJob {
   id: string;
   operation: string;
+  priceKey: string;
   credits: number;
   status: "processing" | "succeeded" | "failed";
   outputUrl: string | null;
+  originalKey: string | null;
+  resultKey: string | null;
 }
 
 type StartJobResult =
@@ -177,13 +186,35 @@ type StartJobResult =
   | { kind: "insufficient"; balance: number }
   | { kind: "duplicate"; job: CloudJob; balance: number };
 
+interface CloudJobRow {
+  id: string;
+  operation: string;
+  price_key: string;
+  credits: number;
+  status: CloudJob["status"];
+  output_url: string | null;
+  original_key: string | null;
+  result_key: string | null;
+}
+
+const JOB_COLUMNS = "id, operation, price_key, credits, status, output_url, original_key, result_key";
+
+const toJob = (row: CloudJobRow): CloudJob => ({
+  id: row.id,
+  operation: row.operation,
+  priceKey: row.price_key,
+  credits: row.credits,
+  status: row.status,
+  outputUrl: row.output_url,
+  originalKey: row.original_key,
+  resultKey: row.result_key,
+});
+
 async function findJob(db: D1Database, accountId: string, requestId: string): Promise<CloudJob | null> {
   const row = await db.prepare(
-    "SELECT id, operation, credits, status, output_url FROM cloud_jobs WHERE account_id = ? AND request_id = ?",
-  ).bind(accountId, requestId).first<{
-    id: string; operation: string; credits: number; status: CloudJob["status"]; output_url: string | null;
-  }>();
-  return row ? { id: row.id, operation: row.operation, credits: row.credits, status: row.status, outputUrl: row.output_url } : null;
+    `SELECT ${JOB_COLUMNS} FROM cloud_jobs WHERE account_id = ? AND request_id = ?`,
+  ).bind(accountId, requestId).first<CloudJobRow>();
+  return row ? toJob(row) : null;
 }
 
 /** Charge for a cloud operation and open its job, atomically.
@@ -196,7 +227,7 @@ async function findJob(db: D1Database, accountId: string, requestId: string): Pr
  *  whole, taking its debit with it. */
 export async function startCloudJob(
   db: D1Database,
-  input: { accountId: string; requestId: string; operation: string; credits: number },
+  input: { accountId: string; requestId: string; operation: string; options: string; priceKey: string; credits: number },
 ): Promise<StartJobResult> {
   if (!Number.isSafeInteger(input.credits) || input.credits <= 0) throw new Error("Job cost must be a positive integer");
   const existing = await findJob(db, input.accountId, input.requestId);
@@ -212,12 +243,13 @@ export async function startCloudJob(
         `INSERT INTO credit_entries (account_id, delta, reason, idempotency_key, detail, created_at)
          SELECT ?1, ?2, 'spend', ?3, ?4, ?5
          WHERE (SELECT COALESCE(SUM(delta), 0) FROM credit_entries WHERE account_id = ?1) >= ?6`,
-      ).bind(input.accountId, -input.credits, spendKey, input.operation, now, input.credits),
+      ).bind(input.accountId, -input.credits, spendKey, input.priceKey, now, input.credits),
       db.prepare(
-        `INSERT INTO cloud_jobs (id, account_id, request_id, operation, credits, status, created_at)
-         SELECT ?1, ?2, ?3, ?4, ?5, 'processing', ?6
-         WHERE EXISTS (SELECT 1 FROM credit_entries WHERE idempotency_key = ?7)`,
-      ).bind(jobId, input.accountId, input.requestId, input.operation, input.credits, now, spendKey),
+        `INSERT INTO cloud_jobs (id, account_id, request_id, operation, options, price_key, credits, status, created_at)
+         SELECT ?1, ?2, ?3, ?4, ?5, ?6, ?7, 'processing', ?8
+         WHERE EXISTS (SELECT 1 FROM credit_entries WHERE idempotency_key = ?9)`,
+      ).bind(jobId, input.accountId, input.requestId, input.operation, input.options, input.priceKey,
+        input.credits, now, spendKey),
     ]);
   } catch (error) {
     const raced = await findJob(db, input.accountId, input.requestId);
@@ -228,15 +260,32 @@ export async function startCloudJob(
   if ((results[0]?.meta.changes ?? 0) === 0) return { kind: "insufficient", balance };
   return {
     kind: "started",
-    job: { id: jobId, operation: input.operation, credits: input.credits, status: "processing", outputUrl: null },
+    job: {
+      id: jobId, operation: input.operation, priceKey: input.priceKey, credits: input.credits,
+      status: "processing", outputUrl: null, originalKey: null, resultKey: null,
+    },
     balance,
   };
 }
 
-export async function completeCloudJob(db: D1Database, jobId: string, outputUrl: string): Promise<void> {
+/** Mark a job succeeded, with its history images when they were copied. */
+export async function completeCloudJob(
+  db: D1Database,
+  jobId: string,
+  input: { outputUrl: string; original: StoredObject | null; result: StoredObject | null },
+): Promise<void> {
   await db.prepare(
-    "UPDATE cloud_jobs SET status = 'succeeded', output_url = ?, finished_at = ? WHERE id = ? AND status = 'processing'",
-  ).bind(outputUrl, Date.now(), jobId).run();
+    `UPDATE cloud_jobs
+        SET status = 'succeeded', output_url = ?1,
+            original_key = ?2, original_mime = ?3, original_bytes = ?4,
+            result_key = ?5, result_mime = ?6, result_bytes = ?7, finished_at = ?8
+      WHERE id = ?9 AND status = 'processing'`,
+  ).bind(
+    input.outputUrl,
+    input.original?.key ?? null, input.original?.mime ?? null, input.original?.bytes ?? null,
+    input.result?.key ?? null, input.result?.mime ?? null, input.result?.bytes ?? null,
+    Date.now(), jobId,
+  ).run();
 }
 
 /** Mark a job failed and give its credits back, once.
@@ -246,7 +295,7 @@ export async function completeCloudJob(db: D1Database, jobId: string, outputUrl:
  *  idempotency key means a second failure report cannot refund twice. */
 export async function failCloudJob(
   db: D1Database,
-  job: { id: string; accountId: string; credits: number; operation: string },
+  job: { id: string; accountId: string; credits: number; priceKey: string },
   error: string,
 ): Promise<{ refunded: boolean; balance: number }> {
   const now = Date.now();
@@ -258,7 +307,104 @@ export async function failCloudJob(
       `INSERT OR IGNORE INTO credit_entries (account_id, delta, reason, idempotency_key, detail, created_at)
        SELECT ?1, ?2, 'reversal', ?3, ?4, ?5
        WHERE EXISTS (SELECT 1 FROM cloud_jobs WHERE id = ?6 AND status = 'failed')`,
-    ).bind(job.accountId, job.credits, `reversal:job:${job.id}`, job.operation, now, job.id),
+    ).bind(job.accountId, job.credits, `reversal:job:${job.id}`, job.priceKey, now, job.id),
   ]);
   return { refunded: (results[1]?.meta.changes ?? 0) > 0, balance: await creditBalance(db, job.accountId) };
+}
+
+/** Jobs still processing that started after `sinceMs`. Bounded by time so a
+ *  job the worker never finished cannot block the account forever. */
+export async function countActiveJobs(db: D1Database, accountId: string, sinceMs: number): Promise<number> {
+  const row = await db.prepare(
+    "SELECT COUNT(*) AS n FROM cloud_jobs WHERE account_id = ? AND status = 'processing' AND created_at >= ?",
+  ).bind(accountId, sinceMs).first<{ n: number }>();
+  return row?.n ?? 0;
+}
+
+/** Bytes the account's history currently occupies in the user-media bucket. */
+export async function historyBytes(db: D1Database, accountId: string): Promise<number> {
+  const row = await db.prepare(
+    `SELECT COALESCE(SUM(COALESCE(original_bytes, 0) + COALESCE(result_bytes, 0)), 0) AS n
+       FROM cloud_jobs WHERE account_id = ? AND deleted_at IS NULL AND result_key IS NOT NULL`,
+  ).bind(accountId).first<{ n: number }>();
+  return row?.n ?? 0;
+}
+
+export interface HistoryItem {
+  id: string;
+  accountId: string;
+  operation: string;
+  options: Record<string, unknown>;
+  priceKey: string;
+  credits: number;
+  createdAt: number;
+  originalKey: string | null;
+  originalMime: string | null;
+  resultKey: string;
+  resultMime: string;
+  resultBytes: number;
+  deletedAt: number | null;
+}
+
+interface HistoryRow {
+  id: string; account_id: string; operation: string; options: string; price_key: string; credits: number;
+  created_at: number; original_key: string | null; original_mime: string | null;
+  result_key: string; result_mime: string; result_bytes: number; deleted_at: number | null;
+}
+
+const HISTORY_COLUMNS = `id, account_id, operation, options, price_key, credits, created_at, original_key,
+  original_mime, result_key, result_mime, result_bytes, deleted_at`;
+
+function toHistoryItem(row: HistoryRow): HistoryItem {
+  let options: Record<string, unknown> = {};
+  try {
+    options = JSON.parse(row.options) as Record<string, unknown>;
+  } catch { /* an unreadable options blob still lists; it just shows no settings */ }
+  return {
+    id: row.id, accountId: row.account_id, operation: row.operation, options, priceKey: row.price_key,
+    credits: row.credits, createdAt: row.created_at, originalKey: row.original_key, originalMime: row.original_mime,
+    resultKey: row.result_key, resultMime: row.result_mime, resultBytes: row.result_bytes, deletedAt: row.deleted_at,
+  };
+}
+
+/** Newest-first saved results. Failed jobs and results that could not be
+ *  copied into storage never appear. */
+export async function listHistory(db: D1Database, accountId: string, limit = 100): Promise<HistoryItem[]> {
+  const { results } = await db.prepare(
+    `SELECT ${HISTORY_COLUMNS} FROM cloud_jobs
+      WHERE account_id = ? AND status = 'succeeded' AND result_key IS NOT NULL AND deleted_at IS NULL
+      ORDER BY created_at DESC, id DESC LIMIT ?`,
+  ).bind(accountId, Math.max(1, Math.min(limit, 500))).all<HistoryRow>();
+  return results.map(toHistoryItem);
+}
+
+/** One saved result by id, deleted or not -- the media route decides what a
+ *  deleted item means. Not scoped to an account: its callers are either
+ *  already account-scoped or authorised by a signed link. */
+export async function getHistoryItem(db: D1Database, jobId: string): Promise<HistoryItem | null> {
+  const row = await db.prepare(
+    `SELECT ${HISTORY_COLUMNS} FROM cloud_jobs WHERE id = ? AND status = 'succeeded' AND result_key IS NOT NULL`,
+  ).bind(jobId).first<HistoryRow>();
+  return row ? toHistoryItem(row) : null;
+}
+
+/** Delete one of the account's saved results. Returns the storage keys to
+ *  remove, or null when there is nothing of this account's to delete -- which
+ *  covers another account's id as well as an unknown one, so callers cannot
+ *  tell the two apart. The ledger row stays: the credits were spent. */
+export async function deleteHistoryItem(
+  db: D1Database,
+  accountId: string,
+  jobId: string,
+): Promise<{ originalKey: string | null; resultKey: string } | null> {
+  const row = await db.prepare(
+    `SELECT original_key, result_key FROM cloud_jobs
+      WHERE id = ? AND account_id = ? AND deleted_at IS NULL AND result_key IS NOT NULL`,
+  ).bind(jobId, accountId).first<{ original_key: string | null; result_key: string }>();
+  if (!row) return null;
+  const result = await db.prepare(
+    "UPDATE cloud_jobs SET deleted_at = ? WHERE id = ? AND account_id = ? AND deleted_at IS NULL",
+  ).bind(Date.now(), jobId, accountId).run();
+  if ((result.meta.changes ?? 0) === 0) return null;
+  return { originalKey: row.original_key, resultKey: row.result_key };
 }

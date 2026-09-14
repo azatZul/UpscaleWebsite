@@ -11,6 +11,8 @@ declare global {
     // Bearer key for the auralens processing service. Cloud operations answer
     // 503 until it is set, the same way billing does without Stripe keys.
     UPSCALER_TOOL_API_KEY?: string;
+    // HMAC key for signed history image links. History answers 503 without it.
+    MEDIA_SIGNING_KEY?: string;
   }
 }
 export {};
