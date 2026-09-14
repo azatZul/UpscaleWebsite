@@ -312,6 +312,29 @@ export async function failCloudJob(
   return { refunded: (results[1]?.meta.changes ?? 0) > 0, balance: await creditBalance(db, job.accountId) };
 }
 
+/** Refund jobs stuck in processing past any request's lifetime.
+ *
+ *  A job only stays "processing" when its request died before finishing --
+ *  usually the browser closed the connection, which cancels the worker along
+ *  with its call to auralens. Without this, those credits would stay spent on a
+ *  result nobody received. failCloudJob refunds at most once per job, so an
+ *  overlapping run cannot double-refund. */
+export async function refundStaleJobs(db: D1Database, startedBeforeMs: number, limit = 50): Promise<number> {
+  const { results } = await db.prepare(
+    `SELECT id, account_id, credits, price_key FROM cloud_jobs
+      WHERE status = 'processing' AND created_at < ? ORDER BY created_at LIMIT ?`,
+  ).bind(startedBeforeMs, limit).all<{ id: string; account_id: string; credits: number; price_key: string }>();
+  let refunded = 0;
+  for (const row of results) {
+    const outcome = await failCloudJob(
+      db, { id: row.id, accountId: row.account_id, credits: row.credits, priceKey: row.price_key },
+      "stale: the request ended before the job finished",
+    );
+    if (outcome.refunded) refunded++;
+  }
+  return refunded;
+}
+
 /** Jobs still processing that started after `sinceMs`. Bounded by time so a
  *  job the worker never finished cannot block the account forever. */
 export async function countActiveJobs(db: D1Database, accountId: string, sinceMs: number): Promise<number> {

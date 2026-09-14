@@ -17,6 +17,7 @@
       "/_shell/*"
     ]
   },
+  "triggers": { "crons": ["*/10 * * * *"] },
   "vars": {
     "FIREBASE_PROJECT_ID": "upscaler-e9010",
     "AURALENS_URL": "https://auralens-406817559814.us-central1.run.app"
@@ -54,6 +55,7 @@
     "staging": {
       "name": "uscale-site-staging",
       "workers_dev": true,
+      "triggers": { "crons": ["*/10 * * * *"] },
       "vars": { "FIREBASE_PROJECT_ID": "upscaler-e9010", "AURALENS_URL": "https://auralens-406817559814.us-central1.run.app" },
       "d1_databases": [
         {
@@ -77,6 +79,7 @@
     "production": {
       "name": "uscale-site",
       "workers_dev": false,
+      "triggers": { "crons": ["*/10 * * * *"] },
       "vars": { "FIREBASE_PROJECT_ID": "upscaler-e9010", "AURALENS_URL": "https://auralens-406817559814.us-central1.run.app" },
       "routes": [
         { "pattern": "upscales.app/*", "zone_name": "upscales.app" }

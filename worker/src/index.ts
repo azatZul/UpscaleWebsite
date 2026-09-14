@@ -1,7 +1,8 @@
 import { bearerToken, verifyIdToken, type VerifiedIdentity } from "./auth";
 import {
   completeCloudJob, countActiveJobs, creditBalance, deleteHistoryItem, failCloudJob, getHistoryItem,
-  getOrCreateAccount, historyBytes, listActivity, listHistory, recordPurchase, setStripeCustomerId, startCloudJob,
+  getOrCreateAccount, historyBytes, listActivity, listHistory, recordPurchase, refundStaleJobs, setStripeCustomerId,
+  startCloudJob,
   type Account, type StoredObject,
 } from "./accounts";
 import { AuralensError, runCloudRequest } from "./auralens";
@@ -646,6 +647,9 @@ const MAX_HISTORY_BYTES = 2 * 1024 * 1024 * 1024;
 // worker never finished cannot block the account forever.
 const MAX_ACTIVE_JOBS = 3;
 const ACTIVE_JOB_WINDOW_MS = 10 * 60 * 1000;
+// A job still processing this long after it started has lost its request: the
+// auralens call times out after 3 minutes and the history copy after 1.
+const STALE_JOB_MS = 15 * 60 * 1000;
 const REQUEST_ID = /^[A-Za-z0-9_-]{8,64}$/;
 const ACCEPTED_IMAGE = /^image\/(jpeg|png|webp|heic|heif)$/;
 const CLOUD_FIELDS = ["creativity", "resolution", "mode", "increaseResolution", "prompt"] as const;
@@ -1005,6 +1009,12 @@ export default {
       }));
       return plain("Internal server error", 500);
     }
+  },
+  // Every 10 minutes (wrangler.jsonc triggers): refund jobs whose request died.
+  async scheduled(_controller: ScheduledController, env: Env, ctx: ExecutionContext): Promise<void> {
+    ctx.waitUntil(refundStaleJobs(env.ACCOUNTS_DB, Date.now() - STALE_JOB_MS).then(refunded => {
+      if (refunded > 0) console.log(JSON.stringify({ event: "stale_jobs_refunded", refunded }));
+    }));
   },
 } satisfies ExportedHandler<Env>;
 

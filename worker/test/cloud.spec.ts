@@ -1,7 +1,7 @@
 import { env } from "cloudflare:workers";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
-import { creditBalance, failCloudJob, listActivity, startCloudJob } from "../src/accounts";
+import { creditBalance, failCloudJob, listActivity, refundStaleJobs, startCloudJob } from "../src/accounts";
 import { RESULT_URL, cloudForm, fetchWorker, fundedAccount, installStubs, type Stubs } from "./helpers";
 
 let stubs: Stubs;
@@ -46,6 +46,25 @@ describe.sequential("cloud jobs in the ledger", () => {
       ["spend", -20, "restore:advanced_restoration"], ["reversal", 20, "restore:advanced_restoration"],
       ["spend", -20, "restore:advanced_restoration"], ["grant", 50, null],
     ]);
+  });
+});
+
+describe.sequential("stale job refunds", () => {
+  it("refunds jobs whose request died, once, and leaves recent ones alone", async () => {
+    const account = await fundedAccount(`sub-${crypto.randomUUID()}`, 50);
+    const stale = await startCloudJob(env.ACCOUNTS_DB, jobInput(account.id, "req-stale-001", 15));
+    const recent = await startCloudJob(env.ACCOUNTS_DB, jobInput(account.id, "req-recent-01", 15));
+    if (stale.kind !== "started" || recent.kind !== "started") throw new Error("expected started jobs");
+    const hourAgo = Date.now() - 60 * 60 * 1000;
+    await env.ACCOUNTS_DB.prepare("UPDATE cloud_jobs SET created_at = ? WHERE id = ?").bind(hourAgo, stale.job.id).run();
+
+    expect(await refundStaleJobs(env.ACCOUNTS_DB, Date.now() - 15 * 60 * 1000)).toBeGreaterThanOrEqual(1);
+    expect(await creditBalance(env.ACCOUNTS_DB, account.id)).toBe(35);
+    expect(await refundStaleJobs(env.ACCOUNTS_DB, Date.now() - 15 * 60 * 1000)).toBe(0);
+    const statuses = await env.ACCOUNTS_DB.prepare("SELECT id, status FROM cloud_jobs WHERE account_id = ?").bind(account.id).all<{ id: string; status: string }>();
+    expect(Object.fromEntries(statuses.results.map(row => [row.id, row.status]))).toEqual({
+      [stale.job.id]: "failed", [recent.job.id]: "processing",
+    });
   });
 });
 
