@@ -40,6 +40,49 @@
     });
   }
 
+  /* Consent. Only analytics is optional; the choice lives next to the theme in
+     localStorage and is announced with a uscale:consent event for analytics code. */
+  var CONSENT_KEY = 'uscale-consent';
+  var consentBox = document.getElementById('consent');
+  var readConsent = function () {
+    try {
+      var v = JSON.parse(localStorage.getItem(CONSENT_KEY));
+      return v && v.v === 1 ? v : null;
+    } catch (e) { return null; }
+  };
+  if (consentBox) {
+    var consentPrefs = document.getElementById('consent-prefs');
+    var consentAnalytics = document.getElementById('consent-analytics');
+    var consentBtn = function (name) { return consentBox.querySelector('[data-consent="' + name + '"]'); };
+    var showConsent = function (withPrefs) {
+      var saved = readConsent();
+      consentAnalytics.checked = !!(saved && saved.analytics);
+      consentPrefs.hidden = !withPrefs;
+      consentBtn('settings').hidden = withPrefs;
+      consentBtn('save').hidden = !withPrefs;
+      consentBox.hidden = false;
+    };
+    var decideConsent = function (analytics) {
+      var record = { v: 1, analytics: analytics, at: new Date().toISOString() };
+      try { localStorage.setItem(CONSENT_KEY, JSON.stringify(record)); } catch (e) {}
+      consentBox.hidden = true;
+      document.dispatchEvent(new CustomEvent('uscale:consent', { detail: record }));
+    };
+    consentBtn('accept').addEventListener('click', function () { decideConsent(true); });
+    consentBtn('reject').addEventListener('click', function () { decideConsent(false); });
+    consentBtn('save').addEventListener('click', function () { decideConsent(consentAnalytics.checked); });
+    consentBtn('settings').addEventListener('click', function () {
+      showConsent(true);
+      consentAnalytics.focus();
+    });
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest || !e.target.closest('[data-consent-open]')) return;
+      showConsent(true);
+      consentAnalytics.focus();
+    });
+    if (!readConsent()) showConsent(false);
+  }
+
   /* Theme is bootstrapped in <head>; this wires controls and persistence. */
   var THEME_KEY = 'uscale-theme';
   var THEME_BG = { dark: '#07080d', light: '#f3f6fe' };

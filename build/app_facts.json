@@ -7,7 +7,7 @@
   "minimum_ios": "16",
   "rating": {
     "value": 4.6,
-    "count": 1582
+    "count": 1601
   },
   "free_limits": {
     "photos_per_day": 2
@@ -56,8 +56,8 @@
       "upscale-anime-art": "2026-08-21"
     },
     "support_page.html": "2026-08-24",
-    "terms.html": "2026-08-21",
-    "privacy_policy.html": "2026-08-24",
+    "terms.html": "2026-09-13",
+    "privacy_policy.html": "2026-09-13",
     "compare.html": "2026-08-23",
     "gallery": "2026-09-04"
   }

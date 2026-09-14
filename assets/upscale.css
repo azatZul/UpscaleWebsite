@@ -1,0 +1,257 @@
+/* Browser photo tool (/free-upscale/). Scoped to main.tool; the palette, theme,
+   nav, buttons and footer all come from site.css. */
+.tool [hidden]{display:none!important}
+.tool-wrap{max-width:1000px;padding-top:46px;padding-bottom:10px}
+.tool-heading,.tool-steps,.tool-card,.tool .notice{max-width:760px;margin-left:auto;margin-right:auto}
+.tool-heading{text-align:center;margin-bottom:28px}
+.tool-heading .eyebrow::before{display:none}
+.tool-heading h1{font-size:clamp(32px,5vw,50px);letter-spacing:-.035em;text-wrap:balance}
+.tool-heading .lead{margin:14px auto 0;max-width:48ch;color:var(--tx-3);text-wrap:balance}
+
+/* A compact segmented pill in the scale toggle's style, sized to its content
+   rather than stretched: only the current step is lit, and a finished one
+   swaps its numeral for a check. */
+.tool-steps{display:flex;align-items:center;gap:2px;width:fit-content;max-width:100%;
+  margin:0 auto 24px;padding:4px;list-style:none;color:var(--tx-3);
+  border:1px solid var(--line-2);border-radius:999px;background:var(--tint)}
+.tool-steps li{display:flex;align-items:center;gap:9px;min-width:0;padding:5px 16px 5px 5px;
+  border-radius:999px;font-size:14px;font-weight:650;white-space:nowrap;
+  transition:color .2s,background .2s}
+.step-mark{display:grid;place-items:center;width:26px;height:26px;flex-shrink:0;
+  border:1px solid var(--line-2);border-radius:50%;font-size:13px;font-weight:700;
+  transition:color .2s,background .2s,border-color .2s}
+.step-mark i{font-style:normal}
+.step-mark svg{display:none;width:14px;height:14px}
+.tool-steps [aria-current]{color:var(--tx);background:var(--surface);box-shadow:var(--shadow)}
+.tool-steps [aria-current] .step-mark{background:var(--acc);border-color:var(--acc);color:var(--ink)}
+.tool-steps .complete{color:var(--tx-2)}
+.tool-steps .complete .step-mark{color:var(--acc-tx);border-color:var(--acc-line);background:var(--acc-soft)}
+.tool-steps .complete .step-mark i{display:none}
+.tool-steps .complete .step-mark svg{display:block}
+
+.tool-card{padding:26px;border:1px solid var(--line-2);border-radius:var(--r-l);
+  background:linear-gradient(180deg,var(--surface),var(--bg-2));box-shadow:var(--shadow);scroll-margin-top:100px}
+.tool-card-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+.tool-card-heading h2{font-size:19px;letter-spacing:-.02em}
+/* Mirrors the app's own on-device badge (VerifiedView): a neutral pill with a
+   shield-check icon, not a coloured status label. */
+.private-badge{display:inline-flex;align-items:center;gap:8px;flex-shrink:0;padding:7px 12px;border-radius:32px;
+  font-size:13px;font-weight:650;white-space:nowrap;color:var(--tx);background:var(--tint);border:1px solid var(--line-2)}
+.private-badge svg{width:15px;height:15px;flex-shrink:0}
+
+/* The drop zone keeps its size with or without a photo, and stays a drop target
+   for the next one. */
+.photo-drop{--drop-h:292px;--drop-pad:24px;position:relative;display:grid;grid-template-columns:minmax(0,1fr);
+  place-items:center;min-height:var(--drop-h);padding:var(--drop-pad);
+  border:1.5px dashed var(--line-2);border-radius:var(--r-m);background:var(--tint);text-align:center;cursor:pointer;
+  transition:border-color .2s,background .2s}
+.photo-drop:hover{border-color:var(--acc-line)}
+.photo-drop.dragging{border-color:var(--acc);background:var(--acc-soft)}
+.photo-drop[aria-disabled="true"]{cursor:default;border-color:var(--line-2)}
+.drop-empty{display:flex;flex-direction:column;align-items:center;gap:14px}
+.drop-target{display:flex;flex-direction:column;align-items:center;gap:12px}
+.upload-mark{display:grid;place-items:center;width:54px;height:54px;border-radius:16px;
+  color:var(--acc-tx);background:var(--acc-soft);border:1px solid var(--acc-line);transition:transform .25s cubic-bezier(.2,.8,.25,1)}
+.upload-mark svg{width:24px;height:24px}
+.photo-drop:hover .upload-mark,.photo-drop.dragging .upload-mark{transform:translateY(-3px)}
+.drop-title{font-size:19px;font-weight:750;letter-spacing:-.015em;line-height:1.3}
+.drop-or{display:flex;align-items:center;gap:12px;width:min(260px,100%);font-size:13px;color:var(--tx-3)}
+.drop-or::before,.drop-or::after{content:"";flex:1;height:1px;background:var(--line-2)}
+.drop-empty .btn{min-height:48px}
+.limit-note{font-size:12.5px;line-height:1.5;color:var(--tx-3);max-width:44ch}
+/* The square preview slot sits inside the zone's own padding, so the gap above,
+   below and to the left of it is the same. The photo is centred in the slot at
+   its own proportions, so the remove button can sit on the photo's corner. */
+.drop-selected{--thumb:calc(var(--drop-h) - var(--drop-pad) * 2);display:flex;align-items:center;gap:22px;width:100%;min-width:0;text-align:left;cursor:default}
+.selected-frame{display:grid;place-items:center;flex:0 0 auto;width:var(--thumb);height:var(--thumb)}
+.selected-thumb{position:relative;display:inline-block;max-width:100%;line-height:0}
+.selected-thumb img{display:block;max-width:100%;max-height:var(--thumb);width:auto;height:auto;border-radius:12px;background:var(--tint-2)}
+.selected-thumb img:not([src]){visibility:hidden}
+.remove-photo{position:absolute;top:-10px;right:-10px;display:grid;place-items:center;width:30px;height:30px;padding:0;
+  border:1px solid var(--line-2);border-radius:50%;color:var(--tx);background:var(--surface-2);box-shadow:0 4px 14px rgba(0,0,0,.35);cursor:pointer}
+.remove-photo::before{content:"";position:absolute;inset:-8px}
+.remove-photo svg{width:14px;height:14px}
+.remove-photo:hover{color:var(--warn)}
+.selected-meta{min-width:0;display:flex;flex-direction:column;gap:4px}
+.selected-meta b{font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#source-size{font-size:14px;color:var(--tx-2);font-variant-numeric:tabular-nums}
+.photo-error{margin:6px 0 0;font-size:13.5px;line-height:1.45;color:var(--warn)}
+.drop-release{position:absolute;inset:0;display:grid;place-items:center;padding:20px;border-radius:inherit;
+  font-size:17px;font-weight:750;color:var(--acc-tx);background:color-mix(in srgb,var(--surface) 90%,transparent);
+  opacity:0;pointer-events:none;transition:opacity .15s}
+.photo-drop.dragging .drop-release{opacity:1}
+
+.tool-options{display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px;margin-top:18px}
+.model-field,.scale-field{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px}
+.option-label{font-size:14px;font-weight:650;color:var(--tx-2)}
+.segment-option{display:inline-flex;gap:4px;padding:3px;border:1px solid var(--line-2);border-radius:12px;background:var(--tint)}
+.segment-option button{font:inherit;font-size:14px;font-weight:700;min-width:58px;min-height:36px;padding:6px 16px;border:0;border-radius:9px;
+  background:none;color:var(--tx-2);cursor:pointer;transition:background .15s,color .15s}
+.segment-option button:hover:not(:disabled):not([aria-pressed="true"]):not([aria-disabled="true"]){color:var(--tx)}
+.segment-option button[aria-disabled="true"]:not([aria-pressed="true"]){color:var(--tx-4);cursor:help}
+.segment-option button[aria-pressed="true"]{background:var(--acc);color:var(--ink)}
+.scale-field{position:relative}
+.scale-popover{position:absolute;z-index:20;top:calc(100% + 8px);left:0;width:max-content;max-width:min(300px,80vw);
+  padding:10px 12px;border:1px solid var(--line-2);border-radius:12px;background:var(--surface-2);box-shadow:var(--shadow);
+  font-size:13.5px;line-height:1.45;color:var(--tx)}
+/* The face toggle shares the line with type and size, pushed to its end. When
+   it doesn't fit (narrow screens, longer locales) main.js marks it wrapped: it
+   then starts its own line and keeps some space from the status box below. */
+.face-option{display:flex;align-items:center;gap:10px;margin-left:auto;cursor:pointer}
+.face-option.is-wrapped{margin-left:0;padding-bottom:8px}
+.face-option input{width:20px;height:20px;margin:0;flex:0 0 auto;accent-color:var(--acc)}
+.face-option span{font-size:14.5px;font-weight:650;line-height:1.3}
+.face-option:has(input:disabled){cursor:default}
+
+.tool-status{display:grid;gap:6px;margin-top:18px;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--tint)}
+.status-head{display:flex;align-items:baseline;gap:10px}
+.status-head:has(#status-title[hidden]):has(#status-value:empty){display:none}
+#status-title{font-size:15.5px;line-height:1.4}
+#status-value{margin-left:auto;font-size:14px;color:var(--acc-tx);font-variant-numeric:tabular-nums}
+#status-detail{font-size:14px;line-height:1.55;color:var(--tx-2)}
+.tool-status progress{display:block;width:100%;height:8px;margin:4px 0 2px;border:0;border-radius:8px;overflow:hidden;
+  accent-color:var(--acc);background:var(--line);-webkit-appearance:none;appearance:none}
+.tool-status progress::-webkit-progress-bar{background:var(--line);border-radius:8px}
+.tool-status progress::-webkit-progress-value{background:var(--acc);border-radius:8px}
+.tool-status progress::-moz-progress-bar{background:var(--acc)}
+
+.tool-actions{display:flex;gap:12px;margin-top:16px}
+.tool-actions .btn{flex:1;min-height:52px;font-size:16px}
+.tool .btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.text-button{font:inherit;font-size:14px;font-weight:650;color:var(--acc-tx);background:none;border:0;padding:10px;min-height:44px;
+  cursor:pointer;text-underline-offset:4px}
+.text-button:hover:not(:disabled){text-decoration:underline}
+.text-button:disabled{color:var(--tx-3);cursor:default}
+.tool .notice{padding:14px 16px;border:1px solid var(--acc-line);border-radius:14px;background:var(--acc-soft);
+  color:var(--tx);font-size:15px;line-height:1.6;margin-top:16px;margin-bottom:16px}
+
+/* Single-photo version of the gallery album viewer. */
+.tool-results{margin-top:32px;outline:0;scroll-margin-top:90px}
+.album-viewer{padding:18px 18px 22px;background:linear-gradient(180deg,var(--surface),var(--bg-2));
+  border:1px solid var(--line);border-radius:var(--r-l);box-shadow:var(--shadow)}
+.album-stage{position:relative;width:100%;height:min(64vh,640px)}
+.result-comparison{position:absolute;inset:0;display:grid;place-items:center}
+/* The hairline is an outline, not a border, and the images no longer paint a
+   backdrop. aspect-ratio applies to the border box, so a 1px border left the
+   content box — which the inset:0 images fill — at a slightly different ratio
+   than the photo. object-fit:contain then letterboxed by about a pixel and the
+   image's own white background painted that sliver as a line down each edge. */
+.result-comparison .cmp{height:auto;max-height:100%;width:min(100%,calc(100% * var(--photo-ratio,1.3333) / var(--stage-ratio,1.3333)));
+  border:0;outline:1px solid var(--line-2);outline-offset:-1px;border-radius:var(--r-m)}
+.result-comparison .cmp img{object-fit:contain;background:transparent}
+.result-comparison .cmp-tag{pointer-events:none}
+/* The shared focus ring is a rectangle around the full-height 3px separator,
+   which reads as two extra separator lines. Ring the round handle instead. */
+.tool .cmp-bar:focus-visible{outline:none}
+.tool .cmp-bar:focus-visible::after{box-shadow:0 6px 22px rgba(0,0,0,.55),0 0 0 3px var(--ink),0 0 0 6px var(--acc)}
+.tool .album-ctl{width:44px;height:44px}
+.album-details{margin-top:14px;text-align:center}
+.album-details h2{font-size:19px;letter-spacing:-.02em;margin:0 0 6px}
+.album-details p{font-size:14px;color:var(--tx-2);line-height:1.5}
+.album-details p:empty{display:none}
+.album-actions{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;align-items:center;margin-top:14px}
+.album-actions .btn{font-size:15px;padding:12px 20px;border-radius:12px;gap:8px}
+.album-actions .btn svg{width:17px;height:17px}
+.album-viewer.is-expanded{position:fixed;inset:0;z-index:1000;width:100%;height:100dvh;padding:0;border:0;border-radius:0;background:var(--bg)}
+.album-viewer.is-expanded .album-stage{height:100%}
+.album-viewer.is-expanded .album-details{display:none}
+/* Pan and zoom (src/tool/pan-zoom.js) scale the whole comparison, as in the gallery; a
+   hairline or rounded corner would scale with it, so the expanded photo has neither. */
+.album-viewer.is-expanded .result-comparison .cmp{outline:0;border-radius:0;
+  transform:translate(var(--pan-x,0px),var(--pan-y,0px)) scale(var(--album-zoom,1))}
+.album-expanded-lock{overflow:hidden}
+.tool .inline-cta{max-width:760px;margin:32px auto 0}
+
+@media(max-width:640px){
+  .tool-wrap{padding-top:28px}
+  .tool-card{padding:16px;border-radius:20px}
+  .tool-card-heading h2{font-size:17px}
+  .private-badge{padding:6px 10px;font-size:12px}
+  .tool-steps{width:100%}
+  .tool-steps li{flex:1;justify-content:center;gap:7px;padding:5px 8px 5px 5px;
+    font-size:13px;white-space:normal;text-align:center}
+  .step-mark{width:24px;height:24px;font-size:12.5px}
+  /* Tall enough for either state in every locale, so a photo never resizes it. */
+  .photo-drop{--drop-h:304px;--drop-pad:18px;padding:18px 14px}
+  .drop-selected{flex-direction:column;gap:12px;text-align:center}
+  .selected-frame{width:100%;height:140px}
+  .selected-thumb img{max-height:140px}
+  .selected-meta{align-items:center;max-width:100%}
+  /* Type and size stay on one line at phone width: their labels are read to
+     screen readers only, and each button sizes to its own word so the longer
+     locale words ("Illustration") still fit beside 2×/4×. */
+  .tool-options{flex-wrap:wrap;align-items:center;gap:12px 10px}
+  .model-field,.scale-field{flex-wrap:nowrap}
+  .scale-field{margin-left:auto}
+  .option-label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  .segment-option button{min-width:44px;padding:6px 10px}
+  .scale-popover{left:auto;right:0}
+  .tool-results{margin-top:24px}
+  .album-viewer{padding:10px 10px 18px}
+  .album-stage{height:min(55vh,500px)}
+  .result-comparison .cmp-tag{top:10px;font-size:12px;padding:5px 8px}
+  .result-comparison .cmp-tag.l{left:10px}
+  .result-comparison .cmp-tag.r{right:10px}
+  /* App banner: small icon beside the title and line, badge underneath. */
+  .tool .inline-cta{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:14px 12px;
+    padding:16px;margin:24px auto 0}
+  .tool .inline-cta>img{width:44px;height:44px;border-radius:11px}
+  .tool .inline-cta h3{font-size:16px;margin-bottom:2px}
+  .tool .inline-cta p{font-size:13.5px;line-height:1.4}
+  .tool .inline-cta>.appstore{grid-column:1/-1}
+}
+@media(max-width:420px){
+  .tool-steps li{flex-direction:column;gap:4px;padding:7px 4px;line-height:1.15}
+}
+@media(prefers-reduced-motion:reduce){.tool *{scroll-behavior:auto!important;transition:none!important}}
+
+/* The picker sits outside .tool; marks counter-scale to stay legible when zoomed. */
+.face-editor[hidden],.face-editor [hidden]{display:none!important}
+.face-editor{position:fixed;inset:0;z-index:1000;display:flex;flex-direction:column;height:100dvh;background:var(--bg);color:var(--tx)}
+.face-editor-stage{position:relative;flex:1 1 auto;min-height:0;overflow:hidden;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+.face-editor-stage.is-panning{cursor:grabbing}
+.face-editor-fit{position:absolute;inset:0;display:grid;place-items:center}
+.face-editor-frame{position:relative;height:auto;max-height:100%;
+  width:min(100%,calc(100% * var(--photo-ratio,1.3333) / var(--stage-ratio,1.3333)));
+  transform:translate(var(--pan-x,0px),var(--pan-y,0px)) scale(var(--album-zoom,1))}
+.face-editor-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;-webkit-user-drag:none}
+.face-editor-marks{position:absolute;inset:0}
+.face-mark{--mark:rgba(255,255,255,.9);position:absolute;min-width:24px;min-height:24px;margin:0;padding:0;
+  border:calc(2px / var(--album-zoom,1)) solid var(--mark);border-radius:calc(14px / var(--album-zoom,1));
+  background:rgba(0,0,0,.08);box-shadow:0 0 0 calc(1px / var(--album-zoom,1)) rgba(0,0,0,.4);
+  cursor:pointer;transition:border-color .18s,background .18s}
+.face-mark[aria-pressed="true"]{--mark:var(--acc);background:color-mix(in srgb,var(--acc) 14%,transparent)}
+.face-mark:disabled{cursor:default}
+.face-mark:focus-visible{outline:calc(2px / var(--album-zoom,1)) solid var(--acc-tx);outline-offset:calc(3px / var(--album-zoom,1))}
+.face-mark-badge{position:absolute;left:0;top:0;display:grid;place-items:center;min-width:22px;height:22px;padding:0 6px;
+  border-radius:11px;font-size:12px;font-weight:750;line-height:1;color:#0a0b11;background:#fff;
+  box-shadow:0 2px 8px rgba(0,0,0,.35);transform-origin:0 0;
+  transform:scale(calc(1 / var(--album-zoom,1))) translate(-35%,-35%);transition:transform .22s cubic-bezier(.2,.8,.25,1),background .18s}
+.face-mark[aria-pressed="true"] .face-mark-badge{background:var(--acc);color:var(--ink)}
+@media(hover:hover){.face-mark:hover:not(:disabled) .face-mark-badge{transform:scale(calc(1.18 / var(--album-zoom,1))) translate(-35%,-35%)}}
+.face-editor .album-ctl{width:44px;height:44px}
+.face-editor-bar{display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px;
+  padding:16px max(22px,env(safe-area-inset-right)) max(16px,env(safe-area-inset-bottom)) max(22px,env(safe-area-inset-left));
+  border-top:1px solid var(--line);background:linear-gradient(180deg,var(--surface),var(--bg-2))}
+.face-editor-text{flex:1 1 340px;min-width:0;display:grid;gap:3px}
+.face-editor-text h2{margin:0;font-size:17px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.face-editor-text p{margin:0;font-size:14px;line-height:1.5;color:var(--tx-2)}
+.face-editor-text p:empty{display:none}
+.face-editor-status.is-error{color:var(--warn)}
+.face-editor-text progress{display:block;width:100%;max-width:360px;height:6px;margin-top:4px;border:0;border-radius:6px;overflow:hidden;
+  accent-color:var(--acc);background:var(--line);-webkit-appearance:none;appearance:none}
+.face-editor-text progress::-webkit-progress-bar{background:var(--line);border-radius:6px}
+.face-editor-text progress::-webkit-progress-value{background:var(--acc);border-radius:6px}
+.face-editor-text progress::-moz-progress-bar{background:var(--acc)}
+.face-editor-actions{display:flex;gap:12px;flex:0 0 auto}
+.face-editor-actions .btn{min-width:124px;min-height:48px;font-size:15.5px}
+.face-editor .btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+@media(max-width:640px){
+  .face-editor-bar{gap:12px;padding:12px max(14px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))}
+  .face-editor-text{flex-basis:100%}
+  .face-editor-hint{display:none}
+  .face-editor-actions{width:100%}
+  .face-editor-actions .btn{flex:1;min-width:0}
+  .face-editor .album-ctl{width:40px;height:40px}
+}
+@media(prefers-reduced-motion:reduce){.face-editor *{transition:none!important}}

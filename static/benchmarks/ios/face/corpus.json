@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "model": "face",
+  "coreml_sha256": "23d1106e79e83c86604571ede9e0aae8136b60df77719e7d8e0bcf62da0f2d3b",
+  "cases": [
+    {
+      "name": "black",
+      "input": "black.input.png",
+      "input_sha256": "1707efe457307d0a5e2f5a1ec1cff55b2a44286f3c4d8dda32bf394be8963b8b",
+      "reference": "black.png",
+      "reference_sha256": "afa1febb28ea2deb431d8e34c45cdc2a611c428c536157152b75efe09f309554"
+    },
+    {
+      "name": "white",
+      "input": "white.input.png",
+      "input_sha256": "b4d63041dafe3244fa279df657034d40d8e679ba7051476e6a30b8cac1aaf382",
+      "reference": "white.png",
+      "reference_sha256": "fd2f7ab741329e3f84a680f8eed7cbac8210ae3c86d23e4538e560393c815e1e"
+    },
+    {
+      "name": "gray",
+      "input": "gray.input.png",
+      "input_sha256": "1569c899427ffd831ffa0f36b3115e75c2758d19ab12b835884bfcde99b42e02",
+      "reference": "gray.png",
+      "reference_sha256": "a2df1aed7eb89b2a26a35b12a0e0d72c11e69d75a698b4ae0c44d18d07a2fcd5"
+    },
+    {
+      "name": "gradient",
+      "input": "gradient.input.png",
+      "input_sha256": "855aadf8e548878382063273bd60ef8a6b25078a84a0c49bae66f44fa03038c5",
+      "reference": "gradient.png",
+      "reference_sha256": "3e7849ecaa8998086ca5d3ccfd07378f5f36b3fb7d0c3036e9ad3989ff00063a"
+    },
+    {
+      "name": "checker",
+      "input": "checker.input.png",
+      "input_sha256": "8f1ed1d07100c6eb9266dc6568bee69beb8ecf880b3b65bb855a307b97fc3367",
+      "reference": "checker.png",
+      "reference_sha256": "a5fda3ebb7186d38598d23b106cc76e926f7ab4525df69a9fa77b254be9fc3b7"
+    },
+    {
+      "name": "impulse",
+      "input": "impulse.input.png",
+      "input_sha256": "8ade4119152d2f0d88c6c1706e002cb35c459c1cbb02bee12b143892d48fd8e6",
+      "reference": "impulse.png",
+      "reference_sha256": "43e42e19d0d6fc499588062856c0bd1e28d16c26eca48f389045d143bdf259a1"
+    },
+    {
+      "name": "noise_seed_c0de",
+      "input": "noise_seed_c0de.input.png",
+      "input_sha256": "0453e5fad478d59d954ab5895177b72e9b97be8af630382013ed73bc213e561a",
+      "reference": "noise_seed_c0de.png",
+      "reference_sha256": "10e7dfbc646b74cf7a0265cf1f4bc6f6a28704e4bc490a9659ef1a1362614cf9"
+    },
+    {
+      "name": "asset_face_preview_blured_2",
+      "input": "asset_face_preview_blured_2.input.png",
+      "input_sha256": "4fcbc267a052b6512695182e74b6b0b00bcc43f1d7f8ced28e72ae4cba619495",
+      "reference": "asset_face_preview_blured_2.png",
+      "reference_sha256": "5d2e2e3a42a9bd49180a2312d1ae8f3aefd1ff2f549e886027f39d4067be1323"
+    },
+    {
+      "name": "asset_face_preview_original",
+      "input": "asset_face_preview_original.input.png",
+      "input_sha256": "e2730a94c0aac9c8324bf6c3eda2884e1311eda7b931e61a2de257b9bbd80985",
+      "reference": "asset_face_preview_original.png",
+      "reference_sha256": "27eb37eaeee89ebab43b51afc6e6aa92dc38b6a6cefa4bf16bf7303a6137cef0"
+    },
+    {
+      "name": "asset_snejana_blured",
+      "input": "asset_snejana_blured.input.png",
+      "input_sha256": "1138d4bdd7e4a99e570d583c250a152ed719a076253932f91ae86de04fe5aec8",
+      "reference": "asset_snejana_blured.png",
+      "reference_sha256": "86587ccdbc61ce5f1727a0467bb85b61dcfa635454c90a8f875a8689af5e432a"
+    },
+    {
+      "name": "asset_girls_blured",
+      "input": "asset_girls_blured.input.png",
+      "input_sha256": "3c3203afa94cc84fc7bfd02dabc5ec9813ee288e9904d4f2d64afa312ffc20f4",
+      "reference": "asset_girls_blured.png",
+      "reference_sha256": "e6e3bd660ab54d638c1cb9805a139005930ed45e4d0b45f548e84dcf4decc511"
+    },
+    {
+      "name": "asset_japan_blured",
+      "input": "asset_japan_blured.input.png",
+      "input_sha256": "213c36555c0411c4cdaa995b745c4a41785ea913f82d5b6fffa0933c0b72942f",
+      "reference": "asset_japan_blured.png",
+      "reference_sha256": "f5d167d95da57251be60b2c738b1cc79b0d21fde49801571023a84e724e74142"
+    }
+  ]
+}

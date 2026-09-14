@@ -1,0 +1,1563 @@
+{
+  "tool.meta.title": {
+    "localizations": {
+      "en": "Free AI Photo Upscaler Online — 2× and 4× in Your Browser | UScale",
+      "ru": "Увеличить фото онлайн бесплатно — 2× и 4× в браузере | UScale",
+      "de": "Foto online kostenlos vergrößern – 2× und 4× im Browser | UScale",
+      "ja": "写真を無料で高画質化 — ブラウザで2倍・4倍｜UScale",
+      "fr": "Agrandir une photo en ligne gratuitement — 2× et 4× | UScale",
+      "es": "Ampliar fotos online gratis — 2× y 4× en el navegador | UScale"
+    },
+    "comment": "Page or section title; preserve product names."
+  },
+  "tool.meta.description": {
+    "localizations": {
+      "en": "Upscale a photo 2× or 4× for free, right in your browser. No sign-up and no upload: the photo is processed on your device.",
+      "ru": "Бесплатно увеличьте фото в 2 или 4 раза прямо в браузере. Без регистрации и загрузки на сервер: фото обрабатывается на вашем устройстве.",
+      "de": "Vergrößere ein Foto kostenlos um 2× oder 4× direkt im Browser. Ohne Anmeldung und ohne Upload: Das Foto wird auf deinem Gerät verarbeitet.",
+      "ja": "ブラウザで写真を無料で2倍・4倍に高画質化。登録もアップロードも不要で、写真はお使いのデバイス上で処理されます。",
+      "fr": "Agrandissez une photo 2× ou 4× gratuitement, directement dans votre navigateur. Sans inscription ni envoi : la photo est traitée sur votre appareil.",
+      "es": "Amplía una foto 2× o 4× gratis, directamente en tu navegador. Sin registro ni subidas: la foto se procesa en tu dispositivo."
+    }
+  },
+  "tool.nav": {
+    "localizations": {
+      "en": "Try online",
+      "ru": "Попробовать онлайн",
+      "de": "Online testen",
+      "ja": "オンラインで試す",
+      "fr": "Essayer en ligne",
+      "es": "Probar online"
+    }
+  },
+  "tool.hero_link": {
+    "localizations": {
+      "en": "Try photo upscaling online",
+      "ru": "Увеличить фото онлайн",
+      "de": "Foto online vergrößern",
+      "ja": "オンラインで写真を高画質化",
+      "fr": "Agrandir une photo en ligne",
+      "es": "Ampliar una foto online"
+    }
+  },
+  "tool.eyebrow": {
+    "localizations": {
+      "en": "Free · In your browser",
+      "ru": "Бесплатно · В браузере",
+      "de": "Kostenlos · Im Browser",
+      "ja": "無料・ブラウザで",
+      "fr": "Gratuit · Dans le navigateur",
+      "es": "Gratis · En el navegador"
+    }
+  },
+  "tool.h1": {
+    "localizations": {
+      "en": "Upscale your photo for free",
+      "ru": "Увеличьте фото бесплатно",
+      "de": "Foto kostenlos vergrößern",
+      "ja": "写真を無料で高画質化",
+      "fr": "Agrandissez votre photo gratuitement",
+      "es": "Amplía tu foto gratis"
+    }
+  },
+  "tool.sub": {
+    "localizations": {
+      "en": "Make it 2× or 4× larger. The photo never leaves your device.",
+      "ru": "В 2 или 4 раза больше. Фото не покидает ваше устройство.",
+      "de": "Mach es 2× oder 4× größer. Das Foto verlässt dein Gerät nie.",
+      "ja": "2倍・4倍に拡大。写真がデバイスの外に出ることはありません。",
+      "fr": "Agrandissez-la 2× ou 4×. La photo ne quitte jamais votre appareil.",
+      "es": "Amplíala 2× o 4×. La foto nunca sale de tu dispositivo."
+    }
+  },
+  "tool.steps_label": {
+    "localizations": {
+      "en": "Photo upscaling steps",
+      "ru": "Этапы увеличения фото",
+      "de": "Schritte zum Vergrößern",
+      "ja": "高画質化の手順",
+      "fr": "Étapes de l’agrandissement",
+      "es": "Pasos para ampliar la foto"
+    }
+  },
+  "tool.step_choose": {
+    "localizations": {
+      "en": "Choose",
+      "ru": "Выбрать",
+      "de": "Auswählen",
+      "ja": "選択",
+      "fr": "Choisir",
+      "es": "Elegir"
+    }
+  },
+  "tool.step_upscale": {
+    "localizations": {
+      "en": "Upscale",
+      "ru": "Увеличить",
+      "de": "Vergrößern",
+      "ja": "高画質化",
+      "fr": "Agrandir",
+      "es": "Ampliar"
+    }
+  },
+  "tool.step_save": {
+    "localizations": {
+      "en": "Save",
+      "ru": "Сохранить",
+      "de": "Speichern",
+      "ja": "保存",
+      "fr": "Enregistrer",
+      "es": "Guardar"
+    }
+  },
+  "tool.private": {
+    "localizations": {
+      "en": "Private processing",
+      "ru": "Приватная обработка",
+      "de": "Private Verarbeitung",
+      "ja": "プライベート処理",
+      "fr": "Traitement privé",
+      "es": "Procesamiento privado"
+    }
+  },
+  "tool.drop_title": {
+    "localizations": {
+      "en": "Drop a photo here",
+      "ru": "Перетащите фото сюда",
+      "de": "Foto hierher ziehen",
+      "ja": "ここに写真をドロップ",
+      "fr": "Déposez une photo ici",
+      "es": "Suelta una foto aquí"
+    }
+  },
+  "tool.or": {
+    "localizations": {
+      "en": "or",
+      "ru": "или",
+      "de": "oder",
+      "ja": "または",
+      "fr": "ou",
+      "es": "o"
+    }
+  },
+  "tool.choose": {
+    "localizations": {
+      "en": "Choose a photo",
+      "ru": "Выбрать фото",
+      "de": "Foto auswählen",
+      "ja": "写真を選ぶ",
+      "fr": "Choisir une photo",
+      "es": "Elegir una foto"
+    }
+  },
+  "tool.formats": {
+    "localizations": {
+      "en": "JPEG, PNG or WebP",
+      "ru": "JPEG, PNG или WebP",
+      "de": "JPEG, PNG oder WebP",
+      "ja": "JPEG・PNG・WebP",
+      "fr": "JPEG, PNG ou WebP",
+      "es": "JPEG, PNG o WebP"
+    }
+  },
+  "tool.thumb_alt": {
+    "localizations": {
+      "en": "Selected photo",
+      "ru": "Выбранное фото",
+      "de": "Ausgewähltes Foto",
+      "ja": "選択した写真",
+      "fr": "Photo sélectionnée",
+      "es": "Foto seleccionada"
+    }
+  },
+  "tool.remove": {
+    "localizations": {
+      "en": "Remove photo",
+      "ru": "Удалить фото",
+      "de": "Foto entfernen",
+      "ja": "写真を削除",
+      "fr": "Retirer la photo",
+      "es": "Quitar foto"
+    }
+  },
+  "tool.drop_release": {
+    "localizations": {
+      "en": "Release to use this photo",
+      "ru": "Отпустите, чтобы выбрать это фото",
+      "de": "Loslassen, um dieses Foto zu verwenden",
+      "ja": "ドロップしてこの写真を使用",
+      "fr": "Relâchez pour utiliser cette photo",
+      "es": "Suelta para usar esta foto"
+    }
+  },
+  "tool.scale_label": {
+    "localizations": {
+      "en": "Size",
+      "ru": "Увеличение",
+      "de": "Vergrößerung",
+      "ja": "倍率",
+      "fr": "Agrandissement",
+      "es": "Ampliación"
+    }
+  },
+  "tool.model_label": {
+    "localizations": {
+      "en": "Type",
+      "ru": "Тип",
+      "de": "Typ",
+      "ja": "種類",
+      "fr": "Type",
+      "es": "Tipo"
+    }
+  },
+  "tool.model_photo": {
+    "localizations": {
+      "en": "Photo",
+      "ru": "Фото",
+      "de": "Foto",
+      "ja": "写真",
+      "fr": "Photo",
+      "es": "Foto"
+    }
+  },
+  "tool.model_drawing": {
+    "localizations": {
+      "en": "Drawing",
+      "ru": "Рисунок",
+      "de": "Zeichnung",
+      "ja": "イラスト",
+      "fr": "Illustration",
+      "es": "Ilustración"
+    }
+  },
+  "tool.x2": {
+    "localizations": {
+      "en": "2×",
+      "ru": "2×",
+      "de": "2×",
+      "ja": "2倍",
+      "fr": "2×",
+      "es": "2×"
+    }
+  },
+  "tool.x4": {
+    "localizations": {
+      "en": "4×",
+      "ru": "4×",
+      "de": "4×",
+      "ja": "4倍",
+      "fr": "4×",
+      "es": "4×"
+    }
+  },
+  "tool.faces": {
+    "localizations": {
+      "en": "Enhance faces",
+      "ru": "Улучшить лица",
+      "de": "Gesichtsverbesserung",
+      "ja": "顔を強調",
+      "fr": "Améliorer les visages",
+      "es": "Mejorar rostros"
+    }
+  },
+  "tool.progress_label": {
+    "localizations": {
+      "en": "Processing progress",
+      "ru": "Ход обработки",
+      "de": "Verarbeitungsfortschritt",
+      "ja": "処理の進行状況",
+      "fr": "Progression du traitement",
+      "es": "Progreso del procesamiento"
+    }
+  },
+  "tool.cancel": {
+    "localizations": {
+      "en": "Cancel",
+      "ru": "Отменить",
+      "de": "Abbrechen",
+      "ja": "キャンセル",
+      "fr": "Annuler",
+      "es": "Cancelar"
+    }
+  },
+  "tool.retry": {
+    "localizations": {
+      "en": "Try again",
+      "ru": "Попробовать снова",
+      "de": "Erneut versuchen",
+      "ja": "もう一度試す",
+      "fr": "Réessayer",
+      "es": "Reintentar"
+    }
+  },
+  "tool.cpu_retry": {
+    "localizations": {
+      "en": "Try another processing method",
+      "ru": "Попробовать другой способ обработки",
+      "de": "Andere Verarbeitungsmethode testen",
+      "ja": "別の処理方法を試す",
+      "fr": "Essayer une autre méthode",
+      "es": "Probar otro método"
+    }
+  },
+  "tool.try_2x": {
+    "localizations": {
+      "en": "Upscale at 2× instead",
+      "ru": "Увеличить в 2 раза",
+      "de": "Stattdessen 2× verwenden",
+      "ja": "代わりに2倍で高画質化",
+      "fr": "Agrandir en 2× à la place",
+      "es": "Ampliar a 2× en su lugar"
+    }
+  },
+  "tool.visibility": {
+    "localizations": {
+      "en": "Return to this page to keep processing. Your browser may pause work in the background.",
+      "ru": "Вернитесь на эту страницу, чтобы продолжить обработку. В фоне браузер может её приостановить.",
+      "de": "Kehre zu dieser Seite zurück, damit die Verarbeitung weiterläuft. Im Hintergrund kann der Browser sie pausieren.",
+      "ja": "処理を続けるにはこのページに戻ってください。バックグラウンドではブラウザが処理を一時停止することがあります。",
+      "fr": "Revenez sur cette page pour poursuivre le traitement. En arrière-plan, le navigateur peut le mettre en pause.",
+      "es": "Vuelve a esta página para seguir procesando. En segundo plano, el navegador puede pausar el trabajo."
+    }
+  },
+  "tool.interrupted": {
+    "localizations": {
+      "en": "Your last session may have been interrupted. Choose the photo again, try a smaller image, or use the app.",
+      "ru": "Похоже, прошлая обработка прервалась. Выберите фото снова, попробуйте снимок поменьше или воспользуйтесь приложением.",
+      "de": "Deine letzte Sitzung wurde möglicherweise unterbrochen. Wähle das Foto erneut, probiere ein kleineres Bild oder nutze die App.",
+      "ja": "前回の処理が中断された可能性があります。写真を選び直すか、小さい画像を試すか、アプリをご利用ください。",
+      "fr": "Votre dernière session a peut-être été interrompue. Choisissez à nouveau la photo, essayez une image plus petite ou utilisez l’app.",
+      "es": "Puede que tu última sesión se interrumpiera. Vuelve a elegir la foto, prueba con una imagen más pequeña o usa la app."
+    }
+  },
+  "tool.noscript": {
+    "localizations": {
+      "en": "Turn on JavaScript to upscale photos in your browser.",
+      "ru": "Включите JavaScript, чтобы увеличивать фото в браузере.",
+      "de": "Aktiviere JavaScript, um Fotos im Browser zu vergrößern.",
+      "ja": "ブラウザで写真を高画質化するにはJavaScriptを有効にしてください。",
+      "fr": "Activez JavaScript pour agrandir des photos dans votre navigateur.",
+      "es": "Activa JavaScript para ampliar fotos en tu navegador."
+    }
+  },
+  "tool.original_alt": {
+    "localizations": {
+      "en": "Your original photo",
+      "ru": "Ваше исходное фото",
+      "de": "Dein Originalfoto",
+      "ja": "元の写真",
+      "fr": "Votre photo d’origine",
+      "es": "Tu foto original"
+    }
+  },
+  "tool.expand": {
+    "localizations": {
+      "en": "Expand photo",
+      "ru": "На весь экран",
+      "de": "Vollbild",
+      "ja": "全画面表示",
+      "fr": "Plein écran",
+      "es": "Pantalla completa"
+    }
+  },
+  "tool.close": {
+    "localizations": {
+      "en": "Close expanded photo",
+      "ru": "Закрыть полноэкранный режим",
+      "de": "Vollbild schließen",
+      "ja": "全画面表示を閉じる",
+      "fr": "Quitter le plein écran",
+      "es": "Salir de pantalla completa"
+    }
+  },
+  "tool.download": {
+    "localizations": {
+      "en": "Download this photo",
+      "ru": "Скачать фото",
+      "de": "Foto herunterladen",
+      "ja": "写真をダウンロード",
+      "fr": "Télécharger la photo",
+      "es": "Descargar la foto"
+    }
+  },
+  "tool.another": {
+    "localizations": {
+      "en": "Upscale another photo",
+      "ru": "Увеличить другое фото",
+      "de": "Weiteres Foto vergrößern",
+      "ja": "別の写真を高画質化",
+      "fr": "Agrandir une autre photo",
+      "es": "Ampliar otra foto"
+    }
+  },
+  "tool.face_editor_hint": {
+    "localizations": {
+      "en": "Tap a face to turn enhancement on or off. Pinch or scroll to zoom.",
+      "ru": "Нажмите на лицо, чтобы включить или выключить улучшение. Масштаб — щипком или колёсиком.",
+      "de": "Tippe auf ein Gesicht, um die Verbesserung ein- oder auszuschalten. Zum Zoomen aufziehen oder scrollen.",
+      "ja": "顔をタップすると強調のオン・オフを切り替えられます。ピンチまたはスクロールで拡大できます。",
+      "fr": "Touchez un visage pour activer ou désactiver l’amélioration. Pincez ou faites défiler pour zoomer.",
+      "es": "Toca un rostro para activar o desactivar la mejora. Pellizca o desplázate para ampliar."
+    }
+  },
+  "tool.face_editor_apply": {
+    "localizations": {
+      "en": "Apply",
+      "ru": "Применить",
+      "de": "Anwenden",
+      "ja": "適用",
+      "fr": "Appliquer",
+      "es": "Aplicar"
+    }
+  },
+  "tool.face_editor_cancel": {
+    "localizations": {
+      "en": "Cancel",
+      "ru": "Отмена",
+      "de": "Abbrechen",
+      "ja": "キャンセル",
+      "fr": "Annuler",
+      "es": "Cancelar"
+    }
+  },
+  "tool.face_editor_close": {
+    "localizations": {
+      "en": "Close face selection",
+      "ru": "Закрыть выбор лиц",
+      "de": "Gesichterauswahl schließen",
+      "ja": "顔の選択を閉じる",
+      "fr": "Fermer la sélection des visages",
+      "es": "Cerrar la selección de rostros"
+    }
+  },
+  "tool.face_editor_alt": {
+    "localizations": {
+      "en": "Your original photo with the faces we found outlined",
+      "ru": "Исходное фото с отмеченными лицами",
+      "de": "Dein Originalfoto mit markierten Gesichtern",
+      "ja": "見つかった顔を枠で囲んだ元の写真",
+      "fr": "Votre photo d’origine avec les visages trouvés encadrés",
+      "es": "Tu foto original con los rostros encontrados marcados"
+    }
+  },
+  "tool.face_editor_group": {
+    "localizations": {
+      "en": "Faces found in your photo",
+      "ru": "Лица на фото",
+      "de": "Gefundene Gesichter",
+      "ja": "写真で見つかった顔",
+      "fr": "Visages trouvés sur la photo",
+      "es": "Rostros encontrados en la foto"
+    }
+  },
+  "tool.app_sub": {
+    "localizations": {
+      "en": "More features, and everything runs faster in the app.",
+      "ru": "В приложении больше функций, и всё работает быстрее.",
+      "de": "In der App gibt es mehr Funktionen, und alles läuft schneller.",
+      "ja": "アプリなら機能がさらに充実し、処理もより高速です。",
+      "fr": "Plus de fonctions, et tout va plus vite dans l’app.",
+      "es": "Más funciones, y todo va más rápido en la app."
+    }
+  },
+  "tool.home.h2": {
+    "localizations": {
+      "en": "Try it free in your browser",
+      "ru": "Попробуйте бесплатно прямо в браузере",
+      "de": "Kostenlos im Browser ausprobieren",
+      "ja": "ブラウザで無料で試す",
+      "fr": "Essayez gratuitement dans votre navigateur",
+      "es": "Pruébalo gratis en tu navegador"
+    },
+    "comment": "Home page banner that links to the free browser tool."
+  },
+  "tool.home.p": {
+    "localizations": {
+      "en": "Upscale a photo 2× right on this site, or 4× on a computer or iPad. No sign-up and no upload: the photo is processed on your device.",
+      "ru": "Увеличьте фото в 2 раза прямо на сайте, а на компьютере или iPad — в 4 раза. Без регистрации и загрузки: фото обрабатывается на вашем устройстве.",
+      "de": "Vergrößere ein Foto direkt auf dieser Website um 2× – auf Computer oder iPad sogar um 4×. Ohne Anmeldung und ohne Upload: Das Foto wird auf deinem Gerät verarbeitet.",
+      "ja": "このサイト上で写真を2倍に、パソコンやiPadなら4倍に高画質化できます。登録もアップロードも不要で、写真はお使いのデバイス上で処理されます。",
+      "fr": "Agrandissez une photo 2× directement sur ce site, ou 4× sur ordinateur et iPad. Sans inscription ni envoi : la photo est traitée sur votre appareil.",
+      "es": "Amplía una foto 2× directamente en esta web, o 4× en un ordenador o iPad. Sin registro ni subidas: la foto se procesa en tu dispositivo."
+    },
+    "comment": "Home page banner that links to the free browser tool."
+  },
+  "tool.home.cta": {
+    "localizations": {
+      "en": "Upscale a photo",
+      "ru": "Увеличить фото",
+      "de": "Foto vergrößern",
+      "ja": "写真を高画質化",
+      "fr": "Agrandir une photo",
+      "es": "Ampliar una foto"
+    },
+    "comment": "Home page banner that links to the free browser tool."
+  },
+  "tool.home.note": {
+    "localizations": {
+      "en": "JPEG, PNG or WebP · Works in current browsers",
+      "ru": "JPEG, PNG или WebP · В современных браузерах",
+      "de": "JPEG, PNG oder WebP · In aktuellen Browsern",
+      "ja": "JPEG・PNG・WebP対応・最新のブラウザで動作",
+      "fr": "JPEG, PNG ou WebP · Dans les navigateurs récents",
+      "es": "JPEG, PNG o WebP · En navegadores actuales"
+    },
+    "comment": "Home page banner that links to the free browser tool."
+  },
+  "tool.home.free": {
+    "localizations": {
+      "en": "Free",
+      "ru": "Бесплатно",
+      "de": "Kostenlos",
+      "ja": "無料",
+      "fr": "Gratuit",
+      "es": "Gratis"
+    },
+    "comment": "Home page banner that links to the free browser tool."
+  },
+  "tool.home.device": {
+    "localizations": {
+      "en": "On your device",
+      "ru": "На устройстве",
+      "de": "Auf dem Gerät",
+      "ja": "デバイス上で処理",
+      "fr": "Sur l’appareil",
+      "es": "En tu dispositivo"
+    },
+    "comment": "Home page banner that links to the free browser tool."
+  },
+  "tool.js.about": {
+    "localizations": {
+      "en": "about {time}",
+      "ru": "примерно {time}",
+      "de": "etwa {time}",
+      "ja": "約{time}",
+      "fr": "environ {time}",
+      "es": "aproximadamente {time}"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.remaining": {
+    "localizations": {
+      "en": "Time left: {time}.",
+      "ru": "Осталось {time}.",
+      "de": "Noch {time}.",
+      "ja": "残り{time}。",
+      "fr": "Encore {time}.",
+      "es": "Tiempo restante: {time}."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.idle_detail": {
+    "localizations": {
+      "en": "Your photo stays on this device. The upscaler downloads once, and results are saved as JPEG with transparent areas on white.",
+      "ru": "Фото остаётся на вашем устройстве. Нейросеть загружается один раз, а результат сохраняется в JPEG — прозрачные области станут белыми.",
+      "de": "Dein Foto bleibt auf deinem Gerät. Der Upscaler wird einmal geladen, Ergebnisse werden als JPEG gespeichert, transparente Bereiche werden weiß.",
+      "ja": "写真はこのデバイスから送信されません。高画質化モデルのダウンロードは初回のみで、結果はJPEGで保存されます（透明部分は白になります）。",
+      "fr": "Votre photo reste sur cet appareil. Le moteur se télécharge une seule fois et les résultats sont enregistrés en JPEG, les zones transparentes sur fond blanc.",
+      "es": "Tu foto se queda en este dispositivo. El modelo se descarga una sola vez y el resultado se guarda en JPEG, con las zonas transparentes en blanco."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.choose_title": {
+    "localizations": {
+      "en": "Add a photo",
+      "ru": "Добавьте фото",
+      "de": "Foto hinzufügen",
+      "ja": "写真を追加",
+      "fr": "Ajoutez une photo",
+      "es": "Añade una foto"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.your_photo": {
+    "localizations": {
+      "en": "Your photo",
+      "ru": "Ваше фото",
+      "de": "Dein Foto",
+      "ja": "選択した写真",
+      "fr": "Votre photo",
+      "es": "Tu foto"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.checking_size": {
+    "localizations": {
+      "en": "Checking image size…",
+      "ru": "Проверяем размер…",
+      "de": "Bildgröße wird geprüft…",
+      "ja": "画像サイズを確認中…",
+      "fr": "Vérification de la taille…",
+      "es": "Comprobando el tamaño…"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.not_processed": {
+    "localizations": {
+      "en": "Photo not processed",
+      "ru": "Фото не обработано",
+      "de": "Foto nicht verarbeitet",
+      "ja": "写真は処理されていません",
+      "fr": "Photo non traitée",
+      "es": "Foto no procesada"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.ready": {
+    "localizations": {
+      "en": "Ready to upscale",
+      "ru": "Всё готово к увеличению",
+      "de": "Bereit zum Vergrößern",
+      "ja": "高画質化の準備ができました",
+      "fr": "Prête à être agrandie",
+      "es": "Lista para ampliar"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.ready_detail": {
+    "localizations": {
+      "en": "Takes {time}. Your photo stays on this device.",
+      "ru": "Займёт {time}. Фото остаётся на вашем устройстве.",
+      "de": "Dauert {time}. Dein Foto bleibt auf deinem Gerät.",
+      "ja": "所要時間は{time}です。写真はこのデバイスから送信されません。",
+      "fr": "Durée : {time}. Votre photo reste sur cet appareil.",
+      "es": "Tardará {time}. Tu foto se queda en este dispositivo."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.slow_title": {
+    "localizations": {
+      "en": "This photo takes {time} on this device",
+      "ru": "На этом устройстве это займёт {time}",
+      "de": "Auf diesem Gerät dauert das {time}",
+      "ja": "このデバイスでは{time}かかります",
+      "fr": "Sur cet appareil, comptez {time}",
+      "es": "En este dispositivo tardará {time}"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.slow_detail": {
+    "localizations": {
+      "en": "Large photos are slow in a browser. You can still upscale it here, or get full speed in the app.",
+      "ru": "Большие фото в браузере обрабатываются медленно. Можно продолжить здесь или получить полную скорость в приложении.",
+      "de": "Große Fotos sind im Browser langsam. Du kannst es trotzdem hier vergrößern oder die volle Geschwindigkeit in der App nutzen.",
+      "ja": "大きな写真はブラウザでは時間がかかります。このまま高画質化するか、アプリでフルスピードで処理できます。",
+      "fr": "Les grandes photos sont lentes dans un navigateur. Vous pouvez tout de même l’agrandir ici, ou profiter de toute la vitesse dans l’app.",
+      "es": "Las fotos grandes van lentas en el navegador. Puedes ampliarla aquí de todos modos o usar la app a máxima velocidad."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.probe_detail": {
+    "localizations": {
+      "en": "Upscaling: {time}. Face enhancement adds time when enabled.",
+      "ru": "Увеличение: {time}. Улучшение лиц займёт дополнительное время.",
+      "de": "Vergrößern: {time}. Die Gesichtsverbesserung dauert zusätzlich.",
+      "ja": "高画質化：{time}。顔の強調を有効にすると時間が延びます。",
+      "fr": "Agrandissement : {time}. L’amélioration des visages ajoute du temps.",
+      "es": "Ampliación: {time}. Mejorar rostros añade tiempo."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.preparing": {
+    "localizations": {
+      "en": "Preparing",
+      "ru": "Подготовка",
+      "de": "Vorbereitung",
+      "ja": "準備中",
+      "fr": "Préparation",
+      "es": "Preparando"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.preparing_detail": {
+    "localizations": {
+      "en": "Loading the upscaler. Your photo stays on this device.",
+      "ru": "Загружаем нейросеть. Фото остаётся на вашем устройстве.",
+      "de": "Der Upscaler wird geladen. Dein Foto bleibt auf deinem Gerät.",
+      "ja": "高画質化モデルを読み込んでいます。写真はこのデバイスから送信されません。",
+      "fr": "Chargement du moteur. Votre photo reste sur cet appareil.",
+      "es": "Cargando el modelo. Tu foto se queda en este dispositivo."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.cpu_title": {
+    "localizations": {
+      "en": "Trying another processing method",
+      "ru": "Пробуем другой способ обработки",
+      "de": "Andere Verarbeitungsmethode wird getestet",
+      "ja": "別の処理方法を試しています",
+      "fr": "Essai d’une autre méthode",
+      "es": "Probando otro método"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.cpu_detail": {
+    "localizations": {
+      "en": "Checking the CPU option. It may take longer.",
+      "ru": "Проверяем обработку на процессоре. Это может занять больше времени.",
+      "de": "Die CPU-Variante wird geprüft. Das kann länger dauern.",
+      "ja": "CPUでの処理を確認しています。時間がかかる場合があります。",
+      "fr": "Vérification du mode processeur. Cela peut prendre plus de temps.",
+      "es": "Comprobando el modo CPU. Puede tardar más."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.cancelled": {
+    "localizations": {
+      "en": "Processing cancelled",
+      "ru": "Обработка отменена",
+      "de": "Verarbeitung abgebrochen",
+      "ja": "処理をキャンセルしました",
+      "fr": "Traitement annulé",
+      "es": "Procesamiento cancelado"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.cancelled_detail": {
+    "localizations": {
+      "en": "Your photo stayed on this device. Start again when you’re ready.",
+      "ru": "Фото осталось на вашем устройстве. Запустите снова, когда будете готовы.",
+      "de": "Dein Foto ist auf deinem Gerät geblieben. Starte erneut, wenn du bereit bist.",
+      "ja": "写真はこのデバイスに残っています。準備ができたら再開してください。",
+      "fr": "Votre photo est restée sur cet appareil. Relancez quand vous voulez.",
+      "es": "Tu foto se ha quedado en este dispositivo. Vuelve a empezar cuando quieras."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.one_at_a_time": {
+    "localizations": {
+      "en": "One photo at a time",
+      "ru": "По одному фото за раз",
+      "de": "Ein Foto nach dem anderen",
+      "ja": "写真は1枚ずつ",
+      "fr": "Une photo à la fois",
+      "es": "Una foto cada vez"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.one_at_a_time_detail": {
+    "localizations": {
+      "en": "Drop a single photo to get started.",
+      "ru": "Перетащите одно фото, чтобы начать.",
+      "de": "Zieh ein einzelnes Foto hierher, um zu starten.",
+      "ja": "開始するには写真を1枚ドロップしてください。",
+      "fr": "Déposez une seule photo pour commencer.",
+      "es": "Suelta una sola foto para empezar."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.choose_again": {
+    "localizations": {
+      "en": "Choose your photo again",
+      "ru": "Выберите фото снова",
+      "de": "Wähle dein Foto erneut",
+      "ja": "写真をもう一度選んでください",
+      "fr": "Choisissez à nouveau votre photo",
+      "es": "Vuelve a elegir tu foto"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.choose_again_detail": {
+    "localizations": {
+      "en": "The previous task ended when you left this page.",
+      "ru": "Предыдущая обработка остановилась, когда вы ушли со страницы.",
+      "de": "Die vorherige Verarbeitung wurde beendet, als du die Seite verlassen hast.",
+      "ja": "ページを離れたため、前回の処理は終了しました。",
+      "fr": "Le traitement précédent s’est arrêté quand vous avez quitté la page.",
+      "es": "El proceso anterior terminó al salir de esta página."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.cannot_title": {
+    "localizations": {
+      "en": "Try this photo in the app",
+      "ru": "Попробуйте это фото в приложении",
+      "de": "Probier dieses Foto in der App",
+      "ja": "この写真はアプリでお試しください",
+      "fr": "Essayez cette photo dans l’app",
+      "es": "Prueba esta foto en la app"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.failed_title": {
+    "localizations": {
+      "en": "Couldn’t finish this photo",
+      "ru": "Не удалось обработать фото",
+      "de": "Foto konnte nicht fertiggestellt werden",
+      "ja": "写真を処理できませんでした",
+      "fr": "Impossible de terminer cette photo",
+      "es": "No se pudo terminar la foto"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.done_title": {
+    "localizations": {
+      "en": "Your photo is ready",
+      "ru": "Фото готово",
+      "de": "Dein Foto ist fertig",
+      "ja": "写真の準備ができました",
+      "fr": "Votre photo est prête",
+      "es": "Tu foto está lista"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.done_detail": {
+    "localizations": {
+      "en": "Compare the result below and download it.",
+      "ru": "Сравните результат ниже и скачайте его.",
+      "de": "Vergleiche das Ergebnis unten und lade es herunter.",
+      "ja": "下で結果を比較してダウンロードしてください。",
+      "fr": "Comparez le résultat ci-dessous et téléchargez-le.",
+      "es": "Compara el resultado abajo y descárgalo."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.finding_faces": {
+    "localizations": {
+      "en": "Finding faces",
+      "ru": "Ищем лица",
+      "de": "Gesichter werden gesucht",
+      "ja": "顔を検出しています",
+      "fr": "Recherche des visages",
+      "es": "Buscando rostros"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.finding_faces_detail": {
+    "localizations": {
+      "en": "Face enhancement runs separately, on this device.",
+      "ru": "Лица улучшаются отдельно, на этом устройстве.",
+      "de": "Die Gesichtsverbesserung läuft separat auf diesem Gerät.",
+      "ja": "顔の強調は、このデバイス上で別に処理されます。",
+      "fr": "Les visages sont améliorés séparément, sur cet appareil.",
+      "es": "Los rostros se mejoran por separado, en este dispositivo."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.finding_faces_check": {
+    "localizations": {
+      "en": "Checking your photo on this device.",
+      "ru": "Проверяем фото на этом устройстве.",
+      "de": "Dein Foto wird auf diesem Gerät geprüft.",
+      "ja": "このデバイス上で写真を確認しています。",
+      "fr": "Analyse de votre photo sur cet appareil.",
+      "es": "Analizando tu foto en este dispositivo."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.enhancing_face": {
+    "localizations": {
+      "en": "Enhancing face {current} of {total}",
+      "ru": "Улучшаем лицо {current} из {total}",
+      "de": "Gesicht {current} von {total} wird verbessert",
+      "ja": "顔を強調中（{current}/{total}）",
+      "fr": "Amélioration du visage {current} sur {total}",
+      "es": "Mejorando rostro {current} de {total}"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.enhancing_face_detail": {
+    "localizations": {
+      "en": "Restoring facial detail with a separate model. Keep this page open.",
+      "ru": "Восстанавливаем детали лица отдельной моделью. Не закрывайте страницу.",
+      "de": "Gesichtsdetails werden mit einem eigenen Modell wiederhergestellt. Lass diese Seite geöffnet.",
+      "ja": "専用モデルで顔のディテールを復元しています。このページを開いたままにしてください。",
+      "fr": "Restauration des détails du visage avec un modèle dédié. Gardez cette page ouverte.",
+      "es": "Restaurando los detalles del rostro con un modelo aparte. Mantén esta página abierta."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.measuring": {
+    "localizations": {
+      "en": "Measuring processing speed",
+      "ru": "Измеряем скорость обработки",
+      "de": "Verarbeitungstempo wird gemessen",
+      "ja": "処理速度を測定しています",
+      "fr": "Mesure de la vitesse",
+      "es": "Midiendo la velocidad"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.measuring_detail": {
+    "localizations": {
+      "en": "Trying a small part of your photo first.",
+      "ru": "Сначала пробуем небольшой фрагмент фото.",
+      "de": "Zuerst wird ein kleiner Teil deines Fotos getestet.",
+      "ja": "まず写真の一部で試しています。",
+      "fr": "Test sur une petite partie de votre photo.",
+      "es": "Probando primero una pequeña parte de tu foto."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.upscaling": {
+    "localizations": {
+      "en": "Upscaling your photo",
+      "ru": "Увеличиваем фото",
+      "de": "Dein Foto wird vergrößert",
+      "ja": "写真を高画質化しています",
+      "fr": "Agrandissement en cours",
+      "es": "Ampliando tu foto"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.upscaling_detail": {
+    "localizations": {
+      "en": "Keep this page open while it processes.",
+      "ru": "Не закрывайте страницу во время обработки.",
+      "de": "Lass diese Seite während der Verarbeitung geöffnet.",
+      "ja": "処理中はこのページを開いたままにしてください。",
+      "fr": "Gardez cette page ouverte pendant le traitement.",
+      "es": "Mantén esta página abierta mientras se procesa."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.upscaling_cancel_detail": {
+    "localizations": {
+      "en": "Keep this page open. You can cancel at any time.",
+      "ru": "Не закрывайте страницу. Отменить можно в любой момент.",
+      "de": "Lass diese Seite geöffnet. Du kannst jederzeit abbrechen.",
+      "ja": "このページを開いたままにしてください。いつでもキャンセルできます。",
+      "fr": "Gardez cette page ouverte. Vous pouvez annuler à tout moment.",
+      "es": "Mantén esta página abierta. Puedes cancelar en cualquier momento."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.encoding": {
+    "localizations": {
+      "en": "Preparing your download",
+      "ru": "Готовим файл",
+      "de": "Download wird vorbereitet",
+      "ja": "ダウンロードを準備しています",
+      "fr": "Préparation du téléchargement",
+      "es": "Preparando la descarga"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.encoding_detail": {
+    "localizations": {
+      "en": "Saving the finished photo on this device.",
+      "ru": "Сохраняем готовое фото на этом устройстве.",
+      "de": "Das fertige Foto wird auf diesem Gerät gespeichert.",
+      "ja": "完成した写真をこのデバイス上で保存しています。",
+      "fr": "Enregistrement de la photo sur cet appareil.",
+      "es": "Guardando la foto terminada en este dispositivo."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.loading_upscaler": {
+    "localizations": {
+      "en": "Loading the upscaler",
+      "ru": "Загружаем нейросеть",
+      "de": "Upscaler wird geladen",
+      "ja": "高画質化モデルを読み込み中",
+      "fr": "Chargement du moteur",
+      "es": "Cargando el modelo"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.loading_faces": {
+    "localizations": {
+      "en": "Loading face enhancement",
+      "ru": "Загружаем улучшение лиц",
+      "de": "Gesichtsverbesserung wird geladen",
+      "ja": "顔の強調モデルを読み込み中",
+      "fr": "Chargement de l’amélioration des visages",
+      "es": "Cargando la mejora de rostros"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.loading_cached_detail": {
+    "localizations": {
+      "en": "Your browser keeps these files for next time.",
+      "ru": "Браузер сохранит эти файлы для следующих визитов.",
+      "de": "Dein Browser speichert diese Dateien für das nächste Mal.",
+      "ja": "これらのファイルは次回のためにブラウザに保存されます。",
+      "fr": "Votre navigateur conserve ces fichiers pour la prochaine fois.",
+      "es": "Tu navegador guarda estos archivos para la próxima vez."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.stays_on_device": {
+    "localizations": {
+      "en": "Your photo stays on this device.",
+      "ru": "Фото остаётся на вашем устройстве.",
+      "de": "Dein Foto bleibt auf deinem Gerät.",
+      "ja": "写真はこのデバイスから送信されません。",
+      "fr": "Votre photo reste sur cet appareil.",
+      "es": "Tu foto se queda en este dispositivo."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.loading_engine": {
+    "localizations": {
+      "en": "Loading the processing engine",
+      "ru": "Загружаем движок обработки",
+      "de": "Verarbeitungs-Engine wird geladen",
+      "ja": "処理エンジンを読み込み中",
+      "fr": "Chargement du moteur de traitement",
+      "es": "Cargando el motor de procesamiento"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.loading_engine_detail": {
+    "localizations": {
+      "en": "The first visit takes longer. The engine is cached for next time.",
+      "ru": "В первый раз это дольше. Потом движок берётся из кэша.",
+      "de": "Beim ersten Besuch dauert es länger. Danach kommt die Engine aus dem Cache.",
+      "ja": "初回は時間がかかります。次回からはキャッシュが使われます。",
+      "fr": "La première visite est plus longue. Le moteur est ensuite mis en cache.",
+      "es": "La primera visita tarda más. Después el motor queda en caché."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.initializing": {
+    "localizations": {
+      "en": "Preparing the upscaler",
+      "ru": "Подготавливаем нейросеть",
+      "de": "Upscaler wird vorbereitet",
+      "ja": "高画質化の準備中",
+      "fr": "Préparation du moteur",
+      "es": "Preparando el modelo"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.initializing_detail": {
+    "localizations": {
+      "en": "Checking that the model runs in this browser.",
+      "ru": "Проверяем, что модель работает в этом браузере.",
+      "de": "Es wird geprüft, ob das Modell in diesem Browser läuft.",
+      "ja": "モデルがこのブラウザで動作するか確認しています。",
+      "fr": "Vérification du fonctionnement du modèle dans ce navigateur.",
+      "es": "Comprobando que el modelo funciona en este navegador."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.limit_note": {
+    "localizations": {
+      "en": "JPEG, PNG or WebP · up to {mp} MP at {scale}× · 50 MB max",
+      "ru": "JPEG, PNG или WebP · до {mp} Мп при {scale}× · до 50 МБ",
+      "de": "JPEG, PNG oder WebP · bis {mp} MP bei {scale}× · max. 50 MB",
+      "ja": "JPEG・PNG・WebP・{scale}倍は{mp}MPまで・最大50MB",
+      "fr": "JPEG, PNG ou WebP · jusqu’à {mp} Mpx en {scale}× · 50 Mo max.",
+      "es": "JPEG, PNG o WebP · hasta {mp} MP a {scale}× · máx. 50 MB"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.upscale_button": {
+    "localizations": {
+      "en": "Upscale photo · {scale}×",
+      "ru": "Увеличить фото · {scale}×",
+      "de": "Foto vergrößern · {scale}×",
+      "ja": "高画質化・{scale}倍",
+      "fr": "Agrandir la photo · {scale}×",
+      "es": "Ampliar foto · {scale}×"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.result_tag": {
+    "localizations": {
+      "en": "Result · {scale}×",
+      "ru": "Результат · {scale}×",
+      "de": "Ergebnis · {scale}×",
+      "ja": "結果・{scale}倍",
+      "fr": "Résultat · {scale}×",
+      "es": "Resultado · {scale}×"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.result_alt": {
+    "localizations": {
+      "en": "Your photo upscaled {scale}×",
+      "ru": "Ваше фото, увеличенное в {scale} раза",
+      "de": "Dein Foto, {scale}× vergrößert",
+      "ja": "{scale}倍に高画質化した写真",
+      "fr": "Votre photo agrandie {scale}×",
+      "es": "Tu foto ampliada {scale}×"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.upscaled": {
+    "localizations": {
+      "en": "Upscaled {scale}×",
+      "ru": "Увеличено в {scale} раза",
+      "de": "{scale}× vergrößert",
+      "ja": "{scale}倍に高画質化",
+      "fr": "Agrandie {scale}×",
+      "es": "Ampliada {scale}×"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.faces_enhanced": {
+    "localizations": {
+      "en": "Faces enhanced: {count}",
+      "ru": "Улучшено лиц: {count}",
+      "de": "Verbesserte Gesichter: {count}",
+      "ja": "強調した顔：{count}",
+      "fr": "Visages améliorés : {count}",
+      "es": "Rostros mejorados: {count}"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.faces_partial": {
+    "localizations": {
+      "en": "some faces couldn’t be enhanced",
+      "ru": "некоторые лица улучшить не удалось",
+      "de": "einige Gesichter konnten nicht verbessert werden",
+      "ja": "一部の顔は強調できませんでした",
+      "fr": "certains visages n’ont pas pu être améliorés",
+      "es": "algunos rostros no se pudieron mejorar"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.choose_faces": {
+    "localizations": {
+      "en": "Faces enhanced: {count} of {total}",
+      "ru": "Улучшено лиц: {count} из {total}",
+      "de": "Verbesserte Gesichter: {count} von {total}",
+      "ja": "強調した顔：{count}/{total}",
+      "fr": "Visages améliorés : {count} sur {total}",
+      "es": "Rostros mejorados: {count} de {total}"
+    },
+    "comment": "Result button that opens face selection; shows how many faces are enhanced. Preserve {placeholders}."
+  },
+  "tool.js.face_editor_title": {
+    "localizations": {
+      "en": "Choose faces to enhance ({count} of {total})",
+      "ru": "Какие лица улучшить ({count} из {total})",
+      "de": "Welche Gesichter verbessern ({count} von {total})",
+      "ja": "強調する顔を選ぶ（{count}/{total}）",
+      "fr": "Visages à améliorer ({count} sur {total})",
+      "es": "Rostros que mejorar ({count} de {total})"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.face_toggle": {
+    "localizations": {
+      "en": "Face {index}",
+      "ru": "Лицо {index}",
+      "de": "Gesicht {index}",
+      "ja": "顔 {index}",
+      "fr": "Visage {index}",
+      "es": "Rostro {index}"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.applying_faces": {
+    "localizations": {
+      "en": "Updating faces",
+      "ru": "Обновляем лица",
+      "de": "Gesichter werden aktualisiert",
+      "ja": "顔を更新中",
+      "fr": "Mise à jour des visages",
+      "es": "Actualizando rostros"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_face_apply": {
+    "localizations": {
+      "en": "Couldn’t update the faces. Your previous result is still here — try again.",
+      "ru": "Не удалось обновить лица. Прежний результат сохранён — попробуйте ещё раз.",
+      "de": "Die Gesichter konnten nicht aktualisiert werden. Dein bisheriges Ergebnis bleibt erhalten – versuch es erneut.",
+      "ja": "顔を更新できませんでした。前の結果はそのままです。もう一度お試しください。",
+      "fr": "Impossible de mettre à jour les visages. Le résultat précédent est conservé — réessayez.",
+      "es": "No se pudieron actualizar los rostros. Tu resultado anterior sigue aquí; inténtalo de nuevo."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.faces_none_suitable": {
+    "localizations": {
+      "en": "No suitable faces to enhance",
+      "ru": "Нет подходящих лиц для улучшения",
+      "de": "Keine geeigneten Gesichter gefunden",
+      "ja": "強調に適した顔はありません",
+      "fr": "Aucun visage adapté",
+      "es": "No hay rostros adecuados"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.faces_none": {
+    "localizations": {
+      "en": "No faces found",
+      "ru": "Лица не найдены",
+      "de": "Keine Gesichter erkannt",
+      "ja": "顔は検出されませんでした",
+      "fr": "Aucun visage détecté",
+      "es": "No se detectaron rostros"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.faces_off": {
+    "localizations": {
+      "en": "Face enhancement off",
+      "ru": "Улучшение лиц выключено",
+      "de": "Gesichtsverbesserung aus",
+      "ja": "顔の強調：オフ",
+      "fr": "Amélioration des visages désactivée",
+      "es": "Mejora de rostros desactivada"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.slider_value": {
+    "localizations": {
+      "en": "{value}% original photo",
+      "ru": "Оригинал: {value}%",
+      "de": "{value} % Original",
+      "ja": "元の写真 {value}%",
+      "fr": "{value} % de l’original",
+      "es": "{value} % del original"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_format": {
+    "localizations": {
+      "en": "Choose a JPEG, PNG or WebP photo. For HEIC, video or other formats, try the app.",
+      "ru": "Выберите фото в формате JPEG, PNG или WebP. Для HEIC, видео и других форматов используйте приложение.",
+      "de": "Wähle ein Foto im Format JPEG, PNG oder WebP. Für HEIC, Videos und andere Formate nutze die App.",
+      "ja": "JPEG、PNG、WebPの写真を選んでください。HEICや動画などの形式はアプリをご利用ください。",
+      "fr": "Choisissez une photo JPEG, PNG ou WebP. Pour le HEIC, les vidéos ou d’autres formats, utilisez l’app.",
+      "es": "Elige una foto JPEG, PNG o WebP. Para HEIC, vídeo u otros formatos, usa la app."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_animated": {
+    "localizations": {
+      "en": "Animated images aren’t supported here. Choose a still photo.",
+      "ru": "Анимированные изображения здесь не поддерживаются. Выберите обычное фото.",
+      "de": "Animierte Bilder werden hier nicht unterstützt. Wähle ein Standbild.",
+      "ja": "アニメーション画像には対応していません。静止画を選んでください。",
+      "fr": "Les images animées ne sont pas prises en charge ici. Choisissez une photo fixe.",
+      "es": "Las imágenes animadas no son compatibles. Elige una foto fija."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_file_size": {
+    "localizations": {
+      "en": "This file is over the 50 MB limit. Try it in the app.",
+      "ru": "Файл больше 50 МБ. Попробуйте его в приложении.",
+      "de": "Diese Datei ist größer als 50 MB. Probier sie in der App.",
+      "ja": "ファイルが50MBの上限を超えています。アプリでお試しください。",
+      "fr": "Ce fichier dépasse la limite de 50 Mo. Essayez-le dans l’app.",
+      "es": "El archivo supera el límite de 50 MB. Pruébalo en la app."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_unreadable": {
+    "localizations": {
+      "en": "We couldn’t read this photo. Try a JPEG, PNG or WebP image.",
+      "ru": "Не удалось прочитать фото. Попробуйте изображение JPEG, PNG или WebP.",
+      "de": "Dieses Foto konnte nicht gelesen werden. Probier ein JPEG-, PNG- oder WebP-Bild.",
+      "ja": "写真を読み込めませんでした。JPEG、PNG、WebPの画像をお試しください。",
+      "fr": "Impossible de lire cette photo. Essayez une image JPEG, PNG ou WebP.",
+      "es": "No se pudo leer la foto. Prueba con una imagen JPEG, PNG o WebP."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_4x_device": {
+    "localizations": {
+      "en": "4× needs a computer or iPad. Try 2× here, or use the app.",
+      "ru": "Для 4× нужен компьютер или iPad. Попробуйте 2× или воспользуйтесь приложением.",
+      "de": "4× braucht einen Computer oder ein iPad. Nutze hier 2× oder die App.",
+      "ja": "4倍にはパソコンまたはiPadが必要です。ここでは2倍をお試しいただくか、アプリをご利用ください。",
+      "fr": "Le 4× nécessite un ordinateur ou un iPad. Essayez le 2× ici ou utilisez l’app.",
+      "es": "El 4× necesita un ordenador o un iPad. Prueba 2× aquí o usa la app."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_4x_too_large": {
+    "localizations": {
+      "en": "This photo is too large for 4× on this device. 2× works.",
+      "ru": "Для 4× это фото слишком большое на этом устройстве. 2× подойдёт.",
+      "de": "Für 4× ist dieses Foto auf diesem Gerät zu groß. 2× funktioniert.",
+      "ja": "この写真はこのデバイスで4倍にするには大きすぎます。2倍なら利用できます。",
+      "fr": "Cette photo est trop grande pour le 4× sur cet appareil. Le 2× fonctionne.",
+      "es": "Esta foto es demasiado grande para 4× en este dispositivo. 2× sí funciona."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_too_large": {
+    "localizations": {
+      "en": "This photo is too large for this browser. At {scale}× the limit on this device is {mp} MP, with extra limits for very wide photos. Try the full-size photo in the app.",
+      "ru": "Фото слишком большое для этого браузера. При {scale}× на этом устройстве лимит — {mp} Мп, для очень широких фото — меньше. Попробуйте фото в полном размере в приложении.",
+      "de": "Dieses Foto ist zu groß für diesen Browser. Bei {scale}× liegt die Grenze auf diesem Gerät bei {mp} MP, für sehr breite Fotos noch darunter. Probier das Foto in voller Größe in der App.",
+      "ja": "この写真はブラウザで処理するには大きすぎます。このデバイスでの{scale}倍の上限は{mp}MPで、横長の写真にはさらに制限があります。元のサイズの写真はアプリでお試しください。",
+      "fr": "Cette photo est trop grande pour ce navigateur. En {scale}×, la limite sur cet appareil est de {mp} Mpx, et moins pour les photos très larges. Essayez la photo en taille réelle dans l’app.",
+      "es": "Esta foto es demasiado grande para este navegador. A {scale}×, el límite en este dispositivo es de {mp} MP, y menos para fotos muy anchas. Prueba la foto a tamaño completo en la app."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_open": {
+    "localizations": {
+      "en": "This browser couldn’t open the photo. Try another image or get the app.",
+      "ru": "Браузер не смог открыть фото. Попробуйте другое изображение или приложение.",
+      "de": "Dieser Browser konnte das Foto nicht öffnen. Probier ein anderes Bild oder die App.",
+      "ja": "このブラウザでは写真を開けませんでした。別の画像を試すか、アプリをご利用ください。",
+      "fr": "Ce navigateur n’a pas pu ouvrir la photo. Essayez une autre image ou l’app.",
+      "es": "Este navegador no pudo abrir la foto. Prueba otra imagen o la app."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_export_probe": {
+    "localizations": {
+      "en": "This browser couldn’t prepare an image download. Try the app.",
+      "ru": "Браузер не смог подготовить файл для скачивания. Попробуйте приложение.",
+      "de": "Dieser Browser konnte keinen Bild-Download vorbereiten. Probier die App.",
+      "ja": "このブラウザでは画像のダウンロードを準備できませんでした。アプリをお試しください。",
+      "fr": "Ce navigateur n’a pas pu préparer le téléchargement. Essayez l’app.",
+      "es": "Este navegador no pudo preparar la descarga. Prueba la app."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_check_again": {
+    "localizations": {
+      "en": "Choose the photo again and retry.",
+      "ru": "Выберите фото снова и повторите.",
+      "de": "Wähle das Foto erneut und versuch es noch einmal.",
+      "ja": "写真を選び直してもう一度お試しください。",
+      "fr": "Choisissez à nouveau la photo et réessayez.",
+      "es": "Vuelve a elegir la foto e inténtalo de nuevo."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_save": {
+    "localizations": {
+      "en": "This browser couldn’t save the full-size result. Try a smaller photo or use the app.",
+      "ru": "Браузер не смог сохранить результат в полном размере. Попробуйте фото поменьше или приложение.",
+      "de": "Dieser Browser konnte das Ergebnis nicht in voller Größe speichern. Probier ein kleineres Foto oder die App.",
+      "ja": "このブラウザでは元のサイズの結果を保存できませんでした。小さい写真を試すか、アプリをご利用ください。",
+      "fr": "Ce navigateur n’a pas pu enregistrer le résultat en taille réelle. Essayez une photo plus petite ou l’app.",
+      "es": "Este navegador no pudo guardar el resultado a tamaño completo. Prueba una foto más pequeña o la app."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_finish": {
+    "localizations": {
+      "en": "This browser couldn’t finish the photo.",
+      "ru": "Браузер не смог завершить обработку фото.",
+      "de": "Dieser Browser konnte das Foto nicht fertigstellen.",
+      "ja": "このブラウザでは写真の処理を完了できませんでした。",
+      "fr": "Ce navigateur n’a pas pu terminer la photo.",
+      "es": "Este navegador no pudo terminar la foto."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_face_limit": {
+    "localizations": {
+      "en": "Face enhancement is limited to {mp} MP on this device. Turn it off to upscale this photo, or try the app.",
+      "ru": "На этом устройстве улучшение лиц работает для фото до {mp} Мп. Выключите его, чтобы увеличить это фото, или попробуйте приложение.",
+      "de": "Die Gesichtsverbesserung ist auf diesem Gerät auf {mp} MP begrenzt. Schalte sie aus, um dieses Foto zu vergrößern, oder probier die App.",
+      "ja": "このデバイスでの顔の強調は{mp}MPまでです。オフにしてこの写真を高画質化するか、アプリをお試しください。",
+      "fr": "L’amélioration des visages est limitée à {mp} Mpx sur cet appareil. Désactivez-la pour agrandir cette photo, ou essayez l’app.",
+      "es": "La mejora de rostros está limitada a {mp} MP en este dispositivo. Desactívala para ampliar esta foto o prueba la app."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_face": {
+    "localizations": {
+      "en": "Face enhancement couldn’t finish in this browser. Try again, turn it off, or use the app.",
+      "ru": "Улучшение лиц не удалось завершить в этом браузере. Попробуйте снова, выключите его или воспользуйтесь приложением.",
+      "de": "Die Gesichtsverbesserung konnte in diesem Browser nicht abgeschlossen werden. Versuch es erneut, schalte sie aus oder nutze die App.",
+      "ja": "このブラウザでは顔の強調を完了できませんでした。もう一度試すか、オフにするか、アプリをご利用ください。",
+      "fr": "L’amélioration des visages n’a pas pu aboutir dans ce navigateur. Réessayez, désactivez-la ou utilisez l’app.",
+      "es": "La mejora de rostros no pudo terminar en este navegador. Inténtalo de nuevo, desactívala o usa la app."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_face_stopped": {
+    "localizations": {
+      "en": "Face enhancement stopped. Turn it off and try again, or use the app.",
+      "ru": "Улучшение лиц остановилось. Выключите его и попробуйте снова или воспользуйтесь приложением.",
+      "de": "Die Gesichtsverbesserung wurde gestoppt. Schalte sie aus und versuch es erneut, oder nutze die App.",
+      "ja": "顔の強調が停止しました。オフにしてもう一度試すか、アプリをご利用ください。",
+      "fr": "L’amélioration des visages s’est arrêtée. Désactivez-la et réessayez, ou utilisez l’app.",
+      "es": "La mejora de rostros se detuvo. Desactívala e inténtalo de nuevo, o usa la app."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_face_start": {
+    "localizations": {
+      "en": "This browser couldn’t start face enhancement. Turn it off and try again, or use the app.",
+      "ru": "Браузер не смог запустить улучшение лиц. Выключите его и попробуйте снова или воспользуйтесь приложением.",
+      "de": "Dieser Browser konnte die Gesichtsverbesserung nicht starten. Schalte sie aus und versuch es erneut, oder nutze die App.",
+      "ja": "このブラウザでは顔の強調を開始できませんでした。オフにしてもう一度試すか、アプリをご利用ください。",
+      "fr": "Ce navigateur n’a pas pu lancer l’amélioration des visages. Désactivez-la et réessayez, ou utilisez l’app.",
+      "es": "Este navegador no pudo iniciar la mejora de rostros. Desactívala e inténtalo de nuevo, o usa la app."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_engine_start": {
+    "localizations": {
+      "en": "The upscaler couldn’t start in this browser.",
+      "ru": "Нейросеть не запустилась в этом браузере.",
+      "de": "Der Upscaler konnte in diesem Browser nicht starten.",
+      "ja": "このブラウザでは高画質化モデルを起動できませんでした。",
+      "fr": "Le moteur n’a pas pu démarrer dans ce navigateur.",
+      "es": "El modelo no pudo iniciarse en este navegador."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_processing": {
+    "localizations": {
+      "en": "This browser couldn’t finish processing the image.",
+      "ru": "Браузер не смог завершить обработку изображения.",
+      "de": "Dieser Browser konnte die Bildverarbeitung nicht abschließen.",
+      "ja": "このブラウザでは画像の処理を完了できませんでした。",
+      "fr": "Ce navigateur n’a pas pu terminer le traitement de l’image.",
+      "es": "Este navegador no pudo terminar de procesar la imagen."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_download": {
+    "localizations": {
+      "en": "The processing files couldn’t be downloaded. Check your connection and try again.",
+      "ru": "Не удалось загрузить файлы для обработки. Проверьте подключение и попробуйте снова.",
+      "de": "Die Verarbeitungsdateien konnten nicht geladen werden. Prüfe deine Verbindung und versuch es erneut.",
+      "ja": "処理用のファイルをダウンロードできませんでした。接続を確認してもう一度お試しください。",
+      "fr": "Impossible de télécharger les fichiers de traitement. Vérifiez votre connexion et réessayez.",
+      "es": "No se pudieron descargar los archivos de procesamiento. Comprueba tu conexión e inténtalo de nuevo."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_unavailable": {
+    "localizations": {
+      "en": "The processing files are unavailable. Please try again shortly.",
+      "ru": "Файлы для обработки сейчас недоступны. Попробуйте чуть позже.",
+      "de": "Die Verarbeitungsdateien sind nicht verfügbar. Versuch es bitte gleich noch einmal.",
+      "ja": "処理用のファイルが利用できません。しばらくしてからもう一度お試しください。",
+      "fr": "Les fichiers de traitement sont indisponibles. Réessayez dans un instant.",
+      "es": "Los archivos de procesamiento no están disponibles. Inténtalo de nuevo en un momento."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_interrupted": {
+    "localizations": {
+      "en": "The download was interrupted. Check your connection and try again.",
+      "ru": "Загрузка прервалась. Проверьте подключение и попробуйте снова.",
+      "de": "Der Download wurde unterbrochen. Prüfe deine Verbindung und versuch es erneut.",
+      "ja": "ダウンロードが中断されました。接続を確認してもう一度お試しください。",
+      "fr": "Le téléchargement a été interrompu. Vérifiez votre connexion et réessayez.",
+      "es": "La descarga se interrumpió. Comprueba tu conexión e inténtalo de nuevo."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_face_download": {
+    "localizations": {
+      "en": "The face model download was interrupted. Check your connection and try again.",
+      "ru": "Загрузка модели для лиц прервалась. Проверьте подключение и попробуйте снова.",
+      "de": "Der Download des Gesichtsmodells wurde unterbrochen. Prüfe deine Verbindung und versuch es erneut.",
+      "ja": "顔モデルのダウンロードが中断されました。接続を確認してもう一度お試しください。",
+      "fr": "Le téléchargement du modèle de visages a été interrompu. Vérifiez votre connexion et réessayez.",
+      "es": "La descarga del modelo de rostros se interrumpió. Comprueba tu conexión e inténtalo de nuevo."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_surface": {
+    "localizations": {
+      "en": "This browser couldn’t create an image surface. Try the app.",
+      "ru": "Браузер не смог создать область для изображения. Попробуйте приложение.",
+      "de": "Dieser Browser konnte keine Bildfläche anlegen. Probier die App.",
+      "ja": "このブラウザでは画像の描画領域を作成できませんでした。アプリをお試しください。",
+      "fr": "Ce navigateur n’a pas pu créer de surface d’image. Essayez l’app.",
+      "es": "Este navegador no pudo crear la superficie de imagen. Prueba la app."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_output_size": {
+    "localizations": {
+      "en": "The upscaler returned an unexpected image size.",
+      "ru": "Нейросеть вернула изображение неожиданного размера.",
+      "de": "Der Upscaler hat eine unerwartete Bildgröße geliefert.",
+      "ja": "高画質化モデルが想定外のサイズの画像を返しました。",
+      "fr": "Le moteur a renvoyé une taille d’image inattendue.",
+      "es": "El modelo devolvió un tamaño de imagen inesperado."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_invalid_output": {
+    "localizations": {
+      "en": "The browser returned an invalid image.",
+      "ru": "Браузер вернул некорректное изображение.",
+      "de": "Der Browser hat ein ungültiges Bild geliefert.",
+      "ja": "ブラウザが無効な画像を返しました。",
+      "fr": "Le navigateur a renvoyé une image non valide.",
+      "es": "El navegador devolvió una imagen no válida."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_https": {
+    "localizations": {
+      "en": "Open this page over HTTPS to process photos in the browser.",
+      "ru": "Откройте страницу по HTTPS, чтобы обрабатывать фото в браузере.",
+      "de": "Öffne diese Seite über HTTPS, um Fotos im Browser zu verarbeiten.",
+      "ja": "ブラウザで写真を処理するには、このページをHTTPSで開いてください。",
+      "fr": "Ouvrez cette page en HTTPS pour traiter des photos dans le navigateur.",
+      "es": "Abre esta página por HTTPS para procesar fotos en el navegador."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_browser": {
+    "localizations": {
+      "en": "This browser doesn’t support what’s needed to upscale photos here. Try a current browser or get the app.",
+      "ru": "Этот браузер не поддерживает нужные для обработки функции. Попробуйте современный браузер или приложение.",
+      "de": "Dieser Browser unterstützt nicht alles, was zum Vergrößern nötig ist. Probier einen aktuellen Browser oder die App.",
+      "ja": "このブラウザは写真の高画質化に必要な機能に対応していません。最新のブラウザかアプリをお試しください。",
+      "fr": "Ce navigateur ne prend pas en charge ce qu’il faut pour agrandir des photos ici. Essayez un navigateur récent ou l’app.",
+      "es": "Este navegador no admite lo necesario para ampliar fotos aquí. Prueba un navegador actual o la app."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_speed": {
+    "localizations": {
+      "en": "The speed check didn’t finish. Please try again.",
+      "ru": "Проверка скорости не завершилась. Попробуйте снова.",
+      "de": "Der Geschwindigkeitstest wurde nicht abgeschlossen. Versuch es bitte erneut.",
+      "ja": "速度チェックが完了しませんでした。もう一度お試しください。",
+      "fr": "Le test de vitesse n’a pas abouti. Réessayez.",
+      "es": "La prueba de velocidad no terminó. Inténtalo de nuevo."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_timeout": {
+    "localizations": {
+      "en": "Processing stopped responding. Retry, choose a smaller photo, or try the app.",
+      "ru": "Обработка перестала отвечать. Повторите, выберите фото поменьше или попробуйте приложение.",
+      "de": "Die Verarbeitung reagiert nicht mehr. Versuch es erneut, wähle ein kleineres Foto oder probier die App.",
+      "ja": "処理が応答しなくなりました。再試行するか、小さい写真を選ぶか、アプリをお試しください。",
+      "fr": "Le traitement ne répond plus. Réessayez, choisissez une photo plus petite ou essayez l’app.",
+      "es": "El procesamiento dejó de responder. Reinténtalo, elige una foto más pequeña o prueba la app."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_task_stopped": {
+    "localizations": {
+      "en": "The processing task stopped. Try again or use the app.",
+      "ru": "Обработка остановилась. Попробуйте снова или воспользуйтесь приложением.",
+      "de": "Die Verarbeitung wurde beendet. Versuch es erneut oder nutze die App.",
+      "ja": "処理が停止しました。もう一度試すか、アプリをご利用ください。",
+      "fr": "Le traitement s’est arrêté. Réessayez ou utilisez l’app.",
+      "es": "El procesamiento se detuvo. Inténtalo de nuevo o usa la app."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_result_read": {
+    "localizations": {
+      "en": "The browser couldn’t read the result. Try the app.",
+      "ru": "Браузер не смог прочитать результат. Попробуйте приложение.",
+      "de": "Der Browser konnte das Ergebnis nicht lesen. Probier die App.",
+      "ja": "ブラウザが結果を読み取れませんでした。アプリをお試しください。",
+      "fr": "Le navigateur n’a pas pu lire le résultat. Essayez l’app.",
+      "es": "El navegador no pudo leer el resultado. Prueba la app."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.err_worker_start": {
+    "localizations": {
+      "en": "This browser couldn’t start processing. Try a current browser or get the app.",
+      "ru": "Браузер не смог запустить обработку. Попробуйте современный браузер или приложение.",
+      "de": "Dieser Browser konnte die Verarbeitung nicht starten. Probier einen aktuellen Browser oder die App.",
+      "ja": "このブラウザでは処理を開始できませんでした。最新のブラウザかアプリをお試しください。",
+      "fr": "Ce navigateur n’a pas pu lancer le traitement. Essayez un navigateur récent ou l’app.",
+      "es": "Este navegador no pudo iniciar el procesamiento. Prueba un navegador actual o la app."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  }
+}

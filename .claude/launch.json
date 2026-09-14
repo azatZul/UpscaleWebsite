@@ -9,6 +9,13 @@
       "autoPort": true
     },
     {
+      "name": "free-upscale",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "npm run build:tool && python3 build/build.py && node scripts/package_preview.mjs && USCALE_SERVE_PREVIEW=1 USCALE_LAB_PORT=${PORT:-4175} exec node scripts/serve_lab.mjs"],
+      "port": 4175,
+      "autoPort": true
+    },
+    {
       "name": "albums-worker",
       "runtimeExecutable": "npx",
       "runtimeArgs": ["wrangler", "dev", "--port", "8788", "--cwd", "worker"],

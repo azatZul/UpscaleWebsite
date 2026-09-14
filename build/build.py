@@ -39,6 +39,21 @@ def asset_v(name):
 CSS_V = asset_v("site.css")
 JS_V = asset_v("site.js")
 
+# The free browser upscaler lives at /free-upscale/ in every locale. Its script
+# comes from the separate Vite build (npm run build:tool); without that build the
+# site still builds and simply leaves out the page, its links and the home banner.
+TOOL_PATH = "free-upscale"
+TOOL_MANIFEST = os.path.join(ROOT, "assets", "processor", "app", ".vite", "manifest.json")
+
+def _tool_script():
+    try:
+        with open(TOOL_MANIFEST, encoding="utf-8") as f:
+            return "/assets/processor/app/" + json.load(f)["src/tool/main.js"]["file"]
+    except (OSError, KeyError, ValueError):
+        return None
+
+TOOL_SCRIPT = _tool_script()
+
 RATING = APP_FACTS["rating"]["value"]
 RATING_COUNT = APP_FACTS["rating"]["count"]
 # Filled width of the five-star rating.
@@ -460,6 +475,8 @@ UNKNOWN_FACTS = set()
 def inject_facts(value, lang="en"):
     """Replace app-fact placeholders, including locale-specific number formatting."""
     facts = fact_text(lang)
+    # The browser tool's runtime strings keep their {placeholders}: src/tool/i18n.js fills them.
+    runtime = value.get("tool", {}).get("js") if isinstance(value, dict) else None
 
     def replace(item):
         if isinstance(item, str):
@@ -475,7 +492,7 @@ def inject_facts(value, lang="en"):
         if isinstance(item, tuple):
             return tuple(replace(child) for child in item)
         if isinstance(item, dict):
-            return {key: replace(child) for key, child in item.items()}
+            return {key: child if child is runtime else replace(child) for key, child in item.items()}
         return item
 
     return replace(value)
@@ -538,8 +555,8 @@ def page_path(path=""):
     """Logical path -> the file that is actually served (extension included)."""
     if not path:
         return ""
-    if path == "guides":
-        return "guides/"
+    if path in ("guides", TOOL_PATH):
+        return path + "/"
     return path + ".html"
 
 def logical_path(filename):
@@ -585,7 +602,7 @@ def copy_static():
 
 # Shared markup
 def head(c, lang, title, desc, canonical, path="", og_image=None, extra_ld=None, robots=None,
-         alternates=True, dynamic_meta=False):
+         alternates=True, dynamic_meta=False, stylesheet=None):
     L = BY_CODE[lang]
     og_image = og_image or f"{SITE}{SCREENSHOTS[0]}"
     alts = ""
@@ -595,7 +612,10 @@ def head(c, lang, title, desc, canonical, path="", og_image=None, extra_ld=None,
             for l in LOCALIZED_CODES
         ) + f'\n  <link rel="alternate" hreflang="x-default" href="{url("en", path)}">' 
     copy_locale = BY_CODE[content_lang(c, lang)]
-    metadata = "<!--HEAD-->" if dynamic_meta else f"""<title>{esc(title)}</title>
+    # A page's own stylesheet from assets/, loaded after site.css.
+    page_css = (f'\n  <link rel="stylesheet" href="/assets/{stylesheet}?v={asset_v(stylesheet)}">'
+                if stylesheet else "")
+    metadata ="<!--HEAD-->" if dynamic_meta else f"""<title>{esc(title)}</title>
   <meta name="description" content="{esc(desc)}">
   <link rel="canonical" href="{canonical}">
   {alts}
@@ -625,7 +645,7 @@ def head(c, lang, title, desc, canonical, path="", og_image=None, extra_ld=None,
   <link rel="icon" type="image/png" sizes="512x512" href="/resources/appstore/icon_512.png">
   <link rel="apple-touch-icon" href="/resources/appstore/icon_180.png">
   <link rel="preload" as="image" href="/resources/appstore/icon_180.png">
-  <link rel="stylesheet" href="/assets/site.css?v={CSS_V}">
+  <link rel="stylesheet" href="/assets/site.css?v={CSS_V}">{page_css}
   {extra_ld or ''}
 </head>
 <body>
@@ -798,12 +818,45 @@ def nav(c, lang, home_prefix, path="", on_home=False):
       <a href="{compare_href}">{esc(n.get('compare', 'Comparison'))}</a>
       <a href="{guides_href}">{esc(n['guides'])}</a>
       <a href="{home_prefix}#faq">{esc(n['faq'])}</a>
+      {browser_tool_link(c, lang)}
     </nav>
     {theme_toggle(c)}
     {lang_switcher(c, lang, path)}
   </div>
 </header>
 """
+
+def browser_tool_link(c, lang, hero=False):
+    """Only advertise the browser tool when its separate build is present."""
+    if not TOOL_SCRIPT:
+        return ""
+    href = rel_url(lang, TOOL_PATH)
+    if hero:
+        return (f'<a class="btn btn-g" href="{href}">{esc(c["tool"]["hero_link"])} '
+                f'<span class="arrow" aria-hidden="true">→</span></a>')
+    return f'<a href="{href}">{esc(c["tool"]["nav"])}</a>'
+
+# Site-wide consent. Hidden until site.js finds no saved choice; Accept and Reject
+# share one style so neither is nudged. Analytics code reads the same choice.
+def consent_banner(c, lang):
+    k = c["consent"]
+    def row(name, desc, control):
+        return (f'<label class="consent-row"><span><b>{esc(name)}</b><small>{esc(desc)}</small></span>'
+                f'{control}<i class="consent-switch" aria-hidden="true"></i></label>')
+    return f"""<section class="consent" id="consent" aria-labelledby="consent-title" hidden>
+  <h2 id="consent-title">{esc(k['title'])}</h2>
+  <p>{esc(k['body'])} <a href="{rel_url(lang, 'privacy_policy')}">{esc(c['footer']['privacy'])}</a></p>
+  <div class="consent-prefs" id="consent-prefs" hidden>
+    {row(k['necessary'], k['necessary_desc'], '<input type="checkbox" checked disabled>')}
+    {row(k['analytics'], k['analytics_desc'], '<input type="checkbox" id="consent-analytics">')}
+  </div>
+  <div class="consent-actions">
+    <button class="btn btn-g" type="button" data-consent="reject">{esc(k['reject'])}</button>
+    <button class="btn btn-g" type="button" data-consent="accept">{esc(k['accept'])}</button>
+    <button class="btn btn-p" type="button" data-consent="save" hidden>{esc(k['save'])}</button>
+    <button class="consent-link" type="button" data-consent="settings">{esc(k['settings'])}</button>
+  </div>
+</section>"""
 
 def footer(c, lang, home_prefix, path=""):
     f = c["footer"]
@@ -841,6 +894,7 @@ def footer(c, lang, home_prefix, path=""):
           <li><a href="{rel_url(lang, 'support_page')}">{esc(f['help'])}</a></li>
           <li><a href="{rel_url(lang, 'privacy_policy')}">{esc(f['privacy'])}</a></li>
           <li><a href="{rel_url(lang, 'terms')}">{esc(f['terms'])}</a></li>
+          <li><button class="consent-link" type="button" data-consent-open>{esc(c['consent']['footer_link'])}</button></li>
         </ul>
       </div>
     </div>
@@ -850,6 +904,7 @@ def footer(c, lang, home_prefix, path=""):
     </div>
   </div>
 </footer>
+{consent_banner(c, lang)}
 <script src="/assets/site.js?v={JS_V}" defer></script>
 </body>
 </html>
@@ -951,7 +1006,7 @@ def render_home(c, lang):
         <span><b>{rating}</b> \u00b7 {esc(h['rating_note'])}</span></div>
       <h1>{h['h1']}</h1>
       <p class="hero-sub">{esc(h['sub'])}</p>
-      <div class="hero-cta stores">{store_badge(appstore_btn(c), h['note'])}</div>
+      <div class="hero-cta stores{' with-tool' if TOOL_SCRIPT else ''}">{store_badge(appstore_btn(c), h['note'])}{browser_tool_link(c, lang, hero=True)}</div>
     </div>
     {hero_phone(c, h)}
     <ul class="chips hero-chips">{chips}</ul>
@@ -1057,6 +1112,7 @@ def render_home(c, lang):
     <div class="steps">{steps}</div>
   </div>
 </section>""")
+    out.append(tool_cta(c, lang))
 
     # Privacy
     pts = c["privacy"]["points"]
@@ -1701,6 +1757,213 @@ def render_compare(c, lang):
             + footer(c, lang, home_prefix, "compare"))
 
 
+# Free browser upscaler
+PLUS_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" '
+            'stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>')
+SHIELD_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">'
+              '<path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z"/><path d="M9 12l2 2 4-4"/></svg>')
+# Viewer controls (.album-ctl in site.css); keep in sync with ICON_EXPAND/ICON_CLOSE in worker/src/index.ts.
+EXPAND_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" '
+              'stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>')
+CLOSE_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" '
+             'aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>')
+CHECK_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" '
+             'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7"/></svg>')
+
+
+def tool_cta(c, lang):
+    """Home banner for the browser tool, in the comparison teaser's card style.
+
+    The art is a small browser window with the tool's drop zone in it; hovering
+    the card slides the comparison, flips the scale switch and lifts the badges."""
+    if not TOOL_SCRIPT:
+        return ""
+    th, h = c["tool"]["home"], c["hero"]
+    return f"""<section class="sect-tight" id="try-online">
+  <div class="wrap">
+    <a class="vs-card try-card" href="{rel_url(lang, TOOL_PATH)}">
+      <div class="try-art" aria-hidden="true">
+        <div class="try-window">
+          <span class="try-bar"><i></i><i></i><i></i><b>upscales.app/{TOOL_PATH}</b></span>
+          <div class="try-drop">
+            <span class="try-photo">
+              <img class="try-after" src="{BA}/lowq_portrait_after.jpg" width="1200" height="1080" loading="lazy" decoding="async" alt="">
+              <img class="try-before" src="{BA}/lowq_portrait_before.jpg" width="400" height="360" loading="lazy" decoding="async" alt="">
+              <span class="try-split"></span>
+              <span class="try-tag l">{esc(h['before'])}</span><span class="try-tag r">{esc(h['after'])}</span>
+            </span>
+            <span class="try-scale"><span>{esc(c['tool']['x2'])}</span><span>{esc(c['tool']['x4'])}</span></span>
+          </div>
+        </div>
+        <span class="try-badge try-free">{esc(th['free'])}</span>
+        <span class="try-badge try-device">{LOCK_SVG}{esc(th['device'])}</span>
+      </div>
+      <div class="vs-card-copy">
+        <h2>{esc(th['h2'])}</h2>
+        <p>{esc(th['p'])}</p>
+        <span class="btn btn-p vs-card-btn">{esc(th['cta'])}
+          <span class="arrow" aria-hidden="true">→</span></span>
+        <p class="hero-note">{esc(th['note'])}</p>
+      </div>
+    </a>
+  </div>
+</section>"""
+
+
+def render_tool(c, lang):
+    """The browser upscaler page: site chrome and theme, the locale's copy, and
+    the tool's runtime strings for src/tool/i18n.js. Stays noindex while the
+    tool is a preview."""
+    tl, js = c["tool"], c["tool"]["js"]
+    home_prefix = rel_url(lang)
+    canonical = url(lang, TOOL_PATH)
+    first = lambda text: esc(text.replace("{scale}", "2"))
+    # "</" would end the script element early; JSON allows the escaped slash.
+    strings = json.dumps(js, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    return (head(c, lang, tl["meta"]["title"], tl["meta"]["description"], canonical, path=TOOL_PATH,
+                 robots="noindex,follow", stylesheet="upscale.css")
+            + nav(c, lang, home_prefix, TOOL_PATH)
+            + f"""<main class="tool" id="main-content" tabindex="-1">
+  <div class="wrap tool-wrap">
+    <div class="tool-heading">
+      <span class="eyebrow">{esc(tl['eyebrow'])}</span>
+      <h1>{esc(tl['h1'])}</h1>
+      <p class="lead">{esc(tl['sub'])}</p>
+    </div>
+    <ol class="tool-steps" aria-label="{esc(tl['steps_label'])}">
+      <li id="step-choose" aria-current="step"><span class="step-mark"><i>1</i>{CHECK_SVG}</span>{esc(tl['step_choose'])}</li>
+      <li id="step-upscale"><span class="step-mark"><i>2</i>{CHECK_SVG}</span>{esc(tl['step_upscale'])}</li>
+      <li id="step-compare"><span class="step-mark"><i>3</i>{CHECK_SVG}</span>{esc(tl['step_save'])}</li>
+    </ol>
+    <p class="notice" id="interrupted" hidden>{esc(tl['interrupted'])}</p>
+    <section class="tool-card" id="photo-stage" aria-labelledby="stage-title">
+      <div class="tool-card-heading">
+        <h2 id="stage-title">{esc(js['choose_title'])}</h2>
+        <span class="private-badge">{SHIELD_SVG}{esc(tl['private'])}</span>
+      </div>
+      <input id="photo-input" type="file" accept="image/*" hidden>
+      <div id="drop-zone" class="photo-drop" aria-disabled="false">
+        <div id="drop-empty" class="drop-empty">
+          <div class="drop-target">
+            <span class="upload-mark" aria-hidden="true">{PLUS_SVG}</span>
+            <p class="drop-title">{esc(tl['drop_title'])}</p>
+          </div>
+          <span class="drop-or">{esc(tl['or'])}</span>
+          <button id="choose-photo" class="btn btn-p" type="button">{esc(tl['choose'])} <span class="arrow" aria-hidden="true">→</span></button>
+          <span id="limit-note" class="limit-note">{esc(tl['formats'])}</span>
+        </div>
+        <div id="selected-photo" class="drop-selected" hidden>
+          <div class="selected-frame">
+            <span class="selected-thumb">
+              <img id="source-thumb" alt="{esc(tl['thumb_alt'])}">
+              <button id="remove-photo" class="remove-photo" type="button" aria-label="{esc(tl['remove'])}">{CLOSE_SVG}</button>
+            </span>
+          </div>
+          <div class="selected-meta">
+            <b id="source-name"></b>
+            <span id="source-size"></span>
+            <p id="photo-error" class="photo-error" role="alert" hidden></p>
+          </div>
+        </div>
+        <span class="drop-release" aria-hidden="true">{esc(tl['drop_release'])}</span>
+      </div>
+      <div class="tool-options" id="tool-options">
+        <div class="model-field">
+          <span class="option-label" id="model-label">{esc(tl['model_label'])}</span>
+          <span class="segment-option model-option" role="group" aria-labelledby="model-label">
+            <button id="model-photo" type="button" aria-pressed="true">{esc(tl['model_photo'])}</button>
+            <button id="model-drawing" type="button" aria-pressed="false">{esc(tl['model_drawing'])}</button>
+          </span>
+        </div>
+        <div class="scale-field">
+          <span class="option-label" id="scale-label">{esc(tl['scale_label'])}</span>
+          <span class="segment-option scale-option" role="group" aria-labelledby="scale-label">
+            <button id="scale-2x" type="button" aria-pressed="true">{esc(tl['x2'])}</button>
+            <button id="scale-4x" type="button" aria-pressed="false">{esc(tl['x4'])}</button>
+          </span>
+          <span id="scale-popover" class="scale-popover" role="status" aria-live="polite" hidden></span>
+        </div>
+        <label class="face-option" id="face-option"><input id="enhance-faces" type="checkbox" checked><span>{esc(tl['faces'])}</span></label>
+      </div>
+      <div class="tool-status" id="status" role="status" aria-live="polite" aria-atomic="true">
+        <div class="status-head"><b id="status-title" hidden></b><span id="status-value"></span></div>
+        <progress id="progress" max="1" value="0" aria-label="{esc(tl['progress_label'])}" hidden></progress>
+        <p id="status-detail">{esc(js['idle_detail'])}</p>
+      </div>
+      <p id="visibility-note" class="notice" hidden>{esc(tl['visibility'])}</p>
+      <div class="tool-actions">
+        <button id="process-photo" class="btn btn-p" type="button" disabled>{first(js['upscale_button'])}</button>
+        <button id="retry" class="btn btn-p" type="button" hidden>{esc(tl['retry'])}</button>
+        <button id="cpu-retry" class="btn btn-p" type="button" hidden>{esc(tl['cpu_retry'])}</button>
+        <button id="try-2x" class="btn btn-p" type="button" hidden>{esc(tl['try_2x'])}</button>
+        <button id="choose-another" class="btn btn-p" type="button" hidden>{esc(tl['choose'])}</button>
+        <button id="cancel" class="btn btn-g" type="button" hidden>{esc(tl['cancel'])}</button>
+      </div>
+    </section>
+    <section class="tool-results" id="results" tabindex="-1" aria-labelledby="result-title" hidden>
+      <div class="album-viewer" id="result-viewer">
+        <div class="album-stage" id="result-stage">
+          <div class="result-comparison">
+            <div class="cmp" id="result-comparison" role="group" aria-label="{esc(c['hero']['cmp_label'])}">
+              <img class="a-img" id="result-image" alt="" draggable="false">
+              <img class="b" id="before-image" alt="{esc(tl['original_alt'])}" draggable="false">
+              <span class="cmp-tag l">{esc(c['compare']['original'])}</span><span class="cmp-tag r" id="result-tag"></span>
+              <span class="cmp-bar" id="comparison-handle" role="slider" tabindex="0" aria-label="{esc(c['hero']['drag'])}" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"></span>
+            </div>
+          </div>
+          <button id="expand-result" class="album-ctl album-zoom" type="button" aria-label="{esc(tl['expand'])}">{EXPAND_SVG}</button>
+          <button id="close-result" class="album-ctl album-close" type="button" aria-label="{esc(tl['close'])}" hidden>{CLOSE_SVG}</button>
+        </div>
+        <div class="album-details">
+          <h2 id="result-title">{first(js['upscaled'])}</h2>
+          <p id="result-summary"></p>
+          <p id="face-summary"></p>
+          <div class="album-actions">
+            <a id="download-result" class="btn btn-p" download="uscale.jpg">{DOWN_SVG}{esc(tl['download'])}</a>
+            <button id="choose-faces" class="btn btn-g" type="button" hidden></button>
+            <button id="another-photo" class="text-button" type="button">{esc(tl['another'])}</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="inline-cta">
+      <img src="/resources/appstore/icon_512.png" width="66" height="66" loading="lazy"
+           alt="{esc(c['ui']['icon_alt'])}">
+      <div><h3>UScale</h3><p>{esc(tl['app_sub'])}</p></div>
+      {appstore_btn(c)}
+    </div>
+    <noscript><p class="notice">{esc(tl['noscript'])}</p></noscript>
+  </div>
+</main>
+<div class="face-editor" id="face-editor" role="dialog" aria-modal="true" aria-labelledby="face-editor-title" hidden>
+  <div class="face-editor-stage" id="face-stage">
+    <div class="face-editor-fit">
+      <div class="face-editor-frame" id="face-frame">
+        <img id="face-photo" alt="{esc(tl['face_editor_alt'])}" draggable="false">
+        <div class="face-editor-marks" id="face-marks" role="group" aria-label="{esc(tl['face_editor_group'])}"></div>
+      </div>
+    </div>
+  </div>
+  <button id="face-close" class="album-ctl album-close" type="button" aria-label="{esc(tl['face_editor_close'])}">{CLOSE_SVG}</button>
+  <div class="face-editor-bar">
+    <div class="face-editor-text">
+      <h2 id="face-editor-title"></h2>
+      <p class="face-editor-hint">{esc(tl['face_editor_hint'])}</p>
+      <p class="face-editor-status" id="face-status" role="status" aria-live="polite" hidden></p>
+      <progress id="face-progress" max="1" value="0" aria-label="{esc(tl['progress_label'])}" hidden></progress>
+    </div>
+    <div class="face-editor-actions">
+      <button id="face-cancel" class="btn btn-g" type="button">{esc(tl['face_editor_cancel'])}</button>
+      <button id="face-apply" class="btn btn-p" type="button">{esc(tl['face_editor_apply'])}</button>
+    </div>
+  </div>
+</div>
+<script type="application/json" id="tool-strings">{strings}</script>
+<script type="module" src="{TOOL_SCRIPT}"></script>
+"""
+            + footer(c, lang, home_prefix, TOOL_PATH))
+
+
 # Sitemap
 def render_sitemap():
     entries = []
@@ -1738,10 +2001,14 @@ def render_static_redirects():
     for code in LOCALIZED_CODES:
         segment = BY_CODE[code][1]
         base = f"/{segment}/" if segment else "/"
-        for directory in (base, base + "guides/"):
+        directories = (base, base + "guides/") + ((base + TOOL_PATH + "/",) if TOOL_SCRIPT else ())
+        for directory in directories:
             rules.append(f"{directory} {directory}index.html 200")
             if directory != "/":
                 rules.append(f"{directory.rstrip('/')} {directory} 301")
+    if TOOL_SCRIPT:
+        # The preview first shipped at /upscale/.
+        rules += [f"/upscale/ /{TOOL_PATH}/ 301", f"/upscale /{TOOL_PATH}/ 301"]
     return "\n".join(rules) + "\n"
 
 
@@ -1776,6 +2043,8 @@ def main():
             write(f"{base}{d['file']}", render_doc(c, d, code)); built += 1
         write(f"{base}sale.html", render_sale(c, code)); built += 1
         write(f"{base}compare.html", render_compare(c, code)); built += 1
+        if TOOL_SCRIPT:
+            write(f"{base}{TOOL_PATH}/index.html", render_tool(c, code)); built += 1
         print(f"  ✓ {code}")
     write("sitemap.xml", render_sitemap())
     write("robots.txt", ROBOTS)
