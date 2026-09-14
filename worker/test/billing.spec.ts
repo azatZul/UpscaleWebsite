@@ -32,8 +32,11 @@ function installFetchStub(stripeResponder?: (url: string) => Response) {
     if (url.startsWith("https://api.stripe.com/")) {
       stripeCalls.push({ url, body: String(init?.body ?? "") });
       if (stripeResponder) return stripeResponder(url);
+      // One customer per account, as real Stripe gives: the stored id is
+      // UNIQUE, so a stub handing every account the same id would collide.
+      const accountId = /metadata%5Baccount_id%5D=([^&]+)/.exec(String(init?.body ?? ""))?.[1];
       const payload = url.includes("/customers")
-        ? { id: "cus_test_1" }
+        ? { id: `cus_${accountId}` }
         : { id: "cs_test_1", url: "https://checkout.stripe.com/c/pay/cs_test_1" };
       return new Response(JSON.stringify(payload), { headers: { "Content-Type": "application/json" } });
     }
@@ -157,21 +160,28 @@ describe.sequential("stripe webhook", () => {
     expect(await balanceOf(account.id)).toBe(1650);
   });
 
-  it("refuses a session whose total disagrees with the pack it claims", async () => {
+  it("credits what was actually paid, not what the metadata claims", async () => {
     const account = await getOrCreateAccount(env.ACCOUNTS_DB, `sub-${crypto.randomUUID()}`, null);
-    // The pro pack's 4800 credits for the starter pack's $5.
-    const event = completedSession({ amount_total: 500, metadata: { pack_id: "pro", account_id: account.id } });
-    expect(event.data.object.amount_total).toBe(500);
+    // Metadata claims the pro pack; Stripe says $5 was paid. $5 buys 500.
+    const event = completedSession({ amount_total: 500, metadata: { pack_id: "pro", account_id: account.id, credits: "4800" } });
     const response = await postWebhook(event);
-    expect(response.status).toBe(200);
-    expect(await response.json()).toMatchObject({ error: "amount_mismatch" });
-    expect(await balanceOf(account.id)).toBe(0);
+    expect(await response.json()).toMatchObject({ applied: true, balance: 500 });
   });
 
-  it("refuses a session for an unknown pack, and one that is not paid", async () => {
+  it("prices a custom amount by the tier it reaches", async () => {
     const account = await getOrCreateAccount(env.ACCOUNTS_DB, `sub-${crypto.randomUUID()}`, null);
-    const unknown = await postWebhook(completedSession({ metadata: { pack_id: "free_money", account_id: account.id } }));
-    expect(await unknown.json()).toMatchObject({ error: "unattributable" });
+    const event = completedSession({ amount_total: 2_000, metadata: { account_id: account.id } });
+    expect(await (await postWebhook(event)).json()).toMatchObject({ applied: true, balance: 2_200 });
+  });
+
+  it("refuses an amount the price table would not sell, and one that is not paid", async () => {
+    const account = await getOrCreateAccount(env.ACCOUNTS_DB, `sub-${crypto.randomUUID()}`, null);
+    for (const amount_total of [550, 400, 60_000]) {
+      const refused = await postWebhook(completedSession({ amount_total, metadata: { account_id: account.id } }));
+      expect(await refused.json(), String(amount_total)).toMatchObject({ error: "amount_mismatch" });
+    }
+    const euros = await postWebhook(completedSession({ currency: "eur", metadata: { pack_id: "starter", account_id: account.id } }));
+    expect(await euros.json()).toMatchObject({ error: "amount_mismatch" });
     const unpaid = await postWebhook(completedSession({
       payment_status: "unpaid", metadata: { pack_id: "starter", account_id: account.id },
     }));
@@ -226,6 +236,7 @@ describe.sequential("billing endpoints", () => {
     expect(body.packs).toHaveLength(3);
     expect(body.packs[0]).toMatchObject({ id: "starter", credits: 500, priceCents: 500 });
     expect(body.operations).toMatchObject({ upscale_standard: 5, restore: 20, upscale_ultimate: 25 });
+    expect(body.limits).toEqual({ minCents: 500, maxCents: 50_000 });
   });
 
   it("creates a customer once, then a checkout session for the chosen pack", async () => {
@@ -246,6 +257,7 @@ describe.sequential("billing endpoints", () => {
     expect(stripeCalls[1]!.body).toContain("unit_amount%5D=1500");
 
     // Second purchase reuses the stored customer rather than making another.
+    const customerId = `cus_${/metadata%5Baccount_id%5D=([^&]+)/.exec(stripeCalls[0]!.body)?.[1]}`;
     stripeCalls = [];
     await fetchWorker("/api/billing/checkout", {
       method: "POST",
@@ -253,12 +265,15 @@ describe.sequential("billing endpoints", () => {
       body: JSON.stringify({ packId: "starter" }),
     });
     expect(stripeCalls.map(call => call.url)).toEqual(["https://api.stripe.com/v1/checkout/sessions"]);
-    expect(stripeCalls[0]!.body).toContain("customer=cus_test_1");
+    expect(stripeCalls[0]!.body).toContain(`customer=${customerId}`);
   });
 
-  it("rejects a pack id the price table does not contain", async () => {
+  it("rejects amounts and pack ids the price table does not contain", async () => {
     installFetchStub();
-    for (const body of [JSON.stringify({ packId: "bespoke" }), JSON.stringify({}), "not json"]) {
+    for (const body of [
+      JSON.stringify({ packId: "bespoke" }), JSON.stringify({}), "not json",
+      JSON.stringify({ amountCents: 450 }), JSON.stringify({ amountCents: 1_050 }), JSON.stringify({ amountCents: "2000" }),
+    ]) {
       const response = await fetchWorker("/api/billing/checkout", {
         method: "POST",
         headers: { Authorization: `Bearer ${await idToken("sub-badpack")}`, "Content-Type": "application/json" },
@@ -266,8 +281,21 @@ describe.sequential("billing endpoints", () => {
       });
       expect(response.status, body).toBe(400);
     }
-    // Nothing reached Stripe: an unknown pack is refused before any API call.
+    // Nothing reached Stripe: an invalid amount is refused before any API call.
     expect(stripeCalls).toHaveLength(0);
+  });
+
+  it("checks out a custom amount at its tier's rate", async () => {
+    installFetchStub();
+    const response = await fetchWorker("/api/billing/checkout", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${await idToken("sub-custom")}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ amountCents: 2_500 }),
+    });
+    expect(response.status).toBe(200);
+    const session = stripeCalls.find(call => call.url.endsWith("/checkout/sessions"))!;
+    expect(session.body).toContain("unit_amount%5D=2500");
+    expect(session.body).toContain("metadata%5Bcredits%5D=2750");
   });
 
   it("reports a Stripe outage as 502 without leaking Stripe's message", async () => {

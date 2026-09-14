@@ -13,7 +13,7 @@ async function sign(body: string, secret = SECRET, timestamp = Math.floor(Date.n
   return `t=${timestamp},v1=${hex}`;
 }
 
-const okFetch = (body: unknown) => vi.fn(async () => new Response(JSON.stringify(body), {
+const okFetch = (body: unknown) => vi.fn(async (_input: RequestInfo | URL, _init?: RequestInit) => new Response(JSON.stringify(body), {
   status: 200, headers: { "Content-Type": "application/json" },
 }));
 
@@ -94,13 +94,13 @@ describe("stripe api client", () => {
   });
 
   it("surfaces a Stripe error response as StripeError", async () => {
-    const fetcher = vi.fn(async () => new Response(JSON.stringify({ error: { message: "No such customer" } }), { status: 400 }));
+    const fetcher = vi.fn(async (_input: RequestInfo | URL, _init?: RequestInit) => new Response(JSON.stringify({ error: { message: "No such customer" } }), { status: 400 }));
     await expect(createCustomer({ secretKey: "sk_test", fetcher: fetcher as any }, { accountId: "a", email: null }))
       .rejects.toThrow(/No such customer/);
   });
 
   it("surfaces a network failure as StripeError, not a raw fetch error", async () => {
-    const fetcher = vi.fn(async () => { throw new TypeError("network down"); });
+    const fetcher = vi.fn(async (_input: RequestInfo | URL, _init?: RequestInit) => { throw new TypeError("network down"); });
     await expect(createCustomer({ secretKey: "sk_test", fetcher: fetcher as any }, { accountId: "a", email: null }))
       .rejects.toThrow(/Could not reach Stripe/);
   });

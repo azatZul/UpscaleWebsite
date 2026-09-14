@@ -51,10 +51,51 @@ export function stripeFeeCents(priceCents: number): number {
 /** Effective value of one credit for a pack, in cents. */
 export const centsPerCredit = (pack: CreditPack): number => pack.priceCents / pack.credits;
 
-/** Gross margin on one operation, as a fraction, for credits bought in `pack`.
- *  Stripe's cut is taken off revenue before the upstream cost. */
-export function marginFor(operation: Operation, pack: CreditPack): number {
-  const revenue = OPERATION_CREDITS[operation] * centsPerCredit(pack);
-  const afterStripe = revenue * (1 - stripeFeeCents(pack.priceCents) / pack.priceCents);
+/** Gross margin on one operation, as a fraction, for credits bought with a
+ *  payment of `amountCents` that granted `credits`. Stripe's cut comes off
+ *  revenue before the upstream cost. */
+export function marginForPurchase(operation: Operation, amountCents: number, credits: number): number {
+  const revenue = OPERATION_CREDITS[operation] * (amountCents / credits);
+  const afterStripe = revenue * (1 - stripeFeeCents(amountCents) / amountCents);
   return (afterStripe - UPSTREAM_COST_CENTS[operation]) / revenue;
+}
+
+export const marginFor = (operation: Operation, pack: CreditPack): number =>
+  marginForPurchase(operation, pack.priceCents, pack.credits);
+
+// Custom top-ups. Whole dollars only: it keeps the credit arithmetic exact and
+// the input simple, and nobody needs to buy $12.37 of credits.
+export const MIN_PURCHASE_CENTS = 500;
+export const MAX_PURCHASE_CENTS = 50_000;
+
+export interface CreditQuote {
+  amountCents: number;
+  credits: number;
+  /** The pack whose rate applies -- the largest one the amount reaches. */
+  tierId: string;
+  /** Bonus over the base rate, in whole percent, for display. */
+  bonusPercent: number;
+}
+
+/** Credits for a custom amount, or null when the amount is not purchasable.
+ *
+ *  An amount earns the rate of the largest pack it reaches, so $20 buys at the
+ *  $15 pack's rate and $100 at the $40 pack's. That keeps custom amounts from
+ *  ever undercutting the packs: within one tier the credit rate is fixed while
+ *  Stripe's fixed 30c shrinks as a share of the payment, so a tier's margin is
+ *  lowest at its bottom edge -- which is exactly the preset pack the margin
+ *  test already covers. */
+export function quoteCredits(amountCents: number): CreditQuote | null {
+  if (!Number.isSafeInteger(amountCents) || amountCents % 100 !== 0) return null;
+  if (amountCents < MIN_PURCHASE_CENTS || amountCents > MAX_PURCHASE_CENTS) return null;
+  const byPrice = [...CREDIT_PACKS].sort((a, b) => a.priceCents - b.priceCents);
+  const tier = byPrice.filter(pack => pack.priceCents <= amountCents).pop();
+  if (!tier) return null;
+  const base = byPrice[0]!;
+  return {
+    amountCents,
+    credits: Math.floor((amountCents * tier.credits) / tier.priceCents),
+    tierId: tier.id,
+    bonusPercent: Math.round((centsPerCredit(base) / centsPerCredit(tier) - 1) * 100),
+  };
 }

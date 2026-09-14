@@ -1,6 +1,12 @@
 import { bearerToken, verifyIdToken, type VerifiedIdentity } from "./auth";
-import { creditBalance, getOrCreateAccount, recordPurchase, setStripeCustomerId, type Account } from "./accounts";
-import { CREDIT_PACKS, OPERATION_CREDITS, packById } from "./pricing";
+import {
+  completeCloudJob, creditBalance, failCloudJob, getOrCreateAccount, listActivity, recordPurchase,
+  setStripeCustomerId, startCloudJob, type Account,
+} from "./accounts";
+import { AuralensError, runOperation } from "./auralens";
+import {
+  CREDIT_PACKS, MAX_PURCHASE_CENTS, MIN_PURCHASE_CENTS, OPERATION_CREDITS, packById, quoteCredits, type Operation,
+} from "./pricing";
 import { StripeError, createCheckoutSession, createCustomer, verifyWebhook } from "./stripe";
 
 const ALBUM_ID = "[0-9A-HJKMNP-TV-Z]{26}";
@@ -507,14 +513,19 @@ async function handleCheckout(request: Request, env: Env, identity: VerifiedIden
   const config = stripeConfig(env);
   if (!config) return json({ error: "billing_unavailable" }, 503);
 
-  let packId: unknown;
+  let body: { packId?: unknown; amountCents?: unknown };
   try {
-    packId = ((await request.json()) as { packId?: unknown })?.packId;
+    body = ((await request.json()) ?? {}) as typeof body;
   } catch {
     return json({ error: "invalid_body" }, 400);
   }
-  const pack = typeof packId === "string" ? packById(packId) : undefined;
-  if (!pack) return json({ error: "unknown_pack" }, 400);
+  // A preset is just a shortcut for its price; either way the credits come from
+  // quoteCredits, never from the request.
+  const amountCents = typeof body.packId === "string" ? packById(body.packId)?.priceCents : body.amountCents;
+  const quote = typeof amountCents === "number" ? quoteCredits(amountCents) : null;
+  if (!quote) {
+    return json({ error: "invalid_amount", minCents: MIN_PURCHASE_CENTS, maxCents: MAX_PURCHASE_CENTS }, 400);
+  }
 
   const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
   const origin = new URL(request.url).origin;
@@ -523,10 +534,10 @@ async function handleCheckout(request: Request, env: Env, identity: VerifiedIden
     const session = await createCheckoutSession(config, {
       accountId: account.id,
       customerId,
-      packId: pack.id,
-      credits: pack.credits,
-      priceCents: pack.priceCents,
-      productName: `UScale ${pack.label}`,
+      packId: quote.tierId,
+      credits: quote.credits,
+      priceCents: quote.amountCents,
+      productName: `${quote.credits.toLocaleString("en-US")} UScale credits`,
       successUrl: `${origin}/account/?purchase=success&session_id={CHECKOUT_SESSION_ID}`,
       cancelUrl: `${origin}/account/?purchase=cancelled`,
     });
@@ -535,7 +546,7 @@ async function handleCheckout(request: Request, env: Env, identity: VerifiedIden
     console.error(JSON.stringify({
       event: "checkout_failed",
       accountId: account.id,
-      packId: pack.id,
+      amountCents: quote.amountCents,
       detail: error instanceof Error ? error.message : "unknown",
     }));
     return json({ error: "checkout_failed" }, 502);
@@ -572,8 +583,7 @@ async function handleStripeWebhook(request: Request, env: Env): Promise<Response
 
   const session = event.data?.object ?? {};
   const accountId = session.metadata?.account_id ?? session.client_reference_id;
-  const pack = packById(session.metadata?.pack_id ?? "");
-  if (typeof accountId !== "string" || !accountId || !pack) {
+  if (typeof accountId !== "string" || !accountId) {
     console.error(JSON.stringify({ event: "stripe_session_unattributable", sessionId: session.id ?? null }));
     // 200: retrying cannot fix a session we cannot attribute. It needs a human.
     return json({ received: true, error: "unattributable" });
@@ -581,34 +591,112 @@ async function handleStripeWebhook(request: Request, env: Env): Promise<Response
   if (session.payment_status !== "paid") {
     return json({ received: true, ignored: "unpaid" });
   }
-  // Guard against a session whose total does not match the pack it claims --
-  // a mismatch means our pricing changed mid-flight or the session was not ours,
-  // and either way granting the pack's credits would be wrong.
-  if (session.amount_total !== pack.priceCents || String(session.currency).toLowerCase() !== "usd") {
+  // Credits follow what was actually paid, priced by our own table. A total
+  // the table would not sell, or another currency, means the session was not
+  // one of ours as created, and is refused rather than guessed at.
+  const quote = String(session.currency).toLowerCase() === "usd" && typeof session.amount_total === "number"
+    ? quoteCredits(session.amount_total)
+    : null;
+  if (!quote) {
     console.error(JSON.stringify({
       event: "stripe_amount_mismatch",
       sessionId: session.id ?? null,
-      expected: pack.priceCents,
       got: session.amount_total ?? null,
       currency: session.currency ?? null,
     }));
     return json({ received: true, error: "amount_mismatch" });
   }
+  const quoted = Number(session.metadata?.credits);
+  if (Number.isFinite(quoted) && quoted !== quote.credits) {
+    // Prices changed between checkout and payment. Grant what the table says
+    // for the amount paid, and leave a trail so it can be reconciled.
+    console.warn(JSON.stringify({ event: "stripe_quote_changed", sessionId: session.id ?? null, quoted, granted: quote.credits }));
+  }
 
   const { applied, balance } = await recordPurchase(env.ACCOUNTS_DB, {
     accountId,
-    packId: pack.id,
-    credits: pack.credits,
-    amountCents: pack.priceCents,
+    packId: quote.tierId,
+    credits: quote.credits,
+    amountCents: quote.amountCents,
     currency: "usd",
     stripeSessionId: String(session.id),
     stripePaymentIntent: typeof session.payment_intent === "string" ? session.payment_intent : null,
   });
   console.log(JSON.stringify({
     event: applied ? "credits_purchased" : "credits_purchase_replayed",
-    accountId, packId: pack.id, credits: pack.credits, balance,
+    accountId, tier: quote.tierId, credits: quote.credits, balance,
   }));
   return json({ received: true, applied, balance });
+}
+
+const CLOUD_PATH = /^\/api\/cloud\/(upscale_standard|restore|upscale_ultimate)$/;
+// Generous for a phone photo; the providers downscale anything larger anyway.
+const MAX_UPLOAD_BYTES = 20 * 1024 * 1024;
+const REQUEST_ID = /^[A-Za-z0-9_-]{8,64}$/;
+const ACCEPTED_IMAGE = /^image\/(jpeg|png|webp|heic|heif)$/;
+
+/** Charge credits, run one cloud operation, and refund if it fails.
+ *
+ *  The debit happens before the call so two tabs cannot both spend the same
+ *  last credits on work that has already started. Anything short of a clean
+ *  result gives the credits back through failCloudJob, which refunds at most
+ *  once per job. */
+async function handleCloudOperation(
+  request: Request,
+  env: Env,
+  identity: VerifiedIdentity,
+  operation: Operation,
+): Promise<Response> {
+  const apiKey = env.UPSCALER_TOOL_API_KEY;
+  if (!apiKey || !env.AURALENS_URL) return json({ error: "processing_unavailable" }, 503);
+  if (Number(request.headers.get("content-length") ?? 0) > MAX_UPLOAD_BYTES + 256_000) {
+    return json({ error: "image_too_large", maxBytes: MAX_UPLOAD_BYTES }, 413);
+  }
+
+  let form: FormData;
+  try {
+    form = await request.formData();
+  } catch {
+    return json({ error: "invalid_body" }, 400);
+  }
+  const image = form.get("image");
+  const requestId = form.get("requestId");
+  if (!(image instanceof File) || image.size === 0) return json({ error: "missing_image" }, 400);
+  if (image.size > MAX_UPLOAD_BYTES) return json({ error: "image_too_large", maxBytes: MAX_UPLOAD_BYTES }, 413);
+  if (!ACCEPTED_IMAGE.test(image.type)) return json({ error: "unsupported_image" }, 415);
+  if (typeof requestId !== "string" || !REQUEST_ID.test(requestId)) return json({ error: "invalid_request_id" }, 400);
+
+  const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+  const cost = OPERATION_CREDITS[operation];
+  const started = await startCloudJob(env.ACCOUNTS_DB, { accountId: account.id, requestId, operation, credits: cost });
+
+  if (started.kind === "insufficient") {
+    return json({ error: "insufficient_credits", balance: started.balance, required: cost }, 402);
+  }
+  if (started.kind === "duplicate") {
+    // A retried upload with the same id is never charged twice.
+    if (started.job.status === "succeeded") {
+      return json({ jobId: started.job.id, outputUrl: started.job.outputUrl, balance: started.balance, charged: 0, replayed: true });
+    }
+    return json({ error: started.job.status === "processing" ? "in_progress" : "already_failed", balance: started.balance }, 409);
+  }
+
+  let outputUrl: string;
+  try {
+    ({ outputUrl } = await runOperation({ baseUrl: env.AURALENS_URL, apiKey }, operation, image, image.name || "photo.jpg"));
+  } catch (error) {
+    const detail = error instanceof AuralensError ? error.message : "unknown";
+    const { refunded, balance } = await failCloudJob(
+      env.ACCOUNTS_DB, { id: started.job.id, accountId: account.id, credits: cost, operation }, detail,
+    );
+    console.error(JSON.stringify({ event: "cloud_job_failed", jobId: started.job.id, operation, detail, refunded }));
+    return json({ error: "processing_failed", refunded, balance }, 502);
+  }
+  // Outside the try on purpose: a failure recording success must not trigger a
+  // refund for work that was actually delivered.
+  await completeCloudJob(env.ACCOUNTS_DB, started.job.id, outputUrl);
+  console.log(JSON.stringify({ event: "cloud_job_succeeded", jobId: started.job.id, operation, charged: cost }));
+  return json({ jobId: started.job.id, outputUrl, balance: started.balance, charged: cost });
 }
 
 async function handleApi(request: Request, env: Env): Promise<Response> {
@@ -644,7 +732,18 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
     return json({
       packs: CREDIT_PACKS.map(pack => ({ id: pack.id, credits: pack.credits, priceCents: pack.priceCents, label: pack.label })),
       operations: OPERATION_CREDITS,
+      limits: { minCents: MIN_PURCHASE_CENTS, maxCents: MAX_PURCHASE_CENTS },
     });
+  }
+
+  if (url.pathname === "/api/account/activity" && request.method === "GET") {
+    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+    return json({ entries: await listActivity(env.ACCOUNTS_DB, account.id) });
+  }
+
+  const cloud = CLOUD_PATH.exec(url.pathname);
+  if (cloud?.[1] && request.method === "POST") {
+    return handleCloudOperation(request, env, identity, cloud[1] as Operation);
   }
 
   if (url.pathname === "/api/billing/checkout" && request.method === "POST") {

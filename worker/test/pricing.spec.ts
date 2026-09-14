@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 
 import {
-  CREDIT_PACKS, OPERATION_CREDITS, UPSTREAM_COST_CENTS,
-  centsPerCredit, marginFor, packById, type Operation,
+  CREDIT_PACKS, MAX_PURCHASE_CENTS, MIN_PURCHASE_CENTS, OPERATION_CREDITS, UPSTREAM_COST_CENTS,
+  centsPerCredit, marginFor, marginForPurchase, packById, quoteCredits, type Operation,
 } from "../src/pricing";
 
 const OPERATIONS = Object.keys(OPERATION_CREDITS) as Operation[];
@@ -46,5 +46,46 @@ describe("pricing", () => {
   it("looks packs up by id and rejects unknown ones", () => {
     expect(packById("pro")?.credits).toBe(4800);
     expect(packById("nope")).toBeUndefined();
+  });
+
+  it("quotes each preset pack exactly as the pack itself", () => {
+    for (const pack of CREDIT_PACKS) {
+      expect(quoteCredits(pack.priceCents)).toMatchObject({ credits: pack.credits, tierId: pack.id });
+    }
+  });
+
+  it("gives a custom amount the rate of the largest pack it reaches", () => {
+    expect(quoteCredits(1_000)).toMatchObject({ credits: 1_000, tierId: "starter", bonusPercent: 0 });
+    expect(quoteCredits(2_000)).toMatchObject({ credits: 2_200, tierId: "plus", bonusPercent: 10 });
+    expect(quoteCredits(10_000)).toMatchObject({ credits: 12_000, tierId: "pro", bonusPercent: 20 });
+  });
+
+  it("refuses amounts outside the purchasable range or with cents", () => {
+    for (const cents of [0, 100, MIN_PURCHASE_CENTS - 100, MAX_PURCHASE_CENTS + 100, 550, -500, 1.5, Number.NaN]) {
+      expect(quoteCredits(cents), String(cents)).toBeNull();
+    }
+    expect(quoteCredits(MIN_PURCHASE_CENTS)).not.toBeNull();
+    expect(quoteCredits(MAX_PURCHASE_CENTS)).not.toBeNull();
+  });
+
+  it("clears 50% margin on every operation for every purchasable whole-dollar amount", () => {
+    // Exhaustive rather than sampled: 496 amounts times three operations is
+    // cheap, and it is the only way to be sure no tier edge dips under.
+    for (let cents = MIN_PURCHASE_CENTS; cents <= MAX_PURCHASE_CENTS; cents += 100) {
+      const quote = quoteCredits(cents)!;
+      for (const operation of OPERATIONS) {
+        const margin = marginForPurchase(operation, cents, quote.credits);
+        expect(margin, `${operation} at $${cents / 100}`).toBeGreaterThanOrEqual(MINIMUM_MARGIN);
+      }
+    }
+  });
+
+  it("never gives fewer credits for paying more", () => {
+    let previous = 0;
+    for (let cents = MIN_PURCHASE_CENTS; cents <= MAX_PURCHASE_CENTS; cents += 100) {
+      const credits = quoteCredits(cents)!.credits;
+      expect(credits, `$${cents / 100}`).toBeGreaterThan(previous);
+      previous = credits;
+    }
   });
 });
