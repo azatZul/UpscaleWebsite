@@ -21,7 +21,6 @@ for (const {file} of modelSpecs) {
     throw new Error(`Missing ${file}. Restore the approved photo and drawing model artifacts described in BROWSER_IMAGE_PROCESSING.md before building the preview.`);
   }
 }
-const faceBytes = await readFile(join(root, 'static/models/face_512.onnx'));
 const finder = await readFile(join(root, 'static/models/face_detector_yunet.onnx'));
 const detector = await readFile(join(root, 'static/models/face_landmarker.task'));
 // This directory contains generated assets only. Keep deployments free of
@@ -44,15 +43,14 @@ for (const {modelKind, scale, key, file} of modelSpecs) {
   assets.models[modelKind][scale][key] = `/assets/processor/${hash}-${file}`;
   await writeFile(join(root, assets.models[modelKind][scale][key]), bytes);
 }
-// Pages serves files up to 25 MiB. Reassemble the exact face model in the worker.
-assets.faceModel = {bytes: faceBytes.length, parts: []};
-for (let offset = 0; offset < faceBytes.length; offset += 20 * 1024 * 1024) {
-  const part = faceBytes.subarray(offset, offset + 20 * 1024 * 1024);
-  const hash = createHash('sha256').update(part).digest('hex').slice(0,16);
-  const url = `/assets/processor/face-${hash}.bin`;
-  await writeFile(join(root, url), part);
-  assets.faceModel.parts.push({url, bytes: part.length});
-}
+// The 85 MB face model is over the per-file limit for site assets, so it lives in
+// the aura-lens-models R2 bucket beside the app models and downloads from
+// upscales.uk (the bucket's CORS rule allows this site's origins). face-model.json
+// pins the exact object by content hash: when the weights change, upload the new
+// file under its new hash and update that file. The build no longer needs the
+// model locally. One part keeps runtime.js's streaming loader unchanged.
+const faceModel = JSON.parse(await readFile(join(root, 'src/tool/face-model.json'), 'utf8'));
+assets.faceModel = {bytes: faceModel.bytes, parts: [{url: faceModel.url, bytes: faceModel.bytes}]};
 const visionPackage = JSON.parse(await readFile(join(root, 'node_modules/@mediapipe/tasks-vision/package.json'), 'utf8'));
 assets.vision = `/assets/processor/vision-${visionPackage.version}`;
 await mkdir(join(root, assets.vision), {recursive: true});

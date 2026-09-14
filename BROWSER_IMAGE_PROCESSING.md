@@ -124,11 +124,14 @@ offered only where the base and a second full-size canvas fit
 (`faceEditFits`): all of 2× on desktop and phones, and 4× on desktop up to
 about 11 MP. A failed Apply keeps the previous result and its download.
 
-`npm run build:preview` requires the approved `face_512.onnx`,
-`face_detector_yunet.onnx` and `face_landmarker.task` artifacts alongside the existing regular models. The
-face model is split into content-addressed parts below Cloudflare Pages'
-25 MiB per-file limit and streamed into one preallocated buffer. Generated
-weights and runtime assets are ignored by Git and cached with immutable URLs.
+`npm run build:preview` requires the approved `face_detector_yunet.onnx` and
+`face_landmarker.task` artifacts alongside the regular models. The 85 MB
+`face_512.onnx` is not built into the site: it lives in the `aura-lens-models`
+R2 bucket and downloads from `upscales.uk`, pinned by content hash in
+`src/tool/face-model.json`, and is streamed into one preallocated buffer. To
+change the weights, upload the new file as `web_models/face_512-<sha256 prefix>.onnx`
+with `Cache-Control: public, max-age=31536000, immutable`, then update that file.
+Generated weights and runtime assets are ignored by Git and cached with immutable URLs.
 
 Validation: 11 processing tests, a 900×1200 portrait with one separate face
 restored and a verified 1800×2400 JPEG result, CPU face inference, no-face
