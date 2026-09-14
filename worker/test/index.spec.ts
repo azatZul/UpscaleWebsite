@@ -54,9 +54,7 @@ async function fetchWorker(path: string, init?: RequestInit): Promise<Response> 
 
 describe.sequential("album worker", () => {
   it("preserves static canonical URLs and directory indexes", async () => {
-    // /account/ is a verbatim copy from static/, not a rendered page, so it only
-    // resolves because build.py now emits a directory-index rule for it.
-    for (const path of ["/", "/de/", "/guides/", "/de/guides/", "/compare.html", "/de/compare.html", "/account/"]) {
+    for (const path of ["/", "/de/", "/guides/", "/de/guides/", "/compare.html", "/de/compare.html"]) {
       const response = await fetchWorker(path);
       expect(response.status, path).toBe(200);
       expect(response.headers.get("Location"), path).toBeNull();

@@ -83,37 +83,6 @@
     if (!readConsent()) showConsent(false);
   }
 
-  /* Account link. Reflects the last known sign-in from a hint account.js
-     writes, so ordinary pages never load the auth SDK just to draw a button.
-     The hint is a convenience, not a session: the account page re-checks. */
-  var accountLink = document.querySelector('[data-account-link]');
-  if (accountLink) {
-    var accountHint = null;
-    try { accountHint = JSON.parse(localStorage.getItem('uscale-account') || 'null'); } catch (e) {}
-    if (accountHint && accountHint.signedIn) {
-      accountLink.classList.add('is-signed-in');
-      var accountLabel = accountLink.querySelector('.nav-account-label');
-      var signedInLabel = accountLink.getAttribute('data-signed-in-label');
-      if (accountLabel && signedInLabel) accountLabel.textContent = signedInLabel;
-      var accountAvatar = accountLink.querySelector('.nav-account-avatar');
-      if (accountAvatar) {
-        if (typeof accountHint.photo === 'string' && /^https:\/\//.test(accountHint.photo)) {
-          var avatarImg = document.createElement('img');
-          avatarImg.alt = '';
-          avatarImg.referrerPolicy = 'no-referrer';
-          avatarImg.src = accountHint.photo;
-          avatarImg.onerror = function () {
-            avatarImg.remove();
-            accountAvatar.textContent = (accountHint.initial || '').slice(0, 1);
-          };
-          accountAvatar.appendChild(avatarImg);
-        } else {
-          accountAvatar.textContent = (accountHint.initial || '').slice(0, 1);
-        }
-      }
-    }
-  }
-
   /* Theme is bootstrapped in <head>; this wires controls and persistence. */
   var THEME_KEY = 'uscale-theme';
   var THEME_BG = { dark: '#07080d', light: '#f3f6fe' };

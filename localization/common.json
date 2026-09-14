@@ -89,26 +89,6 @@
       "es": "Obtén UScale"
     }
   },
-  "nav.sign_in": {
-    "localizations": {
-      "en": "Sign in",
-      "ru": "Войти",
-      "de": "Anmelden",
-      "ja": "ログイン",
-      "fr": "Se connecter",
-      "es": "Iniciar sesión"
-    }
-  },
-  "nav.account": {
-    "localizations": {
-      "en": "Account",
-      "ru": "Аккаунт",
-      "de": "Konto",
-      "ja": "アカウント",
-      "fr": "Compte",
-      "es": "Cuenta"
-    }
-  },
   "ui.download_on": {
     "localizations": {
       "en": "Download on the",
