@@ -1,197 +1,327 @@
-// Page controller. Knows about identities, not about Firebase.
-import {onIdentityChanged, signInWithGoogle, signOut} from './identity.js';
-import {fetchAccount, fetchPacks, startCheckout} from './api.js';
-import {OPERATION_LABELS, formatCredits, formatPrice} from './billing-format.js';
+// Page controller. Knows about identities and the worker API, not Firebase.
+// A localhost-only fixture stands in for sign-in and the worker, so the
+// signed-in design can be reviewed without real credentials. See dev-fixture.js.
+const fixtureMode = ['localhost', '127.0.0.1'].includes(location.hostname)
+  && new URLSearchParams(location.search).has('fixture');
+const {onIdentityChanged, signInWithGoogle, signOut} = await import(fixtureMode ? './dev-fixture.js' : './identity.js');
+const {fetchAccount, fetchActivity, fetchPacks, startCheckout} = await import(fixtureMode ? './dev-fixture.js' : './api.js');
+import {
+  OPERATION_LABELS, describeActivity, formatCredits, formatDelta, formatPrice, parseDollars, quoteCredits,
+} from './billing-format.js';
 
-const card = document.getElementById('account');
-const signInButton = document.getElementById('sign-in');
-const signOutButton = document.getElementById('sign-out');
-const errorBox = document.getElementById('account-error');
-const avatar = document.getElementById('avatar');
-const displayName = document.getElementById('display-name');
-const email = document.getElementById('email');
-const creditCount = document.getElementById('credit-count');
-const packList = document.getElementById('pack-list');
-const creditCosts = document.getElementById('credit-costs');
-const purchaseConfirmed = document.getElementById('purchase-confirmed');
+const $ = id => document.getElementById(id);
+const main = $('main-content');
+const errorBox = $('account-error');
+const signInButton = $('sign-in');
+const signOutButton = $('sign-out');
+const creditCount = $('credit-count');
+const balanceHint = $('balance-hint');
+const operationCosts = $('operation-costs');
+const amountOptions = $('amount-options');
+const customField = $('custom-amount-field');
+const customInput = $('custom-amount');
+const customHelp = $('custom-help');
+const quoteCreditsEl = $('quote-credits');
+const checkoutButton = $('checkout');
+const activityList = $('activity-list');
+const activityEmpty = $('activity-empty');
+const purchaseNotice = $('purchase-notice');
+
+// Read by site.js on every other page to draw the header account button
+// without loading the auth SDK there.
+const HINT_KEY = 'uscale-account';
+// Survives the round trip to Stripe, which fully reloads this page.
+const PENDING_KEY = 'uscale.balanceBeforePurchase';
+
+const state = {catalogue: null, selection: null, balance: null};
+
+function store(fn) {
+  try { return fn(); } catch { return null; }
+}
 
 function showError(message) {
   errorBox.textContent = message || '';
   errorBox.hidden = !message;
 }
 
-function setBusy(busy) {
-  signInButton.disabled = busy;
-  signOutButton.disabled = busy;
+function initialOf(identity) {
+  return (identity.displayName || identity.email || '?').trim().charAt(0).toUpperCase();
 }
 
-function render(identity) {
+function renderIdentity(identity) {
   if (!identity) {
-    card.dataset.state = 'signed-out';
+    main.dataset.state = 'signed-out';
+    store(() => localStorage.removeItem(HINT_KEY));
     return;
   }
-  displayName.textContent = identity.displayName || identity.email || 'Signed in';
-  email.textContent = identity.displayName ? identity.email || '' : '';
+  $('display-name').textContent = identity.displayName || identity.email || 'Your account';
+  $('email').textContent = identity.displayName ? identity.email || '' : '';
+  const avatar = $('avatar');
+  $('avatar-initial').textContent = initialOf(identity);
   if (identity.photoURL) {
     avatar.src = identity.photoURL;
     avatar.hidden = false;
+    avatar.onerror = () => { avatar.hidden = true; };
   } else {
-    avatar.removeAttribute('src');
     avatar.hidden = true;
   }
-  card.dataset.state = 'signed-in';
+  store(() => localStorage.setItem(HINT_KEY, JSON.stringify({
+    signedIn: true,
+    photo: identity.photoURL || null,
+    initial: initialOf(identity),
+  })));
+  main.dataset.state = 'signed-in';
 }
 
 function renderBalance(credits) {
+  state.balance = credits;
   creditCount.textContent = formatCredits(credits);
-  creditCount.dataset.credits = String(credits);
+  const ops = state.catalogue?.operations;
+  if (!ops) return;
+  if (credits < ops.upscale_standard) {
+    balanceHint.textContent = 'Add credits to start using cloud enhancements.';
+  } else {
+    const upscales = Math.floor(credits / ops.upscale_standard);
+    const restores = Math.floor(credits / ops.restore);
+    balanceHint.textContent = `Enough for about ${formatCredits(upscales)} upscales or ${formatCredits(restores)} restorations.`;
+  }
 }
 
-function renderPacks(packs, operations) {
-  packList.textContent = '';
+function renderOperationCosts(operations) {
+  operationCosts.textContent = '';
+  for (const [operation, cost] of Object.entries(operations)) {
+    if (!OPERATION_LABELS[operation]) continue;
+    const item = document.createElement('li');
+    const name = document.createElement('span');
+    name.textContent = OPERATION_LABELS[operation];
+    const price = document.createElement('b');
+    price.textContent = `${formatCredits(cost)} credits`;
+    item.append(name, price);
+    operationCosts.append(item);
+  }
+}
+
+function optionButton({key, price, credits, bonus, custom}) {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = `amount-option${custom ? ' is-custom' : ''}`;
+  button.setAttribute('role', 'radio');
+  button.setAttribute('aria-checked', 'false');
+  button.dataset.key = key;
+  const priceEl = document.createElement('span');
+  priceEl.className = 'amount-price';
+  priceEl.textContent = price;
+  button.append(priceEl);
+  if (credits) {
+    const creditsEl = document.createElement('span');
+    creditsEl.className = 'amount-credits';
+    creditsEl.textContent = credits;
+    button.append(creditsEl);
+  }
+  if (bonus) {
+    const bonusEl = document.createElement('span');
+    bonusEl.className = 'amount-bonus';
+    bonusEl.textContent = bonus;
+    button.append(bonusEl);
+  }
+  button.addEventListener('click', () => select(key));
+  return button;
+}
+
+function renderAmountOptions() {
+  const {packs, limits} = state.catalogue;
+  amountOptions.textContent = '';
   for (const pack of packs) {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'pack';
-    button.dataset.packId = pack.id;
-    const credits = document.createElement('span');
-    credits.className = 'pack-credits';
-    const amount = document.createElement('b');
-    amount.textContent = `${formatCredits(pack.credits)} credits`;
-    const rate = document.createElement('small');
-    rate.textContent = `${formatCredits(Math.round(pack.credits / (pack.priceCents / 100)))} per dollar`;
-    credits.append(amount, rate);
-    const price = document.createElement('span');
-    price.className = 'pack-price';
-    price.textContent = formatPrice(pack.priceCents);
-    button.append(credits, price);
-    button.addEventListener('click', () => buy(pack.id, button));
-    packList.append(button);
+    const quote = quoteCredits(pack.priceCents, packs, limits);
+    amountOptions.append(optionButton({
+      key: pack.id,
+      price: formatPrice(pack.priceCents),
+      credits: `${formatCredits(pack.credits)} credits`,
+      bonus: quote && quote.bonusPercent > 0 ? `+${quote.bonusPercent}%` : '',
+    }));
   }
-  creditCosts.textContent = Object.entries(operations)
-    .filter(([operation]) => OPERATION_LABELS[operation])
-    .map(([operation, cost]) => `${OPERATION_LABELS[operation]} ${cost}`)
-    .join(' · ') + ' credits per photo.';
+  amountOptions.append(optionButton({key: 'custom', price: 'Custom amount', custom: true}));
+  customHelp.textContent = `Whole dollars, ${formatPrice(limits.minCents)} to ${formatPrice(limits.maxCents)}.`;
+  // Default to the middle pack: the first one with a bonus, as most billing pages do.
+  const suggested = packs.find(pack => (quoteCredits(pack.priceCents, packs, limits)?.bonusPercent ?? 0) > 0) || packs[0];
+  select(suggested.id);
 }
 
-// Survives the round trip to Stripe in this tab, which a variable cannot: the
-// page is fully reloaded on return, so the pre-purchase balance has to be
-// written down somewhere before leaving.
-const PENDING_KEY = 'uscale.balanceBeforePurchase';
-
-function rememberBalance(credits) {
-  try {
-    window.sessionStorage.setItem(PENDING_KEY, String(credits));
-  } catch { /* private mode can refuse; polling just falls back to one read */ }
+function selectedAmountCents() {
+  const {packs} = state.catalogue;
+  if (state.selection === 'custom') return parseDollars(customInput.value);
+  return packs.find(pack => pack.id === state.selection)?.priceCents ?? null;
 }
 
-function takeRememberedBalance() {
-  try {
-    const stored = window.sessionStorage.getItem(PENDING_KEY);
-    window.sessionStorage.removeItem(PENDING_KEY);
-    return stored === null ? null : Number(stored);
-  } catch {
-    return null;
+function select(key) {
+  state.selection = key;
+  for (const button of amountOptions.querySelectorAll('.amount-option')) {
+    button.setAttribute('aria-checked', String(button.dataset.key === key));
   }
+  customField.hidden = key !== 'custom';
+  if (key === 'custom') customInput.focus();
+  updateQuote();
 }
 
-async function buy(packId, button) {
-  const buttons = [...packList.querySelectorAll('.pack')];
-  buttons.forEach(candidate => { candidate.disabled = true; });
-  button.textContent = 'Opening checkout…';
+function updateQuote() {
+  const {packs, limits} = state.catalogue;
+  const amountCents = selectedAmountCents();
+  const quote = amountCents === null ? null : quoteCredits(amountCents, packs, limits);
+  const typing = state.selection === 'custom';
+  const invalid = typing && customInput.value.trim() !== '' && !quote;
+
+  customInput.closest('.money-input').classList.toggle('is-invalid', invalid);
+  customHelp.classList.toggle('is-invalid', invalid);
+  customHelp.textContent = invalid
+    ? `Enter a whole-dollar amount from ${formatPrice(limits.minCents)} to ${formatPrice(limits.maxCents)}.`
+    : quote && quote.bonusPercent > 0 && typing
+      ? `Includes a ${quote.bonusPercent}% bonus.`
+      : `Whole dollars, ${formatPrice(limits.minCents)} to ${formatPrice(limits.maxCents)}.`;
+
+  quoteCreditsEl.textContent = quote ? `${formatCredits(quote.credits)} credits` : '—';
+  checkoutButton.disabled = !quote;
+  checkoutButton.textContent = quote ? `Continue to payment · ${formatPrice(quote.amountCents)}` : 'Continue to payment';
+}
+
+async function checkout() {
+  const amountCents = selectedAmountCents();
+  if (amountCents === null) return;
+  checkoutButton.disabled = true;
+  checkoutButton.textContent = 'Opening secure checkout…';
   showError('');
   try {
-    rememberBalance(Number(creditCount.dataset.credits ?? '0'));
-    const {url} = await startCheckout(packId);
-    // Stripe hosts the payment form, so the card details never touch this page.
+    store(() => sessionStorage.setItem(PENDING_KEY, String(state.balance ?? 0)));
+    const {url} = await startCheckout(amountCents);
     window.location.assign(url);
   } catch (error) {
+    store(() => sessionStorage.removeItem(PENDING_KEY));
     showError(error.message);
-    // Rebuild rather than un-disable: the clicked button's label was replaced.
-    await loadBilling();
+    updateQuote();
   }
 }
 
-async function loadBilling() {
+function renderActivity(entries) {
+  activityList.textContent = '';
+  activityEmpty.hidden = entries.length > 0;
+  const dateFormat = new Intl.DateTimeFormat(undefined, {dateStyle: 'medium', timeStyle: 'short'});
+  for (const entry of entries) {
+    const item = document.createElement('li');
+    if (entry.delta > 0) item.classList.add('is-credit');
+    const icon = document.createElement('span');
+    icon.className = 'activity-icon';
+    icon.setAttribute('aria-hidden', 'true');
+    icon.textContent = entry.delta > 0 ? '+' : '−';
+    const text = document.createElement('span');
+    text.className = 'activity-text';
+    const title = document.createElement('b');
+    title.textContent = describeActivity(entry);
+    const time = document.createElement('time');
+    time.dateTime = new Date(entry.createdAt).toISOString();
+    time.textContent = dateFormat.format(entry.createdAt);
+    text.append(title, time);
+    const delta = document.createElement('span');
+    delta.className = 'activity-delta';
+    delta.textContent = formatDelta(entry.delta);
+    item.append(icon, text, delta);
+    activityList.append(item);
+  }
+}
+
+async function loadActivity() {
+  try {
+    renderActivity((await fetchActivity()).entries);
+  } catch {
+    // Activity is informational; a failure here should not hide the balance.
+    activityEmpty.textContent = 'Activity could not be loaded right now.';
+    activityEmpty.hidden = false;
+  }
+}
+
+async function loadDashboard() {
   try {
     const [account, catalogue] = await Promise.all([fetchAccount(), fetchPacks()]);
+    state.catalogue = catalogue;
+    renderOperationCosts(catalogue.operations);
+    renderAmountOptions();
     renderBalance(account.credits);
-    renderPacks(catalogue.packs, catalogue.operations);
   } catch (error) {
-    packList.textContent = '';
     showError(error.message);
   }
+  await loadActivity();
 }
 
-/** After returning from Stripe, the webhook may not have landed yet. Re-read the
- *  balance until it rises above what it was before checkout, rather than showing
- *  a stale figure to someone who has just paid. */
-function showPurchaseNotice(outcome, message) {
-  purchaseConfirmed.textContent = message;
-  purchaseConfirmed.dataset.outcome = outcome;
-  purchaseConfirmed.hidden = false;
+function showNotice(outcome, message) {
+  purchaseNotice.textContent = message;
+  purchaseNotice.dataset.outcome = outcome;
+  purchaseNotice.hidden = false;
 }
 
+/** After Stripe, the webhook may land a moment after the redirect. Re-read the
+ *  balance until it rises above what it was before checkout. */
 async function settlePurchase() {
-  showPurchaseNotice('success', 'Payment received. Your credits have been added.');
-  const before = takeRememberedBalance();
-  // Without a remembered balance there is nothing to compare against, so the
-  // reload that already happened is as good as it gets.
-  if (before === null || !Number.isFinite(before)) return;
+  showNotice('success', 'Payment received. Adding your credits…');
+  const before = Number(store(() => sessionStorage.getItem(PENDING_KEY)) ?? NaN);
+  store(() => sessionStorage.removeItem(PENDING_KEY));
   for (let attempt = 0; attempt < 6; attempt++) {
     try {
       const account = await fetchAccount();
       renderBalance(account.credits);
-      if (account.credits > before) return;
-    } catch { /* keep waiting; a persistent failure falls through to the note */ }
-    // Backs off, because the wait is for Stripe's webhook, not for us.
+      if (!Number.isFinite(before) || account.credits > before) {
+        showNotice('success', 'Payment received. Your credits have been added.');
+        await loadActivity();
+        return;
+      }
+    } catch { /* keep waiting */ }
     await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1)));
   }
-  showPurchaseNotice('success', 'Payment received. Credits can take a moment to appear — reload this page shortly.');
+  showNotice('success', 'Payment received. Credits can take a moment to appear — reload this page shortly.');
 }
 
-function handleReturnFromStripe() {
-  const params = new URLSearchParams(window.location.search);
-  const outcome = params.get('purchase');
-  if (!outcome) return null;
-  // Drop the parameters so a reload does not replay the confirmation, and so
-  // the Stripe session id does not linger in the address bar or in history.
-  window.history.replaceState({}, '', window.location.pathname);
+function takeReturnOutcome() {
+  const outcome = new URLSearchParams(window.location.search).get('purchase');
+  // Drop the parameters so a reload does not replay the notice, and the Stripe
+  // session id does not linger in the address bar.
+  if (outcome) window.history.replaceState({}, '', window.location.pathname);
   return outcome;
 }
 
-const purchaseOutcome = handleReturnFromStripe();
+const returnOutcome = takeReturnOutcome();
+let dashboardLoaded = false;
 
-// Fires once the provider resolves the current state, then on every change —
-// so a returning user lands straight in the signed-in state instead of seeing
-// the signed-out one flash first.
 onIdentityChanged(identity => {
   showError('');
-  setBusy(false);
-  render(identity);
-  if (!identity) return;
-  loadBilling().then(() => {
-    if (purchaseOutcome === 'success') return settlePurchase();
-    if (purchaseOutcome === 'cancelled') {
-      // Coming back from an abandoned checkout with no acknowledgement reads as
-      // if the payment silently failed. Say plainly that nothing was charged.
-      takeRememberedBalance();
-      showPurchaseNotice('cancelled', 'Checkout was cancelled. Nothing was charged.');
+  signInButton.disabled = false;
+  signOutButton.disabled = false;
+  renderIdentity(identity);
+  if (!identity || dashboardLoaded) return;
+  dashboardLoaded = true;
+  loadDashboard().then(() => {
+    if (returnOutcome === 'success') return settlePurchase();
+    if (returnOutcome === 'cancelled') {
+      store(() => sessionStorage.removeItem(PENDING_KEY));
+      showNotice('cancelled', 'Checkout was cancelled. Nothing was charged.');
     }
   });
 });
 
-async function run(action) {
-  setBusy(true);
+async function run(button, action) {
+  button.disabled = true;
   showError('');
   try {
     await action();
   } catch (error) {
-    // identity.js guarantees a human-readable message on every thrown error.
     showError(error.message);
-    setBusy(false);
+    button.disabled = false;
   }
 }
 
-signInButton.addEventListener('click', () => run(signInWithGoogle));
-signOutButton.addEventListener('click', () => run(signOut));
+signInButton.addEventListener('click', () => run(signInButton, signInWithGoogle));
+signOutButton.addEventListener('click', () => run(signOutButton, async () => {
+  await signOut();
+  dashboardLoaded = false;
+}));
+customInput.addEventListener('input', updateQuote);
+customInput.addEventListener('keydown', event => {
+  if (event.key === 'Enter' && !checkoutButton.disabled) checkout();
+});
+checkoutButton.addEventListener('click', checkout);

@@ -820,6 +820,7 @@ def nav(c, lang, home_prefix, path="", on_home=False):
       <a href="{home_prefix}#faq">{esc(n['faq'])}</a>
       {browser_tool_link(c, lang)}
     </nav>
+    <a class="nav-account" href="/account/" data-account-link data-signed-in-label="{esc(n['account'])}"><svg class="nav-account-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.8 20c1.2-3.6 4-5.4 7.2-5.4s6 1.8 7.2 5.4"/></svg><span class="nav-account-avatar" aria-hidden="true"></span><span class="nav-account-label">{esc(n['sign_in'])}</span></a>
     {theme_toggle(c)}
     {lang_switcher(c, lang, path)}
   </div>

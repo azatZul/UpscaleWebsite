@@ -1055,6 +1055,17 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:64px 0 34
 @keyframes cta-glow{0%,100%{opacity:.16;transform:scale(.98)}50%{opacity:.34;transform:scale(1.02)}}
 
 /* ---------- responsive ---------- */
+/* Account entry in the header. Signed-out it is a quiet pill; signed-in it
+   shows the avatar site.js reads from the hint account.js leaves behind. */
+.nav-account{display:inline-flex;align-items:center;gap:8px;flex:0 0 auto;height:44px;padding:0 14px;border-radius:12px;
+  border:1px solid var(--line-2);background:var(--tint);color:var(--tx);font-size:14.5px;font-weight:650;white-space:nowrap;
+  transition:border-color .15s,background .15s}
+.nav-account:hover{border-color:var(--acc-line);background:var(--acc-soft)}
+.nav-account-avatar{display:none;width:28px;height:28px;margin-left:-7px;border-radius:50%;overflow:hidden;flex:0 0 auto;
+  background:var(--acc-soft);color:var(--acc-tx);font-size:13px;font-weight:750;line-height:28px;text-align:center}
+.nav-account-avatar img{display:block;width:100%;height:100%;object-fit:cover}
+.nav-account.is-signed-in .nav-account-avatar{display:block}
+.nav-account-icon{display:none;width:21px;height:21px;flex:0 0 auto}
 @media(max-width:1040px){
   .nav-links{display:none;position:absolute;top:70px;left:0;right:0;flex-direction:column;align-items:stretch;
     background:var(--surface-2);border-bottom:1px solid var(--line);padding:12px;gap:2px}
@@ -1063,7 +1074,24 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:64px 0 34
   .burger{display:flex;flex:0 0 auto;order:4;margin-left:10px}
   .theme-btn{order:2;margin-left:auto}
   .lang{order:3;margin-left:0}
+  .nav-account{order:1;margin-left:auto}
+  .nav-account~.theme-btn{margin-left:0}
 }
+/* Icon-only wherever the burger layout applies. Measured across all six
+   locales: localized labels ("Iniciar sesión", "Anmelden", "Аккаунт") push the
+   burger off screen at tablet widths. The label stays for screen readers. */
+@media(max-width:1040px){
+  .nav-account{width:44px;padding:0;justify-content:center}
+  .nav-account-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .nav-account:not(.is-signed-in) .nav-account-icon{display:block}
+  .nav-account.is-signed-in .nav-account-avatar{margin-left:0}
+}
+/* The tagline goes a step earlier than the rest of the phone rules below: with
+   the account button in the row, long taglines (de, ru) overflow up to ~640px. */
+@media(max-width:640px){.brand small{display:none}}
+/* At the smallest phones (320px) the four header controls leave no room for
+   the wordmark; the icon stays, and its alt text still names the link. */
+@media(max-width:360px){.nav .brand>span{display:none}}
 @media(max-width:560px){
   /* Drop the language name and the tagline to keep the header on one row:
      localized taglines run far wider than the English one and would otherwise
