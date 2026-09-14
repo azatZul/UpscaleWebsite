@@ -591,7 +591,9 @@ def write(path, html):
         f.write(html)
 
 # Exclude OS metadata from published assets.
-IGNORE = shutil.ignore_patterns(".DS_Store", "._*", "Thumbs.db")
+# face_512.onnx is served from R2 (see src/tool/face-model.json), and at 85 MB it
+# exceeds the per-file asset limit, so a local copy must never reach dist.
+IGNORE = shutil.ignore_patterns(".DS_Store", "._*", "Thumbs.db", "face_512.onnx")
 
 def copy_static():
     """Copy asset directories and unwrap static/ into the site root."""
