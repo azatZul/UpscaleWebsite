@@ -63,6 +63,7 @@ export function describePriceKey(key) {
   if (restore && RESTORE_MODE_LABELS[restore[1]]) {
     return `${RESTORE_MODE_LABELS[restore[1]]}${restore[2] ? ' · increased resolution' : ''}`;
   }
+  if (key === 'device:upscale') return 'Upscale on device';
   return OPERATION_LABELS[key] || null;
 }
 
@@ -83,6 +84,7 @@ export function priceList(prices) {
     if (restore[mode] !== undefined) rows.push({label, credits: restore[mode]});
   }
   if (prices.increaseResolution) rows.push({label: 'Increased resolution', credits: prices.increaseResolution, extra: true});
+  if (prices.device) rows.push({label: 'Upscale on device, after 10 free', credits: prices.device});
   return rows;
 }
 

@@ -1,6 +1,7 @@
 import { bearerToken, verifyIdToken, type VerifiedIdentity } from "./auth";
 import {
-  completeCloudJob, countActiveJobs, creditBalance, deleteHistoryItem, failCloudJob, getHistoryItem,
+  claimDeviceUpscale, completeCloudJob, countActiveJobs, creditBalance, deleteHistoryItem, deviceAllowance, failCloudJob,
+  getHistoryItem,
   getOrCreateAccount, historyBytes, listActivity, listHistory, recordPurchase, refundStaleJobs, setStripeCustomerId,
   startCloudJob,
   type Account, type StoredObject,
@@ -8,7 +9,8 @@ import {
 import { AuralensError, runCloudRequest } from "./auralens";
 import { signMediaUrl, verifyMediaSignature, type MediaVariant } from "./media-signing";
 import {
-  CREDIT_PACKS, CREDIT_PRICES, MAX_PURCHASE_CENTS, MIN_PURCHASE_CENTS, creditsFor, packById, parseCloudRequest,
+  CREDIT_PACKS, CREDIT_PRICES, FREE_DEVICE_UPSCALES, MAX_PURCHASE_CENTS, MIN_PURCHASE_CENTS, creditsFor, packById,
+  parseCloudRequest,
   priceKey, quoteCredits, type CloudKind,
 } from "./pricing";
 import { StripeError, createCheckoutSession, createCustomer, verifyWebhook } from "./stripe";
@@ -928,6 +930,7 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
       packs: CREDIT_PACKS.map(pack => ({ id: pack.id, credits: pack.credits, priceCents: pack.priceCents, label: pack.label })),
       prices: CREDIT_PRICES,
       limits: { minCents: MIN_PURCHASE_CENTS, maxCents: MAX_PURCHASE_CENTS },
+      device: { credits: CREDIT_PRICES.device, freeLimit: FREE_DEVICE_UPSCALES },
     });
   }
 
@@ -939,6 +942,35 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   const cloud = CLOUD_PATH.exec(url.pathname);
   if (cloud?.[1] && request.method === "POST") {
     return handleCloudOperation(request, env, identity, cloud[1] as CloudKind);
+  }
+
+  if (url.pathname === "/api/device-upscales" && request.method === "GET") {
+    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+    return json({
+      ...(await deviceAllowance(env.ACCOUNTS_DB, account.id, FREE_DEVICE_UPSCALES)),
+      credits: CREDIT_PRICES.device,
+      balance: await creditBalance(env.ACCOUNTS_DB, account.id),
+    });
+  }
+  // The page confirms a finished on-device upscale here before showing it. The
+  // work itself happened in the browser, so this is an honest-client limit,
+  // like the apps' own local limits -- not a security boundary.
+  if (url.pathname === "/api/device-upscales" && request.method === "POST") {
+    let requestId: unknown;
+    try {
+      requestId = ((await request.json()) as { requestId?: unknown } | null)?.requestId;
+    } catch {
+      return json({ error: "invalid_body" }, 400);
+    }
+    if (typeof requestId !== "string" || !REQUEST_ID.test(requestId)) return json({ error: "invalid_request_id" }, 400);
+    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+    const claim = await claimDeviceUpscale(env.ACCOUNTS_DB, {
+      accountId: account.id, requestId, freeLimit: FREE_DEVICE_UPSCALES, credits: CREDIT_PRICES.device,
+    });
+    if (claim.kind === "insufficient") {
+      return json({ error: "insufficient_credits", required: CREDIT_PRICES.device, ...claim, kind: undefined }, 402);
+    }
+    return json({ ...claim, credits: CREDIT_PRICES.device });
   }
 
   if (url.pathname === "/api/history" && request.method === "GET") {

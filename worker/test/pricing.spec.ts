@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
-  CREDIT_PACKS, CREDIT_PRICES, MAX_PROMPT_LENGTH, MAX_PURCHASE_CENTS, MIN_PURCHASE_CENTS,
+  CREDIT_PACKS, CREDIT_PRICES, FREE_DEVICE_UPSCALES, MAX_PROMPT_LENGTH, MAX_PURCHASE_CENTS, MIN_PURCHASE_CENTS,
   allPricedRequests, centsPerCredit, creditsFor, marginFor, marginForPurchase, packById, parseCloudRequest,
   priceKey, quoteCredits, type CloudRequest,
 } from "../src/pricing";
@@ -22,6 +22,8 @@ describe("pricing", () => {
       "restore:advanced_restoration": 20,
     });
     expect(CREDIT_PRICES.increaseResolution).toBe(10);
+    expect(CREDIT_PRICES.device).toBe(1);
+    expect(FREE_DEVICE_UPSCALES).toBe(10);
   });
 
   it("clears 50% gross margin on every priced option, on every pack", () => {

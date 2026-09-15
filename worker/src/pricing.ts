@@ -43,7 +43,13 @@ export const CREDIT_PRICES = {
   creative: { "2k": 5, "4k": 5, "8k": 15 },
   restore: { restore: 15, colorization: 15, colorization_pro: 35, advanced_restoration: 20 },
   increaseResolution: 10,
+  // An on-device upscale, once the account's free ones are used. No provider
+  // cost: the browser does the work, so this price is margin by construction.
+  device: 1,
 } as const;
+
+// On-device upscales each account gets before they cost credits.
+export const FREE_DEVICE_UPSCALES = 10;
 
 // What each option is assumed to cost upstream, in cents. WaveSpeed publishes
 // base prices only -- $0.01 for the upscaler, $0.024 for a Flux 2 dev edit,

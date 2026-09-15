@@ -66,6 +66,7 @@ test('names option-based price keys, and still names the older operations', () =
   assert.equal(describePriceKey('restore:advanced_restoration'), 'Advanced Fix');
   assert.equal(describePriceKey('restore'), 'Restore');
   assert.equal(describePriceKey('restore:bogus'), null);
+  assert.equal(describePriceKey('device:upscale'), 'Upscale on device');
   assert.equal(describeActivity({reason: 'spend', detail: 'creative:4k'}), 'Creative upscale · 4K');
   assert.equal(describeActivity({reason: 'reversal', detail: 'restore:colorization'}), 'Refund · Restore & Colorize failed');
 });
@@ -75,10 +76,11 @@ test('lists what credits buy from the price table', () => {
     creative: {'2k': 5, '4k': 5, '8k': 15},
     restore: {restore: 15, colorization: 15, colorization_pro: 35, advanced_restoration: 20},
     increaseResolution: 10,
+    device: 1,
   });
   assert.deepEqual(rows.map(row => [row.label, row.credits]), [
     ['Creative upscale · 2K or 4K', 5], ['Creative upscale · 8K', 15], ['Restore', 15], ['Restore & Colorize', 15],
-    ['Enhanced Colorize', 35], ['Advanced Fix', 20], ['Increased resolution', 10],
+    ['Enhanced Colorize', 35], ['Advanced Fix', 20], ['Increased resolution', 10], ['Upscale on device, after 10 free', 1],
   ]);
   assert.deepEqual(priceList(null), []);
 });

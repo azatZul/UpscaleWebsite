@@ -294,18 +294,28 @@ function takeReturnOutcome() {
 const returnOutcome = takeReturnOutcome();
 let dashboardLoaded = false;
 
-// Opened by the upscaler page as its sign-in window. That page is
-// cross-origin isolated, which breaks Firebase's own popup there, so it opens
-// this page instead and picks up the signed-in state Firebase shares across
-// tabs of the same origin.
-const signInWindow = new URLSearchParams(window.location.search).get('popup') === '1';
+// Tools send people here to sign in with ?next=<path>. Only a same-origin path
+// is honoured, so the parameter cannot bounce anyone to another site.
+function safeNext(value) {
+  if (!value || !value.startsWith('/') || value.startsWith('//')) return null;
+  try {
+    const target = new URL(value, window.location.origin);
+    return target.origin === window.location.origin ? target.pathname + target.search + target.hash : null;
+  } catch {
+    return null;
+  }
+}
+const nextUrl = safeNext(new URLSearchParams(window.location.search).get('next'));
+if (nextUrl) {
+  $('auth-heading').textContent = 'Sign in to continue';
+  document.querySelector('.auth-lead').textContent = 'Sign in to upscale your photos. You get 10 free upscales on your device.';
+}
 
 onIdentityChanged(identity => {
-  if (signInWindow && identity) {
-    main.dataset.state = 'popup-done';
+  if (nextUrl && identity) {
     renderIdentity(identity);
-    main.dataset.state = 'popup-done';
-    setTimeout(() => window.close(), 900);
+    main.dataset.state = 'checking';
+    window.location.replace(nextUrl);
     return;
   }
   showError('');

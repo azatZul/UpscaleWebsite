@@ -9,6 +9,8 @@ import {createOverlay} from './overlay.js';
 import {shouldEnhanceFaces, tileMetricKey} from './model-selection.js';
 import {AnalyticsAction, AnalyticsEvent, SCREEN, initAnalytics, modeValue} from './analytics.js';
 import {createCloud} from './cloud.js';
+import {ApiError, createSession} from './account-link.js';
+import {createTopUp} from './topup.js';
 
 const {t, duration} = pageTranslator(document);
 const $ = id => document.getElementById(id);
@@ -23,8 +25,8 @@ const elements = Object.fromEntries(['photo-input', 'choose-photo', 'remove-phot
   'face-status', 'face-progress', 'photo-error', 'status', 'tool-options', 'choose-another', 'mode-device', 'mode-creative',
   'mode-restore', 'credit-chip', 'credit-count', 'private-badge', 'cloud-badge', 'creative-options', 'creativity',
   'creativity-value', 'restore-options', 'negative', 'increase-resolution', 'hires-note', 'prompt-field', 'restore-prompt',
-  'signin-panel', 'signin-status', 'cloud-signin', 'topup-panel', 'topup-title', 'topup-status', 'topup-amounts',
-  'topup-refresh', 'saved-note'].map(id => [id, $(id)]));
+  'topup-panel', 'topup-title', 'topup-status', 'topup-amounts', 'topup-refresh', 'saved-note', 'tool-picker', 'tool-step',
+  'tool-body', 'back-to-tools', 'signin-checking', 'device-quota'].map(id => [id, $(id)]));
 const comparison = createComparison(elements['result-comparison'], elements['before-image'], elements['comparison-handle'],
   value => t('slider_value', {value}));
 const environment = {userAgent: navigator.userAgent, platform: navigator.platform,
@@ -54,6 +56,16 @@ let modelKind = 'photo';
 // cloud for credits (cloud.js). The photo, status and result viewer are shared.
 let mode = 'device';
 let cloud;
+// 'pick' shows the tool picker; 'tool' shows one tool. Both live on this page,
+// switched with ?mode= so the back button returns to the picker.
+let step = 'pick';
+const session = createSession();
+const topUp = createTopUp({elements, t, session, trackTap: (...args) => trackTap(...args)});
+const number = value => new Intl.NumberFormat(document.documentElement.lang || 'en').format(value);
+// On-device results are confirmed with the worker before they are shown: the
+// first ten are free, then each costs a credit. A result waiting on that sits here.
+let heldResult;
+let deviceRequestId;
 // idle (no photo) → assessing → ready → checking/processing → done, or error.
 let phase = 'idle';
 let forceCpu = false;
@@ -323,7 +335,7 @@ function renderSummary() {
   }
 }
 
-const busy = () => ['checking', 'processing'].includes(phase);
+const busy = () => ['checking', 'processing', 'confirming'].includes(phase);
 const locked = () => busy() || applying;
 const dimensions = plan => `${plan.width} × ${plan.height} → ${plan.outputWidth} × ${plan.outputHeight}`;
 
@@ -397,8 +409,34 @@ function refreshControls() {
     elements['try-2x'].hidden = true;
     elements.cancel.hidden = true;
   }
-  for (const id of ['mode-device', 'mode-creative', 'mode-restore']) elements[id].disabled = locked;
+  if (mode === 'device') {
+    if (!busy()) elements['process-photo'].textContent = deviceButtonLabel();
+    if (topUp.isOpen()) elements['process-photo'].hidden = true;
+  }
+  // A finished on-device result waiting on confirmation or credits: Retry
+  // re-confirms it, unless the top-up panel already stands in for the button.
+  if (phase === 'held') {
+    elements['process-photo'].hidden = true;
+    elements.retry.hidden = topUp.isOpen();
+    elements.cancel.hidden = true;
+  }
+  renderAccount();
   cloud?.refresh({busy: busy(), locked});
+}
+
+function deviceButtonLabel() {
+  const device = session.state.device;
+  if (!device) return t('upscale_button', {scale});
+  return device.freeRemaining > 0 ? t('device_button_free', {scale}) : t('device_button_paid', {scale, credits: device.credits});
+}
+
+function renderAccount() {
+  const {identity, balance, device} = session.state;
+  elements['credit-chip'].hidden = !(identity && balance !== null);
+  if (balance !== null) elements['credit-count'].textContent = number(balance);
+  const quota = mode === 'device' && identity && device;
+  elements['device-quota'].hidden = !quota;
+  if (quota) elements['device-quota'].textContent = t('device_free_left', {count: device.freeRemaining, limit: device.freeLimit});
 }
 
 async function keepAwake() {
@@ -497,38 +535,78 @@ function onMessage(data, current) {
   } else if (data.type === 'done') {
     trackOutcome('success', {progress: 1, face_count: data.faceCount || 0, detected_faces: data.detectedCount || 0,
       tile_count: data.plan.tileCount, output_size: `${data.plan.outputWidth}x${data.plan.outputHeight}`});
-    stopWorker(); phase = 'done';
+    stopWorker();
     // Only learn from a run long enough to amortise first-inference shader
     // setup. A four-tile photo would otherwise teach a badly pessimistic rate.
     if (data.plan?.tileCount >= 16 && data.tilesMs) {
       rememberTileMs(data.tilesMs / data.plan.tileCount, data.modelKind, data.plan.scale);
     }
-    clearOutput();
-    resultUrl = URL.createObjectURL(data.blob);
-    // Decode the original for comparison only after inference has finished.
-    // A thumbnail here would make the "before" side artificially blurry.
-    originalUrl = URL.createObjectURL(file);
-    elements['result-image'].src = resultUrl;
-    elements['before-image'].src = originalUrl;
-    elements['result-comparison'].style.aspectRatio = `${data.plan.width} / ${data.plan.height}`;
-    elements['result-comparison'].style.setProperty('--photo-ratio', data.plan.width / data.plan.height);
-    const resultScale = data.plan.scale;
-    elements['result-image'].alt = t('result_alt', {scale: resultScale});
-    elements['result-tag'].textContent = t('result_tag', {scale: resultScale});
-    elements['download-result'].href = resultUrl;
-    elements['download-result'].download = `${file.name.replace(/\.[^.]+$/, '') || 'photo'}-uscale-${resultScale}x.jpg`;
-    lastResult = {plan: data.plan, modelKind: data.modelKind, faceEnabled: data.faceEnabled,
-      detectedCount: data.detectedCount, faceCount: data.faceCount};
-    faceEdit = data.canEdit && data.faces?.length ? {baseBlob: data.baseBlob, plan: data.plan, faces: data.faces,
-      applied: data.faces.map(face => Boolean(face.patch)), changed: false} : undefined;
-    elements['result-title'].textContent = t('upscaled', {scale: resultScale});
-    renderSummary();
-    setStatus(t('done_title'), t('done_detail'));
-    elements.results.hidden = false;
-    refreshControls();
-    elements.results.focus({preventScroll: true});
-    elements.results.scrollIntoView({behavior: 'smooth', block: 'start'});
+    heldResult = data;
+    confirmDevice();
   }
+}
+
+function showDeviceTopUp() {
+  const {device, balance} = session.state;
+  topUp.show({reason: 'device', title: t('device_topup_title',
+    {limit: device?.freeLimit ?? 10, credits: device?.credits ?? 1, balance: number(balance ?? 0)})});
+}
+
+/** Record the finished upscale with the worker -- free or one credit -- and only
+ *  then show it. Nothing is counted for a run that failed or was cancelled. */
+async function confirmDevice() {
+  if (!heldResult) return;
+  const data = heldResult;
+  phase = 'confirming';
+  setStatus(t('device_confirming'), '');
+  refreshControls();
+  try {
+    session.apply(await session.claimDevice(deviceRequestId));
+    if (heldResult !== data) return;
+    heldResult = undefined;
+    showDeviceResult(data);
+  } catch (error) {
+    if (heldResult !== data) return;
+    phase = 'held';
+    if (error instanceof ApiError && error.status === 401) { requireSignIn(); return; }
+    if (error instanceof ApiError && error.status === 402) {
+      session.apply(error.body);
+      showDeviceTopUp();
+      setStatus(t('device_result_held'), '');
+    } else {
+      setStatus(t('failed_title'), t('device_confirm_failed'));
+    }
+    refreshControls();
+  }
+}
+
+function showDeviceResult(data) {
+  phase = 'done';
+  clearOutput();
+  resultUrl = URL.createObjectURL(data.blob);
+  // Decode the original for comparison only after inference has finished.
+  // A thumbnail here would make the "before" side artificially blurry.
+  originalUrl = URL.createObjectURL(file);
+  elements['result-image'].src = resultUrl;
+  elements['before-image'].src = originalUrl;
+  elements['result-comparison'].style.aspectRatio = `${data.plan.width} / ${data.plan.height}`;
+  elements['result-comparison'].style.setProperty('--photo-ratio', data.plan.width / data.plan.height);
+  const resultScale = data.plan.scale;
+  elements['result-image'].alt = t('result_alt', {scale: resultScale});
+  elements['result-tag'].textContent = t('result_tag', {scale: resultScale});
+  elements['download-result'].href = resultUrl;
+  elements['download-result'].download = `${file.name.replace(/\.[^.]+$/, '') || 'photo'}-uscale-${resultScale}x.jpg`;
+  lastResult = {plan: data.plan, modelKind: data.modelKind, faceEnabled: data.faceEnabled,
+    detectedCount: data.detectedCount, faceCount: data.faceCount};
+  faceEdit = data.canEdit && data.faces?.length ? {baseBlob: data.baseBlob, plan: data.plan, faces: data.faces,
+    applied: data.faces.map(face => Boolean(face.patch)), changed: false} : undefined;
+  elements['result-title'].textContent = t('upscaled', {scale: resultScale});
+  renderSummary();
+  setStatus(t('done_title'), t('done_detail'));
+  elements.results.hidden = false;
+  refreshControls();
+  elements.results.focus({preventScroll: true});
+  elements.results.scrollIntoView({behavior: 'smooth', block: 'start'});
 }
 
 function prepare(cpu = false, autoStart = false, faceResults) {
@@ -583,10 +661,26 @@ function trackOutcome(result, extra) {
     duration_sec: Math.round((performance.now() - processingStartedAt) / 100) / 10, ...extra});
 }
 
+function requireSignIn(targetMode = mode) {
+  const url = new URL(location.href);
+  url.searchParams.set('mode', targetMode);
+  location.assign(session.signInUrl(url.pathname + url.search));
+}
+
 function start() {
   if (!file || !supported || locked()) return;
+  if (!session.state.identity) { requireSignIn(); return; }
   trackTap('start_processing', runProperties());
   if (mode !== 'device') { cloud.start(); return; }
+  const device = session.state.device;
+  if (device && device.freeRemaining === 0 && (session.state.balance ?? 0) < device.credits) {
+    showDeviceTopUp();
+    refreshControls();
+    return;
+  }
+  if (topUp.reason() === 'device') topUp.hide();
+  heldResult = undefined;
+  deviceRequestId = crypto.randomUUID().replaceAll('-', '');
   processingStartedAt = performance.now(); outcomeTracked = false; runProgress = 0;
   retriedGpu = false;
   if (shouldEnhanceFaces(modelKind, elements['enhance-faces'].checked)) startFaces(forceCpu);
@@ -600,6 +694,8 @@ function start() {
 async function assessCurrentFile() {
   if (!file || locked()) return;
   const current = ++selection;
+  heldResult = undefined;
+  if (topUp.reason() === 'device') topUp.hide();
   clearOutput();
   phase = 'assessing'; errorCode = undefined; scaleFallback = false;
   elements['source-size'].textContent = t('checking_size');
@@ -704,7 +800,7 @@ function setScale(value) {
   elements['scale-4x'].setAttribute('aria-pressed', String(value === 4));
   if (mode !== 'device') return;
   elements['limit-note'].textContent = t('limit_note', {mp: maxInputPixelsForScale(policy, scale) / 1_000_000, scale});
-  elements['process-photo'].textContent = t('upscale_button', {scale});
+  elements['process-photo'].textContent = deviceButtonLabel();
 }
 function setModelKind(value) {
   modelKind = value;
@@ -793,44 +889,79 @@ function renderHeading() {
     : {eyebrow: t('eyebrow_cloud'), title: t(`h1_${mode}`), lead: t(`lead_${mode}`)};
   for (const [key, node] of Object.entries(heading)) if (node) node.textContent = copy[key];
 }
-const MODE_KEY = 'uscale-tool-mode';
-function initialMode() {
-  const requested = new URLSearchParams(location.search).get('mode');
-  if (MODES.includes(requested)) return requested;
-  try {
-    const stored = localStorage.getItem(MODE_KEY);
-    if (MODES.includes(stored)) return stored;
-  } catch { /* Storage is optional. */ }
-  return 'device';
-}
-// On phones the tiles are a swipeable row, so a page opened straight into a cloud
-// mode would otherwise show the selected tile cut off at the edge. Scroll only the
-// row, never the page.
-function revealModeTile(value, smooth) {
-  const picker = elements['mode-device'].parentElement;
-  if (picker.scrollWidth <= picker.clientWidth) return;
-  const tile = elements[`mode-${value}`];
-  const left = Math.max(0, Math.min(tile.offsetLeft - picker.offsetLeft - 3, picker.scrollWidth - picker.clientWidth));
-  picker.scrollTo({left, behavior: smooth ? 'smooth' : 'auto'});
-}
 function setMode(value, {initial = false} = {}) {
   if (!MODES.includes(value) || (value === mode && !initial) || locked()) return;
   mode = value;
-  for (const id of MODES) elements[`mode-${id}`].setAttribute('aria-checked', String(id === value));
-  revealModeTile(value, !initial);
-  try { localStorage.setItem(MODE_KEY, value); } catch { /* Storage is optional. */ }
-  const url = new URL(location.href);
-  if (value === 'device') url.searchParams.delete('mode'); else url.searchParams.set('mode', value);
-  history.replaceState(history.state, '', url);
   if (value === 'device') setScale(scale); else elements['limit-note'].textContent = formatsNote;
   renderHeading();
   cloud.onMode(value);
   if (file) assessCurrentFile(); else idleStatus();
   refreshControls();
 }
-for (const id of MODES) {
-  elements[`mode-${id}`].addEventListener('click', () => { trackTap('mode', {value: id}); setMode(id); });
+const modeFromUrl = () => {
+  const requested = new URLSearchParams(location.search).get('mode');
+  return MODES.includes(requested) ? requested : null;
+};
+
+/** Which step shows, and whether the tool may show yet: every tool needs a
+ *  signed-in account, so a tool step waits for sign-in to resolve and sends a
+ *  signed-out visitor to the sign-in page. */
+function renderStep() {
+  $('main-content').dataset.step = step;
+  const {known, identity} = session.state;
+  const checking = step === 'tool' && !known;
+  elements['signin-checking'].hidden = !checking;
+  elements['tool-body'].hidden = step === 'tool' && !identity;
+  if (step === 'tool' && known && !identity) requireSignIn();
 }
+
+function openTool(value, {push = true} = {}) {
+  if (session.state.known && !session.state.identity) { requireSignIn(value); return; }
+  step = 'tool';
+  if (push) {
+    const url = new URL(location.href);
+    url.searchParams.set('mode', value);
+    history.pushState({mode: value}, '', url);
+  }
+  setMode(value, {initial: true});
+  renderStep();
+  window.scrollTo({top: 0});
+}
+
+function showPicker({push = true} = {}) {
+  if (locked()) return;
+  step = 'pick';
+  if (push) {
+    const url = new URL(location.href);
+    url.searchParams.delete('mode');
+    history.pushState({}, '', url);
+  }
+  if (topUp.isOpen()) topUp.hide();
+  renderStep();
+  window.scrollTo({top: 0});
+}
+
+for (const id of MODES) {
+  elements[`mode-${id}`].addEventListener('click', () => { trackTap('tool', {value: id}); openTool(id); });
+}
+elements['back-to-tools'].addEventListener('click', () => { trackTap('back_to_tools', {mode}); showPicker(); });
+window.addEventListener('popstate', () => {
+  const requested = modeFromUrl();
+  if (requested) openTool(requested, {push: false}); else showPicker({push: false});
+});
+session.subscribe(state => {
+  if (topUp.reason() === 'device') {
+    const device = state.device;
+    if (device && (device.freeRemaining > 0 || (state.balance ?? 0) >= device.credits)) {
+      topUp.hide();
+      if (phase === 'held') confirmDevice();
+    } else {
+      showDeviceTopUp();
+    }
+  }
+  renderStep();
+  refreshControls();
+});
 
 const readFailure = () => fail('format', 'err_unreadable');
 const openPicker = () => { if (!locked() && supported) elements['photo-input'].click(); };
@@ -855,7 +986,10 @@ elements['photo-input'].addEventListener('change', () => {
   chooseFile(next, 'picker').catch(readFailure);
 });
 elements['process-photo'].addEventListener('click', () => { if (phase === 'ready') start(); });
-elements.retry.addEventListener('click', () => { trackTap('retry', {reason: errorCode}); start(); });
+elements.retry.addEventListener('click', () => {
+  trackTap('retry', {reason: phase === 'held' ? 'confirm' : errorCode});
+  if (phase === 'held') confirmDevice(); else start();
+});
 elements['cpu-retry'].addEventListener('click', () => {
   trackTap('cpu_retry');
   processingStartedAt = performance.now(); outcomeTracked = false;
@@ -871,7 +1005,8 @@ elements.cancel.addEventListener('click', () => {
   refreshControls();
 });
 function reset() {
-  stopWorker(); selection++; phase = 'idle'; file = null;
+  stopWorker(); selection++; phase = 'idle'; file = null; heldResult = undefined;
+  if (topUp.isOpen()) topUp.hide();
   errorCode = undefined; scaleFallback = false; forceCpu = false; tooLargeFor4x = false;
   hideScalePopover();
   clearOutput(); idleStatus();
@@ -911,7 +1046,11 @@ elements['drop-zone'].addEventListener('drop', event => {
 // A photo dropped beside the zone would otherwise open in the tab and end the session.
 for (const eventName of ['dragover', 'drop']) window.addEventListener(eventName, event => { if (hasFiles(event)) event.preventDefault(); });
 
-document.addEventListener('visibilitychange', () => { refreshControls(); watchdog(); applyWatchdog(); keepAwake(); });
+document.addEventListener('visibilitychange', () => {
+  refreshControls(); watchdog(); applyWatchdog(); keepAwake();
+  // Back from the checkout tab: pick up the new balance.
+  if (!document.hidden && session.state.identity) session.refresh();
+});
 window.addEventListener('pagehide', () => {
   const interrupted = busy();
   if (interrupted) trackOutcome('interrupted');
@@ -937,13 +1076,17 @@ try {
 } catch { /* Browser storage is optional. */ }
 // Captured before setScale replaces it with the on-device size limit.
 const formatsNote = elements['limit-note'].textContent;
-cloud = createCloud({elements, t, getMode: () => mode, getFile: () => file, getInfo: () => lastInfo, setStatus,
+cloud = createCloud({elements, t, session, topUp, requireSignIn, getMode: () => mode, getFile: () => file, getInfo: () => lastInfo, setStatus,
   setPhase: value => { phase = value; }, refreshControls, fail, presentResult: presentCloudResult,
   optionsChanged: () => { if (['done', 'error'].includes(phase)) assessCurrentFile(); },
   analytics, trackTap, isLocked: () => busy() || applying || !supported});
 setScale(2);
 setModelKind('photo');
-setMode(initialMode(), {initial: true});
+const startMode = modeFromUrl();
+step = startMode ? 'tool' : 'pick';
+setMode(startMode || 'device', {initial: true});
+session.start();
+renderStep();
 idleStatus();
 try {
   checkBrowser({secure: isSecureContext, worker: typeof Worker === 'function', wasm: typeof WebAssembly === 'object',

@@ -166,18 +166,27 @@
    behind its name, a dark fade for the text, and a gold Pro badge. Selecting a
    mode sweeps the divider once, as the app's preview does when it appears. */
 @property --split{syntax:"<percentage>";inherits:true;initial-value:50%}
-.mode-picker{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:760px;margin:0 auto 18px}
+/* Two steps on one page: choose a tool, then use it. */
+.tool[data-step="pick"] .tool-step,.tool[data-step="tool"] .tool-picker{display:none}
+.tool-picker .tool-heading{margin-bottom:26px}
+.mode-picker{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;max-width:1000px;margin:0 auto}
+.tool-picker .mode-tile{height:240px}
+.back-link{display:flex;align-items:center;gap:8px;width:fit-content;max-width:760px;margin:0 auto 12px;padding:8px 0;
+  font:inherit;font-size:14.5px;font-weight:650;color:var(--tx-2);background:none;border:0;cursor:pointer}
+.tool-step>.back-link{margin-left:max(0px,calc((100% - 760px) / 2))}
+.back-link:hover{color:var(--tx)}
+.signin-checking{max-width:760px;margin:40px auto;text-align:center;font-size:15px;color:var(--tx-2)}
 .mode-tile{position:relative;display:block;height:188px;padding:0;overflow:hidden;font:inherit;text-align:left;color:#fff;cursor:pointer;
   border:0;border-radius:16px;background:var(--tint);box-shadow:0 0 0 1px var(--line-2);transition:box-shadow .15s}
-@media(hover:hover){.mode-tile:not([aria-checked="true"]):not(:disabled):hover{box-shadow:0 0 0 1px var(--acc-line)}}
-.mode-tile[aria-checked="true"]{box-shadow:0 0 0 2.5px var(--acc),0 12px 30px -14px var(--acc-glow)}
+@media(hover:hover){.mode-tile:not(:disabled):hover{box-shadow:0 0 0 2px var(--acc),0 12px 30px -14px var(--acc-glow)}
+  .mode-tile:hover .mode-preview{animation:mode-split 2.4s cubic-bezier(.45,0,.2,1) 1}}
+.mode-tile:focus-visible{outline:none;box-shadow:0 0 0 2.5px var(--acc)}
 .mode-tile:disabled{cursor:not-allowed;opacity:.6}
 .mode-preview{--split:50%;position:absolute;inset:0}
 .mode-preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .mode-preview .mode-before{clip-path:inset(0 calc(100% - var(--split)) 0 0)}
 .mode-divider{position:absolute;top:0;bottom:0;left:var(--split);width:2px;margin-left:-1px;background:#fff;box-shadow:0 0 6px rgba(0,0,0,.45)}
 .mode-preview::after{content:"";position:absolute;inset:38% 0 0;background:linear-gradient(180deg,transparent,rgba(0,0,0,.78))}
-.mode-tile[aria-checked="true"] .mode-preview{animation:mode-split 2.4s cubic-bezier(.45,0,.2,1) 1}
 @keyframes mode-split{0%{--split:50%}30%{--split:88%}65%{--split:12%}100%{--split:50%}}
 .mode-tag{position:absolute;top:10px;right:10px;z-index:1;display:inline-flex;align-items:center;gap:4px;padding:3px 9px;
   border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.01em;line-height:1.3}
@@ -187,7 +196,7 @@
 .mode-tile-text{position:absolute;left:0;right:0;bottom:0;z-index:1;display:grid;gap:2px;padding:12px 14px}
 .mode-tile-text b{font-size:18px;font-weight:800;letter-spacing:-.015em;line-height:1.2;text-shadow:0 1px 2px rgba(0,0,0,.7)}
 .mode-tile-sub{font-size:12.5px;line-height:1.35;color:rgba(255,255,255,.84);text-shadow:0 1px 2px rgba(0,0,0,.5)}
-@media(prefers-reduced-motion:reduce){.mode-tile[aria-checked="true"] .mode-preview{animation:none}}
+@media(prefers-reduced-motion:reduce){.mode-tile .mode-preview{animation:none!important}}
 
 .card-badges{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .credit-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:32px;font-size:13.5px;font-weight:750;
@@ -247,12 +256,8 @@
   .tool-card{padding:16px;border-radius:20px}
   .tool-card-heading h2{font-size:17px}
   .private-badge{padding:6px 10px;font-size:12px}
-  /* A swipeable row on phones, so three tall previews don't push the photo
-     card off the first screen. */
-  .mode-picker{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(220px,76%);gap:10px;
-    overflow-x:auto;scroll-snap-type:x mandatory;margin-bottom:14px;padding:3px 3px 6px;scrollbar-width:none}
-  .mode-picker::-webkit-scrollbar{display:none}
-  .mode-tile{height:150px;scroll-snap-align:start}
+  .mode-picker{grid-template-columns:minmax(0,1fr);gap:12px}
+  .tool-picker .mode-tile{height:176px}
   .mode-tile-text b{font-size:16.5px}
   .restore-modes{grid-template-columns:minmax(0,1fr)}
   .card-badges{gap:6px}

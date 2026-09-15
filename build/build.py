@@ -1859,10 +1859,9 @@ def render_tool(c, lang):
         for mode in ("restore", "colorization", "colorization_pro", "advanced_restoration"))
     def mode_tile(mode, title, sub, tag):
         name, width, height = TOOL_MODE_PREVIEWS[mode]
-        checked = "true" if mode == "device" else "false"
         badge = (f'<span class="mode-tag is-pro">{CROWN_SVG}{esc(tl["tag_pro"])}</span>' if tag == "pro"
                  else f'<span class="mode-tag is-free">{esc(tl["tag_free"])}</span>')
-        return (f'<button type="button" role="radio" class="mode-tile" id="mode-{mode}" aria-checked="{checked}">'
+        return (f'<button type="button" class="mode-tile" id="mode-{mode}" data-mode="{mode}">'
                 f'<span class="mode-preview" aria-hidden="true">'
                 f'<img class="mode-after" src="{TOOL_MODE_IMG}/{name}_after.jpg" width="{width}" height="{height}" alt="" decoding="async">'
                 f'<img class="mode-before" src="{TOOL_MODE_IMG}/{name}_before.jpg" width="{width}" height="{height}" alt="" decoding="async">'
@@ -1876,14 +1875,25 @@ def render_tool(c, lang):
     return (head(c, lang, tl["meta"]["title"], tl["meta"]["description"], canonical, path=TOOL_PATH,
                  robots="noindex,follow", stylesheet="upscale.css")
             + nav(c, lang, home_prefix, TOOL_PATH)
-            + f"""<main class="tool" id="main-content" tabindex="-1">
+            + f"""<main class="tool" id="main-content" tabindex="-1" data-step="pick">
   <div class="wrap tool-wrap">
+    <section class="tool-picker" id="tool-picker" aria-labelledby="picker-title">
+      <div class="tool-heading">
+        <span class="eyebrow">{esc(tl['picker_eyebrow'])}</span>
+        <h1 id="picker-title">{esc(tl['picker_h1'])}</h1>
+        <p class="lead">{esc(tl['picker_lead'])}</p>
+      </div>
+      <div class="mode-picker" id="mode-picker" role="group" aria-label="{esc(tl['mode_label'])}">{mode_tiles}</div>
+    </section>
+    <div class="tool-step" id="tool-step">
+    <button type="button" class="back-link" id="back-to-tools"><span aria-hidden="true">←</span> {esc(tl['back_to_tools'])}</button>
     <div class="tool-heading">
       <span class="eyebrow">{esc(tl['eyebrow'])}</span>
       <h1>{esc(tl['h1'])}</h1>
       <p class="lead">{esc(tl['sub'])}</p>
     </div>
-    <div class="mode-picker" id="mode-picker" role="radiogroup" aria-label="{esc(tl['mode_label'])}">{mode_tiles}</div>
+    <p class="signin-checking" id="signin-checking" role="status" hidden>{esc(tl['signin_checking'])}</p>
+    <div class="tool-body" id="tool-body">
     <ol class="tool-steps" aria-label="{esc(tl['steps_label'])}">
       <li id="step-choose" aria-current="step"><span class="step-mark"><i>1</i>{CHECK_SVG}</span>{esc(tl['step_choose'])}</li>
       <li id="step-upscale"><span class="step-mark"><i>2</i>{CHECK_SVG}</span>{esc(tl['step_upscale'])}</li>
@@ -1894,6 +1904,7 @@ def render_tool(c, lang):
       <div class="tool-card-heading">
         <h2 id="stage-title">{esc(js['choose_title'])}</h2>
         <div class="card-badges">
+          <span class="credit-chip quota-chip" id="device-quota" hidden></span>
           <a class="credit-chip" id="credit-chip" href="/account/" hidden>{COIN_SVG}<span id="credit-count">0</span><span class="visually-hidden"> {esc(tl['credits_label'])}</span></a>
           <span class="private-badge" id="private-badge">{SHIELD_SVG}{esc(tl['private'])}</span>
           <span class="private-badge cloud-badge" id="cloud-badge" hidden>{CLOUD_SVG}{esc(tl['cloud'])}</span>
@@ -1969,10 +1980,6 @@ def render_tool(c, lang):
           <textarea id="restore-prompt" rows="3" maxlength="500" placeholder="{esc(tl['prompt_placeholder'])}"></textarea>
         </details>
       </div>
-      <div class="cloud-gate" id="signin-panel" hidden>
-        <div><b>{esc(tl['signin_title'])}</b><p>{esc(tl['signin_body'])}</p><p class="gate-status" id="signin-status" role="status" hidden></p></div>
-        <button id="cloud-signin" class="btn btn-p" type="button">{esc(tl['signin_button'])}</button>
-      </div>
       <div class="cloud-gate" id="topup-panel" hidden>
         <div><b id="topup-title"></b><p>{esc(tl['topup_body'])}</p><p class="gate-status" id="topup-status" role="status" hidden></p></div>
         <div class="topup-amounts" id="topup-amounts"></div>
@@ -2020,6 +2027,8 @@ def render_tool(c, lang):
         </div>
       </div>
     </section>
+    </div>
+    </div>
     <div class="inline-cta">
       <img src="/resources/appstore/icon_512.png" width="66" height="66" loading="lazy"
            alt="{esc(c['ui']['icon_alt'])}">

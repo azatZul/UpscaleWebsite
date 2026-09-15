@@ -22,42 +22,42 @@
   },
   "tool.nav": {
     "localizations": {
-      "en": "Try online",
-      "ru": "Попробовать онлайн",
-      "de": "Online testen",
-      "ja": "オンラインで試す",
-      "fr": "Essayer en ligne",
-      "es": "Probar online"
+      "en": "Upscale photos",
+      "ru": "Увеличить фото",
+      "de": "Fotos vergrößern",
+      "ja": "写真を高画質化",
+      "fr": "Agrandir des photos",
+      "es": "Ampliar fotos"
     }
   },
   "tool.hero_link": {
     "localizations": {
-      "en": "Try photo upscaling online",
-      "ru": "Увеличить фото онлайн",
-      "de": "Foto online vergrößern",
-      "ja": "オンラインで写真を高画質化",
-      "fr": "Agrandir une photo en ligne",
-      "es": "Ampliar una foto online"
+      "en": "Upscale photos",
+      "ru": "Увеличить фото",
+      "de": "Fotos vergrößern",
+      "ja": "写真を高画質化",
+      "fr": "Agrandir des photos",
+      "es": "Ampliar fotos"
     }
   },
   "tool.eyebrow": {
     "localizations": {
-      "en": "Free · In your browser",
-      "ru": "Бесплатно · В браузере",
-      "de": "Kostenlos · Im Browser",
-      "ja": "無料・ブラウザで",
-      "fr": "Gratuit · Dans le navigateur",
-      "es": "Gratis · En el navegador"
+      "en": "On your device · 10 free",
+      "ru": "На устройстве · 10 бесплатно",
+      "de": "Auf deinem Gerät · 10 kostenlos",
+      "ja": "端末上で処理・10枚無料",
+      "fr": "Sur votre appareil · 10 gratuites",
+      "es": "En tu dispositivo · 10 gratis"
     }
   },
   "tool.h1": {
     "localizations": {
-      "en": "Upscale your photo for free",
-      "ru": "Увеличьте фото бесплатно",
-      "de": "Foto kostenlos vergrößern",
-      "ja": "写真を無料で高画質化",
-      "fr": "Agrandissez votre photo gratuitement",
-      "es": "Amplía tu foto gratis"
+      "en": "Upscale your photo",
+      "ru": "Увеличьте фото",
+      "de": "Vergrößere dein Foto",
+      "ja": "写真を高画質化",
+      "fr": "Agrandissez votre photo",
+      "es": "Amplía tu foto"
     }
   },
   "tool.sub": {
@@ -1584,12 +1584,12 @@
   },
   "tool.mode_device_sub": {
     "localizations": {
-      "en": "Free · runs on your device",
-      "ru": "Бесплатно · на вашем устройстве",
-      "de": "Kostenlos · auf deinem Gerät",
-      "ja": "無料・端末上で処理",
-      "fr": "Gratuit · sur votre appareil",
-      "es": "Gratis · en tu dispositivo"
+      "en": "On your device · then 1 credit",
+      "ru": "На устройстве · затем 1 кредит",
+      "de": "Auf deinem Gerät · danach 1 Credit",
+      "ja": "端末上で処理・以降1クレジット",
+      "fr": "Sur votre appareil · puis 1 crédit",
+      "es": "En tu dispositivo · luego 1 crédito"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1639,12 +1639,12 @@
   },
   "tool.tag_free": {
     "localizations": {
-      "en": "Free",
-      "ru": "Бесплатно",
-      "de": "Kostenlos",
-      "ja": "無料",
-      "fr": "Gratuit",
-      "es": "Gratis"
+      "en": "10 free",
+      "ru": "10 бесплатно",
+      "de": "10 kostenlos",
+      "ja": "10枚無料",
+      "fr": "10 gratuites",
+      "es": "10 gratis"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1843,39 +1843,6 @@
       "ja": "残したい・復元したい詳細を入力（例：目の色、服の色、欠けている部分）",
       "fr": "Décrivez les détails à préserver ou restaurer : couleur des yeux, des vêtements, parties manquantes.",
       "es": "Describe detalles que conservar o restaurar, p. ej. color de ojos, color de la ropa o partes que faltan."
-    },
-    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
-  },
-  "tool.signin_title": {
-    "localizations": {
-      "en": "Sign in to use Pro tools",
-      "ru": "Войдите, чтобы пользоваться Pro",
-      "de": "Melde dich an, um Pro-Tools zu nutzen",
-      "ja": "Proツールを使うにはログイン",
-      "fr": "Connectez-vous pour utiliser les outils Pro",
-      "es": "Inicia sesión para usar las herramientas Pro"
-    },
-    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
-  },
-  "tool.signin_body": {
-    "localizations": {
-      "en": "Pro tools run in the cloud and use credits. Your photo stays selected.",
-      "ru": "Pro-инструменты работают в облаке и расходуют кредиты. Выбранное фото сохранится.",
-      "de": "Pro-Tools laufen in der Cloud und verbrauchen Credits. Dein Foto bleibt ausgewählt.",
-      "ja": "Proツールはクラウドで処理し、クレジットを使用します。選んだ写真はそのままです。",
-      "fr": "Les outils Pro fonctionnent dans le cloud et utilisent des crédits. Votre photo reste sélectionnée.",
-      "es": "Las herramientas Pro funcionan en la nube y usan créditos. Tu foto sigue seleccionada."
-    },
-    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
-  },
-  "tool.signin_button": {
-    "localizations": {
-      "en": "Continue with Google",
-      "ru": "Продолжить с Google",
-      "de": "Weiter mit Google",
-      "ja": "Googleで続ける",
-      "fr": "Continuer avec Google",
-      "es": "Continuar con Google"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -2154,28 +2121,6 @@
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
-  "tool.js.signin_waiting": {
-    "localizations": {
-      "en": "Finish signing in in the window that opened.",
-      "ru": "Завершите вход в открывшемся окне.",
-      "de": "Schließe die Anmeldung im geöffneten Fenster ab.",
-      "ja": "開いたウィンドウでログインを完了してください。",
-      "fr": "Terminez la connexion dans la fenêtre ouverte.",
-      "es": "Termina de iniciar sesión en la ventana que se abrió."
-    },
-    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
-  },
-  "tool.js.signin_blocked": {
-    "localizations": {
-      "en": "Your browser blocked the sign-in window. Allow pop-ups for this site and try again.",
-      "ru": "Браузер заблокировал окно входа. Разрешите всплывающие окна для сайта и попробуйте снова.",
-      "de": "Dein Browser hat das Anmeldefenster blockiert. Erlaube Pop-ups für diese Seite und versuche es erneut.",
-      "ja": "ブラウザがログインウィンドウをブロックしました。このサイトのポップアップを許可して、もう一度お試しください。",
-      "fr": "Votre navigateur a bloqué la fenêtre de connexion. Autorisez les fenêtres pop-up pour ce site et réessayez.",
-      "es": "Tu navegador bloqueó la ventana de inicio de sesión. Permite las ventanas emergentes en este sitio e inténtalo de nuevo."
-    },
-    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
-  },
   "tool.js.topup_title": {
     "localizations": {
       "en": "This needs {credits} credits. You have {balance}.",
@@ -2338,6 +2283,138 @@
       "ja": "傷や損傷を取り除き、色を取り戻します。クレジットを使ってクラウドで処理します。",
       "fr": "Supprimez rayures et dégâts, et retrouvez les couleurs. Traité dans le cloud avec des crédits.",
       "es": "Elimina rayones y daños, y recupera el color. Se procesa en la nube con créditos."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.picker_eyebrow": {
+    "localizations": {
+      "en": "UScale tools",
+      "ru": "Инструменты UScale",
+      "de": "UScale-Tools",
+      "ja": "UScaleのツール",
+      "fr": "Outils UScale",
+      "es": "Herramientas de UScale"
+    },
+    "comment": "Browser upscaler tool picker; preserve product names."
+  },
+  "tool.picker_h1": {
+    "localizations": {
+      "en": "Upscale photos",
+      "ru": "Увеличить фото",
+      "de": "Fotos vergrößern",
+      "ja": "写真を高画質化",
+      "fr": "Agrandir des photos",
+      "es": "Ampliar fotos"
+    },
+    "comment": "Browser upscaler tool picker; preserve product names."
+  },
+  "tool.picker_lead": {
+    "localizations": {
+      "en": "Choose a tool to start. The upscaler runs on your device with 10 free photos; Pro tools run in the cloud with credits.",
+      "ru": "Выберите инструмент. Увеличение работает на вашем устройстве, первые 10 фото бесплатно; Pro-инструменты работают в облаке за кредиты.",
+      "de": "Wähle ein Tool. Das Vergrößern läuft auf deinem Gerät, 10 Fotos sind kostenlos; Pro-Tools laufen in der Cloud mit Credits.",
+      "ja": "ツールを選んでください。高画質化は端末上で処理され、10枚まで無料です。Proツールはクレジットを使ってクラウドで処理します。",
+      "fr": "Choisissez un outil. L’agrandissement s’exécute sur votre appareil, 10 photos gratuites ; les outils Pro fonctionnent dans le cloud avec des crédits.",
+      "es": "Elige una herramienta. La ampliación funciona en tu dispositivo con 10 fotos gratis; las herramientas Pro funcionan en la nube con créditos."
+    },
+    "comment": "Browser upscaler tool picker; preserve product names."
+  },
+  "tool.back_to_tools": {
+    "localizations": {
+      "en": "All tools",
+      "ru": "Все инструменты",
+      "de": "Alle Tools",
+      "ja": "すべてのツール",
+      "fr": "Tous les outils",
+      "es": "Todas las herramientas"
+    },
+    "comment": "Browser upscaler tool picker; preserve product names."
+  },
+  "tool.signin_checking": {
+    "localizations": {
+      "en": "Checking sign-in…",
+      "ru": "Проверяем вход…",
+      "de": "Anmeldung wird geprüft…",
+      "ja": "ログインを確認しています…",
+      "fr": "Vérification de la connexion…",
+      "es": "Comprobando el inicio de sesión…"
+    },
+    "comment": "Browser upscaler tool picker; preserve product names."
+  },
+  "tool.js.device_free_left": {
+    "localizations": {
+      "en": "{count} of {limit} free left",
+      "ru": "Осталось {count} из {limit} бесплатно",
+      "de": "Noch {count} von {limit} kostenlos",
+      "ja": "無料残り{count}/{limit}枚",
+      "fr": "{count} sur {limit} gratuites restantes",
+      "es": "Quedan {count} de {limit} gratis"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.device_button_free": {
+    "localizations": {
+      "en": "Upscale photo · {scale}× · free",
+      "ru": "Увеличить · {scale}× · бесплатно",
+      "de": "Vergrößern · {scale}× · kostenlos",
+      "ja": "高画質化・{scale}×・無料",
+      "fr": "Agrandir · {scale}× · gratuit",
+      "es": "Ampliar · {scale}× · gratis"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.device_button_paid": {
+    "localizations": {
+      "en": "Upscale photo · {scale}× · {credits} credit",
+      "ru": "Увеличить · {scale}× · {credits} кредит",
+      "de": "Vergrößern · {scale}× · {credits} Credit",
+      "ja": "高画質化・{scale}×・{credits}クレジット",
+      "fr": "Agrandir · {scale}× · {credits} crédit",
+      "es": "Ampliar · {scale}× · {credits} crédito"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.device_confirming": {
+    "localizations": {
+      "en": "Finishing up",
+      "ru": "Завершаем",
+      "de": "Wird abgeschlossen",
+      "ja": "仕上げています",
+      "fr": "Finalisation",
+      "es": "Terminando"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.device_confirm_failed": {
+    "localizations": {
+      "en": "Couldn’t confirm this upscale. Check your connection and try again.",
+      "ru": "Не удалось подтвердить увеличение. Проверьте подключение и попробуйте снова.",
+      "de": "Die Vergrößerung konnte nicht bestätigt werden. Prüfe deine Verbindung und versuche es erneut.",
+      "ja": "高画質化を確認できませんでした。接続を確認してもう一度お試しください。",
+      "fr": "Impossible de confirmer cet agrandissement. Vérifiez votre connexion et réessayez.",
+      "es": "No se pudo confirmar la ampliación. Revisa tu conexión e inténtalo de nuevo."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.device_topup_title": {
+    "localizations": {
+      "en": "Your {limit} free upscales are used. This one needs {credits} credit, and you have {balance}.",
+      "ru": "{limit} бесплатных увеличений использованы. Нужен {credits} кредит, у вас {balance}.",
+      "de": "Deine {limit} kostenlosen Vergrößerungen sind aufgebraucht. Diese braucht {credits} Credit, du hast {balance}.",
+      "ja": "無料の{limit}枚を使い切りました。{credits}クレジットが必要で、残高は{balance}です。",
+      "fr": "Vos {limit} agrandissements gratuits sont utilisés. Celui-ci coûte {credits} crédit et vous en avez {balance}.",
+      "es": "Ya usaste tus {limit} ampliaciones gratis. Esta necesita {credits} crédito y tienes {balance}."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.device_result_held": {
+    "localizations": {
+      "en": "Add credits to see and download this result.",
+      "ru": "Пополните кредиты, чтобы открыть и скачать результат.",
+      "de": "Füge Credits hinzu, um dieses Ergebnis zu sehen und herunterzuladen.",
+      "ja": "この結果を表示・ダウンロードするにはクレジットを追加してください。",
+      "fr": "Ajoutez des crédits pour voir et télécharger ce résultat.",
+      "es": "Añade créditos para ver y descargar este resultado."
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   }
