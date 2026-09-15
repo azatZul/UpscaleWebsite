@@ -81,6 +81,14 @@ function renderIdentity(identity) {
 
 function renderBalance(credits) {
   state.balance = credits;
+  // The header shows the balance under Account on every page.
+  store(() => {
+    const hint = JSON.parse(localStorage.getItem(HINT_KEY) || 'null');
+    if (hint?.signedIn && hint.credits !== credits) {
+      localStorage.setItem(HINT_KEY, JSON.stringify({...hint, credits}));
+      window.dispatchEvent(new Event('uscale:account-hint'));
+    }
+  });
   creditCount.textContent = formatCredits(credits);
   const prices = state.catalogue?.prices;
   if (!prices) return;

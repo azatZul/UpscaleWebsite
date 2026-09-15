@@ -109,6 +109,16 @@
       "es": "Cuenta"
     }
   },
+  "nav.credits": {
+    "localizations": {
+      "en": "Credits",
+      "ru": "Кредиты",
+      "de": "Credits",
+      "ja": "クレジット",
+      "fr": "Crédits",
+      "es": "Créditos"
+    }
+  },
   "ui.download_on": {
     "localizations": {
       "en": "Download on the",

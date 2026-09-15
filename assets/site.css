@@ -1065,6 +1065,12 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:64px 0 34
   background:var(--acc-soft);color:var(--acc-tx);font-size:13px;font-weight:750;line-height:28px;text-align:center}
 .nav-account-avatar img{display:block;width:100%;height:100%;object-fit:cover}
 .nav-account.is-signed-in .nav-account-avatar{display:block}
+/* Signed in, the button reads Account with the credit balance beneath it, so
+   the balance sits with the account rather than next to a price. */
+.nav-account-text{display:flex;flex-direction:column;align-items:flex-start;gap:1px;line-height:1.15}
+.nav-account-credits{display:inline-flex;align-items:center;gap:3px;font-size:11.5px;font-weight:700;color:var(--acc-tx);font-variant-numeric:tabular-nums}
+.nav-account-credits[hidden]{display:none}
+.nav-account-credits svg{width:11px;height:11px;flex:0 0 auto}
 .nav-account-icon{display:none;width:21px;height:21px;flex:0 0 auto}
 @media(max-width:1040px){
   .nav-links{display:none;position:absolute;top:70px;left:0;right:0;flex-direction:column;align-items:stretch;
@@ -1083,7 +1089,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:64px 0 34
    nav up to ~1100px. The label stays for screen readers. */
 @media(max-width:1200px){
   .nav-account{width:44px;padding:0;justify-content:center}
-  .nav-account-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .nav-account-text{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
   .nav-account:not(.is-signed-in) .nav-account-icon{display:block}
   .nav-account.is-signed-in .nav-account-avatar{margin-left:0}
 }

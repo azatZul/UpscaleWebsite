@@ -83,36 +83,61 @@
     if (!readConsent()) showConsent(false);
   }
 
-  /* Account link. Reflects the last known sign-in from a hint account.js
-     writes, so ordinary pages never load the auth SDK just to draw a button.
-     The hint is a convenience, not a session: the account page re-checks. */
+  /* Account link. Reflects the last known sign-in, and the credit balance, from
+     a hint the account and upscaler pages write, so ordinary pages never load the
+     auth SDK just to draw a button. The hint is a convenience, not a session:
+     the account page re-checks. Those pages announce changes with an event. */
   var accountLink = document.querySelector('[data-account-link]');
-  if (accountLink) {
-    var accountHint = null;
-    try { accountHint = JSON.parse(localStorage.getItem('uscale-account') || 'null'); } catch (e) {}
-    if (accountHint && accountHint.signedIn) {
-      accountLink.classList.add('is-signed-in');
-      var accountLabel = accountLink.querySelector('.nav-account-label');
-      var signedInLabel = accountLink.getAttribute('data-signed-in-label');
-      if (accountLabel && signedInLabel) accountLabel.textContent = signedInLabel;
-      var accountAvatar = accountLink.querySelector('.nav-account-avatar');
-      if (accountAvatar) {
-        if (typeof accountHint.photo === 'string' && /^https:\/\//.test(accountHint.photo)) {
-          var avatarImg = document.createElement('img');
-          avatarImg.alt = '';
-          avatarImg.referrerPolicy = 'no-referrer';
-          avatarImg.src = accountHint.photo;
-          avatarImg.onerror = function () {
-            avatarImg.remove();
-            accountAvatar.textContent = (accountHint.initial || '').slice(0, 1);
-          };
-          accountAvatar.appendChild(avatarImg);
-        } else {
-          accountAvatar.textContent = (accountHint.initial || '').slice(0, 1);
-        }
+  var COIN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M14.6 9.4c-.4-.9-1.4-1.4-2.6-1.4-1.5 0-2.6.8-2.6 1.9 0 2.6 5.3 1.4 5.3 4.2 0 1.1-1.1 1.9-2.7 1.9-1.2 0-2.3-.5-2.7-1.4"/></svg>';
+  var renderAccountLink = function () {
+    if (!accountLink) return;
+    var hint = null;
+    try { hint = JSON.parse(localStorage.getItem('uscale-account') || 'null'); } catch (e) {}
+    var signedIn = !!(hint && hint.signedIn);
+    accountLink.classList.toggle('is-signed-in', signedIn);
+    var label = accountLink.querySelector('.nav-account-label');
+    if (label) {
+      if (!label.hasAttribute('data-signed-out-label')) label.setAttribute('data-signed-out-label', label.textContent);
+      label.textContent = signedIn
+        ? (accountLink.getAttribute('data-signed-in-label') || label.textContent)
+        : label.getAttribute('data-signed-out-label');
+    }
+    var credits = accountLink.querySelector('.nav-account-credits');
+    var hasCredits = signedIn && typeof hint.credits === 'number' && isFinite(hint.credits);
+    if (credits) {
+      credits.hidden = !hasCredits;
+      if (hasCredits) {
+        var amount = document.createElement('span');
+        amount.textContent = hint.credits.toLocaleString(document.documentElement.lang || undefined);
+        credits.innerHTML = COIN;
+        credits.appendChild(amount);
+        accountLink.title = (accountLink.getAttribute('data-credits-label') || '') + ': ' + amount.textContent;
+      } else {
+        credits.textContent = '';
+        accountLink.removeAttribute('title');
       }
     }
-  }
+    var avatar = accountLink.querySelector('.nav-account-avatar');
+    if (!avatar) return;
+    avatar.textContent = '';
+    if (!signedIn) return;
+    if (typeof hint.photo === 'string' && /^https:\/\//.test(hint.photo)) {
+      var avatarImg = document.createElement('img');
+      avatarImg.alt = '';
+      avatarImg.referrerPolicy = 'no-referrer';
+      avatarImg.src = hint.photo;
+      avatarImg.onerror = function () {
+        avatarImg.remove();
+        avatar.textContent = (hint.initial || '').slice(0, 1);
+      };
+      avatar.appendChild(avatarImg);
+    } else {
+      avatar.textContent = (hint.initial || '').slice(0, 1);
+    }
+  };
+  renderAccountLink();
+  window.addEventListener('uscale:account-hint', renderAccountLink);
+  window.addEventListener('storage', function (e) { if (e.key === 'uscale-account') renderAccountLink(); });
 
   /* Theme is bootstrapped in <head>; this wires controls and persistence. */
   var THEME_KEY = 'uscale-theme';

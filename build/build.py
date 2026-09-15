@@ -822,7 +822,7 @@ def nav(c, lang, home_prefix, path="", on_home=False):
       <a href="{home_prefix}#faq">{esc(n['faq'])}</a>
       {browser_tool_link(c, lang)}
     </nav>
-    <a class="nav-account" href="/account/" data-account-link data-signed-in-label="{esc(n['account'])}"><svg class="nav-account-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.8 20c1.2-3.6 4-5.4 7.2-5.4s6 1.8 7.2 5.4"/></svg><span class="nav-account-avatar" aria-hidden="true"></span><span class="nav-account-label">{esc(n['sign_in'])}</span></a>
+    <a class="nav-account" href="/account/" data-account-link data-signed-in-label="{esc(n['account'])}" data-credits-label="{esc(n['credits'])}"><svg class="nav-account-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.8 20c1.2-3.6 4-5.4 7.2-5.4s6 1.8 7.2 5.4"/></svg><span class="nav-account-avatar" aria-hidden="true"></span><span class="nav-account-text"><span class="nav-account-label">{esc(n['sign_in'])}</span><small class="nav-account-credits" hidden></small></span></a>
     {theme_toggle(c)}
     {lang_switcher(c, lang, path)}
   </div>
@@ -1905,7 +1905,6 @@ def render_tool(c, lang):
         <h2 id="stage-title">{esc(js['choose_title'])}</h2>
         <div class="card-badges">
           <span class="credit-chip quota-chip" id="device-quota" hidden></span>
-          <a class="credit-chip" id="credit-chip" href="/account/" hidden>{COIN_SVG}<span id="credit-count">0</span><span class="visually-hidden"> {esc(tl['credits_label'])}</span></a>
           <span class="private-badge" id="private-badge">{SHIELD_SVG}{esc(tl['private'])}</span>
           <span class="private-badge cloud-badge" id="cloud-badge" hidden>{CLOUD_SVG}{esc(tl['cloud'])}</span>
         </div>

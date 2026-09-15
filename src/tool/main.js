@@ -23,7 +23,7 @@ const elements = Object.fromEntries(['photo-input', 'choose-photo', 'remove-phot
   'result-tag', 'result-title', 'model-photo', 'model-drawing', 'face-option', 'choose-faces', 'face-editor', 'face-stage',
   'face-frame', 'face-photo', 'face-marks', 'face-apply', 'face-cancel', 'face-close', 'face-editor-title',
   'face-status', 'face-progress', 'photo-error', 'status', 'tool-options', 'choose-another', 'mode-device', 'mode-creative',
-  'mode-restore', 'credit-chip', 'credit-count', 'private-badge', 'cloud-badge', 'creative-options', 'creativity',
+  'mode-restore', 'private-badge', 'cloud-badge', 'creative-options', 'creativity',
   'creativity-value', 'restore-options', 'negative', 'increase-resolution', 'hires-note', 'prompt-field', 'restore-prompt',
   'topup-panel', 'topup-title', 'topup-status', 'topup-amounts', 'topup-refresh', 'saved-note', 'tool-picker', 'tool-step',
   'tool-body', 'back-to-tools', 'signin-checking', 'device-quota'].map(id => [id, $(id)]));
@@ -430,10 +430,19 @@ function deviceButtonLabel() {
   return device.freeRemaining > 0 ? t('device_button_free', {scale}) : t('device_button_paid', {scale, credits: device.credits});
 }
 
+function rememberBalance(balance) {
+  try {
+    const hint = JSON.parse(localStorage.getItem('uscale-account') || 'null');
+    if (!hint?.signedIn || hint.credits === balance) return;
+    localStorage.setItem('uscale-account', JSON.stringify({...hint, credits: balance}));
+    window.dispatchEvent(new Event('uscale:account-hint'));
+  } catch { /* Storage is optional; the header just shows no balance. */ }
+}
+
 function renderAccount() {
   const {identity, balance, device} = session.state;
-  elements['credit-chip'].hidden = !(identity && balance !== null);
-  if (balance !== null) elements['credit-count'].textContent = number(balance);
+  // The balance lives in the header, under Account, not beside a price.
+  if (identity && balance !== null) rememberBalance(balance);
   const quota = mode === 'device' && identity && device;
   elements['device-quota'].hidden = !quota;
   if (quota) elements['device-quota'].textContent = t('device_free_left', {count: device.freeRemaining, limit: device.freeLimit});
