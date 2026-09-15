@@ -6,6 +6,7 @@
     "build:lab": "vite build --config vite.lab.config.js && node scripts/copy_lab_runtime.mjs",
     "build:tool": "node scripts/prepare_tool_assets.mjs && vite build --config vite.tool.config.js",
     "build": "npm run build:lab && npm run build:tool && python3 build/build.py",
+    "build:production": "npm run build:tool && python3 build/build.py && node scripts/package_production.mjs",
     "build:preview": "npm run build:tool && python3 build/build.py && node scripts/package_preview.mjs",
     "test:tool": "node --test tests/tool/*.test.js",
     "preview:lab": "node scripts/serve_lab.mjs",

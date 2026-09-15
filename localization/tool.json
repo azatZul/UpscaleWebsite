@@ -22,22 +22,22 @@
   },
   "tool.nav": {
     "localizations": {
-      "en": "Try online",
-      "ru": "Попробовать онлайн",
-      "de": "Online testen",
-      "ja": "オンラインで試す",
-      "fr": "Essayer en ligne",
-      "es": "Probar online"
+      "en": "Try for free",
+      "ru": "Попробовать бесплатно",
+      "de": "Kostenlos testen",
+      "ja": "無料で試す",
+      "fr": "Essayer gratuitement",
+      "es": "Probar gratis"
     }
   },
   "tool.hero_link": {
     "localizations": {
-      "en": "Try photo upscaling online",
-      "ru": "Увеличить фото онлайн",
-      "de": "Foto online vergrößern",
-      "ja": "オンラインで写真を高画質化",
-      "fr": "Agrandir une photo en ligne",
-      "es": "Ampliar una foto online"
+      "en": "Try photo upscaling for free",
+      "ru": "Увеличить фото бесплатно",
+      "de": "Foto kostenlos vergrößern",
+      "ja": "写真を無料で高画質化してみる",
+      "fr": "Agrandir une photo gratuitement",
+      "es": "Ampliar una foto gratis"
     }
   },
   "tool.eyebrow": {

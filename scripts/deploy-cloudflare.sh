@@ -19,7 +19,7 @@ if ! "$python_bin" -c "import PIL" >/dev/null 2>&1; then
   exit 2
 fi
 cd "$repo_root"
-"$python_bin" build/build.py
+npm run build:production
 ALBUM_TESTS_REQUIRED=1 "$python_bin" -m unittest discover -s tests -v
 npm --prefix worker run check
 (cd worker && npx wrangler d1 migrations apply DB --remote --env "$environment")

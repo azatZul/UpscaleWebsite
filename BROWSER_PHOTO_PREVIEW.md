@@ -1,6 +1,6 @@
 # Guarded browser photo preview
 
-The website's **Try online** link, the hero link and the home banner open
+The website's **Try for free** link, the hero link and the home banner open
 `/free-upscale/` (`/<locale>/free-upscale/` on localized pages; the old
 `/upscale/` redirects). `build/build.py` renders the page with the site's head,
 theme, navigation and footer, and localizes it from `localization/tool.json`.
