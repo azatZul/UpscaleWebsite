@@ -79,10 +79,24 @@ test('lists what credits buy from the price table', () => {
     device: 1,
   });
   assert.deepEqual(rows.map(row => [row.label, row.credits]), [
-    ['Creative upscale · 2K or 4K', 10], ['Creative upscale · 8K', 10], ['Restore', 10], ['Restore & Colorize', 10],
-    ['Enhanced Colorize', 20], ['Advanced Fix', 10], ['Increased resolution', 5], ['Upscale on device, after 10 free', 1],
+    ['Any photo', 10], ['Enhanced Colorize', 20], ['Increased resolution', 5], ['Upscale on device, after 10 free', 1],
   ]);
   assert.deepEqual(priceList(null), []);
+});
+
+test('keeps operations apart when their prices differ', () => {
+  const rows = priceList({
+    creative: {'2k': 5, '4k': 5, '8k': 15},
+    restore: {restore: 15, colorization: 15, colorization_pro: 35, advanced_restoration: 20},
+    increaseResolution: 10,
+  });
+  assert.deepEqual(rows.map(row => [row.label, row.credits]), [
+    ['Creative upscale · 2K or 4K', 5],
+    ['Any photo', 15],
+    ['Advanced Fix', 20],
+    ['Enhanced Colorize', 35],
+    ['Increased resolution', 10],
+  ]);
 });
 
 test('titles a saved result by its mode and price-changing option', () => {

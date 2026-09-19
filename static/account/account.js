@@ -97,6 +97,9 @@ function renderBalance(credits) {
   if (!upscale || !restore) return;
   if (credits < Math.min(upscale, restore)) {
     balanceHint.textContent = 'Add credits to start using cloud enhancements.';
+  } else if (upscale === restore) {
+    // The two cost the same, so naming both twice over would just repeat a figure.
+    balanceHint.textContent = `Enough for about ${formatCredits(Math.floor(credits / upscale))} photos.`;
   } else {
     balanceHint.textContent = `Enough for about ${formatCredits(Math.floor(credits / upscale))} creative upscales or ${formatCredits(Math.floor(credits / restore))} restorations.`;
   }
