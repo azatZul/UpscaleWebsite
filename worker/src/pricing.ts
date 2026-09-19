@@ -14,9 +14,9 @@ export interface CreditPack {
 // price, not the headline rate -- otherwise the volume discount quietly eats
 // the margin on exactly the customers who buy most.
 export const CREDIT_PACKS: readonly CreditPack[] = [
-  { id: "starter", credits: 500, priceCents: 500, label: "500 credits" },
-  { id: "plus", credits: 1650, priceCents: 1500, label: "1,650 credits" },
-  { id: "pro", credits: 4800, priceCents: 4000, label: "4,800 credits" },
+  { id: "starter", credits: 350, priceCents: 500, label: "350 credits" },
+  { id: "plus", credits: 1200, priceCents: 1500, label: "1,200 credits" },
+  { id: "pro", credits: 3300, priceCents: 4000, label: "3,300 credits" },
 ];
 
 export const packById = (id: string): CreditPack | undefined =>
@@ -39,10 +39,13 @@ export const CREATIVITY_RANGE = { min: -2, max: 2 } as const;
 export const MAX_PROMPT_LENGTH = 500;
 
 // What each option costs a customer, in credits.
+// One standard photo costs 10 credits, which is $0.14 at the smallest pack and
+// $0.12 at the largest. Enhanced Colorize is the only operation whose provider
+// cost needs more than that, so it is the one at double.
 export const CREDIT_PRICES = {
-  creative: { "2k": 5, "4k": 5, "8k": 15 },
-  restore: { restore: 15, colorization: 15, colorization_pro: 35, advanced_restoration: 20 },
-  increaseResolution: 10,
+  creative: { "2k": 10, "4k": 10, "8k": 10 },
+  restore: { restore: 10, colorization: 10, colorization_pro: 20, advanced_restoration: 10 },
+  increaseResolution: 5,
   // An on-device upscale, once the account's free ones are used. No provider
   // cost: the browser does the work, so this price is margin by construction.
   device: 1,
@@ -51,17 +54,26 @@ export const CREDIT_PRICES = {
 // On-device upscales each account gets before they cost credits.
 export const FREE_DEVICE_UPSCALES = 10;
 
-// What each option is assumed to cost upstream, in cents. WaveSpeed publishes
-// base prices only -- $0.01 for the upscaler, $0.024 for a Flux 2 dev edit,
-// $0.06 for a Flux 2 pro edit -- and says larger outputs cost more without a
-// formula, so 8K and increased resolution carry explicit allowances rather
-// than the base figure. Replicate's restore-image measured about $0.055.
-// Re-check against the per-job charges WaveSpeed records before lowering
-// any price.
+// What each option costs upstream, in cents, checked against the providers.
+//
+//   creative       WaveSpeed image-upscaler, $0.01 per run. 8K keeps a larger
+//                  allowance: the published price is flat, but the page warns
+//                  the charge grows with output size, and no 8K job has been
+//                  measured yet.
+//   restore        WaveSpeed flux-2-dev/edit, $0.024 per edited image.
+//   colorization_pro  WaveSpeed flux-2-pro/edit is $0.06, but a job under
+//                  ~1.17 MP falls back to Replicate, billed $0.015 per run
+//                  plus $0.015 per input and per output megapixel -- measured
+//                  $0.05 typical and $0.08 on a large photo. The worst of
+//                  those is the figure here.
+//   advanced_restoration  Replicate flux-kontext-apps/restore-image, $0.04 per
+//                  output image, per-unit: it does not grow with image size.
+//   increaseResolution  free on WaveSpeed (flat per image) and about x1.33 on
+//                  Replicate (one more output megapixel); x1.5 for safety.
 export const UPSTREAM_COST_CENTS = {
   creative: { "2k": 1, "4k": 1, "8k": 4 },
-  restore: { restore: 2.4, colorization: 2.4, colorization_pro: 6, advanced_restoration: 5.5 },
-  increaseResolutionFactor: 2,
+  restore: { restore: 2.4, colorization: 2.4, colorization_pro: 8, advanced_restoration: 4 },
+  increaseResolutionFactor: 1.5,
 } as const;
 
 export function creditsFor(request: CloudRequest): number {

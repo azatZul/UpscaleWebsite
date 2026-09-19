@@ -75,7 +75,7 @@ describe.sequential("POST /api/cloud/:kind", () => {
     const response = await post(sub, "/api/cloud/creative", cloudForm("req-creative1", { creativity: "2", resolution: "8k" }));
     expect(response.status).toBe(200);
     const body = await response.json() as Record<string, unknown>;
-    expect(body).toMatchObject({ charged: 15, balance: 85, saved: true });
+    expect(body).toMatchObject({ charged: 10, balance: 90, saved: true });
     expect(String(body.outputUrl)).toMatch(/^\/media\/history\/[0-9a-f-]{36}\/result\?exp=\d+&sig=/);
     expect(String(body.downloadUrl)).toMatch(/&download=1$/);
 
@@ -93,10 +93,10 @@ describe.sequential("POST /api/cloud/:kind", () => {
     const sub = `sub-${crypto.randomUUID()}`;
     await fundedAccount(sub, 200);
     const cases = [
-      { mode: "restore", path: "/edit-flux-2-dev", charged: 15 },
-      { mode: "colorization", path: "/edit-flux-2-dev", charged: 15 },
-      { mode: "colorization_pro", path: "/edit-flux-2-pro", charged: 35 },
-      { mode: "advanced_restoration", path: "/restore-image", charged: 20 },
+      { mode: "restore", path: "/edit-flux-2-dev", charged: 10 },
+      { mode: "colorization", path: "/edit-flux-2-dev", charged: 10 },
+      { mode: "colorization_pro", path: "/edit-flux-2-pro", charged: 20 },
+      { mode: "advanced_restoration", path: "/restore-image", charged: 10 },
     ];
     for (const [index, expected] of cases.entries()) {
       const response = await post(sub, "/api/cloud/restore", cloudForm(`req-mode-${index}-abc`, { mode: expected.mode }));
@@ -116,12 +116,12 @@ describe.sequential("POST /api/cloud/:kind", () => {
     }
   });
 
-  it("adds 10 credits for increased resolution and forwards the user's prompt", async () => {
+  it("adds 5 credits for increased resolution and forwards the user's prompt", async () => {
     const sub = `sub-${crypto.randomUUID()}`;
     await fundedAccount(sub, 100);
     const response = await post(sub, "/api/cloud/restore",
       cloudForm("req-hires-001", { mode: "colorization", increaseResolution: "true", prompt: "blue eyes, red dress" }));
-    expect(await response.json()).toMatchObject({ charged: 25, balance: 75 });
+    expect(await response.json()).toMatchObject({ charged: 15, balance: 85 });
     expect(stubs.auralensCalls[0]!.fields).toMatchObject({
       increase_resolution: "true", user_prompt: "blue eyes, red dress", improve_user_prompt: "true",
     });
@@ -151,8 +151,8 @@ describe.sequential("POST /api/cloud/:kind", () => {
     const sub = `sub-${crypto.randomUUID()}`;
     await fundedAccount(sub, 100);
     const send = () => post(sub, "/api/cloud/restore", cloudForm("req-retry001"));
-    expect(await (await send()).json()).toMatchObject({ balance: 85, charged: 15, saved: true });
-    expect(await (await send()).json()).toMatchObject({ balance: 85, charged: 0, replayed: true, saved: true });
+    expect(await (await send()).json()).toMatchObject({ balance: 90, charged: 10, saved: true });
+    expect(await (await send()).json()).toMatchObject({ balance: 90, charged: 0, replayed: true, saved: true });
     expect(stubs.auralensCalls).toHaveLength(1);
   });
 
@@ -173,7 +173,7 @@ describe.sequential("POST /api/cloud/:kind", () => {
     const response = await post(sub, "/api/cloud/restore", cloudForm("req-nosave01"));
     expect(response.status).toBe(200);
     // Charged, not refunded: the work was done, and the provider link still works.
-    expect(await response.json()).toMatchObject({ saved: false, charged: 15, balance: 15, outputUrl: RESULT_URL, originalUrl: null });
+    expect(await response.json()).toMatchObject({ saved: false, charged: 10, balance: 20, outputUrl: RESULT_URL, originalUrl: null });
     expect(await objectsFor(account.id)).toEqual([]);
   });
 
@@ -182,7 +182,7 @@ describe.sequential("POST /api/cloud/:kind", () => {
     await fundedAccount(sub, 4);
     const response = await post(sub, "/api/cloud/creative", cloudForm("req-poor0001"));
     expect(response.status).toBe(402);
-    expect(await response.json()).toEqual({ error: "insufficient_credits", balance: 4, required: 5 });
+    expect(await response.json()).toEqual({ error: "insufficient_credits", balance: 4, required: 10 });
     expect(stubs.auralensCalls).toHaveLength(0);
   });
 

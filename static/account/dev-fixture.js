@@ -4,9 +4,9 @@
 // It is never loaded on any other host.
 
 const PACKS = [
-  {id: 'starter', credits: 500, priceCents: 500, label: '500 credits'},
-  {id: 'plus', credits: 1650, priceCents: 1500, label: '1,650 credits'},
-  {id: 'pro', credits: 4800, priceCents: 4000, label: '4,800 credits'},
+  {id: 'starter', credits: 350, priceCents: 500, label: '350 credits'},
+  {id: 'plus', credits: 1200, priceCents: 1500, label: '1,200 credits'},
+  {id: 'pro', credits: 3300, priceCents: 4000, label: '3,300 credits'},
 ];
 const now = Date.now();
 const hour = 3_600_000;
@@ -31,9 +31,9 @@ export const fetchAccount = async () => ({accountId: 'fixture', email: identity.
 export const fetchPacks = async () => ({
   packs: PACKS,
   prices: {
-    creative: {'2k': 5, '4k': 5, '8k': 15},
-    restore: {restore: 15, colorization: 15, colorization_pro: 35, advanced_restoration: 20},
-    increaseResolution: 10,
+    creative: {'2k': 10, '4k': 10, '8k': 10},
+    restore: {restore: 10, colorization: 10, colorization_pro: 20, advanced_restoration: 10},
+    increaseResolution: 5,
     device: 1,
   },
   device: {credits: 1, freeLimit: 10},
@@ -41,9 +41,9 @@ export const fetchPacks = async () => ({
 });
 export const fetchActivity = async () => ({
   entries: empty ? [] : [
-    {id: 6, delta: -45, reason: 'spend', detail: 'restore:colorization_pro+hires', createdAt: now - 0.4 * hour},
-    {id: 5, delta: 20, reason: 'reversal', detail: 'restore:advanced_restoration', createdAt: now - 3 * hour},
-    {id: 4, delta: -20, reason: 'spend', detail: 'restore:advanced_restoration', createdAt: now - 3.1 * hour},
+    {id: 6, delta: -25, reason: 'spend', detail: 'restore:colorization_pro+hires', createdAt: now - 0.4 * hour},
+    {id: 5, delta: 10, reason: 'reversal', detail: 'restore:advanced_restoration', createdAt: now - 3 * hour},
+    {id: 4, delta: -10, reason: 'spend', detail: 'restore:advanced_restoration', createdAt: now - 3.1 * hour},
     {id: 3, delta: -1, reason: 'spend', detail: 'device:upscale', createdAt: now - 26 * hour},
     {id: 2, delta: 1_650, reason: 'purchase', detail: 'plus', createdAt: now - 50 * hour},
     {id: 1, delta: -385, reason: 'spend', detail: 'restore', createdAt: now - 400 * hour},
@@ -51,11 +51,11 @@ export const fetchActivity = async () => ({
 });
 const sample = '/resources/appstore/icon_512.png';
 let historyItems = empty ? [] : [
-  {id: 'fixture-1', operation: 'restore', options: {mode: 'colorization_pro', increaseResolution: true}, credits: 45,
+  {id: 'fixture-1', operation: 'restore', options: {mode: 'colorization_pro', increaseResolution: true}, credits: 25,
     createdAt: now - 0.4 * hour, resultBytes: 3_400_000},
-  {id: 'fixture-2', operation: 'creative', options: {creativity: 1, resolution: '8k'}, credits: 15,
+  {id: 'fixture-2', operation: 'creative', options: {creativity: 1, resolution: '8k'}, credits: 10,
     createdAt: now - 26 * hour, resultBytes: 21_000_000},
-  {id: 'fixture-3', operation: 'restore', options: {mode: 'advanced_restoration'}, credits: 20,
+  {id: 'fixture-3', operation: 'restore', options: {mode: 'advanced_restoration'}, credits: 10,
     createdAt: now - 400 * hour, resultBytes: 1_900_000},
 ].map(item => ({...item, resultUrl: sample, originalUrl: sample, downloadUrl: sample}));
 export const fetchHistory = async () => ({

@@ -73,14 +73,14 @@ test('names option-based price keys, and still names the older operations', () =
 
 test('lists what credits buy from the price table', () => {
   const rows = priceList({
-    creative: {'2k': 5, '4k': 5, '8k': 15},
-    restore: {restore: 15, colorization: 15, colorization_pro: 35, advanced_restoration: 20},
-    increaseResolution: 10,
+    creative: {'2k': 10, '4k': 10, '8k': 10},
+    restore: {restore: 10, colorization: 10, colorization_pro: 20, advanced_restoration: 10},
+    increaseResolution: 5,
     device: 1,
   });
   assert.deepEqual(rows.map(row => [row.label, row.credits]), [
     ['Creative upscale · 2K or 4K', 5], ['Creative upscale · 8K', 15], ['Restore', 15], ['Restore & Colorize', 15],
-    ['Enhanced Colorize', 35], ['Advanced Fix', 20], ['Increased resolution', 10], ['Upscale on device, after 10 free', 1],
+    ['Enhanced Colorize', 20], ['Advanced Fix', 10], ['Increased resolution', 5], ['Upscale on device, after 10 free', 1],
   ]);
   assert.deepEqual(priceList(null), []);
 });

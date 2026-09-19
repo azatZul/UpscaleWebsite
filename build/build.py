@@ -1846,8 +1846,8 @@ def render_tool(c, lang):
     # Cloud modes. The "from N credits" figures mirror worker/src/pricing.ts
     # (cheapest creative and restore prices); the page updates exact prices at
     # runtime from the worker's own table.
-    creative_sub = esc(tl['mode_creative_sub'].replace('{credits}', '5'))
-    restore_sub = esc(tl['mode_restore_sub'].replace('{credits}', '15'))
+    creative_sub = esc(tl['mode_creative_sub'].replace('{credits}', '10'))
+    restore_sub = esc(tl['mode_restore_sub'].replace('{credits}', '10'))
     restore_modes = "".join(
         f'<button type="button" role="radio" class="restore-mode" data-restore-mode="{mode}" '
         f'aria-checked="{"true" if mode == "restore" else "false"}">'

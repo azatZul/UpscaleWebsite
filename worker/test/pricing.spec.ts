@@ -15,13 +15,13 @@ describe("pricing", () => {
   it("charges the approved credit prices", () => {
     const table = Object.fromEntries(REQUESTS.map(request => [priceKey(request), creditsFor(request)]));
     expect(table).toEqual({
-      "creative:2k": 5, "creative:4k": 5, "creative:8k": 15,
-      "restore:restore": 15, "restore:restore+hires": 25,
-      "restore:colorization": 15, "restore:colorization+hires": 25,
-      "restore:colorization_pro": 35, "restore:colorization_pro+hires": 45,
-      "restore:advanced_restoration": 20,
+      "creative:2k": 10, "creative:4k": 10, "creative:8k": 10,
+      "restore:restore": 10, "restore:restore+hires": 15,
+      "restore:colorization": 10, "restore:colorization+hires": 15,
+      "restore:colorization_pro": 20, "restore:colorization_pro+hires": 25,
+      "restore:advanced_restoration": 10,
     });
-    expect(CREDIT_PRICES.increaseResolution).toBe(10);
+    expect(CREDIT_PRICES.increaseResolution).toBe(5);
     expect(CREDIT_PRICES.device).toBe(1);
     expect(FREE_DEVICE_UPSCALES).toBe(10);
   });
@@ -55,7 +55,7 @@ describe("pricing", () => {
   });
 
   it("looks packs up by id and rejects unknown ones", () => {
-    expect(packById("pro")?.credits).toBe(4800);
+    expect(packById("pro")?.credits).toBe(3300);
     expect(packById("nope")).toBeUndefined();
   });
 
@@ -66,9 +66,9 @@ describe("pricing", () => {
   });
 
   it("gives a custom amount the rate of the largest pack it reaches", () => {
-    expect(quoteCredits(1_000)).toMatchObject({ credits: 1_000, tierId: "starter", bonusPercent: 0 });
-    expect(quoteCredits(2_000)).toMatchObject({ credits: 2_200, tierId: "plus", bonusPercent: 10 });
-    expect(quoteCredits(10_000)).toMatchObject({ credits: 12_000, tierId: "pro", bonusPercent: 20 });
+    expect(quoteCredits(1_000)).toMatchObject({ credits: 700, tierId: "starter", bonusPercent: 0 });
+    expect(quoteCredits(2_000)).toMatchObject({ credits: 1_600, tierId: "plus", bonusPercent: 14 });
+    expect(quoteCredits(10_000)).toMatchObject({ credits: 8_250, tierId: "pro", bonusPercent: 18 });
   });
 
   it("refuses amounts outside the purchasable range or with cents", () => {
