@@ -79,7 +79,7 @@ test('lists what credits buy from the price table', () => {
     device: 1,
   });
   assert.deepEqual(rows.map(row => [row.label, row.credits]), [
-    ['Creative upscale · 2K or 4K', 5], ['Creative upscale · 8K', 15], ['Restore', 15], ['Restore & Colorize', 15],
+    ['Creative upscale · 2K or 4K', 10], ['Creative upscale · 8K', 10], ['Restore', 10], ['Restore & Colorize', 10],
     ['Enhanced Colorize', 20], ['Advanced Fix', 10], ['Increased resolution', 5], ['Upscale on device, after 10 free', 1],
   ]);
   assert.deepEqual(priceList(null), []);
