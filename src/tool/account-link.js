@@ -38,7 +38,7 @@ async function call(path, {method = 'GET', body, json} = {}) {
 
 export function createSession() {
   // known: the provider has answered at least once, so identity is meaningful.
-  const state = {known: false, identity: null, balance: null, prices: null, packs: null, device: null};
+  const state = {known: false, identity: null, balance: null, prices: null, packs: null};
   const listeners = new Set();
   const emit = () => { for (const listener of listeners) listener(state); };
   let started = false;
@@ -48,11 +48,10 @@ export function createSession() {
     if (!state.identity) return Promise.resolve();
     loading ||= (async () => {
       try {
-        const [me, catalogue, device] = await Promise.all([call('/api/me'), call('/api/billing/packs'), call('/api/device-upscales')]);
+        const [me, catalogue] = await Promise.all([call('/api/me'), call('/api/billing/packs')]);
         state.balance = me.credits;
         state.prices = catalogue.prices || null;
         state.packs = catalogue.packs || null;
-        state.device = device;
       } catch (error) {
         if (error instanceof ApiError && error.status === 401) state.identity = null;
       } finally {
@@ -72,7 +71,7 @@ export function createSession() {
       loadIdentity().then(module => module.onIdentityChanged(identity => {
         state.identity = identity;
         state.known = true;
-        if (!identity) { state.balance = null; state.device = null; }
+        if (!identity) state.balance = null;
         emit();
         if (identity) refresh();
       })).catch(() => { state.known = true; emit(); });
@@ -82,12 +81,6 @@ export function createSession() {
     apply(update) {
       if (!update) return;
       if (typeof update.balance === 'number') state.balance = update.balance;
-      if (typeof update.freeRemaining === 'number') {
-        state.device = {...(state.device || {}), freeRemaining: update.freeRemaining,
-          ...(typeof update.freeLimit === 'number' ? {freeLimit: update.freeLimit} : {}),
-          ...(typeof update.freeUsed === 'number' ? {freeUsed: update.freeUsed} : {}),
-          ...(typeof update.credits === 'number' ? {credits: update.credits} : {})};
-      }
       emit();
     },
     signInUrl: (path = location.pathname + location.search) => `/account/?next=${encodeURIComponent(path)}`,
@@ -121,6 +114,5 @@ export function createSession() {
       return call('/api/cloud/result', {method: 'POST', body: form});
     },
     checkout: amountCents => call('/api/billing/checkout', {method: 'POST', json: {amountCents}}),
-    claimDevice: requestId => call('/api/device-upscales', {method: 'POST', json: {requestId}}),
   };
 }

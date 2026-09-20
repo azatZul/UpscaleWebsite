@@ -117,7 +117,6 @@ export function priceList(prices) {
     .map(group => ({label: group === widest ? 'Any photo' : group.labels.join(', '), credits: group.credits}))
     .sort((a, b) => a.credits - b.credits);
   if (prices.increaseResolution) rows.push({label: 'Increased resolution', credits: prices.increaseResolution, extra: true});
-  if (prices.device) rows.push({label: 'Upscale on device, after 10 free', credits: prices.device});
   return rows;
 }
 

@@ -1904,7 +1904,6 @@ def render_tool(c, lang):
       <div class="tool-card-heading">
         <h2 id="stage-title">{esc(js['choose_title'])}</h2>
         <div class="card-badges">
-          <span class="credit-chip quota-chip" id="device-quota" hidden></span>
           <span class="private-badge" id="private-badge">{SHIELD_SVG}{esc(tl['private'])}</span>
           <span class="private-badge cloud-badge" id="cloud-badge" hidden>{CLOUD_SVG}{esc(tl['cloud'])}</span>
         </div>

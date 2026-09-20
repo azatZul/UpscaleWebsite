@@ -335,7 +335,7 @@ function safeNext(value) {
 const nextUrl = safeNext(new URLSearchParams(window.location.search).get('next'));
 if (nextUrl) {
   $('auth-heading').textContent = 'Sign in to continue';
-  document.querySelector('.auth-lead').textContent = 'Sign in to upscale your photos. You get 10 free upscales on your device.';
+  document.querySelector('.auth-lead').textContent = 'Sign in to upscale your photos, free in your browser.';
 }
 
 onIdentityChanged(identity => {

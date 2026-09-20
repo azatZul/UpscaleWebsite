@@ -77,11 +77,8 @@ test('lists what credits buy from the price table', () => {
     creative: {'2k': 10, '4k': 10, '8k': 10},
     restore: {restore: 10, colorization: 10, colorization_pro: 10, advanced_restoration: 10},
     increaseResolution: 0,
-    device: 1,
   });
-  assert.deepEqual(rows.map(row => [row.label, row.credits]), [
-    ['Any photo', 10], ['Upscale on device, after 10 free', 1],
-  ]);
+  assert.deepEqual(rows.map(row => [row.label, row.credits]), [['Any photo', 10]]);
   assert.deepEqual(priceList(null), []);
 });
 

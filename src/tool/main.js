@@ -9,7 +9,7 @@ import {createOverlay} from './overlay.js';
 import {shouldEnhanceFaces, tileMetricKey} from './model-selection.js';
 import {AnalyticsAction, AnalyticsEvent, SCREEN, initAnalytics, modeValue} from './analytics.js';
 import {createCloud} from './cloud.js';
-import {ApiError, createSession} from './account-link.js';
+import {createSession} from './account-link.js';
 import {createTopUp} from './topup.js';
 
 const {t, duration} = pageTranslator(document);
@@ -26,7 +26,7 @@ const elements = Object.fromEntries(['photo-input', 'choose-photo', 'remove-phot
   'mode-restore', 'private-badge', 'cloud-badge', 'creative-options', 'creativity',
   'creativity-value', 'restore-options', 'negative', 'increase-resolution', 'hires-note', 'prompt-field', 'restore-prompt',
   'topup-panel', 'topup-title', 'topup-status', 'topup-amounts', 'topup-refresh', 'saved-note', 'tool-picker', 'tool-step',
-  'tool-body', 'back-to-tools', 'signin-checking', 'device-quota'].map(id => [id, $(id)]));
+  'tool-body', 'back-to-tools', 'signin-checking'].map(id => [id, $(id)]));
 const comparison = createComparison(elements['result-comparison'], elements['before-image'], elements['comparison-handle'],
   value => t('slider_value', {value}));
 const environment = {userAgent: navigator.userAgent, platform: navigator.platform,
@@ -62,10 +62,6 @@ let step = 'pick';
 const session = createSession();
 const topUp = createTopUp({elements, t, session, trackTap: (...args) => trackTap(...args)});
 const number = value => new Intl.NumberFormat(document.documentElement.lang || 'en').format(value);
-// On-device results are confirmed with the worker before they are shown: the
-// first ten are free, then each costs a credit. A result waiting on that sits here.
-let heldResult;
-let deviceRequestId;
 // idle (no photo) → assessing → ready → checking/processing → done, or error.
 let phase = 'idle';
 let forceCpu = false;
@@ -335,7 +331,7 @@ function renderSummary() {
   }
 }
 
-const busy = () => ['checking', 'processing', 'confirming'].includes(phase);
+const busy = () => ['checking', 'processing'].includes(phase);
 const locked = () => busy() || applying;
 const dimensions = plan => `${plan.width} × ${plan.height} → ${plan.outputWidth} × ${plan.outputHeight}`;
 
@@ -409,25 +405,8 @@ function refreshControls() {
     elements['try-2x'].hidden = true;
     elements.cancel.hidden = true;
   }
-  if (mode === 'device') {
-    if (!busy()) elements['process-photo'].textContent = deviceButtonLabel();
-    if (topUp.isOpen()) elements['process-photo'].hidden = true;
-  }
-  // A finished on-device result waiting on confirmation or credits: Retry
-  // re-confirms it, unless the top-up panel already stands in for the button.
-  if (phase === 'held') {
-    elements['process-photo'].hidden = true;
-    elements.retry.hidden = topUp.isOpen();
-    elements.cancel.hidden = true;
-  }
   renderAccount();
   cloud?.refresh({busy: busy(), locked});
-}
-
-function deviceButtonLabel() {
-  const device = session.state.device;
-  if (!device) return t('upscale_button', {scale});
-  return device.freeRemaining > 0 ? t('device_button_free', {scale}) : t('device_button_paid', {scale, credits: device.credits});
 }
 
 function rememberBalance(balance) {
@@ -440,12 +419,9 @@ function rememberBalance(balance) {
 }
 
 function renderAccount() {
-  const {identity, balance, device} = session.state;
+  const {identity, balance} = session.state;
   // The balance lives in the header, under Account, not beside a price.
   if (identity && balance !== null) rememberBalance(balance);
-  const quota = mode === 'device' && identity && device;
-  elements['device-quota'].hidden = !quota;
-  if (quota) elements['device-quota'].textContent = t('device_free_left', {count: device.freeRemaining, limit: device.freeLimit});
 }
 
 async function keepAwake() {
@@ -550,42 +526,7 @@ function onMessage(data, current) {
     if (data.plan?.tileCount >= 16 && data.tilesMs) {
       rememberTileMs(data.tilesMs / data.plan.tileCount, data.modelKind, data.plan.scale);
     }
-    heldResult = data;
-    confirmDevice();
-  }
-}
-
-function showDeviceTopUp() {
-  const {device, balance} = session.state;
-  topUp.show({reason: 'device', title: t('device_topup_title',
-    {limit: device?.freeLimit ?? 10, credits: device?.credits ?? 1, balance: number(balance ?? 0)})});
-}
-
-/** Record the finished upscale with the worker -- free or one credit -- and only
- *  then show it. Nothing is counted for a run that failed or was cancelled. */
-async function confirmDevice() {
-  if (!heldResult) return;
-  const data = heldResult;
-  phase = 'confirming';
-  setStatus(t('device_confirming'), '');
-  refreshControls();
-  try {
-    session.apply(await session.claimDevice(deviceRequestId));
-    if (heldResult !== data) return;
-    heldResult = undefined;
     showDeviceResult(data);
-  } catch (error) {
-    if (heldResult !== data) return;
-    phase = 'held';
-    if (error instanceof ApiError && error.status === 401) { requireSignIn(); return; }
-    if (error instanceof ApiError && error.status === 402) {
-      session.apply(error.body);
-      showDeviceTopUp();
-      setStatus(t('device_result_held'), '');
-    } else {
-      setStatus(t('failed_title'), t('device_confirm_failed'));
-    }
-    refreshControls();
   }
 }
 
@@ -681,15 +622,6 @@ function start() {
   if (!session.state.identity) { requireSignIn(); return; }
   trackTap('start_processing', runProperties());
   if (mode !== 'device') { cloud.start(); return; }
-  const device = session.state.device;
-  if (device && device.freeRemaining === 0 && (session.state.balance ?? 0) < device.credits) {
-    showDeviceTopUp();
-    refreshControls();
-    return;
-  }
-  if (topUp.reason() === 'device') topUp.hide();
-  heldResult = undefined;
-  deviceRequestId = crypto.randomUUID().replaceAll('-', '');
   processingStartedAt = performance.now(); outcomeTracked = false; runProgress = 0;
   retriedGpu = false;
   if (shouldEnhanceFaces(modelKind, elements['enhance-faces'].checked)) startFaces(forceCpu);
@@ -703,8 +635,6 @@ function start() {
 async function assessCurrentFile() {
   if (!file || locked()) return;
   const current = ++selection;
-  heldResult = undefined;
-  if (topUp.reason() === 'device') topUp.hide();
   clearOutput();
   phase = 'assessing'; errorCode = undefined; scaleFallback = false;
   elements['source-size'].textContent = t('checking_size');
@@ -809,7 +739,7 @@ function setScale(value) {
   elements['scale-4x'].setAttribute('aria-pressed', String(value === 4));
   if (mode !== 'device') return;
   elements['limit-note'].textContent = t('limit_note', {mp: maxInputPixelsForScale(policy, scale) / 1_000_000, scale});
-  elements['process-photo'].textContent = deviceButtonLabel();
+  elements['process-photo'].textContent = t('upscale_button', {scale});
 }
 function setModelKind(value) {
   modelKind = value;
@@ -958,16 +888,7 @@ window.addEventListener('popstate', () => {
   const requested = modeFromUrl();
   if (requested) openTool(requested, {push: false}); else showPicker({push: false});
 });
-session.subscribe(state => {
-  if (topUp.reason() === 'device') {
-    const device = state.device;
-    if (device && (device.freeRemaining > 0 || (state.balance ?? 0) >= device.credits)) {
-      topUp.hide();
-      if (phase === 'held') confirmDevice();
-    } else {
-      showDeviceTopUp();
-    }
-  }
+session.subscribe(() => {
   renderStep();
   refreshControls();
 });
@@ -995,10 +916,7 @@ elements['photo-input'].addEventListener('change', () => {
   chooseFile(next, 'picker').catch(readFailure);
 });
 elements['process-photo'].addEventListener('click', () => { if (phase === 'ready') start(); });
-elements.retry.addEventListener('click', () => {
-  trackTap('retry', {reason: phase === 'held' ? 'confirm' : errorCode});
-  if (phase === 'held') confirmDevice(); else start();
-});
+elements.retry.addEventListener('click', () => { trackTap('retry', {reason: errorCode}); start(); });
 elements['cpu-retry'].addEventListener('click', () => {
   trackTap('cpu_retry');
   processingStartedAt = performance.now(); outcomeTracked = false;
@@ -1014,7 +932,7 @@ elements.cancel.addEventListener('click', () => {
   refreshControls();
 });
 function reset() {
-  stopWorker(); selection++; phase = 'idle'; file = null; heldResult = undefined;
+  stopWorker(); selection++; phase = 'idle'; file = null;
   if (topUp.isOpen()) topUp.hide();
   errorCode = undefined; scaleFallback = false; forceCpu = false; tooLargeFor4x = false;
   hideScalePopover();

@@ -49,13 +49,10 @@ export const CREDIT_PRICES = {
   restore: { restore: 10, colorization: 10, colorization_pro: 10, advanced_restoration: 10 },
   // A bigger output is part of the one price, not an extra.
   increaseResolution: 0,
-  // An on-device upscale, once the account's free ones are used. No provider
-  // cost: the browser does the work, so this price is margin by construction.
-  device: 1,
 } as const;
 
-// On-device upscales each account gets before they cost credits.
-export const FREE_DEVICE_UPSCALES = 10;
+// Upscaling in the browser is free and unlimited: the work happens on the
+// person's own device and costs us nothing to allow.
 
 // What each option costs upstream, in cents, checked against the providers.
 //
