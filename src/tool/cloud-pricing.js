@@ -6,9 +6,9 @@
 // (the live table needs a token). tests/tool/cloud-pricing.test.js pins it to
 // the same numbers worker/test/pricing.spec.ts asserts.
 export const DEFAULT_PRICES = Object.freeze({
-  creative: Object.freeze({'2k': 5, '4k': 5, '8k': 15}),
-  restore: Object.freeze({restore: 15, colorization: 15, colorization_pro: 35, advanced_restoration: 20}),
-  increaseResolution: 10,
+  creative: Object.freeze({'2k': 10, '4k': 10, '8k': 10}),
+  restore: Object.freeze({restore: 10, colorization: 10, colorization_pro: 10, advanced_restoration: 10}),
+  increaseResolution: 0,
 });
 
 export const RESOLUTIONS = ['2k', '4k', '8k'];
@@ -40,7 +40,7 @@ export function cloudCredits(prices, mode, options) {
   return null;
 }
 
-/** Lowest price in a mode, for "from 5 credits". */
+/** Lowest price in a mode, for a "from N credits" line. */
 export function cheapestCredits(prices, mode) {
   if (!prices) return null;
   const values = mode === 'creative' ? Object.values(prices.creative || {}) : Object.values(prices.restore || {});
