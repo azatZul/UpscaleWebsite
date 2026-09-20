@@ -68,6 +68,23 @@ export function describePriceKey(key) {
 }
 
 /** Rows for "What credits buy", from the worker's price table. */
+/** What an ordinary photo costs: the price most operations share. Only a basis
+ *  for the rough "photos per pack" estimate -- which operation someone picks,
+ *  and the prices themselves, can both change. Null when nothing is priced. */
+export function photoPrice(prices) {
+  if (!prices) return null;
+  const values = [...Object.values(prices.creative || {}), ...Object.values(prices.restore || {})]
+    .filter(value => typeof value === 'number' && value > 0);
+  if (!values.length) return null;
+  const counts = new Map();
+  for (const value of values) counts.set(value, (counts.get(value) || 0) + 1);
+  let best = null;
+  for (const [value, count] of counts) {
+    if (!best || count > best.count || (count === best.count && value < best.value)) best = {value, count};
+  }
+  return best.value;
+}
+
 export function priceList(prices) {
   if (!prices) return [];
   const {creative = {}, restore = {}} = prices;

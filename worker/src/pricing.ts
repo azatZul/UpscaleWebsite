@@ -14,9 +14,9 @@ export interface CreditPack {
 // price, not the headline rate -- otherwise the volume discount quietly eats
 // the margin on exactly the customers who buy most.
 export const CREDIT_PACKS: readonly CreditPack[] = [
-  { id: "starter", credits: 350, priceCents: 500, label: "350 credits" },
-  { id: "plus", credits: 1200, priceCents: 1500, label: "1,200 credits" },
-  { id: "pro", credits: 3300, priceCents: 4000, label: "3,300 credits" },
+  { id: "starter", credits: 200, priceCents: 500, label: "200 credits" },
+  { id: "plus", credits: 650, priceCents: 1500, label: "650 credits" },
+  { id: "pro", credits: 1800, priceCents: 4000, label: "1,800 credits" },
 ];
 
 export const packById = (id: string): CreditPack | undefined =>
@@ -39,13 +39,16 @@ export const CREATIVITY_RANGE = { min: -2, max: 2 } as const;
 export const MAX_PROMPT_LENGTH = 500;
 
 // What each option costs a customer, in credits.
-// One standard photo costs 10 credits, which is $0.14 at the smallest pack and
-// $0.12 at the largest. Enhanced Colorize is the only operation whose provider
-// cost needs more than that, so it is the one at double.
+// One price for every photo: 10 credits, whichever tool runs it and whatever
+// options it carries. That is $0.25 at the smallest pack and $0.22 at the
+// largest, which is what the dearest tool needs to clear ~70%; the cheaper
+// tools simply earn more. A price per tool would earn a little more again, and
+// is not worth a price list nobody wants to read.
 export const CREDIT_PRICES = {
   creative: { "2k": 10, "4k": 10, "8k": 10 },
-  restore: { restore: 10, colorization: 10, colorization_pro: 20, advanced_restoration: 10 },
-  increaseResolution: 5,
+  restore: { restore: 10, colorization: 10, colorization_pro: 10, advanced_restoration: 10 },
+  // A bigger output is part of the one price, not an extra.
+  increaseResolution: 0,
   // An on-device upscale, once the account's free ones are used. No provider
   // cost: the browser does the work, so this price is margin by construction.
   device: 1,
@@ -61,19 +64,24 @@ export const FREE_DEVICE_UPSCALES = 10;
 //                  the charge grows with output size, and no 8K job has been
 //                  measured yet.
 //   restore        WaveSpeed flux-2-dev/edit, $0.024 per edited image.
-//   colorization_pro  WaveSpeed flux-2-pro/edit is $0.06, but a job under
-//                  ~1.17 MP falls back to Replicate, billed $0.015 per run
-//                  plus $0.015 per input and per output megapixel -- measured
-//                  $0.05 typical and $0.08 on a large photo. The worst of
-//                  those is the figure here.
+//   colorization_pro  WaveSpeed flux-2-pro/edit, $0.06 per edited image. A
+//                  job under ~1.17 MP falls back to Replicate, billed $0.015
+//                  per run plus $0.015 per input and per output megapixel,
+//                  which comes to about $0.055 at the sizes that fall back.
+//                  The $0.08 charges in the Replicate dashboard are the app's
+//                  own path, which asks for more than 1 MP; the website never
+//                  does, so $0.06 is its ceiling.
 //   advanced_restoration  Replicate flux-kontext-apps/restore-image, $0.04 per
 //                  output image, per-unit: it does not grow with image size.
-//   increaseResolution  free on WaveSpeed (flat per image) and about x1.33 on
-//                  Replicate (one more output megapixel); x1.5 for safety.
+//   increaseResolution  no charge on WaveSpeed, which bills flat per edited
+//                  image, and the website's jobs go there. Worth re-checking
+//                  against a measured hi-res job: if WaveSpeed's charge does
+//                  grow with output size after all, this factor is the first
+//                  thing that has to change.
 export const UPSTREAM_COST_CENTS = {
   creative: { "2k": 1, "4k": 1, "8k": 4 },
-  restore: { restore: 2.4, colorization: 2.4, colorization_pro: 8, advanced_restoration: 4 },
-  increaseResolutionFactor: 1.5,
+  restore: { restore: 2.4, colorization: 2.4, colorization_pro: 6, advanced_restoration: 4 },
+  increaseResolutionFactor: 1,
 } as const;
 
 export function creditsFor(request: CloudRequest): number {

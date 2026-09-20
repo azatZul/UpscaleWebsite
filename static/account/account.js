@@ -7,7 +7,8 @@ const {onIdentityChanged, signInWithGoogle, signOut} = await import(fixtureMode 
 const {deleteHistoryItem, fetchAccount, fetchActivity, fetchHistory, fetchPacks, startCheckout} =
   await import(fixtureMode ? './dev-fixture.js' : './api.js');
 import {
-  describeActivity, describeHistoryItem, formatBytes, formatCredits, formatDelta, formatPrice, parseDollars, priceList,
+  describeActivity, describeHistoryItem, formatBytes, formatCredits, formatDelta, formatPrice, parseDollars, photoPrice,
+  priceList,
   quoteCredits,
 } from './billing-format.js';
 
@@ -20,6 +21,7 @@ const creditCount = $('credit-count');
 const balanceHint = $('balance-hint');
 const operationCosts = $('operation-costs');
 const amountOptions = $('amount-options');
+const amountNote = $('amount-note');
 const customField = $('custom-amount-field');
 const customInput = $('custom-amount');
 const customHelp = $('custom-help');
@@ -118,7 +120,7 @@ function renderOperationCosts(prices) {
   }
 }
 
-function optionButton({key, price, credits, bonus, custom}) {
+function optionButton({key, price, credits, photos, bonus, custom}) {
   const button = document.createElement('button');
   button.type = 'button';
   button.className = `amount-option${custom ? ' is-custom' : ''}`;
@@ -135,6 +137,12 @@ function optionButton({key, price, credits, bonus, custom}) {
     creditsEl.textContent = credits;
     button.append(creditsEl);
   }
+  if (photos) {
+    const photosEl = document.createElement('span');
+    photosEl.className = 'amount-photos';
+    photosEl.textContent = photos;
+    button.append(photosEl);
+  }
   if (bonus) {
     const bonusEl = document.createElement('span');
     bonusEl.className = 'amount-bonus';
@@ -147,6 +155,7 @@ function optionButton({key, price, credits, bonus, custom}) {
 
 function renderAmountOptions() {
   const {packs, limits} = state.catalogue;
+  const perPhoto = photoPrice(state.catalogue.prices);
   amountOptions.textContent = '';
   for (const pack of packs) {
     const quote = quoteCredits(pack.priceCents, packs, limits);
@@ -154,9 +163,16 @@ function renderAmountOptions() {
       key: pack.id,
       price: formatPrice(pack.priceCents),
       credits: `${formatCredits(pack.credits)} credits`,
+      photos: perPhoto ? `about ${formatCredits(Math.floor(pack.credits / perPhoto))} photos*` : '',
       bonus: quote && quote.bonusPercent > 0 ? `+${quote.bonusPercent}%` : '',
     }));
   }
+  // Said plainly: the photo counts are arithmetic on today's prices, not an
+  // entitlement. Credits are what is bought.
+  amountNote.textContent = perPhoto
+    ? '* Photo counts are a rough guide based on today\'s prices. You buy credits, not photos: how far a pack goes depends on which tools you use, and prices can change.'
+    : '';
+  amountNote.hidden = !perPhoto;
   amountOptions.append(optionButton({key: 'custom', price: 'Custom amount', custom: true}));
   customHelp.textContent = `Whole dollars, ${formatPrice(limits.minCents)} to ${formatPrice(limits.maxCents)}.`;
   // Default to the middle pack: the first one with a bonus, as most billing pages do.

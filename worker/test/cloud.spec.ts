@@ -95,7 +95,7 @@ describe.sequential("POST /api/cloud/:kind", () => {
     const cases = [
       { mode: "restore", path: "/edit-flux-2-dev", charged: 10 },
       { mode: "colorization", path: "/edit-flux-2-dev", charged: 10 },
-      { mode: "colorization_pro", path: "/edit-flux-2-pro", charged: 20 },
+      { mode: "colorization_pro", path: "/edit-flux-2-pro", charged: 10 },
       { mode: "advanced_restoration", path: "/restore-image", charged: 10 },
     ];
     for (const [index, expected] of cases.entries()) {
@@ -116,12 +116,12 @@ describe.sequential("POST /api/cloud/:kind", () => {
     }
   });
 
-  it("adds 5 credits for increased resolution and forwards the user's prompt", async () => {
+  it("charges the same for increased resolution and forwards the user's prompt", async () => {
     const sub = `sub-${crypto.randomUUID()}`;
     await fundedAccount(sub, 100);
     const response = await post(sub, "/api/cloud/restore",
       cloudForm("req-hires-001", { mode: "colorization", increaseResolution: "true", prompt: "blue eyes, red dress" }));
-    expect(await response.json()).toMatchObject({ charged: 15, balance: 85 });
+    expect(await response.json()).toMatchObject({ charged: 10, balance: 90 });
     expect(stubs.auralensCalls[0]!.fields).toMatchObject({
       increase_resolution: "true", user_prompt: "blue eyes, red dress", improve_user_prompt: "true",
     });

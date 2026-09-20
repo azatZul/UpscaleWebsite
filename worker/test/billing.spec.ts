@@ -129,13 +129,13 @@ describe.sequential("stripe webhook", () => {
     const event = completedSession({ metadata: { pack_id: "starter", account_id: account.id } });
     const response = await postWebhook(event);
     expect(response.status).toBe(200);
-    expect(await response.json()).toMatchObject({ received: true, applied: true, balance: 350 });
+    expect(await response.json()).toMatchObject({ received: true, applied: true, balance: 200 });
 
     const purchase = await env.ACCOUNTS_DB
       .prepare("SELECT account_id, pack_id, credits, amount_cents, currency, stripe_payment_intent FROM purchases WHERE stripe_session_id = ?")
       .bind(event.data.object.id).first();
     expect(purchase).toMatchObject({
-      account_id: account.id, pack_id: "starter", credits: 350, amount_cents: 500,
+      account_id: account.id, pack_id: "starter", credits: 200, amount_cents: 500,
       currency: "usd", stripe_payment_intent: "pi_test_1",
     });
   });
@@ -144,7 +144,7 @@ describe.sequential("stripe webhook", () => {
     const account = await getOrCreateAccount(env.ACCOUNTS_DB, `sub-${crypto.randomUUID()}`, null);
     const event = completedSession({ client_reference_id: account.id, metadata: { pack_id: "pro" } });
     expect((await postWebhook(event)).status).toBe(200);
-    expect(await balanceOf(account.id)).toBe(3300);
+    expect(await balanceOf(account.id)).toBe(1800);
   });
 
   it("does not credit twice when Stripe retries the same event", async () => {
@@ -152,26 +152,26 @@ describe.sequential("stripe webhook", () => {
     const event = completedSession({ metadata: { pack_id: "plus", account_id: account.id } });
     const first = await postWebhook(event);
     const second = await postWebhook(event);
-    expect(await first.json()).toMatchObject({ applied: true, balance: 1200 });
+    expect(await first.json()).toMatchObject({ applied: true, balance: 650 });
     // Retries are routine, not exceptional: the second call must succeed and
     // change nothing, or Stripe will keep resending.
     expect(second.status).toBe(200);
-    expect(await second.json()).toMatchObject({ applied: false, balance: 1200 });
-    expect(await balanceOf(account.id)).toBe(1200);
+    expect(await second.json()).toMatchObject({ applied: false, balance: 650 });
+    expect(await balanceOf(account.id)).toBe(650);
   });
 
   it("credits what was actually paid, not what the metadata claims", async () => {
     const account = await getOrCreateAccount(env.ACCOUNTS_DB, `sub-${crypto.randomUUID()}`, null);
-    // Metadata claims the pro pack; Stripe says $5 was paid. $5 buys 350.
-    const event = completedSession({ amount_total: 500, metadata: { pack_id: "pro", account_id: account.id, credits: "3300" } });
+    // Metadata claims the pro pack; Stripe says $5 was paid. $5 buys 200.
+    const event = completedSession({ amount_total: 500, metadata: { pack_id: "pro", account_id: account.id, credits: "1800" } });
     const response = await postWebhook(event);
-    expect(await response.json()).toMatchObject({ applied: true, balance: 350 });
+    expect(await response.json()).toMatchObject({ applied: true, balance: 200 });
   });
 
   it("prices a custom amount by the tier it reaches", async () => {
     const account = await getOrCreateAccount(env.ACCOUNTS_DB, `sub-${crypto.randomUUID()}`, null);
     const event = completedSession({ amount_total: 2_000, metadata: { account_id: account.id } });
-    expect(await (await postWebhook(event)).json()).toMatchObject({ applied: true, balance: 1_600 });
+    expect(await (await postWebhook(event)).json()).toMatchObject({ applied: true, balance: 866 });
   });
 
   it("refuses an amount the price table would not sell, and one that is not paid", async () => {
@@ -234,11 +234,11 @@ describe.sequential("billing endpoints", () => {
     expect(response.status).toBe(200);
     const body = await response.json() as any;
     expect(body.packs).toHaveLength(3);
-    expect(body.packs[0]).toMatchObject({ id: "starter", credits: 350, priceCents: 500 });
+    expect(body.packs[0]).toMatchObject({ id: "starter", credits: 200, priceCents: 500 });
     expect(body.prices).toMatchObject({
       creative: { "2k": 10, "4k": 10, "8k": 10 },
-      restore: { restore: 10, colorization: 10, colorization_pro: 20, advanced_restoration: 10 },
-      increaseResolution: 5,
+      restore: { restore: 10, colorization: 10, colorization_pro: 10, advanced_restoration: 10 },
+      increaseResolution: 0,
     });
     expect(body.limits).toEqual({ minCents: 500, maxCents: 50_000 });
   });
@@ -299,7 +299,7 @@ describe.sequential("billing endpoints", () => {
     expect(response.status).toBe(200);
     const session = stripeCalls.find(call => call.url.endsWith("/checkout/sessions"))!;
     expect(session.body).toContain("unit_amount%5D=2500");
-    expect(session.body).toContain("metadata%5Bcredits%5D=2000");
+    expect(session.body).toContain("metadata%5Bcredits%5D=1083");
   });
 
   it("reports a Stripe outage as 502 without leaking Stripe's message", async () => {

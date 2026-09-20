@@ -44,7 +44,12 @@ export function createCloud(hooks) {
       const value = button.dataset.restoreMode;
       button.setAttribute('aria-checked', String(options.restore.mode === value));
       button.disabled = locked;
-      button.querySelector('.restore-mode-price').textContent = t('price_credits', {credits: number(table.restore[value])});
+      // Every mode costing the same makes four identical price tags noise; the
+      // process button still says what the photo costs.
+      const prices = Object.values(table.restore);
+      const sameForAll = prices.every(price => price === prices[0]);
+      button.querySelector('.restore-mode-price').textContent = sameForAll
+        ? '' : t('price_credits', {credits: number(table.restore[value])});
     }
     for (const button of resolutionButtons) {
       button.setAttribute('aria-pressed', String(options.creative.resolution === button.dataset.resolution));

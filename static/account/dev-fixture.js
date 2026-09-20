@@ -4,9 +4,9 @@
 // It is never loaded on any other host.
 
 const PACKS = [
-  {id: 'starter', credits: 350, priceCents: 500, label: '350 credits'},
-  {id: 'plus', credits: 1200, priceCents: 1500, label: '1,200 credits'},
-  {id: 'pro', credits: 3300, priceCents: 4000, label: '3,300 credits'},
+  {id: 'starter', credits: 200, priceCents: 500, label: '200 credits'},
+  {id: 'plus', credits: 650, priceCents: 1500, label: '650 credits'},
+  {id: 'pro', credits: 1800, priceCents: 4000, label: '1,800 credits'},
 ];
 const now = Date.now();
 const hour = 3_600_000;
@@ -32,8 +32,8 @@ export const fetchPacks = async () => ({
   packs: PACKS,
   prices: {
     creative: {'2k': 10, '4k': 10, '8k': 10},
-    restore: {restore: 10, colorization: 10, colorization_pro: 20, advanced_restoration: 10},
-    increaseResolution: 5,
+    restore: {restore: 10, colorization: 10, colorization_pro: 10, advanced_restoration: 10},
+    increaseResolution: 0,
     device: 1,
   },
   device: {credits: 1, freeLimit: 10},
@@ -41,7 +41,7 @@ export const fetchPacks = async () => ({
 });
 export const fetchActivity = async () => ({
   entries: empty ? [] : [
-    {id: 6, delta: -25, reason: 'spend', detail: 'restore:colorization_pro+hires', createdAt: now - 0.4 * hour},
+    {id: 6, delta: -10, reason: 'spend', detail: 'restore:colorization_pro+hires', createdAt: now - 0.4 * hour},
     {id: 5, delta: 10, reason: 'reversal', detail: 'restore:advanced_restoration', createdAt: now - 3 * hour},
     {id: 4, delta: -10, reason: 'spend', detail: 'restore:advanced_restoration', createdAt: now - 3.1 * hour},
     {id: 3, delta: -1, reason: 'spend', detail: 'device:upscale', createdAt: now - 26 * hour},
@@ -51,7 +51,7 @@ export const fetchActivity = async () => ({
 });
 const sample = '/resources/appstore/icon_512.png';
 let historyItems = empty ? [] : [
-  {id: 'fixture-1', operation: 'restore', options: {mode: 'colorization_pro', increaseResolution: true}, credits: 25,
+  {id: 'fixture-1', operation: 'restore', options: {mode: 'colorization_pro', increaseResolution: true}, credits: 10,
     createdAt: now - 0.4 * hour, resultBytes: 3_400_000},
   {id: 'fixture-2', operation: 'creative', options: {creativity: 1, resolution: '8k'}, credits: 10,
     createdAt: now - 26 * hour, resultBytes: 21_000_000},

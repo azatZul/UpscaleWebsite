@@ -2,7 +2,8 @@ import assert from 'node:assert/strict';
 import {test} from 'node:test';
 
 import {
-  OPERATION_LABELS, describeActivity, describeHistoryItem, describePriceKey, formatBytes, formatCredits, formatDelta, formatPrice, parseDollars, priceList,
+  OPERATION_LABELS, describeActivity, describeHistoryItem, describePriceKey, formatBytes, formatCredits, formatDelta, formatPrice, parseDollars,
+  photoPrice, priceList,
   quoteCredits,
 } from '../../static/account/billing-format.js';
 
@@ -74,14 +75,22 @@ test('names option-based price keys, and still names the older operations', () =
 test('lists what credits buy from the price table', () => {
   const rows = priceList({
     creative: {'2k': 10, '4k': 10, '8k': 10},
-    restore: {restore: 10, colorization: 10, colorization_pro: 20, advanced_restoration: 10},
-    increaseResolution: 5,
+    restore: {restore: 10, colorization: 10, colorization_pro: 10, advanced_restoration: 10},
+    increaseResolution: 0,
     device: 1,
   });
   assert.deepEqual(rows.map(row => [row.label, row.credits]), [
-    ['Any photo', 10], ['Enhanced Colorize', 20], ['Increased resolution', 5], ['Upscale on device, after 10 free', 1],
+    ['Any photo', 10], ['Upscale on device, after 10 free', 1],
   ]);
   assert.deepEqual(priceList(null), []);
+});
+
+test('reads the ordinary photo price as the one most operations share', () => {
+  assert.equal(photoPrice({creative: {'2k': 10, '4k': 10, '8k': 10}, restore: {restore: 10, colorization_pro: 20}}), 10);
+  // A tie goes to the cheaper figure, so an estimate never flatters a pack.
+  assert.equal(photoPrice({creative: {'4k': 5}, restore: {restore: 15}}), 5);
+  assert.equal(photoPrice(null), null);
+  assert.equal(photoPrice({}), null);
 });
 
 test('keeps operations apart when their prices differ', () => {
