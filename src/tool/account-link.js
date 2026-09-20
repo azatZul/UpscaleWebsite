@@ -38,7 +38,9 @@ async function call(path, {method = 'GET', body, json} = {}) {
 
 export function createSession() {
   // known: the provider has answered at least once, so identity is meaningful.
-  const state = {known: false, identity: null, balance: null, prices: null, packs: null};
+  // stalled: the check timed out, so `identity` being null means "unknown",
+  // not "signed out".
+  const state = {known: false, identity: null, balance: null, prices: null, packs: null, stalled: false};
   const listeners = new Set();
   const emit = () => { for (const listener of listeners) listener(state); };
   let started = false;
@@ -71,10 +73,11 @@ export function createSession() {
       loadIdentity().then(module => module.onIdentityChanged(identity => {
         state.identity = identity;
         state.known = true;
+        state.stalled = module.identityStalled?.() ?? false;
         if (!identity) state.balance = null;
         emit();
         if (identity) refresh();
-      })).catch(() => { state.known = true; emit(); });
+      })).catch(() => { state.known = true; state.stalled = true; emit(); });
     },
     refresh,
     /** Merge balance and allowance figures any worker response carries. */

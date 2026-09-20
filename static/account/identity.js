@@ -11,6 +11,12 @@ import {IdentityError, mapErrorCode, messageForCode, toIdentity} from './identit
 let sdkPromise;
 let cached = null;
 let resolvedOnce = false;
+let stalled = false;
+// How long to wait for the provider before carrying on without it. A provider
+// that fails rejects and is handled; one that goes silent -- a blocked or
+// stalled SDK download -- would otherwise leave every page saying "checking
+// sign-in" for ever, with nothing to click.
+const RESOLUTION_DEADLINE_MS = 10_000;
 let watching = false;
 const listeners = new Set();
 
@@ -39,15 +45,24 @@ function asIdentityError(error) {
   return new IdentityError(code, messageForCode(code, location.hostname));
 }
 
-function publish(identity) {
+function publish(identity, fromDeadline = false) {
   cached = identity;
   resolvedOnce = true;
+  stalled = fromDeadline;
   for (const listener of listeners) listener(identity);
+}
+
+/** True when the last answer came from the deadline rather than the provider:
+ *  nobody knows whether this browser is signed in, so a caller should say the
+ *  check failed rather than act as though the answer were no. */
+export function identityStalled() {
+  return stalled;
 }
 
 async function watch() {
   if (watching) return;
   watching = true;
+  setTimeout(() => { if (!resolvedOnce) publish(null, true); }, RESOLUTION_DEADLINE_MS);
   try {
     const {auth, instance} = await sdk();
     auth.onAuthStateChanged(instance, user => {

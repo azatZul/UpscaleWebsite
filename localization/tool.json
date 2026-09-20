@@ -2384,5 +2384,27 @@
       "es": "{credits} créditos"
     },
     "comment": "Browser upscaler tool picker; preserve {placeholders}."
+  },
+  "tool.js.signin_stalled": {
+    "localizations": {
+      "en": "We couldn’t check your sign-in. Check your connection and try again.",
+      "ru": "Не удалось проверить вход. Проверьте подключение и попробуйте снова.",
+      "de": "Deine Anmeldung konnte nicht geprüft werden. Prüfe deine Verbindung und versuche es erneut.",
+      "ja": "ログイン状態を確認できませんでした。接続を確認してもう一度お試しください。",
+      "fr": "Impossible de vérifier votre connexion au compte. Vérifiez votre connexion et réessayez.",
+      "es": "No pudimos comprobar tu inicio de sesión. Revisa tu conexión e inténtalo de nuevo."
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.signin_go": {
+    "localizations": {
+      "en": "Go to sign-in",
+      "ru": "Перейти ко входу",
+      "de": "Zur Anmeldung",
+      "ja": "ログインへ進む",
+      "fr": "Aller à la connexion",
+      "es": "Ir al inicio de sesión"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   }
 }

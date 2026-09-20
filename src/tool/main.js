@@ -624,9 +624,7 @@ function trackOutcome(result, extra) {
 }
 
 function requireSignIn(targetMode = mode) {
-  const url = new URL(location.href);
-  url.searchParams.set('mode', targetMode);
-  location.assign(session.signInUrl(url.pathname + url.search));
+  location.assign(session.signInUrl(toolUrl(targetMode)));
 }
 
 function start() {
@@ -863,17 +861,38 @@ function renderStep() {
   const checking = step === 'tool' && !known;
   elements['signin-checking'].hidden = !checking;
   elements['tool-body'].hidden = step === 'tool' && !identity;
-  if (step === 'tool' && known && !identity) requireSignIn();
+  if (step === 'tool' && known && !identity) {
+    // A check that timed out tells us nothing. Sending someone to sign in on
+    // the strength of it could bounce them straight back, so offer the link
+    // and let them decide.
+    if (session.state.stalled) offerSignIn(); else requireSignIn();
+  }
+}
+
+/** Say the check failed, with a way on. Replaces the "checking sign-in" line,
+ *  which would otherwise sit there saying nothing for ever. */
+function offerSignIn() {
+  const notice = elements['signin-checking'];
+  notice.hidden = false;
+  notice.textContent = t('signin_stalled');
+  if (notice.querySelector('a')) return;
+  const link = document.createElement('a');
+  link.className = 'btn btn-p';
+  link.href = session.signInUrl(toolUrl(mode));
+  link.textContent = t('signin_go');
+  notice.append(document.createElement('br'), link);
+}
+
+function toolUrl(value) {
+  const url = new URL(location.href);
+  url.searchParams.set('mode', value);
+  return url.pathname + url.search;
 }
 
 function openTool(value, {push = true} = {}) {
-  if (session.state.known && !session.state.identity) { requireSignIn(value); return; }
+  if (session.state.known && !session.state.identity && !session.state.stalled) { requireSignIn(value); return; }
   step = 'tool';
-  if (push) {
-    const url = new URL(location.href);
-    url.searchParams.set('mode', value);
-    history.pushState({mode: value}, '', url);
-  }
+  if (push) history.pushState({mode: value}, '', toolUrl(value));
   setMode(value, {initial: true});
   renderStep();
   window.scrollTo({top: 0});
