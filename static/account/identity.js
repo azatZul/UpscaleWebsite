@@ -1,11 +1,11 @@
 // The only module in the codebase that knows Firebase exists.
 //
-// Everything else imports these five functions and the Identity shape from
+// Everything else imports these functions and the Identity shape from
 // identity-model.js. Nothing outside this file may import from gstatic, name a
 // Firebase type, or read a Firebase-specific field. Replacing the provider
 // later means rewriting this one file and keeping the same exports — see
 // WEB_AUTH_PLAN.md §10.
-import {FIREBASE_CONFIG, FIREBASE_SDK_VERSION} from './firebase-config.js';
+import {FIREBASE_CONFIG, FIREBASE_SDK_VERSION, APPLE_SIGN_IN_ENABLED} from './firebase-config.js';
 import {IdentityError, mapErrorCode, messageForCode, toIdentity} from './identity-model.js';
 
 let sdkPromise;
@@ -13,6 +13,8 @@ let cached = null;
 let resolvedOnce = false;
 let watching = false;
 const listeners = new Set();
+export const enabledSignInProviders = Object.freeze(APPLE_SIGN_IN_ENABLED
+  ? ['google.com', 'apple.com'] : ['google.com']);
 
 // Loaded on demand rather than at module load: the page renders its checking
 // state immediately instead of waiting on ~260 KB of SDK.
@@ -53,7 +55,7 @@ async function watch() {
     auth.onAuthStateChanged(instance, user => {
       let identity = null;
       // A signed-in user we cannot map is treated as signed out rather than
-      // surfaced half-built: an Identity without a sub is not usable.
+      // surfaced half-built: an Identity without a UID is not usable.
       try { identity = toIdentity(user); } catch { identity = null; }
       publish(identity);
     });
@@ -78,12 +80,43 @@ export function currentIdentity() {
   return cached;
 }
 
-export async function signInWithGoogle() {
+function createProvider(auth, providerId) {
+  if (!enabledSignInProviders.includes(providerId)) {
+    throw new IdentityError('provider-disabled', messageForCode('provider-disabled'));
+  }
+  if (providerId === 'google.com') return new auth.GoogleAuthProvider();
+  const provider = new auth.OAuthProvider('apple.com');
+  provider.addScope('email');
+  provider.addScope('name');
+  return provider;
+}
+
+async function signIn(providerId) {
   try {
     const {auth, instance} = await sdk();
-    const provider = new auth.GoogleAuthProvider();
+    const provider = createProvider(auth, providerId);
     const result = await auth.signInWithPopup(instance, provider);
     return toIdentity(result.user);
+  } catch (error) {
+    throw asIdentityError(error);
+  }
+}
+
+export const signInWithGoogle = () => signIn('google.com');
+export const signInWithApple = () => signIn('apple.com');
+
+/** The user explicitly chooses to connect a provider from their account.
+ * Never merge separate accounts or infer a link from an email address. */
+export async function linkSignInProvider(providerId) {
+  try {
+    const {auth, instance} = await sdk();
+    const user = instance.currentUser;
+    if (!user) throw new IdentityError('sign-in-required', messageForCode('sign-in-required'));
+    const result = await auth.linkWithPopup(user, createProvider(auth, providerId));
+    await result.user.getIdToken(true);
+    const identity = toIdentity(result.user);
+    publish(identity);
+    return identity;
   } catch (error) {
     throw asIdentityError(error);
   }

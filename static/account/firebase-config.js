@@ -19,3 +19,6 @@ export const FIREBASE_CONFIG = {
 // Pinned deliberately. The gstatic modules hardcode absolute URLs to each other
 // at this exact version, so app and auth must always move together.
 export const FIREBASE_SDK_VERSION = '11.6.0';
+
+// Enable only after Apple's Services ID and key are configured in Firebase.
+export const APPLE_SIGN_IN_ENABLED = false;

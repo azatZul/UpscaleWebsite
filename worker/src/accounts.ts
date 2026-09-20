@@ -4,7 +4,7 @@
 
 export interface Account {
   id: string;
-  googleSub: string;
+  firebaseUid: string;
   email: string | null;
   stripeCustomerId: string | null;
 }
@@ -13,22 +13,22 @@ export type CreditReason = "purchase" | "spend" | "refund" | "grant" | "reversal
 
 interface AccountRow {
   id: string;
-  google_sub: string;
+  firebase_uid: string;
   email: string | null;
   stripe_customer_id: string | null;
 }
 
 const toAccount = (row: AccountRow): Account => ({
   id: row.id,
-  googleSub: row.google_sub,
+  firebaseUid: row.firebase_uid,
   email: row.email,
   stripeCustomerId: row.stripe_customer_id,
 });
 
-export async function getOrCreateAccount(db: D1Database, googleSub: string, email: string | null): Promise<Account> {
+export async function getOrCreateAccount(db: D1Database, firebaseUid: string, email: string | null): Promise<Account> {
   const existing = await db.prepare(
-    "SELECT id, google_sub, email, stripe_customer_id FROM accounts WHERE google_sub = ?",
-  ).bind(googleSub).first<AccountRow>();
+    "SELECT id, firebase_uid, email, stripe_customer_id FROM accounts WHERE firebase_uid = ?",
+  ).bind(firebaseUid).first<AccountRow>();
   if (existing) {
     // Providers do let people change their address; keep the latest one.
     if (email && email !== existing.email) {
@@ -39,11 +39,11 @@ export async function getOrCreateAccount(db: D1Database, googleSub: string, emai
   }
   const id = crypto.randomUUID();
   await db.prepare(
-    "INSERT INTO accounts (id, google_sub, email, created_at) VALUES (?, ?, ?, ?) ON CONFLICT(google_sub) DO NOTHING",
-  ).bind(id, googleSub, email, Date.now()).run();
+    "INSERT INTO accounts (id, firebase_uid, email, created_at) VALUES (?, ?, ?, ?) ON CONFLICT(firebase_uid) DO NOTHING",
+  ).bind(id, firebaseUid, email, Date.now()).run();
   const row = await db.prepare(
-    "SELECT id, google_sub, email, stripe_customer_id FROM accounts WHERE google_sub = ?",
-  ).bind(googleSub).first<AccountRow>();
+    "SELECT id, firebase_uid, email, stripe_customer_id FROM accounts WHERE firebase_uid = ?",
+  ).bind(firebaseUid).first<AccountRow>();
   if (!row) throw new Error("Account row vanished immediately after insert");
   return toAccount(row);
 }

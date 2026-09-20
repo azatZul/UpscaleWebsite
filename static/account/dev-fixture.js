@@ -14,16 +14,25 @@ const params = new URLSearchParams(location.search);
 const empty = params.get('fixture') === 'empty';
 
 const identity = {
-  provider: 'google.com', sub: 'fixture', email: 'alex@example.com', emailVerified: true,
+  uid: 'fixture', providers: ['google.com'], email: 'alex@example.com', emailVerified: true,
   displayName: 'Alex Morgan', photoURL: null,
 };
 
+export const enabledSignInProviders = params.has('apple') ? ['google.com', 'apple.com'] : ['google.com'];
+const listeners = new Set();
 export function onIdentityChanged(listener) {
+  listeners.add(listener);
   setTimeout(() => listener(params.get('fixture') === 'signed-out' ? null : identity), 250);
-  return () => {};
+  return () => listeners.delete(listener);
 }
 export const currentIdentity = () => identity;
 export async function signInWithGoogle() { location.search = '?fixture'; }
+export async function signInWithApple() { location.search = '?fixture&apple'; }
+export async function linkSignInProvider(provider) {
+  identity.providers = [...new Set([...identity.providers, provider])];
+  for (const listener of listeners) listener(identity);
+  return identity;
+}
 export async function signOut() { location.search = '?fixture=signed-out'; }
 export const getAccessToken = async () => 'fixture';
 

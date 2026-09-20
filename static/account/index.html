@@ -36,6 +36,9 @@
         <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5a5.6 5.6 0 0 1-2.4 3.7v3h3.9c2.3-2.1 3.5-5.2 3.5-8.9z"/><path fill="#34A853" d="M12 24c3.2 0 5.9-1.1 7.9-2.9l-3.9-3c-1 .7-2.3 1.1-4 1.1-3.1 0-5.7-2.1-6.6-4.9h-4v3.1A12 12 0 0 0 12 24z"/><path fill="#FBBC05" d="M5.4 14.3a7.2 7.2 0 0 1 0-4.6V6.6h-4a12 12 0 0 0 0 10.8l4-3.1z"/><path fill="#EA4335" d="M12 4.8c1.8 0 3.3.6 4.6 1.8l3.4-3.4A12 12 0 0 0 1.4 6.6l4 3.1C6.3 6.9 8.9 4.8 12 4.8z"/></svg>
         <span>Continue with Google</span>
       </button>
+      <button id="sign-in-apple" class="apple-btn" type="button" hidden>
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M17.05 12.54c.03 3.25 2.85 4.33 2.88 4.34-.02.08-.45 1.55-1.49 3.07-.9 1.31-1.84 2.62-3.31 2.65-1.44.03-1.91-.86-3.56-.86-1.65 0-2.16.83-3.53.89-1.42.05-2.5-1.42-3.41-2.72-1.85-2.67-3.27-7.55-1.37-10.85.94-1.64 2.62-2.68 4.45-2.71 1.39-.03 2.7.94 3.55.94.85 0 2.44-1.16 4.11-.99.7.03 2.67.28 3.94 2.14-.1.07-2.35 1.37-2.26 4.1ZM14.35 4.46c.75-.91 1.25-2.17 1.11-3.43-1.07.04-2.37.72-3.14 1.62-.69.79-1.29 2.06-1.13 3.27 1.19.09 2.4-.61 3.16-1.46Z"/></svg><span>Continue with Apple</span>
+      </button>
       <ul class="auth-points">
         <li>10 free upscales on your device</li>
         <li>Creative upscale and Restore with credits — no subscription</li>
@@ -57,6 +60,16 @@
       </div>
 
       <p id="purchase-notice" class="account-notice" role="status" hidden></p>
+
+      <section id="sign-in-methods" class="dash-card sign-in-methods" aria-labelledby="sign-in-methods-heading" hidden>
+        <h2 id="sign-in-methods-heading">Sign-in methods</h2>
+        <p class="dash-muted">Connecting a method links it to this account, including your profile, credits, and history.</p>
+        <div class="sign-in-method-actions">
+          <button id="connect-google" class="btn btn-g" type="button">Connect Google</button>
+          <button id="connect-apple" class="btn btn-g" type="button" hidden>Connect Apple</button>
+        </div>
+        <p id="connection-status" class="dash-muted" role="status" hidden></p>
+      </section>
 
       <div class="dash-grid">
         <section class="dash-card balance-card" aria-labelledby="balance-heading">

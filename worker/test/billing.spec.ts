@@ -44,18 +44,18 @@ function installFetchStub(stripeResponder?: (url: string) => Response) {
   }) as typeof fetch;
 }
 
-async function idToken(googleSub: string): Promise<string> {
+async function idToken(firebaseUid: string): Promise<string> {
   const now = Math.floor(Date.now() / 1000);
   const header = { alg: "RS256", kid: KID, typ: "JWT" };
   const payload = {
     iss: `https://securetoken.google.com/${PROJECT}`,
     aud: PROJECT,
-    sub: "firebase-uid",
+    sub: firebaseUid,
     iat: now - 10,
     exp: now + 3600,
     email: "buyer@example.com",
     email_verified: true,
-    firebase: { identities: { "google.com": [googleSub] }, sign_in_provider: "google.com" },
+    firebase: { identities: { "google.com": [`google-${firebaseUid}`] }, sign_in_provider: "google.com" },
   };
   const encode = (value: unknown) => b64url(new TextEncoder().encode(JSON.stringify(value)));
   const signingInput = `${encode(header)}.${encode(payload)}`;

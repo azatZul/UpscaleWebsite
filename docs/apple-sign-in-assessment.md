@@ -1,133 +1,101 @@
-# Apple sign-in through the existing Firebase project
+# Firebase identity and Apple sign-in
 
-Assessed 19 September 2026 against `web-cloud-tools` at `3eb63ca`.
-This is an assessment; Apple sign-in has not been enabled or implemented.
+Updated 19 September 2026. Implemented on
+`codex/auth-google-style-apple-assessment`, based on `web-cloud-tools`.
 
-## Verified current state
+## Current design
 
-- The website uses Firebase project `upscaler-e9010`, also used by the mobile app.
-- A live, read-only Identity Toolkit API query returned only `google.com`, enabled.
-- Authorized domains already include `upscales.app`, `www.upscales.app`,
-  `upscaler-e9010.firebaseapp.com`, `upscaler-e9010.web.app`, `localhost`, and
-  `uscale-site-staging.sharrikk.workers.dev`.
-- The current local Google Cloud account has `firebaseauth.configs.get` and
-  `firebaseauth.configs.update`, confirmed with `testIamPermissions`.
-- Both Firebase CLI and Google Cloud CLI are installed and authenticated.
-  The installed Firebase CLI exposes user import/export but no provider-config command.
-- No remote configuration was changed during this assessment.
+- Firebase project: `upscaler-e9010`, shared with the mobile app.
+- One Firebase UID identifies the user across linked Google and Apple providers.
+- `accounts.firebase_uid` is a unique authentication lookup. `accounts.id`
+  remains our own ID for credits, Stripe, history, and free-use limits.
+- The worker verifies the signed Firebase token, project/issuer, expiry, UID,
+  and supported sign-in provider. Anonymous/custom sessions cannot create web
+  accounts or claim the free-use allowance.
+- The browser identity has `uid` and a list of connected `providers`; it handles
+  Apple relay email addresses and missing names/photos.
+- The backend never joins accounts based on email. Different Firebase UIDs
+  remain different accounts, even if their email addresses match.
 
-## What I can do
+## Apple is prepared, disabled
 
-1. Implement the Apple button and `signInWithApple()` in the existing Firebase
-   adapter using `OAuthProvider('apple.com')`, with email/name scopes. Keep
-   Firebase-specific code confined to `static/account/identity.js`.
-2. Generalize the identity model, provider-specific error messages, fixtures,
-   backend account lookup, and tests. Support missing names/photos and Apple's
-   private relay addresses. Apple supplies a name only on initial authorization.
-3. Migrate the account identity storage while preserving account IDs, Stripe
-   customers, credits, free-use counts, and history. See the migration below.
-4. Configure and enable Apple's provider via the Identity Toolkit REST API,
-   authenticated using the existing CLI login, once the Apple credentials exist.
-   No Firebase Console work is necessary from you for this part.
-5. Check authorized domains, implement the sign-in/cancellation/error flows,
-   and test desktop and mobile browsers. A real Apple sign-in still requires
-   you to complete the Apple account authentication/2FA.
+Per the user's instruction, `APPLE_SIGN_IN_ENABLED` in
+`static/account/firebase-config.js` is **false**. Apple is not configured in
+Firebase; the live provider API still lists only Google. The Apple button and
+connection controls are hidden. The adapter also refuses disabled providers.
 
-## What you need to supply or complete on Apple's side
+The prepared code uses `OAuthProvider('apple.com')` with name/email scopes and
+Firebase popup sign-in. Once enabled, a signed-in user can explicitly connect
+Google or Apple in the account page. The explanation next to the buttons makes
+clear that connecting a method associates it with the profile, credits, and
+history. Firebase performs the linking, then the adapter refreshes the token
+and publishes the updated connection status. A credential already attached to
+another account produces an actionable error; no account merge is attempted.
 
-Use an Apple Developer team with permission to manage Certificates, Identifiers
-& Profiles. Firebase credentials cannot administer that Apple account.
+For local design/interaction review only, use:
+- `/account/?fixture=signed-out&apple` for both buttons.
+- `/account/?fixture&apple` for the connection controls.
 
-1. Confirm the existing UScale primary App ID and team; enable Sign in with
-   Apple on that App ID if necessary. Reuse the intended app grouping so web
-   and native Apple identities can align later.
-2. Create or reuse a **Services ID** for web sign-in, associated with that
-   primary App ID. This Services ID becomes Firebase's OAuth `clientId`.
-3. Register `upscaler-e9010.firebaseapp.com` as the authentication domain and
-   this exact return URL:
+These fixtures cannot run on a deployed hostname.
 
-   `https://upscaler-e9010.firebaseapp.com/__/auth/handler`
+## Remaining Apple setup
 
-   Include the website domains in Apple's web configuration where applicable.
-4. Create or reuse a Sign in with Apple private key for the primary App ID.
-   Supply the **Team ID**, **Services ID**, **Key ID**, and a secure local path
-   to the downloaded **`.p8` private key**. The private key belongs only in
-   Firebase's server-side provider configuration, never in browser code or Git.
-5. If Firebase or another service will email Apple relay addresses, register
-   the relevant sender/domain with Apple's private email relay. For default
-   Firebase auth emails this is `noreply@upscaler-e9010.firebaseapp.com`.
+The Firebase CLI and Google Cloud CLI are authenticated. The local account has
+`firebaseauth.configs.get` and `firebaseauth.configs.update`. Provider settings
+can be updated through Identity Toolkit REST using the CLI access token and
+`x-goog-user-project: upscaler-e9010`. Firebase/Cloudflare access cannot create
+resources in the Apple Developer account.
 
-I can assist with the Apple setup using an authorized Apple session, but the
-Firebase API/CLI cannot create those Apple resources. Existing Apple-side
-configuration has not been inspected in this task.
+Before enabling Apple, obtain:
+1. An Apple primary App ID with Sign in with Apple enabled, on the intended
+   developer team (reuse the native app grouping).
+2. A web Services ID associated with that App ID.
+3. Team ID, Key ID, and a secure local `.p8` private-key file.
+4. Apple's web domain/return URL registration, including:
+   - Domain: `upscaler-e9010.firebaseapp.com`
+   - Return URL: `https://upscaler-e9010.firebaseapp.com/__/auth/handler`
+5. Private email relay sender registration if sending emails to hidden Apple
+   addresses. Default Firebase sender: `noreply@upscaler-e9010.firebaseapp.com`.
 
-## Why this is more than another button
+Then create/update `apple.com` at
+`https://identitytoolkit.googleapis.com/v2/projects/upscaler-e9010/defaultSupportedIdpConfigs`:
+set `clientId` to the Services ID, and populate
+`appleSignInConfig.codeFlowConfig.{teamId,keyId,privateKey}`. Preserve existing
+bundle IDs and other provider settings. Keep private keys out of Git/browser
+code. Enable the provider, flip the site flag, and verify real Apple sign-in,
+repeat sign-in, Hide My Email, cancellation, and explicit linking. This needs
+an Apple user to complete authentication/2FA; fixtures cannot verify OAuth.
 
-`static/account/identity-model.js` rejects users without `google.com` provider
-data. `worker/src/auth.ts` rejects Firebase tokens without a Google subject.
-`worker/src/accounts.ts` and the original accounts migration require a unique,
-non-null `google_sub`. Multiple routes in `worker/src/index.ts` depend on it.
-Simply enabling Apple would therefore still prevent Apple-only users from
-using their account, credits, history, and processing features.
+The existing authorized domains include the production website, Firebase auth
+host, localhost, and `uscale-site-staging.sharrikk.workers.dev`.
 
-Recommended migration: add an `account_identities` table with a unique
-`(provider, subject)` key pointing to the existing `accounts.id`; backfill
-Google identities, and remove the requirement that every account contain a
-Google subject. Retain the project's deliberate provider-independent account
-ID design. Do not replace existing account IDs with Firebase UIDs or synthetic
-Google IDs. Plan the D1 migration and rollback before deployment.
+## Development database transition
 
-For people using both providers, linking must preserve one credit balance.
-Do not merge accounts on matching email alone; use verified credentials and
-explicit linking consent, including Apple's anonymized-data requirements.
-Two existing funded accounts require a deliberate conflict/merge policy.
+Migration `0006_firebase_identity.sql` renames `google_sub` to `firebase_uid`.
+It marks pre-existing identifiers with `legacy-google:` so they cannot silently
+be interpreted as Firebase UIDs. New accounts use actual Firebase UIDs.
 
-Keep popup sign-in initially, matching the current architecture. If mobile
-testing requires redirect sign-in, account for Firebase's cross-origin storage
-restrictions and preservation of the selected photo; switching to redirects
-without that work can lose state or fail in privacy-restrictive browsers.
+For existing development accounts, look up the old Google subject via the
+Firebase admin `accounts:lookup` API (`federatedUserId`, provider `google.com`).
+Update the marked identifier to the returned `localId` using the existing
+account ID. Do not guess from email. Our three staging accounts all matched
+Firebase users during preflight. This preserves their account IDs and related
+data without introducing a permanent migration compatibility layer.
 
-## API configuration details
+Apply the migration and one-time mapping together with the worker update in
+staging. Old worker versions expect `google_sub` and cannot run against the new
+schema. Before any future production rollout, take a database backup, perform
+the same mapping if accounts exist, and deploy the compatible worker. Do not
+roll back the worker alone after applying this migration.
 
-The existing read endpoints are:
+Merging two existing Firebase/UScale accounts, unlinking providers, and redirect
+sign-in are intentionally outside this change. Redirects need additional
+cross-origin storage and photo-state handling on this website.
 
-- `GET https://identitytoolkit.googleapis.com/v2/projects/upscaler-e9010/defaultSupportedIdpConfigs`
-- `GET https://identitytoolkit.googleapis.com/admin/v2/projects/upscaler-e9010/config`
+## References
 
-Use `Authorization: Bearer <CLI access token>` and
-`x-goog-user-project: upscaler-e9010` (required by the local Google Cloud login).
-Keep tokens and private keys out of output and command history.
-
-Create `apple.com` through `defaultSupportedIdpConfigs.create` if absent,
-or use `patch` with an explicit update mask if it already exists. Set:
-
-- `enabled: true`
-- `clientId: <Apple Services ID>`
-- `appleSignInConfig.codeFlowConfig.teamId: <Team ID>`
-- `appleSignInConfig.codeFlowConfig.keyId: <Key ID>`
-- `appleSignInConfig.codeFlowConfig.privateKey: <contents of .p8>`
-
-Preserve any existing mobile bundle IDs and unrelated provider settings. The
-native Apple provider config accepts the private key directly; do not build
-an ad hoc client-secret rotation mechanism into the website.
-
-## Scope and validation
-
-This is a moderate authentication/backend change, with account migration and
-linking as the main complexity. A planning estimate is 1–2 engineering days
-after credentials are ready for basic Apple sign-in, migration, and browser
-checks; merging existing accounts or adding reliable redirects is additional
-scope. This is an estimate, not a measured delivery commitment.
-
-Validate existing Google accounts and balances after migration, new Apple
-users, repeat sign-in, Hide My Email, missing name/photo, popup cancellation,
-disabled provider errors, rejected invalid tokens, and account-link conflicts.
-Deploy schema/backend support before exposing the Apple button.
-
-## Sources
-
-- [Firebase: Apple authentication for web](https://firebase.google.com/docs/auth/web/apple)
-- [Identity Toolkit provider configuration API and Apple fields](https://docs.cloud.google.com/identity-platform/docs/reference/rest/v2/projects.defaultSupportedIdpConfigs)
-- [Apple: configure Sign in with Apple for the web](https://developer.apple.com/help/account/capabilities/configure-sign-in-with-apple-for-the-web)
-- [Apple: create a Sign in with Apple private key](https://developer.apple.com/help/account/capabilities/create-a-sign-in-with-apple-private-key)
-- [Google sign-in branding guidelines](https://developers.google.com/identity/branding-guidelines)
+- [Firebase account linking](https://firebase.google.com/docs/auth/web/account-linking)
+- [Firebase Apple authentication](https://firebase.google.com/docs/auth/web/apple)
+- [Firebase token verification](https://firebase.google.com/docs/auth/admin/verify-id-tokens)
+- [Provider configuration REST API](https://docs.cloud.google.com/identity-platform/docs/reference/rest/v2/projects.defaultSupportedIdpConfigs)
+- [Apple web configuration](https://developer.apple.com/help/account/capabilities/configure-sign-in-with-apple-for-the-web)

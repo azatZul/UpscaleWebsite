@@ -511,7 +511,7 @@ async function ensureCustomer(env: Env, config: { secretKey: string }, account: 
   await setStripeCustomerId(env.ACCOUNTS_DB, account.id, customer.id);
   // Re-read rather than trusting the write: setStripeCustomerId only fills a
   // NULL, so a concurrent checkout may have won and stored a different id.
-  const stored = await getOrCreateAccount(env.ACCOUNTS_DB, account.googleSub, account.email);
+  const stored = await getOrCreateAccount(env.ACCOUNTS_DB, account.firebaseUid, account.email);
   return stored.stripeCustomerId ?? customer.id;
 }
 
@@ -533,7 +533,7 @@ async function handleCheckout(request: Request, env: Env, identity: VerifiedIden
     return json({ error: "invalid_amount", minCents: MIN_PURCHASE_CENTS, maxCents: MAX_PURCHASE_CENTS }, 400);
   }
 
-  const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+  const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.firebaseUid, identity.email);
   const origin = new URL(request.url).origin;
   try {
     const customerId = await ensureCustomer(env, config, account);
@@ -750,7 +750,7 @@ async function handleCloudOperation(
   const cost = creditsFor(parsed);
   const key = priceKey(parsed);
 
-  const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+  const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.firebaseUid, identity.email);
   if (await countActiveJobs(env.ACCOUNTS_DB, account.id, Date.now() - ACTIVE_JOB_WINDOW_MS) >= MAX_ACTIVE_JOBS) {
     return json({ error: "too_many_active_jobs", maxActive: MAX_ACTIVE_JOBS }, 429);
   }
@@ -813,7 +813,7 @@ async function handleCloudOperation(
 
 async function handleHistoryList(env: Env, identity: VerifiedIdentity): Promise<Response> {
   if (!mediaSigningKey(env)) return json({ error: "history_unavailable" }, 503);
-  const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+  const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.firebaseUid, identity.email);
   const items = await listHistory(env.ACCOUNTS_DB, account.id);
   const withUrls = await Promise.all(items.map(async item => ({
     id: item.id,
@@ -828,7 +828,7 @@ async function handleHistoryList(env: Env, identity: VerifiedIdentity): Promise<
 }
 
 async function handleHistoryDelete(env: Env, identity: VerifiedIdentity, jobId: string): Promise<Response> {
-  const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+  const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.firebaseUid, identity.email);
   const removed = await deleteHistoryItem(env.ACCOUNTS_DB, account.id, jobId);
   // Another account's item answers exactly like a missing one.
   if (!removed) return json({ error: "not_found" }, 404);
@@ -914,12 +914,12 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   // Called once after sign-in, then idempotent. Creating the row here rather
   // than lazily means later endpoints can assume an account exists.
   if (url.pathname === "/api/auth/session" && request.method === "POST") {
-    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.firebaseUid, identity.email);
     return json({ accountId: account.id, email: account.email, credits: await creditBalance(env.ACCOUNTS_DB, account.id) });
   }
 
   if (url.pathname === "/api/me" && request.method === "GET") {
-    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.firebaseUid, identity.email);
     return json({ accountId: account.id, email: account.email, credits: await creditBalance(env.ACCOUNTS_DB, account.id) });
   }
 
@@ -935,7 +935,7 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   }
 
   if (url.pathname === "/api/account/activity" && request.method === "GET") {
-    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.firebaseUid, identity.email);
     return json({ entries: await listActivity(env.ACCOUNTS_DB, account.id) });
   }
 
@@ -945,7 +945,7 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   }
 
   if (url.pathname === "/api/device-upscales" && request.method === "GET") {
-    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.firebaseUid, identity.email);
     return json({
       ...(await deviceAllowance(env.ACCOUNTS_DB, account.id, FREE_DEVICE_UPSCALES)),
       credits: CREDIT_PRICES.device,
@@ -963,7 +963,7 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
       return json({ error: "invalid_body" }, 400);
     }
     if (typeof requestId !== "string" || !REQUEST_ID.test(requestId)) return json({ error: "invalid_request_id" }, 400);
-    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.firebaseUid, identity.email);
     const claim = await claimDeviceUpscale(env.ACCOUNTS_DB, {
       accountId: account.id, requestId, freeLimit: FREE_DEVICE_UPSCALES, credits: CREDIT_PRICES.device,
     });

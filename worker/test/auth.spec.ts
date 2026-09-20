@@ -31,7 +31,7 @@ async function makeToken(overrides: { header?: object; payload?: object; signatu
   const payload = {
     iss: `https://securetoken.google.com/${PROJECT}`,
     aud: PROJECT,
-    sub: "FIREBASE_UID_NOT_THE_KEY",
+    sub: "firebase-user-123",
     iat: now - 10,
     exp: now + 3600,
     email: "person@example.com",
@@ -52,10 +52,10 @@ beforeEach(async () => {
 });
 
 describe("verifyIdToken", () => {
-  it("accepts a well-formed token and returns the Google subject, not the Firebase uid", async () => {
+  it("returns the Firebase UID rather than a provider subject", async () => {
     const identity = await verifyIdToken(await makeToken(), PROJECT, fetcher);
-    expect(identity.googleSub).toBe("115204000000000004029");
-    expect(identity.googleSub).not.toBe("FIREBASE_UID_NOT_THE_KEY");
+    expect(identity.firebaseUid).toBe("firebase-user-123");
+    expect(identity.firebaseUid).not.toBe("115204000000000004029");
     expect(identity.email).toBe("person@example.com");
     expect(identity.emailVerified).toBe(true);
   });
@@ -91,9 +91,28 @@ describe("verifyIdToken", () => {
       .rejects.toThrow(AuthError);
   });
 
-  it("rejects a token with no Google identity, which would leave sub undefined", async () => {
-    const token = await makeToken({ payload: { firebase: { identities: {}, sign_in_provider: "password" } } });
-    await expect(verifyIdToken(token, PROJECT, fetcher)).rejects.toThrow(AuthError);
+  it("accepts Apple-only tokens and preserves the UID when providers are linked", async () => {
+    for (const firebase of [
+      { identities: { "apple.com": ["apple-456"] }, sign_in_provider: "apple.com" },
+      { identities: { "google.com": ["google-789"], "apple.com": ["apple-456"] }, sign_in_provider: "google.com" },
+      { identities: { "google.com": ["google-789"], "apple.com": ["apple-456"] }, sign_in_provider: "apple.com" },
+    ]) {
+      const identity = await verifyIdToken(await makeToken({ payload: { firebase } }), PROJECT, fetcher);
+      expect(identity.firebaseUid).toBe("firebase-user-123");
+    }
+  });
+
+  it("rejects an absent, empty, non-string, or oversized Firebase UID", async () => {
+    for (const sub of [undefined, "", 123, "a".repeat(129)]) {
+      await expect(verifyIdToken(await makeToken({ payload: { sub } }), PROJECT, fetcher)).rejects.toThrow(AuthError);
+    }
+  });
+
+  it("rejects anonymous and unsupported sessions from the shared Firebase project", async () => {
+    for (const provider of ['anonymous', 'custom', undefined]) {
+      const token = await makeToken({ payload: { firebase: {sign_in_provider: provider} } });
+      await expect(verifyIdToken(token, PROJECT, fetcher)).rejects.toThrow(AuthError);
+    }
   });
 
   it("rejects malformed tokens, including one with extra segments", async () => {

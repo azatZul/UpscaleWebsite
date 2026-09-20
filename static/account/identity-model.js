@@ -18,6 +18,10 @@ const ERROR_CODES = {
   'auth/cancelled-popup-request': 'cancelled',
   'auth/user-cancelled': 'cancelled',
   'auth/network-request-failed': 'network',
+  'auth/account-exists-with-different-credential': 'account-exists',
+  'auth/credential-already-in-use': 'already-linked-elsewhere',
+  'auth/provider-already-linked': 'already-linked',
+  'auth/user-not-found': 'sign-in-required',
   // Configuration faults, kept distinct from transient ones: telling someone to
   // try again when the host they are on will never be allowed to sign in wastes
   // their time and hides the actual cause from whoever has to fix it.
@@ -49,7 +53,15 @@ export function messageForCode(code, hostname) {
     case 'domain-not-allowed':
       return `Sign-in is not enabled for ${hostname || 'this address'}. The host has to be added to the project's authorized domains.`;
     case 'provider-disabled':
-      return 'Google sign-in is switched off for this project.';
+      return 'This sign-in method is not available yet.';
+    case 'account-exists':
+      return 'Sign in with the method you used before, then connect this sign-in method from your account.';
+    case 'already-linked-elsewhere':
+      return 'This sign-in method belongs to another account. Sign in to that account to use it. Your accounts have not been merged.';
+    case 'already-linked':
+      return 'This sign-in method is already connected to your account.';
+    case 'sign-in-required':
+      return 'Sign in before connecting another sign-in method.';
     case 'misconfigured':
       return 'Sign-in is misconfigured for this site. This needs a fix on our side, not a retry.';
     default:
@@ -59,23 +71,20 @@ export function messageForCode(code, hostname) {
 
 // Map a provider user record onto our own Identity.
 //
-// The identifier we keep is the Google account's subject claim, read from the
-// provider record — NOT the Firebase uid. That uid is meaningful only inside
-// this one Firebase project; the Google sub is the same value Google returns
-// when verifying its tokens directly, so users stay matchable if Firebase is
-// ever swapped out. Nothing in this file reads user.uid, on purpose.
+// One Firebase UID owns all linked providers. Backend credits/history still
+// belong to our own account ID. Provider IDs describe connection status only.
 export function toIdentity(user) {
   if (!user) return null;
-  const google = (user.providerData || []).find(entry => entry && entry.providerId === 'google.com');
-  if (!google || !google.uid) {
-    throw new IdentityError('unknown', 'Signed in, but no Google identity was returned.');
+  if (user.isAnonymous || typeof user.uid !== 'string' || !user.uid || user.uid.length > 128) {
+    throw new IdentityError('unknown', 'Signed in, but no valid user identity was returned.');
   }
+  const providers = (user.providerData || []).filter(entry => entry && entry.providerId);
   return {
-    provider: 'google.com',
-    sub: google.uid,
-    email: google.email || user.email || null,
+    uid: user.uid,
+    providers: [...new Set(providers.map(entry => entry.providerId))],
+    email: user.email || providers.find(entry => entry.email)?.email || null,
     emailVerified: Boolean(user.emailVerified),
-    displayName: google.displayName || user.displayName || null,
-    photoURL: google.photoURL || user.photoURL || null,
+    displayName: user.displayName || providers.find(entry => entry.displayName)?.displayName || null,
+    photoURL: user.photoURL || providers.find(entry => entry.photoURL)?.photoURL || null,
   };
 }

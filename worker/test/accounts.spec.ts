@@ -8,11 +8,11 @@ async function freshAccount(sub = `sub-${crypto.randomUUID()}`) {
 }
 
 describe("accounts", () => {
-  it("keys the account on the Google subject, not on any provider uid", async () => {
+  it("looks up the Firebase UID while keeping our own account ID", async () => {
     const first = await getOrCreateAccount(env.ACCOUNTS_DB, "sub-stable", "a@example.com");
     const again = await getOrCreateAccount(env.ACCOUNTS_DB, "sub-stable", "a@example.com");
     expect(again.id).toBe(first.id);
-    expect(first.googleSub).toBe("sub-stable");
+    expect(first.firebaseUid).toBe("sub-stable");
     // Our id is ours -- it must not be the provider's identifier.
     expect(first.id).not.toBe("sub-stable");
   });
