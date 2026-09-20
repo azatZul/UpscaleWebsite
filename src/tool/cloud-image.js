@@ -3,14 +3,15 @@
 //   Restore and the colorize modes: under 1 MP, sides divisible by 16, at
 //   least 512 px on the short side, centre-cropped to that shape.
 //   Increased resolution and Advanced Fix: longest side capped at 4032.
-//   Creative upscale: the original, capped at 4096 until the web tiles as the
-//   app does.
+//   Creative upscale: the original, capped at 6144. Past the model's own
+//   comfortable size the photo is split into tiles (creative-tiles.js) exactly
+//   as the app splits it, so this cap is about upload size, not the model.
 
 export const FLUX_MAX_PIXELS = 1024 * 1024;
 export const FLUX_MIN_SIDE = 512;
 export const FLUX_STEP = 16;
 export const RESTORE_MAX_SIDE = 4032;
-export const CREATIVE_MAX_SIDE = 4096;
+export const CREATIVE_MAX_SIDE = 6144;
 
 function fitWithin(width, height, maxSide) {
   const scale = Math.min(1, maxSide / Math.max(width, height));

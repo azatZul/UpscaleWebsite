@@ -59,10 +59,11 @@ export const FREE_DEVICE_UPSCALES = 10;
 
 // What each option costs upstream, in cents, checked against the providers.
 //
-//   creative       WaveSpeed image-upscaler, $0.01 per run. 8K keeps a larger
-//                  allowance: the published price is flat, but the page warns
-//                  the charge grows with output size, and no 8K job has been
-//                  measured yet.
+//   creative       WaveSpeed image-upscaler, $0.01 per run, and a big photo
+//                  is split into as many as four tiles that each cost a run.
+//                  Four is the figure here: the published price is flat, but
+//                  the page warns the charge grows with output size, and no
+//                  8K job has been measured yet.
 //   restore        WaveSpeed flux-2-dev/edit, $0.024 per edited image.
 //   colorization_pro  WaveSpeed flux-2-pro/edit, $0.06 per edited image. A
 //                  job under ~1.17 MP falls back to Replicate, billed $0.015
@@ -79,7 +80,7 @@ export const FREE_DEVICE_UPSCALES = 10;
 //                  grow with output size after all, this factor is the first
 //                  thing that has to change.
 export const UPSTREAM_COST_CENTS = {
-  creative: { "2k": 1, "4k": 1, "8k": 4 },
+  creative: { "2k": 4, "4k": 4, "8k": 4 },
   restore: { restore: 2.4, colorization: 2.4, colorization_pro: 6, advanced_restoration: 4 },
   increaseResolutionFactor: 1,
 } as const;

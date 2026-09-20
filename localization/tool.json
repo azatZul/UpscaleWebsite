@@ -2417,5 +2417,49 @@
       "es": "Añade créditos para ver y descargar este resultado."
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.cloud_merging": {
+    "localizations": {
+      "en": "Putting your photo together",
+      "ru": "Собираем фото",
+      "de": "Dein Foto wird zusammengesetzt",
+      "ja": "写真を合成しています",
+      "fr": "Assemblage de votre photo",
+      "es": "Uniendo tu foto"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.cloud_tile_progress": {
+    "localizations": {
+      "en": "Part {index} of {total}",
+      "ru": "Часть {index} из {total}",
+      "de": "Teil {index} von {total}",
+      "ja": "{total}枚中{index}枚目",
+      "fr": "Partie {index} sur {total}",
+      "es": "Parte {index} de {total}"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.cloud_merging_detail": {
+    "localizations": {
+      "en": "Blending the parts together",
+      "ru": "Соединяем части",
+      "de": "Die Teile werden verbunden",
+      "ja": "パーツをつなぎ合わせています",
+      "fr": "Fusion des parties",
+      "es": "Combinando las partes"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.cloud_saving": {
+    "localizations": {
+      "en": "Saving to your history",
+      "ru": "Сохраняем в историю",
+      "de": "Wird in deinem Verlauf gespeichert",
+      "ja": "履歴に保存しています",
+      "fr": "Enregistrement dans votre historique",
+      "es": "Guardando en tu historial"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   }
 }

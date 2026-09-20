@@ -506,3 +506,31 @@ export async function claimDeviceUpscale(
   return { kind, ...(await snapshot()) };
 }
 
+export async function jobForAccount(db: D1Database, accountId: string, jobId: string): Promise<CloudJob | null> {
+  const row = await db.prepare(
+    `SELECT ${JOB_COLUMNS} FROM cloud_jobs WHERE id = ? AND account_id = ? AND deleted_at IS NULL`,
+  ).bind(jobId, accountId).first<CloudJobRow>();
+  return row ? toJob(row) : null;
+}
+
+/** Attach the images to a job that already succeeded: a tiled upscale is put
+ *  back together in the browser, so its result arrives after the job does.
+ *  Writes only while nothing is stored, so a repeated upload cannot orphan the
+ *  objects already in the bucket. */
+export async function attachHistoryMedia(
+  db: D1Database,
+  jobId: string,
+  input: { original: StoredObject | null; result: StoredObject },
+): Promise<boolean> {
+  const result = await db.prepare(
+    `UPDATE cloud_jobs
+        SET original_key = ?1, original_mime = ?2, original_bytes = ?3,
+            result_key = ?4, result_mime = ?5, result_bytes = ?6
+      WHERE id = ?7 AND status = 'succeeded' AND result_key IS NULL AND deleted_at IS NULL`,
+  ).bind(
+    input.original?.key ?? null, input.original?.mime ?? null, input.original?.bytes ?? null,
+    input.result.key, input.result.mime, input.result.bytes, jobId,
+  ).run();
+  return (result.meta.changes ?? 0) > 0;
+}
+

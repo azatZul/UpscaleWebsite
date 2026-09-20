@@ -64,3 +64,35 @@ export async function verifyMediaSignature(
   if (!signature) return false;
   return crypto.subtle.verify("HMAC", await importKey(secret, "verify"), signature, message(jobId, variant, expiry));
 }
+
+// A tile of a tiled upscale lives at the provider, not in the bucket, and the
+// browser has to read its pixels to stitch the photo -- which a cross-origin
+// image on this isolated page cannot do. So the worker fetches it instead, and
+// this signature is what says the browser may ask for that exact URL: the
+// worker signs the tiles it just produced, and accepts nothing else. Without
+// it the endpoint would fetch whatever URL it was handed.
+const tileMessage = (jobId: string, index: number, url: string) =>
+  encoder.encode(`cloud-tile:${jobId}:${index}:${url}`);
+
+export async function signCloudTile(secret: string, jobId: string, index: number, url: string): Promise<string> {
+  const signature = await crypto.subtle.sign("HMAC", await importKey(secret, "sign"), tileMessage(jobId, index, url));
+  return toBase64Url(signature);
+}
+
+export async function verifyCloudTile(
+  secret: string,
+  jobId: string,
+  index: number,
+  url: string,
+  sig: string,
+): Promise<boolean> {
+  const signature = fromBase64Url(sig);
+  if (!signature) return false;
+  return await crypto.subtle.verify(
+    "HMAC",
+    await importKey(secret, "verify"),
+    signature as unknown as ArrayBuffer,
+    tileMessage(jobId, index, url),
+  );
+}
+

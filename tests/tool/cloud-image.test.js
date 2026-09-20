@@ -24,7 +24,7 @@ test('increased resolution and advanced fix cap the long side at 4032 without cr
   assert.deepEqual(uploadPlan(1200, 900, 'restore', {mode: 'advanced_restoration'}), {width: 1200, height: 900, crop: false});
 });
 
-test('creative upscale keeps the original, capped at 4096', () => {
+test('creative upscale keeps the original, capped at 6144', () => {
   assert.deepEqual(uploadPlan(3000, 2000, 'creative'), {width: 3000, height: 2000, crop: false});
-  assert.deepEqual(uploadPlan(8192, 4096, 'creative'), {width: CREATIVE_MAX_SIDE, height: 2048, crop: false});
+  assert.deepEqual(uploadPlan(12288, 6144, 'creative'), {width: CREATIVE_MAX_SIDE, height: 3072, crop: false});
 });

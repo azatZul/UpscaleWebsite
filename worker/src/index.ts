@@ -1,13 +1,13 @@
 import { bearerToken, verifyIdToken, type VerifiedIdentity } from "./auth";
 import {
-  claimDeviceUpscale, completeCloudJob, countActiveJobs, creditBalance, deleteHistoryItem, deviceAllowance, failCloudJob,
-  getHistoryItem,
+  attachHistoryMedia, claimDeviceUpscale, completeCloudJob, countActiveJobs, creditBalance, deleteHistoryItem,
+  deviceAllowance, failCloudJob, getHistoryItem, jobForAccount,
   getOrCreateAccount, historyBytes, listActivity, listHistory, recordPurchase, refundStaleJobs, setStripeCustomerId,
   startCloudJob,
   type Account, type StoredObject,
 } from "./accounts";
 import { AuralensError, runCloudRequest } from "./auralens";
-import { signMediaUrl, verifyMediaSignature, type MediaVariant } from "./media-signing";
+import { signCloudTile, signMediaUrl, verifyCloudTile, verifyMediaSignature, type MediaVariant } from "./media-signing";
 import {
   CREDIT_PACKS, CREDIT_PRICES, FREE_DEVICE_UPSCALES, MAX_PURCHASE_CENTS, MIN_PURCHASE_CENTS, creditsFor, packById,
   parseCloudRequest,
@@ -636,6 +636,10 @@ async function handleStripeWebhook(request: Request, env: Env): Promise<Response
 }
 
 const CLOUD_PATH = /^\/api\/cloud\/(creative|restore)$/;
+// A big photo goes up as tiles, mirroring the app's CreativeTiler: a 2x2
+// grid above 2160 square, two tiles above 1280 square, one below that.
+const MAX_CREATIVE_TILES = 4;
+const JOB_ID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const HISTORY_ITEM_PATH = /^\/api\/history\/([0-9a-f-]{36})$/;
 const HISTORY_MEDIA_PATH = /^\/media\/history\/([0-9a-f-]{36})\/(original|result)$/;
 // Generous for a phone photo; the providers downscale anything larger anyway.
@@ -715,6 +719,73 @@ async function storeHistoryMedia(
  *  last credits on work that has already started. Anything short of a clean
  *  result gives the credits back through failCloudJob, which refunds at most
  *  once per job. */
+/** Keep the finished photo from a tiled upscale.
+ *
+ *  Only a tiled job needs this: its tiles are put back together in the browser,
+ *  so the worker never sees the photo the person actually gets. The job is
+ *  already paid for and already succeeded, so nothing here can charge or refund
+ *  -- at worst the history copy is missing and the person still has their
+ *  download. */
+async function handleCloudResult(request: Request, env: Env, identity: VerifiedIdentity): Promise<Response> {
+  if (Number(request.headers.get("content-length") ?? 0) > MAX_RESULT_BYTES + MAX_UPLOAD_BYTES + 256_000) {
+    return json({ error: "image_too_large", maxBytes: MAX_RESULT_BYTES }, 413);
+  }
+  let form: FormData;
+  try {
+    form = await request.formData();
+  } catch {
+    return json({ error: "invalid_body" }, 400);
+  }
+  const jobId = form.get("jobId");
+  if (typeof jobId !== "string" || !JOB_ID.test(jobId)) return json({ error: "invalid_job_id" }, 400);
+  const result = form.get("result");
+  if (!(result instanceof File) || result.size === 0) return json({ error: "missing_image" }, 400);
+  if (result.size > MAX_RESULT_BYTES) return json({ error: "image_too_large", maxBytes: MAX_RESULT_BYTES }, 413);
+  if (!ACCEPTED_IMAGE.test(result.type)) return json({ error: "unsupported_image" }, 415);
+  const originalField = form.get("original");
+  const original = originalField instanceof File && originalField.size > 0 ? originalField : null;
+  if (original && (original.size > MAX_UPLOAD_BYTES || !ACCEPTED_IMAGE.test(original.type))) {
+    return json({ error: "unsupported_image" }, 415);
+  }
+
+  const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+  const job = await jobForAccount(env.ACCOUNTS_DB, account.id, jobId);
+  if (!job) return json({ error: "not_found" }, 404);
+  if (job.status !== "succeeded") return json({ error: "job_not_finished" }, 409);
+  if (job.resultKey) {
+    // A retried upload keeps the copy already stored rather than paying for a
+    // second one; the links are the same either way.
+    const urls = await historyUrls(env, jobId);
+    return json({ saved: Boolean(urls), ...(urls ?? {}), replayed: true });
+  }
+  if (await historyBytes(env.ACCOUNTS_DB, account.id) + result.size + (original?.size ?? 0) > MAX_HISTORY_BYTES) {
+    return json({ error: "history_full", maxBytes: MAX_HISTORY_BYTES }, 409);
+  }
+
+  const base = `users/${account.id}/${jobId}`;
+  const originalKey = `${base}/original`;
+  const resultKey = `${base}/result`;
+  try {
+    if (original) await env.USER_MEDIA.put(originalKey, original, { httpMetadata: { contentType: original.type } });
+    await env.USER_MEDIA.put(resultKey, result, { httpMetadata: { contentType: result.type } });
+  } catch (error) {
+    console.error(JSON.stringify({ event: "history_store_failed", jobId, detail: error instanceof Error ? error.message : "unknown" }));
+    await env.USER_MEDIA.delete([originalKey, resultKey]).catch(() => undefined);
+    return json({ saved: false });
+  }
+  const attached = await attachHistoryMedia(env.ACCOUNTS_DB, jobId, {
+    original: original ? { key: originalKey, mime: original.type, bytes: original.size } : null,
+    result: { key: resultKey, mime: result.type, bytes: result.size },
+  });
+  if (!attached) {
+    await env.USER_MEDIA.delete([originalKey, resultKey]).catch(() => undefined);
+    return json({ saved: false });
+  }
+  const urls = await historyUrls(env, jobId);
+  console.log(JSON.stringify({ event: "cloud_result_saved", jobId, bytes: result.size }));
+  return json({ saved: Boolean(urls), ...(urls ?? {}) });
+}
+
 async function handleCloudOperation(
   request: Request,
   env: Env,
@@ -733,20 +804,39 @@ async function handleCloudOperation(
   } catch {
     return json({ error: "invalid_body" }, 400);
   }
-  const image = form.get("image");
   const requestId = form.get("requestId");
-  if (!(image instanceof File) || image.size === 0) return json({ error: "missing_image" }, 400);
-  if (image.size > MAX_UPLOAD_BYTES) return json({ error: "image_too_large", maxBytes: MAX_UPLOAD_BYTES }, 413);
-  if (!ACCEPTED_IMAGE.test(image.type)) return json({ error: "unsupported_image" }, 415);
   if (typeof requestId !== "string" || !REQUEST_ID.test(requestId)) return json({ error: "invalid_request_id" }, 400);
+  // One photo, or the tiles it was split into. Either way it is one job, one
+  // charge and one result; the tile count only decides how many provider calls
+  // it takes, which is why the browser may not name more than the grid allows.
+  const rawTileCount = form.get("tileCount");
+  const tileCount = rawTileCount === null ? 1 : Number(rawTileCount);
+  if (!Number.isInteger(tileCount) || tileCount < 1 || tileCount > MAX_CREATIVE_TILES) {
+    return json({ error: "invalid_tile_count", maxTiles: MAX_CREATIVE_TILES }, 400);
+  }
+  if (tileCount > 1 && kind !== "creative") return json({ error: "tiling_unsupported" }, 400);
+  const images: File[] = [];
+  for (let index = 0; index < tileCount; index++) {
+    const file = form.get(tileCount === 1 ? "image" : `tile${index}`);
+    if (!(file instanceof File) || file.size === 0) return json({ error: "missing_image" }, 400);
+    if (file.size > MAX_UPLOAD_BYTES) return json({ error: "image_too_large", maxBytes: MAX_UPLOAD_BYTES }, 413);
+    if (!ACCEPTED_IMAGE.test(file.type)) return json({ error: "unsupported_image" }, 415);
+    images.push(file);
+  }
+  const image = images[0]!;
+  const uploadBytes = images.reduce((total, file) => total + file.size, 0);
 
   const fields: Record<string, string | undefined> = {};
   for (const name of CLOUD_FIELDS) {
     const value = form.get(name);
     fields[name] = typeof value === "string" ? value : undefined;
   }
-  const parsed = parseCloudRequest(kind, fields);
-  if ("error" in parsed) return json({ error: parsed.error }, 400);
+  const parsedInput = parseCloudRequest(kind, fields);
+  if ("error" in parsedInput) return json({ error: parsedInput.error }, 400);
+  // Each tile is upscaled on its own, so three or four of them already make a
+  // very large photo; the app drops 8K to 4K in that case and so does this.
+  const parsed = parsedInput.kind === "creative" && tileCount > 2 && parsedInput.resolution === "8k"
+    ? { ...parsedInput, resolution: "4k" as const } : parsedInput;
   const cost = creditsFor(parsed);
   const key = priceKey(parsed);
 
@@ -754,7 +844,7 @@ async function handleCloudOperation(
   if (await countActiveJobs(env.ACCOUNTS_DB, account.id, Date.now() - ACTIVE_JOB_WINDOW_MS) >= MAX_ACTIVE_JOBS) {
     return json({ error: "too_many_active_jobs", maxActive: MAX_ACTIVE_JOBS }, 429);
   }
-  if (await historyBytes(env.ACCOUNTS_DB, account.id) + image.size > MAX_HISTORY_BYTES) {
+  if (await historyBytes(env.ACCOUNTS_DB, account.id) + uploadBytes > MAX_HISTORY_BYTES) {
     return json({ error: "history_full", maxBytes: MAX_HISTORY_BYTES }, 409);
   }
 
@@ -783,9 +873,22 @@ async function handleCloudOperation(
     return json({ error: started.job.status === "processing" ? "in_progress" : "already_failed", balance: started.balance }, 409);
   }
 
-  let outputUrl: string;
+  const outputs: string[] = new Array(images.length);
   try {
-    ({ outputUrl } = await runCloudRequest({ baseUrl: env.AURALENS_URL, apiKey }, parsed, image, image.name || "photo.jpg"));
+    const pending = images.map((file, index) => ({ file, index }));
+    const runNext = async (): Promise<void> => {
+      for (;;) {
+        const next = pending.shift();
+        if (!next) return;
+        const { outputUrl } = await runCloudRequest(
+          { baseUrl: env.AURALENS_URL, apiKey }, parsed, next.file, next.file.name || `photo-${next.index}.jpg`,
+        );
+        outputs[next.index] = outputUrl;
+      }
+    };
+    // Two at a time, as the app runs its tiles: enough to hide the latency
+    // without pointing four concurrent jobs at the provider for one photo.
+    await Promise.all(Array.from({ length: Math.min(2, images.length) }, () => runNext()));
   } catch (error) {
     const detail = error instanceof AuralensError ? error.message : "unknown";
     const { refunded, balance } = await failCloudJob(
@@ -793,6 +896,22 @@ async function handleCloudOperation(
     );
     console.error(JSON.stringify({ event: "cloud_job_failed", jobId: started.job.id, priceKey: key, detail, refunded }));
     return json({ error: "processing_failed", refunded, balance }, 502);
+  }
+  const outputUrl = outputs[0]!;
+  if (tileCount > 1) {
+    // The tiles are stitched in the browser, so the finished photo arrives
+    // later at /api/cloud/result. The job is done and paid for either way.
+    await completeCloudJob(env.ACCOUNTS_DB, started.job.id, { outputUrl, original: null, result: null });
+    console.log(JSON.stringify({ event: "cloud_job_succeeded", jobId: started.job.id, priceKey: key, charged: cost, tiles: tileCount }));
+    const secret = mediaSigningKey(env);
+    const tiles = await Promise.all(outputs.map(async (url, index) => ({
+      index,
+      url,
+      sig: secret ? await signCloudTile(secret, started.job.id, index, url) : null,
+    })));
+    return json({
+      jobId: started.job.id, tiles, tileCount, saved: false, balance: started.balance, charged: cost,
+    });
   }
   // Outside the try on purpose: nothing after a delivered result may trigger a
   // refund, including a failure to keep a copy of it.
@@ -937,6 +1056,41 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   if (url.pathname === "/api/account/activity" && request.method === "GET") {
     const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
     return json({ entries: await listActivity(env.ACCOUNTS_DB, account.id) });
+  }
+
+  // Fetching one tile on the browser's behalf. The signature is the worker's
+  // own, over this job and this URL, so nothing else can be fetched through here.
+  if (url.pathname === "/api/cloud/tile" && request.method === "POST") {
+    const secret = mediaSigningKey(env);
+    if (!secret) return json({ error: "processing_unavailable" }, 503);
+    let body: { jobId?: unknown; index?: unknown; url?: unknown; sig?: unknown } | null;
+    try {
+      body = await request.json();
+    } catch {
+      return json({ error: "invalid_body" }, 400);
+    }
+    const { jobId, index, url: tileUrl, sig } = body ?? {};
+    if (typeof jobId !== "string" || !JOB_ID.test(jobId)) return json({ error: "invalid_job_id" }, 400);
+    if (typeof index !== "number" || !Number.isInteger(index) || index < 0 || index >= MAX_CREATIVE_TILES) {
+      return json({ error: "invalid_tile" }, 400);
+    }
+    if (typeof tileUrl !== "string" || typeof sig !== "string") return json({ error: "invalid_tile" }, 400);
+    if (!(await verifyCloudTile(secret, jobId, index, tileUrl, sig))) return json({ error: "invalid_tile" }, 403);
+    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+    if (!(await jobForAccount(env.ACCOUNTS_DB, account.id, jobId))) return json({ error: "not_found" }, 404);
+    const upstream = await fetch(tileUrl, { signal: AbortSignal.timeout(60_000) });
+    if (!upstream.ok || !upstream.body) return json({ error: "tile_unavailable" }, 502);
+    const mime = (upstream.headers.get("content-type") ?? "image/jpeg").split(";")[0]!.trim().toLowerCase();
+    if (!mime.startsWith("image/")) return json({ error: "tile_unavailable" }, 502);
+    const headers = commonHeaders();
+    headers.set("Content-Type", mime);
+    headers.set("Cache-Control", "private, no-store");
+    headers.set("X-Robots-Tag", "noindex, nofollow");
+    return new Response(upstream.body, { headers });
+  }
+
+  if (url.pathname === "/api/cloud/result" && request.method === "POST") {
+    return handleCloudResult(request, env, identity);
   }
 
   const cloud = CLOUD_PATH.exec(url.pathname);

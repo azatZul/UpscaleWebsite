@@ -4,6 +4,7 @@
 // processing live in one card.
 import {DEFAULT_PRICES, cloudCredits, cloudFields, defaultOptions, normalizeRestore} from './cloud-pricing.js';
 import {prepareUpload, uploadPlan} from './cloud-image.js';
+import {mergeTiles, splitPhoto, tileGrid, tileRects} from './creative-tiles.js';
 import {ApiError} from './account-link.js';
 import {AnalyticsEvent, SCREEN} from './analytics.js';
 
@@ -96,6 +97,32 @@ export function createCloud(hooks) {
     fail('cloud', 'cloud_failed');
   }
 
+  /** Collect the finished tiles, put them back into one photo, and keep it.
+   *
+   *  The job is already paid for by the time this runs, so nothing here may
+   *  throw the result away: if saving it fails, the photo is still shown and
+   *  still downloadable, just not kept in history. */
+  async function stitch(response, rects, grid, original) {
+    const tiles = [];
+    for (const tile of response.tiles) {
+      setStatus(t('cloud_merging'), t('cloud_tile_progress', {index: tile.index + 1, total: response.tiles.length}));
+      tiles.push(await session.tile(tile, response.jobId));
+    }
+    setStatus(t('cloud_merging'), t('cloud_merging_detail'));
+    const merged = await mergeTiles(tiles, rects, {width: rects.at(-1).x + rects.at(-1).width,
+      height: rects.at(-1).y + rects.at(-1).height}, grid);
+    let saved = null;
+    try {
+      setStatus(t('cloud_merging'), t('cloud_saving'));
+      saved = await session.saveResult(response.jobId, merged, original);
+    } catch {
+      // Keeping the copy is best effort; the photo below is the real result.
+    }
+    if (saved?.saved) return {...response, ...saved};
+    const local = URL.createObjectURL(merged);
+    return {...response, outputUrl: local, downloadUrl: local, saved: false};
+  }
+
   async function start() {
     const mode = getMode();
     const file = getFile();
@@ -127,8 +154,29 @@ export function createCloud(hooks) {
     }
     if (upload.size > MAX_UPLOAD_BYTES) { running = false; fail('size', 'cloud_too_large'); return; }
 
+    // A photo past the model's comfortable size goes up in tiles, as the app
+    // does, and comes back to be stitched here.
+    const grid = mode === 'creative' ? tileGrid(plan.width, plan.height) : {x: 1, y: 1};
+    const rects = grid.x * grid.y > 1 ? tileRects(plan.width, plan.height, grid) : null;
+    let pieces = null;
+    if (rects) {
+      try {
+        pieces = await splitPhoto(upload, rects);
+      } catch {
+        running = false;
+        fail('format', 'err_unreadable');
+        return;
+      }
+      if (pieces.some(piece => piece.size > MAX_UPLOAD_BYTES)) { running = false; fail('size', 'cloud_too_large'); return; }
+    }
+
     const form = new FormData();
-    form.append('image', new File([upload], 'photo.jpg', {type: 'image/jpeg'}));
+    if (pieces) {
+      form.append('tileCount', String(pieces.length));
+      pieces.forEach((piece, index) => form.append(`tile${index}`, new File([piece], `tile-${index}.jpg`, {type: 'image/jpeg'})));
+    } else {
+      form.append('image', new File([upload], 'photo.jpg', {type: 'image/jpeg'}));
+    }
     // A fresh id per attempt: the worker charges once per id, so a network
     // retry of this same request can never charge twice.
     form.append('requestId', crypto.randomUUID().replaceAll('-', ''));
@@ -141,10 +189,12 @@ export function createCloud(hooks) {
     const properties = {screen: SCREEN, mode, credits: cost, media: 'images', batch_count: 1,
       options: JSON.stringify(cloudFields(mode, chosen)), size: `${info.width}x${info.height}`};
     try {
-      const result = await session.process(mode, form);
-      session.apply(result);
+      const response = await session.process(mode, form);
+      session.apply(response);
+      const result = response.tiles ? await stitch(response, rects, grid, upload) : response;
       running = false;
-      analytics.trackEvent(AnalyticsEvent.processingCompleted, {...properties, result: 'success', saved: result.saved, duration_sec: elapsed()});
+      analytics.trackEvent(AnalyticsEvent.processingCompleted, {...properties, result: 'success', saved: result.saved,
+        tiles: rects?.length ?? 1, duration_sec: elapsed()});
       presentResult({mode, options: chosen, result, before: upload, plan});
     } catch (error) {
       running = false;

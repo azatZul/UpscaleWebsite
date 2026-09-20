@@ -92,6 +92,34 @@ export function createSession() {
     },
     signInUrl: (path = location.pathname + location.search) => `/account/?next=${encodeURIComponent(path)}`,
     process: (mode, form) => call(`/api/cloud/${mode}`, {method: 'POST', body: form}),
+    /** One tile of a tiled upscale, fetched through the worker so the browser
+     *  can read its pixels: a cross-origin image cannot be drawn to a canvas
+     *  on this page and then read back. */
+    async tile(tile, jobId) {
+      const {getAccessToken} = await loadIdentity();
+      const token = await getAccessToken();
+      if (!token) throw new ApiError('unauthorized', 401, null);
+      let response;
+      try {
+        response = await fetch('/api/cloud/tile', {
+          method: 'POST',
+          headers: {Authorization: `Bearer ${token}`, 'Content-Type': 'application/json'},
+          body: JSON.stringify({jobId, index: tile.index, url: tile.url, sig: tile.sig}),
+        });
+      } catch {
+        throw new ApiError('network', 0, null);
+      }
+      if (!response.ok) throw new ApiError('tile_unavailable', response.status, null);
+      return await response.blob();
+    },
+    /** Keep the stitched photo, which only the browser has. */
+    saveResult(jobId, result, original) {
+      const form = new FormData();
+      form.append('jobId', jobId);
+      form.append('result', new File([result], 'result.jpg', {type: 'image/jpeg'}));
+      if (original) form.append('original', new File([original], 'original.jpg', {type: 'image/jpeg'}));
+      return call('/api/cloud/result', {method: 'POST', body: form});
+    },
     checkout: amountCents => call('/api/billing/checkout', {method: 'POST', json: {amountCents}}),
     claimDevice: requestId => call('/api/device-upscales', {method: 'POST', json: {requestId}}),
   };
