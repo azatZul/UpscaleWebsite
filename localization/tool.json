@@ -1606,12 +1606,12 @@
   },
   "tool.mode_creative_sub": {
     "localizations": {
-      "en": "Adds natural detail · from {credits} credits",
-      "ru": "Добавляет естественные детали · от {credits} кредитов",
-      "de": "Ergänzt natürliche Details · ab {credits} Credits",
-      "ja": "自然なディテールを追加・{credits}クレジットから",
-      "fr": "Ajoute des détails naturels · dès {credits} crédits",
-      "es": "Añade detalle natural · desde {credits} créditos"
+      "en": "Adds natural detail",
+      "ru": "Добавляет естественные детали",
+      "de": "Fügt natürliche Details hinzu",
+      "ja": "自然なディテールを追加",
+      "fr": "Ajoute des détails naturels",
+      "es": "Añade detalles naturales"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1628,12 +1628,12 @@
   },
   "tool.mode_restore_sub": {
     "localizations": {
-      "en": "Old and damaged photos · from {credits} credits",
-      "ru": "Старые и повреждённые фото · от {credits} кредитов",
-      "de": "Alte und beschädigte Fotos · ab {credits} Credits",
-      "ja": "古い写真や傷んだ写真・{credits}クレジットから",
-      "fr": "Photos anciennes et abîmées · dès {credits} crédits",
-      "es": "Fotos antiguas y dañadas · desde {credits} créditos"
+      "en": "Old and damaged photos",
+      "ru": "Старые и повреждённые фото",
+      "de": "Alte und beschädigte Fotos",
+      "ja": "古い写真や傷んだ写真",
+      "fr": "Photos anciennes et abîmées",
+      "es": "Fotos antiguas y dañadas"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1645,17 +1645,6 @@
       "ja": "無料",
       "fr": "Gratuit",
       "es": "Gratis"
-    },
-    "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
-  },
-  "tool.tag_pro": {
-    "localizations": {
-      "en": "Pro",
-      "ru": "Pro",
-      "de": "Pro",
-      "ja": "Pro",
-      "fr": "Pro",
-      "es": "Pro"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -2384,5 +2373,16 @@
       "es": "Guardando en tu historial"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.tag_credits": {
+    "localizations": {
+      "en": "{credits} credits",
+      "ru": "{credits} кредитов",
+      "de": "{credits} Credits",
+      "ja": "{credits}クレジット",
+      "fr": "{credits} crédits",
+      "es": "{credits} créditos"
+    },
+    "comment": "Browser upscaler tool picker; preserve {placeholders}."
   }
 }

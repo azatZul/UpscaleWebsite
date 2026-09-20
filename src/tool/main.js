@@ -418,8 +418,20 @@ function rememberBalance(balance) {
   } catch { /* Storage is optional; the header just shows no balance. */ }
 }
 
+// The tiles are rendered with the price from pricing.ts; once the worker's own
+// table arrives it has the final say, so a price change needs no redeploy.
+function renderTilePrices() {
+  const prices = session.state.prices;
+  if (!prices) return;
+  for (const [id, credits] of [['creative', prices.creative?.['4k']], ['restore', prices.restore?.restore]]) {
+    const amount = elements[`mode-${id}`]?.querySelector('.mode-tag-amount');
+    if (amount && typeof credits === 'number') amount.textContent = t('price_credits', {credits: number(credits)});
+  }
+}
+
 function renderAccount() {
   const {identity, balance} = session.state;
+  renderTilePrices();
   // The balance lives in the header, under Account, not beside a price.
   if (identity && balance !== null) rememberBalance(balance);
 }

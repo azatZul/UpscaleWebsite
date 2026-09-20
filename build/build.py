@@ -1778,8 +1778,6 @@ COIN_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-w
             'aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M14.6 9.4c-.4-.9-1.4-1.4-2.6-1.4-1.5 0-2.6.8-2.6 1.9 '
             '0 2.6 5.3 1.4 5.3 4.2 0 1.1-1.1 1.9-2.7 1.9-1.2 0-2.3-.5-2.7-1.4M12 6.5v1.5m0 8v1.5"/></svg>')
 
-CROWN_SVG = ('<svg viewBox="0 0 14 12" fill="currentColor" aria-hidden="true">'
-             '<path d="M1 3.4 4.1 6 7 1l2.9 5L13 3.4 11.8 11H2.2z"/></svg>')
 # Before/after pairs from the iOS app's model picker (ModelPickerViewModel):
 # the same photos the app shows behind each mode.
 TOOL_MODE_IMG = "/resources/tool_modes"
@@ -1846,8 +1844,11 @@ def render_tool(c, lang):
     # Cloud modes. The "from N credits" figures mirror worker/src/pricing.ts
     # (cheapest creative and restore prices); the page updates exact prices at
     # runtime from the worker's own table.
-    creative_sub = esc(tl['mode_creative_sub'].replace('{credits}', '10'))
-    restore_sub = esc(tl['mode_restore_sub'].replace('{credits}', '10'))
+    creative_sub = esc(tl['mode_creative_sub'])
+    restore_sub = esc(tl['mode_restore_sub'])
+    # The price a cloud tool charges, mirroring worker/src/pricing.ts. The page
+    # replaces it with the worker's own figure once the prices load.
+    credits_tag = esc(tl['tag_credits'].replace('{credits}', '10'))
     restore_modes = "".join(
         f'<button type="button" role="radio" class="restore-mode" data-restore-mode="{mode}" '
         f'aria-checked="{"true" if mode == "restore" else "false"}">'
@@ -1859,8 +1860,8 @@ def render_tool(c, lang):
         for mode in ("restore", "colorization", "colorization_pro", "advanced_restoration"))
     def mode_tile(mode, title, sub, tag):
         name, width, height = TOOL_MODE_PREVIEWS[mode]
-        badge = (f'<span class="mode-tag is-pro">{CROWN_SVG}{esc(tl["tag_pro"])}</span>' if tag == "pro"
-                 else f'<span class="mode-tag is-free">{esc(tl["tag_free"])}</span>')
+        badge = (f'<span class="mode-tag is-credits">{COIN_SVG}<span class="mode-tag-amount">{credits_tag}</span></span>'
+                 if tag == "pro" else f'<span class="mode-tag is-free">{esc(tl["tag_free"])}</span>')
         return (f'<button type="button" class="mode-tile" id="mode-{mode}" data-mode="{mode}">'
                 f'<span class="mode-preview" aria-hidden="true">'
                 f'<img class="mode-after" src="{TOOL_MODE_IMG}/{name}_after.jpg" width="{width}" height="{height}" alt="" decoding="async">'
