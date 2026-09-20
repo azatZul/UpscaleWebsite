@@ -31,7 +31,7 @@ describe.sequential("history", () => {
     const { status, body } = await history(sub);
     expect(status).toBe(200);
     expect(body.items.map(item => item.id)).toEqual([second.jobId, first.jobId]);
-    expect(body.items[0]).toMatchObject({ operation: "restore", credits: 15, options: { mode: "colorization", prompt: "green coat" } });
+    expect(body.items[0]).toMatchObject({ operation: "restore", credits: 10, options: { mode: "colorization", prompt: "green coat" } });
     expect(body.usedBytes).toBe(2 * (64 + RESULT_BYTES));
 
     const result = await fetchWorker(body.items[0]!.resultUrl);

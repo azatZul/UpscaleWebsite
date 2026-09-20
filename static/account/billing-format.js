@@ -70,19 +70,35 @@ export function describePriceKey(key) {
 /** Rows for "What credits buy", from the worker's price table. */
 export function priceList(prices) {
   if (!prices) return [];
-  const rows = [];
   const {creative = {}, restore = {}} = prices;
-  if (creative['2k'] !== undefined && creative['2k'] === creative['4k']) {
-    rows.push({label: 'Creative upscale · 2K or 4K', credits: creative['4k']});
-  } else {
-    for (const resolution of ['2k', '4k']) {
-      if (creative[resolution] !== undefined) rows.push({label: `Creative upscale · ${resolution.toUpperCase()}`, credits: creative[resolution]});
-    }
+  // One entry per cloud operation first, then operations sharing a price are
+  // merged: most of them cost the same, and a list repeating one figure six
+  // times says less than "any photo, except these".
+  const operations = [];
+  const resolutions = ['2k', '4k', '8k'].filter(resolution => creative[resolution] !== undefined);
+  for (const credits of [...new Set(resolutions.map(resolution => creative[resolution]))]) {
+    const shared = resolutions.filter(resolution => creative[resolution] === credits);
+    operations.push({
+      label: shared.length === resolutions.length ? 'Creative upscale'
+        : `Creative upscale · ${shared.map(resolution => resolution.toUpperCase()).join(' or ')}`,
+      credits,
+    });
   }
-  if (creative['8k'] !== undefined) rows.push({label: 'Creative upscale · 8K', credits: creative['8k']});
   for (const [mode, label] of Object.entries(RESTORE_MODE_LABELS)) {
-    if (restore[mode] !== undefined) rows.push({label, credits: restore[mode]});
+    if (restore[mode] !== undefined) operations.push({label, credits: restore[mode]});
   }
+  const groups = [];
+  for (const operation of operations) {
+    const group = groups.find(candidate => candidate.credits === operation.credits);
+    if (group) group.labels.push(operation.label);
+    else groups.push({credits: operation.credits, labels: [operation.label]});
+  }
+  // The widest group becomes "Any photo"; the dearer exceptions are listed
+  // under it by name, which is how a price list normally reads.
+  const widest = groups.reduce((best, group) => (group.labels.length > (best?.labels.length ?? 1) ? group : best), null);
+  const rows = groups
+    .map(group => ({label: group === widest ? 'Any photo' : group.labels.join(', '), credits: group.credits}))
+    .sort((a, b) => a.credits - b.credits);
   if (prices.increaseResolution) rows.push({label: 'Increased resolution', credits: prices.increaseResolution, extra: true});
   if (prices.device) rows.push({label: 'Upscale on device, after 10 free', credits: prices.device});
   return rows;
