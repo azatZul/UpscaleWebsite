@@ -381,6 +381,9 @@ html:lang(ja) h1,html:lang(ja) h2,html:lang(ja) h3,html:lang(ja) h4{
 .cmp-wide .cmp-tag{top:18px;font-size:13.5px;padding:7px 14px}
 .cmp-wide .cmp-tag.l{left:18px} .cmp-wide .cmp-tag.r{right:18px}
 .cmp-tabs-lg{gap:16px;margin-top:22px;align-items:flex-start}
+/* Run the example you are looking at, in the browser. */
+.sw-try{display:flex;justify-content:center;margin-top:20px}
+.sw-try a[hidden]{display:none}
 .cmp-tab.lg{width:auto;aspect-ratio:auto;overflow:visible;border:0;border-radius:0;
   display:flex;flex-direction:column;align-items:center;gap:9px}
 .cmp-tab.lg .cmp-thumb{position:relative;display:block;width:118px;aspect-ratio:4/3;

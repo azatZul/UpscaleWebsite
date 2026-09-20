@@ -1050,6 +1050,16 @@
       "es": "Elige un ejemplo de antes y después"
     }
   },
+  "showcase.try": {
+    "localizations": {
+      "en": "Try it in your browser",
+      "ru": "Попробовать в браузере",
+      "de": "Im Browser ausprobieren",
+      "ja": "ブラウザで試す",
+      "fr": "Essayer dans votre navigateur",
+      "es": "Pruébalo en tu navegador"
+    }
+  },
   "showcase.on_device": {
     "localizations": {
       "en": "Processed on device",

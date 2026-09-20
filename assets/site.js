@@ -667,6 +667,15 @@
 
     /* Media tabs */
     var tabs = root.querySelectorAll('.cmp-tab');
+    /* "Try it in your browser" points at the tool the open example was made
+       with, and steps aside for the video examples, which the web tool cannot do. */
+    var tryLink = root.parentNode && root.parentNode.querySelector('[data-showcase-try]');
+    var pointTry = function (tab) {
+      if (!tryLink) return;
+      var tool = tab.dataset.tool;
+      tryLink.hidden = !tool;
+      if (tool) tryLink.href = tryLink.dataset.base + (tool === 'device' ? '' : '?mode=' + tool);
+    };
     /* The comparison page swaps only the "after" side, so dissolve into the new result
        instead of cutting to it: .a-ghost keeps the outgoing image underneath. */
     var ghost = cmp.querySelector('.a-ghost');
@@ -710,6 +719,7 @@
         tabs.forEach(function (t) { t.setAttribute('aria-pressed', 'false'); });
         tab.setAttribute('aria-pressed', 'true');
         if (tab.dataset.ratio) cmp.style.setProperty('--ar', tab.dataset.ratio);
+        pointTry(tab);
         if (badge) {
           badge.classList.toggle('cloud', tab.dataset.cloud === '1');
           badge.classList.toggle('vid', !!tab.dataset.video);

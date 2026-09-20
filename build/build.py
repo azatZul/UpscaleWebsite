@@ -163,23 +163,23 @@ SCREENSHOTS = [f"{SHOTS}/screen_{i}.jpg" for i in range(1, 7)]
 SHOWCASE_TABS = [
     {"thumb": "/resources/before_after/girls_thumb.jpg",
      "before": "/resources/before_after/girls_before.jpg",
-     "after": "/resources/before_after/girls_after.jpg", "ratio": "1.5", "cloud": True,
+     "after": "/resources/before_after/girls_after.jpg", "ratio": "1.5", "cloud": True, "tool": "creative",
      "before_size": (840, 560), "after_size": (3010, 2006)},
     {"thumb": "/resources/before_after/upscale_photo_thumb.jpg",
      "before": "/resources/before_after/before_2.jpg",
-     "after": "/resources/before_after/after_2.jpg", "ratio": "1.5009"},
+     "after": "/resources/before_after/after_2.jpg", "ratio": "1.5009", "tool": "device"},
     {"thumb": "/resources/before_after/lowq_portrait_thumb.jpg",
      "before": "/resources/before_after/lowq_portrait_before.jpg",
-     "after": "/resources/before_after/lowq_portrait_after.jpg", "ratio": "1.1111", "cloud": True},
+     "after": "/resources/before_after/lowq_portrait_after.jpg", "ratio": "1.1111", "cloud": True, "tool": "creative"},
     {"thumb": "/resources/before_after/restore_kids_thumb.jpg",
      "before": "/resources/before_after/restore_kids_before.jpg",
-     "after": "/resources/before_after/restore_kids_after.jpg", "ratio": "1.0714", "cloud": True},
+     "after": "/resources/before_after/restore_kids_after.jpg", "ratio": "1.0714", "cloud": True, "tool": "restore"},
     {"thumb": "/resources/before_after/restore_family_thumb.jpg",
      "before": "/resources/before_after/restore_family_before.jpg",
-     "after": "/resources/before_after/restore_family_after.jpg", "ratio": "0.75", "cloud": True},
+     "after": "/resources/before_after/restore_family_after.jpg", "ratio": "0.75", "cloud": True, "tool": "restore"},
     {"thumb": "/resources/before_after/restore_portrait_thumb.jpg",
      "before": "/resources/before_after/restore_portrait_before.jpg",
-     "after": "/resources/before_after/restore_portrait_after.jpg", "ratio": "0.75", "cloud": True},
+     "after": "/resources/before_after/restore_portrait_after.jpg", "ratio": "0.75", "cloud": True, "tool": "restore"},
     {"thumb": "/resources/before_after/video_quality_thumb.jpg",
      "video": "/resources/before_after/before_after_3.mp4", "sound": True, "ratio": "1.375"},
     {"thumb": "/resources/before_after/slowmo_thumb.jpg",
@@ -1050,6 +1050,8 @@ def render_home(c, lang):
                     if "video" in t
                     else f'data-before="{t["before"]}" data-after="{t["after"]}"')
             cloud = ' data-cloud="1"' if t.get("cloud") else ""
+            # The tool this example was made with, so the link below follows the tabs.
+            cloud += f' data-tool="{t["tool"]}"' if t.get("tool") and TOOL_SCRIPT else ""
             play = '<span class="play" aria-hidden="true">▶</span>' if "video" in t else ""
             sw_tabs.append(f'<button class="cmp-tab lg"{cloud} type="button" {data} '
                            f'data-ratio="{t["ratio"]}" aria-pressed="{"true" if i == 0 else "false"}">'
@@ -1062,6 +1064,16 @@ def render_home(c, lang):
             return (f'<span class="od-tip-v {cls}"><span class="od-tip-ic">{icon}</span>'
                     f'<span class="od-tip-tx"><b>{esc(sw[f"tip_{key}_h"])}</b>'
                     f'{esc(sw[f"tip_{key}_p"])}</span></span>')
+        # Run the example you are looking at, in the browser. Hidden for the
+        # video examples, which the web tool does not do.
+        first_tool = SHOWCASE_TABS[0].get("tool")
+        tool_base = rel_url(lang, TOOL_PATH)
+        showcase_try = (
+            f'<div class="sw-try"><a class="btn btn-p" id="showcase-try" data-showcase-try '
+            f'data-base="{tool_base}" data-cta="showcase_try" '
+            f'href="{tool_base}{"" if first_tool == "device" else f"?mode={first_tool}"}"'
+            f'{"" if first_tool else " hidden"}>{esc(sw["try"])}<span class="arrow" aria-hidden="true">→</span></a></div>'
+        ) if TOOL_SCRIPT else ""
         badge_state = ((" cloud" if SHOWCASE_TABS[0].get("cloud") else "")
                        + (" vid" if SHOWCASE_TABS[0].get("video") else ""))
         badge = (f'<span class="on-device{badge_state}" tabindex="0" aria-describedby="od-tip">'
@@ -1088,6 +1100,7 @@ def render_home(c, lang):
       </div>
       <div class="cmp-tabs cmp-tabs-lg" role="group" aria-label="{esc(sw['tabs_label'])}">{''.join(sw_tabs)}</div>
     </div>
+    {showcase_try}
     {teaser}
   </div>
 </section>""")
