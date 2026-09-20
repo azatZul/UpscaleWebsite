@@ -1,7 +1,26 @@
 # Firebase identity and Apple sign-in
 
-Updated 19 September 2026. Implemented on
+Updated 20 September 2026. Implemented on
 `codex/auth-google-style-apple-assessment`, based on `web-cloud-tools`.
+
+## Staging deployment
+
+Deployed on 20 September 2026 to
+`https://uscale-site-staging.sharrikk.workers.dev/account/`, including the latest
+pricing changes from `web-cloud-tools` (`8dd7d1a`). Worker version:
+`aa0632b6-bc7b-4154-ab10-cd1b699b58e3`.
+
+Migration 0006 and the Firebase UID mapping are applied to all three staging
+accounts. A comparison with the pre-migration snapshot confirmed unchanged
+account IDs, profile data, Stripe references, and every related table, with
+valid foreign keys. A private SQL backup is retained locally under `.tmp/`.
+Production was not modified, and Firebase provider settings were not changed.
+
+Validation: 99 worker tests, 23 account tests, TypeScript checking, and the full
+preview build passed after merging pricing updates. The deployed auth files
+match the tested build; the Google light button renders and Apple is hidden.
+Missing/invalid API credentials return 401. Explicit linking was checked with
+the local fixture. Live Apple OAuth remains untested until credentials exist.
 
 ## Current design
 
