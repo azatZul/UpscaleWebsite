@@ -411,9 +411,9 @@ function refreshControls() {
 
 function rememberBalance(balance) {
   try {
-    const hint = JSON.parse(localStorage.getItem('uscale-account') || 'null');
+    const hint = JSON.parse(localStorage.getItem(HINT_KEY) || 'null');
     if (!hint?.signedIn || hint.credits === balance) return;
-    localStorage.setItem('uscale-account', JSON.stringify({...hint, credits: balance}));
+    localStorage.setItem(HINT_KEY, JSON.stringify({...hint, credits: balance}));
     window.dispatchEvent(new Event('uscale:account-hint'));
   } catch { /* Storage is optional; the header just shows no balance. */ }
 }
@@ -623,13 +623,22 @@ function trackOutcome(result, extra) {
     duration_sec: Math.round((performance.now() - processingStartedAt) / 100) / 10, ...extra});
 }
 
+// Upscaling on the device is free, unlimited and runs in the browser, so it
+// asks for nothing. Only the cloud tools need an account, because credits and
+// history hang off one.
+const needsAccount = value => value !== 'device';
+const HINT_KEY = 'uscale-account';
+const signedInHint = () => {
+  try { return Boolean(JSON.parse(localStorage.getItem(HINT_KEY) || 'null')?.signedIn); } catch { return false; }
+};
+
 function requireSignIn(targetMode = mode) {
   location.assign(session.signInUrl(toolUrl(targetMode)));
 }
 
 function start() {
   if (!file || !supported || locked()) return;
-  if (!session.state.identity) { requireSignIn(); return; }
+  if (needsAccount(mode) && !session.state.identity) { requireSignIn(); return; }
   trackTap('start_processing', runProperties());
   if (mode !== 'device') { cloud.start(); return; }
   processingStartedAt = performance.now(); outcomeTracked = false; runProgress = 0;
@@ -858,10 +867,11 @@ const modeFromUrl = () => {
 function renderStep() {
   $('main-content').dataset.step = step;
   const {known, identity} = session.state;
-  const checking = step === 'tool' && !known;
+  const gated = step === 'tool' && needsAccount(mode);
+  const checking = gated && !known;
   elements['signin-checking'].hidden = !checking;
-  elements['tool-body'].hidden = step === 'tool' && !identity;
-  if (step === 'tool' && known && !identity) {
+  elements['tool-body'].hidden = gated && !identity;
+  if (gated && known && !identity) {
     // A check that timed out tells us nothing. Sending someone to sign in on
     // the strength of it could bounce them straight back, so offer the link
     // and let them decide.
@@ -890,7 +900,10 @@ function toolUrl(value) {
 }
 
 function openTool(value, {push = true} = {}) {
-  if (session.state.known && !session.state.identity && !session.state.stalled) { requireSignIn(value); return; }
+  if (needsAccount(value)) {
+    session.start();
+    if (session.state.known && !session.state.identity && !session.state.stalled) { requireSignIn(value); return; }
+  }
   step = 'tool';
   if (push) history.pushState({mode: value}, '', toolUrl(value));
   setMode(value, {initial: true});
@@ -1043,7 +1056,9 @@ setModelKind('photo');
 const startMode = modeFromUrl();
 step = startMode ? 'tool' : 'pick';
 setMode(startMode || 'device', {initial: true});
-session.start();
+// Someone here only to upscale on their device never loads the auth SDK; a
+// cloud tool, or a browser that has signed in before, does.
+if (needsAccount(mode) || signedInHint()) session.start();
 renderStep();
 idleStatus();
 try {

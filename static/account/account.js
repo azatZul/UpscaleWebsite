@@ -335,7 +335,7 @@ function safeNext(value) {
 const nextUrl = safeNext(new URLSearchParams(window.location.search).get('next'));
 if (nextUrl) {
   $('auth-heading').textContent = 'Sign in to continue';
-  document.querySelector('.auth-lead').textContent = 'Sign in to upscale your photos, free in your browser.';
+  document.querySelector('.auth-lead').textContent = 'Sign in to use Creative upscale and Restore. Upscaling on your own device needs no account.';
 }
 
 onIdentityChanged(identity => {
