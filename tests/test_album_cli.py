@@ -276,7 +276,7 @@ class AlbumCliTests(unittest.TestCase):
             self.assertTrue(album_params[13].endswith("/gallery-v2.jpg"))
             self.assertEqual(album_params[15:17], (960, 720))
             photo_params = admin.batch.call_args.args[0][1][1]
-            self.assertTrue(photo_params[8].endswith("/after-wm.webp"))
+            self.assertTrue(photo_params[8].endswith("/after-wm-v2.webp"))
 
     def test_unlocked_publish_uses_clean_preview(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -288,9 +288,27 @@ class AlbumCliTests(unittest.TestCase):
                 result = album.publish(folder, unlocked=True, price_override=None)
             self.assertEqual(result["state"], "unlocked")
             photo_params = admin.batch.call_args.args[0][1][1]
-            self.assertTrue(photo_params[8].endswith("/after.webp"))
+            self.assertTrue(photo_params[8].endswith("/after-v2.webp"))
             preview = Path(json.loads((folder / album.STATE_NAME).read_text())["photos"][0]["media"]["after"]["path"])
-            self.assertEqual(preview.name, "after.webp")
+            self.assertEqual(preview.name, "after-v2.webp")
+
+    def test_result_preview_caps_only_large_results_and_keeps_watermark(self):
+        with tempfile.TemporaryDirectory() as directory:
+            folder = Path(directory)
+            source = folder / "source.png"
+            plain = folder / "plain.webp"
+            marked = folder / "marked.webp"
+            Image.new("RGB", (3000, 1000), (120, 120, 120)).save(source)
+            album.save_result_preview(source, plain, False)
+            album.save_result_preview(source, marked, True)
+            with Image.open(plain) as preview, Image.open(marked) as watermarked:
+                self.assertEqual(preview.size, (2400, 800))
+                self.assertEqual(watermarked.size, preview.size)
+                self.assertNotEqual(preview.tobytes(), watermarked.tobytes())
+            Image.new("RGB", (640, 480), "navy").save(source)
+            album.save_result_preview(source, plain, False)
+            with Image.open(plain) as preview:
+                self.assertEqual(preview.size, (640, 480))
 
     def test_soft_watermark_can_include_app_badge(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -319,6 +337,27 @@ class AlbumCliTests(unittest.TestCase):
             self.assertEqual(original_zip, state["zip"]["sha256"])
             with zipfile.ZipFile(state["zip"]["path"]) as archive:
                 self.assertTrue(all(info.date_time == (1980, 1, 1, 0, 0, 0) for info in archive.infolist()))
+
+    def test_legacy_prepared_folder_upgrades_only_result_preview(self):
+        with tempfile.TemporaryDirectory() as directory:
+            folder = Path(directory)
+            photos = album.validate_manifest(folder, self.make_album(folder))
+            state = album.initialize_state(folder, photos)
+            album.prepare_media(folder, photos, state, watermarked=False)
+            media = state["photos"][0]["media"]
+            before_hash, clean_hash = media["before"]["sha256"], media["clean"]["sha256"]
+            legacy_path = folder / album.WORK_NAME / state["photos"][0]["id"] / "after.webp"
+            Image.new("RGB", (96, 72), "green").save(legacy_path, "WEBP")
+            media["after"] = album.file_record(album.inspect_image(legacy_path),
+                f"albums/{state['album_id']}/{state['photos'][0]['id']}/after.webp")
+            album.save_state(folder, state)
+
+            album.prepare_media(folder, photos, state, watermarked=False)
+
+            self.assertEqual(media["before"]["sha256"], before_hash)
+            self.assertEqual(media["clean"]["sha256"], clean_hash)
+            self.assertTrue(media["after"]["key"].endswith("/after-v2.webp"))
+            self.assertTrue(legacy_path.is_file())
 
     def test_changed_after_is_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -514,6 +553,63 @@ class AlbumCliTests(unittest.TestCase):
             album.migrate_gallery(None, all_albums=False, dry_run=True)
         with self.assertRaisesRegex(album.AlbumError, "either an album ID or --all"):
             album.migrate_gallery("01ARZ3NDEKTSV4RRFFQ69G5FAV", all_albums=True, dry_run=True)
+
+    def test_preview_migration_dry_run_and_conditional_update(self):
+        album_id = "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+        photo_id = "02ARZ3NDEKTSV4RRFFQ69G5FAV"
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / "clean.jpg"
+            Image.new("RGB", (2600, 1300), "teal").save(source, "JPEG")
+            info = album.inspect_image(source)
+            row = {
+                "album_id": album_id, "state": "unlocked", "photo_id": photo_id,
+                "after_key": f"albums/{album_id}/{photo_id}/after.webp",
+                "after_width": 1600, "after_height": 800, "after_bytes": 1000,
+                "clean_key": f"albums/{album_id}/{photo_id}/clean.jpg",
+                "clean_width": info.width, "clean_height": info.height,
+                "clean_bytes": info.size, "clean_mime": info.content_type,
+                "clean_sha256": info.sha256,
+            }
+            admin = mock.Mock()
+            admin.query.return_value = [row]
+            admin.download.side_effect = lambda _key, destination: shutil.copyfile(source, destination)
+            admin.execute.return_value = 1
+            with mock.patch.object(album, "CloudflareAdmin", return_value=admin):
+                dry = album.migrate_previews(None, True, True)
+                self.assertEqual(dry["would_migrate"], 1)
+                self.assertEqual((dry["photos"][0]["new_width"], dry["photos"][0]["new_height"]), (2400, 1200))
+                admin.upload.assert_not_called()
+                admin.execute.assert_not_called()
+                changed = album.migrate_previews(None, True, False)
+            self.assertEqual(changed["migrated"], 1)
+            self.assertTrue(changed["photos"][0]["new_key"].endswith("/after-v2.webp"))
+            admin.upload.assert_called_once()
+            self.assertEqual(admin.execute.call_args.args[1][7], row["after_key"])
+            self.assertIn("state IN ('locked','unlocked')", admin.query.call_args.args[0])
+
+    def test_preview_migration_skips_invalid_clean_and_reuses_current(self):
+        album_id = "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+        photo_id = "02ARZ3NDEKTSV4RRFFQ69G5FAV"
+        row = {
+            "album_id": album_id, "state": "locked", "photo_id": photo_id,
+            "after_key": f"albums/{album_id}/{photo_id}/after-wm.webp",
+            "after_width": 1600, "after_height": 800, "after_bytes": 1000,
+            "clean_key": f"albums/{album_id}/{photo_id}/clean.jpg",
+            "clean_width": 2600, "clean_height": 1300, "clean_bytes": 1000,
+            "clean_mime": "image/jpeg", "clean_sha256": "wrong",
+        }
+        admin = mock.Mock()
+        admin.query.return_value = [row]
+        admin.download.side_effect = FileNotFoundError("clean object missing")
+        with mock.patch.object(album, "CloudflareAdmin", return_value=admin):
+            skipped = album.migrate_previews(None, True, False)
+            self.assertEqual(skipped["skipped"], 1)
+            admin.upload.assert_not_called()
+            admin.execute.assert_not_called()
+            row["after_key"] = f"albums/{album_id}/{photo_id}/after-wm-v2.webp"
+            current = album.migrate_previews(None, True, False)
+        self.assertEqual(current["reused"], 1)
+        admin.download.assert_called_once()
 
 
 if __name__ == "__main__":

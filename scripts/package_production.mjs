@@ -1,4 +1,4 @@
-import {cp, mkdir, readdir, rm, stat} from 'node:fs/promises';
+import {cp, mkdir, readdir, rm, stat, writeFile} from 'node:fs/promises';
 import {basename, join, relative, sep} from 'node:path';
 
 const root = new URL('../', import.meta.url).pathname;
@@ -33,6 +33,8 @@ for (const entry of await readdir(join(source, 'assets'))) {
 
 // The Vite manifest is a build input consumed by build.py, not a runtime asset.
 await rm(join(output, 'assets', 'processor', 'app', '.vite'), {recursive: true, force: true});
+// Finder can add .DS_Store after package validation and before Wrangler uploads.
+await writeFile(join(output, '.assetsignore'), '**/.DS_Store\n');
 
 let fileCount = 0;
 let totalBytes = 0;
@@ -50,6 +52,7 @@ async function validate(directory) {
       continue;
     }
     if (!entry.isFile()) throw new Error(`Production package contains an unsupported entry: ${rel}`);
+    if (rel === '.assetsignore') continue;
     if (entry.name.startsWith('.') || sensitiveName.test(basename(path)) || sensitiveExtension.test(entry.name)) {
       throw new Error(`Production package contains a private or development file: ${rel}`);
     }

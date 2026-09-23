@@ -18,6 +18,10 @@ if ! "$python_bin" -c "import PIL" >/dev/null 2>&1; then
   echo "$python_bin cannot import Pillow; create tools/album/.venv and install tools/album/requirements.txt." >&2
   exit 2
 fi
+if ! command -v cwebp >/dev/null 2>&1; then
+  echo "cwebp is required for result previews and album CLI tests." >&2
+  exit 2
+fi
 cd "$repo_root"
 npm run build:production
 ALBUM_TESTS_REQUIRED=1 "$python_bin" -m unittest discover -s tests -v

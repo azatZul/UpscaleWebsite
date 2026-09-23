@@ -10,6 +10,7 @@ import mimetypes
 import os
 import secrets
 import shutil
+import subprocess
 import sys
 import tempfile
 import time
@@ -30,7 +31,10 @@ MAX_PHOTOS = 20
 MAX_IMAGE_BYTES = 100 * 1024 * 1024
 MAX_IMAGE_PIXELS = 100_000_000
 MAX_ZIP_BYTES = 500 * 1024 * 1024
-PREVIEW_EDGE = 1600
+BEFORE_PREVIEW_EDGE = 1600
+RESULT_PREVIEW_EDGE = 2400
+RESULT_PREVIEW_QUALITY = 95
+RESULT_PREVIEW_VERSION = "v2"
 GALLERY_HALF_SIZE = (480, 720)
 GALLERY_SIZE = (960, 720)
 GALLERY_QUALITY = 70
@@ -323,10 +327,35 @@ def save_image(image: Image.Image, path: Path, image_format: str, quality: Optio
     image.save(path, format=image_format, **options)
 
 
-def resized_preview(image: Image.Image) -> Image.Image:
+def resized_preview(image: Image.Image, edge: int = BEFORE_PREVIEW_EDGE) -> Image.Image:
     result = image.copy()
-    result.thumbnail((PREVIEW_EDGE, PREVIEW_EDGE), Image.Resampling.LANCZOS)
+    result.thumbnail((edge, edge), Image.Resampling.LANCZOS)
     return result
+
+
+def result_preview_name(watermarked: bool) -> str:
+    return f"after-{'wm-' if watermarked else ''}{RESULT_PREVIEW_VERSION}.webp"
+
+
+def save_result_preview(source: Path, destination: Path, watermarked: bool) -> None:
+    encoder = shutil.which("cwebp")
+    if not encoder:
+        raise AlbumError("cwebp is required to create result previews")
+    image = resized_preview(open_normalized(source), RESULT_PREVIEW_EDGE)
+    if watermarked:
+        image = add_watermark(image, logo_path=configured_watermark_logo())
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="album-preview-") as directory:
+        input_path = Path(directory) / "input.png"
+        save_image(image, input_path, "PNG")
+        result = subprocess.run(
+            [encoder, "-quiet", "-q", str(RESULT_PREVIEW_QUALITY), "-m", "6",
+             "-metadata", "none", str(input_path), "-o", str(destination)],
+            capture_output=True, text=True, check=False,
+        )
+    if result.returncode != 0:
+        destination.unlink(missing_ok=True)
+        raise AlbumError(f"cwebp failed: {result.stderr.strip() or result.returncode}")
 
 
 def watermark_font(size: int) -> ImageFont.ImageFont:
@@ -416,7 +445,7 @@ def make_gallery_preview(media: Dict[str, Any], destination: Path) -> None:
         GALLERY_HALF_SIZE,
         method=Image.Resampling.LANCZOS,
     )
-    if Path(media["after"]["key"]).name == "after-wm.webp":
+    if Path(media["after"]["key"]).name.startswith("after-wm"):
         after = add_watermark(after, logo_path=configured_watermark_logo())
     combined = Image.new("RGB", GALLERY_SIZE)
     combined.paste(before, (0, 0))
@@ -586,6 +615,13 @@ def prepare_media(
             prepared = photo_state["media"]
             for name in ("before", "after", "clean"):
                 verify_record(prepared[name])
+            after_name = result_preview_name(watermarked)
+            after_key = f"albums/{state['album_id']}/{photo_id}/{after_name}"
+            if prepared["after"]["key"] != after_key:
+                after_path = work / after_name
+                save_result_preview(Path(prepared["clean"]["path"]), after_path, watermarked)
+                prepared["after"] = file_record(inspect_image(after_path), after_key)
+                save_state(folder, state)
             prepared["alt"] = photo["alt"]
             media[photo_id] = prepared
             clean_total += prepared["clean"]["bytes"]
@@ -608,13 +644,9 @@ def prepare_media(
         clean_info = inspect_image(clean_path)
         clean_total += clean_info.size
 
-        after_preview = resized_preview(clean_image)
-        after_name = "after.webp"
-        if watermarked:
-            after_preview = add_watermark(after_preview, logo_path=configured_watermark_logo())
-            after_name = "after-wm.webp"
+        after_name = result_preview_name(watermarked)
         after_preview_path = work / after_name
-        save_image(after_preview, after_preview_path, "WEBP")
+        save_result_preview(clean_path, after_preview_path, watermarked)
         before_info = inspect_image(before_path)
         preview_info = inspect_image(after_preview_path)
         photo_media = {
@@ -1124,6 +1156,117 @@ def migrate_gallery(album_id: Optional[str], all_albums: bool, dry_run: bool) ->
     }
 
 
+def migrate_previews(album_id: Optional[str], all_albums: bool, dry_run: bool) -> Dict[str, Any]:
+    if bool(album_id) == bool(all_albums):
+        raise AlbumError("migrate-previews requires either an album ID or --all")
+    params: Sequence[Any] = ()
+    where = "a.state IN ('locked','unlocked')"
+    if album_id:
+        validate_album_id(album_id)
+        where += " AND a.id=?1"
+        params = (album_id,)
+    admin = CloudflareAdmin()
+    rows = admin.query(
+        f"""SELECT a.id AS album_id,a.state,p.id AS photo_id,p.after_key,p.after_width,
+                   p.after_height,p.after_bytes,p.clean_key,p.clean_width,p.clean_height,
+                   p.clean_bytes,p.clean_mime,p.clean_sha256
+              FROM albums a JOIN photos p ON p.album_id=a.id
+             WHERE {where} ORDER BY a.created_at,p.position""",
+        params,
+    )
+    if album_id and not rows:
+        raise AlbumError("Active album with photos was not found")
+
+    results: List[Dict[str, Any]] = []
+    for row in rows:
+        watermarked = row["state"] == "locked"
+        target_key = f"albums/{row['album_id']}/{row['photo_id']}/{result_preview_name(watermarked)}"
+        item = {
+            "album_id": row["album_id"], "photo_id": row["photo_id"],
+            "old_key": row["after_key"], "new_key": target_key,
+            "old_width": row["after_width"], "old_height": row["after_height"],
+            "old_bytes": row["after_bytes"],
+        }
+        if row["after_key"] == target_key:
+            item.update(status="reused", new_width=row["after_width"],
+                        new_height=row["after_height"], new_bytes=row["after_bytes"])
+            results.append(item)
+            continue
+
+        with tempfile.TemporaryDirectory(prefix=f"preview-{row['photo_id']}-") as directory:
+            source = Path(directory) / "clean"
+            destination = Path(directory) / result_preview_name(watermarked)
+            try:
+                admin.download(row["clean_key"], source)
+            except Exception as error:
+                response = getattr(error, "response", {})
+                code = str(response.get("Error", {}).get("Code", "")) if isinstance(response, dict) else ""
+                if not isinstance(error, FileNotFoundError) and code not in {"404", "NoSuchKey", "NotFound"}:
+                    raise
+                item.update(status="skipped", reason="Clean R2 object is missing")
+                results.append(item)
+                continue
+            try:
+                source_info = inspect_image(source)
+                if (source_info.sha256 != row["clean_sha256"]
+                        or source_info.size != row["clean_bytes"]
+                        or (source_info.width, source_info.height) != (row["clean_width"], row["clean_height"])
+                        or source_info.content_type != row["clean_mime"]):
+                    raise AlbumError("clean R2 object does not match D1 metadata")
+            except AlbumError as error:
+                item.update(status="skipped", reason=str(error))
+                results.append(item)
+                continue
+            save_result_preview(source, destination, watermarked)
+            record = file_record(inspect_image(destination), target_key)
+
+            item.update(new_width=record["width"], new_height=record["height"],
+                        new_bytes=record["bytes"])
+            if dry_run:
+                item["status"] = "would_migrate"
+            else:
+                admin.upload(record)
+                changes = admin.execute(
+                    """UPDATE photos SET after_key=?1,after_width=?2,after_height=?3,
+                              after_bytes=?4,after_sha256=?5
+                         WHERE album_id=?6 AND id=?7 AND after_key=?8
+                           AND clean_key=?9 AND clean_sha256=?10
+                           AND EXISTS (SELECT 1 FROM albums a WHERE a.id=photos.album_id
+                                       AND a.state IN ('locked','unlocked'))""",
+                    (record["key"], record["width"], record["height"], record["bytes"],
+                     record["sha256"], row["album_id"], row["photo_id"], row["after_key"],
+                     row["clean_key"], row["clean_sha256"]),
+                )
+                if changes == 1:
+                    item["status"] = "migrated"
+                else:
+                    settled = admin.query(
+                        """SELECT a.state,p.after_key,p.after_width,p.after_height,
+                                  p.after_bytes,p.after_sha256
+                             FROM albums a JOIN photos p ON p.album_id=a.id
+                            WHERE a.id=?1 AND p.id=?2""",
+                        (row["album_id"], row["photo_id"]),
+                    )
+                    current = settled[0] if settled else {}
+                    item["status"] = "reused" if (
+                        current.get("state") in {"locked", "unlocked"}
+                        and current.get("after_key") == record["key"]
+                        and current.get("after_sha256") == record["sha256"]
+                    ) else "conflict"
+            results.append(item)
+
+    return {
+        "ok": True, "action": "migrate-previews", "dry_run": dry_run,
+        "scanned": len(results),
+        "migrated": sum(item["status"] == "migrated" for item in results),
+        "would_migrate": sum(item["status"] == "would_migrate" for item in results),
+        "reused": sum(item["status"] == "reused" for item in results),
+        "skipped": sum(item["status"] == "skipped" for item in results),
+        "conflicts": sum(item["status"] == "conflict" for item in results),
+        "photos": results,
+    }
+
+
 def gc_albums(delete: bool) -> None:
     admin = CloudflareAdmin()
     albums = {row["id"]: row["state"] for row in admin.query("SELECT id,state FROM albums")}
@@ -1181,6 +1324,11 @@ def parser() -> argparse.ArgumentParser:
     gallery_migration.add_argument("--all", action="store_true", dest="all_albums")
     gallery_migration.add_argument("--dry-run", action="store_true")
     gallery_migration.add_argument("--json", action="store_true")
+    preview_migration = sub.add_parser("migrate-previews")
+    preview_migration.add_argument("album_id", nargs="?")
+    preview_migration.add_argument("--all", action="store_true", dest="all_albums")
+    preview_migration.add_argument("--dry-run", action="store_true")
+    preview_migration.add_argument("--json", action="store_true")
     gc = sub.add_parser("gc")
     gc.add_argument("--delete", action="store_true", help="Delete listed orphan objects")
     return root
@@ -1204,6 +1352,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             result = list_albums(args.json)
         elif args.command == "migrate-gallery":
             result = migrate_gallery(args.album_id, args.all_albums, args.dry_run)
+        elif args.command == "migrate-previews":
+            result = migrate_previews(args.album_id, args.all_albums, args.dry_run)
         elif args.command == "gc":
             gc_albums(args.delete)
         if result is not None:
@@ -1215,6 +1365,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 changed = result["would_migrate"] if result["dry_run"] else result["migrated"]
                 prefix = "gallery migration dry run" if result["dry_run"] else "gallery migration"
                 print(f"{prefix}: {changed} changed, {result['reused']} current, {result['scanned']} scanned")
+            elif args.command == "migrate-previews":
+                changed = result["would_migrate"] if result["dry_run"] else result["migrated"]
+                print(f"preview migration: {changed} changed, {result['reused']} current, "
+                      f"{result['skipped']} skipped, {result['conflicts']} conflicts, {result['scanned']} scanned")
             elif args.command in {"publish", "resume"}:
                 print(result["url"])
             else:
