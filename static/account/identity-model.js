@@ -25,6 +25,9 @@ const ERROR_CODES = {
   'auth/operation-not-allowed': 'provider-disabled',
   'auth/invalid-api-key': 'misconfigured',
   'auth/api-key-not-valid': 'misconfigured',
+  // The same address already signed in with the other provider. Firebase will
+  // not merge them on its own, and saying "try again" would be a lie.
+  'auth/account-exists-with-different-credential': 'other-provider',
 };
 
 export function mapErrorCode(providerCode) {
@@ -49,7 +52,9 @@ export function messageForCode(code, hostname) {
     case 'domain-not-allowed':
       return `Sign-in is not enabled for ${hostname || 'this address'}. The host has to be added to the project's authorized domains.`;
     case 'provider-disabled':
-      return 'Google sign-in is switched off for this project.';
+      return 'That sign-in method is switched off for this project.';
+    case 'other-provider':
+      return 'You already have an account with this email address. Sign in the way you did the first time.';
     case 'misconfigured':
       return 'Sign-in is misconfigured for this site. This needs a fix on our side, not a retry.';
     default:
@@ -57,25 +62,34 @@ export function messageForCode(code, hostname) {
   }
 }
 
+// Providers we accept, in the order the worker reads them: an account that has
+// linked both keeps the subject it was created with, so its credits stay put.
+export const PROVIDERS = Object.freeze(['google.com', 'apple.com']);
+
 // Map a provider user record onto our own Identity.
 //
-// The identifier we keep is the Google account's subject claim, read from the
+// The identifier we keep is the provider's own subject claim, read from the
 // provider record — NOT the Firebase uid. That uid is meaningful only inside
-// this one Firebase project; the Google sub is the same value Google returns
-// when verifying its tokens directly, so users stay matchable if Firebase is
-// ever swapped out. Nothing in this file reads user.uid, on purpose.
+// this one Firebase project; the provider's subject is the same value the
+// provider returns when verifying its tokens directly, so users stay matchable
+// if Firebase is ever swapped out. Nothing in this file reads user.uid.
+//
+// Apple gives a name only on the very first sign-in and often an addressed
+// relay rather than a real mailbox, so neither is relied on for anything.
 export function toIdentity(user) {
   if (!user) return null;
-  const google = (user.providerData || []).find(entry => entry && entry.providerId === 'google.com');
-  if (!google || !google.uid) {
-    throw new IdentityError('unknown', 'Signed in, but no Google identity was returned.');
+  const records = user.providerData || [];
+  for (const provider of PROVIDERS) {
+    const record = records.find(entry => entry && entry.providerId === provider && entry.uid);
+    if (!record) continue;
+    return {
+      provider,
+      sub: record.uid,
+      email: record.email || user.email || null,
+      emailVerified: Boolean(user.emailVerified),
+      displayName: record.displayName || user.displayName || null,
+      photoURL: record.photoURL || user.photoURL || null,
+    };
   }
-  return {
-    provider: 'google.com',
-    sub: google.uid,
-    email: google.email || user.email || null,
-    emailVerified: Boolean(user.emailVerified),
-    displayName: google.displayName || user.displayName || null,
-    photoURL: google.photoURL || user.photoURL || null,
-  };
+  throw new IdentityError('unknown', 'Signed in, but no usable identity was returned.');
 }

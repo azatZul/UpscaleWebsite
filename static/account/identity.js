@@ -104,6 +104,20 @@ export async function signInWithGoogle() {
   }
 }
 
+export async function signInWithApple() {
+  try {
+    const {auth, instance} = await sdk();
+    const provider = new auth.OAuthProvider('apple.com');
+    // Apple returns these once, on the first sign-in, and only if asked.
+    provider.addScope('email');
+    provider.addScope('name');
+    const result = await auth.signInWithPopup(instance, provider);
+    return toIdentity(result.user);
+  } catch (error) {
+    throw asIdentityError(error);
+  }
+}
+
 export async function signOut() {
   try {
     const {auth, instance} = await sdk();

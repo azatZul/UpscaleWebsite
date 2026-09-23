@@ -52,10 +52,35 @@ beforeEach(async () => {
 });
 
 describe("verifyIdToken", () => {
+  it("accepts a Sign in with Apple token and keeps Apple's own subject", async () => {
+    const identity = await verifyIdToken(await makeToken({ payload: {
+      email: "person@privaterelay.appleid.com",
+      firebase: { identities: { "apple.com": ["001234.abcdef.5678"] }, sign_in_provider: "apple.com" },
+    } }), PROJECT, fetcher);
+    expect(identity).toMatchObject({
+      provider: "apple.com", subject: "001234.abcdef.5678", email: "person@privaterelay.appleid.com",
+    });
+  });
+
+  it("keeps the Google subject for an account that has linked both providers", async () => {
+    const identity = await verifyIdToken(await makeToken({ payload: {
+      firebase: { identities: { "apple.com": ["001234.abcdef.5678"], "google.com": ["115204000000000004029"] },
+        sign_in_provider: "apple.com" },
+    } }), PROJECT, fetcher);
+    // Linking must not strand the credits the Google account already holds.
+    expect(identity).toMatchObject({ provider: "google.com", subject: "115204000000000004029" });
+  });
+
+  it("refuses a token from a provider we do not support", async () => {
+    await expect(verifyIdToken(await makeToken({ payload: {
+      firebase: { identities: { "facebook.com": ["fb-1"] }, sign_in_provider: "facebook.com" },
+    } }), PROJECT, fetcher)).rejects.toThrow(AuthError);
+  });
+
   it("accepts a well-formed token and returns the Google subject, not the Firebase uid", async () => {
     const identity = await verifyIdToken(await makeToken(), PROJECT, fetcher);
-    expect(identity.googleSub).toBe("115204000000000004029");
-    expect(identity.googleSub).not.toBe("FIREBASE_UID_NOT_THE_KEY");
+    expect(identity.subject).toBe("115204000000000004029");
+    expect(identity.subject).not.toBe("FIREBASE_UID_NOT_THE_KEY");
     expect(identity.email).toBe("person@example.com");
     expect(identity.emailVerified).toBe(true);
   });

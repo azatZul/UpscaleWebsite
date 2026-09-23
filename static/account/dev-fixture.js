@@ -24,6 +24,7 @@ export function onIdentityChanged(listener) {
 }
 export const currentIdentity = () => identity;
 export async function signInWithGoogle() { location.search = '?fixture'; }
+export async function signInWithApple() { location.search = '?fixture'; }
 export async function signOut() { location.search = '?fixture=signed-out'; }
 export const getAccessToken = async () => 'fixture';
 

@@ -510,7 +510,7 @@ async function ensureCustomer(env: Env, config: { secretKey: string }, account: 
   await setStripeCustomerId(env.ACCOUNTS_DB, account.id, customer.id);
   // Re-read rather than trusting the write: setStripeCustomerId only fills a
   // NULL, so a concurrent checkout may have won and stored a different id.
-  const stored = await getOrCreateAccount(env.ACCOUNTS_DB, account.googleSub, account.email);
+  const stored = await getOrCreateAccount(env.ACCOUNTS_DB, account);
   return stored.stripeCustomerId ?? customer.id;
 }
 
@@ -532,7 +532,7 @@ async function handleCheckout(request: Request, env: Env, identity: VerifiedIden
     return json({ error: "invalid_amount", minCents: MIN_PURCHASE_CENTS, maxCents: MAX_PURCHASE_CENTS }, 400);
   }
 
-  const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+  const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity);
   const origin = new URL(request.url).origin;
   try {
     const customerId = await ensureCustomer(env, config, account);
@@ -747,7 +747,7 @@ async function handleCloudResult(request: Request, env: Env, identity: VerifiedI
     return json({ error: "unsupported_image" }, 415);
   }
 
-  const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+  const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity);
   const job = await jobForAccount(env.ACCOUNTS_DB, account.id, jobId);
   if (!job) return json({ error: "not_found" }, 404);
   if (job.status !== "succeeded") return json({ error: "job_not_finished" }, 409);
@@ -839,7 +839,7 @@ async function handleCloudOperation(
   const cost = creditsFor(parsed);
   const key = priceKey(parsed);
 
-  const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+  const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity);
   if (await countActiveJobs(env.ACCOUNTS_DB, account.id, Date.now() - ACTIVE_JOB_WINDOW_MS) >= MAX_ACTIVE_JOBS) {
     return json({ error: "too_many_active_jobs", maxActive: MAX_ACTIVE_JOBS }, 429);
   }
@@ -931,7 +931,7 @@ async function handleCloudOperation(
 
 async function handleHistoryList(env: Env, identity: VerifiedIdentity): Promise<Response> {
   if (!mediaSigningKey(env)) return json({ error: "history_unavailable" }, 503);
-  const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+  const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity);
   const items = await listHistory(env.ACCOUNTS_DB, account.id);
   const withUrls = await Promise.all(items.map(async item => ({
     id: item.id,
@@ -946,7 +946,7 @@ async function handleHistoryList(env: Env, identity: VerifiedIdentity): Promise<
 }
 
 async function handleHistoryDelete(env: Env, identity: VerifiedIdentity, jobId: string): Promise<Response> {
-  const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+  const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity);
   const removed = await deleteHistoryItem(env.ACCOUNTS_DB, account.id, jobId);
   // Another account's item answers exactly like a missing one.
   if (!removed) return json({ error: "not_found" }, 404);
@@ -1032,12 +1032,12 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   // Called once after sign-in, then idempotent. Creating the row here rather
   // than lazily means later endpoints can assume an account exists.
   if (url.pathname === "/api/auth/session" && request.method === "POST") {
-    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity);
     return json({ accountId: account.id, email: account.email, credits: await creditBalance(env.ACCOUNTS_DB, account.id) });
   }
 
   if (url.pathname === "/api/me" && request.method === "GET") {
-    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity);
     return json({ accountId: account.id, email: account.email, credits: await creditBalance(env.ACCOUNTS_DB, account.id) });
   }
 
@@ -1052,7 +1052,7 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   }
 
   if (url.pathname === "/api/account/activity" && request.method === "GET") {
-    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity);
     return json({ entries: await listActivity(env.ACCOUNTS_DB, account.id) });
   }
 
@@ -1074,7 +1074,7 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
     }
     if (typeof tileUrl !== "string" || typeof sig !== "string") return json({ error: "invalid_tile" }, 400);
     if (!(await verifyCloudTile(secret, jobId, index, tileUrl, sig))) return json({ error: "invalid_tile" }, 403);
-    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.googleSub, identity.email);
+    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity);
     if (!(await jobForAccount(env.ACCOUNTS_DB, account.id, jobId))) return json({ error: "not_found" }, 404);
     const upstream = await fetch(tileUrl, { signal: AbortSignal.timeout(60_000) });
     if (!upstream.ok || !upstream.body) return json({ error: "tile_unavailable" }, 502);

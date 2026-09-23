@@ -25,7 +25,7 @@ export interface Stubs {
   auralensCalls: AuralensCall[];
   setAuralensResponder(responder: () => Response): void;
   setResultResponder(responder: () => Response): void;
-  idToken(googleSub: string): Promise<string>;
+  idToken(googleSub: string, provider?: string): Promise<string>;
   restore(): void;
 }
 
@@ -68,12 +68,12 @@ export async function installStubs(): Promise<Stubs> {
     auralensCalls,
     setAuralensResponder: responder => { auralensResponder = responder; },
     setResultResponder: responder => { resultResponder = responder; },
-    async idToken(googleSub: string) {
+    async idToken(googleSub: string, provider = "google.com") {
       const now = Math.floor(Date.now() / 1000);
       const encode = (value: unknown) => b64url(new TextEncoder().encode(JSON.stringify(value)));
       const signingInput = `${encode({ alg: "RS256", kid: KID, typ: "JWT" })}.${encode({
         iss: `https://securetoken.google.com/${PROJECT}`, aud: PROJECT, sub: "uid", iat: now - 10, exp: now + 3600,
-        email: "cloud@example.com", firebase: { identities: { "google.com": [googleSub] } },
+        email: "cloud@example.com", firebase: { identities: { [provider]: [googleSub] }, sign_in_provider: provider },
       })}`;
       const signature = await crypto.subtle.sign("RSASSA-PKCS1-v1_5", keyPair.privateKey, new TextEncoder().encode(signingInput));
       return `${signingInput}.${b64url(new Uint8Array(signature))}`;
@@ -86,7 +86,8 @@ export const fetchWorker = (path: string, init?: RequestInit) =>
   exports.default.fetch(new Request(`https://upscales.app${path}`, init));
 
 export async function fundedAccount(googleSub: string, credits: number) {
-  const account = await getOrCreateAccount(env.ACCOUNTS_DB, googleSub, "cloud@example.com");
+  const account = await getOrCreateAccount(env.ACCOUNTS_DB,
+    { provider: "google.com", subject: googleSub, email: "cloud@example.com" });
   if (credits > 0) {
     await grantCredits(env.ACCOUNTS_DB, { accountId: account.id, amount: credits, reason: "grant", idempotencyKey: `seed:${googleSub}` });
   }

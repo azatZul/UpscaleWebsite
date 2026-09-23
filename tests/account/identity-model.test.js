@@ -36,13 +36,53 @@ test('provider fields win over the top-level fallbacks, which still apply', () =
   assert.equal(toIdentity(sparse).email, 'person@example.com');
 });
 
-test('a missing Google identity fails loudly instead of yielding an undefined sub', () => {
+test('a missing identity fails loudly instead of yielding an undefined sub', () => {
   assert.throws(() => toIdentity({uid: 'x', providerData: []}), {name: 'IdentityError', code: 'unknown'});
-  assert.throws(() => toIdentity({uid: 'x', providerData: [{providerId: 'apple.com', uid: 'a'}]}),
+  // A provider we do not accept is as unusable as none at all: the worker
+  // would refuse its token anyway.
+  assert.throws(() => toIdentity({uid: 'x', providerData: [{providerId: 'facebook.com', uid: 'f'}]}),
     {name: 'IdentityError', code: 'unknown'});
   // A provider entry with no uid is just as unusable as no entry at all.
   assert.throws(() => toIdentity({uid: 'x', providerData: [{providerId: 'google.com'}]}),
     {name: 'IdentityError', code: 'unknown'});
+  assert.throws(() => toIdentity({uid: 'x', providerData: [{providerId: 'apple.com'}]}),
+    {name: 'IdentityError', code: 'unknown'});
+});
+
+test('Sign in with Apple maps, relay address and all', () => {
+  const appleUser = {
+    uid: 'FIREBASE_UID',
+    email: 'person@privaterelay.appleid.com',
+    emailVerified: true,
+    displayName: null,
+    providerData: [{providerId: 'apple.com', uid: '001234.abcdef.5678', email: 'person@privaterelay.appleid.com'}],
+  };
+  assert.deepEqual(toIdentity(appleUser), {
+    provider: 'apple.com',
+    sub: '001234.abcdef.5678',
+    email: 'person@privaterelay.appleid.com',
+    emailVerified: true,
+    // Apple sends a name only on the first sign-in, so this is routinely null.
+    displayName: null,
+    photoURL: null,
+  });
+  assert.ok(!Object.values(toIdentity(appleUser)).includes('FIREBASE_UID'));
+});
+
+test('an account with both providers linked keeps its Google subject', () => {
+  // Credits hang off the subject, so preferring Apple here would strand them.
+  const linked = {
+    uid: 'FIREBASE_UID',
+    email: 'person@example.com',
+    providerData: [
+      {providerId: 'apple.com', uid: '001234.abcdef.5678'},
+      {providerId: 'google.com', uid: '107712345678901234567'},
+    ],
+  };
+  assert.deepEqual(
+    [toIdentity(linked).provider, toIdentity(linked).sub],
+    ['google.com', '107712345678901234567'],
+  );
 });
 
 test('signed out maps to null rather than throwing', () => {

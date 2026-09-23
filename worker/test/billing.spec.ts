@@ -125,7 +125,7 @@ afterEach(() => {
 
 describe.sequential("stripe webhook", () => {
   it("credits a paid session and records the purchase behind it", async () => {
-    const account = await getOrCreateAccount(env.ACCOUNTS_DB, `sub-${crypto.randomUUID()}`, "buyer@example.com");
+    const account = await getOrCreateAccount(env.ACCOUNTS_DB, { provider: "google.com", subject: `sub-${crypto.randomUUID()}`, email: "buyer@example.com" });
     const event = completedSession({ metadata: { pack_id: "starter", account_id: account.id } });
     const response = await postWebhook(event);
     expect(response.status).toBe(200);
@@ -141,14 +141,14 @@ describe.sequential("stripe webhook", () => {
   });
 
   it("falls back to client_reference_id when metadata carries no account", async () => {
-    const account = await getOrCreateAccount(env.ACCOUNTS_DB, `sub-${crypto.randomUUID()}`, null);
+    const account = await getOrCreateAccount(env.ACCOUNTS_DB, { provider: "google.com", subject: `sub-${crypto.randomUUID()}`, email: null });
     const event = completedSession({ client_reference_id: account.id, metadata: { pack_id: "pro" } });
     expect((await postWebhook(event)).status).toBe(200);
     expect(await balanceOf(account.id)).toBe(1800);
   });
 
   it("does not credit twice when Stripe retries the same event", async () => {
-    const account = await getOrCreateAccount(env.ACCOUNTS_DB, `sub-${crypto.randomUUID()}`, null);
+    const account = await getOrCreateAccount(env.ACCOUNTS_DB, { provider: "google.com", subject: `sub-${crypto.randomUUID()}`, email: null });
     const event = completedSession({ metadata: { pack_id: "plus", account_id: account.id } });
     const first = await postWebhook(event);
     const second = await postWebhook(event);
@@ -161,7 +161,7 @@ describe.sequential("stripe webhook", () => {
   });
 
   it("credits what was actually paid, not what the metadata claims", async () => {
-    const account = await getOrCreateAccount(env.ACCOUNTS_DB, `sub-${crypto.randomUUID()}`, null);
+    const account = await getOrCreateAccount(env.ACCOUNTS_DB, { provider: "google.com", subject: `sub-${crypto.randomUUID()}`, email: null });
     // Metadata claims the pro pack; Stripe says $5 was paid. $5 buys 200.
     const event = completedSession({ amount_total: 500, metadata: { pack_id: "pro", account_id: account.id, credits: "1800" } });
     const response = await postWebhook(event);
@@ -169,13 +169,13 @@ describe.sequential("stripe webhook", () => {
   });
 
   it("prices a custom amount by the tier it reaches", async () => {
-    const account = await getOrCreateAccount(env.ACCOUNTS_DB, `sub-${crypto.randomUUID()}`, null);
+    const account = await getOrCreateAccount(env.ACCOUNTS_DB, { provider: "google.com", subject: `sub-${crypto.randomUUID()}`, email: null });
     const event = completedSession({ amount_total: 2_000, metadata: { account_id: account.id } });
     expect(await (await postWebhook(event)).json()).toMatchObject({ applied: true, balance: 866 });
   });
 
   it("refuses an amount the price table would not sell, and one that is not paid", async () => {
-    const account = await getOrCreateAccount(env.ACCOUNTS_DB, `sub-${crypto.randomUUID()}`, null);
+    const account = await getOrCreateAccount(env.ACCOUNTS_DB, { provider: "google.com", subject: `sub-${crypto.randomUUID()}`, email: null });
     for (const amount_total of [550, 400, 60_000]) {
       const refused = await postWebhook(completedSession({ amount_total, metadata: { account_id: account.id } }));
       expect(await refused.json(), String(amount_total)).toMatchObject({ error: "amount_mismatch" });
@@ -190,7 +190,7 @@ describe.sequential("stripe webhook", () => {
   });
 
   it("grants nothing when the signature is wrong, absent, or stale", async () => {
-    const account = await getOrCreateAccount(env.ACCOUNTS_DB, `sub-${crypto.randomUUID()}`, null);
+    const account = await getOrCreateAccount(env.ACCOUNTS_DB, { provider: "google.com", subject: `sub-${crypto.randomUUID()}`, email: null });
     const event = completedSession({ metadata: { pack_id: "starter", account_id: account.id } });
     const wrongSecret = await postWebhook(event, { secret: "whsec_attacker" });
     expect(wrongSecret.status).toBe(400);

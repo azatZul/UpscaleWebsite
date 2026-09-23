@@ -4,22 +4,22 @@ import { describe, expect, it } from "vitest";
 import { creditBalance, getOrCreateAccount, grantCredits, spendCredits } from "../src/accounts";
 
 async function freshAccount(sub = `sub-${crypto.randomUUID()}`) {
-  return getOrCreateAccount(env.ACCOUNTS_DB, sub, "person@example.com");
+  return getOrCreateAccount(env.ACCOUNTS_DB, { provider: "google.com", subject: sub, email: "person@example.com" });
 }
 
 describe("accounts", () => {
   it("keys the account on the Google subject, not on any provider uid", async () => {
-    const first = await getOrCreateAccount(env.ACCOUNTS_DB, "sub-stable", "a@example.com");
-    const again = await getOrCreateAccount(env.ACCOUNTS_DB, "sub-stable", "a@example.com");
+    const first = await getOrCreateAccount(env.ACCOUNTS_DB, { provider: "google.com", subject: "sub-stable", email: "a@example.com" });
+    const again = await getOrCreateAccount(env.ACCOUNTS_DB, { provider: "google.com", subject: "sub-stable", email: "a@example.com" });
     expect(again.id).toBe(first.id);
-    expect(first.googleSub).toBe("sub-stable");
+    expect(first.subject).toBe("sub-stable");
     // Our id is ours -- it must not be the provider's identifier.
     expect(first.id).not.toBe("sub-stable");
   });
 
   it("picks up an address change without creating a second account", async () => {
-    const first = await getOrCreateAccount(env.ACCOUNTS_DB, "sub-rename", "old@example.com");
-    const renamed = await getOrCreateAccount(env.ACCOUNTS_DB, "sub-rename", "new@example.com");
+    const first = await getOrCreateAccount(env.ACCOUNTS_DB, { provider: "google.com", subject: "sub-rename", email: "old@example.com" });
+    const renamed = await getOrCreateAccount(env.ACCOUNTS_DB, { provider: "google.com", subject: "sub-rename", email: "new@example.com" });
     expect(renamed.id).toBe(first.id);
     expect(renamed.email).toBe("new@example.com");
   });

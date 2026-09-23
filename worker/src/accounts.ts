@@ -4,7 +4,8 @@
 
 export interface Account {
   id: string;
-  googleSub: string;
+  provider: string;
+  subject: string;
   email: string | null;
   stripeCustomerId: string | null;
 }
@@ -14,20 +15,26 @@ export type CreditReason = "purchase" | "spend" | "refund" | "grant" | "reversal
 interface AccountRow {
   id: string;
   google_sub: string;
+  provider: string | null;
   email: string | null;
   stripe_customer_id: string | null;
 }
 
 const toAccount = (row: AccountRow): Account => ({
   id: row.id,
-  googleSub: row.google_sub,
+  provider: row.provider ?? "google.com",
+  subject: row.google_sub,
   email: row.email,
   stripeCustomerId: row.stripe_customer_id,
 });
 
-export async function getOrCreateAccount(db: D1Database, googleSub: string, email: string | null): Promise<Account> {
+export async function getOrCreateAccount(
+  db: D1Database,
+  identity: { provider: string; subject: string; email: string | null },
+): Promise<Account> {
+  const { subject: googleSub, provider, email } = identity;
   const existing = await db.prepare(
-    "SELECT id, google_sub, email, stripe_customer_id FROM accounts WHERE google_sub = ?",
+    "SELECT id, google_sub, provider, email, stripe_customer_id FROM accounts WHERE google_sub = ?",
   ).bind(googleSub).first<AccountRow>();
   if (existing) {
     // Providers do let people change their address; keep the latest one.
@@ -39,10 +46,10 @@ export async function getOrCreateAccount(db: D1Database, googleSub: string, emai
   }
   const id = crypto.randomUUID();
   await db.prepare(
-    "INSERT INTO accounts (id, google_sub, email, created_at) VALUES (?, ?, ?, ?) ON CONFLICT(google_sub) DO NOTHING",
-  ).bind(id, googleSub, email, Date.now()).run();
+    "INSERT INTO accounts (id, google_sub, provider, email, created_at) VALUES (?, ?, ?, ?, ?) ON CONFLICT(google_sub) DO NOTHING",
+  ).bind(id, googleSub, provider, email, Date.now()).run();
   const row = await db.prepare(
-    "SELECT id, google_sub, email, stripe_customer_id FROM accounts WHERE google_sub = ?",
+    "SELECT id, google_sub, provider, email, stripe_customer_id FROM accounts WHERE google_sub = ?",
   ).bind(googleSub).first<AccountRow>();
   if (!row) throw new Error("Account row vanished immediately after insert");
   return toAccount(row);

@@ -28,6 +28,10 @@
   padding:0 20px;border-radius:14px;border:1px solid #dadce0;background:#fff;color:#1f1f1f;
   font:inherit;font-size:15.5px;font-weight:650;cursor:pointer;transition:box-shadow .15s,transform .15s}
 .google-btn:hover:not(:disabled){box-shadow:0 8px 24px -10px rgba(0,0,0,.45)}
+/* Apple's guidance: its button matches the others in shape and sits in black
+   or white, whichever the surrounding theme is not. */
+.apple-btn{margin-top:12px;color:#fff;background:#000;border-color:#000}
+:root[data-theme="light"] .apple-btn{color:#fff;background:#000}
 .google-btn:active:not(:disabled){transform:translateY(1px)}
 .auth-points{list-style:none;width:100%;margin:26px 0 0;padding:20px 0 0;border-top:1px solid var(--line);
   display:grid;gap:12px;text-align:left}
