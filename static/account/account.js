@@ -3,8 +3,7 @@
 // signed-in design can be reviewed without real credentials. See dev-fixture.js.
 const fixtureMode = ['localhost', '127.0.0.1'].includes(location.hostname)
   && new URLSearchParams(location.search).has('fixture');
-const {onIdentityChanged, signInWithApple, signInWithGoogle, signOut} =
-  await import(fixtureMode ? './dev-fixture.js' : './identity.js');
+const {onIdentityChanged, signInWithGoogle, signOut} = await import(fixtureMode ? './dev-fixture.js' : './identity.js');
 const {deleteHistoryItem, fetchAccount, fetchActivity, fetchHistory, fetchPacks, startCheckout} =
   await import(fixtureMode ? './dev-fixture.js' : './api.js');
 import {
@@ -17,7 +16,6 @@ const $ = id => document.getElementById(id);
 const main = $('main-content');
 const errorBox = $('account-error');
 const signInButton = $('sign-in');
-const signInAppleButton = $('sign-in-apple');
 const signOutButton = $('sign-out');
 const creditCount = $('credit-count');
 const balanceHint = $('balance-hint');
@@ -374,7 +372,6 @@ async function run(button, action) {
 }
 
 signInButton.addEventListener('click', () => run(signInButton, signInWithGoogle));
-signInAppleButton.addEventListener('click', () => run(signInAppleButton, signInWithApple));
 signOutButton.addEventListener('click', () => run(signOutButton, async () => {
   await signOut();
   dashboardLoaded = false;

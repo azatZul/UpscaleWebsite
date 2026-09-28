@@ -9,8 +9,6 @@
 
 const JWKS_URL = "https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com";
 const ISSUER_PREFIX = "https://securetoken.google.com/";
-// In preference order: an account that has both keeps the subject it started with.
-const SUPPORTED_PROVIDERS = ["google.com", "apple.com"] as const;
 // Tolerance for clock skew between Google and the edge, in seconds.
 const LEEWAY = 60;
 
@@ -22,10 +20,7 @@ export class AuthError extends Error {
 }
 
 export interface VerifiedIdentity {
-  /** Which provider signed this person in: "google.com" or "apple.com". */
-  provider: string;
-  /** That provider's own subject claim -- not the Firebase uid. */
-  subject: string;
+  googleSub: string;
   email: string | null;
   emailVerified: boolean;
 }
@@ -119,25 +114,13 @@ export async function verifyIdToken(
   if (payload.iss !== `${ISSUER_PREFIX}${projectId}`) throw new AuthError("Token has an unexpected issuer");
   if (typeof payload.sub !== "string" || !payload.sub) throw new AuthError("Token has no subject");
 
-  // The durable identifier is the provider's own subject claim, not payload.sub
-  // -- that one is the Firebase uid, which is meaningful only inside this
-  // project. Google first, so an account that has linked both keeps the subject
-  // it was created with.
-  let provider = "";
-  let subject = "";
-  for (const candidate of SUPPORTED_PROVIDERS) {
-    const value = payload.firebase?.identities?.[candidate]?.[0];
-    if (typeof value === "string" && value) {
-      provider = candidate;
-      subject = value;
-      break;
-    }
-  }
-  if (!subject) throw new AuthError("Token carries no supported identity");
+  // The durable identifier is Google's subject claim, not payload.sub -- that
+  // one is the Firebase uid, which is meaningful only inside this project.
+  const googleSub = payload.firebase?.identities?.["google.com"]?.[0];
+  if (typeof googleSub !== "string" || !googleSub) throw new AuthError("Token carries no Google identity");
 
   return {
-    provider,
-    subject,
+    googleSub,
     email: typeof payload.email === "string" ? payload.email : null,
     emailVerified: payload.email_verified === true,
   };
