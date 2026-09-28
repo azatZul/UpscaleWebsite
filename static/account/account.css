@@ -36,10 +36,18 @@
   font:500 15px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   cursor:pointer;transition:background-color .15s,box-shadow .15s}
 .google-btn{margin-top:28px}
-.apple-btn{margin-top:12px;color:#000}
+/* Apple's two styles for its button, by background: black on a light page,
+   white on a dark one, where a black button would disappear. Title and logo
+   are always the opposite colour, never tinted. */
+.apple-btn{margin-top:12px;background:#000;border-color:#000;color:#fff}
+.apple-btn:hover:not(:disabled){background:#1d1d1f}
+.apple-btn:active:not(:disabled){background:#333}
+[data-theme="dark"] .apple-btn{background:#fff;border-color:#fff;color:#000}
+[data-theme="dark"] .apple-btn:hover:not(:disabled){background:#f0f0f2}
+[data-theme="dark"] .apple-btn:active:not(:disabled){background:#e4e4e7}
 .google-btn svg,.apple-btn svg{flex:none;width:20px;height:20px}
-.google-btn:hover:not(:disabled),.apple-btn:hover:not(:disabled){background:#f5f6f8;box-shadow:0 1px 2px rgba(60,64,67,.3)}
-.google-btn:active:not(:disabled),.apple-btn:active:not(:disabled){background:#eceef2}
+.google-btn:hover:not(:disabled){background:#f5f6f8;box-shadow:0 1px 2px rgba(60,64,67,.3)}
+.google-btn:active:not(:disabled){background:#eceef2}
 .apple-btn[hidden],.sign-in-methods[hidden],.sign-in-method-actions button[hidden]{display:none}
 /* Email sign-in: the same shape as the provider buttons above it, so the three
    read as one set of choices. */
