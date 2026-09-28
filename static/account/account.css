@@ -25,22 +25,21 @@
 .auth-card h1{font-size:28px;letter-spacing:-.035em;line-height:1.15;margin:22px 0 10px}
 .auth-lead{font-size:16px;line-height:1.55;color:var(--tx-2);max-width:32ch;text-wrap:balance}
 /* Google's light button stays light in both site themes. */
-.google-btn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;min-height:40px;margin-top:28px;
-  padding:0 12px;border-radius:4px;border:1px solid #747775;background:#fff;color:#1f1f1f;color-scheme:light;
-  font-family:Arial,sans-serif;font-size:14px;line-height:20px;font-weight:500;letter-spacing:.25px;
+/* Google and Apple as one matched pair: the same typeface, size, height,
+   outline and logo size, so neither looks bolted on. Each keeps what its owner
+   insists on -- the multicolour G, the Apple logo in black, white buttons, the
+   approved "Continue with" titles, equal prominence -- and both give up the
+   exact text proportions of their own reference buttons, which would put a
+   14px title next to a 17px one. */
+.google-btn,.apple-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:44px;
+  padding:0 16px;border-radius:10px;border:1px solid #747775;background:#fff;color:#1f1f1f;color-scheme:light;
+  font:500 15px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   cursor:pointer;transition:background-color .15s,box-shadow .15s}
-.google-btn svg{flex:none}
-.google-btn:hover:not(:disabled){background:#f8faff;box-shadow:0 1px 2px rgba(60,64,67,.3)}
-.google-btn:active:not(:disabled){background:#eef3fe}
-/* Apple's rules for a custom button: title at 43% of the button's height,
-   ideally in the system font; title and logo black on the white style; a black
-   outline on light backgrounds and no outline on dark ones. */
-.apple-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:40px;margin-top:12px;
-  padding:0 12px;border-radius:4px;border:1px solid #000;background:#fff;color:#000;color-scheme:light;
-  font:500 17px/1 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;cursor:pointer}
-[data-theme="dark"] .apple-btn{border-color:#fff}
-.apple-btn svg{flex:none}
-.apple-btn:hover:not(:disabled){background:#f2f2f2}
+.google-btn{margin-top:28px}
+.apple-btn{margin-top:12px;color:#000}
+.google-btn svg,.apple-btn svg{flex:none;width:20px;height:20px}
+.google-btn:hover:not(:disabled),.apple-btn:hover:not(:disabled){background:#f5f6f8;box-shadow:0 1px 2px rgba(60,64,67,.3)}
+.google-btn:active:not(:disabled),.apple-btn:active:not(:disabled){background:#eceef2}
 .apple-btn[hidden],.sign-in-methods[hidden],.sign-in-method-actions button[hidden]{display:none}
 /* Email sign-in: the same shape as the provider buttons above it, so the three
    read as one set of choices. */
@@ -51,11 +50,11 @@
 .auth-divider{display:flex;align-items:center;gap:12px;margin:18px 0 12px;font-size:12.5px;color:var(--tx-3)}
 .auth-divider::before,.auth-divider::after{content:"";flex:1;height:1px;background:var(--line)}
 .email-form{display:flex;flex-direction:column;gap:10px}
-.email-form input{width:100%;height:40px;padding:0 12px;border-radius:4px;border:1px solid var(--line-2);
+.email-form input{width:100%;height:44px;padding:0 16px;border-radius:10px;border:1px solid var(--line-2);
   background:var(--surface);color:var(--tx);font:inherit;font-size:15px}
 .email-form input:focus{outline:2px solid var(--acc);outline-offset:1px}
-.email-btn{width:100%;height:40px;border-radius:4px;border:1px solid var(--line-2);background:transparent;color:var(--tx);
-  font:inherit;font-size:14.5px;font-weight:600;cursor:pointer}
+.email-btn{width:100%;height:44px;border-radius:10px;border:1px solid var(--line-2);background:transparent;color:var(--tx);
+  font:500 15px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;cursor:pointer}
 .email-btn:hover:not(:disabled){background:var(--tint-2)}
 .email-sent{padding:16px;border-radius:12px;background:var(--tint-2);text-align:center}
 .email-sent b{display:block;font-size:15px;color:var(--tx)}
