@@ -26,4 +26,4 @@ export const APPLE_SIGN_IN_ENABLED = true;
 
 // Email sign-in by one-time link, no password. Turn on only after Firebase has
 // Authentication > Sign-in method > Email/Password enabled with "Email link".
-export const EMAIL_LINK_SIGN_IN_ENABLED = false;
+export const EMAIL_LINK_SIGN_IN_ENABLED = true;
