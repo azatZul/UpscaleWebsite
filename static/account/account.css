@@ -219,3 +219,4 @@
   .viewer-actions{width:100%}
   .account-page .viewer-actions .btn{flex:1}
 }
+.secure-note a{color:inherit;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}

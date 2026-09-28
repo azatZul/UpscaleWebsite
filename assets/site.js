@@ -423,6 +423,20 @@
     if (narrow.addEventListener) { narrow.addEventListener('change', syncToc); }
     else if (narrow.addListener) { narrow.addListener(syncToc); }
 
+    /* A link from another page to one section -- checkout's "Refund policy",
+       say -- arrives with #section, and the browser's own jump to it gets cut
+       short while this page's smooth scrolling and layout settle, leaving the
+       reader at the top. Land on the section once the page has loaded. */
+    if (window.location.hash.length > 1) {
+      var land = function () {
+        var target = null;
+        try { target = document.getElementById(decodeURIComponent(window.location.hash.slice(1))); } catch (e) {}
+        if (target) target.scrollIntoView({ block: 'start', behavior: 'instant' });
+      };
+      if (document.readyState === 'complete') land();
+      else window.addEventListener('load', land, { once: true });
+    }
+
     var secs = [].slice.call(document.querySelectorAll('.doc-sec'));
     var tocLinks = [].slice.call(toc.querySelectorAll('a[href^="#"]'));
     tocLinks.forEach(function (a) {
