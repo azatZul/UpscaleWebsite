@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {IdentityError, mapErrorCode, messageForCode, toIdentity, IDENTITY_ERROR_CODES} from '../../static/account/identity-model.js';
 
 const googleUser = {
-  uid: 'FIREBASE_UID_MUST_NOT_BE_USED',
+  uid: 'firebase-user-123',
   email: 'person@example.com',
   emailVerified: true,
   displayName: 'Fallback Name',
@@ -17,32 +17,45 @@ const googleUser = {
   }],
 };
 
-test('identity is keyed on the Google subject claim, never the Firebase uid', () => {
-  const identity = toIdentity(googleUser);
-  assert.equal(identity.sub, '107712345678901234567');
-  assert.equal(identity.provider, 'google.com');
-  // The whole migration story depends on this: the Firebase uid must not appear
-  // anywhere in the shape, under any key.
-  assert.ok(!Object.values(identity).includes(googleUser.uid));
-  assert.equal('uid' in identity, false);
+test('all linked providers map to one Firebase UID', () => {
+  const apple = {providerId: 'apple.com', uid: 'apple-456', email: 'hidden@privaterelay.appleid.com'};
+  for (const providerData of [googleUser.providerData, [apple], [...googleUser.providerData, apple]]) {
+    const identity = toIdentity({...googleUser, providerData});
+    assert.equal(identity.uid, googleUser.uid);
+    assert.deepEqual(identity.providers, providerData.map(entry => entry.providerId));
+    assert.equal('sub' in identity, false);
+  }
 });
 
-test('provider fields win over the top-level fallbacks, which still apply', () => {
-  const identity = toIdentity(googleUser);
-  assert.equal(identity.displayName, 'Person Example');
-  assert.equal(identity.photoURL, 'https://example.com/a.jpg');
-  const sparse = {...googleUser, providerData: [{providerId: 'google.com', uid: '1', displayName: null}]};
-  assert.equal(toIdentity(sparse).displayName, 'Fallback Name');
-  assert.equal(toIdentity(sparse).email, 'person@example.com');
+test('the Firebase profile wins, with provider details as fallbacks', () => {
+  assert.equal(toIdentity(googleUser).displayName, 'Fallback Name');
+  assert.equal(toIdentity(googleUser).photoURL, 'https://example.com/a.jpg');
+  assert.equal(toIdentity({...googleUser, displayName: null}).displayName, 'Person Example');
 });
 
-test('a missing Google identity fails loudly instead of yielding an undefined sub', () => {
-  assert.throws(() => toIdentity({uid: 'x', providerData: []}), {name: 'IdentityError', code: 'unknown'});
-  assert.throws(() => toIdentity({uid: 'x', providerData: [{providerId: 'apple.com', uid: 'a'}]}),
-    {name: 'IdentityError', code: 'unknown'});
-  // A provider entry with no uid is just as unusable as no entry at all.
-  assert.throws(() => toIdentity({uid: 'x', providerData: [{providerId: 'google.com'}]}),
-    {name: 'IdentityError', code: 'unknown'});
+test('Apple users can have a relay email and no name or photo', () => {
+  const user = {uid: 'apple-user', email: 'hidden@privaterelay.appleid.com', emailVerified: true,
+    providerData: [{providerId: 'apple.com', uid: 'apple-456'}]};
+  assert.deepEqual(toIdentity(user), {uid: 'apple-user', providers: ['apple.com'],
+    email: user.email, emailVerified: true, displayName: null, photoURL: null});
+});
+
+test('missing provider details do not invalidate a Firebase user', () => {
+  assert.equal(toIdentity({uid: 'user'}).uid, 'user');
+  assert.deepEqual(toIdentity({uid: 'user', providerData: [null, {}]}).providers, []);
+});
+
+test('missing or invalid Firebase UID fails instead of falling back to Google', () => {
+  for (const uid of [undefined, '', 123, 'a'.repeat(129)]) {
+    assert.throws(() => toIdentity({...googleUser, uid}), {name: 'IdentityError', code: 'unknown'});
+  }
+  assert.throws(() => toIdentity({...googleUser, isAnonymous: true}), {name: 'IdentityError'});
+});
+
+test('linking conflicts explain how to recover without silently merging accounts', () => {
+  assert.equal(mapErrorCode('auth/account-exists-with-different-credential'), 'account-exists');
+  assert.equal(mapErrorCode('auth/credential-already-in-use'), 'already-linked-elsewhere');
+  assert.match(messageForCode('already-linked-elsewhere'), /not been merged/);
 });
 
 test('signed out maps to null rather than throwing', () => {

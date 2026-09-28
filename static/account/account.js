@@ -3,7 +3,8 @@
 // signed-in design can be reviewed without real credentials. See dev-fixture.js.
 const fixtureMode = ['localhost', '127.0.0.1'].includes(location.hostname)
   && new URLSearchParams(location.search).has('fixture');
-const {onIdentityChanged, signInWithGoogle, signOut} = await import(fixtureMode ? './dev-fixture.js' : './identity.js');
+const {onIdentityChanged, signInWithGoogle, signInWithApple, signOut, linkSignInProvider, enabledSignInProviders} =
+  await import(fixtureMode ? './dev-fixture.js' : './identity.js');
 const {deleteHistoryItem, fetchAccount, fetchActivity, fetchHistory, fetchPacks, startCheckout} =
   await import(fixtureMode ? './dev-fixture.js' : './api.js');
 import {
@@ -16,7 +17,24 @@ const $ = id => document.getElementById(id);
 const main = $('main-content');
 const errorBox = $('account-error');
 const signInButton = $('sign-in');
+const appleSignInButton = $('sign-in-apple');
+const connectGoogleButton = $('connect-google');
+const connectAppleButton = $('connect-apple');
 const signOutButton = $('sign-out');
+const authButtons = [signInButton, appleSignInButton, connectGoogleButton, connectAppleButton, signOutButton];
+let authBusy = false;
+let currentUser = null;
+appleSignInButton.hidden = !enabledSignInProviders.includes('apple.com');
+
+function renderSignInMethods() {
+  $('sign-in-methods').hidden = enabledSignInProviders.length < 2;
+  for (const [button, provider, label] of [[connectGoogleButton, 'google.com', 'Google'], [connectAppleButton, 'apple.com', 'Apple']]) {
+    const connected = currentUser?.providers.includes(provider);
+    button.hidden = !enabledSignInProviders.includes(provider);
+    button.textContent = connected ? `${label} connected` : `Connect ${label}`;
+    button.disabled = authBusy || Boolean(connected);
+  }
+}
 const creditCount = $('credit-count');
 const balanceHint = $('balance-hint');
 const operationCosts = $('operation-costs');
@@ -339,6 +357,13 @@ if (nextUrl) {
 }
 
 onIdentityChanged(identity => {
+  const changedUser = currentUser?.uid !== identity?.uid;
+  currentUser = identity;
+  if (changedUser) {
+    dashboardLoaded = false;
+    $('connection-status').hidden = true;
+  }
+  renderSignInMethods();
   if (nextUrl && identity) {
     renderIdentity(identity);
     main.dataset.state = 'checking';
@@ -346,8 +371,9 @@ onIdentityChanged(identity => {
     return;
   }
   showError('');
-  signInButton.disabled = false;
-  signOutButton.disabled = false;
+  signInButton.disabled = authBusy;
+  appleSignInButton.disabled = authBusy;
+  signOutButton.disabled = authBusy;
   renderIdentity(identity);
   if (!identity || dashboardLoaded) return;
   dashboardLoaded = true;
@@ -361,17 +387,33 @@ onIdentityChanged(identity => {
 });
 
 async function run(button, action) {
-  button.disabled = true;
+  if (authBusy) return;
+  authBusy = true;
+  authButtons.forEach(control => { control.disabled = true; });
+  button.setAttribute('aria-busy', 'true');
   showError('');
   try {
     await action();
   } catch (error) {
     showError(error.message);
-    button.disabled = false;
+  } finally {
+    authBusy = false;
+    authButtons.forEach(control => { control.disabled = false; });
+    button.removeAttribute('aria-busy');
+    renderSignInMethods();
   }
 }
 
 signInButton.addEventListener('click', () => run(signInButton, signInWithGoogle));
+appleSignInButton.addEventListener('click', () => run(appleSignInButton, signInWithApple));
+for (const [button, provider, label] of [[connectGoogleButton, 'google.com', 'Google'], [connectAppleButton, 'apple.com', 'Apple']]) {
+  button.addEventListener('click', () => run(button, async () => {
+    $('connection-status').hidden = true;
+    await linkSignInProvider(provider);
+    $('connection-status').textContent = `${label} is connected. You can now use it to sign in to this account.`;
+    $('connection-status').hidden = false;
+  }));
+}
 signOutButton.addEventListener('click', () => run(signOutButton, async () => {
   await signOut();
   dashboardLoaded = false;
@@ -465,4 +507,3 @@ $('viewer-delete').addEventListener('click', async () => {
     showError(error.message);
   }
 });
-

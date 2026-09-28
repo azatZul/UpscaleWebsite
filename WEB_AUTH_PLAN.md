@@ -1,5 +1,11 @@
 # Website sign-in (Firebase Auth) — Phase 0 plan
 
+> Identity update (19 September 2026): the current implementation uses a unique
+> `firebase_uid` to look up our own account ID. Firebase owns Google/Apple
+> credential linking; the old Google-subject-only decisions below are historical.
+> Apple sign-in and explicit linking are implemented behind a disabled flag.
+> See `docs/apple-sign-in-assessment.md` for the current design and enablement.
+
 Status: Phase 0 implemented. Phase 1 (credits + billing) designed below, not built.
 Worktree: `UpscaleWebsite-web-auth`, branch `web-auth`, based on `main` @ `1baa444`.
 Audience: the agent implementing it.

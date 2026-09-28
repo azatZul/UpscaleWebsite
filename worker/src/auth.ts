@@ -3,9 +3,8 @@
 // The token is an ordinary RS256 JWT signed by Google, and the public keys sit
 // on an unauthenticated endpoint. No Admin SDK, no service account, no IAM
 // grant on the identity project. That is precisely what lets identity live in
-// upscaler-e9010 while this code runs in Cloudflare, and it is the seam that
-// makes leaving Firebase cheap: swapping in Google's own OIDC issuer means
-// changing the two constants below, not the callers.
+// upscaler-e9010 while this code runs in Cloudflare. Our own account ID keeps
+// billing and history independent of the authentication service.
 
 const JWKS_URL = "https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com";
 const ISSUER_PREFIX = "https://securetoken.google.com/";
@@ -20,7 +19,7 @@ export class AuthError extends Error {
 }
 
 export interface VerifiedIdentity {
-  googleSub: string;
+  firebaseUid: string;
   email: string | null;
   emailVerified: boolean;
 }
@@ -70,7 +69,7 @@ function base64UrlToBytes(segment: string): Uint8Array {
   return Uint8Array.from(binary, char => char.charCodeAt(0));
 }
 
-/** Verify a Firebase ID token and return the durable Google identity from it.
+/** Verify a Firebase ID token and return its Firebase user ID.
  *  Throws AuthError on anything that fails; callers should treat that as 401. */
 export async function verifyIdToken(
   token: string,
@@ -112,15 +111,17 @@ export async function verifyIdToken(
   if (typeof payload.iat !== "number" || payload.iat - LEEWAY > now) throw new AuthError("Token issued in the future");
   if (payload.aud !== projectId) throw new AuthError("Token was issued for another project");
   if (payload.iss !== `${ISSUER_PREFIX}${projectId}`) throw new AuthError("Token has an unexpected issuer");
-  if (typeof payload.sub !== "string" || !payload.sub) throw new AuthError("Token has no subject");
+  if (typeof payload.sub !== "string" || !payload.sub || payload.sub.length > 128) throw new AuthError("Token has no subject");
+  // Anonymous/custom sessions from the shared mobile project must not unlock
+  // web accounts or their free-use allowance. Enable other providers deliberately.
+  if (!["google.com", "apple.com"].includes(payload.firebase?.sign_in_provider)) {
+    throw new AuthError("Unsupported sign-in provider");
+  }
 
-  // The durable identifier is Google's subject claim, not payload.sub -- that
-  // one is the Firebase uid, which is meaningful only inside this project.
-  const googleSub = payload.firebase?.identities?.["google.com"]?.[0];
-  if (typeof googleSub !== "string" || !googleSub) throw new AuthError("Token carries no Google identity");
-
+  // Firebase keeps this UID stable across linked sign-in providers.
+  // Never select an account by email or by a Google/Apple provider subject.
   return {
-    googleSub,
+    firebaseUid: payload.sub,
     email: typeof payload.email === "string" ? payload.email : null,
     emailVerified: payload.email_verified === true,
   };

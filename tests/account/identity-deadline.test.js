@@ -11,6 +11,7 @@ import {test} from 'node:test';
 // publishing, the stalled flag -- is the shipped code.
 const SOURCE = new URL('../../static/account/identity.js', import.meta.url);
 const MODEL = new URL('../../static/account/identity-model.js', import.meta.url);
+const CONFIG = new URL('../../static/account/firebase-config.js', import.meta.url);
 
 function loadWith(sdkBody, deadlineMs = 120) {
   const source = readFileSync(SOURCE, 'utf8');
@@ -19,7 +20,9 @@ function loadWith(sdkBody, deadlineMs = 120) {
   assert.ok(start > 0 && end > start, 'found the provider loader to replace');
   const patched = (source.slice(0, start) + `function sdk() {\n${sdkBody}\n}\n` + source.slice(end))
     .replace('const RESOLUTION_DEADLINE_MS = 10_000;', `const RESOLUTION_DEADLINE_MS = ${deadlineMs};`)
-    .replace("import {FIREBASE_CONFIG, FIREBASE_SDK_VERSION} from './firebase-config.js';", '')
+    // Point the copy at the real config rather than deleting the import, so
+    // the test does not break each time that import line gains a name.
+    .replace("from './firebase-config.js';", `from ${JSON.stringify(CONFIG.href)};`)
     .replace("from './identity-model.js';", `from ${JSON.stringify(MODEL.href)};`);
   assert.ok(patched.includes(`RESOLUTION_DEADLINE_MS = ${deadlineMs}`), 'the deadline is still a named constant');
   const file = join(mkdtempSync(join(tmpdir(), 'uscale-identity-')), 'identity.js');
