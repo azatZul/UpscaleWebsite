@@ -57,7 +57,19 @@ For local design/interaction review only, use:
 
 These fixtures cannot run on a deployed hostname.
 
-## Remaining Apple setup
+## Apple is configured (28 September 2026)
+
+- Services ID `com.graz.upscaler.web`, team `RE82W8HD52`, key ID `34WCRZLAM8`,
+  entered in the Firebase console by the owner. The key stays out of Git.
+- Checked from outside, with no Apple login: Apple's authorize page names the
+  app "UScale" for this Services ID with the Firebase return URL, answers
+  `invalid_client` for an unknown ID and `403` for an unregistered return URL.
+  Firebase's `accounts:createAuthUri` now returns an Apple URL with
+  `client_id=com.graz.upscaler.web` and that return URL.
+- A real Apple sign-in with Hide My Email completed in the browser.
+- `APPLE_SIGN_IN_ENABLED` is now true on `web-cloud-tools`.
+
+## Remaining Apple setup (original checklist)
 
 The Firebase CLI and Google Cloud CLI are authenticated. The local account has
 `firebaseauth.configs.get` and `firebaseauth.configs.update`. Provider settings
