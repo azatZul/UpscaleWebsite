@@ -79,3 +79,10 @@ export async function startCheckout(amountCents) {
   await new Promise(resolve => setTimeout(resolve, 600));
   throw new Error(`Fixture mode: checkout for ${amountCents} cents would redirect to Stripe here.`);
 }
+
+// Email link sign-in, for reviewing the form locally. Sending pretends to work.
+export const emailLinkSignInEnabled = true;
+export async function sendEmailSignInLink() {}
+export async function isEmailSignInLink() { return false; }
+export function rememberedSignInEmail() { return null; }
+export async function completeEmailSignIn() {}

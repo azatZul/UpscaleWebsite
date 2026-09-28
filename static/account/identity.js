@@ -5,8 +5,8 @@
 // Firebase type, or read a Firebase-specific field. Replacing the provider
 // later means rewriting this one file and keeping the same exports — see
 // WEB_AUTH_PLAN.md §10.
-import {FIREBASE_CONFIG, FIREBASE_SDK_VERSION, APPLE_SIGN_IN_ENABLED} from './firebase-config.js';
-import {IdentityError, mapErrorCode, messageForCode, toIdentity} from './identity-model.js';
+import {FIREBASE_CONFIG, FIREBASE_SDK_VERSION, APPLE_SIGN_IN_ENABLED, EMAIL_LINK_SIGN_IN_ENABLED} from './firebase-config.js';
+import {IdentityError, looksLikeEmailLink, mapErrorCode, messageForCode, toIdentity} from './identity-model.js';
 
 let sdkPromise;
 let cached = null;
@@ -119,6 +119,49 @@ async function signIn(providerId) {
 
 export const signInWithGoogle = () => signIn('google.com');
 export const signInWithApple = () => signIn('apple.com');
+
+// Email sign-in by one-time link. The address is remembered in this browser,
+// so following the link here needs no retyping; on another device the page
+// asks for it again, which is what stops a forwarded link signing in whoever
+// happens to click it.
+export const emailLinkSignInEnabled = EMAIL_LINK_SIGN_IN_ENABLED;
+const EMAIL_KEY = 'uscale-sign-in-email';
+
+export async function sendEmailSignInLink(email, continuePath) {
+  try {
+    if (!EMAIL_LINK_SIGN_IN_ENABLED) throw new IdentityError('provider-disabled', messageForCode('provider-disabled'));
+    const {auth, instance} = await sdk();
+    await auth.sendSignInLinkToEmail(instance, email, {
+      url: new URL(continuePath, location.origin).href,
+      handleCodeInApp: true,
+    });
+    try { localStorage.setItem(EMAIL_KEY, email); } catch { /* the link still works; it just asks again */ }
+  } catch (error) {
+    throw asIdentityError(error);
+  }
+}
+
+/** Whether this page was opened from a sign-in link. */
+export async function isEmailSignInLink(href) {
+  if (!EMAIL_LINK_SIGN_IN_ENABLED || !looksLikeEmailLink(href)) return false;
+  const {auth, instance} = await sdk();
+  return auth.isSignInWithEmailLink(instance, href);
+}
+
+export function rememberedSignInEmail() {
+  try { return localStorage.getItem(EMAIL_KEY); } catch { return null; }
+}
+
+export async function completeEmailSignIn(email, href) {
+  try {
+    const {auth, instance} = await sdk();
+    const result = await auth.signInWithEmailLink(instance, email, href);
+    try { localStorage.removeItem(EMAIL_KEY); } catch { /* nothing to clean up */ }
+    return toIdentity(result.user);
+  } catch (error) {
+    throw asIdentityError(error);
+  }
+}
 
 /** The user explicitly chooses to connect a provider from their account.
  * Never merge separate accounts or infer a link from an email address. */

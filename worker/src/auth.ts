@@ -114,8 +114,15 @@ export async function verifyIdToken(
   if (typeof payload.sub !== "string" || !payload.sub || payload.sub.length > 128) throw new AuthError("Token has no subject");
   // Anonymous/custom sessions from the shared mobile project must not unlock
   // web accounts or their free-use allowance. Enable other providers deliberately.
-  if (!["google.com", "apple.com"].includes(payload.firebase?.sign_in_provider)) {
+  const provider = payload.firebase?.sign_in_provider;
+  if (!["google.com", "apple.com", "password"].includes(provider)) {
     throw new AuthError("Unsupported sign-in provider");
+  }
+  // "password" covers email links too. A link proves the address is theirs; an
+  // email-and-password account need not, so an unverified one is refused
+  // rather than trusted with an address somebody else may own.
+  if (provider === "password" && payload.email_verified !== true) {
+    throw new AuthError("Email address is not verified");
   }
 
   // Firebase keeps this UID stable across linked sign-in providers.

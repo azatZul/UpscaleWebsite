@@ -39,10 +39,23 @@
       <button id="sign-in-apple" class="apple-btn" type="button" hidden>
         <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M17.05 12.54c.03 3.25 2.85 4.33 2.88 4.34-.02.08-.45 1.55-1.49 3.07-.9 1.31-1.84 2.62-3.31 2.65-1.44.03-1.91-.86-3.56-.86-1.65 0-2.16.83-3.53.89-1.42.05-2.5-1.42-3.41-2.72-1.85-2.67-3.27-7.55-1.37-10.85.94-1.64 2.62-2.68 4.45-2.71 1.39-.03 2.7.94 3.55.94.85 0 2.44-1.16 4.11-.99.7.03 2.67.28 3.94 2.14-.1.07-2.35 1.37-2.26 4.1ZM14.35 4.46c.75-.91 1.25-2.17 1.11-3.43-1.07.04-2.37.72-3.14 1.62-.69.79-1.29 2.06-1.13 3.27 1.19.09 2.4-.61 3.16-1.46Z"/></svg><span>Continue with Apple</span>
       </button>
+      <div id="email-sign-in" class="email-sign-in" hidden>
+        <p class="auth-divider"><span>or</span></p>
+        <form id="email-form" class="email-form" novalidate>
+          <input id="sign-in-email" type="email" name="email" autocomplete="email" inputmode="email" spellcheck="false"
+            placeholder="Email address" aria-label="Email address" required>
+          <button id="email-submit" class="email-btn" type="submit">Continue with email</button>
+        </form>
+        <div id="email-sent" class="email-sent" role="status" hidden>
+          <b>Check your inbox</b>
+          <p id="email-sent-to"></p>
+          <button id="email-restart" class="email-restart" type="button">Use a different email</button>
+        </div>
+      </div>
+      <p id="auth-error" class="account-error auth-error" role="alert" hidden></p>
       <ul class="auth-points">
-        <li>Creative upscale and Restore in the cloud</li>
-        <li>Pay per photo, no subscription</li>
-        <li>Every result kept in your history</li>
+        <li>Upscale right in your browser</li>
+        <li>Keep your history</li>
       </ul>
       <p class="auth-legal">By continuing you agree to the <a href="/terms.html">Terms of Use</a> and <a href="/privacy_policy.html">Privacy Policy</a>.</p>
     </section>

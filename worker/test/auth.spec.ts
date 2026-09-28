@@ -52,6 +52,21 @@ beforeEach(async () => {
 });
 
 describe("verifyIdToken", () => {
+  it("accepts an email sign-in whose address is verified", async () => {
+    const identity = await verifyIdToken(await makeToken({ payload: {
+      email: "reader@example.com", email_verified: true,
+      firebase: { identities: { email: ["reader@example.com"] }, sign_in_provider: "password" },
+    } }), PROJECT, fetcher);
+    expect(identity).toMatchObject({ email: "reader@example.com", emailVerified: true });
+  });
+
+  it("refuses an email sign-in whose address was never verified", async () => {
+    await expect(verifyIdToken(await makeToken({ payload: {
+      email: "someone-else@example.com", email_verified: false,
+      firebase: { identities: { email: ["someone-else@example.com"] }, sign_in_provider: "password" },
+    } }), PROJECT, fetcher)).rejects.toThrow("Email address is not verified");
+  });
+
   it("returns the Firebase UID rather than a provider subject", async () => {
     const identity = await verifyIdToken(await makeToken(), PROJECT, fetcher);
     expect(identity.firebaseUid).toBe("firebase-user-123");

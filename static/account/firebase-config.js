@@ -23,3 +23,7 @@ export const FIREBASE_SDK_VERSION = '11.6.0';
 // Apple's Services ID and key are configured in Firebase (see
 // docs/apple-sign-in-assessment.md). Set back to false to hide Apple again.
 export const APPLE_SIGN_IN_ENABLED = true;
+
+// Email sign-in by one-time link, no password. Turn on only after Firebase has
+// Authentication > Sign-in method > Email/Password enabled with "Email link".
+export const EMAIL_LINK_SIGN_IN_ENABLED = false;

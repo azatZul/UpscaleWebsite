@@ -29,6 +29,13 @@ const ERROR_CODES = {
   'auth/operation-not-allowed': 'provider-disabled',
   'auth/invalid-api-key': 'misconfigured',
   'auth/api-key-not-valid': 'misconfigured',
+  // Email link sign-in.
+  'auth/invalid-email': 'invalid-email',
+  'auth/missing-email': 'invalid-email',
+  'auth/invalid-action-code': 'link-invalid',
+  'auth/expired-action-code': 'link-invalid',
+  'auth/too-many-requests': 'rate-limited',
+  'auth/quota-exceeded': 'rate-limited',
 };
 
 export function mapErrorCode(providerCode) {
@@ -64,6 +71,12 @@ export function messageForCode(code, hostname) {
       return 'Sign in before connecting another sign-in method.';
     case 'misconfigured':
       return 'Sign-in is unavailable because of a problem on our side.';
+    case 'invalid-email':
+      return 'Enter a valid email address.';
+    case 'link-invalid':
+      return 'This sign-in link has expired or was already used. Request a new one below.';
+    case 'rate-limited':
+      return 'Too many attempts. Wait a few minutes, then try again.';
     default:
       return 'Sign-in could not be completed. Please try again.';
   }
@@ -87,4 +100,23 @@ export function toIdentity(user) {
     displayName: user.displayName || providers.find(entry => entry.displayName)?.displayName || null,
     photoURL: user.photoURL || providers.find(entry => entry.photoURL)?.photoURL || null,
   };
+}
+
+// The query parameters a sign-in link adds to the page it opens. Once the link
+// has been used -- or has failed -- they are dead weight in the address bar,
+// and a reload would try the spent code again.
+const EMAIL_LINK_PARAMS = ['apiKey', 'oobCode', 'mode', 'lang', 'continueUrl', 'tenantId'];
+
+/** The same URL without the sign-in link's parameters; anything else, such as
+ *  ?next=, is kept. */
+export function withoutEmailLinkParams(href) {
+  const url = new URL(href);
+  for (const name of EMAIL_LINK_PARAMS) url.searchParams.delete(name);
+  return url.pathname + url.search + url.hash;
+}
+
+/** Cheap check, no SDK needed: does this URL look like a sign-in link landing? */
+export function looksLikeEmailLink(href) {
+  const params = new URL(href).searchParams;
+  return params.get('mode') === 'signIn' && Boolean(params.get('oobCode'));
 }

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {IdentityError, mapErrorCode, messageForCode, toIdentity, IDENTITY_ERROR_CODES} from '../../static/account/identity-model.js';
+import {IdentityError, mapErrorCode, messageForCode, toIdentity, IDENTITY_ERROR_CODES, looksLikeEmailLink, withoutEmailLinkParams} from '../../static/account/identity-model.js';
 
 const googleUser = {
   uid: 'firebase-user-123',
@@ -104,3 +104,22 @@ test('names the host in the unauthorized-domain message, without reading the DOM
   // No hostname supplied is still a sentence, not "undefined".
   assert.doesNotMatch(messageForCode('domain-not-allowed'), /undefined/);
 });
+
+test('email link errors collapse to codes a person can act on', () => {
+  assert.equal(mapErrorCode('auth/invalid-email'), 'invalid-email');
+  assert.equal(mapErrorCode('auth/expired-action-code'), 'link-invalid');
+  assert.equal(mapErrorCode('auth/invalid-action-code'), 'link-invalid');
+  assert.equal(mapErrorCode('auth/too-many-requests'), 'rate-limited');
+  assert.match(messageForCode('link-invalid'), /new one/);
+});
+
+test('recognises a sign-in link landing, and strips it once used', () => {
+  const landing = 'https://upscales.app/account/?next=%2Ffree-upscale%2F%3Fmode%3Drestore'
+    + '&apiKey=AIza&oobCode=CODE123&mode=signIn&lang=en';
+  assert.equal(looksLikeEmailLink(landing), true);
+  assert.equal(looksLikeEmailLink('https://upscales.app/account/?mode=signIn'), false, 'no code, no link');
+  assert.equal(looksLikeEmailLink('https://upscales.app/account/'), false);
+  // ?next= survives, so finishing sign-in still returns to the tool.
+  assert.equal(withoutEmailLinkParams(landing), '/account/?next=%2Ffree-upscale%2F%3Fmode%3Drestore');
+});
+

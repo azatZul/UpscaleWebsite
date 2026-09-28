@@ -3,8 +3,11 @@
 // signed-in design can be reviewed without real credentials. See dev-fixture.js.
 const fixtureMode = ['localhost', '127.0.0.1'].includes(location.hostname)
   && new URLSearchParams(location.search).has('fixture');
-const {onIdentityChanged, signInWithGoogle, signInWithApple, signOut, linkSignInProvider, enabledSignInProviders} =
-  await import(fixtureMode ? './dev-fixture.js' : './identity.js');
+const {
+  onIdentityChanged, signInWithGoogle, signInWithApple, signOut, linkSignInProvider, enabledSignInProviders,
+  emailLinkSignInEnabled, sendEmailSignInLink, isEmailSignInLink, rememberedSignInEmail, completeEmailSignIn,
+} = await import(fixtureMode ? './dev-fixture.js' : './identity.js');
+import {withoutEmailLinkParams} from './identity-model.js';
 const {deleteHistoryItem, fetchAccount, fetchActivity, fetchHistory, fetchPacks, startCheckout} =
   await import(fixtureMode ? './dev-fixture.js' : './api.js');
 import {
@@ -21,10 +24,14 @@ const appleSignInButton = $('sign-in-apple');
 const connectGoogleButton = $('connect-google');
 const connectAppleButton = $('connect-apple');
 const signOutButton = $('sign-out');
-const authButtons = [signInButton, appleSignInButton, connectGoogleButton, connectAppleButton, signOutButton];
+const emailForm = $('email-form');
+const emailInput = $('sign-in-email');
+const emailSubmit = $('email-submit');
+const authButtons = [signInButton, appleSignInButton, emailSubmit, connectGoogleButton, connectAppleButton, signOutButton];
 let authBusy = false;
 let currentUser = null;
 appleSignInButton.hidden = !enabledSignInProviders.includes('apple.com');
+$('email-sign-in').hidden = !emailLinkSignInEnabled;
 
 function renderSignInMethods() {
   $('sign-in-methods').hidden = enabledSignInProviders.length < 2;
@@ -65,9 +72,15 @@ function store(fn) {
   try { return fn(); } catch { return null; }
 }
 
+// Signed out, a sign-in error belongs in the card, next to the button that
+// caused it; the page's own error box sits below the card, which on a phone is
+// off the screen. Signed in, errors are about the dashboard and go there.
 function showError(message) {
-  errorBox.textContent = message || '';
-  errorBox.hidden = !message;
+  const target = currentUser ? errorBox : $('auth-error');
+  for (const box of [errorBox, $('auth-error')]) {
+    box.textContent = box === target ? message || '' : '';
+    box.hidden = box !== target || !message;
+  }
 }
 
 function initialOf(identity) {
@@ -406,6 +419,67 @@ async function run(button, action) {
 }
 
 signInButton.addEventListener('click', () => run(signInButton, signInWithGoogle));
+
+// Email sign-in. Sending a link shows "check your inbox"; following it lands
+// back here, where the page finishes signing in. A link opened in a different
+// browser has no remembered address, so it asks for the email first.
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+let confirmingLink = false;
+const emailContinuePath = () => '/account/' + (nextUrl ? `?next=${encodeURIComponent(nextUrl)}` : '');
+
+function showEmailSent(address) {
+  emailForm.hidden = true;
+  $('email-sent-to').textContent = `We sent a sign-in link to ${address}.`;
+  $('email-sent').hidden = false;
+}
+$('email-restart').addEventListener('click', () => {
+  $('email-sent').hidden = true;
+  emailForm.hidden = false;
+  emailInput.focus();
+});
+
+async function finishEmailLink(address) {
+  try {
+    await completeEmailSignIn(address, location.href);
+  } finally {
+    // Spent or failed, the link's code must not be retried by a reload.
+    history.replaceState(history.state, '', withoutEmailLinkParams(location.href));
+    confirmingLink = false;
+    emailSubmit.textContent = 'Continue with email';
+  }
+}
+
+emailForm.addEventListener('submit', event => {
+  event.preventDefault();
+  const address = emailInput.value.trim();
+  if (!EMAIL_PATTERN.test(address)) {
+    showError('Enter a valid email address.');
+    emailInput.focus();
+    return;
+  }
+  if (confirmingLink) {
+    run(emailSubmit, () => finishEmailLink(address));
+    return;
+  }
+  run(emailSubmit, async () => {
+    await sendEmailSignInLink(address, emailContinuePath());
+    showEmailSent(address);
+  });
+});
+
+(async () => {
+  if (!emailLinkSignInEnabled || !(await isEmailSignInLink(location.href))) return;
+  const remembered = rememberedSignInEmail();
+  if (remembered) {
+    await run(emailSubmit, () => finishEmailLink(remembered));
+    return;
+  }
+  confirmingLink = true;
+  $('auth-heading').textContent = 'Confirm your email';
+  document.querySelector('.auth-lead').textContent = 'Enter the email address the link was sent to.';
+  emailSubmit.textContent = 'Finish signing in';
+  emailInput.focus();
+})();
 appleSignInButton.addEventListener('click', () => run(appleSignInButton, signInWithApple));
 for (const [button, provider, label] of [[connectGoogleButton, 'google.com', 'Google'], [connectAppleButton, 'apple.com', 'Apple']]) {
   button.addEventListener('click', () => run(button, async () => {
