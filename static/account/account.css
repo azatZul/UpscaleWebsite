@@ -46,6 +46,10 @@
 [data-theme="dark"] .apple-btn:hover:not(:disabled){background:#f0f0f2}
 [data-theme="dark"] .apple-btn:active:not(:disabled){background:#e4e4e7}
 .google-btn svg,.apple-btn svg{flex:none;width:20px;height:20px}
+/* Apple's logo file is drawn to fill the button's full height, and its own
+   padding is the gap before the title, so it takes no gap and no scaling. */
+.apple-btn{gap:0}
+.apple-btn .apple-logo{width:31px;height:44px;margin:-1px 0}
 .google-btn:hover:not(:disabled){background:#f5f6f8;box-shadow:0 1px 2px rgba(60,64,67,.3)}
 .google-btn:active:not(:disabled){background:#eceef2}
 .apple-btn[hidden],.sign-in-methods[hidden],.sign-in-method-actions button[hidden]{display:none}
