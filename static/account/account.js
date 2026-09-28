@@ -353,7 +353,7 @@ function safeNext(value) {
 const nextUrl = safeNext(new URLSearchParams(window.location.search).get('next'));
 if (nextUrl) {
   $('auth-heading').textContent = 'Sign in to continue';
-  document.querySelector('.auth-lead').textContent = 'Sign in to use Creative upscale and Restore. Upscaling on your own device needs no account.';
+  document.querySelector('.auth-lead').textContent = 'Creative upscale and Restore need an account. Upscaling on your device doesn\'t.';
 }
 
 onIdentityChanged(identity => {
@@ -395,7 +395,8 @@ async function run(button, action) {
   try {
     await action();
   } catch (error) {
-    showError(error.message);
+    // Closing the Google or Apple window is a choice, not a failure: say nothing.
+    if (error?.code !== 'cancelled') showError(error.message);
   } finally {
     authBusy = false;
     authButtons.forEach(control => { control.disabled = false; });
@@ -410,7 +411,7 @@ for (const [button, provider, label] of [[connectGoogleButton, 'google.com', 'Go
   button.addEventListener('click', () => run(button, async () => {
     $('connection-status').hidden = true;
     await linkSignInProvider(provider);
-    $('connection-status').textContent = `${label} is connected. You can now use it to sign in to this account.`;
+    $('connection-status').textContent = `You can now sign in with ${label}.`;
     $('connection-status').hidden = false;
   }));
 }

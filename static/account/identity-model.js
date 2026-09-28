@@ -51,19 +51,19 @@ export function messageForCode(code, hostname) {
     case 'network':
       return 'Could not reach the sign-in service. Check your connection and try again.';
     case 'domain-not-allowed':
-      return `Sign-in is not enabled for ${hostname || 'this address'}. The host has to be added to the project's authorized domains.`;
+      return `Sign-in isn't enabled for ${hostname || 'this address'}. Add it to the Firebase authorized domains.`;
     case 'provider-disabled':
       return 'This sign-in method is not available yet.';
     case 'account-exists':
-      return 'Sign in with the method you used before, then connect this sign-in method from your account.';
+      return 'This email already has an account. Sign in the way you did before, then add this method from your account.';
     case 'already-linked-elsewhere':
-      return 'This sign-in method belongs to another account. Sign in to that account to use it. Your accounts have not been merged.';
+      return 'This sign-in method is used by another account. Sign in there instead — your accounts have not been merged.';
     case 'already-linked':
       return 'This sign-in method is already connected to your account.';
     case 'sign-in-required':
       return 'Sign in before connecting another sign-in method.';
     case 'misconfigured':
-      return 'Sign-in is misconfigured for this site. This needs a fix on our side, not a retry.';
+      return 'Sign-in is unavailable because of a problem on our side.';
     default:
       return 'Sign-in could not be completed. Please try again.';
   }
