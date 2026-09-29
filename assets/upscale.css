@@ -115,6 +115,33 @@
 .tool-status progress::-webkit-progress-value{background:var(--acc);border-radius:8px}
 .tool-status progress::-moz-progress-bar{background:var(--acc)}
 
+/* While processing: a spinner by the stage name, a light sweeping the bar and a
+   scan line over the photo, so a running job never looks stalled. */
+.tool-status{transition:border-color .3s}
+.tool-status.is-busy{border-color:color-mix(in srgb,var(--acc) 50%,var(--line))}
+.tool-status.is-busy #status-title{display:flex;align-items:center;gap:10px}
+.tool-status.is-busy #status-title::before{content:"";flex:0 0 auto;width:15px;height:15px;border-radius:50%;
+  border:2px solid color-mix(in srgb,var(--acc) 28%,transparent);border-top-color:var(--acc);animation:tool-spin .8s linear infinite}
+.tool-status.is-busy progress::-webkit-progress-value{background:var(--acc) linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent) no-repeat;
+  background-size:40% 100%;animation:tool-shine 1.4s linear infinite}
+.tool-status.is-busy progress::-moz-progress-bar{background:var(--acc) linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent) no-repeat;
+  background-size:40% 100%;animation:tool-shine 1.4s linear infinite}
+.photo-drop.is-busy .selected-thumb img{animation:tool-glow 1.8s ease-in-out infinite}
+.photo-drop.is-busy .selected-thumb::after{content:"";position:absolute;inset:0;border-radius:12px;pointer-events:none;
+  background:linear-gradient(180deg,transparent,color-mix(in srgb,var(--acc) 55%,transparent) 50%,transparent) no-repeat;
+  background-size:100% 36%;mix-blend-mode:screen;animation:tool-scan 2s ease-in-out infinite alternate}
+@keyframes tool-spin{to{transform:rotate(360deg)}}
+@keyframes tool-shine{from{background-position:-70% 0}to{background-position:170% 0}}
+@keyframes tool-scan{from{background-position:0 -60%}to{background-position:0 160%}}
+@keyframes tool-glow{0%,100%{box-shadow:0 0 0 2px color-mix(in srgb,var(--acc) 35%,transparent)}
+  50%{box-shadow:0 0 0 4px color-mix(in srgb,var(--acc) 70%,transparent),0 0 26px color-mix(in srgb,var(--acc) 40%,transparent)}}
+@media(prefers-reduced-motion:reduce){
+  .tool-status.is-busy progress::-webkit-progress-value{animation:none}
+  .tool-status.is-busy progress::-moz-progress-bar{animation:none}
+  .photo-drop.is-busy .selected-thumb img,.photo-drop.is-busy .selected-thumb::after,
+  .tool-status.is-busy #status-title::before{animation:none}
+}
+
 .tool-actions{display:flex;gap:12px;margin-top:16px}
 .tool-actions .btn{flex:1;min-height:52px;font-size:16px}
 .tool .btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}

@@ -376,6 +376,16 @@ html:lang(ja) h1,html:lang(ja) h2,html:lang(ja) h3,html:lang(ja) h4{
 @media(min-width:1000px){
   .cmp-wide .cmp{--h:min(var(--cmp-h),70vw);aspect-ratio:auto;height:var(--h)}
 }
+/* Switching examples: the frame eases to the new ratio while the media fades in. */
+/* Only at fixed height: below 1000px the height follows the width through --ar. */
+@media(min-width:1000px){.cmp-wide:not(.vs-cmp) .cmp{transition:width .4s ease}}
+.cmp-wide .cmp.cmp-out>img,.cmp-wide .cmp.cmp-out>video{opacity:0}
+.cmp-wide .cmp.cmp-in>img,.cmp-wide .cmp.cmp-in>video{animation:cmp-in .45s ease both}
+@keyframes cmp-in{from{opacity:0;transform:scale(1.025)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){
+  .cmp-wide .cmp{transition:none}
+  .cmp-wide .cmp.cmp-in>img,.cmp-wide .cmp.cmp-in>video{animation-duration:.01ms}
+}
 .cmp-wide .cmp-bar{width:4px;transform:translateX(-2px)}
 .cmp-wide .cmp-bar::after{width:52px;height:52px;background-size:30px}
 .cmp-wide .cmp-tag{top:18px;font-size:13.5px;padding:7px 14px}

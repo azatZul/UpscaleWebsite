@@ -349,6 +349,10 @@ function refreshControls() {
   // A photo already processing can't take new options or be removed; Cancel stays.
   elements['tool-options'].hidden = busy();
   elements['remove-photo'].hidden = busy();
+  // Motion on the photo and the status box shows the work is running, even
+  // during stages that report no percentage.
+  elements['drop-zone'].classList.toggle('is-busy', busy());
+  elements.status.classList.toggle('is-busy', busy());
   if (busy()) hideScalePopover();
   elements['face-option'].hidden = modelKind !== 'photo';
   elements['choose-faces'].hidden = !faceEdit || phase !== 'done';
