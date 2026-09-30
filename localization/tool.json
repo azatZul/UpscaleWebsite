@@ -70,46 +70,6 @@
       "es": "Amplíala 2× o 4×. La foto nunca sale de tu dispositivo."
     }
   },
-  "tool.steps_label": {
-    "localizations": {
-      "en": "Photo upscaling steps",
-      "ru": "Этапы увеличения фото",
-      "de": "Schritte zum Vergrößern",
-      "ja": "高画質化の手順",
-      "fr": "Étapes de l’agrandissement",
-      "es": "Pasos para ampliar la foto"
-    }
-  },
-  "tool.step_choose": {
-    "localizations": {
-      "en": "Choose",
-      "ru": "Выбрать",
-      "de": "Auswählen",
-      "ja": "選択",
-      "fr": "Choisir",
-      "es": "Elegir"
-    }
-  },
-  "tool.step_upscale": {
-    "localizations": {
-      "en": "Upscale",
-      "ru": "Увеличить",
-      "de": "Vergrößern",
-      "ja": "高画質化",
-      "fr": "Agrandir",
-      "es": "Ampliar"
-    }
-  },
-  "tool.step_save": {
-    "localizations": {
-      "en": "Save",
-      "ru": "Сохранить",
-      "de": "Speichern",
-      "ja": "保存",
-      "fr": "Enregistrer",
-      "es": "Guardar"
-    }
-  },
   "tool.private": {
     "localizations": {
       "en": "Private processing",
@@ -128,16 +88,6 @@
       "ja": "ここに写真をドロップ",
       "fr": "Déposez une photo ici",
       "es": "Suelta una foto aquí"
-    }
-  },
-  "tool.or": {
-    "localizations": {
-      "en": "or",
-      "ru": "или",
-      "de": "oder",
-      "ja": "または",
-      "fr": "ou",
-      "es": "o"
     }
   },
   "tool.choose": {

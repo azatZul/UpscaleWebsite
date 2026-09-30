@@ -1760,17 +1760,15 @@ def render_compare(c, lang):
 
 
 # Free browser upscaler
-PLUS_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" '
-            'stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>')
 SHIELD_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">'
               '<path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z"/><path d="M9 12l2 2 4-4"/></svg>')
+UPLOAD_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" '
+              'stroke-linejoin="round" aria-hidden="true"><path d="M12 15V4m-4.5 4.5L12 4l4.5 4.5M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg>')
 # Viewer controls (.album-ctl in site.css); keep in sync with ICON_EXPAND/ICON_CLOSE in worker/src/index.ts.
 EXPAND_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" '
               'stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>')
 CLOSE_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" '
              'aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>')
-CHECK_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" '
-             'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7"/></svg>')
 
 
 def tool_cta(c, lang):
@@ -1832,27 +1830,19 @@ def render_tool(c, lang):
       <h1>{esc(tl['h1'])}</h1>
       <p class="lead">{esc(tl['sub'])}</p>
     </div>
-    <ol class="tool-steps" aria-label="{esc(tl['steps_label'])}">
-      <li id="step-choose" aria-current="step"><span class="step-mark"><i>1</i>{CHECK_SVG}</span>{esc(tl['step_choose'])}</li>
-      <li id="step-upscale"><span class="step-mark"><i>2</i>{CHECK_SVG}</span>{esc(tl['step_upscale'])}</li>
-      <li id="step-compare"><span class="step-mark"><i>3</i>{CHECK_SVG}</span>{esc(tl['step_save'])}</li>
-    </ol>
     <p class="notice" id="interrupted" hidden>{esc(tl['interrupted'])}</p>
     <section class="tool-card" id="photo-stage" aria-labelledby="stage-title">
-      <div class="tool-card-heading">
-        <h2 id="stage-title">{esc(js['choose_title'])}</h2>
-        <span class="private-badge">{SHIELD_SVG}{esc(tl['private'])}</span>
-      </div>
+      <h2 id="stage-title" class="sr-label">{esc(js['choose_title'])}</h2>
       <input id="photo-input" type="file" accept="image/*" hidden>
       <div id="drop-zone" class="photo-drop" aria-disabled="false">
         <div id="drop-empty" class="drop-empty">
           <div class="drop-target">
-            <span class="upload-mark" aria-hidden="true">{PLUS_SVG}</span>
+            <span class="upload-mark" aria-hidden="true">{UPLOAD_SVG}</span>
             <p class="drop-title">{esc(tl['drop_title'])}</p>
           </div>
-          <span class="drop-or">{esc(tl['or'])}</span>
           <button id="choose-photo" class="btn btn-p" type="button">{esc(tl['choose'])} <span class="arrow" aria-hidden="true">→</span></button>
           <span id="limit-note" class="limit-note">{esc(tl['formats'])}</span>
+          <span class="private-note" tabindex="0" aria-describedby="private-tip">{SHIELD_SVG}{esc(tl['private'])}<span class="private-tip" id="private-tip" role="tooltip">{esc(js['idle_detail'])}</span></span>
         </div>
         <div id="selected-photo" class="drop-selected" hidden>
           <div class="selected-frame">
@@ -1887,14 +1877,14 @@ def render_tool(c, lang):
         </div>
         <label class="face-option" id="face-option"><input id="enhance-faces" type="checkbox" checked><span>{esc(tl['faces'])}</span></label>
       </div>
-      <div class="tool-status" id="status" role="status" aria-live="polite" aria-atomic="true">
+      <div class="tool-status is-quiet" id="status" role="status" aria-live="polite" aria-atomic="true">
         <div class="status-head"><b id="status-title" hidden></b><span id="status-value"></span></div>
         <progress id="progress" max="1" value="0" aria-label="{esc(tl['progress_label'])}" hidden></progress>
         <p id="status-detail">{esc(js['idle_detail'])}</p>
       </div>
       <p id="visibility-note" class="notice" hidden>{esc(tl['visibility'])}</p>
       <div class="tool-actions">
-        <button id="process-photo" class="btn btn-p" type="button" disabled>{first(js['upscale_button'])}</button>
+        <button id="process-photo" class="btn btn-p" type="button" disabled hidden>{first(js['upscale_button'])}</button>
         <button id="retry" class="btn btn-p" type="button" hidden>{esc(tl['retry'])}</button>
         <button id="cpu-retry" class="btn btn-p" type="button" hidden>{esc(tl['cpu_retry'])}</button>
         <button id="try-2x" class="btn btn-p" type="button" hidden>{esc(tl['try_2x'])}</button>
