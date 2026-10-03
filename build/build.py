@@ -2030,7 +2030,7 @@ def render_tool(c, lang):
           <h2 id="result-title">{first(js['upscaled'])}</h2>
           <p id="result-summary"></p>
           <p id="face-summary"></p>
-          <p class="saved-note" id="saved-note" hidden><a href="/account/#history">{esc(tl['saved_note'])}</a></p>
+          <p class="saved-note" id="saved-note" hidden>{esc(tl['saved_note'])} <a href="/account/#history">{esc(tl['saved_view'])}</a></p>
           <div class="album-actions">
             <a id="download-result" class="btn btn-p" download="uscale.jpg">{DOWN_SVG}{esc(tl['download'])}</a>
             <button id="choose-faces" class="btn btn-g" type="button" hidden></button>

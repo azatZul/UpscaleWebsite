@@ -183,13 +183,24 @@ export function createCloud(hooks) {
     for (const [name, value] of Object.entries(cloudFields(mode, chosen))) form.append(name, value);
 
     const elapsed = () => Math.round((performance.now() - startedAt) / 1000);
-    const tick = () => setStatus(t('cloud_processing'), `${t('cloud_processing_detail')} ${t('cloud_elapsed', {seconds: elapsed()})}`);
+    // The provider reports no progress, so the bar is an estimate, and a
+    // pessimistic one: a minute per round of provider calls (a 4K upscale takes
+    // it 40-50 s; tiles go two at a time). It fills to 95% over that time and
+    // then only creeps, so a slow job never shows a full bar that is not done.
+    const estimateMs = 60_000 * Math.ceil((rects?.length ?? 1) / 2);
+    const fraction = () => {
+      const ms = performance.now() - startedAt;
+      return ms < estimateMs ? 0.95 * ms / estimateMs : 0.95 + 0.04 * (1 - Math.exp((estimateMs - ms) / estimateMs));
+    };
+    const tick = () => setStatus(t('cloud_processing'), t('cloud_processing_detail'), fraction());
     tick();
-    const timer = setInterval(tick, 1000);
+    const timer = setInterval(tick, 500);
     const properties = {screen: SCREEN, mode, credits: cost, media: 'images', batch_count: 1,
       options: JSON.stringify(cloudFields(mode, chosen)), size: `${info.width}x${info.height}`};
     try {
       const response = await session.process(mode, form);
+      // Stitching reports its own steps; the estimate must not paint over them.
+      clearInterval(timer);
       session.apply(response);
       const result = response.tiles ? await stitch(response, rects, grid, upload) : response;
       running = false;

@@ -194,14 +194,19 @@
 .history-viewer{width:min(100% - 24px,1080px);max-width:none;max-height:calc(100dvh - 24px);padding:0;overflow:hidden;
   color:var(--tx);background:var(--surface);border:1px solid var(--line-2);border-radius:20px}
 .history-viewer::backdrop{background:rgba(0,0,0,.72)}
-.viewer-stage{display:grid;place-items:center;padding:16px;background:var(--bg)}
+.viewer-stage{position:relative;display:grid;place-items:center;padding:16px;background:var(--bg)}
+/* Full screen: the photo takes the whole window; the bar with its buttons steps
+   aside until the reader leaves it again. */
+.history-viewer.is-expanded{width:100vw;height:100dvh;max-height:100dvh;border-radius:0;background:#000}
+.history-viewer.is-expanded .viewer-stage{height:100dvh;padding:0;background:#000}
+.history-viewer.is-expanded .viewer-cmp img{max-height:100dvh;border-radius:0}
+.history-viewer.is-expanded .viewer-bar{display:none}
 .viewer-cmp{position:relative;display:inline-block;max-width:100%;line-height:0;user-select:none;-webkit-user-select:none}
 .viewer-cmp img{display:block;max-width:100%;max-height:min(68vh,760px);width:auto;height:auto;border-radius:10px}
 .viewer-cmp .viewer-before{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover}
-.viewer-divider{position:absolute;top:0;bottom:0;left:50%;width:2px;margin-left:-1px;background:#fff;
-  box-shadow:0 0 0 1px rgba(0,0,0,.25);pointer-events:none}
-.viewer-divider::after{content:"";position:absolute;top:50%;left:50%;width:34px;height:34px;margin:-17px 0 0 -17px;
-  border-radius:50%;background:#fff;box-shadow:0 4px 16px rgba(0,0,0,.4)}
+/* The line and handle are the site's .cmp-bar, as on the upscaler's result; the
+   range input on top does the dragging, so the bar itself takes no pointer. */
+.viewer-divider{pointer-events:none}
 .viewer-tag{position:absolute;top:12px;padding:5px 9px;border-radius:8px;font-size:12px;font-weight:700;line-height:1.2;
   color:#fff;background:rgba(0,0,0,.55);pointer-events:none}
 .viewer-tag-l{left:12px}.viewer-tag-r{right:12px}

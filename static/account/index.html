@@ -136,10 +136,12 @@
       <div class="viewer-cmp">
         <img id="viewer-result" alt="Result" draggable="false">
         <img id="viewer-original" class="viewer-before" alt="Original" draggable="false">
-        <span class="viewer-divider" id="viewer-divider" aria-hidden="true"></span>
+        <span class="cmp-bar viewer-divider" id="viewer-divider" aria-hidden="true"></span>
         <span class="viewer-tag viewer-tag-l">Original</span><span class="viewer-tag viewer-tag-r">Result</span>
         <input id="viewer-slider" class="viewer-slider" type="range" min="0" max="100" value="50" aria-label="Compare the original and the result">
       </div>
+      <button id="viewer-expand" class="album-ctl album-zoom" type="button" aria-label="Full screen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
+      <button id="viewer-unexpand" class="album-ctl album-close" type="button" aria-label="Exit full screen" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     </div>
     <div class="viewer-bar">
       <div class="viewer-text">

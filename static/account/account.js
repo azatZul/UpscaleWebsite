@@ -564,7 +564,32 @@ function openViewer(item) {
 
 $('viewer-slider').addEventListener('input', event => setSplit(Number(event.target.value)));
 $('viewer-close').addEventListener('click', () => viewer.close());
+
+function setExpanded(value) {
+  viewer.classList.toggle('is-expanded', value);
+  $('viewer-expand').hidden = value;
+  $('viewer-unexpand').hidden = !value;
+  (value ? $('viewer-unexpand') : $('viewer-expand')).focus({preventScroll: true});
+}
+$('viewer-expand').addEventListener('click', () => setExpanded(true));
+$('viewer-unexpand').addEventListener('click', () => setExpanded(false));
+// Escape leaves full screen first, and only closes the viewer from the normal
+// view. Handled on the key itself: Chrome may close a modal dialog on Escape
+// without offering a cancel event that could be stopped.
+viewer.addEventListener('keydown', event => {
+  if (event.key !== 'Escape' || !viewer.classList.contains('is-expanded')) return;
+  event.preventDefault();
+  setExpanded(false);
+});
+viewer.addEventListener('cancel', event => {
+  if (!viewer.classList.contains('is-expanded')) return;
+  event.preventDefault();
+  setExpanded(false);
+});
 viewer.addEventListener('close', () => {
+  viewer.classList.remove('is-expanded');
+  $('viewer-expand').hidden = false;
+  $('viewer-unexpand').hidden = true;
   $('viewer-result').removeAttribute('src');
   $('viewer-original').removeAttribute('src');
   viewing = null;

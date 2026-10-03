@@ -825,7 +825,7 @@ function presentCloudResult({mode: kind, options, result, before, plan}) {
   elements['result-summary'].textContent = '';
   elements['face-summary'].textContent = result.saved ? '' : t('cloud_not_saved');
   elements['saved-note'].hidden = !result.saved;
-  setStatus(t('done_title'), t(result.saved ? 'cloud_done_detail' : 'cloud_not_saved'));
+  setStatus(t('done_title'), t(result.saved ? 'done_detail' : 'cloud_not_saved'));
   elements.results.hidden = false;
   refreshControls();
   elements.results.focus({preventScroll: true});

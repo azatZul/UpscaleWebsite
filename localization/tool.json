@@ -1859,14 +1859,25 @@
   },
   "tool.saved_note": {
     "localizations": {
-      "en": "Saved to your history",
-      "ru": "Сохранено в истории",
-      "de": "Im Verlauf gespeichert",
-      "ja": "履歴に保存しました",
-      "fr": "Enregistré dans votre historique",
-      "es": "Guardado en tu historial"
+      "en": "Saved to your history.",
+      "ru": "Сохранено в истории.",
+      "de": "Im Verlauf gespeichert.",
+      "ja": "履歴に保存しました。",
+      "fr": "Enregistré dans votre historique.",
+      "es": "Guardado en tu historial."
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
+  },
+  "tool.saved_view": {
+    "localizations": {
+      "en": "View it in your account",
+      "ru": "Посмотреть в аккаунте",
+      "de": "In deinem Konto ansehen",
+      "ja": "アカウントで見る",
+      "fr": "Le voir dans votre compte",
+      "es": "Verlo en tu cuenta"
+    },
+    "comment": "Link to the account page's history, after a cloud result."
   },
   "tool.js.creativity_0": {
     "localizations": {
@@ -1997,28 +2008,6 @@
       "ja": "通常1分以内です。このページを開いたままにしてください。",
       "fr": "Généralement moins d’une minute. Gardez cette page ouverte.",
       "es": "Suele tardar menos de un minuto. Mantén esta página abierta."
-    },
-    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
-  },
-  "tool.js.cloud_elapsed": {
-    "localizations": {
-      "en": "{seconds} s",
-      "ru": "{seconds} с",
-      "de": "{seconds} s",
-      "ja": "{seconds}秒",
-      "fr": "{seconds} s",
-      "es": "{seconds} s"
-    },
-    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
-  },
-  "tool.js.cloud_done_detail": {
-    "localizations": {
-      "en": "Saved to your history. Compare the result below and download it.",
-      "ru": "Сохранено в истории. Сравните результат ниже и скачайте его.",
-      "de": "Im Verlauf gespeichert. Vergleiche das Ergebnis unten und lade es herunter.",
-      "ja": "履歴に保存しました。下で結果を比べてダウンロードできます。",
-      "fr": "Enregistré dans votre historique. Comparez le résultat ci-dessous et téléchargez-le.",
-      "es": "Guardado en tu historial. Compara el resultado abajo y descárgalo."
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
