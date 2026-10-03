@@ -460,3 +460,53 @@ export async function attachHistoryMedia(
   return (result.meta.changes ?? 0) > 0;
 }
 
+type RefundReversal =
+  | { found: false }
+  | { found: true; accountId: string; applied: boolean; removed: number; balance: number };
+
+/** Take back the credits a Stripe refund paid for.
+ *
+ *  Stripe reports a charge's running total refunded, so the credits that should
+ *  be gone by now are the purchase's credits times the share of the payment
+ *  refunded. A single statement compares that with what earlier refunds of the
+ *  same payment already took and removes only the difference -- D1 runs one
+ *  statement at a time -- so retried events, several partial refunds and
+ *  events arriving out of order can never remove more than the purchase gave.
+ *
+ *  The balance may go below zero when the credits were already spent; spending
+ *  then waits for a top-up. A refund for a payment that bought no credits --
+ *  this Stripe account may sell other things -- is not ours to act on. */
+export async function reverseRefundedPurchase(
+  db: D1Database,
+  input: { paymentIntent: string; amountRefunded: number },
+): Promise<RefundReversal> {
+  const purchase = await db.prepare(
+    "SELECT account_id, credits, amount_cents FROM purchases WHERE stripe_payment_intent = ?",
+  ).bind(input.paymentIntent).first<{ account_id: string; credits: number; amount_cents: number }>();
+  if (!purchase) return { found: false };
+
+  const share = Math.min(Math.max(input.amountRefunded, 0), purchase.amount_cents) / purchase.amount_cents;
+  const target = Math.round(purchase.credits * share);
+  const prefix = `refund:${input.paymentIntent}:`;
+  const result = await db.prepare(
+    `INSERT INTO credit_entries (account_id, delta, reason, idempotency_key, detail, created_at)
+     SELECT ?1, -(?2 - removed), 'refund', ?3, 'stripe:refund', ?4
+       FROM (SELECT COALESCE(-SUM(delta), 0) AS removed FROM credit_entries
+              WHERE account_id = ?1 AND reason = 'refund' AND substr(idempotency_key, 1, length(?5)) = ?5)
+      WHERE ?2 - removed > 0
+     ON CONFLICT(idempotency_key) DO NOTHING`,
+  ).bind(purchase.account_id, target, `${prefix}${input.amountRefunded}`, Date.now(), prefix).run();
+
+  const removed = await db.prepare(
+    `SELECT COALESCE(-SUM(delta), 0) AS removed FROM credit_entries
+      WHERE account_id = ? AND reason = 'refund' AND substr(idempotency_key, 1, length(?)) = ?`,
+  ).bind(purchase.account_id, prefix, prefix).first<{ removed: number }>();
+  return {
+    found: true,
+    accountId: purchase.account_id,
+    applied: (result.meta.changes ?? 0) > 0,
+    removed: removed?.removed ?? 0,
+    balance: await creditBalance(db, purchase.account_id),
+  };
+}
+

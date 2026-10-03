@@ -1,7 +1,7 @@
 import { bearerToken, verifyIdToken, type VerifiedIdentity } from "./auth";
 import {
   attachHistoryMedia, completeCloudJob, countActiveJobs, creditBalance, deleteHistoryItem, failCloudJob,
-  getHistoryItem, jobForAccount,
+  getHistoryItem, jobForAccount, reverseRefundedPurchase,
   getOrCreateAccount, historyBytes, listActivity, listHistory, recordPurchase, refundStaleJobs, setStripeCustomerId,
   startCloudJob,
   type Account, type StoredObject,
@@ -579,6 +579,28 @@ async function handleStripeWebhook(request: Request, env: Env): Promise<Response
       detail: error instanceof StripeError ? error.message : "unknown",
     }));
     return json({ error: "invalid_signature" }, 400);
+  }
+
+  // A refund made in the Stripe dashboard takes back the credits it paid for,
+  // in proportion to the amount refunded.
+  if (event?.type === "charge.refunded") {
+    const charge = event.data?.object ?? {};
+    const paymentIntent = typeof charge.payment_intent === "string" ? charge.payment_intent : null;
+    const amountRefunded = charge.amount_refunded;
+    if (!paymentIntent || !Number.isInteger(amountRefunded) || String(charge.currency).toLowerCase() !== "usd") {
+      console.error(JSON.stringify({ event: "stripe_refund_unreadable", chargeId: charge.id ?? null }));
+      return json({ received: true, error: "unreadable_refund" });
+    }
+    const reversal = await reverseRefundedPurchase(env.ACCOUNTS_DB, { paymentIntent, amountRefunded });
+    if (!reversal.found) {
+      // Not a credits purchase -- this Stripe account may sell other things.
+      return json({ received: true, ignored: "no_matching_purchase" });
+    }
+    console.log(JSON.stringify({
+      event: reversal.applied ? "credits_refunded" : "credits_refund_replayed",
+      accountId: reversal.accountId, amountRefunded, removed: reversal.removed, balance: reversal.balance,
+    }));
+    return json({ received: true, applied: reversal.applied, removed: reversal.removed, balance: reversal.balance });
   }
 
   // Anything else is acknowledged, not retried: Stripe resends non-2xx for days

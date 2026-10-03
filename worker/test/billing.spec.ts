@@ -123,6 +123,84 @@ afterEach(() => {
   if (realFetch) globalThis.fetch = realFetch;
 });
 
+/** A refund event shaped like Stripe's: the charge with its running total refunded. */
+function refundedCharge(paymentIntent: string, amountRefunded: number, overrides: Record<string, any> = {}) {
+  return {
+    type: "charge.refunded",
+    data: {
+      object: {
+        id: `ch_${crypto.randomUUID()}`,
+        object: "charge",
+        payment_intent: paymentIntent,
+        amount: 500,
+        amount_refunded: amountRefunded,
+        refunded: amountRefunded >= 500,
+        currency: "usd",
+        ...overrides,
+      },
+    },
+  };
+}
+
+/** A $5 starter purchase (200 credits) behind a payment intent of its own. */
+async function boughtStarter() {
+  const account = await getOrCreateAccount(env.ACCOUNTS_DB, `sub-${crypto.randomUUID()}`, "buyer@example.com");
+  const paymentIntent = `pi_${crypto.randomUUID().replaceAll("-", "")}`;
+  await postWebhook(completedSession({ payment_intent: paymentIntent, metadata: { pack_id: "starter", account_id: account.id } }));
+  expect(await balanceOf(account.id)).toBe(200);
+  return { account, paymentIntent };
+}
+
+describe.sequential("stripe refunds", () => {
+  it("takes back every credit a full refund paid for, once", async () => {
+    const { account, paymentIntent } = await boughtStarter();
+    const response = await postWebhook(refundedCharge(paymentIntent, 500));
+    expect(await response.json()).toMatchObject({ received: true, applied: true, removed: 200, balance: 0 });
+    // Stripe retries; a replay changes nothing.
+    expect(await (await postWebhook(refundedCharge(paymentIntent, 500))).json()).toMatchObject({ applied: false, removed: 200, balance: 0 });
+    const entries = await env.ACCOUNTS_DB.prepare(
+      "SELECT delta, reason, detail FROM credit_entries WHERE account_id = ? AND reason = 'refund'",
+    ).bind(account.id).all();
+    expect(entries.results).toEqual([{ delta: -200, reason: "refund", detail: "stripe:refund" }]);
+  });
+
+  it("takes back credits in proportion to a partial refund, and the rest when it grows", async () => {
+    const { account, paymentIntent } = await boughtStarter();
+    expect(await (await postWebhook(refundedCharge(paymentIntent, 250))).json()).toMatchObject({ removed: 100, balance: 100 });
+    expect(await (await postWebhook(refundedCharge(paymentIntent, 500))).json()).toMatchObject({ removed: 200, balance: 0 });
+    expect(await balanceOf(account.id)).toBe(0);
+  });
+
+  it("never takes back more than the purchase gave, whatever order the events arrive in", async () => {
+    const { account, paymentIntent } = await boughtStarter();
+    await postWebhook(refundedCharge(paymentIntent, 500));
+    const late = await (await postWebhook(refundedCharge(paymentIntent, 250))).json();
+    expect(late).toMatchObject({ applied: false, removed: 200 });
+    expect(await balanceOf(account.id)).toBe(0);
+  });
+
+  it("lets the balance go below zero when the refunded credits were already spent", async () => {
+    const { account, paymentIntent } = await boughtStarter();
+    await env.ACCOUNTS_DB.prepare(
+      "INSERT INTO credit_entries (account_id, delta, reason, idempotency_key, detail, created_at) VALUES (?, -150, 'spend', ?, 'creative:4k', ?)",
+    ).bind(account.id, `spend:test:${crypto.randomUUID()}`, Date.now()).run();
+    expect(await (await postWebhook(refundedCharge(paymentIntent, 500))).json()).toMatchObject({ removed: 200, balance: -150 });
+  });
+
+  it("leaves refunds of other payments alone", async () => {
+    const response = await postWebhook(refundedCharge("pi_not_a_credits_purchase", 500));
+    expect(response.status).toBe(200);
+    expect(await response.json()).toMatchObject({ received: true, ignored: "no_matching_purchase" });
+  });
+
+  it("refuses an unsigned refund", async () => {
+    const { account, paymentIntent } = await boughtStarter();
+    const response = await postWebhook(refundedCharge(paymentIntent, 500), { header: "t=1,v1=00" });
+    expect(response.status).toBe(400);
+    expect(await balanceOf(account.id)).toBe(200);
+  });
+});
+
 describe.sequential("stripe webhook", () => {
   it("credits a paid session and records the purchase behind it", async () => {
     const account = await getOrCreateAccount(env.ACCOUNTS_DB, `sub-${crypto.randomUUID()}`, "buyer@example.com");
