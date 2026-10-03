@@ -201,6 +201,55 @@ describe.sequential("stripe refunds", () => {
   });
 });
 
+/** A dispute event shaped like Stripe's. */
+function disputeFunds(direction: "withdrawn" | "reinstated", paymentIntent: string, disputeId: string, amount = 500) {
+  return {
+    type: `charge.dispute.funds_${direction}`,
+    data: { object: { id: disputeId, object: "dispute", payment_intent: paymentIntent, amount, currency: "usd" } },
+  };
+}
+
+describe.sequential("stripe chargebacks", () => {
+  it("takes the credits back when a dispute withdraws the funds, and returns them if it is won", async () => {
+    const { account, paymentIntent } = await boughtStarter();
+    const disputeId = `dp_${crypto.randomUUID()}`;
+    expect(await (await postWebhook(disputeFunds("withdrawn", paymentIntent, disputeId))).json())
+      .toMatchObject({ applied: true, delta: -200, balance: 0 });
+    // Replayed, nothing changes.
+    expect(await (await postWebhook(disputeFunds("withdrawn", paymentIntent, disputeId))).json())
+      .toMatchObject({ applied: false, balance: 0 });
+    expect(await (await postWebhook(disputeFunds("reinstated", paymentIntent, disputeId))).json())
+      .toMatchObject({ applied: true, delta: 200, balance: 200 });
+    expect(await (await postWebhook(disputeFunds("reinstated", paymentIntent, disputeId))).json())
+      .toMatchObject({ applied: false, balance: 200 });
+    const details = (await env.ACCOUNTS_DB.prepare(
+      "SELECT detail FROM credit_entries WHERE account_id = ? AND detail LIKE 'stripe:%' ORDER BY id",
+    ).bind(account.id).all<{ detail: string }>()).results.map(row => row.detail);
+    expect(details).toEqual(["stripe:dispute", "stripe:dispute-won"]);
+  });
+
+  it("never takes more than a partial refund left", async () => {
+    const { account, paymentIntent } = await boughtStarter();
+    await postWebhook(refundedCharge(paymentIntent, 250));
+    expect(await balanceOf(account.id)).toBe(100);
+    // The dispute claims the full $5, but only 100 credits of the purchase are left to take.
+    expect(await (await postWebhook(disputeFunds("withdrawn", paymentIntent, `dp_${crypto.randomUUID()}`))).json())
+      .toMatchObject({ applied: true, delta: -100, balance: 0 });
+  });
+
+  it("restores nothing for a reinstatement that never had a withdrawal", async () => {
+    const { account, paymentIntent } = await boughtStarter();
+    expect(await (await postWebhook(disputeFunds("reinstated", paymentIntent, `dp_${crypto.randomUUID()}`))).json())
+      .toMatchObject({ applied: false, balance: 200 });
+    expect(await balanceOf(account.id)).toBe(200);
+  });
+
+  it("leaves disputes on other payments alone", async () => {
+    expect(await (await postWebhook(disputeFunds("withdrawn", "pi_not_ours", "dp_other"))).json())
+      .toMatchObject({ received: true, ignored: "no_matching_purchase" });
+  });
+});
+
 describe.sequential("stripe webhook", () => {
   it("credits a paid session and records the purchase behind it", async () => {
     const account = await getOrCreateAccount(env.ACCOUNTS_DB, `sub-${crypto.randomUUID()}`, "buyer@example.com");

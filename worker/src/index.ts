@@ -1,7 +1,7 @@
 import { bearerToken, verifyIdToken, type VerifiedIdentity } from "./auth";
 import {
   attachHistoryMedia, completeCloudJob, countActiveJobs, creditBalance, deleteHistoryItem, failCloudJob,
-  getHistoryItem, jobForAccount, reverseRefundedPurchase,
+  applyDisputeFunds, getHistoryItem, jobForAccount, reverseRefundedPurchase,
   getOrCreateAccount, historyBytes, listActivity, listHistory, recordPurchase, refundStaleJobs, setStripeCustomerId,
   startCloudJob,
   type Account, type StoredObject,
@@ -601,6 +601,29 @@ async function handleStripeWebhook(request: Request, env: Env): Promise<Response
       accountId: reversal.accountId, amountRefunded, removed: reversal.removed, balance: reversal.balance,
     }));
     return json({ received: true, applied: reversal.applied, removed: reversal.removed, balance: reversal.balance });
+  }
+
+  // A chargeback: the credits follow the money. Funds withdrawn take them back;
+  // funds reinstated, after a won dispute, return them. Inquiries that move no
+  // money send neither event and change nothing.
+  if (event?.type === "charge.dispute.funds_withdrawn" || event?.type === "charge.dispute.funds_reinstated") {
+    const dispute = event.data?.object ?? {};
+    const paymentIntent = typeof dispute.payment_intent === "string" ? dispute.payment_intent : null;
+    if (!paymentIntent || typeof dispute.id !== "string" || !Number.isInteger(dispute.amount)
+      || String(dispute.currency).toLowerCase() !== "usd") {
+      console.error(JSON.stringify({ event: "stripe_dispute_unreadable", disputeId: dispute.id ?? null }));
+      return json({ received: true, error: "unreadable_dispute" });
+    }
+    const change = await applyDisputeFunds(env.ACCOUNTS_DB, {
+      paymentIntent, disputeId: dispute.id, amount: dispute.amount,
+      direction: event.type === "charge.dispute.funds_withdrawn" ? "withdrawn" : "reinstated",
+    });
+    if (!change.found) return json({ received: true, ignored: "no_matching_purchase" });
+    console.log(JSON.stringify({
+      event: event.type === "charge.dispute.funds_withdrawn" ? "credits_disputed" : "credits_dispute_won",
+      accountId: change.accountId, applied: change.applied, delta: change.delta, balance: change.balance,
+    }));
+    return json({ received: true, applied: change.applied, delta: change.delta, balance: change.balance });
   }
 
   // Anything else is acknowledged, not retried: Stripe resends non-2xx for days

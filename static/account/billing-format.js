@@ -127,8 +127,8 @@ export function describeActivity(entry) {
     case 'purchase': return 'Credits added';
     case 'spend': return operation;
     case 'reversal': return `Refund · ${operation} failed`;
-    case 'refund': return 'Payment refunded';
-    case 'grant': return 'Credits granted';
+    case 'refund': return entry.detail === 'stripe:dispute' ? 'Payment disputed' : 'Payment refunded';
+    case 'grant': return entry.detail === 'stripe:dispute-won' ? 'Dispute won · credits restored' : 'Credits granted';
     default: return 'Credit adjustment';
   }
 }

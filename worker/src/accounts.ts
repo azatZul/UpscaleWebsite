@@ -510,3 +510,65 @@ export async function reverseRefundedPurchase(
   };
 }
 
+type DisputeChange =
+  | { found: false }
+  | { found: true; accountId: string; applied: boolean; delta: number; balance: number };
+
+/** Follow a chargeback's money with the credits it paid for.
+ *
+ *  When a dispute withdraws the funds, the credits for the disputed share come
+ *  off -- never more than the purchase still has left after any refunds. If
+ *  the dispute is won and Stripe reinstates the funds, exactly what this
+ *  dispute took comes back. Both entries are keyed by the dispute, so Stripe
+ *  replaying either event changes nothing, and a reinstatement without a
+ *  withdrawal restores nothing. */
+export async function applyDisputeFunds(
+  db: D1Database,
+  input: { paymentIntent: string; disputeId: string; amount: number; direction: "withdrawn" | "reinstated" },
+): Promise<DisputeChange> {
+  const purchase = await db.prepare(
+    "SELECT account_id, credits, amount_cents FROM purchases WHERE stripe_payment_intent = ?",
+  ).bind(input.paymentIntent).first<{ account_id: string; credits: number; amount_cents: number }>();
+  if (!purchase) return { found: false };
+
+  const withdrawnKey = `dispute:${input.paymentIntent}:${input.disputeId}:withdrawn`;
+  const now = Date.now();
+  let result: D1Result;
+  if (input.direction === "withdrawn") {
+    const share = Math.min(Math.max(input.amount, 0), purchase.amount_cents) / purchase.amount_cents;
+    const target = Math.round(purchase.credits * share);
+    // What refunds and earlier disputes of this payment already took, net of
+    // reinstatements, so the two together never exceed the purchase.
+    result = await db.prepare(
+      `INSERT INTO credit_entries (account_id, delta, reason, idempotency_key, detail, created_at)
+       SELECT ?1, -MIN(?2, ?3 - taken), 'refund', ?4, 'stripe:dispute', ?5
+         FROM (SELECT COALESCE(-SUM(delta), 0) AS taken FROM credit_entries
+                WHERE account_id = ?1
+                  AND (substr(idempotency_key, 1, length(?6)) = ?6 OR substr(idempotency_key, 1, length(?7)) = ?7))
+        WHERE MIN(?2, ?3 - taken) > 0
+       ON CONFLICT(idempotency_key) DO NOTHING`,
+    ).bind(
+      purchase.account_id, target, purchase.credits, withdrawnKey, now,
+      `refund:${input.paymentIntent}:`, `dispute:${input.paymentIntent}:`,
+    ).run();
+  } else {
+    result = await db.prepare(
+      `INSERT INTO credit_entries (account_id, delta, reason, idempotency_key, detail, created_at)
+       SELECT ?1, -delta, 'grant', ?2, 'stripe:dispute-won', ?3
+         FROM credit_entries WHERE idempotency_key = ?4
+       ON CONFLICT(idempotency_key) DO NOTHING`,
+    ).bind(purchase.account_id, `dispute:${input.paymentIntent}:${input.disputeId}:reinstated`, now, withdrawnKey).run();
+  }
+  const entry = await db.prepare(
+    "SELECT delta FROM credit_entries WHERE idempotency_key = ?",
+  ).bind(input.direction === "withdrawn" ? withdrawnKey : `dispute:${input.paymentIntent}:${input.disputeId}:reinstated`)
+    .first<{ delta: number }>();
+  return {
+    found: true,
+    accountId: purchase.account_id,
+    applied: (result.meta.changes ?? 0) > 0,
+    delta: entry?.delta ?? 0,
+    balance: await creditBalance(db, purchase.account_id),
+  };
+}
+

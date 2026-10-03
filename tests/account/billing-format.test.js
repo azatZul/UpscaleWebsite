@@ -120,3 +120,10 @@ test('formats storage sizes the way people read them', () => {
   assert.equal(formatBytes(-4), '0 B');
 });
 
+test('names refunds, chargebacks and won disputes apart in the activity list', () => {
+  assert.equal(describeActivity({reason: 'refund', detail: 'stripe:refund'}), 'Payment refunded');
+  assert.equal(describeActivity({reason: 'refund', detail: 'stripe:dispute'}), 'Payment disputed');
+  assert.equal(describeActivity({reason: 'grant', detail: 'stripe:dispute-won'}), 'Dispute won · credits restored');
+  assert.equal(describeActivity({reason: 'grant', detail: null}), 'Credits granted');
+});
+
