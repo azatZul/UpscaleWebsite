@@ -2,62 +2,56 @@
    nav, buttons and footer all come from site.css. */
 .tool [hidden]{display:none!important}
 .tool-wrap{max-width:1000px;padding-top:46px;padding-bottom:10px}
-.tool-heading,.tool-steps,.tool-card,.tool .notice{max-width:760px;margin-left:auto;margin-right:auto}
-.tool-heading{text-align:center;margin-bottom:28px}
+.tool-heading,.tool-card,.tool .notice{max-width:760px;margin-left:auto;margin-right:auto}
+.tool-heading{text-align:center;margin-bottom:36px}
 .tool-heading .eyebrow::before{display:none}
 .tool-heading h1{font-size:clamp(32px,5vw,50px);letter-spacing:-.035em;text-wrap:balance}
 .tool-heading .lead{margin:14px auto 0;max-width:48ch;color:var(--tx-3);text-wrap:balance}
 
-/* A compact segmented pill in the scale toggle's style, sized to its content
-   rather than stretched: only the current step is lit, and a finished one
-   swaps its numeral for a check. */
-.tool-steps{display:flex;align-items:center;gap:2px;width:fit-content;max-width:100%;
-  margin:0 auto 24px;padding:4px;list-style:none;color:var(--tx-3);
-  border:1px solid var(--line-2);border-radius:999px;background:var(--tint)}
-.tool-steps li{display:flex;align-items:center;gap:9px;min-width:0;padding:5px 16px 5px 5px;
-  border-radius:999px;font-size:14px;font-weight:650;white-space:nowrap;
-  transition:color .2s,background .2s}
-.step-mark{display:grid;place-items:center;width:26px;height:26px;flex-shrink:0;
-  border:1px solid var(--line-2);border-radius:50%;font-size:13px;font-weight:700;
-  transition:color .2s,background .2s,border-color .2s}
-.step-mark i{font-style:normal}
-.step-mark svg{display:none;width:14px;height:14px}
-.tool-steps [aria-current]{color:var(--tx);background:var(--surface);box-shadow:var(--shadow)}
-.tool-steps [aria-current] .step-mark{background:var(--acc);border-color:var(--acc);color:var(--ink)}
-.tool-steps .complete{color:var(--tx-2)}
-.tool-steps .complete .step-mark{color:var(--acc-tx);border-color:var(--acc-line);background:var(--acc-soft)}
-.tool-steps .complete .step-mark i{display:none}
-.tool-steps .complete .step-mark svg{display:block}
-
-.tool-card{padding:26px;border:1px solid var(--line-2);border-radius:var(--r-l);
-  background:linear-gradient(180deg,var(--surface),var(--bg-2));box-shadow:var(--shadow);scroll-margin-top:100px}
-.tool-card-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
-.tool-card-heading h2{font-size:19px;letter-spacing:-.02em}
-/* Mirrors the app's own on-device badge (VerifiedView): a neutral pill with a
-   shield-check icon, not a coloured status label. */
-.private-badge{display:inline-flex;align-items:center;gap:8px;flex-shrink:0;padding:7px 12px;border-radius:32px;
-  font-size:13px;font-weight:650;white-space:nowrap;color:var(--tx);background:var(--tint);border:1px solid var(--line-2)}
-.private-badge svg{width:15px;height:15px;flex-shrink:0}
+.tool-card{padding:14px;border:1px solid var(--line);border-radius:var(--r-l);
+  background:var(--surface);box-shadow:var(--shadow);scroll-margin-top:100px}
+/* The card's name is for screen readers; the page's h1 already heads it. */
+.sr-label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 
 /* The drop zone keeps its size with or without a photo, and stays a drop target
    for the next one. */
 .photo-drop{--drop-h:292px;--drop-pad:24px;position:relative;display:grid;grid-template-columns:minmax(0,1fr);
   place-items:center;min-height:var(--drop-h);padding:var(--drop-pad);
-  border:1.5px dashed var(--line-2);border-radius:var(--r-m);background:var(--tint);text-align:center;cursor:pointer;
+  border:1.5px dashed var(--line-2);border-radius:var(--r-m);text-align:center;cursor:pointer;
   transition:border-color .2s,background .2s}
-.photo-drop:hover{border-color:var(--acc-line)}
+/* The privacy badge explains rather than picks a photo, so hovering it leaves
+   the zone unlit. */
+.photo-drop:hover:not(:has(.private-note:hover)){border-color:var(--acc-line)}
 .photo-drop.dragging{border-color:var(--acc);background:var(--acc-soft)}
 .photo-drop[aria-disabled="true"]{cursor:default;border-color:var(--line-2)}
-.drop-empty{display:flex;flex-direction:column;align-items:center;gap:14px}
-.drop-target{display:flex;flex-direction:column;align-items:center;gap:12px}
-.upload-mark{display:grid;place-items:center;width:54px;height:54px;border-radius:16px;
-  color:var(--acc-tx);background:var(--acc-soft);border:1px solid var(--acc-line);transition:transform .25s cubic-bezier(.2,.8,.25,1)}
-.upload-mark svg{width:24px;height:24px}
-.photo-drop:hover .upload-mark,.photo-drop.dragging .upload-mark{transform:translateY(-3px)}
-.drop-title{font-size:19px;font-weight:750;letter-spacing:-.015em;line-height:1.3}
-.drop-or{display:flex;align-items:center;gap:12px;width:min(260px,100%);font-size:13px;color:var(--tx-3)}
-.drop-or::before,.drop-or::after{content:"";flex:1;height:1px;background:var(--line-2)}
+.drop-empty{display:flex;flex-direction:column;align-items:center;gap:18px}
+.drop-target{display:flex;flex-direction:column;align-items:center;gap:10px}
+.upload-mark{display:grid;place-items:center;color:var(--tx-3);transition:transform .25s cubic-bezier(.2,.8,.25,1),color .2s}
+.upload-mark svg{width:34px;height:34px}
+.photo-drop:hover:not(:has(.private-note:hover)) .upload-mark,.photo-drop.dragging .upload-mark{transform:translateY(-3px);color:var(--acc-tx)}
+.drop-title{font-size:20px;font-weight:750;letter-spacing:-.02em;line-height:1.3}
 .drop-empty .btn{min-height:48px}
+/* Mirrors the app's on-device badge (VerifiedView), reduced to a caption in the
+   zone's corner so it reassures without adding another box or row. It belongs
+   to the empty state and leaves with it. */
+.private-note{position:absolute;right:14px;bottom:12px;display:inline-flex;align-items:center;gap:6px;
+  font-size:12.5px;font-weight:650;line-height:1.4;color:var(--tx-2);cursor:help;outline:none;transition:color .2s}
+.private-note[hidden]{display:none}
+.private-note>svg{width:15px;height:15px;flex-shrink:0;color:var(--tx-3);transition:color .2s}
+.private-note:focus-visible{border-radius:6px;box-shadow:0 0 0 2px var(--acc-line)}
+/* With a pointer that hovers, the idle note opens above the badge in the 4×
+   popover's style; touch screens keep it as the caption below instead. */
+.private-tip{position:absolute;z-index:20;right:0;bottom:calc(100% + 10px);width:max-content;max-width:min(300px,80vw);
+  padding:10px 12px;border:1px solid var(--line-2);border-radius:12px;background:var(--surface-2);box-shadow:var(--shadow);
+  font-size:13px;font-weight:500;line-height:1.5;color:var(--tx-2);text-align:left;text-wrap:pretty;cursor:default;
+  opacity:0;visibility:hidden;transform:translateY(4px);transition:opacity .15s,transform .15s,visibility 0s linear .15s}
+.private-note:focus-visible .private-tip{opacity:1;visibility:visible;transform:none;transition:opacity .15s,transform .15s}
+@media(hover:hover){
+  .private-note:hover,.private-note:focus-visible{color:var(--tx)}
+  .private-note:hover>svg,.private-note:focus-visible>svg{color:var(--acc-tx)}
+  .private-note:hover .private-tip{opacity:1;visibility:visible;transform:none;transition:opacity .15s,transform .15s}
+}
+@media(hover:none){.private-tip{display:none}}
 .limit-note{font-size:12.5px;line-height:1.5;color:var(--tx-3);max-width:44ch}
 /* The square preview slot sits inside the zone's own padding, so the gap above,
    below and to the left of it is the same. The photo is centred in the slot at
@@ -81,15 +75,17 @@
   opacity:0;pointer-events:none;transition:opacity .15s}
 .photo-drop.dragging .drop-release{opacity:1}
 
-.tool-options{display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px;margin-top:18px}
+.tool-options{display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px;padding:16px 8px 4px}
 .model-field,.scale-field{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px}
-.option-label{font-size:14px;font-weight:650;color:var(--tx-2)}
-.segment-option{display:inline-flex;gap:4px;padding:3px;border:1px solid var(--line-2);border-radius:12px;background:var(--tint)}
+.option-label{font-size:14px;font-weight:600;color:var(--tx-3)}
+.segment-option{display:inline-flex;gap:2px;padding:3px;border-radius:12px;background:var(--bg-2)}
 .segment-option button{font:inherit;font-size:14px;font-weight:700;min-width:58px;min-height:36px;padding:6px 16px;border:0;border-radius:9px;
   background:none;color:var(--tx-2);cursor:pointer;transition:background .15s,color .15s}
 .segment-option button:hover:not(:disabled):not([aria-pressed="true"]):not([aria-disabled="true"]){color:var(--tx)}
 .segment-option button[aria-disabled="true"]:not([aria-pressed="true"]){color:var(--tx-4);cursor:help}
-.segment-option button[aria-pressed="true"]{background:var(--acc);color:var(--ink)}
+/* Selection is a raised pill, not the accent: yellow belongs to the main button.
+   bg-2 sits below surface-2 in both themes, so the pill always reads as lifted. */
+.segment-option button[aria-pressed="true"]{background:var(--surface-2);color:var(--tx);box-shadow:0 1px 3px rgba(0,0,0,.16),0 0 0 1px var(--line)}
 .scale-field{position:relative}
 .scale-popover{position:absolute;z-index:20;top:calc(100% + 8px);left:0;width:max-content;max-width:min(300px,80vw);
   padding:10px 12px;border:1px solid var(--line-2);border-radius:12px;background:var(--surface-2);box-shadow:var(--shadow);
@@ -103,7 +99,16 @@
 .face-option span{font-size:14.5px;font-weight:650;line-height:1.3}
 .face-option:has(input:disabled){cursor:default}
 
-.tool-status{display:grid;gap:6px;margin-top:18px;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--tint)}
+.tool-status{display:grid;gap:6px;margin:16px 8px 0;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--tint)}
+/* The idle note: a caption under the options rather than a box, so it drops the
+   box's border and side padding and lines up with the options' left edge. */
+.tool-status.is-quiet{margin-top:10px;padding:0 0 8px;border:0;background:none}
+.tool-status.is-quiet #status-detail{font-size:13px;line-height:1.5;color:var(--tx-3)}
+/* Where the badge's explainer can open on hover, the caption would repeat it.
+   Hidden from view only: the status stays a live region for what comes next. */
+@media(hover:hover){
+  .tool-status.is-quiet{position:absolute;width:1px;height:1px;margin:0;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+}
 .status-head{display:flex;align-items:baseline;gap:10px}
 .status-head:has(#status-title[hidden]):has(#status-value:empty){display:none}
 #status-title{font-size:15.5px;line-height:1.4}
@@ -115,7 +120,35 @@
 .tool-status progress::-webkit-progress-value{background:var(--acc);border-radius:8px}
 .tool-status progress::-moz-progress-bar{background:var(--acc)}
 
-.tool-actions{display:flex;gap:12px;margin-top:16px}
+/* While processing: a spinner by the stage name, a light sweeping the bar and a
+   scan line over the photo, so a running job never looks stalled. */
+.tool-status{transition:border-color .3s}
+.tool-status.is-busy{border-color:color-mix(in srgb,var(--acc) 50%,var(--line))}
+.tool-status.is-busy #status-title{display:flex;align-items:center;gap:10px}
+.tool-status.is-busy #status-title::before{content:"";flex:0 0 auto;width:15px;height:15px;border-radius:50%;
+  border:2px solid color-mix(in srgb,var(--acc) 28%,transparent);border-top-color:var(--acc);animation:tool-spin .8s linear infinite}
+.tool-status.is-busy progress::-webkit-progress-value{background:var(--acc) linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent) no-repeat;
+  background-size:40% 100%;animation:tool-shine 1.4s linear infinite}
+.tool-status.is-busy progress::-moz-progress-bar{background:var(--acc) linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent) no-repeat;
+  background-size:40% 100%;animation:tool-shine 1.4s linear infinite}
+.photo-drop.is-busy .selected-thumb img{animation:tool-glow 1.8s ease-in-out infinite}
+.photo-drop.is-busy .selected-thumb::after{content:"";position:absolute;inset:0;border-radius:12px;pointer-events:none;
+  background:linear-gradient(180deg,transparent,color-mix(in srgb,var(--acc) 55%,transparent) 50%,transparent) no-repeat;
+  background-size:100% 36%;mix-blend-mode:screen;animation:tool-scan 2s ease-in-out infinite alternate}
+@keyframes tool-spin{to{transform:rotate(360deg)}}
+@keyframes tool-shine{from{background-position:-70% 0}to{background-position:170% 0}}
+@keyframes tool-scan{from{background-position:0 -60%}to{background-position:0 160%}}
+@keyframes tool-glow{0%,100%{box-shadow:0 0 0 2px color-mix(in srgb,var(--acc) 35%,transparent)}
+  50%{box-shadow:0 0 0 4px color-mix(in srgb,var(--acc) 70%,transparent),0 0 26px color-mix(in srgb,var(--acc) 40%,transparent)}}
+@media(prefers-reduced-motion:reduce){
+  .tool-status.is-busy progress::-webkit-progress-value{animation:none}
+  .tool-status.is-busy progress::-moz-progress-bar{animation:none}
+  .photo-drop.is-busy .selected-thumb img,.photo-drop.is-busy .selected-thumb::after,
+  .tool-status.is-busy #status-title::before{animation:none}
+}
+
+.tool-actions{display:flex;gap:12px;margin:16px 8px 8px}
+.tool-actions:not(:has(.btn:not([hidden]))){display:none}
 .tool-actions .btn{flex:1;min-height:52px;font-size:16px}
 .tool .btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
 .text-button{font:inherit;font-size:14px;font-weight:650;color:var(--acc-tx);background:none;border:0;padding:10px;min-height:44px;
@@ -124,6 +157,7 @@
 .text-button:disabled{color:var(--tx-3);cursor:default}
 .tool .notice{padding:14px 16px;border:1px solid var(--acc-line);border-radius:14px;background:var(--acc-soft);
   color:var(--tx);font-size:15px;line-height:1.6;margin-top:16px;margin-bottom:16px}
+.tool-card .notice{margin:16px 8px 0}
 
 /* Single-photo version of the gallery album viewer. */
 .tool-results{margin-top:32px;outline:0;scroll-margin-top:90px}
@@ -160,7 +194,7 @@
 .album-viewer.is-expanded .result-comparison .cmp{outline:0;border-radius:0;
   transform:translate(var(--pan-x,0px),var(--pan-y,0px)) scale(var(--album-zoom,1))}
 .album-expanded-lock{overflow:hidden}
-.tool .inline-cta{max-width:760px;margin:32px auto 0}
+.tool .inline-cta{max-width:760px;margin:56px auto 0}
 
 /* Mode picker, after the app's model picker: each mode's before/after photo
    behind its name, a dark fade for the text, and a gold Pro badge. Selecting a
@@ -199,11 +233,6 @@
 .mode-tile-sub{font-size:12.5px;line-height:1.35;color:rgba(255,255,255,.84);text-shadow:0 1px 2px rgba(0,0,0,.5)}
 @media(prefers-reduced-motion:reduce){.mode-tile .mode-preview{animation:none!important}}
 
-.card-badges{display:flex;align-items:center;gap:8px;flex-shrink:0}
-.credit-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:32px;font-size:13.5px;font-weight:750;
-  color:var(--tx);background:var(--tint);border:1px solid var(--line-2);font-variant-numeric:tabular-nums}
-.credit-chip:hover{border-color:var(--acc-line)}
-.credit-chip svg{width:16px;height:16px;color:var(--acc-tx)}
 .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 
 .cloud-options{display:grid;gap:14px;margin-top:18px}
@@ -254,21 +283,15 @@
 
 @media(max-width:640px){
   .tool-wrap{padding-top:28px}
-  .tool-card{padding:16px;border-radius:20px}
-  .tool-card-heading h2{font-size:17px}
-  .private-badge{padding:6px 10px;font-size:12px}
+  .tool-heading{margin-bottom:24px}
+  .tool-card{padding:10px;border-radius:20px}
   .mode-picker{grid-template-columns:minmax(0,1fr);gap:12px}
   .tool-picker .mode-tile{height:176px}
   .mode-tile-text b{font-size:16.5px}
   .restore-modes{grid-template-columns:minmax(0,1fr)}
-  .card-badges{gap:6px}
-  .credit-chip{padding:5px 9px;font-size:12.5px}
-  .tool-steps{width:100%}
-  .tool-steps li{flex:1;justify-content:center;gap:7px;padding:5px 8px 5px 5px;
-    font-size:13px;white-space:normal;text-align:center}
-  .step-mark{width:24px;height:24px;font-size:12.5px}
   /* Tall enough for either state in every locale, so a photo never resizes it. */
   .photo-drop{--drop-h:304px;--drop-pad:18px;padding:18px 14px}
+  .private-note{right:12px;bottom:10px}
   .drop-selected{flex-direction:column;gap:12px;text-align:center}
   .selected-frame{width:100%;height:140px}
   .selected-thumb img{max-height:140px}
@@ -276,10 +299,14 @@
   /* Type and size stay on one line at phone width: their labels are read to
      screen readers only, and each button sizes to its own word so the longer
      locale words ("Illustration") still fit beside 2×/4×. */
-  .tool-options{flex-wrap:wrap;align-items:center;gap:12px 10px}
+  .tool-options{flex-wrap:wrap;align-items:center;gap:12px 10px;padding:12px 4px 2px}
   .model-field,.scale-field{flex-wrap:nowrap}
   .scale-field{margin-left:auto}
   .option-label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  .tool-status{margin:12px 4px 0}
+  .tool-status.is-quiet{padding:0 0 6px}
+  .tool-actions{margin:12px 4px 4px}
+  .tool-card .notice{margin:12px 4px 0}
   .segment-option button{min-width:44px;padding:6px 10px}
   .scale-popover{left:auto;right:0}
   .tool-results{margin-top:24px}
@@ -290,14 +317,11 @@
   .result-comparison .cmp-tag.r{right:10px}
   /* App banner: small icon beside the title and line, badge underneath. */
   .tool .inline-cta{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:14px 12px;
-    padding:16px;margin:24px auto 0}
+    padding:16px;margin:36px auto 0}
   .tool .inline-cta>img{width:44px;height:44px;border-radius:11px}
   .tool .inline-cta h3{font-size:16px;margin-bottom:2px}
   .tool .inline-cta p{font-size:13.5px;line-height:1.4}
   .tool .inline-cta>.appstore{grid-column:1/-1}
-}
-@media(max-width:420px){
-  .tool-steps li{flex-direction:column;gap:4px;padding:7px 4px;line-height:1.15}
 }
 @media(prefers-reduced-motion:reduce){.tool *{scroll-behavior:auto!important;transition:none!important}}
 

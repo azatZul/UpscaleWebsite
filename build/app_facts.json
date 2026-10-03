@@ -7,7 +7,7 @@
   "minimum_ios": "16",
   "rating": {
     "value": 4.6,
-    "count": 1601
+    "count": 1626
   },
   "free_limits": {
     "photos_per_day": 2
@@ -24,19 +24,19 @@
     },
     "fr": {
       "currency": "EUR",
-      "annual": 44.99
+      "annual": 49.99
     },
     "de": {
       "currency": "EUR",
-      "annual": 44.99
+      "annual": 49.99
     },
     "ru": {
       "currency": "RUB",
-      "annual": 3490
+      "annual": 2690
     },
     "ja": {
       "currency": "JPY",
-      "annual": 6000
+      "annual": 5890
     }
   },
   "annual_trial_days": 3,

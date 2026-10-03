@@ -33,6 +33,7 @@ static/models/*.tflite
 assets/processor/
 src/tool/assets.generated.js
 .preview-dist/
+.deploy-dist/
 
 # album publishing CLI state and local secrets
 .env
@@ -43,4 +44,3 @@ src/tool/assets.generated.js
 worker/node_modules/
 worker/.wrangler/
 tools/album/.venv/
-

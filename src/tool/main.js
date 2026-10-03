@@ -18,12 +18,12 @@ const elements = Object.fromEntries(['photo-input', 'choose-photo', 'remove-phot
   'selected-photo', 'source-thumb', 'source-name', 'source-size', 'status-title', 'status-detail', 'progress',
   'status-value', 'process-photo', 'cancel', 'retry', 'cpu-retry', 'try-2x', 'results', 'result-image', 'result-summary',
   'download-result', 'another-photo', 'limit-note', 'interrupted', 'visibility-note', 'photo-stage', 'stage-title',
-  'step-choose', 'step-upscale', 'step-compare', 'before-image', 'result-comparison', 'comparison-handle', 'enhance-faces',
+  'before-image', 'result-comparison', 'comparison-handle', 'enhance-faces',
   'face-summary', 'result-viewer', 'result-stage', 'expand-result', 'close-result', 'scale-2x', 'scale-4x', 'scale-popover',
   'result-tag', 'result-title', 'model-photo', 'model-drawing', 'face-option', 'choose-faces', 'face-editor', 'face-stage',
   'face-frame', 'face-photo', 'face-marks', 'face-apply', 'face-cancel', 'face-close', 'face-editor-title',
   'face-status', 'face-progress', 'photo-error', 'status', 'tool-options', 'choose-another', 'mode-device', 'mode-creative',
-  'mode-restore', 'private-badge', 'cloud-badge', 'creative-options', 'creativity',
+  'mode-restore', 'private-note', 'cloud-note', 'creative-options', 'creativity',
   'creativity-value', 'restore-options', 'negative', 'increase-resolution', 'hires-note', 'prompt-field', 'restore-prompt',
   'topup-panel', 'topup-title', 'topup-status', 'topup-amounts', 'topup-refresh', 'saved-note', 'tool-picker', 'tool-step',
   'tool-body', 'back-to-tools', 'signin-checking'].map(id => [id, $(id)]));
@@ -107,7 +107,7 @@ const stageObserver = new ResizeObserver(entries => {
 });
 stageObserver.observe(elements['result-stage']);
 const resultOverlay = createOverlay({root: elements['result-viewer'],
-  regions: '.nav, .skip-link, .tool-heading, .tool-steps, #photo-stage, .inline-cta, footer',
+  regions: '.nav, .skip-link, .tool-heading, #photo-stage, .inline-cta, footer',
   onClose: () => expandResult(false)});
 function expandResult(value) {
   expanded = value;
@@ -346,11 +346,15 @@ function setStatus(title, detail, progress) {
   elements.progress.hidden = progress === undefined;
   if (progress !== undefined) runProgress = Math.round((elements.progress.value = progress) * 100) / 100;
   elements['status-value'].textContent = progress === undefined ? '' : `${Math.round(progress * 100)}%`;
+  // Only the idle note has neither a title nor progress: it reads as a caption,
+  // while every real status keeps its box.
+  elements.status.classList.toggle('is-quiet', !title && progress === undefined);
 }
 const idleStatus = () => setStatus('', t(mode === 'device' ? 'idle_detail' : 'cloud_ready_detail'));
 
-// The card keeps one layout from the first visit to the finished photo: the
-// drop zone swaps its contents, and the options and main button stay put.
+// The drop zone swaps its contents and the options stay put; the main button
+// shows only while a chosen photo waits to be upscaled. The build renders the
+// no-photo state (quiet status, no main button), so this first call moves nothing.
 function refreshControls() {
   const hasFile = Boolean(file);
   const locked = busy() || applying || !supported;
@@ -366,6 +370,10 @@ function refreshControls() {
   // A photo already processing can't take new options or be removed; Cancel stays.
   elements['tool-options'].hidden = busy();
   elements['remove-photo'].hidden = busy();
+  // Motion on the photo and the status box shows the work is running, even
+  // during stages that report no percentage.
+  elements['drop-zone'].classList.toggle('is-busy', busy());
+  elements.status.classList.toggle('is-busy', busy());
   if (busy()) hideScalePopover();
   elements['face-option'].hidden = modelKind !== 'photo';
   elements['choose-faces'].hidden = !faceEdit || phase !== 'done';
@@ -381,19 +389,15 @@ function refreshControls() {
   elements['photo-error'].hidden = !photoError;
   elements.status.hidden = photoError;
   elements['choose-another'].hidden = !chooseAnother;
-  elements['process-photo'].hidden = busy() || cpuRetry || tryTwo || retry || chooseAnother;
+  // Without a photo the drop zone's own button is the only action on the card;
+  // with a result the actions move under it, until an option change asks again.
+  elements['process-photo'].hidden = !hasFile || phase === 'done' || busy() || cpuRetry || tryTwo || retry || chooseAnother;
   elements['process-photo'].disabled = phase !== 'ready';
   elements.cancel.hidden = !busy();
   elements['cpu-retry'].hidden = !cpuRetry;
   elements.retry.hidden = !retry;
   elements['try-2x'].hidden = !tryTwo;
   elements['visibility-note'].hidden = !busy() || !document.hidden;
-  // "Upscale" lights up when processing starts, not when a photo is chosen.
-  const currentStep = phase === 'done' ? 2 : busy() ? 1 : 0;
-  ['step-choose', 'step-upscale', 'step-compare'].forEach((id, index) => {
-    index === currentStep ? elements[id].setAttribute('aria-current', 'step') : elements[id].removeAttribute('aria-current');
-    elements[id].classList.toggle('complete', index < currentStep);
-  });
   // Cloud modes share the photo, status, buttons and result viewer; only the
   // on-device options and recovery paths stand down. A cloud job cannot be
   // cancelled from here once uploaded, so Cancel is not offered.
@@ -950,7 +954,7 @@ elements['remove-photo'].addEventListener('click', event => {
 // The empty zone is a click target; its button stays the keyboard path. With a
 // photo in place, removing it is explicit, so a stray tap doesn't open the picker.
 elements['drop-zone'].addEventListener('click', event => {
-  if (file || event.target.closest('button')) return;
+  if (file || event.target.closest('button, .private-note')) return;
   trackTap('drop_zone');
   openPicker();
 });

@@ -1,8 +1,13 @@
 # UScale albums Worker
 
-The Worker serves the existing generated site through Cloudflare Static Assets and
+The Worker serves the production package in `.deploy-dist` through Cloudflare Static Assets and
 handles only the dynamic album routes. The R2 bucket is private; clean media is
 always gated by the album state in D1.
+
+`npm run build:production` rebuilds the public browser tool and site, then packages
+only public assets into `.deploy-dist`. The packaging step excludes the engineering
+lab, raw model directory, benchmark fixtures, source maps and hidden files, and
+rejects any asset over Cloudflare's 25 MiB per-file limit.
 
 Static Assets uses `html_handling=none` to preserve existing `.html` canonical URLs.
 The build emits explicit `_redirects` rewrites for `/`, locale homes and guide
@@ -23,7 +28,7 @@ database ID is a deliberate zero-UUID placeholder; staging and production point 
 real D1 databases. The `upscales.app/*` route exists only in the production
 environment.
 
-From the repository root, `scripts/deploy-cloudflare.sh staging` runs the build,
+From the repository root, `scripts/deploy-cloudflare.sh staging` runs the production build,
 Python tests, Worker checks, remote D1 migration and deploy as one sequence. Use
 `production` only after the staging smoke test; the Netlify deploy remains available
 as rollback.

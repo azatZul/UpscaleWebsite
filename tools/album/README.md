@@ -20,6 +20,9 @@ ALBUM_BASE_URL
 Automatic flows additionally require `AURALENS_BASE_URL` and
 `UPSCALER_TOOL_API_KEY`. Put them in an untracked `.env` and load them into the shell;
 do not add them to editor launch settings or command arguments.
+Publishing also requires `cwebp` on `PATH` for the result comparison preview.
+The original-side preview remains capped at 1600 pixels; the result-side preview
+is capped at 2400 pixels on its longest side and encoded as WebP quality 95.
 
 ```bash
 python3 tools/album/album.py validate /path/to/album
@@ -41,6 +44,8 @@ python3 tools/album/album.py rename <id> --title 'New album title' --json
 python3 tools/album/album.py unfeature <id> --json
 python3 tools/album/album.py migrate-gallery --all --dry-run --json
 python3 tools/album/album.py migrate-gallery --all --json
+python3 tools/album/album.py migrate-previews --all --dry-run --json
+python3 tools/album/album.py migrate-previews --all --json
 ```
 
 `unfeature` removes the album from `/gallery` while its direct
@@ -64,6 +69,16 @@ non-deleted album, not just featured ones. `--dry-run` downloads and encodes the
 cards to report their expected sizes but does not upload objects or change D1.
 Migration uploads each immutable `gallery-v2.jpg` before conditionally moving its
 D1 pointer. Repeated runs are safe, and v1 objects remain in R2 for rollback.
+
+`migrate-previews` rebuilds only the result side of every active album comparison
+from its clean full-resolution object in R2. Use an album ID instead of `--all`
+to scope a run. It validates the clean object against D1, reports missing or
+damaged sources as skipped, and never enlarges a smaller source. Locked albums
+receive the existing watermark pattern. Set `ALBUM_WATERMARK_PATH` to the same
+logo used at publication when migrating locked albums with a logo. The command
+uploads a versioned WebP before conditionally updating the photo's D1 pointer;
+old previews stay in R2 for rollback. `--dry-run` performs the encoding and
+reports dimensions and byte counts without remote writes.
 
 The CLI writes `.album-state.json` and `.album-work/` inside the album folder. Keep
 both until publication completes: they make retries idempotent. R2 credentials should

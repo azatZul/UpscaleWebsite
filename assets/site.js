@@ -485,6 +485,8 @@
 
     /* Ignore the temporary pause caused by switching sources. */
     var switching = false;
+    /* Set by the examples fade so a clip that won't play doesn't stay hidden. */
+    var clipRefused = null;
 
     function startClip(withSound, attempt) {
       vid.muted = !withSound;
@@ -499,6 +501,7 @@
         if (name === 'AbortError' && !attempt) { setTimeout(function () { startClip(withSound, 1); }, 150); return; }
         switching = false;
         if (playing() && vid.paused) cmp.classList.add('paused');
+        if (clipRefused) clipRefused();
       });
     }
 
@@ -721,6 +724,43 @@
       pre.src = afterSrc;
       if (pre.complete) show();
     };
+    /* Home examples swap both sides at once, so hide the media and fade the new
+       pair in once it can paint instead of letting it load in visibly. */
+    var fadeIn = !ghost && root.classList.contains('cmp-wide');
+    var swapGen = 0, unwatchClip = null;
+    var reveal = function (els) {
+      var gen = ++swapGen, done = false;
+      /* A newer swap no longer waits on the previous clip. */
+      if (unwatchClip) unwatchClip();
+      cmp.classList.remove('cmp-in');
+      cmp.classList.add('cmp-out');
+      var go = function () {
+        if (done || gen !== swapGen) return;
+        done = true;
+        cmp.classList.remove('cmp-out');
+        void cmp.offsetWidth; /* restart the animation on quick repeat clicks */
+        cmp.classList.add('cmp-in');
+      };
+      Promise.all(els.map(function (el) {
+        if (el.tagName === 'VIDEO') {
+          return new Promise(function (ready) {
+            if (el.readyState >= 2) return ready();
+            var unwatch = function () {
+              el.removeEventListener('loadeddata', settle);
+              el.removeEventListener('error', settle);
+              clipRefused = unwatchClip = null;
+            };
+            var settle = function () { unwatch(); ready(); };
+            el.addEventListener('loadeddata', settle);
+            el.addEventListener('error', settle);
+            /* With preload="none" a refused play() never loads a frame. */
+            clipRefused = settle;
+            unwatchClip = unwatch;
+          });
+        }
+        return el.decode ? el.decode().catch(function () {}) : null;
+      })).then(go);
+    };
     var setTagText = function (el, text, ico) {
       if (!el) return;
       var nm = el.querySelector('.tag-nm');
@@ -730,6 +770,7 @@
     };
     tabs.forEach(function (tab) {
       tab.addEventListener('click', function () {
+        var wasVideo = cmp.classList.contains('has-video');
         tabs.forEach(function (t) { t.setAttribute('aria-pressed', 'false'); });
         tab.setAttribute('aria-pressed', 'true');
         if (tab.dataset.ratio) cmp.style.setProperty('--ar', tab.dataset.ratio);
@@ -763,6 +804,7 @@
           if (mute) { mute.hidden = tab.dataset.sound !== '1'; }
           vid.load();
           startClip(tab.dataset.sound === '1', 0);
+          if (fadeIn) reveal([vid]);
         } else {
           [before, after, bar].forEach(function (el) { el.style.display = 'block'; });
           tags.forEach(function (el) { el.style.display = ''; });
@@ -772,8 +814,12 @@
           if (ghost) {
             crossfade(tab.dataset.before, tab.dataset.after, applyMeta);
           } else {
+            /* Clicking the pair already on screen has nothing new to fade in. */
+            var fresh = wasVideo || before.getAttribute('src') !== tab.dataset.before ||
+              after.getAttribute('src') !== tab.dataset.after;
             before.src = tab.dataset.before;
             after.src = tab.dataset.after;
+            if (fadeIn && fresh) reveal([before, after]);
           }
           /* Keep the divider where the reader left it when only the result changes. */
           if (!root.dataset.keepPos) setPos(50);

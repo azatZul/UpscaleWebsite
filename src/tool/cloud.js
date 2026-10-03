@@ -17,8 +17,6 @@ export function createCloud(hooks) {
   const options = defaultOptions();
   const restoreButtons = [...document.querySelectorAll('[data-restore-mode]')];
   const resolutionButtons = [...document.querySelectorAll('[data-resolution]')];
-  const stepText = [...elements['step-upscale'].childNodes].find(node => node.nodeType === Node.TEXT_NODE);
-  const deviceStep = stepText?.nodeValue ?? '';
 
   let running = false;
 
@@ -34,11 +32,11 @@ export function createCloud(hooks) {
   function render({busy = false, locked = isLocked()} = {}) {
     const mode = getMode();
     const cloud = mode !== 'device';
-    elements['private-badge'].hidden = cloud;
-    elements['cloud-badge'].hidden = !cloud;
+    // The drop zone's corner note says where the photo is processed.
+    elements['private-note'].hidden = cloud;
+    elements['cloud-note'].hidden = !cloud;
     elements['creative-options'].hidden = mode !== 'creative' || busy;
     elements['restore-options'].hidden = mode !== 'restore' || busy;
-    if (stepText) stepText.nodeValue = cloud ? t('step_process') : deviceStep;
 
     const table = session.state.prices || DEFAULT_PRICES;
     for (const button of restoreButtons) {

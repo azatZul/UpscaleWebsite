@@ -276,10 +276,11 @@ async function handleAlbum(request: Request, env: Env, albumId: string): Promise
   const slides = photos.results.map((photo, index) => {
     const sized = photo.after_width > 0 && photo.after_height > 0;
     const photoRatio = (sized ? photo.after_width / photo.after_height : 4 / 3).toFixed(4);
+    const afterVersion = encodeURIComponent(photo.after_key.split("/").pop() ?? photo.after_key);
     return `<article class="album-slide" data-album-slide style="--photo-ar:${photoRatio}"${index === 0 ? "" : " hidden"}>
       <div class="cmp-wrap" data-keep-pos="1">
         <div class="cmp" role="group" aria-label="Original and result: ${escapeHtml(photo.alt)}">
-          <img class="a-img" src="/media/${album.id}/${photo.id}/after.webp" width="${photo.after_width}" height="${photo.after_height}" ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async" alt="${escapeHtml(photo.alt)}">
+          <img class="a-img" src="/media/${album.id}/${photo.id}/after.webp?v=${afterVersion}" width="${photo.after_width}" height="${photo.after_height}" ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async" alt="${escapeHtml(photo.alt)}">
           <img class="b" src="/media/${album.id}/${photo.id}/before.webp" width="${photo.before_width}" height="${photo.before_height}" ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async" alt="Original scan: ${escapeHtml(photo.alt)}">
           <span class="cmp-bar" aria-label="Drag to compare"></span>
           <span class="cmp-tag l">Original</span><span class="cmp-tag r">Result</span>

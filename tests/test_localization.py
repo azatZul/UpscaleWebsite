@@ -83,34 +83,44 @@ class CatalogTests(unittest.TestCase):
         self.assertIsNone(compare["compare.crop_alt"]["de"])
 
     def test_dynamic_facts_use_each_locale_own_numbers_and_currency(self):
-        # The rating count is refreshed from the App Store, so take it from the
-        # facts file and assert only the grouping separator each locale uses.
+        # Prices and the rating count follow the App Store, so take them from the
+        # facts file and assert only which locale's price and marks end up in the copy.
         digits = str(site_build.RATING_COUNT)
         self.assertEqual(len(digits), 4, "regroup the expectations below")
         grouped = {"en": ",", "fr": "\u00a0", "de": ".", "ru": "\u00a0", "ja": ","}
+        # France and Germany space the percent sign off; the rest write it flush.
+        percent = {"en": "", "fr": "\u00a0", "de": "\u00a0", "ru": "", "ja": ""}
         template = "{rating_count} · {annual_price} · {off}"
-        self.assertEqual(
-            site_build.inject_facts(template, "en"),
-            f"{digits[0]}{grouped['en']}{digits[1:]} · $39.99 · 25%",
-        )
-        # France and Germany share the euro tier but not the grouping mark.
-        self.assertEqual(
-            site_build.inject_facts(template, "fr"),
-            f"{digits[0]}{grouped['fr']}{digits[1:]} · 44,99\u00a0\u20ac · 25\u00a0%",
-        )
-        self.assertEqual(
-            site_build.inject_facts(template, "de"),
-            f"{digits[0]}{grouped['de']}{digits[1:]} · 44,99\u00a0\u20ac · 25\u00a0%",
-        )
-        self.assertEqual(
-            site_build.inject_facts(template, "ru"),
-            f"{digits[0]}{grouped['ru']}{digits[1:]} · 3\u00a0490\u00a0\u20bd · 25%",
-        )
-        # Japanese groups and points like English, so only the currency differs.
-        self.assertEqual(
-            site_build.inject_facts(template, "ja"),
-            f"{digits[0]}{grouped['ja']}{digits[1:]} · \u00a56,000 · 25%",
-        )
+        for lang in grouped:
+            with self.subTest(lang=lang):
+                prices = site_build.locale_pricing(lang)
+                price = site_build.money_text(prices["annual"], prices["currency"], lang)
+                self.assertEqual(
+                    site_build.inject_facts(template, lang),
+                    f"{digits[0]}{grouped[lang]}{digits[1:]} · {price} · "
+                    f"{site_build._SALE_PERCENT}{percent[lang]}%",
+                )
+        # Each locale quotes its own store's currency, not the reference one.
+        self.assertEqual(site_build.locale_pricing("ru")["currency"], "RUB")
+        self.assertEqual(site_build.locale_pricing("ja")["currency"], "JPY")
+        self.assertEqual(site_build.locale_pricing("de")["currency"], "EUR")
+
+    def test_prices_are_written_the_way_each_store_writes_them(self):
+        # Fixed amounts, so a price change in app_facts.json can't break this.
+        cases = [
+            (1234.5, "USD", "en", "$1,234.50"),
+            # France and Germany share the euro but not the grouping mark.
+            (1234.5, "EUR", "fr", "1\u00a0234,50\u00a0\u20ac"),
+            (1234.5, "EUR", "de", "1.234,50\u00a0\u20ac"),
+            (1234.5, "EUR", "es", "1.234,50\u00a0\u20ac"),
+            # Roubles and yen have no minor units in the store.
+            (2690, "RUB", "ru", "2\u00a0690\u00a0\u20bd"),
+            # Japanese groups and points like English, so only the currency differs.
+            (5890, "JPY", "ja", "\u00a55,890"),
+        ]
+        for amount, currency, lang, expected in cases:
+            with self.subTest(lang=lang, currency=currency):
+                self.assertEqual(site_build.money_text(amount, currency, lang), expected)
 
     def test_rating_uses_the_locale_decimal_mark(self):
         self.assertEqual(site_build.rating_text("en"), "4.6")

@@ -128,7 +128,22 @@ describe.sequential("album worker", () => {
     // A one-photo album carries no carousel controls.
     expect(html).not.toContain('data-album-counter');
     expect(html).toContain("Portrait &lt;01&gt;");
+    expect(html).toContain(`/media/${FEATURED}/${PHOTO}/after.webp?v=after-wm.webp`);
     expect(html).not.toContain("Download full resolution");
+  });
+
+  it("versions result preview URLs when the D1 object key changes", async () => {
+    const key = `albums/${FEATURED}/${PHOTO}/after-wm-v2.webp`;
+    await env.MEDIA.put(key, new Uint8Array([70, 71]), { httpMetadata: { contentType: "image/webp" } });
+    await env.DB.prepare(
+      "UPDATE photos SET after_key=?3,after_width=2400,after_height=1800,after_bytes=2 WHERE album_id=?1 AND id=?2",
+    ).bind(FEATURED, PHOTO, key).run();
+    const html = await (await fetchWorker(`/gallery/${FEATURED}`)).text();
+    expect(html).toContain(`/media/${FEATURED}/${PHOTO}/after.webp?v=after-wm-v2.webp`);
+    expect(html).toContain('width="2400" height="1800"');
+    expect(html).toContain(`/media/${FEATURED}/${PHOTO}/before.webp`);
+    const image = await fetchWorker(`/media/${FEATURED}/${PHOTO}/after.webp?v=after-wm-v2.webp`);
+    expect([...new Uint8Array(await image.arrayBuffer())]).toEqual([70, 71]);
   });
 
   it("renders a zero-price locked album as a watermarked preview", async () => {
