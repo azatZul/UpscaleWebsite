@@ -45,12 +45,12 @@ test('tiles cover the whole photo and overlap by the blend width', () => {
   }
 });
 
-test('asks for 4K per tile once a photo needs more than two', () => {
-  assert.equal(tiledResolution('8k', 1), '8k');
-  assert.equal(tiledResolution('8k', 2), '8k');
-  assert.equal(tiledResolution('8k', 4), '4k', 'four 8K tiles would be enormous');
-  assert.equal(tiledResolution('4k', 4), '4k');
-  assert.equal(tiledResolution('2k', 4), '2k');
+test('asks each tile for one size down, so the stitched photo is the chosen size', () => {
+  assert.equal(tiledResolution('8k', 1), '8k', 'one tile asks for what was chosen');
+  assert.equal(tiledResolution('4k', 1), '4k');
+  assert.equal(tiledResolution('8k', 2), '4k', 'tiles side by side make the chosen size');
+  assert.equal(tiledResolution('4k', 4), '2k');
+  assert.equal(tiledResolution('2k', 4), '2k', 'nothing below 2K');
 });
 
 test('thresholds match the app exactly', () => {

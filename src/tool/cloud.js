@@ -4,7 +4,7 @@
 // processing live in one card.
 import {DEFAULT_PRICES, cloudCredits, cloudFields, defaultOptions, normalizeRestore} from './cloud-pricing.js';
 import {prepareUpload, uploadPlan} from './cloud-image.js';
-import {mergeTiles, splitPhoto, tileGrid, tileRects} from './creative-tiles.js';
+import {mergeTiles, splitPhoto, tileGrid, tileRects, tiledResolution} from './creative-tiles.js';
 import {ApiError} from './account-link.js';
 import {AnalyticsEvent, SCREEN} from './analytics.js';
 
@@ -101,11 +101,15 @@ export function createCloud(hooks) {
    *  throw the result away: if saving it fails, the photo is still shown and
    *  still downloadable, just not kept in history. */
   async function stitch(response, rects, grid, original) {
-    const tiles = [];
-    for (const tile of response.tiles) {
-      setStatus(t('cloud_merging'), t('cloud_tile_progress', {index: tile.index + 1, total: response.tiles.length}));
-      tiles.push(await session.tile(tile, response.jobId));
-    }
+    // All at once: each is a few megabytes, and one after another they add up.
+    let fetched = 0;
+    const total = response.tiles.length;
+    setStatus(t('cloud_merging'), t('cloud_tile_progress', {index: 1, total}));
+    const tiles = await Promise.all(response.tiles.map(tile => session.tile(tile, response.jobId).then(blob => {
+      fetched += 1;
+      setStatus(t('cloud_merging'), t('cloud_tile_progress', {index: Math.min(fetched + 1, total), total}));
+      return blob;
+    })));
     setStatus(t('cloud_merging'), t('cloud_merging_detail'));
     const merged = await mergeTiles(tiles, rects, {width: rects.at(-1).x + rects.at(-1).width,
       height: rects.at(-1).y + rects.at(-1).height}, grid);
@@ -116,7 +120,9 @@ export function createCloud(hooks) {
     } catch {
       // Keeping the copy is best effort; the photo below is the real result.
     }
-    if (saved?.saved) return {...response, ...saved};
+    // The save answers with resultUrl; the viewer shows outputUrl. Without this
+    // the page pointed the result at nothing while history had the photo.
+    if (saved?.saved) return {...response, ...saved, outputUrl: saved.resultUrl, downloadUrl: saved.downloadUrl};
     const local = URL.createObjectURL(merged);
     return {...response, outputUrl: local, downloadUrl: local, saved: false};
   }
@@ -182,10 +188,14 @@ export function createCloud(hooks) {
 
     const elapsed = () => Math.round((performance.now() - startedAt) / 1000);
     // The provider reports no progress, so the bar is an estimate, and a
-    // pessimistic one: a minute per round of provider calls (a 4K upscale takes
-    // it 40-50 s; tiles go two at a time). It fills to 95% over that time and
-    // then only creeps, so a slow job never shows a full bar that is not done.
-    const estimateMs = 60_000 * Math.ceil((rects?.length ?? 1) / 2);
+    // pessimistic one: per provider call, about half again what it measured
+    // (2K ~17 s, 4K ~45 s), times the rounds of tiles, which go two at a time,
+    // plus time to stitch them. It fills to 95% over that and then only creeps,
+    // so a slow job never shows a full bar that is not done.
+    const tileCount = rects?.length ?? 1;
+    const callMs = {'2k': 25_000, '4k': 60_000, '8k': 120_000}[tiledResolution(chosen.resolution, tileCount)];
+    const estimateMs = mode === 'creative' && callMs
+      ? callMs * Math.ceil(tileCount / 2) + (tileCount > 1 ? 10_000 : 0) : 60_000;
     const fraction = () => {
       const ms = performance.now() - startedAt;
       return ms < estimateMs ? 0.95 * ms / estimateMs : 0.95 + 0.04 * (1 - Math.exp((estimateMs - ms) / estimateMs));

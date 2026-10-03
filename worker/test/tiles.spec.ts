@@ -41,7 +41,7 @@ describe.sequential("tiled creative upscale", () => {
     expect(body).toMatchObject({ charged: 10, balance: 90, tileCount: 4, saved: false });
     expect(stubs.auralensCalls).toHaveLength(4);
     expect(stubs.auralensCalls.every(call => call.path === "/creative-upscale")).toBe(true);
-    // Four 8K tiles would be enormous, so each tile is asked for at 4K, as in the app.
+    // Stitched side by side, 4K tiles make the 8K photo that was chosen.
     expect(stubs.auralensCalls.map(call => call.fields.target_resolution)).toEqual(["4k", "4k", "4k", "4k"]);
     expect(body.tiles.map((tile: any) => tile.index)).toEqual([0, 1, 2, 3]);
     expect(body.tiles.every((tile: any) => typeof tile.sig === "string" && tile.url === RESULT_URL)).toBe(true);
@@ -50,11 +50,26 @@ describe.sequential("tiled creative upscale", () => {
     expect(await creditBalance(env.ACCOUNTS_DB, account.id)).toBe(90);
   });
 
-  it("keeps 8K per tile when a photo only needs two", async () => {
+  it("asks each tile for one size down, and keeps the chosen size on the job", async () => {
+    const sub = `sub-${crypto.randomUUID()}`;
+    const account = await fundedAccount(sub, 100);
+    const body = await (await post(sub, "/api/cloud/creative", tiledForm("req-tiled-002", 2, { resolution: "4k" }))).json() as Record<string, any>;
+    expect(stubs.auralensCalls.map(call => call.fields.target_resolution)).toEqual(["2k", "2k"]);
+    const job = await env.ACCOUNTS_DB.prepare("SELECT price_key, options FROM cloud_jobs WHERE id = ? AND account_id = ?")
+      .bind(body.jobId, account.id).first<{ price_key: string; options: string }>();
+    expect(job?.price_key).toBe("creative:4k");
+    expect(JSON.parse(job!.options)).toMatchObject({ resolution: "4k" });
+  });
+
+  it("asks a single photo for the size that was chosen", async () => {
     const sub = `sub-${crypto.randomUUID()}`;
     await fundedAccount(sub, 100);
-    await post(sub, "/api/cloud/creative", tiledForm("req-tiled-002", 2, { resolution: "8k" }));
-    expect(stubs.auralensCalls.map(call => call.fields.target_resolution)).toEqual(["8k", "8k"]);
+    const form = new FormData();
+    form.append("image", new File([new Uint8Array(64).fill(1)], "photo.jpg", { type: "image/jpeg" }));
+    form.append("requestId", "req-single-001");
+    form.append("resolution", "4k");
+    await post(sub, "/api/cloud/creative", form);
+    expect(stubs.auralensCalls.map(call => call.fields.target_resolution)).toEqual(["4k"]);
   });
 
   it("refuses more tiles than the grid allows, and tiling for restore", async () => {

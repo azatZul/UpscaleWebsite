@@ -3,8 +3,9 @@
 // The same geometry as the iOS app's CreativeTiler, so a photo comes back the
 // same shape whichever surface ran it: a 2x2 grid above 2160 square, two tiles
 // above 1280 square, one tile below that, with a 32px overlap the seams are
-// blended across. Each tile is upscaled on its own, so three or four of them
-// already make a very large photo -- that is why 8K drops to 4K past two.
+// blended across. Each tile is upscaled on its own and the tiles are stitched
+// side by side, so each asks for one size down and the stitched photo comes
+// out at the chosen size (see tiledResolution).
 
 export const TILE_OVERLAP = 32;
 export const TWO_TILE_PIXELS = 1280 * 1280;
@@ -50,7 +51,8 @@ export function tileRects(width, height, grid = tileGrid(width, height), overlap
 
 /** The resolution to ask the provider for, per tile. */
 export function tiledResolution(resolution, tileCount) {
-  return tileCount > 2 && resolution === '8k' ? '4k' : resolution;
+  if (tileCount <= 1) return resolution;
+  return {'8k': '4k', '4k': '2k', '2k': '2k'}[resolution] ?? resolution;
 }
 
 function makeCanvas(width, height) {

@@ -639,6 +639,7 @@ const CLOUD_PATH = /^\/api\/cloud\/(creative|restore)$/;
 // A big photo goes up as tiles, mirroring the app's CreativeTiler: a 2x2
 // grid above 2160 square, two tiles above 1280 square, one below that.
 const MAX_CREATIVE_TILES = 4;
+const TILE_RESOLUTION = { "8k": "4k", "4k": "2k", "2k": "2k" } as const;
 const JOB_ID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const HISTORY_ITEM_PATH = /^\/api\/history\/([0-9a-f-]{36})$/;
 const HISTORY_MEDIA_PATH = /^\/media\/history\/([0-9a-f-]{36})\/(original|result)$/;
@@ -831,12 +832,16 @@ async function handleCloudOperation(
     const value = form.get(name);
     fields[name] = typeof value === "string" ? value : undefined;
   }
-  const parsedInput = parseCloudRequest(kind, fields);
-  if ("error" in parsedInput) return json({ error: parsedInput.error }, 400);
-  // Each tile is upscaled on its own, so three or four of them already make a
-  // very large photo; the app drops 8K to 4K in that case and so does this.
-  const parsed = parsedInput.kind === "creative" && tileCount > 2 && parsedInput.resolution === "8k"
-    ? { ...parsedInput, resolution: "4k" as const } : parsedInput;
+  const parsed = parseCloudRequest(kind, fields);
+  if ("error" in parsed) return json({ error: parsed.error }, 400);
+  // Each tile is upscaled on its own and the tiles are stitched side by side,
+  // so asking for the full resolution per tile would make a photo twice the
+  // size that was chosen -- and a 4K call takes the provider about 45 s
+  // against 17 s for 2K. So each tile asks for one size down; the stitched
+  // photo comes out at the chosen size. The job keeps the chosen resolution for
+  // its price and its history; only the call to the provider changes.
+  const providerRequest = parsed.kind === "creative" && tileCount > 1
+    ? { ...parsed, resolution: TILE_RESOLUTION[parsed.resolution] } : parsed;
   const cost = creditsFor(parsed);
   const key = priceKey(parsed);
 
@@ -881,7 +886,7 @@ async function handleCloudOperation(
         const next = pending.shift();
         if (!next) return;
         const { outputUrl } = await runCloudRequest(
-          { baseUrl: env.AURALENS_URL, apiKey }, parsed, next.file, next.file.name || `photo-${next.index}.jpg`,
+          { baseUrl: env.AURALENS_URL, apiKey }, providerRequest, next.file, next.file.name || `photo-${next.index}.jpg`,
         );
         outputs[next.index] = outputUrl;
       }
