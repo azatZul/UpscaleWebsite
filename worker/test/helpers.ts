@@ -25,7 +25,7 @@ export interface Stubs {
   auralensCalls: AuralensCall[];
   setAuralensResponder(responder: () => Response): void;
   setResultResponder(responder: () => Response): void;
-  idToken(firebaseUid: string, provider?: string): Promise<string>;
+  idToken(firebaseUid: string, provider?: string, email?: string): Promise<string>;
   restore(): void;
 }
 
@@ -68,12 +68,12 @@ export async function installStubs(): Promise<Stubs> {
     auralensCalls,
     setAuralensResponder: responder => { auralensResponder = responder; },
     setResultResponder: responder => { resultResponder = responder; },
-    async idToken(firebaseUid: string, provider = "google.com") {
+    async idToken(firebaseUid: string, provider = "google.com", email = "cloud@example.com") {
       const now = Math.floor(Date.now() / 1000);
       const encode = (value: unknown) => b64url(new TextEncoder().encode(JSON.stringify(value)));
       const signingInput = `${encode({ alg: "RS256", kid: KID, typ: "JWT" })}.${encode({
         iss: `https://securetoken.google.com/${PROJECT}`, aud: PROJECT, sub: firebaseUid, iat: now - 10, exp: now + 3600,
-        email: "cloud@example.com", firebase: { identities: { [provider]: [`provider-${firebaseUid}`] }, sign_in_provider: provider },
+        email, email_verified: true, firebase: { identities: { [provider]: [`provider-${firebaseUid}`] }, sign_in_provider: provider },
       })}`;
       const signature = await crypto.subtle.sign("RSASSA-PKCS1-v1_5", keyPair.privateKey, new TextEncoder().encode(signingInput));
       return `${signingInput}.${b64url(new Uint8Array(signature))}`;

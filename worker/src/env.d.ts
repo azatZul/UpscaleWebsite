@@ -7,6 +7,8 @@
 declare global {
   interface Env {
     STRIPE_SECRET_KEY?: string;
+    // Test mode only: who may buy and spend credits. See test-mode.ts.
+    TEST_ALLOWED_EMAILS?: string;
     STRIPE_WEBHOOK_SECRET?: string;
     // Bearer key for the auralens processing service. Cloud operations answer
     // 503 until it is set, the same way billing does without Stripe keys.

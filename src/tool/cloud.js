@@ -85,6 +85,7 @@ export function createCloud(hooks) {
     session.apply(body);
     const backToReady = () => { setPhase('ready'); setStatus(t('cloud_ready'), t('cloud_ready_detail')); };
     if (status === 401) { requireSignIn(); return; }
+    if (status === 403 && body?.error === 'test_mode_restricted') { fail('cloud', 'cloud_test_mode'); return; }
     if (status === 402) { topUp.show({reason: 'cloud', title: topUpTitle()}); backToReady(); return; }
     if (status === 413) { fail('size', 'cloud_too_large'); return; }
     if (status === 429) { fail('cloud', 'cloud_too_many'); return; }

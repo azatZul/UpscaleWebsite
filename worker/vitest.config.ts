@@ -11,6 +11,9 @@ export default defineConfig({
           // Stripe credentials are secrets in real deployments; tests supply
           // fakes so the billing paths are exercised without a live account.
           STRIPE_SECRET_KEY: "sk_test_fake",
+          // The fake key is a test key, so the test-mode lock is on: these are the
+          // emails the suites sign in with.
+          TEST_ALLOWED_EMAILS: "cloud@example.com, buyer@example.com",
           STRIPE_WEBHOOK_SECRET: "whsec_test_secret",
           UPSCALER_TOOL_API_KEY: "test-tool-key-that-is-long-enough-000000",
           MEDIA_SIGNING_KEY: "test-media-signing-key-0123456789abcdef",

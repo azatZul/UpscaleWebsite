@@ -15,6 +15,8 @@ const MESSAGES = {
   401: 'Your session expired. Sign in again to continue.',
   503: 'Payments are not switched on yet. Check back shortly.',
 };
+// Only the test site answers this way: see worker/src/test-mode.ts.
+const TEST_MODE_MESSAGE = "This is UScale's test site, where credits are free, so buying and using them is limited to the team. If you're a developer, ask for your email to be added to TEST_ALLOWED_EMAILS.";
 
 async function call(path, {method = 'GET', body} = {}) {
   const token = await getAccessToken();
@@ -36,7 +38,9 @@ async function call(path, {method = 'GET', body} = {}) {
 
   const payload = await response.json().catch(() => null);
   if (!response.ok) {
-    throw new ApiError(MESSAGES[response.status] || 'Something went wrong on our side. Please try again.', response.status, payload);
+    const message = payload?.error === 'test_mode_restricted' ? TEST_MODE_MESSAGE
+      : MESSAGES[response.status] || 'Something went wrong on our side. Please try again.';
+    throw new ApiError(message, response.status, payload);
   }
   return payload;
 }

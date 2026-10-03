@@ -1,3 +1,4 @@
+import { testModeAllows } from "./test-mode";
 import { bearerToken, verifyIdToken, type VerifiedIdentity } from "./auth";
 import {
   attachHistoryMedia, completeCloudJob, countActiveJobs, creditBalance, deleteHistoryItem, failCloudJob,
@@ -518,6 +519,7 @@ async function ensureCustomer(env: Env, config: { secretKey: string }, account: 
 async function handleCheckout(request: Request, env: Env, identity: VerifiedIdentity): Promise<Response> {
   const config = stripeConfig(env);
   if (!config) return json({ error: "billing_unavailable" }, 503);
+  if (!testModeAllows(env, identity)) return json({ error: "test_mode_restricted" }, 403);
 
   let body: { packId?: unknown; amountCents?: unknown };
   try {
@@ -838,6 +840,7 @@ async function handleCloudOperation(
   identity: VerifiedIdentity,
   kind: CloudKind,
 ): Promise<Response> {
+  if (!testModeAllows(env, identity)) return json({ error: "test_mode_restricted" }, 403);
   const apiKey = env.UPSCALER_TOOL_API_KEY;
   if (!apiKey || !env.AURALENS_URL) return json({ error: "processing_unavailable" }, 503);
   if (Number(request.headers.get("content-length") ?? 0) > MAX_UPLOAD_BYTES + 256_000) {

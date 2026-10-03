@@ -2334,5 +2334,16 @@
       "es": "Ir al inicio de sesión"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.cloud_test_mode": {
+    "localizations": {
+      "en": "This is UScale's test site, where credits are free, so buying and using them is limited to the team. If you're a developer, ask for your email to be added to TEST_ALLOWED_EMAILS.",
+      "ru": "Это тестовый сайт UScale: кредиты здесь бесплатные, поэтому покупать и тратить их может только команда. Если вы разработчик, попросите добавить ваш email в TEST_ALLOWED_EMAILS.",
+      "de": "Dies ist die Testseite von UScale: Credits sind hier kostenlos, daher kann nur das Team sie kaufen und nutzen. Wenn du Entwickler bist, bitte darum, deine E-Mail in TEST_ALLOWED_EMAILS aufzunehmen.",
+      "ja": "ここはUScaleのテストサイトです。クレジットが無料のため、購入と利用はチームに限られています。開発者の方は、メールアドレスをTEST_ALLOWED_EMAILSに追加するよう依頼してください。",
+      "fr": "Ceci est le site de test d’UScale : les crédits y sont gratuits, leur achat et leur utilisation sont donc réservés à l’équipe. Si vous êtes développeur, demandez l’ajout de votre e-mail à TEST_ALLOWED_EMAILS.",
+      "es": "Este es el sitio de pruebas de UScale: aquí los créditos son gratis, así que comprarlos y usarlos está limitado al equipo. Si eres desarrollador, pide que añadan tu correo a TEST_ALLOWED_EMAILS."
+    },
+    "comment": "Shown only on the test site; keep TEST_ALLOWED_EMAILS untranslated."
   }
 }
