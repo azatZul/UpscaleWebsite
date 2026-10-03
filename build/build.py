@@ -2016,6 +2016,14 @@ def render_static_redirects():
             rules.append(f"{directory} {directory}index.html 200")
             if directory != "/":
                 rules.append(f"{directory.rstrip('/')} {directory} 301")
+    # The legal and support pages live at .html addresses; a link or a typed
+    # address without the extension should still find them.
+    for code in LOCALIZED_CODES:
+        segment = BY_CODE[code][1]
+        base = f"/{segment}/" if segment else "/"
+        for page in ("terms", "privacy_policy", "support_page"):
+            rules.append(f"{base}{page} {base}{page}.html 301")
+            rules.append(f"{base}{page}/ {base}{page}.html 301")
     if TOOL_SCRIPT:
         # The preview first shipped at /upscale/.
         rules += [f"/upscale/ /{TOOL_PATH}/ 301", f"/upscale /{TOOL_PATH}/ 301"]
