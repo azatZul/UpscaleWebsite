@@ -282,7 +282,7 @@ const ALBUM_NOTICES: Record<AlbumNotice, string> = {
   retry: "Checkout is busy right now. Please try again in a minute.",
   failed: "Checkout could not be started. Please try again.",
   unavailable: "Payments are not available right now. Please try again later.",
-  paid: "Thank you! This album is now unlocked for everyone with this link.",
+  paid: "Thank you! Your photos are unlocked and ready to download.",
   pending: "Your payment is being confirmed. Refresh this page in a minute.",
   refunded: "This album had already been unlocked, so your payment is being refunded in full.",
 };
@@ -376,7 +376,7 @@ async function handleAlbum(request: Request, env: Env, albumId: string): Promise
   const unlock = !unlocked && album.sale_ready
     ? `<form class="album-actions album-unlock" method="post" action="/gallery/${album.id}/unlock" data-album-unlock>
         <button class="btn btn-p" type="submit">${ICON_UNLOCK}Unlock full resolution — ${escapeHtml(formatPrice(album.price_cents, album.currency))}</button>
-        <span class="album-unlock-note">One payment unlocks downloads for everyone with this link. No account needed.</span>
+        <span class="album-unlock-note">One-time payment unlocks downloads of these photos. No account needed.</span>
       </form>`
     : "";
   const date = albumDate(album.created_at);

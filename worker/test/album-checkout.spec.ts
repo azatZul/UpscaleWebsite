@@ -464,7 +464,7 @@ describe.sequential("confirming a payment", () => {
     expect(await refundJobs(id)).toHaveLength(0);
 
     const page = await (await fetchWorker(`/gallery/${id}?payment=paid`)).text();
-    expect(page).toContain("This album is now unlocked for everyone");
+    expect(page).toContain("Your photos are unlocked and ready to download");
   });
 
   it("does not ask Stripe about a session it did not create for this album", async () => {
