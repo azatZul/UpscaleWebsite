@@ -148,7 +148,8 @@ describe.sequential("album worker", () => {
 
   it("renders a zero-price locked album as a watermarked preview", async () => {
     const albumPage = await (await fetchWorker(`/gallery/${FEATURED}`)).text();
-    expect(albumPage).toContain("This album shows watermarked previews.");
+    expect(albumPage).toContain("after.webp?v=after-wm-v2.webp");
+    expect(albumPage).not.toContain("data-album-unlock");
     expect(albumPage).not.toContain("$0.00");
   });
 
@@ -195,7 +196,10 @@ describe.sequential("album worker", () => {
     await insertAlbum(id, "unlocked", false);
     const statements = [];
     for (let position = 19; position > 0; position--) {
-      statements.push(env.DB.prepare(`INSERT INTO photos
+      statements.push(env.DB.prepare(`INSERT INTO photos (
+          album_id, id, position, before_key, before_width, before_height, before_bytes, before_sha256,
+          after_key, after_width, after_height, after_bytes, after_sha256,
+          clean_key, clean_width, clean_height, clean_bytes, clean_mime, clean_sha256, alt)
         SELECT album_id, ?2, ?3, before_key, before_width, before_height, before_bytes, before_sha256,
                after_key, after_width, after_height, after_bytes, after_sha256,
                clean_key, clean_width, clean_height, clean_bytes, clean_mime, clean_sha256, ?4

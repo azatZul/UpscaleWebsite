@@ -1,21 +1,34 @@
 // A hand-rolled Stripe client, deliberately.
 //
-// The official SDK expects Node built-ins and bundles far more surface than two
-// endpoints need. Stripe's REST API is form-encoded HTTP, and webhook signing
-// is an HMAC we can do with WebCrypto, so the whole integration is this file.
+// The official SDK expects Node built-ins and bundles far more surface than the
+// handful of endpoints used here need. Stripe's REST API is form-encoded HTTP,
+// and webhook signing is an HMAC we can do with WebCrypto, so the whole
+// integration is this file.
 //
 // Nothing here trusts the amounts Stripe echoes back: the webhook resolves the
-// pack from our own table and refuses a session whose total disagrees with it.
+// pack (or the album attempt) from our own tables and refuses a session whose
+// total disagrees with it.
 
 const API_BASE = "https://api.stripe.com/v1";
 // Stripe's own recommended replay window for webhook timestamps.
 const SIGNATURE_TOLERANCE = 300;
 
 export class StripeError extends Error {
-  constructor(message: string) {
+  /** Stripe's HTTP status, or undefined when no answer arrived at all. */
+  readonly status?: number;
+  constructor(message: string, status?: number) {
     super(message);
     this.name = "StripeError";
+    this.status = status;
   }
+}
+
+/** Whether Stripe definitely refused the request, so repeating it cannot help.
+ *  A network failure, a 5xx, a 429, or a 409 (the same idempotency key still in
+ *  flight) leaves the outcome unknown: the request may yet have taken effect. */
+export function isDefinitiveRefusal(error: unknown): boolean {
+  if (!(error instanceof StripeError) || error.status === undefined) return false;
+  return error.status >= 400 && error.status < 500 && error.status !== 409 && error.status !== 429;
 }
 
 type Fetcher = typeof fetch;
@@ -37,38 +50,51 @@ function formEncode(params: Record<string, unknown>, prefix = ""): string[] {
   return pairs;
 }
 
+async function sendStripe(
+  config: StripeConfig,
+  method: "GET" | "POST",
+  path: string,
+  body?: string,
+  idempotencyKey?: string,
+): Promise<any> {
+  const headers: Record<string, string> = {
+    Authorization: `Bearer ${config.secretKey}`,
+    // Pin the version: an account-level default upgrade must not silently
+    // reshape the payloads this code parses.
+    "Stripe-Version": "2025-08-27.basil",
+  };
+  if (method === "POST") headers["Content-Type"] = "application/x-www-form-urlencoded";
+  if (idempotencyKey) headers["Idempotency-Key"] = idempotencyKey;
+
+  let response: Response;
+  try {
+    response = await (config.fetcher ?? fetch)(`${API_BASE}${path}`, { method, headers, body });
+  } catch {
+    throw new StripeError("Could not reach Stripe");
+  }
+  const parsed = await response.json().catch(() => null) as any;
+  if (!response.ok) {
+    // Stripe's message is safe to log but not to return: it can quote request
+    // parameters back, and those include our own identifiers.
+    throw new StripeError(parsed?.error?.message ?? `Stripe returned ${response.status}`, response.status);
+  }
+  return parsed;
+}
+
 async function callStripe(
   config: StripeConfig,
   path: string,
   params: Record<string, unknown>,
   idempotencyKey?: string,
 ): Promise<any> {
-  const headers: Record<string, string> = {
-    Authorization: `Bearer ${config.secretKey}`,
-    "Content-Type": "application/x-www-form-urlencoded",
-    // Pin the version: an account-level default upgrade must not silently
-    // reshape the payloads this code parses.
-    "Stripe-Version": "2025-08-27.basil",
-  };
-  if (idempotencyKey) headers["Idempotency-Key"] = idempotencyKey;
+  return sendStripe(config, "POST", path, formEncode(params).join("&"), idempotencyKey);
+}
 
-  let response: Response;
-  try {
-    response = await (config.fetcher ?? fetch)(`${API_BASE}${path}`, {
-      method: "POST",
-      headers,
-      body: formEncode(params).join("&"),
-    });
-  } catch {
-    throw new StripeError("Could not reach Stripe");
-  }
-  const body = await response.json().catch(() => null) as any;
-  if (!response.ok) {
-    // Stripe's message is safe to log but not to return: it can quote request
-    // parameters back, and those include our own identifiers.
-    throw new StripeError(body?.error?.message ?? `Stripe returned ${response.status}`);
-  }
-  return body;
+/** Stripe object ids are word characters after a prefix; anything else is not
+ *  put into a URL path. */
+function objectPath(prefix: string, id: string, suffix = ""): string {
+  if (!/^\w+$/.test(id)) throw new StripeError("Invalid Stripe object id");
+  return `${prefix}/${id}${suffix}`;
 }
 
 export async function createCustomer(
@@ -122,6 +148,92 @@ export async function createCheckoutSession(
     throw new StripeError("Stripe returned no checkout URL");
   }
   return { id: session.id, url: session.url };
+}
+
+export interface AlbumCheckoutInput {
+  checkoutId: string;
+  albumId: string;
+  productName: string;
+  priceCents: number;
+  successUrl: string;
+  cancelUrl: string;
+}
+
+/** The form body for an album unlock session, built once per attempt and
+ *  stored, so a retry sends exactly the same request under the same key.
+ *
+ *  No expires_at: Stripe's 24-hour default applies, and the real deadline is
+ *  read from the response. A stored deadline would be refused on a later retry,
+ *  since Stripe wants at least 30 minutes from the moment of creation. Cards
+ *  only (which covers Apple Pay and Google Pay), so a completed session is a
+ *  paid one and there is no delayed-payment state to track. */
+export function albumCheckoutBody(input: AlbumCheckoutInput): string {
+  return formEncode({
+    mode: "payment",
+    "payment_method_types[0]": "card",
+    success_url: input.successUrl,
+    cancel_url: input.cancelUrl,
+    // kind keeps these sessions apart from credit purchases in the webhook.
+    metadata: { kind: "album_unlock", album_id: input.albumId, checkout_id: input.checkoutId },
+    payment_intent_data: { metadata: { kind: "album_unlock", album_id: input.albumId } },
+    "line_items[0]": {
+      quantity: 1,
+      price_data: {
+        currency: "usd",
+        unit_amount: input.priceCents,
+        product_data: { name: input.productName },
+      },
+    },
+  }).join("&");
+}
+
+export async function createCheckoutSessionFromBody(
+  config: StripeConfig,
+  body: string,
+  idempotencyKey: string,
+): Promise<{ id: string; url: string; expiresAt: number | null }> {
+  const session = await sendStripe(config, "POST", "/checkout/sessions", body, idempotencyKey);
+  if (typeof session?.id !== "string" || typeof session?.url !== "string") {
+    throw new StripeError("Stripe returned no checkout URL");
+  }
+  return { id: session.id, url: session.url, expiresAt: Number.isInteger(session.expires_at) ? session.expires_at : null };
+}
+
+export async function retrieveCheckoutSession(config: StripeConfig, sessionId: string): Promise<any> {
+  return sendStripe(config, "GET", objectPath("/checkout/sessions", sessionId));
+}
+
+/** Close an open session so nobody can pay it any more. Stripe refuses this for
+ *  a session that is already complete or expired. */
+export async function expireCheckoutSession(config: StripeConfig, sessionId: string): Promise<any> {
+  return sendStripe(config, "POST", objectPath("/checkout/sessions", sessionId, "/expire"), "");
+}
+
+export interface RefundResult {
+  id: string;
+  status: string;
+}
+
+function refundResult(refund: any): RefundResult {
+  if (typeof refund?.id !== "string" || typeof refund?.status !== "string") {
+    throw new StripeError("Stripe returned no refund");
+  }
+  return { id: refund.id, status: refund.status };
+}
+
+/** Refund a whole payment. Keyed on the payment, so a retry never refunds twice. */
+export async function createRefund(
+  config: StripeConfig,
+  input: { paymentIntent: string; reason: string },
+): Promise<RefundResult> {
+  return refundResult(await callStripe(config, "/refunds", {
+    payment_intent: input.paymentIntent,
+    metadata: { kind: "album_unlock", reason: input.reason },
+  }, `album-refund:${input.paymentIntent}`));
+}
+
+export async function retrieveRefund(config: StripeConfig, refundId: string): Promise<RefundResult> {
+  return refundResult(await sendStripe(config, "GET", objectPath("/refunds", refundId)));
 }
 
 /** Compare two hex digests without leaking where they differ via timing. */

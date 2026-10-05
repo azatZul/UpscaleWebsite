@@ -42,6 +42,13 @@ GALLERY_VERSION = "v2"
 LEGACY_GALLERY_SIZE = (1280, 960)
 LEGACY_GALLERY_VERSION = "v1"
 PROCESSING_PROFILE_VERSION = "1"
+# Default album price by photo count: (up to this many photos, cents). `--price-usd` and
+# `set-price --price-usd` override it per album; the price itself lives in D1.
+ALBUM_PRICE_TIERS = ((1, 300), (4, 500), (20, 800))
+# Stripe's smallest USD charge. 0 means "not for sale"; anything in between cannot be sold.
+MIN_PRICE_CENTS = 50
+# Keep every supported payment method within Stripe's eight-digit USD amount limit.
+MAX_PRICE_CENTS = 99_999_999
 ALLOWED_FLOWS = {"photo-restoration", "creative-upscale", "restore-and-upscale"}
 ALLOWED_FORMATS = {"JPEG": ("jpg", "image/jpeg"), "PNG": ("png", "image/png"), "WEBP": ("webp", "image/webp")}
 PREFERRED_RESOLUTIONS = (
@@ -433,7 +440,7 @@ def make_cover(after_preview: Path, destination: Path) -> None:
     save_image(background, destination, "JPEG")
 
 
-def make_gallery_preview(media: Dict[str, Any], destination: Path) -> None:
+def make_gallery_preview(media: Dict[str, Any], destination: Path, watermarked: bool) -> None:
     """Build the gallery card exactly at its rendered before/after aspect ratio."""
     before = ImageOps.fit(
         open_normalized(Path(media["before"]["path"])).convert("RGB"),
@@ -445,7 +452,7 @@ def make_gallery_preview(media: Dict[str, Any], destination: Path) -> None:
         GALLERY_HALF_SIZE,
         method=Image.Resampling.LANCZOS,
     )
-    if Path(media["after"]["key"]).name.startswith("after-wm"):
+    if watermarked:
         after = add_watermark(after, logo_path=configured_watermark_logo())
     combined = Image.new("RGB", GALLERY_SIZE)
     combined.paste(before, (0, 0))
@@ -464,7 +471,9 @@ def resize_gallery_preview(source: Path, destination: Path) -> None:
     save_image(resized, destination, "JPEG", quality=GALLERY_QUALITY)
 
 
-def ensure_gallery_preview(folder: Path, state: Dict[str, Any], media: Dict[str, Dict[str, Any]]) -> Dict[str, Any]:
+def ensure_gallery_preview(
+    folder: Path, state: Dict[str, Any], media: Dict[str, Dict[str, Any]], watermarked: bool,
+) -> Dict[str, Any]:
     destination = folder / WORK_NAME / f"gallery-{GALLERY_VERSION}.jpg"
     expected_key = f"albums/{state['album_id']}/gallery-{GALLERY_VERSION}.jpg"
     existing = state.get("gallery")
@@ -478,11 +487,46 @@ def ensure_gallery_preview(folder: Path, state: Dict[str, Any], media: Dict[str,
                 or (existing.get("width"), existing.get("height")) != LEGACY_GALLERY_SIZE):
             raise AlbumError("Prepared gallery preview does not match the current profile; start in a new folder")
     first_id = state["photos"][0]["id"]
-    make_gallery_preview(media[first_id], destination)
+    make_gallery_preview(media[first_id], destination, watermarked)
     record = file_record(inspect_image(destination), expected_key)
     state["gallery"] = record
     save_state(folder, state)
     return record
+
+
+def unlocked_cover_key(album_id: str) -> str:
+    return f"albums/{album_id}/cover-unlocked.jpg"
+
+
+def unlocked_gallery_key(album_id: str) -> str:
+    return f"albums/{album_id}/gallery-{GALLERY_VERSION}-unlocked.jpg"
+
+
+def prepared_twin(state: Dict[str, Any], name: str, key: str) -> Optional[Dict[str, Any]]:
+    """A clean twin prepared by an earlier run, if it is still the one wanted."""
+    record = state.get(name)
+    if record and record.get("key") == key:
+        verify_record(record)
+        return record
+    return None
+
+
+def ensure_unlocked_twins(folder: Path, state: Dict[str, Any], media: Dict[str, Dict[str, Any]]) -> None:
+    """Clean cover and gallery card for a watermarked album, shown once it is unlocked."""
+    album_id = state["album_id"]
+    first = media[state["photos"][0]["id"]]
+    cover_key = unlocked_cover_key(album_id)
+    if not prepared_twin(state, "unlocked_cover", cover_key):
+        path = folder / WORK_NAME / "cover-unlocked.jpg"
+        make_cover(Path(first["unlocked_after"]["path"]), path)
+        state["unlocked_cover"] = file_record(inspect_image(path), cover_key)
+        save_state(folder, state)
+    gallery_key = unlocked_gallery_key(album_id)
+    if not prepared_twin(state, "unlocked_gallery", gallery_key):
+        path = folder / WORK_NAME / f"gallery-{GALLERY_VERSION}-unlocked.jpg"
+        make_gallery_preview(first, path, watermarked=False)
+        state["unlocked_gallery"] = file_record(inspect_image(path), gallery_key)
+        save_state(folder, state)
 
 
 class AuraLensClient:
@@ -598,6 +642,25 @@ def ensure_after(
     return output_path
 
 
+def ensure_unlocked_after(
+    folder: Path, state: Dict[str, Any], photo_id: str, prepared: Dict[str, Any], watermarked: bool,
+) -> None:
+    """Keep a clean twin beside a watermarked result preview, for after a paid unlock."""
+    if not watermarked:
+        prepared.pop("unlocked_after", None)
+        return
+    name = result_preview_name(False)
+    key = f"albums/{state['album_id']}/{photo_id}/{name}"
+    existing = prepared.get("unlocked_after")
+    if existing and existing.get("key") == key:
+        verify_record(existing)
+        return
+    path = folder / WORK_NAME / photo_id / name
+    save_result_preview(Path(prepared["clean"]["path"]), path, False)
+    prepared["unlocked_after"] = file_record(inspect_image(path), key)
+    save_state(folder, state)
+
+
 def prepare_media(
     folder: Path,
     photos: Sequence[Dict[str, Any]],
@@ -622,6 +685,7 @@ def prepare_media(
                 save_result_preview(Path(prepared["clean"]["path"]), after_path, watermarked)
                 prepared["after"] = file_record(inspect_image(after_path), after_key)
                 save_state(folder, state)
+            ensure_unlocked_after(folder, state, photo_id, prepared, watermarked)
             prepared["alt"] = photo["alt"]
             media[photo_id] = prepared
             clean_total += prepared["clean"]["bytes"]
@@ -657,6 +721,7 @@ def prepare_media(
             "position": index,
         }
         photo_state["media"] = photo_media
+        ensure_unlocked_after(folder, state, photo_id, photo_media, watermarked)
         media[photo_id] = photo_media
         save_state(folder, state)
 
@@ -668,7 +733,13 @@ def prepare_media(
     else:
         make_cover(Path(media[first_id]["after"]["path"]), cover_path)
         cover = file_record(inspect_image(cover_path), f"albums/{state['album_id']}/cover.jpg")
-    gallery = ensure_gallery_preview(folder, state, media)
+    gallery = ensure_gallery_preview(folder, state, media, watermarked)
+    if watermarked:
+        ensure_unlocked_twins(folder, state, media)
+    else:
+        # Published clean: the stored previews already are the unlocked ones.
+        state.pop("unlocked_cover", None)
+        state.pop("unlocked_gallery", None)
 
     # A prepared archive is reused as-is, like the cover and the gallery preview above, so a
     # resumed run cannot drop a record it is not rebuilding.
@@ -870,20 +941,31 @@ class CloudflareAdmin:
 
 def price_cents(photo_count: int, override: Optional[str]) -> int:
     if override is None:
-        return 300 if photo_count == 1 else (500 if photo_count <= 4 else 800)
+        for most_photos, cents in ALBUM_PRICE_TIERS:
+            if photo_count <= most_photos:
+                return cents
+        return ALBUM_PRICE_TIERS[-1][1]
     try:
         value = Decimal(override)
     except InvalidOperation as error:
         raise AlbumError("--price-usd must be a number") from error
-    if value < 0 or value.as_tuple().exponent < -2:
-        raise AlbumError("--price-usd must be non-negative with at most two decimals")
-    return int(value * 100)
+    if not value.is_finite() or value < 0 or value.as_tuple().exponent < -2:
+        raise AlbumError("--price-usd must be a finite, non-negative amount with at most two decimals")
+    if value > Decimal(MAX_PRICE_CENTS) / 100:
+        raise AlbumError(f"--price-usd must be at most {MAX_PRICE_CENTS / 100:.2f}")
+    cents = int(value * 100)
+    if 0 < cents < MIN_PRICE_CENTS:
+        raise AlbumError(f"--price-usd must be 0 (not for sale) or at least {MIN_PRICE_CENTS / 100:.2f}")
+    return cents
 
 
 def all_records(state: Dict[str, Any]) -> List[Dict[str, Any]]:
     records = [state["cover"], state["gallery"]]
     for photo in state["photos"]:
         records.extend(photo["media"][name] for name in ("before", "after", "clean"))
+        if photo["media"].get("unlocked_after"):
+            records.append(photo["media"]["unlocked_after"])
+    records.extend(state[name] for name in ("unlocked_cover", "unlocked_gallery") if state.get(name))
     if state.get("zip"):
         records.append(state["zip"])
     return records
@@ -924,6 +1006,8 @@ def publish(folder: Path, unlocked: bool, price_override: Optional[str]) -> Dict
 
     cover = state["cover"]
     gallery = state["gallery"]
+    unlocked_cover = state.get("unlocked_cover") or {}
+    unlocked_gallery = state.get("unlocked_gallery") or {}
     zip_record = state.get("zip")
     now = int(state["created_at"])
     statements: List[Tuple[str, Sequence[Any]]] = [(
@@ -931,8 +1015,10 @@ def publish(folder: Path, unlocked: bool, price_override: Optional[str]) -> Dict
              id,title,note,state,featured,price_cents,currency,photo_count,
              cover_photo_id,cover_key,cover_mime,cover_width,cover_height,cover_bytes,
              gallery_key,gallery_mime,gallery_width,gallery_height,gallery_bytes,
-             zip_key,zip_bytes,source_url,created_at,unlocked_at
-           ) VALUES(?1,?2,?3,?4,?5,?6,'USD',?7,?8,?9,?10,?11,?12,?13,?14,?15,?16,?17,?18,?19,?20,?21,?22,?23)""",
+             zip_key,zip_bytes,source_url,created_at,unlocked_at,
+             unlocked_cover_key,unlocked_cover_bytes,unlocked_gallery_key,unlocked_gallery_bytes
+           ) VALUES(?1,?2,?3,?4,?5,?6,'USD',?7,?8,?9,?10,?11,?12,?13,?14,?15,?16,?17,?18,?19,?20,?21,?22,?23,
+                    ?24,?25,?26,?27)""",
         (
             state["album_id"], manifest["title"].strip(), manifest.get("note"),
             "unlocked" if unlocked else "locked", 1 if manifest.get("featured", False) else 0,
@@ -941,22 +1027,27 @@ def publish(folder: Path, unlocked: bool, price_override: Optional[str]) -> Dict
             gallery["key"], gallery["content_type"], gallery["width"], gallery["height"], gallery["bytes"],
             zip_record["key"] if zip_record else None, zip_record["bytes"] if zip_record else None,
             manifest.get("source_url"), now, now if unlocked else None,
+            unlocked_cover.get("key"), unlocked_cover.get("bytes"),
+            unlocked_gallery.get("key"), unlocked_gallery.get("bytes"),
         ),
     )]
     for photo_state in state["photos"]:
         media = photo_state["media"]
         before, after, clean = media["before"], media["after"], media["clean"]
+        twin = media.get("unlocked_after") or {}
         statements.append((
             """INSERT INTO photos(
                  album_id,id,position,before_key,before_width,before_height,before_bytes,before_sha256,
                  after_key,after_width,after_height,after_bytes,after_sha256,
-                 clean_key,clean_width,clean_height,clean_bytes,clean_mime,clean_sha256,alt
-               ) VALUES(?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12,?13,?14,?15,?16,?17,?18,?19,?20)""",
+                 clean_key,clean_width,clean_height,clean_bytes,clean_mime,clean_sha256,alt,
+                 unlocked_after_key,unlocked_after_bytes,unlocked_after_sha256
+               ) VALUES(?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12,?13,?14,?15,?16,?17,?18,?19,?20,?21,?22,?23)""",
             (
                 state["album_id"], photo_state["id"], media["position"],
                 before["key"], before["width"], before["height"], before["bytes"], before["sha256"],
                 after["key"], after["width"], after["height"], after["bytes"], after["sha256"],
                 clean["key"], clean["width"], clean["height"], clean["bytes"], clean["content_type"], clean["sha256"], media["alt"],
+                twin.get("key"), twin.get("bytes"), twin.get("sha256"),
             ),
         ))
     admin.batch(statements)
@@ -1015,7 +1106,8 @@ def delete_album(album_id: str) -> Dict[str, Any]:
     validate_album_id(album_id)
     admin = CloudflareAdmin()
     rows = admin.query(
-        """SELECT a.cover_key, a.gallery_key, a.zip_key, p.before_key, p.after_key, p.clean_key
+        """SELECT a.cover_key, a.gallery_key, a.zip_key, a.unlocked_cover_key, a.unlocked_gallery_key,
+                  p.before_key, p.after_key, p.clean_key, p.unlocked_after_key
              FROM albums a LEFT JOIN photos p ON p.album_id=a.id WHERE a.id=?1""",
         (album_id,),
     )
@@ -1025,7 +1117,8 @@ def delete_album(album_id: str) -> Dict[str, Any]:
     admin.execute("UPDATE albums SET state='deleted', featured=0, deleted_at=?1 WHERE id=?2 AND state!='deleted'", (now, album_id))
     keys = set()
     for row in rows:
-        for name in ("cover_key", "gallery_key", "zip_key", "before_key", "after_key", "clean_key"):
+        for name in ("cover_key", "gallery_key", "zip_key", "unlocked_cover_key", "unlocked_gallery_key",
+                     "before_key", "after_key", "clean_key", "unlocked_after_key"):
             value = row.get(name)
             if isinstance(value, str) and value:
                 keys.add(value)
@@ -1035,7 +1128,8 @@ def delete_album(album_id: str) -> Dict[str, Any]:
 
 def list_albums(as_json: bool = False) -> Optional[Dict[str, Any]]:
     rows = CloudflareAdmin().query(
-        "SELECT id,title,state,featured,photo_count,created_at FROM albums ORDER BY created_at DESC LIMIT 200"
+        f"SELECT a.id,a.title,a.state,a.featured,a.photo_count,a.created_at,a.price_cents,"
+        f" {MEDIA_READY_SQL} AS media_ready FROM albums a ORDER BY a.created_at DESC LIMIT 200"
     )
     if not as_json:
         for row in rows:
@@ -1050,6 +1144,8 @@ def list_albums(as_json: bool = False) -> Optional[Dict[str, Any]]:
             "state": row["state"],
             "featured": bool(row.get("featured")),
             "photo_count": row.get("photo_count"),
+            "price_cents": row.get("price_cents"),
+            "media_ready": bool(row.get("media_ready")),
             "created_at": row.get("created_at"),
             "url": f"{base_url}/gallery/{row['id']}",
             "gallery_url": f"{base_url}/media/{row['id']}/gallery.jpg",
@@ -1266,6 +1362,212 @@ def migrate_previews(album_id: Optional[str], all_albums: bool, dry_run: bool) -
         "photos": results,
     }
 
+# Same test as MEDIA_READY_SQL in worker/src/album-checkout.ts: every clean twin is in place.
+MEDIA_READY_SQL = """(a.unlocked_cover_key IS NOT NULL
+  AND (a.gallery_key IS NULL OR a.unlocked_gallery_key IS NOT NULL)
+  AND NOT EXISTS (SELECT 1 FROM photos p WHERE p.album_id = a.id AND p.unlocked_after_key IS NULL))"""
+
+
+def set_price(album_id: str, price_override: Optional[str]) -> Dict[str, Any]:
+    """Price a locked album: the tier for its photo count, or --price-usd. 0 takes it off sale."""
+    validate_album_id(album_id)
+    base_url = required_env("ALBUM_BASE_URL").rstrip("/")
+    admin = CloudflareAdmin()
+    rows = admin.query(
+        f"SELECT a.state, a.photo_count, a.price_cents, {MEDIA_READY_SQL} AS media_ready FROM albums a WHERE a.id=?1",
+        (album_id,),
+    )
+    if not rows or rows[0].get("state") == "deleted":
+        raise AlbumError("Album not found")
+    row = rows[0]
+    if row["state"] != "locked":
+        raise AlbumError("Only a locked album can be priced; this one is already unlocked")
+    cents = price_cents(int(row["photo_count"]), price_override)
+    # Selling is a promise of clean previews the moment it is paid for.
+    if cents > 0 and not row.get("media_ready"):
+        raise AlbumError(f"Album is missing clean previews; run: album migrate-unlock-previews {album_id}")
+    changes = admin.execute(
+        "UPDATE albums SET price_cents=?1 WHERE id=?2 AND state='locked' AND price_cents!=?1",
+        (cents, album_id),
+    )
+    if changes != 1:
+        settled = admin.query("SELECT state,price_cents FROM albums WHERE id=?1", (album_id,))
+        if not settled or settled[0].get("state") != "locked" or settled[0].get("price_cents") != cents:
+            raise AlbumError("Album was not changed; check its ID and current state (set-price)")
+    return {"ok": True, "album_id": album_id, "url": f"{base_url}/gallery/{album_id}",
+            "action": "set-price", "price_cents": cents, "reused": changes != 1}
+
+
+# Albums published locked, so their cover and gallery card carry watermarks. An unlocked
+# publication stamps unlocked_at with created_at; a later unlock -- by hand or paid -- lands
+# after it. Photo previews are no guide: migrate-previews makes them clean once unlocked,
+# while the cover and card keep their watermarks.
+WATERMARKED_ALBUM_SQL = """(a.state='locked'
+  OR (a.state='unlocked' AND (a.unlocked_at IS NULL OR a.unlocked_at > a.created_at))
+  OR (a.state='unlocked' AND EXISTS (SELECT 1 FROM photos w WHERE w.album_id=a.id AND w.after_key LIKE '%/after-wm%')))"""
+
+
+def migrate_unlock_previews(album_id: Optional[str], all_albums: bool, dry_run: bool) -> Dict[str, Any]:
+    """Prepare the clean twins a watermarked album shows once unlocked.
+
+    Each twin -- every photo's preview, the cover, the gallery card -- is checked and filled
+    on its own, so an interrupted run resumes with whatever is still missing. Albums are
+    chosen by WATERMARKED_ALBUM_SQL, which no run changes."""
+    if bool(album_id) == bool(all_albums):
+        raise AlbumError("migrate-unlock-previews requires either an album ID or --all")
+    params: Sequence[Any] = ()
+    where = WATERMARKED_ALBUM_SQL
+    if album_id:
+        validate_album_id(album_id)
+        where += " AND a.id=?1"
+        params = (album_id,)
+    admin = CloudflareAdmin()
+    rows = admin.query(
+        f"""SELECT a.id AS album_id,a.gallery_key,a.unlocked_cover_key,a.unlocked_gallery_key,
+                   p.id AS photo_id,p.position,p.unlocked_after_key,
+                   p.before_key,p.before_bytes,p.before_sha256,
+                   p.clean_key,p.clean_width,p.clean_height,p.clean_bytes,p.clean_mime,p.clean_sha256
+              FROM albums a JOIN photos p ON p.album_id=a.id
+             WHERE {where} ORDER BY a.created_at,a.id,p.position""",
+        params,
+    )
+    if album_id and not rows:
+        raise AlbumError("Active album published with watermarks was not found")
+    albums: Dict[str, List[Dict[str, Any]]] = {}
+    for row in rows:
+        albums.setdefault(row["album_id"], []).append(row)
+
+    results: List[Dict[str, Any]] = []
+    for current_id, photos in albums.items():
+        with tempfile.TemporaryDirectory(prefix=f"unlock-{current_id}-") as directory:
+            results.extend(_fill_album_twins(admin, current_id, photos, Path(directory), dry_run))
+
+    return {
+        "ok": True, "action": "migrate-unlock-previews", "dry_run": dry_run,
+        "albums": len(albums), "scanned": len(results),
+        "migrated": sum(item["status"] == "migrated" for item in results),
+        "would_migrate": sum(item["status"] == "would_migrate" for item in results),
+        "reused": sum(item["status"] == "reused" for item in results),
+        "skipped": sum(item["status"] == "skipped" for item in results),
+        "conflicts": sum(item["status"] == "conflict" for item in results),
+        "items": results,
+    }
+
+
+def _verified_download(admin: "CloudflareAdmin", key: str, destination: Path, expected: Dict[str, Any]) -> None:
+    """Download an R2 object and refuse it unless it matches what D1 recorded."""
+    admin.download(key, destination)
+    info = inspect_image(destination)
+    if info.sha256 != expected["sha256"] or info.size != expected["bytes"]:
+        raise AlbumError(f"R2 object {key} does not match D1 metadata")
+    for name in ("width", "height", "content_type"):
+        if expected.get(name) is not None and getattr(info, name) != expected[name]:
+            raise AlbumError(f"R2 object {key} does not match D1 metadata")
+
+
+def _fill_album_twins(
+    admin: "CloudflareAdmin", album_id: str, photos: List[Dict[str, Any]], work: Path, dry_run: bool,
+) -> List[Dict[str, Any]]:
+    results: List[Dict[str, Any]] = []
+    sources: Dict[str, Path] = {}
+
+    def source(row: Dict[str, Any], kind: str) -> Path:
+        cache = f"{row['photo_id']}/{kind}"
+        if cache not in sources:
+            path = work / row["photo_id"] / kind
+            path.parent.mkdir(parents=True, exist_ok=True)
+            if kind == "clean":
+                expected = {"sha256": row["clean_sha256"], "bytes": row["clean_bytes"], "width": row["clean_width"],
+                            "height": row["clean_height"], "content_type": row["clean_mime"]}
+                _verified_download(admin, row["clean_key"], path, expected)
+            else:
+                _verified_download(admin, row["before_key"], path,
+                                   {"sha256": row["before_sha256"], "bytes": row["before_bytes"]})
+            sources[cache] = path
+        return sources[cache]
+
+    def clean_preview(row: Dict[str, Any]) -> Path:
+        path = work / row["photo_id"] / result_preview_name(False)
+        if not path.is_file():
+            save_result_preview(source(row, "clean"), path, False)
+        return path
+
+    def apply(item: Dict[str, Any], record: Dict[str, Any], sql: str, params: Sequence[Any],
+              settled_sql: str, settled_params: Sequence[Any], column: str) -> None:
+        item.update(new_key=record["key"], new_bytes=record["bytes"])
+        if dry_run:
+            item["status"] = "would_migrate"
+            return
+        admin.upload(record)
+        if admin.execute(sql, params) == 1:
+            item["status"] = "migrated"
+            return
+        settled = admin.query(settled_sql, settled_params)
+        item["status"] = "reused" if settled and settled[0].get(column) == record["key"] else "conflict"
+
+    def attempt(item: Dict[str, Any], build) -> None:
+        try:
+            build(item)
+        except AlbumError as error:
+            item.update(status="skipped", reason=str(error))
+        except Exception as error:
+            response = getattr(error, "response", {})
+            code = str(response.get("Error", {}).get("Code", "")) if isinstance(response, dict) else ""
+            if not isinstance(error, FileNotFoundError) and code not in {"404", "NoSuchKey", "NotFound"}:
+                raise
+            item.update(status="skipped", reason="Source R2 object is missing")
+        results.append(item)
+
+    for row in photos:
+        item = {"album_id": album_id, "variant": "photo", "photo_id": row["photo_id"]}
+        if row.get("unlocked_after_key"):
+            results.append(dict(item, status="reused", new_key=row["unlocked_after_key"]))
+            continue
+
+        def build_photo(item: Dict[str, Any], row: Dict[str, Any] = row) -> None:
+            key = f"albums/{album_id}/{row['photo_id']}/{result_preview_name(False)}"
+            record = file_record(inspect_image(clean_preview(row)), key)
+            apply(item, record,
+                  """UPDATE photos SET unlocked_after_key=?1,unlocked_after_bytes=?2,unlocked_after_sha256=?3
+                      WHERE album_id=?4 AND id=?5 AND unlocked_after_key IS NULL
+                        AND clean_key=?6 AND clean_sha256=?7""",
+                  (record["key"], record["bytes"], record["sha256"], album_id, row["photo_id"],
+                   row["clean_key"], row["clean_sha256"]),
+                  "SELECT unlocked_after_key FROM photos WHERE album_id=?1 AND id=?2",
+                  (album_id, row["photo_id"]), "unlocked_after_key")
+        attempt(item, build_photo)
+
+    first = min(photos, key=lambda row: row["position"])
+    if first.get("unlocked_cover_key"):
+        results.append({"album_id": album_id, "variant": "cover", "status": "reused", "new_key": first["unlocked_cover_key"]})
+    else:
+        def build_cover(item: Dict[str, Any]) -> None:
+            path = work / "cover-unlocked.jpg"
+            make_cover(clean_preview(first), path)
+            record = file_record(inspect_image(path), unlocked_cover_key(album_id))
+            apply(item, record,
+                  """UPDATE albums SET unlocked_cover_key=?1,unlocked_cover_bytes=?2
+                      WHERE id=?3 AND state IN ('locked','unlocked') AND unlocked_cover_key IS NULL""",
+                  (record["key"], record["bytes"], album_id),
+                  "SELECT unlocked_cover_key FROM albums WHERE id=?1", (album_id,), "unlocked_cover_key")
+        attempt({"album_id": album_id, "variant": "cover"}, build_cover)
+
+    if first.get("gallery_key") and first.get("unlocked_gallery_key"):
+        results.append({"album_id": album_id, "variant": "gallery", "status": "reused", "new_key": first["unlocked_gallery_key"]})
+    elif first.get("gallery_key"):
+        def build_gallery(item: Dict[str, Any]) -> None:
+            path = work / f"gallery-{GALLERY_VERSION}-unlocked.jpg"
+            media = {"before": {"path": str(source(first, "before"))}, "clean": {"path": str(source(first, "clean"))}}
+            make_gallery_preview(media, path, watermarked=False)
+            record = file_record(inspect_image(path), unlocked_gallery_key(album_id))
+            apply(item, record,
+                  """UPDATE albums SET unlocked_gallery_key=?1,unlocked_gallery_bytes=?2
+                      WHERE id=?3 AND state IN ('locked','unlocked') AND unlocked_gallery_key IS NULL""",
+                  (record["key"], record["bytes"], album_id),
+                  "SELECT unlocked_gallery_key FROM albums WHERE id=?1", (album_id,), "unlocked_gallery_key")
+        attempt({"album_id": album_id, "variant": "gallery"}, build_gallery)
+    return results
+
 
 def gc_albums(delete: bool) -> None:
     admin = CloudflareAdmin()
@@ -1313,6 +1615,10 @@ def parser() -> argparse.ArgumentParser:
         command = sub.add_parser(action)
         command.add_argument("album_id")
         command.add_argument("--json", action="store_true")
+    pricing = sub.add_parser("set-price", help="Price a locked album; 0 takes it off sale")
+    pricing.add_argument("album_id")
+    pricing.add_argument("--price-usd", help="Defaults to the tier for the album's photo count")
+    pricing.add_argument("--json", action="store_true")
     rename = sub.add_parser("rename")
     rename.add_argument("album_id")
     rename.add_argument("--title", required=True)
@@ -1329,6 +1635,12 @@ def parser() -> argparse.ArgumentParser:
     preview_migration.add_argument("--all", action="store_true", dest="all_albums")
     preview_migration.add_argument("--dry-run", action="store_true")
     preview_migration.add_argument("--json", action="store_true")
+    unlock_migration = sub.add_parser("migrate-unlock-previews",
+                                      help="Prepare clean previews shown after an album is unlocked")
+    unlock_migration.add_argument("album_id", nargs="?")
+    unlock_migration.add_argument("--all", action="store_true", dest="all_albums")
+    unlock_migration.add_argument("--dry-run", action="store_true")
+    unlock_migration.add_argument("--json", action="store_true")
     gc = sub.add_parser("gc")
     gc.add_argument("--delete", action="store_true", help="Delete listed orphan objects")
     return root
@@ -1354,6 +1666,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             result = migrate_gallery(args.album_id, args.all_albums, args.dry_run)
         elif args.command == "migrate-previews":
             result = migrate_previews(args.album_id, args.all_albums, args.dry_run)
+        elif args.command == "migrate-unlock-previews":
+            result = migrate_unlock_previews(args.album_id, args.all_albums, args.dry_run)
+        elif args.command == "set-price":
+            result = set_price(args.album_id, args.price_usd)
         elif args.command == "gc":
             gc_albums(args.delete)
         if result is not None:
@@ -1369,6 +1685,17 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 changed = result["would_migrate"] if result["dry_run"] else result["migrated"]
                 print(f"preview migration: {changed} changed, {result['reused']} current, "
                       f"{result['skipped']} skipped, {result['conflicts']} conflicts, {result['scanned']} scanned")
+            elif args.command == "migrate-unlock-previews":
+                changed = result["would_migrate"] if result["dry_run"] else result["migrated"]
+                print(f"unlock preview migration: {changed} changed, {result['reused']} current, "
+                      f"{result['skipped']} skipped, {result['conflicts']} conflicts, "
+                      f"{result['albums']} album(s)")
+                for item in result["items"]:
+                    if item["status"] in {"skipped", "conflict"}:
+                        print(f"  {item['status']}: {item['album_id']} {item['variant']} {item.get('reason', '')}".rstrip())
+            elif args.command == "set-price":
+                price = f"${result['price_cents'] / 100:.2f}" if result["price_cents"] else "not for sale"
+                print(f"set-price: {result['album_id']} {price}")
             elif args.command in {"publish", "resume"}:
                 print(result["url"])
             else:

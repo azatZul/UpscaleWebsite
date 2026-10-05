@@ -33,10 +33,42 @@ Python tests, Worker checks, remote D1 migration and deploy as one sequence. Use
 `production` only after the staging smoke test; the Netlify deploy remains available
 as rollback.
 
-Migration `0001` also creates `checkouts`, `payment_events` and `refund_jobs`. Nothing
-reads them yet: they are reserved for the paid-unlock stage and are deliberately kept
-rather than dropped, because the migration is already applied to both remote
-databases.
+## Paid album unlocks
+
+A locked album that is for sale shows an "Unlock" button. A visitor pays on Stripe
+Checkout without an account, and the album opens for everyone with its link:
+downloads, the ZIP, and clean previews in place of the watermarked ones. The code is
+in `src/album-checkout.ts`.
+
+- **For sale** means locked, priced at $0.50 or more, and every clean preview twin
+  present in D1 (`unlocked_after_key` on each photo, `unlocked_cover_key`, and
+  `unlocked_gallery_key` when there is a gallery card). Prices and twins are set by
+  the album CLI (`set-price`, `migrate-unlock-previews`).
+- **One payable session per album.** `POST /gallery/<id>/unlock` writes the attempt to
+  `checkouts` before calling Stripe; a partial unique index allows one creating-or-open
+  attempt per album. The attempt id is the Stripe idempotency key and the stored form
+  body is resent byte for byte, so a crash at any point recovers the same session. An
+  old session is closed in Stripe (after reading what it really is) before another is
+  made.
+- **Confirmation** comes from the `checkout.session.completed` webhook or from the
+  success redirect, whichever is first. One D1 batch unlocks the album, records the
+  payment in `payment_events`, and queues a refund in `refund_jobs` when the payment
+  did not unlock it (paid after a manual unlock, or after deletion).
+- **Refunds** are pushed by the 10-minute cron until Stripe reports them succeeded or
+  failed; `album_refund_failed` in the logs needs a human. A refund or chargeback of an
+  album payment does not lock the album again.
+- **`STRIPE_MODE`** (`live` in production, `test` elsewhere) is the only mode album
+  payments accept: a key or an event from the other mode is refused, so test keys can
+  never unlock a production album. No extra webhook events need enabling.
+
+Migration `0003` replaces the `checkouts`, `payment_events` and `refund_jobs` tables
+that `0001` reserved but never used. Before applying it to a remote database, check
+that all three are still empty:
+
+```bash
+npx wrangler d1 execute uscale-albums --env production --remote --command \
+  "SELECT (SELECT COUNT(*) FROM checkouts) AS c, (SELECT COUNT(*) FROM payment_events) AS p, (SELECT COUNT(*) FROM refund_jobs) AS r"
+```
 
 Run `npm run types` whenever a binding changes. Do not add provider or Cloudflare API
 tokens to this Worker: administrative writes are performed by the local album CLI.

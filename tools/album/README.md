@@ -33,10 +33,39 @@ python3 tools/album/album.py publish /path/to/album --json --unlocked
 
 Set `ALBUM_ENVIRONMENT=staging` and `ALBUM_BASE_URL=https://<your-worker>.workers.dev`
 for staging; production uses `ALBUM_ENVIRONMENT=production` and defaults to
-`ALBUM_BASE_URL=https://upscales.app`. A locked album can be published with
-`--price-usd 0` and later opened with `album unlock <id>`; no checkout is exposed.
-Use `--json` for machine-readable integration output. `unlock`, `feature`,
-`unfeature` and `rename` are no-ops when the album is already in that state.
+`ALBUM_BASE_URL=https://upscales.app`. Use `--json` for machine-readable integration
+output. `unlock`, `feature`, `unfeature`, `rename` and `set-price` are no-ops when the
+album is already in that state.
+
+### Selling an album
+
+A locked album is sold through a pay-to-unlock button on its page (see
+`worker/README.md`). Its price is stored per album in D1. By default it follows
+`ALBUM_PRICE_TIERS` in `album.py`: $3 for one photo, $5 for 2–4, $8 for 5–20.
+`--price-usd` overrides it at publish time, and `set-price` changes it later. `0` means
+"not for sale"; prices between $0.01 and $0.49 are refused because Stripe cannot charge
+them. The largest accepted price is $999,999.99, within Stripe's eight-digit
+USD amount limit. `album unlock <id>` still opens an album by hand without payment.
+
+A locked publication uploads a clean twin of every watermarked preview: the result
+preview, the cover and the gallery card. The page switches to them as soon as the
+album is unlocked. Albums published before the twins existed need them prepared
+before they can be sold:
+
+```bash
+python3 tools/album/album.py migrate-unlock-previews --all --dry-run
+python3 tools/album/album.py migrate-unlock-previews --all
+python3 tools/album/album.py set-price <id>
+python3 tools/album/album.py set-price <id> --price-usd 4.50
+python3 tools/album/album.py set-price <id> --price-usd 0
+```
+
+`migrate-unlock-previews` covers every non-deleted album that was published locked,
+including ones already unlocked by hand -- even after `migrate-previews` has made their
+photo previews clean, since their cover and gallery card keep the watermark. It checks each twin separately, so an
+interrupted run resumes with whatever is still missing. Sources are verified against
+D1, and a mismatch is reported as skipped. `set-price` refuses a non-zero price until
+the twins are in place, so a buyer is never shown watermarks after paying.
 
 ```bash
 python3 tools/album/album.py list --json
@@ -46,6 +75,7 @@ python3 tools/album/album.py migrate-gallery --all --dry-run --json
 python3 tools/album/album.py migrate-gallery --all --json
 python3 tools/album/album.py migrate-previews --all --dry-run --json
 python3 tools/album/album.py migrate-previews --all --json
+python3 tools/album/album.py migrate-unlock-previews --all --json
 ```
 
 `unfeature` removes the album from `/gallery` while its direct

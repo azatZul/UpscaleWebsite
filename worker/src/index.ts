@@ -1,4 +1,8 @@
 import { testModeAllows } from "./test-mode";
+import {
+  SALE_READY_SQL, albumForPayment, confirmCheckoutReturn, handleAlbumWebhook, processRefundJobs, startAlbumCheckout,
+  type CheckoutOutcome,
+} from "./album-checkout";
 import { bearerToken, verifyIdToken, type VerifiedIdentity } from "./auth";
 import {
   attachHistoryMedia, completeCloudJob, countActiveJobs, creditBalance, deleteHistoryItem, failCloudJob,
@@ -17,6 +21,7 @@ import { StripeError, createCheckoutSession, createCustomer, verifyWebhook } fro
 
 const ALBUM_ID = "[0-9A-HJKMNP-TV-Z]{26}";
 const ALBUM_PATH = new RegExp(`^/gallery/(${ALBUM_ID})$`);
+const UNLOCK_PATH = new RegExp(`^/gallery/(${ALBUM_ID})/unlock$`);
 const COVER_PATH = new RegExp(`^/media/(${ALBUM_ID})/cover\\.jpg$`);
 const GALLERY_MEDIA_PATH = new RegExp(`^/media/(${ALBUM_ID})/gallery\\.jpg$`);
 const MEDIA_PATH = new RegExp(`^/media/(${ALBUM_ID})/(${ALBUM_ID})/(before|after)\\.webp$`);
@@ -32,6 +37,7 @@ const ICON_EXPAND = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" 
 const ICON_FLAG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V4m0 0h11l-1.5 4L15 12H4"/></svg>`;
 const ICON_CALENDAR = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>`;
 const ICON_DOWNLOAD = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>`;
+const ICON_UNLOCK = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.8-1.2"/></svg>`;
 const ICON_ARCHIVE = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18M4 7v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7M3 7l1.6-3.2A1 1 0 0 1 5.5 3h13a1 1 0 0 1 .9.8L21 7M10 12h4"/></svg>`;
 
 type AlbumState = "locked" | "unlocked" | "deleted";
@@ -47,6 +53,9 @@ type AlbumRow = {
   cover_height: number;
   zip_key: string | null;
   created_at: number;
+  price_cents: number;
+  currency: string;
+  sale_ready: number;
 };
 
 type GalleryRow = {
@@ -60,6 +69,7 @@ type GalleryRow = {
   gallery_width: number | null;
   gallery_height: number | null;
   created_at: number;
+  sale_ready: number;
 };
 
 type PhotoRow = {
@@ -206,23 +216,31 @@ function albumStageRatio(photos: PhotoRow[]): string {
 
 async function getAlbum(env: Env, id: string): Promise<AlbumRow | null> {
   return env.DB.prepare(
-    `SELECT id, title, note, state, photo_count, cover_mime, cover_width,
-            cover_height, zip_key, created_at
-       FROM albums WHERE id = ?1`,
+    `SELECT a.id, a.title, a.note, a.state, a.photo_count, a.cover_mime, a.cover_width,
+            a.cover_height, a.zip_key, a.created_at, a.price_cents, a.currency,
+            ${SALE_READY_SQL} AS sale_ready
+       FROM albums a WHERE a.id = ?1`,
   ).bind(id).first<AlbumRow>();
 }
 
+/* After a paid (or manual) unlock, the clean twin of a watermarked preview is
+   shown; until then, and for albums published unlocked, the stored key is. */
+const AFTER_KEY_SQL = "CASE WHEN a.state = 'unlocked' AND p.unlocked_after_key IS NOT NULL THEN p.unlocked_after_key ELSE p.after_key END";
+const COVER_KEY_SQL = "CASE WHEN state = 'unlocked' AND unlocked_cover_key IS NOT NULL THEN unlocked_cover_key ELSE cover_key END";
+const GALLERY_KEY_SQL = "CASE WHEN state = 'unlocked' AND unlocked_gallery_key IS NOT NULL THEN unlocked_gallery_key ELSE gallery_key END";
+
 async function renderGallery(request: Request, env: Env): Promise<Response> {
   const result = await env.DB.prepare(
-    `SELECT id, title, state, price_cents, currency, photo_count,
-            gallery_key, gallery_width, gallery_height, created_at
-       FROM albums
-      WHERE featured = 1 AND state IN ('locked', 'unlocked') AND gallery_key IS NOT NULL
-      ORDER BY created_at DESC LIMIT 100`,
+    `SELECT a.id, a.title, a.state, a.price_cents, a.currency, a.photo_count,
+            ${GALLERY_KEY_SQL} AS gallery_key, a.gallery_width, a.gallery_height, a.created_at,
+            ${SALE_READY_SQL} AS sale_ready
+       FROM albums a
+      WHERE a.featured = 1 AND a.state IN ('locked', 'unlocked') AND a.gallery_key IS NOT NULL
+      ORDER BY a.created_at DESC LIMIT 100`,
   ).all<GalleryRow>();
   const cards = result.results.map((album) => {
     const status = album.state === "locked"
-      ? ` · ${album.price_cents > 0 ? formatPrice(album.price_cents, album.currency) : "Watermarked preview"}`
+      ? ` · ${album.sale_ready ? formatPrice(album.price_cents, album.currency) : "Watermarked preview"}`
       : "";
     const title = escapeHtml(album.title);
     const date = albumDate(album.created_at);
@@ -257,15 +275,53 @@ async function handleGallery(request: Request, env: Env, ctx: ExecutionContext):
   return request.method === "HEAD" ? new Response(null, response) : response;
 }
 
+type AlbumNotice = "preparing" | "retry" | "failed" | "unavailable" | "paid" | "pending" | "refunded";
+
+const ALBUM_NOTICES: Record<AlbumNotice, string> = {
+  preparing: "Preparing checkout…",
+  retry: "Checkout is busy right now. Please try again in a minute.",
+  failed: "Checkout could not be started. Please try again.",
+  unavailable: "Payments are not available right now. Please try again later.",
+  paid: "Thank you! This album is now unlocked for everyone with this link.",
+  pending: "Your payment is being confirmed. Refresh this page in a minute.",
+  refunded: "This album had already been unlocked, so your payment is being refunded in full.",
+};
+
+function albumUrl(albumId: string, notice?: AlbumNotice): string {
+  return `/gallery/${albumId}${notice ? `?payment=${notice}` : ""}`;
+}
+
+function seeOther(location: string): Response {
+  const headers = commonHeaders();
+  headers.set("Location", location);
+  headers.set("Cache-Control", "private, no-store");
+  return new Response(null, { status: 303, headers });
+}
+
+async function handleUnlock(request: Request, env: Env, albumId: string): Promise<Response> {
+  const outcome: CheckoutOutcome = await startAlbumCheckout(env, albumId, new URL(request.url).origin);
+  return seeOther(outcome.kind === "stripe" ? outcome.url : albumUrl(albumId, outcome.notice));
+}
+
 async function handleAlbum(request: Request, env: Env, albumId: string): Promise<Response> {
+  const url = new URL(request.url);
+  // Back from Stripe: confirm now rather than wait for the webhook, then drop
+  // the session id from the address bar.
+  const checkout = url.searchParams.get("checkout");
+  if (checkout !== null && request.method === "GET") {
+    const result = await confirmCheckoutReturn(env, albumId, checkout);
+    return seeOther(albumUrl(albumId, result === "ignored" ? undefined : result));
+  }
+
   const album = await getAlbum(env, albumId);
   if (!album) return plain("Album not found", 404, { "X-Robots-Tag": "noindex, nofollow" });
   if (album.state === "deleted") return plain("Album removed", 410, { "X-Robots-Tag": "noindex, nofollow" });
 
   const photos = await env.DB.prepare(
-    `SELECT id, position, before_key, before_width, before_height, after_key,
-            after_width, after_height, clean_key, clean_bytes, clean_mime, alt
-       FROM photos WHERE album_id = ?1 ORDER BY position`,
+    `SELECT p.id, p.position, p.before_key, p.before_width, p.before_height, ${AFTER_KEY_SQL} AS after_key,
+            p.after_width, p.after_height, p.clean_key, p.clean_bytes, p.clean_mime, p.alt
+       FROM photos p JOIN albums a ON a.id = p.album_id
+      WHERE p.album_id = ?1 ORDER BY p.position`,
   ).bind(albumId).all<PhotoRow>();
   if (photos.results.length !== album.photo_count) {
     console.error(JSON.stringify({ event: "album_photo_count_mismatch", albumId }));
@@ -307,13 +363,28 @@ async function handleAlbum(request: Request, env: Env, albumId: string): Promise
     `<button type="button" class="album-dot${index === 0 ? " is-active" : ""}" data-album-dot="${index}" aria-label="Show photo ${index + 1}" aria-pressed="${index === 0 ? "true" : "false"}"></button>`,
   ).join("");
 
-  const locked = unlocked ? "" : `<div class="album-locked"><strong>This album shows watermarked previews.</strong><br>Full-resolution downloads open once the album is unlocked.</div>`;
+  const requested = url.searchParams.get("payment");
+  const noticeKey = requested && Object.hasOwn(ALBUM_NOTICES, requested) ? requested as AlbumNotice : null;
+  // "Preparing" means another request is still talking to Stripe: ask again
+  // shortly with the same POST, which then finds the session ready.
+  const notice = noticeKey
+    ? `<p class="album-notice" role="status">${ALBUM_NOTICES[noticeKey]}</p>${noticeKey === "preparing" && album.sale_ready
+      ? `<script>setTimeout(function(){var f=document.querySelector("[data-album-unlock]");if(f)f.submit()},2000)</script>`
+      : ""}`
+    : "";
+  // Sits where the download buttons appear once the album is unlocked.
+  const unlock = !unlocked && album.sale_ready
+    ? `<form class="album-actions album-unlock" method="post" action="/gallery/${album.id}/unlock" data-album-unlock>
+        <button class="btn btn-p" type="submit">${ICON_UNLOCK}Unlock full resolution — ${escapeHtml(formatPrice(album.price_cents, album.currency))}</button>
+        <span class="album-unlock-note">One payment unlocks downloads for everyone with this link. No account needed.</span>
+      </form>`
+    : "";
   const date = albumDate(album.created_at);
   const removalSubject = encodeURIComponent(`Removal request for album ${album.id}`);
   const removalBody = encodeURIComponent(`Please remove https://upscales.app/gallery/${album.id}`);
   const body = `<main class="wrap album-page" id="main-content" tabindex="-1">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>&rsaquo;</span><a href="/gallery">Gallery</a><span>&rsaquo;</span><span>${escapeHtml(album.title)}</span></nav>
-    <header class="head center album-head"><span class="eyebrow">Before &amp; after</span><h1>These photos were restored and enhanced with UScale.</h1>${locked}</header>
+    <header class="head center album-head"><span class="eyebrow">Before &amp; after</span><h1>These photos were restored and enhanced with UScale.</h1>${notice}</header>
     <section class="album-viewer" data-album-carousel tabindex="0" aria-label="Photo album">
       <div class="album-stage" data-album-stage style="--album-ar:${stageRatio}">
         <div class="album-slides">${slides}</div>
@@ -326,11 +397,11 @@ async function handleAlbum(request: Request, env: Env, albumId: string): Promise
         <div class="album-page-control" aria-label="Choose photo">${pageControl}</div>
         <span class="album-counter" data-album-counter aria-live="polite">1 / ${album.photo_count}</span>
       </nav>` : ""}
-      <div class="album-details">${details}</div>
+      <div class="album-details">${details}${unlock}</div>
     </section>
     <div class="album-foot">${date ? `<span class="album-date">${ICON_CALENDAR}<time datetime="${date.iso}">${date.label}</time></span>` : ""}<a class="album-more" href="/gallery">${ICON_GALLERY}See more examples in the gallery</a><a class="album-remove" href="mailto:${SUPPORT_EMAIL}?subject=${removalSubject}&body=${removalBody}">${ICON_FLAG}Request removal</a></div>
   </main>`;
-  const origin = new URL(request.url).origin;
+  const origin = url.origin;
   const canonical = `${origin}/gallery/${album.id}`;
   const description = album.note || `Compare ${album.photo_count} restored ${album.photo_count === 1 ? "photo" : "photos"} from UScale.`;
   const response = await renderShell(request, env, pageHead({
@@ -350,17 +421,17 @@ async function handleAlbum(request: Request, env: Env, albumId: string): Promise
 async function mediaRow(env: Env, albumId: string, photoId: string | null, variant: "before" | "after" | "cover" | "gallery"): Promise<MediaRow | null> {
   if (variant === "cover") {
     return env.DB.prepare(
-      `SELECT state, cover_key AS object_key, cover_mime AS content_type
+      `SELECT state, ${COVER_KEY_SQL} AS object_key, cover_mime AS content_type
          FROM albums WHERE id = ?1`,
     ).bind(albumId).first<MediaRow>();
   }
   if (variant === "gallery") {
     return env.DB.prepare(
-      `SELECT state, gallery_key AS object_key, gallery_mime AS content_type
+      `SELECT state, ${GALLERY_KEY_SQL} AS object_key, gallery_mime AS content_type
          FROM albums WHERE id = ?1 AND gallery_key IS NOT NULL`,
     ).bind(albumId).first<MediaRow>();
   }
-  const column = variant === "before" ? "p.before_key" : "p.after_key";
+  const column = variant === "before" ? "p.before_key" : AFTER_KEY_SQL;
   return env.DB.prepare(
     `SELECT a.state, ${column} AS object_key, 'image/webp' AS content_type
        FROM albums a JOIN photos p ON p.album_id = a.id
@@ -595,6 +666,13 @@ async function handleStripeWebhook(request: Request, env: Env): Promise<Response
     }
     const reversal = await reverseRefundedPurchase(env.ACCOUNTS_DB, { paymentIntent, amountRefunded });
     if (!reversal.found) {
+      // An album stays unlocked when its payment is refunded -- including our
+      // own refunds of duplicate payments. Leave a trail and nothing else.
+      const albumId = await albumForPayment(env, paymentIntent);
+      if (albumId) {
+        console.log(JSON.stringify({ event: "album_payment_refunded", albumId, paymentIntent, amountRefunded }));
+        return json({ received: true, ignored: "album_payment" });
+      }
       // Not a credits purchase -- this Stripe account may sell other things.
       return json({ received: true, ignored: "no_matching_purchase" });
     }
@@ -620,12 +698,25 @@ async function handleStripeWebhook(request: Request, env: Env): Promise<Response
       paymentIntent, disputeId: dispute.id, amount: dispute.amount,
       direction: event.type === "charge.dispute.funds_withdrawn" ? "withdrawn" : "reinstated",
     });
-    if (!change.found) return json({ received: true, ignored: "no_matching_purchase" });
+    if (!change.found) {
+      const albumId = await albumForPayment(env, paymentIntent);
+      if (albumId) {
+        console.warn(JSON.stringify({ event: "album_payment_disputed", albumId, paymentIntent, direction: event.type }));
+        return json({ received: true, ignored: "album_payment" });
+      }
+      return json({ received: true, ignored: "no_matching_purchase" });
+    }
     console.log(JSON.stringify({
       event: event.type === "charge.dispute.funds_withdrawn" ? "credits_disputed" : "credits_dispute_won",
       accountId: change.accountId, applied: change.applied, delta: change.delta, balance: change.balance,
     }));
     return json({ received: true, applied: change.applied, delta: change.delta, balance: change.balance });
+  }
+
+  // An album unlock, told apart from credit purchases by its metadata.
+  if (event?.type === "checkout.session.completed" && event.data?.object?.metadata?.kind === "album_unlock") {
+    const result = await handleAlbumWebhook(env, event);
+    return json(result.body, result.status);
   }
 
   // Anything else is acknowledged, not retried: Stripe resends non-2xx for days
@@ -1169,8 +1260,14 @@ async function route(request: Request, env: Env, ctx: ExecutionContext): Promise
   const url = new URL(request.url);
   const isRead = request.method === "GET" || request.method === "HEAD";
   const dynamic = url.pathname === "/gallery" || url.pathname.startsWith("/gallery/") || url.pathname.startsWith("/media/") || url.pathname.startsWith("/download/") || url.pathname.startsWith("/api/") || url.pathname.startsWith("/_shell/");
-  // /api/ is the one dynamic prefix that accepts writes: sign-in creates an
-  // account row, and Stripe will POST webhooks here.
+  // The unlock form posts here; it only ever starts a checkout.
+  const unlock = UNLOCK_PATH.exec(url.pathname);
+  if (unlock?.[1]) {
+    if (request.method !== "POST") return plain("Method not allowed", 405, { Allow: "POST" });
+    return handleUnlock(request, env, unlock[1]);
+  }
+  // /api/ is the one other dynamic prefix that accepts writes: sign-in creates
+  // an account row, and Stripe will POST webhooks here.
   if (dynamic && !isRead && !url.pathname.startsWith("/api/")) {
     return plain("Method not allowed", 405, { Allow: "GET, HEAD" });
   }
@@ -1219,10 +1316,14 @@ export default {
       return plain("Internal server error", 500);
     }
   },
-  // Every 10 minutes (wrangler.jsonc triggers): refund jobs whose request died.
+  // Every 10 minutes (wrangler.jsonc triggers): refund jobs whose request
+  // died, and push queued album refunds forward.
   async scheduled(_controller: ScheduledController, env: Env, ctx: ExecutionContext): Promise<void> {
     ctx.waitUntil(refundStaleJobs(env.ACCOUNTS_DB, Date.now() - STALE_JOB_MS).then(refunded => {
       if (refunded > 0) console.log(JSON.stringify({ event: "stale_jobs_refunded", refunded }));
+    }));
+    ctx.waitUntil(processRefundJobs(env).then(processed => {
+      if (processed > 0) console.log(JSON.stringify({ event: "album_refunds_processed", processed }));
     }));
   },
 } satisfies ExportedHandler<Env>;

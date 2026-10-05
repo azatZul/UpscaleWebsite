@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import re
 import shutil
+import sqlite3
 import sys
 import tempfile
 import unittest
@@ -65,8 +66,12 @@ class AlbumCliTests(unittest.TestCase):
     def test_price_tiers_and_override(self):
         self.assertEqual([album.price_cents(count, None) for count in (1, 2, 4, 5, 20)], [300, 500, 500, 800, 800])
         self.assertEqual(album.price_cents(20, "6.25"), 625)
-        with self.assertRaises(album.AlbumError):
-            album.price_cents(1, "1.999")
+        self.assertEqual(album.price_cents(20, "0"), 0)
+        self.assertEqual(album.price_cents(20, "0.50"), 50)
+        self.assertEqual(album.price_cents(1, "999999.99"), 99_999_999)
+        for invalid in ("1.999", "0.01", "0.49", "-1", "NaN", "Infinity", "1000000"):
+            with self.assertRaises(album.AlbumError, msg=invalid):
+                album.price_cents(1, invalid)
 
     def test_manifest_requires_rights_and_one_input_mode(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -147,6 +152,171 @@ class AlbumCliTests(unittest.TestCase):
         deleted = admin.delete_keys.call_args.args[0]
         self.assertIn(f"albums/{album_id}/gallery-v1.jpg", deleted)
 
+    def test_album_delete_removes_the_clean_twins(self):
+        album_id = "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+        admin = mock.Mock()
+        admin.query.return_value = [{
+            "cover_key": f"albums/{album_id}/cover.jpg",
+            "gallery_key": f"albums/{album_id}/gallery-v2.jpg",
+            "unlocked_cover_key": f"albums/{album_id}/cover-unlocked.jpg",
+            "unlocked_gallery_key": f"albums/{album_id}/gallery-v2-unlocked.jpg",
+            "zip_key": None,
+            "before_key": f"albums/{album_id}/photo/before.webp",
+            "after_key": f"albums/{album_id}/photo/after-wm-v2.webp",
+            "clean_key": f"albums/{album_id}/photo/clean.jpg",
+            "unlocked_after_key": f"albums/{album_id}/photo/after-v2.webp",
+        }]
+        with mock.patch.object(album, "CloudflareAdmin", return_value=admin):
+            result = album.delete_album(album_id)
+        self.assertEqual(result["deleted_objects"], 8)
+        deleted = admin.delete_keys.call_args.args[0]
+        for name in ("cover-unlocked.jpg", "gallery-v2-unlocked.jpg", "photo/after-v2.webp"):
+            self.assertIn(f"albums/{album_id}/{name}", deleted)
+
+    def published_twin_rows(self, directory: Path, count: int = 2):
+        """D1 rows and R2 objects for a watermarked album published before clean twins existed."""
+        album_id = "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+        objects: dict = {}
+        rows = []
+        for position in range(count):
+            photo_id = f"0{position + 2}ARZ3NDEKTSV4RRFFQ69G5FAV"
+            clean = directory / f"clean-{position}.jpg"
+            before = directory / f"before-{position}.webp"
+            Image.new("RGB", (640, 480), (20 * position, 120, 90)).save(clean, "JPEG")
+            Image.new("RGB", (320, 240), "gray").save(before, "WEBP")
+            clean_info, before_info = album.inspect_image(clean), album.inspect_image(before)
+            clean_key = f"albums/{album_id}/{photo_id}/clean.jpg"
+            before_key = f"albums/{album_id}/{photo_id}/before.webp"
+            objects[clean_key], objects[before_key] = clean, before
+            rows.append({
+                "album_id": album_id, "gallery_key": f"albums/{album_id}/gallery-v2.jpg",
+                "unlocked_cover_key": None, "unlocked_gallery_key": None,
+                "photo_id": photo_id, "position": position, "unlocked_after_key": None,
+                "before_key": before_key, "before_bytes": before_info.size, "before_sha256": before_info.sha256,
+                "clean_key": clean_key, "clean_width": clean_info.width, "clean_height": clean_info.height,
+                "clean_bytes": clean_info.size, "clean_mime": clean_info.content_type, "clean_sha256": clean_info.sha256,
+            })
+        admin = mock.Mock()
+        admin.query.return_value = rows
+        admin.download.side_effect = lambda key, destination: shutil.copyfile(objects[key], destination)
+        admin.execute.return_value = 1
+        return album_id, rows, admin
+
+    def test_unlock_preview_migration_dry_run_then_fills_every_twin(self):
+        with tempfile.TemporaryDirectory() as directory:
+            album_id, rows, admin = self.published_twin_rows(Path(directory))
+            with mock.patch.object(album, "CloudflareAdmin", return_value=admin):
+                dry = album.migrate_unlock_previews(None, True, True)
+                self.assertEqual(dry["would_migrate"], 4)
+                admin.upload.assert_not_called()
+                admin.execute.assert_not_called()
+                changed = album.migrate_unlock_previews(None, True, False)
+            self.assertEqual((changed["migrated"], changed["albums"]), (4, 1))
+            uploaded = [call.args[0]["key"] for call in admin.upload.call_args_list]
+            self.assertEqual(sorted(uploaded), sorted([
+                f"albums/{album_id}/{rows[0]['photo_id']}/after-v2.webp",
+                f"albums/{album_id}/{rows[1]['photo_id']}/after-v2.webp",
+                f"albums/{album_id}/cover-unlocked.jpg",
+                f"albums/{album_id}/gallery-v2-unlocked.jpg",
+            ]))
+            # Each twin is written on its own, only where it is still missing.
+            for call in admin.execute.call_args_list:
+                self.assertRegex(call.args[0], r"unlocked_\w+_key IS NULL")
+            query = admin.query.call_args_list[0].args[0]
+            self.assertIn(album.WATERMARKED_ALBUM_SQL, query)
+
+    def test_unlock_preview_migration_selects_every_album_published_locked(self):
+        db = sqlite3.connect(":memory:")
+        db.executescript("""
+            CREATE TABLE albums(id TEXT, state TEXT, created_at INTEGER, unlocked_at INTEGER);
+            CREATE TABLE photos(album_id TEXT, after_key TEXT);
+            INSERT INTO albums VALUES
+              ('locked', 'locked', 100, NULL),
+              ('unlocked-by-hand', 'unlocked', 100, 200),
+              ('unlocked-then-migrated', 'unlocked', 100, 200),
+              ('published-unlocked', 'unlocked', 100, 100),
+              ('deleted', 'deleted', 100, NULL);
+            INSERT INTO photos VALUES
+              ('locked', 'albums/locked/p/after-wm-v2.webp'),
+              ('unlocked-by-hand', 'albums/unlocked-by-hand/p/after-wm-v2.webp'),
+              ('unlocked-then-migrated', 'albums/unlocked-then-migrated/p/after-v2.webp'),
+              ('published-unlocked', 'albums/published-unlocked/p/after-v2.webp'),
+              ('deleted', 'albums/deleted/p/after-wm-v2.webp');
+        """)
+        chosen = [row[0] for row in db.execute(
+            f"SELECT a.id FROM albums a WHERE {album.WATERMARKED_ALBUM_SQL} ORDER BY a.rowid")]
+        # migrate-previews already made this album's photos clean; its cover and card are not.
+        self.assertEqual(chosen, ["locked", "unlocked-by-hand", "unlocked-then-migrated"])
+
+    def test_unlock_preview_migration_resumes_after_the_photos(self):
+        with tempfile.TemporaryDirectory() as directory:
+            album_id, rows, admin = self.published_twin_rows(Path(directory))
+            for row in rows:
+                row["unlocked_after_key"] = f"albums/{album_id}/{row['photo_id']}/after-v2.webp"
+            with mock.patch.object(album, "CloudflareAdmin", return_value=admin):
+                resumed = album.migrate_unlock_previews(album_id, False, False)
+            self.assertEqual((resumed["migrated"], resumed["reused"]), (2, 2))
+            uploaded = sorted(call.args[0]["key"] for call in admin.upload.call_args_list)
+            self.assertEqual(uploaded, [f"albums/{album_id}/cover-unlocked.jpg", f"albums/{album_id}/gallery-v2-unlocked.jpg"])
+
+            # The cover landed but the run died before the gallery card.
+            admin.reset_mock()
+            for row in rows:
+                row["unlocked_cover_key"] = f"albums/{album_id}/cover-unlocked.jpg"
+            with mock.patch.object(album, "CloudflareAdmin", return_value=admin):
+                last = album.migrate_unlock_previews(album_id, False, False)
+            self.assertEqual(last["migrated"], 1)
+            self.assertEqual([call.args[0]["key"] for call in admin.upload.call_args_list],
+                             [f"albums/{album_id}/gallery-v2-unlocked.jpg"])
+
+    def test_unlock_preview_migration_skips_a_source_that_does_not_match_d1(self):
+        with tempfile.TemporaryDirectory() as directory:
+            album_id, rows, admin = self.published_twin_rows(Path(directory), count=1)
+            rows[0]["clean_sha256"] = "wrong"
+            with mock.patch.object(album, "CloudflareAdmin", return_value=admin):
+                result = album.migrate_unlock_previews(album_id, False, False)
+            # The photo, the cover and the gallery card are all made from the refused source.
+            self.assertEqual(result["skipped"], 3)
+            self.assertEqual(result["migrated"], 0)
+            self.assertEqual([item["variant"] for item in result["items"]], ["photo", "cover", "gallery"])
+            admin.upload.assert_not_called()
+
+    def test_set_price_puts_an_unpriced_album_on_sale_at_its_tier(self):
+        album_id = "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+        admin = mock.Mock()
+        admin.query.return_value = [{"state": "locked", "photo_count": 5, "price_cents": 0, "media_ready": 1}]
+        admin.execute.return_value = 1
+        with mock.patch.dict(os.environ, self.publish_env("production")), mock.patch.object(album, "CloudflareAdmin", return_value=admin):
+            result = album.set_price(album_id, None)
+            self.assertEqual((result["price_cents"], result["reused"]), (800, False))
+            self.assertEqual(admin.execute.call_args.args[1], (800, album_id))
+            self.assertIn("unlocked_after_key IS NULL", admin.query.call_args_list[0].args[0])
+
+            admin.execute.return_value = 0
+            admin.query.side_effect = [
+                [{"state": "locked", "photo_count": 5, "price_cents": 800, "media_ready": 1}],
+                [{"state": "locked", "price_cents": 800}],
+            ]
+            self.assertTrue(album.set_price(album_id, None)["reused"])
+
+    def test_set_price_refuses_a_sale_it_cannot_honour(self):
+        album_id = "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+        admin = mock.Mock()
+        admin.execute.return_value = 1
+        with mock.patch.dict(os.environ, self.publish_env("production")), mock.patch.object(album, "CloudflareAdmin", return_value=admin):
+            admin.query.return_value = [{"state": "locked", "photo_count": 1, "price_cents": 0, "media_ready": 0}]
+            with self.assertRaisesRegex(album.AlbumError, "migrate-unlock-previews"):
+                album.set_price(album_id, None)
+            with self.assertRaisesRegex(album.AlbumError, "at least 0.50"):
+                album.set_price(album_id, "0.30")
+            admin.execute.assert_not_called()
+            # Taking an album off sale never needs the clean previews.
+            admin.query.return_value = [{"state": "locked", "photo_count": 1, "price_cents": 300, "media_ready": 0}]
+            self.assertEqual(album.set_price(album_id, "0")["price_cents"], 0)
+            admin.query.return_value = [{"state": "unlocked", "photo_count": 1, "price_cents": 300, "media_ready": 1}]
+            with self.assertRaisesRegex(album.AlbumError, "already unlocked"):
+                album.set_price(album_id, None)
+
     def test_media_is_reencoded_without_exif_and_single_photo_has_no_zip(self):
         with tempfile.TemporaryDirectory() as directory:
             folder = Path(directory)
@@ -189,7 +359,7 @@ class AlbumCliTests(unittest.TestCase):
                 return Image.new("RGB", image.size, "blue")
 
             with mock.patch.object(album, "add_watermark", side_effect=blue_watermark) as watermark:
-                album.make_gallery_preview(media, output)
+                album.make_gallery_preview(media, output, watermarked=True)
             watermark.assert_called_once()
             with Image.open(output) as gallery:
                 self.assertEqual(gallery.size, (960, 720))
@@ -208,7 +378,7 @@ class AlbumCliTests(unittest.TestCase):
             state["gallery"] = album.file_record(album.inspect_image(legacy_path), legacy_key)
             album.save_state(folder, state)
 
-            upgraded = album.ensure_gallery_preview(folder, state, media)
+            upgraded = album.ensure_gallery_preview(folder, state, media, watermarked=True)
 
             self.assertEqual(upgraded["key"], f"albums/{state['album_id']}/gallery-v2.jpg")
             self.assertEqual((upgraded["width"], upgraded["height"]), (960, 720))
@@ -248,7 +418,7 @@ class AlbumCliTests(unittest.TestCase):
         admin = mock.Mock()
         admin.query.return_value = [
             {"id": "01ARZ3NDEKTSV4RRFFQ69G5FAV", "title": "Old family photo", "state": "unlocked",
-             "featured": 1, "photo_count": 2, "created_at": 10},
+             "featured": 1, "photo_count": 2, "price_cents": 500, "media_ready": 1, "created_at": 10},
             {"id": "01ARZ3NDEKTSV4RRFFQ69G5FAW", "title": "Removed", "state": "deleted",
              "featured": 0, "photo_count": 1, "created_at": 9},
         ]
@@ -258,6 +428,9 @@ class AlbumCliTests(unittest.TestCase):
         self.assertEqual([item["id"] for item in payload["albums"]], ["01ARZ3NDEKTSV4RRFFQ69G5FAV"])
         entry = payload["albums"][0]
         self.assertIs(entry["featured"], True)
+        self.assertEqual(entry["price_cents"], 500)
+        self.assertIs(entry["media_ready"], True)
+        self.assertIn("AS media_ready", admin.query.call_args.args[0])
         self.assertEqual(entry["url"], "https://upscales.app/gallery/01ARZ3NDEKTSV4RRFFQ69G5FAV")
         self.assertEqual(entry["gallery_url"], "https://upscales.app/media/01ARZ3NDEKTSV4RRFFQ69G5FAV/gallery.jpg")
 
@@ -277,6 +450,44 @@ class AlbumCliTests(unittest.TestCase):
             self.assertEqual(album_params[15:17], (960, 720))
             photo_params = admin.batch.call_args.args[0][1][1]
             self.assertTrue(photo_params[8].endswith("/after-wm-v2.webp"))
+
+    def test_locked_publish_uploads_clean_twins_of_every_watermarked_preview(self):
+        with tempfile.TemporaryDirectory() as directory:
+            folder = Path(directory)
+            self.make_album(folder, 2)
+            admin = mock.Mock()
+            admin.query.return_value = []
+            with mock.patch.dict(os.environ, self.publish_env("production")), mock.patch.object(album, "CloudflareAdmin", return_value=admin):
+                result = album.publish(folder, unlocked=False, price_override=None)
+            album_id = result["album_id"]
+            uploaded = {call.args[0]["key"] for call in admin.upload.call_args_list}
+            statements = admin.batch.call_args.args[0]
+            album_params = statements[0][1]
+            self.assertEqual(album_params[5], 500)
+            self.assertEqual(album_params[23], f"albums/{album_id}/cover-unlocked.jpg")
+            self.assertEqual(album_params[25], f"albums/{album_id}/gallery-v2-unlocked.jpg")
+            self.assertIn(album_params[23], uploaded)
+            self.assertIn(album_params[25], uploaded)
+            for _sql, photo_params in statements[1:]:
+                self.assertTrue(photo_params[8].endswith("/after-wm-v2.webp"))
+                self.assertTrue(photo_params[20].endswith("/after-v2.webp"))
+                self.assertIn(photo_params[20], uploaded)
+            state = json.loads((folder / album.STATE_NAME).read_text())
+            twin = state["photos"][0]["media"]["unlocked_after"]
+            with Image.open(twin["path"]) as clean, Image.open(state["photos"][0]["media"]["after"]["path"]) as marked:
+                self.assertEqual(clean.size, marked.size)
+
+    def test_unlocked_publish_has_no_twins(self):
+        with tempfile.TemporaryDirectory() as directory:
+            folder = Path(directory)
+            self.make_album(folder)
+            admin = mock.Mock()
+            admin.query.return_value = []
+            with mock.patch.dict(os.environ, self.publish_env("production")), mock.patch.object(album, "CloudflareAdmin", return_value=admin):
+                album.publish(folder, unlocked=True, price_override=None)
+            album_params = admin.batch.call_args.args[0][0][1]
+            self.assertEqual(album_params[23:27], (None, None, None, None))
+            self.assertEqual(admin.batch.call_args.args[0][1][1][20:23], (None, None, None))
 
     def test_unlocked_publish_uses_clean_preview(self):
         with tempfile.TemporaryDirectory() as directory:

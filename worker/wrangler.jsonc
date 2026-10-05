@@ -18,9 +18,12 @@
     ]
   },
   "triggers": { "crons": ["*/10 * * * *"] },
+  // STRIPE_MODE is the only Stripe mode album payments accept here; a key or an
+  // event from the other mode is refused (see src/album-checkout.ts).
   "vars": {
     "FIREBASE_PROJECT_ID": "upscaler-e9010",
-    "AURALENS_URL": "https://auralens-406817559814.us-central1.run.app"
+    "AURALENS_URL": "https://auralens-406817559814.us-central1.run.app",
+    "STRIPE_MODE": "test"
   },
   "d1_databases": [
     {
@@ -56,7 +59,7 @@
       "name": "uscale-site-staging",
       "workers_dev": true,
       "triggers": { "crons": ["*/10 * * * *"] },
-      "vars": { "FIREBASE_PROJECT_ID": "upscaler-e9010", "AURALENS_URL": "https://auralens-406817559814.us-central1.run.app" },
+      "vars": { "FIREBASE_PROJECT_ID": "upscaler-e9010", "AURALENS_URL": "https://auralens-406817559814.us-central1.run.app", "STRIPE_MODE": "test" },
       "d1_databases": [
         {
           "binding": "DB",
@@ -80,7 +83,7 @@
       "name": "uscale-site",
       "workers_dev": false,
       "triggers": { "crons": ["*/10 * * * *"] },
-      "vars": { "FIREBASE_PROJECT_ID": "upscaler-e9010", "AURALENS_URL": "https://auralens-406817559814.us-central1.run.app" },
+      "vars": { "FIREBASE_PROJECT_ID": "upscaler-e9010", "AURALENS_URL": "https://auralens-406817559814.us-central1.run.app", "STRIPE_MODE": "live" },
       "routes": [
         { "pattern": "upscales.app/*", "zone_name": "upscales.app" }
       ],
