@@ -51,3 +51,15 @@
 /apple-app-site-association
   Content-Type: application/json
   Cache-Control: public, max-age=0, must-revalidate
+
+# Store redirects carry campaign parameters only to Google Play.
+/go
+  Cache-Control: no-store
+  Referrer-Policy: no-referrer
+  X-Robots-Tag: noindex, nofollow
+
+/go/*
+  Cache-Control: no-store
+  Referrer-Policy: no-referrer
+  X-Robots-Tag: noindex, nofollow
+  Content-Security-Policy: default-src 'none'; script-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
