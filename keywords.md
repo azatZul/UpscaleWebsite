@@ -85,8 +85,9 @@ The 12 locales use *native* keywords pulled from their own store — not machine
 ### 🇰🇷 Korean (`/ko/`)
 `화질 개선` (p55, d52) · `고화질 변환` (p48, **d23**) · `사진 화질 개선` (p24, d46) · `사진 고화질` (p21, d48) · `사진 화질` (p17, d50)
 
-### 🇨🇳 Simplified Chinese (`/zh/`)
-`画质修复` (p62, d65) · `高清修复` (p34, d55) · `修复模糊图片` (p31, d47) · `照片修复` (p29, d67) · `老照片修复` (p25, d47) · `视频高清修复` (p5, d46) · `图片清晰放大` · `ai照片修复` (p16, d58)
+### 🇨🇳 Simplified Chinese (`/zh/`) — live
+
+→ **[`localization/keywords/zh.md`](localization/keywords/zh.md)** — ASO, web demand, traps, copy rules and the placement map.
 
 ### 🇷🇺 Russian (`/ru/`) — live
 
@@ -115,7 +116,7 @@ The 12 locales use *native* keywords pulled from their own store — not machine
 /sale.html                         "uscale discount / lifetime deal"    (kept, redesigned)
 ```
 
-Current indexable set: **80 pages** — English, German, Russian, Japanese and French versions of the landing, guide hub, 10 guides, comparison, support, terms and privacy pages. `/sale.html` is `noindex,follow` in every locale and stays out of the sitemap. A locale joins the indexable `hreflang` cluster automatically once it is translated in every section file under `localization/`; locales without translated content cannot be built.
+Current localized indexable set: **112 pages** — English, Spanish, French, German, Japanese, Simplified Chinese and Russian versions of the landing, guide hub, 10 guides, comparison, support, terms and privacy pages. The English gallery is listed separately in the sitemap. `/sale.html` is `noindex,follow` in every locale and stays out of the sitemap. A locale joins the indexable `hreflang` cluster automatically once it is translated in every section file under `localization/`; locales without translated content cannot be built.
 
 ## 5. On-page SEO checklist applied to every generated page
 

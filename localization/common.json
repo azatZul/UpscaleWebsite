@@ -6,7 +6,8 @@
       "de": "KI-Verbesserung für Fotos und Videos",
       "ja": "AIで写真・動画を高画質化",
       "fr": "Amélioration photo et vidéo par IA",
-      "es": "Mejora de fotos y videos con IA"
+      "es": "Mejora de fotos y videos con IA",
+      "zh": "AI 照片与视频画质修复"
     }
   },
   "nav.menu": {
@@ -16,7 +17,8 @@
       "de": "Menü",
       "ja": "メニュー",
       "fr": "Menu",
-      "es": "Menú"
+      "es": "Menú",
+      "zh": "菜单"
     }
   },
   "nav.features": {
@@ -26,7 +28,8 @@
       "de": "Funktionen",
       "ja": "機能",
       "fr": "Fonctions",
-      "es": "Funciones"
+      "es": "Funciones",
+      "zh": "功能"
     }
   },
   "nav.screens": {
@@ -36,7 +39,8 @@
       "de": "Beispiele",
       "ja": "使用例",
       "fr": "Exemples",
-      "es": "Ejemplos"
+      "es": "Ejemplos",
+      "zh": "示例"
     }
   },
   "nav.how": {
@@ -46,7 +50,8 @@
       "de": "So funktioniert’s",
       "ja": "使い方",
       "fr": "Fonctionnement",
-      "es": "Cómo funciona"
+      "es": "Cómo funciona",
+      "zh": "工作原理"
     }
   },
   "nav.guides": {
@@ -56,7 +61,8 @@
       "de": "Anleitungen",
       "ja": "ガイド",
       "fr": "Guides",
-      "es": "Guías"
+      "es": "Guías",
+      "zh": "教程"
     }
   },
   "nav.faq": {
@@ -66,7 +72,8 @@
       "de": "FAQ",
       "ja": "よくある質問",
       "fr": "FAQ",
-      "es": "Preguntas frecuentes"
+      "es": "Preguntas frecuentes",
+      "zh": "常见问题"
     }
   },
   "nav.compare": {
@@ -76,7 +83,8 @@
       "de": "Vergleich",
       "ja": "比較",
       "fr": "Comparatif",
-      "es": "Comparación"
+      "es": "Comparación",
+      "zh": "对比"
     }
   },
   "nav.cta": {
@@ -86,7 +94,8 @@
       "de": "UScale laden",
       "ja": "UScaleを入手",
       "fr": "Obtenir UScale",
-      "es": "Obtén UScale"
+      "es": "Obtén UScale",
+      "zh": "获取 UScale"
     }
   },
   "nav.sign_in": {
@@ -96,7 +105,8 @@
       "de": "Anmelden",
       "ja": "ログイン",
       "fr": "Se connecter",
-      "es": "Iniciar sesión"
+      "es": "Iniciar sesión",
+      "zh": "登录"
     }
   },
   "nav.account": {
@@ -106,7 +116,8 @@
       "de": "Konto",
       "ja": "アカウント",
       "fr": "Compte",
-      "es": "Cuenta"
+      "es": "Cuenta",
+      "zh": "账户"
     }
   },
   "nav.credits": {
@@ -116,7 +127,8 @@
       "de": "Credits",
       "ja": "クレジット",
       "fr": "Crédits",
-      "es": "Créditos"
+      "es": "Créditos",
+      "zh": "积分"
     }
   },
   "ui.download_on": {
@@ -126,7 +138,8 @@
       "de": "Laden im",
       "ja": "からダウンロード",
       "fr": "Télécharger dans l’",
-      "es": "Descárgalo en"
+      "es": "Descárgalo en",
+      "zh": "下载"
     }
   },
   "ui.app_store": {
@@ -136,7 +149,8 @@
       "de": "App Store",
       "ja": "App Store",
       "fr": "App Store",
-      "es": "App Store"
+      "es": "App Store",
+      "zh": "App Store"
     }
   },
   "ui.language": {
@@ -146,7 +160,8 @@
       "de": "Sprache",
       "ja": "言語",
       "fr": "Langue",
-      "es": "Idioma"
+      "es": "Idioma",
+      "zh": "语言"
     }
   },
   "ui.skip_to_content": {
@@ -156,7 +171,8 @@
       "de": "Zum Inhalt springen",
       "ja": "コンテンツへ移動",
       "fr": "Aller au contenu",
-      "es": "Ir al contenido"
+      "es": "Ir al contenido",
+      "zh": "跳到正文"
     }
   },
   "ui.theme_light": {
@@ -166,7 +182,8 @@
       "de": "Zum hellen Design wechseln",
       "ja": "ライトテーマに切り替える",
       "fr": "Passer au thème clair",
-      "es": "Cambiar al tema claro"
+      "es": "Cambiar al tema claro",
+      "zh": "切换到浅色模式"
     }
   },
   "ui.theme_dark": {
@@ -176,7 +193,8 @@
       "de": "Zum dunklen Design wechseln",
       "ja": "ダークテーマに切り替える",
       "fr": "Passer au thème sombre",
-      "es": "Cambiar al tema oscuro"
+      "es": "Cambiar al tema oscuro",
+      "zh": "切换到深色模式"
     }
   },
   "ui.icon_alt": {
@@ -186,7 +204,8 @@
       "de": "App-Symbol von UScale zur KI-Fotoverbesserung",
       "ja": "UScaleのAI写真高画質化アプリアイコン",
       "fr": "Icône de UScale, outil IA pour améliorer les photos",
-      "es": "Ícono de la app UScale para mejorar fotos con IA"
+      "es": "Ícono de la app UScale para mejorar fotos con IA",
+      "zh": "UScale AI 照片画质修复 App 图标"
     },
     "comment": "Accessibility text describing an image."
   },
@@ -197,7 +216,8 @@
       "de": "Startseite",
       "ja": "ホーム",
       "fr": "Accueil",
-      "es": "Inicio"
+      "es": "Inicio",
+      "zh": "首页"
     }
   },
   "ui.updated": {
@@ -207,7 +227,8 @@
       "de": "Aktualisiert",
       "ja": "更新日",
       "fr": "Mis à jour",
-      "es": "Actualizado"
+      "es": "Actualizado",
+      "zh": "更新于"
     }
   },
   "ui.by": {
@@ -217,7 +238,8 @@
       "de": "Vom UScale-Team",
       "ja": "UScaleチーム",
       "fr": "Par l’équipe UScale",
-      "es": "Por el equipo de UScale"
+      "es": "Por el equipo de UScale",
+      "zh": "UScale 团队"
     }
   },
   "ui.next_guide": {
@@ -227,7 +249,8 @@
       "de": "Nächste Anleitung",
       "ja": "次のガイド",
       "fr": "Guide suivant",
-      "es": "Siguiente guía"
+      "es": "Siguiente guía",
+      "zh": "下一篇教程"
     }
   },
   "ui.keep_reading": {
@@ -237,7 +260,8 @@
       "de": "Weiterlesen",
       "ja": "続きを読む",
       "fr": "Continuer la lecture",
-      "es": "Seguir leyendo"
+      "es": "Seguir leyendo",
+      "zh": "继续阅读"
     }
   },
   "ui.sound_off": {
@@ -247,7 +271,8 @@
       "de": "Ton ausschalten",
       "ja": "消音",
       "fr": "Couper le son",
-      "es": "Silenciar"
+      "es": "Silenciar",
+      "zh": "静音"
     }
   },
   "ui.sound_on": {
@@ -257,7 +282,8 @@
       "de": "Ton einschalten",
       "ja": "音声を再生",
       "fr": "Activer le son",
-      "es": "Reproducir sonido"
+      "es": "Reproducir sonido",
+      "zh": "播放声音"
     }
   },
   "ui.paused": {
@@ -267,7 +293,8 @@
       "de": "Pausiert",
       "ja": "一時停止",
       "fr": "En pause",
-      "es": "En pausa"
+      "es": "En pausa",
+      "zh": "已暂停"
     }
   },
   "ui.on_this_page": {
@@ -277,7 +304,8 @@
       "de": "Auf dieser Seite",
       "ja": "このページの内容",
       "fr": "Sur cette page",
-      "es": "En esta página"
+      "es": "En esta página",
+      "zh": "本页内容"
     }
   },
   "cta.h2": {
@@ -287,7 +315,8 @@
       "de": "Mach deine Fotos wieder scharf",
       "ja": "写真をもう一度鮮明に",
       "fr": "Rendez vos photos nettes à nouveau",
-      "es": "Haz que tus fotos vuelvan a verse nítidas"
+      "es": "Haz que tus fotos vuelvan a verse nítidas",
+      "zh": "让你的照片重新清晰起来"
     }
   },
   "cta.p": {
@@ -297,7 +326,8 @@
       "de": "Kostenlos starten, ohne Konto. Bei der Verarbeitung auf dem Gerät bleiben deine Bilder auf deinem iPhone.",
       "ja": "無料で始められ、アカウントは不要です。デバイス上で処理するツールなら、写真はiPhoneの中に留まります。",
       "fr": "Essayez gratuitement, sans compte. Les outils sur l’appareil gardent vos photos sur votre téléphone.",
-      "es": "Empieza gratis, sin cuenta. Las herramientas en el dispositivo mantienen tus fotos en tu teléfono."
+      "es": "Empieza gratis, sin cuenta. Las herramientas en el dispositivo mantienen tus fotos en tu teléfono.",
+      "zh": "免费开始，无需账户。本地处理的工具会让照片始终留在你的手机上。"
     }
   },
   "cta.note": {
@@ -307,7 +337,8 @@
       "de": "iPhone und iPad · iOS {minimum_ios} oder neuer",
       "ja": "iPhoneとiPad · iOS {minimum_ios}以降",
       "fr": "iPhone et iPad · iOS {minimum_ios} ou version ultérieure",
-      "es": "iPhone y iPad · iOS {minimum_ios} o posterior"
+      "es": "iPhone y iPad · iOS {minimum_ios} o posterior",
+      "zh": "iPhone 和 iPad · iOS {minimum_ios} 或更高版本"
     },
     "comment": "Preserve every {placeholder} exactly."
   },
@@ -318,7 +349,8 @@
       "de": "KI-Verbesserung für Fotos und Videos auf iPhone und iPad. Entferne Unschärfe und skaliere Fotos auf deinem Gerät hoch, restauriere alte Fotos mit Cloud-KI.",
       "ja": "iPhoneとiPad向けのAI写真・動画高画質化アプリです。デバイス上でぼやけを鮮明にして解像度を上げ、古い写真はクラウドAIで修復します。",
       "fr": "Outil IA pour améliorer les photos et vidéos sur iPhone et iPad. Défloutez et agrandissez sur votre appareil, restaurez les photos anciennes avec l’IA dans le cloud.",
-      "es": "Mejora fotos y videos con IA en iPhone y iPad. Corrige el desenfoque y aumenta la resolución en tu dispositivo; restaura fotos antiguas con IA en la nube."
+      "es": "Mejora fotos y videos con IA en iPhone y iPad. Corrige el desenfoque y aumenta la resolución en tu dispositivo; restaura fotos antiguas con IA en la nube.",
+      "zh": "适用于 iPhone 和 iPad 的 AI 照片与视频画质修复 App。在设备上去模糊、放大，用云端 AI 模型修复老照片。"
     }
   },
   "footer.product": {
@@ -328,7 +360,8 @@
       "de": "Produkt",
       "ja": "製品",
       "fr": "Produit",
-      "es": "Producto"
+      "es": "Producto",
+      "zh": "产品"
     }
   },
   "footer.reviews": {
@@ -338,7 +371,8 @@
       "de": "Bewertungen",
       "ja": "レビュー",
       "fr": "Avis",
-      "es": "Reseñas"
+      "es": "Reseñas",
+      "zh": "用户评价"
     }
   },
   "footer.gallery": {
@@ -352,7 +386,7 @@
       "pt": "Galeria",
       "it": "Galleria",
       "ko": "갤러리",
-      "zh": "图库",
+      "zh": "示例图库",
       "hi": "गैलरी",
       "tr": "Galeri"
     }
@@ -364,7 +398,8 @@
       "de": "Alle Anleitungen",
       "ja": "ガイド一覧",
       "fr": "Tous les guides",
-      "es": "Todas las guías"
+      "es": "Todas las guías",
+      "zh": "全部教程"
     }
   },
   "footer.support": {
@@ -374,7 +409,8 @@
       "de": "Support",
       "ja": "サポート",
       "fr": "Assistance",
-      "es": "Soporte"
+      "es": "Soporte",
+      "zh": "支持"
     }
   },
   "footer.help": {
@@ -384,7 +420,8 @@
       "de": "Hilfe und Support",
       "ja": "ヘルプとサポート",
       "fr": "Aide et assistance",
-      "es": "Ayuda y soporte"
+      "es": "Ayuda y soporte",
+      "zh": "帮助与支持"
     }
   },
   "footer.privacy": {
@@ -394,7 +431,8 @@
       "de": "Datenschutzerklärung",
       "ja": "プライバシーポリシー",
       "fr": "Politique de confidentialité",
-      "es": "Política de privacidad"
+      "es": "Política de privacidad",
+      "zh": "隐私政策"
     }
   },
   "footer.terms": {
@@ -404,7 +442,8 @@
       "de": "Nutzungsbedingungen",
       "ja": "利用規約",
       "fr": "Conditions d’utilisation",
-      "es": "Términos de uso"
+      "es": "Términos de uso",
+      "zh": "使用条款"
     }
   },
   "footer.appstore": {
@@ -414,7 +453,8 @@
       "de": "Seite im App Store",
       "ja": "App Storeページ",
       "fr": "Page App Store",
-      "es": "Página de App Store"
+      "es": "Página de App Store",
+      "zh": "App Store 页面"
     }
   },
   "footer.rights": {
@@ -424,7 +464,8 @@
       "de": "Alle Rechte vorbehalten.",
       "ja": "すべての権利を留保します。",
       "fr": "Tous droits réservés.",
-      "es": "Todos los derechos reservados."
+      "es": "Todos los derechos reservados.",
+      "zh": "保留所有权利。"
     }
   },
   "footer.made": {
@@ -434,7 +475,8 @@
       "de": "Für Fotos, die es wert sind, bewahrt zu werden.",
       "ja": "残しておきたい写真のために作りました。",
       "fr": "Pour les photos qui méritent d’être gardées.",
-      "es": "Hecho para las fotos que vale la pena conservar."
+      "es": "Hecho para las fotos que vale la pena conservar.",
+      "zh": "为值得珍藏的照片而生。"
     }
   },
   "ui.breadcrumb": {
@@ -444,7 +486,8 @@
       "de": "Brotkrümelnavigation",
       "ja": "パンくずリスト",
       "fr": "Fil d’Ariane",
-      "es": "Ruta de navegación"
+      "es": "Ruta de navegación",
+      "zh": "面包屑导航"
     }
   },
   "consent.title": {
@@ -454,7 +497,8 @@
       "de": "Cookies und Analyse",
       "ja": "Cookieと分析",
       "fr": "Cookies et mesure d’audience",
-      "es": "Cookies y analítica"
+      "es": "Cookies y analítica",
+      "zh": "Cookie 与分析"
     },
     "comment": "Heading of the site-wide consent banner."
   },
@@ -465,7 +509,8 @@
       "de": "Wir nutzen notwendigen Speicher für den Betrieb der Website und, mit deiner Erlaubnis, Analysen, um zu verstehen, wie sie genutzt wird, und sie zu verbessern. Deine Fotos werden nie gesendet oder erfasst.",
       "ja": "サイトの動作に必要なストレージを使用し、許可いただいた場合は利用状況を把握して改善するための分析も行います。写真が送信・追跡されることはありません。",
       "fr": "Nous utilisons un stockage essentiel au fonctionnement du site et, avec votre accord, la mesure d’audience pour comprendre son utilisation et l’améliorer. Vos photos ne sont jamais envoyées ni suivies.",
-      "es": "Usamos almacenamiento esencial para que el sitio funcione y, con tu permiso, analítica para entender cómo se usa y mejorarlo. Tus fotos nunca se envían ni se rastrean."
+      "es": "Usamos almacenamiento esencial para que el sitio funcione y, con tu permiso, analítica para entender cómo se usa y mejorarlo. Tus fotos nunca se envían ni se rastrean.",
+      "zh": "我们使用必要的存储来维持网站运行，并在你允许的情况下使用分析工具，了解网站的使用情况并加以改进。你的照片绝不会被发送或追踪。"
     },
     "comment": "Consent banner text; followed by a link to the Privacy Policy. Photos are processed on-device, so the last sentence must stay true."
   },
@@ -476,7 +521,8 @@
       "de": "Alle akzeptieren",
       "ja": "すべて許可",
       "fr": "Tout accepter",
-      "es": "Aceptar todo"
+      "es": "Aceptar todo",
+      "zh": "全部接受"
     },
     "comment": "Consent button; same prominence as Reject all."
   },
@@ -487,7 +533,8 @@
       "de": "Alle ablehnen",
       "ja": "すべて拒否",
       "fr": "Tout refuser",
-      "es": "Rechazar todo"
+      "es": "Rechazar todo",
+      "zh": "全部拒绝"
     },
     "comment": "Consent button; allows only necessary storage."
   },
@@ -498,7 +545,8 @@
       "de": "Einstellungen",
       "ja": "設定",
       "fr": "Personnaliser",
-      "es": "Configurar"
+      "es": "Configurar",
+      "zh": "设置"
     },
     "comment": "Consent button that reveals per-category toggles."
   },
@@ -509,7 +557,8 @@
       "de": "Auswahl speichern",
       "ja": "選択を保存",
       "fr": "Enregistrer mes choix",
-      "es": "Guardar selección"
+      "es": "Guardar selección",
+      "zh": "保存选择"
     },
     "comment": "Consent button that saves the toggles."
   },
@@ -520,7 +569,8 @@
       "de": "Notwendig",
       "ja": "必須",
       "fr": "Nécessaires",
-      "es": "Necesarias"
+      "es": "Necesarias",
+      "zh": "必要"
     },
     "comment": "Consent category that cannot be turned off."
   },
@@ -531,7 +581,8 @@
       "de": "Speichern dein Design und diese Auswahl. Immer aktiv.",
       "ja": "テーマとこの選択を保存します。常にオン。",
       "fr": "Mémorisent votre thème et ces choix. Toujours actifs.",
-      "es": "Recuerdan tu tema y esta selección. Siempre activas."
+      "es": "Recuerdan tu tema y esta selección. Siempre activas.",
+      "zh": "记住你的主题和以上选择。始终开启。"
     },
     "comment": "Description of the necessary category."
   },
@@ -542,7 +593,8 @@
       "de": "Analyse",
       "ja": "分析",
       "fr": "Mesure d’audience",
-      "es": "Analítica"
+      "es": "Analítica",
+      "zh": "分析"
     },
     "comment": "Optional consent category."
   },
@@ -553,7 +605,8 @@
       "de": "Nutzungsstatistik über Amplitude, z. B. welche Schaltflächen genutzt werden und ob das Hochskalieren klappt.",
       "ja": "Amplitudeによる利用統計（使われたボタンや高画質化の成否など）。",
       "fr": "Statistiques d’utilisation via Amplitude, comme les boutons utilisés et la réussite de l’agrandissement.",
-      "es": "Estadísticas de uso con Amplitude, como qué botones se usan y si el escalado funciona."
+      "es": "Estadísticas de uso con Amplitude, como qué botones se usan y si el escalado funciona.",
+      "zh": "通过 Amplitude 收集使用统计，例如使用了哪些按钮、放大是否成功。"
     },
     "comment": "Description of the analytics category. Amplitude is the vendor name; do not translate."
   },
@@ -564,7 +617,8 @@
       "de": "Cookie-Einstellungen",
       "ja": "Cookie設定",
       "fr": "Paramètres des cookies",
-      "es": "Configuración de cookies"
+      "es": "Configuración de cookies",
+      "zh": "Cookie 设置"
     },
     "comment": "Footer link that reopens the consent settings."
   }

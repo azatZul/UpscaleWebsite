@@ -6,7 +6,8 @@
       "de": "Foto online kostenlos vergrößern – 2× und 4× im Browser | UScale",
       "ja": "写真を無料で高画質化 — ブラウザで2倍・4倍｜UScale",
       "fr": "Agrandir une photo en ligne gratuitement — 2× et 4× | UScale",
-      "es": "Ampliar fotos online gratis — 2× y 4× en el navegador | UScale"
+      "es": "Ampliar fotos online gratis — 2× y 4× en el navegador | UScale",
+      "zh": "免费在线 AI 图片放大 2×/4×｜UScale"
     },
     "comment": "Page or section title; preserve product names."
   },
@@ -17,7 +18,8 @@
       "de": "Vergrößere ein Foto kostenlos um 2× oder 4× direkt im Browser. Ohne Anmeldung und ohne Upload: Das Foto wird auf deinem Gerät verarbeitet.",
       "ja": "ブラウザで写真を無料で2倍・4倍に高画質化。登録もアップロードも不要で、写真はお使いのデバイス上で処理されます。",
       "fr": "Agrandissez une photo 2× ou 4× gratuitement, directement dans votre navigateur. Sans inscription ni envoi : la photo est traitée sur votre appareil.",
-      "es": "Amplía una foto 2× o 4× gratis, directamente en tu navegador. Sin registro ni subidas: la foto se procesa en tu dispositivo."
+      "es": "Amplía una foto 2× o 4× gratis, directamente en tu navegador. Sin registro ni subidas: la foto se procesa en tu dispositivo.",
+      "zh": "在浏览器中免费把图片放大 2× 或 4×。无需注册，无需上传：图片在你的设备上处理。"
     }
   },
   "tool.nav": {
@@ -27,7 +29,8 @@
       "de": "Fotos vergrößern",
       "ja": "写真を高画質化",
       "fr": "Agrandir des photos",
-      "es": "Ampliar fotos"
+      "es": "Ampliar fotos",
+      "zh": "图片放大"
     }
   },
   "tool.hero_link": {
@@ -37,7 +40,8 @@
       "de": "Fotos vergrößern",
       "ja": "写真を高画質化",
       "fr": "Agrandir des photos",
-      "es": "Ampliar fotos"
+      "es": "Ampliar fotos",
+      "zh": "图片放大"
     }
   },
   "tool.eyebrow": {
@@ -47,7 +51,8 @@
       "de": "Kostenlos · In deinem Browser",
       "ja": "無料・ブラウザで処理",
       "fr": "Gratuit · Dans votre navigateur",
-      "es": "Gratis · En tu navegador"
+      "es": "Gratis · En tu navegador",
+      "zh": "免费 · 在浏览器中"
     }
   },
   "tool.h1": {
@@ -57,7 +62,8 @@
       "de": "Vergrößere dein Foto",
       "ja": "写真を高画質化",
       "fr": "Agrandissez votre photo",
-      "es": "Amplía tu foto"
+      "es": "Amplía tu foto",
+      "zh": "放大你的图片"
     }
   },
   "tool.sub": {
@@ -67,7 +73,8 @@
       "de": "Mach es 2× oder 4× größer. Das Foto verlässt dein Gerät nie.",
       "ja": "2倍・4倍に拡大。写真がデバイスの外に出ることはありません。",
       "fr": "Agrandissez-la 2× ou 4×. La photo ne quitte jamais votre appareil.",
-      "es": "Amplíala 2× o 4×. La foto nunca sale de tu dispositivo."
+      "es": "Amplíala 2× o 4×. La foto nunca sale de tu dispositivo.",
+      "zh": "放大 2× 或 4×。图片不会离开你的设备。"
     }
   },
   "tool.private": {
@@ -77,7 +84,8 @@
       "de": "Private Verarbeitung",
       "ja": "プライベート処理",
       "fr": "Traitement privé",
-      "es": "Procesamiento privado"
+      "es": "Procesamiento privado",
+      "zh": "本地私密处理"
     }
   },
   "tool.drop_title": {
@@ -87,7 +95,8 @@
       "de": "Foto hierher ziehen",
       "ja": "ここに写真をドロップ",
       "fr": "Déposez une photo ici",
-      "es": "Suelta una foto aquí"
+      "es": "Suelta una foto aquí",
+      "zh": "将照片拖到这里"
     }
   },
   "tool.choose": {
@@ -97,7 +106,8 @@
       "de": "Foto auswählen",
       "ja": "写真を選ぶ",
       "fr": "Choisir une photo",
-      "es": "Elegir una foto"
+      "es": "Elegir una foto",
+      "zh": "选择照片"
     }
   },
   "tool.formats": {
@@ -107,7 +117,8 @@
       "de": "JPEG, PNG oder WebP",
       "ja": "JPEG・PNG・WebP",
       "fr": "JPEG, PNG ou WebP",
-      "es": "JPEG, PNG o WebP"
+      "es": "JPEG, PNG o WebP",
+      "zh": "JPEG、PNG 或 WebP"
     }
   },
   "tool.thumb_alt": {
@@ -117,7 +128,8 @@
       "de": "Ausgewähltes Foto",
       "ja": "選択した写真",
       "fr": "Photo sélectionnée",
-      "es": "Foto seleccionada"
+      "es": "Foto seleccionada",
+      "zh": "已选择的照片"
     }
   },
   "tool.remove": {
@@ -127,7 +139,8 @@
       "de": "Foto entfernen",
       "ja": "写真を削除",
       "fr": "Retirer la photo",
-      "es": "Quitar foto"
+      "es": "Quitar foto",
+      "zh": "移除照片"
     }
   },
   "tool.drop_release": {
@@ -137,7 +150,8 @@
       "de": "Loslassen, um dieses Foto zu verwenden",
       "ja": "ドロップしてこの写真を使用",
       "fr": "Relâchez pour utiliser cette photo",
-      "es": "Suelta para usar esta foto"
+      "es": "Suelta para usar esta foto",
+      "zh": "松开即可使用这张照片"
     }
   },
   "tool.scale_label": {
@@ -147,7 +161,8 @@
       "de": "Vergrößerung",
       "ja": "倍率",
       "fr": "Agrandissement",
-      "es": "Ampliación"
+      "es": "Ampliación",
+      "zh": "放大倍数"
     }
   },
   "tool.model_label": {
@@ -157,7 +172,8 @@
       "de": "Typ",
       "ja": "種類",
       "fr": "Type",
-      "es": "Tipo"
+      "es": "Tipo",
+      "zh": "类型"
     }
   },
   "tool.model_photo": {
@@ -167,7 +183,8 @@
       "de": "Foto",
       "ja": "写真",
       "fr": "Photo",
-      "es": "Foto"
+      "es": "Foto",
+      "zh": "照片"
     }
   },
   "tool.model_drawing": {
@@ -177,7 +194,8 @@
       "de": "Zeichnung",
       "ja": "イラスト",
       "fr": "Illustration",
-      "es": "Ilustración"
+      "es": "Ilustración",
+      "zh": "插画"
     }
   },
   "tool.x2": {
@@ -187,7 +205,8 @@
       "de": "2×",
       "ja": "2倍",
       "fr": "2×",
-      "es": "2×"
+      "es": "2×",
+      "zh": "2×"
     }
   },
   "tool.x4": {
@@ -197,7 +216,8 @@
       "de": "4×",
       "ja": "4倍",
       "fr": "4×",
-      "es": "4×"
+      "es": "4×",
+      "zh": "4×"
     }
   },
   "tool.faces": {
@@ -207,7 +227,8 @@
       "de": "Gesichtsverbesserung",
       "ja": "顔を強調",
       "fr": "Améliorer les visages",
-      "es": "Mejorar rostros"
+      "es": "Mejorar rostros",
+      "zh": "增强人脸"
     }
   },
   "tool.progress_label": {
@@ -217,7 +238,8 @@
       "de": "Verarbeitungsfortschritt",
       "ja": "処理の進行状況",
       "fr": "Progression du traitement",
-      "es": "Progreso del procesamiento"
+      "es": "Progreso del procesamiento",
+      "zh": "处理进度"
     }
   },
   "tool.cancel": {
@@ -227,7 +249,8 @@
       "de": "Abbrechen",
       "ja": "キャンセル",
       "fr": "Annuler",
-      "es": "Cancelar"
+      "es": "Cancelar",
+      "zh": "取消"
     }
   },
   "tool.retry": {
@@ -237,7 +260,8 @@
       "de": "Erneut versuchen",
       "ja": "もう一度試す",
       "fr": "Réessayer",
-      "es": "Reintentar"
+      "es": "Reintentar",
+      "zh": "重试"
     }
   },
   "tool.cpu_retry": {
@@ -247,7 +271,8 @@
       "de": "Andere Verarbeitungsmethode testen",
       "ja": "別の処理方法を試す",
       "fr": "Essayer une autre méthode",
-      "es": "Probar otro método"
+      "es": "Probar otro método",
+      "zh": "尝试其他处理方式"
     }
   },
   "tool.try_2x": {
@@ -257,7 +282,8 @@
       "de": "Stattdessen 2× verwenden",
       "ja": "代わりに2倍で高画質化",
       "fr": "Agrandir en 2× à la place",
-      "es": "Ampliar a 2× en su lugar"
+      "es": "Ampliar a 2× en su lugar",
+      "zh": "改为放大 2×"
     }
   },
   "tool.visibility": {
@@ -267,7 +293,8 @@
       "de": "Kehre zu dieser Seite zurück, damit die Verarbeitung weiterläuft. Im Hintergrund kann der Browser sie pausieren.",
       "ja": "処理を続けるにはこのページに戻ってください。バックグラウンドではブラウザが処理を一時停止することがあります。",
       "fr": "Revenez sur cette page pour poursuivre le traitement. En arrière-plan, le navigateur peut le mettre en pause.",
-      "es": "Vuelve a esta página para seguir procesando. En segundo plano, el navegador puede pausar el trabajo."
+      "es": "Vuelve a esta página para seguir procesando. En segundo plano, el navegador puede pausar el trabajo.",
+      "zh": "回到此页面以继续处理。浏览器可能会在后台暂停处理。"
     }
   },
   "tool.interrupted": {
@@ -277,7 +304,8 @@
       "de": "Deine letzte Sitzung wurde möglicherweise unterbrochen. Wähle das Foto erneut, probiere ein kleineres Bild oder nutze die App.",
       "ja": "前回の処理が中断された可能性があります。写真を選び直すか、小さい画像を試すか、アプリをご利用ください。",
       "fr": "Votre dernière session a peut-être été interrompue. Choisissez à nouveau la photo, essayez une image plus petite ou utilisez l’app.",
-      "es": "Puede que tu última sesión se interrumpiera. Vuelve a elegir la foto, prueba con una imagen más pequeña o usa la app."
+      "es": "Puede que tu última sesión se interrumpiera. Vuelve a elegir la foto, prueba con una imagen más pequeña o usa la app.",
+      "zh": "上次处理可能已中断。请重新选择照片、换一张较小的图片，或使用 App。"
     }
   },
   "tool.noscript": {
@@ -287,7 +315,8 @@
       "de": "Aktiviere JavaScript, um Fotos im Browser zu vergrößern.",
       "ja": "ブラウザで写真を高画質化するにはJavaScriptを有効にしてください。",
       "fr": "Activez JavaScript pour agrandir des photos dans votre navigateur.",
-      "es": "Activa JavaScript para ampliar fotos en tu navegador."
+      "es": "Activa JavaScript para ampliar fotos en tu navegador.",
+      "zh": "请开启 JavaScript，以便在浏览器中放大照片。"
     }
   },
   "tool.original_alt": {
@@ -297,7 +326,8 @@
       "de": "Dein Originalfoto",
       "ja": "元の写真",
       "fr": "Votre photo d’origine",
-      "es": "Tu foto original"
+      "es": "Tu foto original",
+      "zh": "你的原始照片"
     }
   },
   "tool.expand": {
@@ -307,7 +337,8 @@
       "de": "Vollbild",
       "ja": "全画面表示",
       "fr": "Plein écran",
-      "es": "Pantalla completa"
+      "es": "Pantalla completa",
+      "zh": "全屏查看照片"
     }
   },
   "tool.close": {
@@ -317,7 +348,8 @@
       "de": "Vollbild schließen",
       "ja": "全画面表示を閉じる",
       "fr": "Quitter le plein écran",
-      "es": "Salir de pantalla completa"
+      "es": "Salir de pantalla completa",
+      "zh": "关闭全屏照片"
     }
   },
   "tool.download": {
@@ -327,7 +359,8 @@
       "de": "Foto herunterladen",
       "ja": "写真をダウンロード",
       "fr": "Télécharger la photo",
-      "es": "Descargar la foto"
+      "es": "Descargar la foto",
+      "zh": "下载这张照片"
     }
   },
   "tool.another": {
@@ -337,7 +370,8 @@
       "de": "Weiteres Foto vergrößern",
       "ja": "別の写真を高画質化",
       "fr": "Agrandir une autre photo",
-      "es": "Ampliar otra foto"
+      "es": "Ampliar otra foto",
+      "zh": "放大另一张照片"
     }
   },
   "tool.face_editor_hint": {
@@ -347,7 +381,8 @@
       "de": "Tippe auf ein Gesicht, um die Verbesserung ein- oder auszuschalten. Zum Zoomen aufziehen oder scrollen.",
       "ja": "顔をタップすると強調のオン・オフを切り替えられます。ピンチまたはスクロールで拡大できます。",
       "fr": "Touchez un visage pour activer ou désactiver l’amélioration. Pincez ou faites défiler pour zoomer.",
-      "es": "Toca un rostro para activar o desactivar la mejora. Pellizca o desplázate para ampliar."
+      "es": "Toca un rostro para activar o desactivar la mejora. Pellizca o desplázate para ampliar.",
+      "zh": "轻点人脸可开启或关闭增强。双指捏合或滚动可缩放。"
     }
   },
   "tool.face_editor_apply": {
@@ -357,7 +392,8 @@
       "de": "Anwenden",
       "ja": "適用",
       "fr": "Appliquer",
-      "es": "Aplicar"
+      "es": "Aplicar",
+      "zh": "应用"
     }
   },
   "tool.face_editor_cancel": {
@@ -367,7 +403,8 @@
       "de": "Abbrechen",
       "ja": "キャンセル",
       "fr": "Annuler",
-      "es": "Cancelar"
+      "es": "Cancelar",
+      "zh": "取消"
     }
   },
   "tool.face_editor_close": {
@@ -377,7 +414,8 @@
       "de": "Gesichterauswahl schließen",
       "ja": "顔の選択を閉じる",
       "fr": "Fermer la sélection des visages",
-      "es": "Cerrar la selección de rostros"
+      "es": "Cerrar la selección de rostros",
+      "zh": "关闭人脸选择"
     }
   },
   "tool.face_editor_alt": {
@@ -387,7 +425,8 @@
       "de": "Dein Originalfoto mit markierten Gesichtern",
       "ja": "見つかった顔を枠で囲んだ元の写真",
       "fr": "Votre photo d’origine avec les visages trouvés encadrés",
-      "es": "Tu foto original con los rostros encontrados marcados"
+      "es": "Tu foto original con los rostros encontrados marcados",
+      "zh": "你的原始照片，已标出检测到的人脸"
     }
   },
   "tool.face_editor_group": {
@@ -397,7 +436,8 @@
       "de": "Gefundene Gesichter",
       "ja": "写真で見つかった顔",
       "fr": "Visages trouvés sur la photo",
-      "es": "Rostros encontrados en la foto"
+      "es": "Rostros encontrados en la foto",
+      "zh": "照片中检测到的人脸"
     }
   },
   "tool.app_sub": {
@@ -407,7 +447,8 @@
       "de": "In der App gibt es mehr Funktionen, und alles läuft schneller.",
       "ja": "アプリなら機能がさらに充実し、処理もより高速です。",
       "fr": "Plus de fonctions, et tout va plus vite dans l’app.",
-      "es": "Más funciones, y todo va más rápido en la app."
+      "es": "Más funciones, y todo va más rápido en la app.",
+      "zh": "App 功能更多，处理速度也更快。"
     }
   },
   "tool.home.h2": {
@@ -417,7 +458,8 @@
       "de": "Kostenlos im Browser ausprobieren",
       "ja": "ブラウザで無料で試す",
       "fr": "Essayez gratuitement dans votre navigateur",
-      "es": "Pruébalo gratis en tu navegador"
+      "es": "Pruébalo gratis en tu navegador",
+      "zh": "在浏览器中免费试用"
     },
     "comment": "Home page banner that links to the free browser tool."
   },
@@ -428,7 +470,8 @@
       "de": "Vergrößere ein Foto direkt auf dieser Website um 2× – auf Computer oder iPad sogar um 4×. Ohne Anmeldung und ohne Upload: Das Foto wird auf deinem Gerät verarbeitet.",
       "ja": "このサイト上で写真を2倍に、パソコンやiPadなら4倍に高画質化できます。登録もアップロードも不要で、写真はお使いのデバイス上で処理されます。",
       "fr": "Agrandissez une photo 2× directement sur ce site, ou 4× sur ordinateur et iPad. Sans inscription ni envoi : la photo est traitée sur votre appareil.",
-      "es": "Amplía una foto 2× directamente en esta web, o 4× en un ordenador o iPad. Sin registro ni subidas: la foto se procesa en tu dispositivo."
+      "es": "Amplía una foto 2× directamente en esta web, o 4× en un ordenador o iPad. Sin registro ni subidas: la foto se procesa en tu dispositivo.",
+      "zh": "在本网站直接把图片放大 2×，在电脑或 iPad 上可放大 4×。无需注册，无需上传：图片在你的设备上处理。"
     },
     "comment": "Home page banner that links to the free browser tool."
   },
@@ -439,7 +482,8 @@
       "de": "Foto vergrößern",
       "ja": "写真を高画質化",
       "fr": "Agrandir une photo",
-      "es": "Ampliar una foto"
+      "es": "Ampliar una foto",
+      "zh": "放大图片"
     },
     "comment": "Home page banner that links to the free browser tool."
   },
@@ -450,7 +494,8 @@
       "de": "JPEG, PNG oder WebP · In aktuellen Browsern",
       "ja": "JPEG・PNG・WebP対応・最新のブラウザで動作",
       "fr": "JPEG, PNG ou WebP · Dans les navigateurs récents",
-      "es": "JPEG, PNG o WebP · En navegadores actuales"
+      "es": "JPEG, PNG o WebP · En navegadores actuales",
+      "zh": "JPEG、PNG 或 WebP · 适用于新版浏览器"
     },
     "comment": "Home page banner that links to the free browser tool."
   },
@@ -461,7 +506,8 @@
       "de": "Kostenlos",
       "ja": "無料",
       "fr": "Gratuit",
-      "es": "Gratis"
+      "es": "Gratis",
+      "zh": "免费"
     },
     "comment": "Home page banner that links to the free browser tool."
   },
@@ -472,7 +518,8 @@
       "de": "Auf dem Gerät",
       "ja": "デバイス上で処理",
       "fr": "Sur l’appareil",
-      "es": "En tu dispositivo"
+      "es": "En tu dispositivo",
+      "zh": "在你的设备上"
     },
     "comment": "Home page banner that links to the free browser tool."
   },
@@ -483,7 +530,8 @@
       "de": "etwa {time}",
       "ja": "約{time}",
       "fr": "environ {time}",
-      "es": "aproximadamente {time}"
+      "es": "aproximadamente {time}",
+      "zh": "约{time}"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -494,7 +542,8 @@
       "de": "Noch {time}.",
       "ja": "残り{time}。",
       "fr": "Encore {time}.",
-      "es": "Tiempo restante: {time}."
+      "es": "Tiempo restante: {time}.",
+      "zh": "剩余时间：{time}。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -505,7 +554,8 @@
       "de": "Dein Foto bleibt auf deinem Gerät. Der Upscaler wird einmal geladen, Ergebnisse werden als JPEG gespeichert, transparente Bereiche werden weiß.",
       "ja": "写真はこのデバイスから送信されません。高画質化モデルのダウンロードは初回のみで、結果はJPEGで保存されます（透明部分は白になります）。",
       "fr": "Votre photo reste sur cet appareil. Le moteur se télécharge une seule fois et les résultats sont enregistrés en JPEG, les zones transparentes sur fond blanc.",
-      "es": "Tu foto se queda en este dispositivo. El modelo se descarga una sola vez y el resultado se guarda en JPEG, con las zonas transparentes en blanco."
+      "es": "Tu foto se queda en este dispositivo. El modelo se descarga una sola vez y el resultado se guarda en JPEG, con las zonas transparentes en blanco.",
+      "zh": "照片会保留在此设备上。放大模型只需下载一次，结果保存为 JPEG，透明区域会填充为白色。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -516,7 +566,8 @@
       "de": "Foto hinzufügen",
       "ja": "写真を追加",
       "fr": "Ajoutez une photo",
-      "es": "Añade una foto"
+      "es": "Añade una foto",
+      "zh": "添加照片"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -527,7 +578,8 @@
       "de": "Dein Foto",
       "ja": "選択した写真",
       "fr": "Votre photo",
-      "es": "Tu foto"
+      "es": "Tu foto",
+      "zh": "你的照片"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -538,7 +590,8 @@
       "de": "Bildgröße wird geprüft…",
       "ja": "画像サイズを確認中…",
       "fr": "Vérification de la taille…",
-      "es": "Comprobando el tamaño…"
+      "es": "Comprobando el tamaño…",
+      "zh": "正在检查图片尺寸…"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -549,7 +602,8 @@
       "de": "Foto nicht verarbeitet",
       "ja": "写真は処理されていません",
       "fr": "Photo non traitée",
-      "es": "Foto no procesada"
+      "es": "Foto no procesada",
+      "zh": "照片未处理"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -560,7 +614,8 @@
       "de": "Bereit zum Vergrößern",
       "ja": "高画質化の準備ができました",
       "fr": "Prête à être agrandie",
-      "es": "Lista para ampliar"
+      "es": "Lista para ampliar",
+      "zh": "可以开始放大"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -571,7 +626,8 @@
       "de": "Dauert {time}. Dein Foto bleibt auf deinem Gerät.",
       "ja": "所要時間は{time}です。写真はこのデバイスから送信されません。",
       "fr": "Durée : {time}. Votre photo reste sur cet appareil.",
-      "es": "Tardará {time}. Tu foto se queda en este dispositivo."
+      "es": "Tardará {time}. Tu foto se queda en este dispositivo.",
+      "zh": "预计用时{time}。照片会保留在此设备上。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -582,7 +638,8 @@
       "de": "Auf diesem Gerät dauert das {time}",
       "ja": "このデバイスでは{time}かかります",
       "fr": "Sur cet appareil, comptez {time}",
-      "es": "En este dispositivo tardará {time}"
+      "es": "En este dispositivo tardará {time}",
+      "zh": "在此设备上处理这张照片需要{time}"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -593,7 +650,8 @@
       "de": "Große Fotos sind im Browser langsam. Du kannst es trotzdem hier vergrößern oder die volle Geschwindigkeit in der App nutzen.",
       "ja": "大きな写真はブラウザでは時間がかかります。このまま高画質化するか、アプリでフルスピードで処理できます。",
       "fr": "Les grandes photos sont lentes dans un navigateur. Vous pouvez tout de même l’agrandir ici, ou profiter de toute la vitesse dans l’app.",
-      "es": "Las fotos grandes van lentas en el navegador. Puedes ampliarla aquí de todos modos o usar la app a máxima velocidad."
+      "es": "Las fotos grandes van lentas en el navegador. Puedes ampliarla aquí de todos modos o usar la app a máxima velocidad.",
+      "zh": "在浏览器中处理大尺寸照片较慢。你仍可在这里放大，或在 App 中全速处理。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -604,7 +662,8 @@
       "de": "Vergrößern: {time}. Die Gesichtsverbesserung dauert zusätzlich.",
       "ja": "高画質化：{time}。顔の強調を有効にすると時間が延びます。",
       "fr": "Agrandissement : {time}. L’amélioration des visages ajoute du temps.",
-      "es": "Ampliación: {time}. Mejorar rostros añade tiempo."
+      "es": "Ampliación: {time}. Mejorar rostros añade tiempo.",
+      "zh": "放大：{time}。开启人脸增强会额外耗时。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -615,7 +674,8 @@
       "de": "Vorbereitung",
       "ja": "準備中",
       "fr": "Préparation",
-      "es": "Preparando"
+      "es": "Preparando",
+      "zh": "正在准备"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -626,7 +686,8 @@
       "de": "Der Upscaler wird geladen. Dein Foto bleibt auf deinem Gerät.",
       "ja": "高画質化モデルを読み込んでいます。写真はこのデバイスから送信されません。",
       "fr": "Chargement du moteur. Votre photo reste sur cet appareil.",
-      "es": "Cargando el modelo. Tu foto se queda en este dispositivo."
+      "es": "Cargando el modelo. Tu foto se queda en este dispositivo.",
+      "zh": "正在载入放大模型。照片会保留在此设备上。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -637,7 +698,8 @@
       "de": "Andere Verarbeitungsmethode wird getestet",
       "ja": "別の処理方法を試しています",
       "fr": "Essai d’une autre méthode",
-      "es": "Probando otro método"
+      "es": "Probando otro método",
+      "zh": "正在尝试其他处理方式"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -648,7 +710,8 @@
       "de": "Die CPU-Variante wird geprüft. Das kann länger dauern.",
       "ja": "CPUでの処理を確認しています。時間がかかる場合があります。",
       "fr": "Vérification du mode processeur. Cela peut prendre plus de temps.",
-      "es": "Comprobando el modo CPU. Puede tardar más."
+      "es": "Comprobando el modo CPU. Puede tardar más.",
+      "zh": "正在检查 CPU 处理方式，可能需要更长时间。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -659,7 +722,8 @@
       "de": "Verarbeitung abgebrochen",
       "ja": "処理をキャンセルしました",
       "fr": "Traitement annulé",
-      "es": "Procesamiento cancelado"
+      "es": "Procesamiento cancelado",
+      "zh": "已取消处理"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -670,7 +734,8 @@
       "de": "Dein Foto ist auf deinem Gerät geblieben. Starte erneut, wenn du bereit bist.",
       "ja": "写真はこのデバイスに残っています。準備ができたら再開してください。",
       "fr": "Votre photo est restée sur cet appareil. Relancez quand vous voulez.",
-      "es": "Tu foto se ha quedado en este dispositivo. Vuelve a empezar cuando quieras."
+      "es": "Tu foto se ha quedado en este dispositivo. Vuelve a empezar cuando quieras.",
+      "zh": "照片一直保留在此设备上。准备好后可重新开始。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -681,7 +746,8 @@
       "de": "Ein Foto nach dem anderen",
       "ja": "写真は1枚ずつ",
       "fr": "Une photo à la fois",
-      "es": "Una foto cada vez"
+      "es": "Una foto cada vez",
+      "zh": "一次只能处理一张照片"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -692,7 +758,8 @@
       "de": "Zieh ein einzelnes Foto hierher, um zu starten.",
       "ja": "開始するには写真を1枚ドロップしてください。",
       "fr": "Déposez une seule photo pour commencer.",
-      "es": "Suelta una sola foto para empezar."
+      "es": "Suelta una sola foto para empezar.",
+      "zh": "拖入一张照片即可开始。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -703,7 +770,8 @@
       "de": "Wähle dein Foto erneut",
       "ja": "写真をもう一度選んでください",
       "fr": "Choisissez à nouveau votre photo",
-      "es": "Vuelve a elegir tu foto"
+      "es": "Vuelve a elegir tu foto",
+      "zh": "请重新选择照片"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -714,7 +782,8 @@
       "de": "Die vorherige Verarbeitung wurde beendet, als du die Seite verlassen hast.",
       "ja": "ページを離れたため、前回の処理は終了しました。",
       "fr": "Le traitement précédent s’est arrêté quand vous avez quitté la page.",
-      "es": "El proceso anterior terminó al salir de esta página."
+      "es": "El proceso anterior terminó al salir de esta página.",
+      "zh": "你离开此页面时，上一个任务已结束。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -725,7 +794,8 @@
       "de": "Probier dieses Foto in der App",
       "ja": "この写真はアプリでお試しください",
       "fr": "Essayez cette photo dans l’app",
-      "es": "Prueba esta foto en la app"
+      "es": "Prueba esta foto en la app",
+      "zh": "试试在 App 中处理这张照片"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -736,7 +806,8 @@
       "de": "Foto konnte nicht fertiggestellt werden",
       "ja": "写真を処理できませんでした",
       "fr": "Impossible de terminer cette photo",
-      "es": "No se pudo terminar la foto"
+      "es": "No se pudo terminar la foto",
+      "zh": "无法完成这张照片的处理"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -747,7 +818,8 @@
       "de": "Dein Foto ist fertig",
       "ja": "写真の準備ができました",
       "fr": "Votre photo est prête",
-      "es": "Tu foto está lista"
+      "es": "Tu foto está lista",
+      "zh": "照片已处理完成"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -758,7 +830,8 @@
       "de": "Vergleiche das Ergebnis unten und lade es herunter.",
       "ja": "下で結果を比較してダウンロードしてください。",
       "fr": "Comparez le résultat ci-dessous et téléchargez-le.",
-      "es": "Compara el resultado abajo y descárgalo."
+      "es": "Compara el resultado abajo y descárgalo.",
+      "zh": "在下方对比结果并下载。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -769,7 +842,8 @@
       "de": "Gesichter werden gesucht",
       "ja": "顔を検出しています",
       "fr": "Recherche des visages",
-      "es": "Buscando rostros"
+      "es": "Buscando rostros",
+      "zh": "正在查找人脸"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -780,7 +854,8 @@
       "de": "Die Gesichtsverbesserung läuft separat auf diesem Gerät.",
       "ja": "顔の強調は、このデバイス上で別に処理されます。",
       "fr": "Les visages sont améliorés séparément, sur cet appareil.",
-      "es": "Los rostros se mejoran por separado, en este dispositivo."
+      "es": "Los rostros se mejoran por separado, en este dispositivo.",
+      "zh": "人脸增强会在此设备上单独进行。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -791,7 +866,8 @@
       "de": "Dein Foto wird auf diesem Gerät geprüft.",
       "ja": "このデバイス上で写真を確認しています。",
       "fr": "Analyse de votre photo sur cet appareil.",
-      "es": "Analizando tu foto en este dispositivo."
+      "es": "Analizando tu foto en este dispositivo.",
+      "zh": "正在此设备上检查照片。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -802,7 +878,8 @@
       "de": "Gesicht {current} von {total} wird verbessert",
       "ja": "顔を強調中（{current}/{total}）",
       "fr": "Amélioration du visage {current} sur {total}",
-      "es": "Mejorando rostro {current} de {total}"
+      "es": "Mejorando rostro {current} de {total}",
+      "zh": "正在增强第 {current} 张人脸（共 {total} 张）"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -813,7 +890,8 @@
       "de": "Gesichtsdetails werden mit einem eigenen Modell wiederhergestellt. Lass diese Seite geöffnet.",
       "ja": "専用モデルで顔のディテールを復元しています。このページを開いたままにしてください。",
       "fr": "Restauration des détails du visage avec un modèle dédié. Gardez cette page ouverte.",
-      "es": "Restaurando los detalles del rostro con un modelo aparte. Mantén esta página abierta."
+      "es": "Restaurando los detalles del rostro con un modelo aparte. Mantén esta página abierta.",
+      "zh": "正在用单独的模型修复面部细节。请保持此页面打开。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -824,7 +902,8 @@
       "de": "Verarbeitungstempo wird gemessen",
       "ja": "処理速度を測定しています",
       "fr": "Mesure de la vitesse",
-      "es": "Midiendo la velocidad"
+      "es": "Midiendo la velocidad",
+      "zh": "正在测量处理速度"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -835,7 +914,8 @@
       "de": "Zuerst wird ein kleiner Teil deines Fotos getestet.",
       "ja": "まず写真の一部で試しています。",
       "fr": "Test sur une petite partie de votre photo.",
-      "es": "Probando primero una pequeña parte de tu foto."
+      "es": "Probando primero una pequeña parte de tu foto.",
+      "zh": "先试着处理照片的一小部分。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -846,7 +926,8 @@
       "de": "Dein Foto wird vergrößert",
       "ja": "写真を高画質化しています",
       "fr": "Agrandissement en cours",
-      "es": "Ampliando tu foto"
+      "es": "Ampliando tu foto",
+      "zh": "正在放大照片"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -857,7 +938,8 @@
       "de": "Lass diese Seite während der Verarbeitung geöffnet.",
       "ja": "処理中はこのページを開いたままにしてください。",
       "fr": "Gardez cette page ouverte pendant le traitement.",
-      "es": "Mantén esta página abierta mientras se procesa."
+      "es": "Mantén esta página abierta mientras se procesa.",
+      "zh": "处理期间请保持此页面打开。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -868,7 +950,8 @@
       "de": "Lass diese Seite geöffnet. Du kannst jederzeit abbrechen.",
       "ja": "このページを開いたままにしてください。いつでもキャンセルできます。",
       "fr": "Gardez cette page ouverte. Vous pouvez annuler à tout moment.",
-      "es": "Mantén esta página abierta. Puedes cancelar en cualquier momento."
+      "es": "Mantén esta página abierta. Puedes cancelar en cualquier momento.",
+      "zh": "请保持此页面打开。你可以随时取消。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -879,7 +962,8 @@
       "de": "Download wird vorbereitet",
       "ja": "ダウンロードを準備しています",
       "fr": "Préparation du téléchargement",
-      "es": "Preparando la descarga"
+      "es": "Preparando la descarga",
+      "zh": "正在准备下载"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -890,7 +974,8 @@
       "de": "Das fertige Foto wird auf diesem Gerät gespeichert.",
       "ja": "完成した写真をこのデバイス上で保存しています。",
       "fr": "Enregistrement de la photo sur cet appareil.",
-      "es": "Guardando la foto terminada en este dispositivo."
+      "es": "Guardando la foto terminada en este dispositivo.",
+      "zh": "正在此设备上保存处理好的照片。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -901,7 +986,8 @@
       "de": "Upscaler wird geladen",
       "ja": "高画質化モデルを読み込み中",
       "fr": "Chargement du moteur",
-      "es": "Cargando el modelo"
+      "es": "Cargando el modelo",
+      "zh": "正在载入放大模型"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -912,7 +998,8 @@
       "de": "Gesichtsverbesserung wird geladen",
       "ja": "顔の強調モデルを読み込み中",
       "fr": "Chargement de l’amélioration des visages",
-      "es": "Cargando la mejora de rostros"
+      "es": "Cargando la mejora de rostros",
+      "zh": "正在载入人脸增强"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -923,7 +1010,8 @@
       "de": "Dein Browser speichert diese Dateien für das nächste Mal.",
       "ja": "これらのファイルは次回のためにブラウザに保存されます。",
       "fr": "Votre navigateur conserve ces fichiers pour la prochaine fois.",
-      "es": "Tu navegador guarda estos archivos para la próxima vez."
+      "es": "Tu navegador guarda estos archivos para la próxima vez.",
+      "zh": "浏览器会保存这些文件，供下次使用。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -934,7 +1022,8 @@
       "de": "Dein Foto bleibt auf deinem Gerät.",
       "ja": "写真はこのデバイスから送信されません。",
       "fr": "Votre photo reste sur cet appareil.",
-      "es": "Tu foto se queda en este dispositivo."
+      "es": "Tu foto se queda en este dispositivo.",
+      "zh": "照片会保留在此设备上。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -945,7 +1034,8 @@
       "de": "Verarbeitungs-Engine wird geladen",
       "ja": "処理エンジンを読み込み中",
       "fr": "Chargement du moteur de traitement",
-      "es": "Cargando el motor de procesamiento"
+      "es": "Cargando el motor de procesamiento",
+      "zh": "正在载入处理引擎"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -956,7 +1046,8 @@
       "de": "Beim ersten Besuch dauert es länger. Danach kommt die Engine aus dem Cache.",
       "ja": "初回は時間がかかります。次回からはキャッシュが使われます。",
       "fr": "La première visite est plus longue. Le moteur est ensuite mis en cache.",
-      "es": "La primera visita tarda más. Después el motor queda en caché."
+      "es": "La primera visita tarda más. Después el motor queda en caché.",
+      "zh": "首次访问耗时较长。引擎会被缓存，供下次使用。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -967,7 +1058,8 @@
       "de": "Upscaler wird vorbereitet",
       "ja": "高画質化の準備中",
       "fr": "Préparation du moteur",
-      "es": "Preparando el modelo"
+      "es": "Preparando el modelo",
+      "zh": "正在准备放大模型"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -978,7 +1070,8 @@
       "de": "Es wird geprüft, ob das Modell in diesem Browser läuft.",
       "ja": "モデルがこのブラウザで動作するか確認しています。",
       "fr": "Vérification du fonctionnement du modèle dans ce navigateur.",
-      "es": "Comprobando que el modelo funciona en este navegador."
+      "es": "Comprobando que el modelo funciona en este navegador.",
+      "zh": "正在检查模型能否在此浏览器中运行。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -989,7 +1082,8 @@
       "de": "JPEG, PNG oder WebP · bis {mp} MP bei {scale}× · max. 50 MB",
       "ja": "JPEG・PNG・WebP・{scale}倍は{mp}MPまで・最大50MB",
       "fr": "JPEG, PNG ou WebP · jusqu’à {mp} Mpx en {scale}× · 50 Mo max.",
-      "es": "JPEG, PNG o WebP · hasta {mp} MP a {scale}× · máx. 50 MB"
+      "es": "JPEG, PNG o WebP · hasta {mp} MP a {scale}× · máx. 50 MB",
+      "zh": "JPEG、PNG 或 WebP · {scale}× 时最高 {mp} MP · 最大 50 MB"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1000,7 +1094,8 @@
       "de": "Foto vergrößern · {scale}×",
       "ja": "高画質化・{scale}倍",
       "fr": "Agrandir la photo · {scale}×",
-      "es": "Ampliar foto · {scale}×"
+      "es": "Ampliar foto · {scale}×",
+      "zh": "放大照片 · {scale}×"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1011,7 +1106,8 @@
       "de": "Ergebnis · {scale}×",
       "ja": "結果・{scale}倍",
       "fr": "Résultat · {scale}×",
-      "es": "Resultado · {scale}×"
+      "es": "Resultado · {scale}×",
+      "zh": "结果 · {scale}×"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1022,7 +1118,8 @@
       "de": "Dein Foto, {scale}× vergrößert",
       "ja": "{scale}倍に高画質化した写真",
       "fr": "Votre photo agrandie {scale}×",
-      "es": "Tu foto ampliada {scale}×"
+      "es": "Tu foto ampliada {scale}×",
+      "zh": "放大 {scale}× 后的照片"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1033,7 +1130,8 @@
       "de": "{scale}× vergrößert",
       "ja": "{scale}倍に高画質化",
       "fr": "Agrandie {scale}×",
-      "es": "Ampliada {scale}×"
+      "es": "Ampliada {scale}×",
+      "zh": "已放大 {scale}×"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1044,7 +1142,8 @@
       "de": "Verbesserte Gesichter: {count}",
       "ja": "強調した顔：{count}",
       "fr": "Visages améliorés : {count}",
-      "es": "Rostros mejorados: {count}"
+      "es": "Rostros mejorados: {count}",
+      "zh": "已增强人脸：{count}"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1055,7 +1154,8 @@
       "de": "einige Gesichter konnten nicht verbessert werden",
       "ja": "一部の顔は強調できませんでした",
       "fr": "certains visages n’ont pas pu être améliorés",
-      "es": "algunos rostros no se pudieron mejorar"
+      "es": "algunos rostros no se pudieron mejorar",
+      "zh": "部分人脸无法增强"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1066,7 +1166,8 @@
       "de": "Verbesserte Gesichter: {count} von {total}",
       "ja": "強調した顔：{count}/{total}",
       "fr": "Visages améliorés : {count} sur {total}",
-      "es": "Rostros mejorados: {count} de {total}"
+      "es": "Rostros mejorados: {count} de {total}",
+      "zh": "已增强人脸：{count}/{total}"
     },
     "comment": "Result button that opens face selection; shows how many faces are enhanced. Preserve {placeholders}."
   },
@@ -1077,7 +1178,8 @@
       "de": "Welche Gesichter verbessern ({count} von {total})",
       "ja": "強調する顔を選ぶ（{count}/{total}）",
       "fr": "Visages à améliorer ({count} sur {total})",
-      "es": "Rostros que mejorar ({count} de {total})"
+      "es": "Rostros que mejorar ({count} de {total})",
+      "zh": "选择要增强的人脸（{count}/{total}）"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1088,7 +1190,8 @@
       "de": "Gesicht {index}",
       "ja": "顔 {index}",
       "fr": "Visage {index}",
-      "es": "Rostro {index}"
+      "es": "Rostro {index}",
+      "zh": "人脸 {index}"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1099,7 +1202,8 @@
       "de": "Gesichter werden aktualisiert",
       "ja": "顔を更新中",
       "fr": "Mise à jour des visages",
-      "es": "Actualizando rostros"
+      "es": "Actualizando rostros",
+      "zh": "正在更新人脸"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1110,7 +1214,8 @@
       "de": "Die Gesichter konnten nicht aktualisiert werden. Dein bisheriges Ergebnis bleibt erhalten – versuch es erneut.",
       "ja": "顔を更新できませんでした。前の結果はそのままです。もう一度お試しください。",
       "fr": "Impossible de mettre à jour les visages. Le résultat précédent est conservé — réessayez.",
-      "es": "No se pudieron actualizar los rostros. Tu resultado anterior sigue aquí; inténtalo de nuevo."
+      "es": "No se pudieron actualizar los rostros. Tu resultado anterior sigue aquí; inténtalo de nuevo.",
+      "zh": "无法更新人脸。之前的结果仍在这里，请重试。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1121,7 +1226,8 @@
       "de": "Keine geeigneten Gesichter gefunden",
       "ja": "強調に適した顔はありません",
       "fr": "Aucun visage adapté",
-      "es": "No hay rostros adecuados"
+      "es": "No hay rostros adecuados",
+      "zh": "没有适合增强的人脸"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1132,7 +1238,8 @@
       "de": "Keine Gesichter erkannt",
       "ja": "顔は検出されませんでした",
       "fr": "Aucun visage détecté",
-      "es": "No se detectaron rostros"
+      "es": "No se detectaron rostros",
+      "zh": "未检测到人脸"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1143,7 +1250,8 @@
       "de": "Gesichtsverbesserung aus",
       "ja": "顔の強調：オフ",
       "fr": "Amélioration des visages désactivée",
-      "es": "Mejora de rostros desactivada"
+      "es": "Mejora de rostros desactivada",
+      "zh": "人脸增强已关闭"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1154,7 +1262,8 @@
       "de": "{value} % Original",
       "ja": "元の写真 {value}%",
       "fr": "{value} % de l’original",
-      "es": "{value} % del original"
+      "es": "{value} % del original",
+      "zh": "原图 {value}%"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1165,7 +1274,8 @@
       "de": "Wähle ein Foto im Format JPEG, PNG oder WebP. Für HEIC, Videos und andere Formate nutze die App.",
       "ja": "JPEG、PNG、WebPの写真を選んでください。HEICや動画などの形式はアプリをご利用ください。",
       "fr": "Choisissez une photo JPEG, PNG ou WebP. Pour le HEIC, les vidéos ou d’autres formats, utilisez l’app.",
-      "es": "Elige una foto JPEG, PNG o WebP. Para HEIC, vídeo u otros formatos, usa la app."
+      "es": "Elige una foto JPEG, PNG o WebP. Para HEIC, vídeo u otros formatos, usa la app.",
+      "zh": "请选择 JPEG、PNG 或 WebP 照片。HEIC、视频或其他格式请使用 App。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1176,7 +1286,8 @@
       "de": "Animierte Bilder werden hier nicht unterstützt. Wähle ein Standbild.",
       "ja": "アニメーション画像には対応していません。静止画を選んでください。",
       "fr": "Les images animées ne sont pas prises en charge ici. Choisissez une photo fixe.",
-      "es": "Las imágenes animadas no son compatibles. Elige una foto fija."
+      "es": "Las imágenes animadas no son compatibles. Elige una foto fija.",
+      "zh": "此处不支持动图，请选择静态照片。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1187,7 +1298,8 @@
       "de": "Diese Datei ist größer als 50 MB. Probier sie in der App.",
       "ja": "ファイルが50MBの上限を超えています。アプリでお試しください。",
       "fr": "Ce fichier dépasse la limite de 50 Mo. Essayez-le dans l’app.",
-      "es": "El archivo supera el límite de 50 MB. Pruébalo en la app."
+      "es": "El archivo supera el límite de 50 MB. Pruébalo en la app.",
+      "zh": "此文件超过 50 MB 上限，请在 App 中尝试。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1198,7 +1310,8 @@
       "de": "Dieses Foto konnte nicht gelesen werden. Probier ein JPEG-, PNG- oder WebP-Bild.",
       "ja": "写真を読み込めませんでした。JPEG、PNG、WebPの画像をお試しください。",
       "fr": "Impossible de lire cette photo. Essayez une image JPEG, PNG ou WebP.",
-      "es": "No se pudo leer la foto. Prueba con una imagen JPEG, PNG o WebP."
+      "es": "No se pudo leer la foto. Prueba con una imagen JPEG, PNG o WebP.",
+      "zh": "无法读取这张照片。请使用 JPEG、PNG 或 WebP 图片。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1209,7 +1322,8 @@
       "de": "4× braucht einen Computer oder ein iPad. Nutze hier 2× oder die App.",
       "ja": "4倍にはパソコンまたはiPadが必要です。ここでは2倍をお試しいただくか、アプリをご利用ください。",
       "fr": "Le 4× nécessite un ordinateur ou un iPad. Essayez le 2× ici ou utilisez l’app.",
-      "es": "El 4× necesita un ordenador o un iPad. Prueba 2× aquí o usa la app."
+      "es": "El 4× necesita un ordenador o un iPad. Prueba 2× aquí o usa la app.",
+      "zh": "4× 需要在电脑或 iPad 上使用。可在这里试试 2×，或使用 App。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1220,7 +1334,8 @@
       "de": "Für 4× ist dieses Foto auf diesem Gerät zu groß. 2× funktioniert.",
       "ja": "この写真はこのデバイスで4倍にするには大きすぎます。2倍なら利用できます。",
       "fr": "Cette photo est trop grande pour le 4× sur cet appareil. Le 2× fonctionne.",
-      "es": "Esta foto es demasiado grande para 4× en este dispositivo. 2× sí funciona."
+      "es": "Esta foto es demasiado grande para 4× en este dispositivo. 2× sí funciona.",
+      "zh": "这张照片太大，无法在此设备上放大 4×，可以放大 2×。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1231,7 +1346,8 @@
       "de": "Dieses Foto ist zu groß für diesen Browser. Bei {scale}× liegt die Grenze auf diesem Gerät bei {mp} MP, für sehr breite Fotos noch darunter. Probier das Foto in voller Größe in der App.",
       "ja": "この写真はブラウザで処理するには大きすぎます。このデバイスでの{scale}倍の上限は{mp}MPで、横長の写真にはさらに制限があります。元のサイズの写真はアプリでお試しください。",
       "fr": "Cette photo est trop grande pour ce navigateur. En {scale}×, la limite sur cet appareil est de {mp} Mpx, et moins pour les photos très larges. Essayez la photo en taille réelle dans l’app.",
-      "es": "Esta foto es demasiado grande para este navegador. A {scale}×, el límite en este dispositivo es de {mp} MP, y menos para fotos muy anchas. Prueba la foto a tamaño completo en la app."
+      "es": "Esta foto es demasiado grande para este navegador. A {scale}×, el límite en este dispositivo es de {mp} MP, y menos para fotos muy anchas. Prueba la foto a tamaño completo en la app.",
+      "zh": "这张照片对此浏览器来说太大。在此设备上放大 {scale}× 时上限为 {mp} MP，超宽照片另有限制。请在 App 中处理原尺寸照片。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1242,7 +1358,8 @@
       "de": "Dieser Browser konnte das Foto nicht öffnen. Probier ein anderes Bild oder die App.",
       "ja": "このブラウザでは写真を開けませんでした。別の画像を試すか、アプリをご利用ください。",
       "fr": "Ce navigateur n’a pas pu ouvrir la photo. Essayez une autre image ou l’app.",
-      "es": "Este navegador no pudo abrir la foto. Prueba otra imagen o la app."
+      "es": "Este navegador no pudo abrir la foto. Prueba otra imagen o la app.",
+      "zh": "此浏览器无法打开这张照片。请换一张图片或下载 App。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1253,7 +1370,8 @@
       "de": "Dieser Browser konnte keinen Bild-Download vorbereiten. Probier die App.",
       "ja": "このブラウザでは画像のダウンロードを準備できませんでした。アプリをお試しください。",
       "fr": "Ce navigateur n’a pas pu préparer le téléchargement. Essayez l’app.",
-      "es": "Este navegador no pudo preparar la descarga. Prueba la app."
+      "es": "Este navegador no pudo preparar la descarga. Prueba la app.",
+      "zh": "此浏览器无法准备图片下载。请试试 App。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1264,7 +1382,8 @@
       "de": "Wähle das Foto erneut und versuch es noch einmal.",
       "ja": "写真を選び直してもう一度お試しください。",
       "fr": "Choisissez à nouveau la photo et réessayez.",
-      "es": "Vuelve a elegir la foto e inténtalo de nuevo."
+      "es": "Vuelve a elegir la foto e inténtalo de nuevo.",
+      "zh": "请重新选择照片后重试。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1275,7 +1394,8 @@
       "de": "Dieser Browser konnte das Ergebnis nicht in voller Größe speichern. Probier ein kleineres Foto oder die App.",
       "ja": "このブラウザでは元のサイズの結果を保存できませんでした。小さい写真を試すか、アプリをご利用ください。",
       "fr": "Ce navigateur n’a pas pu enregistrer le résultat en taille réelle. Essayez une photo plus petite ou l’app.",
-      "es": "Este navegador no pudo guardar el resultado a tamaño completo. Prueba una foto más pequeña o la app."
+      "es": "Este navegador no pudo guardar el resultado a tamaño completo. Prueba una foto más pequeña o la app.",
+      "zh": "此浏览器无法保存原尺寸结果。请换一张较小的照片或使用 App。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1286,7 +1406,8 @@
       "de": "Dieser Browser konnte das Foto nicht fertigstellen.",
       "ja": "このブラウザでは写真の処理を完了できませんでした。",
       "fr": "Ce navigateur n’a pas pu terminer la photo.",
-      "es": "Este navegador no pudo terminar la foto."
+      "es": "Este navegador no pudo terminar la foto.",
+      "zh": "此浏览器无法完成这张照片的处理。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1297,7 +1418,8 @@
       "de": "Die Gesichtsverbesserung ist auf diesem Gerät auf {mp} MP begrenzt. Schalte sie aus, um dieses Foto zu vergrößern, oder probier die App.",
       "ja": "このデバイスでの顔の強調は{mp}MPまでです。オフにしてこの写真を高画質化するか、アプリをお試しください。",
       "fr": "L’amélioration des visages est limitée à {mp} Mpx sur cet appareil. Désactivez-la pour agrandir cette photo, ou essayez l’app.",
-      "es": "La mejora de rostros está limitada a {mp} MP en este dispositivo. Desactívala para ampliar esta foto o prueba la app."
+      "es": "La mejora de rostros está limitada a {mp} MP en este dispositivo. Desactívala para ampliar esta foto o prueba la app.",
+      "zh": "在此设备上，人脸增强最多支持 {mp} MP。关闭人脸增强即可放大这张照片，或试试 App。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1308,7 +1430,8 @@
       "de": "Die Gesichtsverbesserung konnte in diesem Browser nicht abgeschlossen werden. Versuch es erneut, schalte sie aus oder nutze die App.",
       "ja": "このブラウザでは顔の強調を完了できませんでした。もう一度試すか、オフにするか、アプリをご利用ください。",
       "fr": "L’amélioration des visages n’a pas pu aboutir dans ce navigateur. Réessayez, désactivez-la ou utilisez l’app.",
-      "es": "La mejora de rostros no pudo terminar en este navegador. Inténtalo de nuevo, desactívala o usa la app."
+      "es": "La mejora de rostros no pudo terminar en este navegador. Inténtalo de nuevo, desactívala o usa la app.",
+      "zh": "人脸增强无法在此浏览器中完成。请重试、关闭人脸增强，或使用 App。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1319,7 +1442,8 @@
       "de": "Die Gesichtsverbesserung wurde gestoppt. Schalte sie aus und versuch es erneut, oder nutze die App.",
       "ja": "顔の強調が停止しました。オフにしてもう一度試すか、アプリをご利用ください。",
       "fr": "L’amélioration des visages s’est arrêtée. Désactivez-la et réessayez, ou utilisez l’app.",
-      "es": "La mejora de rostros se detuvo. Desactívala e inténtalo de nuevo, o usa la app."
+      "es": "La mejora de rostros se detuvo. Desactívala e inténtalo de nuevo, o usa la app.",
+      "zh": "人脸增强已停止。请关闭后重试，或使用 App。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1330,7 +1454,8 @@
       "de": "Dieser Browser konnte die Gesichtsverbesserung nicht starten. Schalte sie aus und versuch es erneut, oder nutze die App.",
       "ja": "このブラウザでは顔の強調を開始できませんでした。オフにしてもう一度試すか、アプリをご利用ください。",
       "fr": "Ce navigateur n’a pas pu lancer l’amélioration des visages. Désactivez-la et réessayez, ou utilisez l’app.",
-      "es": "Este navegador no pudo iniciar la mejora de rostros. Desactívala e inténtalo de nuevo, o usa la app."
+      "es": "Este navegador no pudo iniciar la mejora de rostros. Desactívala e inténtalo de nuevo, o usa la app.",
+      "zh": "此浏览器无法启动人脸增强。请关闭后重试，或使用 App。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1341,7 +1466,8 @@
       "de": "Der Upscaler konnte in diesem Browser nicht starten.",
       "ja": "このブラウザでは高画質化モデルを起動できませんでした。",
       "fr": "Le moteur n’a pas pu démarrer dans ce navigateur.",
-      "es": "El modelo no pudo iniciarse en este navegador."
+      "es": "El modelo no pudo iniciarse en este navegador.",
+      "zh": "放大模型无法在此浏览器中启动。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1352,7 +1478,8 @@
       "de": "Dieser Browser konnte die Bildverarbeitung nicht abschließen.",
       "ja": "このブラウザでは画像の処理を完了できませんでした。",
       "fr": "Ce navigateur n’a pas pu terminer le traitement de l’image.",
-      "es": "Este navegador no pudo terminar de procesar la imagen."
+      "es": "Este navegador no pudo terminar de procesar la imagen.",
+      "zh": "此浏览器无法完成图片处理。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1363,7 +1490,8 @@
       "de": "Die Verarbeitungsdateien konnten nicht geladen werden. Prüfe deine Verbindung und versuch es erneut.",
       "ja": "処理用のファイルをダウンロードできませんでした。接続を確認してもう一度お試しください。",
       "fr": "Impossible de télécharger les fichiers de traitement. Vérifiez votre connexion et réessayez.",
-      "es": "No se pudieron descargar los archivos de procesamiento. Comprueba tu conexión e inténtalo de nuevo."
+      "es": "No se pudieron descargar los archivos de procesamiento. Comprueba tu conexión e inténtalo de nuevo.",
+      "zh": "无法下载处理所需的文件。请检查网络连接后重试。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1374,7 +1502,8 @@
       "de": "Die Verarbeitungsdateien sind nicht verfügbar. Versuch es bitte gleich noch einmal.",
       "ja": "処理用のファイルが利用できません。しばらくしてからもう一度お試しください。",
       "fr": "Les fichiers de traitement sont indisponibles. Réessayez dans un instant.",
-      "es": "Los archivos de procesamiento no están disponibles. Inténtalo de nuevo en un momento."
+      "es": "Los archivos de procesamiento no están disponibles. Inténtalo de nuevo en un momento.",
+      "zh": "处理所需的文件暂时不可用，请稍后重试。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1385,7 +1514,8 @@
       "de": "Der Download wurde unterbrochen. Prüfe deine Verbindung und versuch es erneut.",
       "ja": "ダウンロードが中断されました。接続を確認してもう一度お試しください。",
       "fr": "Le téléchargement a été interrompu. Vérifiez votre connexion et réessayez.",
-      "es": "La descarga se interrumpió. Comprueba tu conexión e inténtalo de nuevo."
+      "es": "La descarga se interrumpió. Comprueba tu conexión e inténtalo de nuevo.",
+      "zh": "下载已中断。请检查网络连接后重试。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1396,7 +1526,8 @@
       "de": "Der Download des Gesichtsmodells wurde unterbrochen. Prüfe deine Verbindung und versuch es erneut.",
       "ja": "顔モデルのダウンロードが中断されました。接続を確認してもう一度お試しください。",
       "fr": "Le téléchargement du modèle de visages a été interrompu. Vérifiez votre connexion et réessayez.",
-      "es": "La descarga del modelo de rostros se interrumpió. Comprueba tu conexión e inténtalo de nuevo."
+      "es": "La descarga del modelo de rostros se interrumpió. Comprueba tu conexión e inténtalo de nuevo.",
+      "zh": "人脸模型下载已中断。请检查网络连接后重试。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1407,7 +1538,8 @@
       "de": "Dieser Browser konnte keine Bildfläche anlegen. Probier die App.",
       "ja": "このブラウザでは画像の描画領域を作成できませんでした。アプリをお試しください。",
       "fr": "Ce navigateur n’a pas pu créer de surface d’image. Essayez l’app.",
-      "es": "Este navegador no pudo crear la superficie de imagen. Prueba la app."
+      "es": "Este navegador no pudo crear la superficie de imagen. Prueba la app.",
+      "zh": "此浏览器无法创建图像画布。请试试 App。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1418,7 +1550,8 @@
       "de": "Der Upscaler hat eine unerwartete Bildgröße geliefert.",
       "ja": "高画質化モデルが想定外のサイズの画像を返しました。",
       "fr": "Le moteur a renvoyé une taille d’image inattendue.",
-      "es": "El modelo devolvió un tamaño de imagen inesperado."
+      "es": "El modelo devolvió un tamaño de imagen inesperado.",
+      "zh": "放大模型返回的图片尺寸异常。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1429,7 +1562,8 @@
       "de": "Der Browser hat ein ungültiges Bild geliefert.",
       "ja": "ブラウザが無効な画像を返しました。",
       "fr": "Le navigateur a renvoyé une image non valide.",
-      "es": "El navegador devolvió una imagen no válida."
+      "es": "El navegador devolvió una imagen no válida.",
+      "zh": "浏览器返回了无效的图片。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1440,7 +1574,8 @@
       "de": "Öffne diese Seite über HTTPS, um Fotos im Browser zu verarbeiten.",
       "ja": "ブラウザで写真を処理するには、このページをHTTPSで開いてください。",
       "fr": "Ouvrez cette page en HTTPS pour traiter des photos dans le navigateur.",
-      "es": "Abre esta página por HTTPS para procesar fotos en el navegador."
+      "es": "Abre esta página por HTTPS para procesar fotos en el navegador.",
+      "zh": "请通过 HTTPS 打开此页面，才能在浏览器中处理照片。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1451,7 +1586,8 @@
       "de": "Dieser Browser unterstützt nicht alles, was zum Vergrößern nötig ist. Probier einen aktuellen Browser oder die App.",
       "ja": "このブラウザは写真の高画質化に必要な機能に対応していません。最新のブラウザかアプリをお試しください。",
       "fr": "Ce navigateur ne prend pas en charge ce qu’il faut pour agrandir des photos ici. Essayez un navigateur récent ou l’app.",
-      "es": "Este navegador no admite lo necesario para ampliar fotos aquí. Prueba un navegador actual o la app."
+      "es": "Este navegador no admite lo necesario para ampliar fotos aquí. Prueba un navegador actual o la app.",
+      "zh": "此浏览器不支持在这里放大照片所需的功能。请使用新版浏览器或下载 App。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1462,7 +1598,8 @@
       "de": "Der Geschwindigkeitstest wurde nicht abgeschlossen. Versuch es bitte erneut.",
       "ja": "速度チェックが完了しませんでした。もう一度お試しください。",
       "fr": "Le test de vitesse n’a pas abouti. Réessayez.",
-      "es": "La prueba de velocidad no terminó. Inténtalo de nuevo."
+      "es": "La prueba de velocidad no terminó. Inténtalo de nuevo.",
+      "zh": "速度检测未完成，请重试。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1473,7 +1610,8 @@
       "de": "Die Verarbeitung reagiert nicht mehr. Versuch es erneut, wähle ein kleineres Foto oder probier die App.",
       "ja": "処理が応答しなくなりました。再試行するか、小さい写真を選ぶか、アプリをお試しください。",
       "fr": "Le traitement ne répond plus. Réessayez, choisissez une photo plus petite ou essayez l’app.",
-      "es": "El procesamiento dejó de responder. Reinténtalo, elige una foto más pequeña o prueba la app."
+      "es": "El procesamiento dejó de responder. Reinténtalo, elige una foto más pequeña o prueba la app.",
+      "zh": "处理已停止响应。请重试、选择较小的照片，或试试 App。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1484,7 +1622,8 @@
       "de": "Die Verarbeitung wurde beendet. Versuch es erneut oder nutze die App.",
       "ja": "処理が停止しました。もう一度試すか、アプリをご利用ください。",
       "fr": "Le traitement s’est arrêté. Réessayez ou utilisez l’app.",
-      "es": "El procesamiento se detuvo. Inténtalo de nuevo o usa la app."
+      "es": "El procesamiento se detuvo. Inténtalo de nuevo o usa la app.",
+      "zh": "处理任务已停止。请重试或使用 App。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1495,7 +1634,8 @@
       "de": "Der Browser konnte das Ergebnis nicht lesen. Probier die App.",
       "ja": "ブラウザが結果を読み取れませんでした。アプリをお試しください。",
       "fr": "Le navigateur n’a pas pu lire le résultat. Essayez l’app.",
-      "es": "El navegador no pudo leer el resultado. Prueba la app."
+      "es": "El navegador no pudo leer el resultado. Prueba la app.",
+      "zh": "浏览器无法读取结果。请试试 App。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1506,7 +1646,8 @@
       "de": "Dieser Browser konnte die Verarbeitung nicht starten. Probier einen aktuellen Browser oder die App.",
       "ja": "このブラウザでは処理を開始できませんでした。最新のブラウザかアプリをお試しください。",
       "fr": "Ce navigateur n’a pas pu lancer le traitement. Essayez un navigateur récent ou l’app.",
-      "es": "Este navegador no pudo iniciar el procesamiento. Prueba un navegador actual o la app."
+      "es": "Este navegador no pudo iniciar el procesamiento. Prueba un navegador actual o la app.",
+      "zh": "此浏览器无法开始处理。请使用新版浏览器或下载 App。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1517,7 +1658,8 @@
       "de": "Wähle, wie verbessert wird",
       "ja": "高画質化の方法を選択",
       "fr": "Choisissez comment améliorer",
-      "es": "Elige cómo mejorar"
+      "es": "Elige cómo mejorar",
+      "zh": "选择增强方式"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1528,7 +1670,8 @@
       "de": "Vergrößern",
       "ja": "高画質化",
       "fr": "Agrandir",
-      "es": "Ampliar"
+      "es": "Ampliar",
+      "zh": "放大"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1539,7 +1682,8 @@
       "de": "Kostenlos · auf deinem Gerät",
       "ja": "無料・端末上で処理",
       "fr": "Gratuit · sur votre appareil",
-      "es": "Gratis · en tu dispositivo"
+      "es": "Gratis · en tu dispositivo",
+      "zh": "免费 · 在你的设备上运行"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1550,7 +1694,8 @@
       "de": "Kreatives Vergrößern",
       "ja": "クリエイティブ高画質化",
       "fr": "Agrandissement créatif",
-      "es": "Ampliación creativa"
+      "es": "Ampliación creativa",
+      "zh": "创意放大"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1561,7 +1706,8 @@
       "de": "Fügt natürliche Details hinzu",
       "ja": "自然なディテールを追加",
       "fr": "Ajoute des détails naturels",
-      "es": "Añade detalles naturales"
+      "es": "Añade detalles naturales",
+      "zh": "添加自然细节"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1572,7 +1718,8 @@
       "de": "Restaurieren",
       "ja": "修復",
       "fr": "Restaurer",
-      "es": "Restaurar"
+      "es": "Restaurar",
+      "zh": "修复"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1583,7 +1730,8 @@
       "de": "Alte und beschädigte Fotos",
       "ja": "古い写真や傷んだ写真",
       "fr": "Photos anciennes et abîmées",
-      "es": "Fotos antiguas y dañadas"
+      "es": "Fotos antiguas y dañadas",
+      "zh": "老照片和受损照片"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1594,7 +1742,8 @@
       "de": "Kostenlos",
       "ja": "無料",
       "fr": "Gratuit",
-      "es": "Gratis"
+      "es": "Gratis",
+      "zh": "免费"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1605,7 +1754,8 @@
       "de": "Cloud-Verarbeitung",
       "ja": "クラウド処理",
       "fr": "Traitement dans le cloud",
-      "es": "Procesamiento en la nube"
+      "es": "Procesamiento en la nube",
+      "zh": "云端处理"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1616,7 +1766,8 @@
       "de": "Credits",
       "ja": "クレジット",
       "fr": "crédits",
-      "es": "créditos"
+      "es": "créditos",
+      "zh": "积分"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1627,7 +1778,8 @@
       "de": "Kreativität",
       "ja": "創造性",
       "fr": "Créativité",
-      "es": "Creatividad"
+      "es": "Creatividad",
+      "zh": "创意程度"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1638,7 +1790,8 @@
       "de": "Auflösung",
       "ja": "解像度",
       "fr": "Résolution",
-      "es": "Resolución"
+      "es": "Resolución",
+      "zh": "分辨率"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1649,7 +1802,8 @@
       "de": "Restaurierungsmodus",
       "ja": "修復モード",
       "fr": "Mode de restauration",
-      "es": "Modo de restauración"
+      "es": "Modo de restauración",
+      "zh": "修复模式"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1660,7 +1814,8 @@
       "de": "Restaurieren",
       "ja": "修復",
       "fr": "Restaurer",
-      "es": "Restaurar"
+      "es": "Restaurar",
+      "zh": "修复"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1671,7 +1826,8 @@
       "de": "Entfernt Kratzer, behält die Originalfarben",
       "ja": "元の色を保ったまま傷を除去",
       "fr": "Supprime les rayures, garde les couleurs d’origine",
-      "es": "Elimina rayones y conserva los colores originales"
+      "es": "Elimina rayones y conserva los colores originales",
+      "zh": "去除划痕，保留原有色彩"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1682,7 +1838,8 @@
       "de": "Restaurieren & Kolorieren",
       "ja": "修復＆カラー化",
       "fr": "Restaurer et coloriser",
-      "es": "Restaurar y colorear"
+      "es": "Restaurar y colorear",
+      "zh": "修复与上色"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1693,7 +1850,8 @@
       "de": "Restauriert und koloriert das Foto",
       "ja": "修復してカラー化",
       "fr": "Restaure et colorise la photo",
-      "es": "Restaura y colorea la foto"
+      "es": "Restaura y colorea la foto",
+      "zh": "修复并上色"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1704,7 +1862,8 @@
       "de": "Verbessertes Kolorieren",
       "ja": "高精細カラー化",
       "fr": "Colorisation avancée",
-      "es": "Coloreado mejorado"
+      "es": "Coloreado mejorado",
+      "zh": "增强上色"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1715,7 +1874,8 @@
       "de": "Koloriert mit mehr Schärfe",
       "ja": "よりシャープにカラー化",
       "fr": "Colorise avec plus de netteté",
-      "es": "Colorea con mayor nitidez"
+      "es": "Colorea con mayor nitidez",
+      "zh": "上色并提升清晰度"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1726,7 +1886,8 @@
       "de": "Erweiterte Reparatur",
       "ja": "高度な修復",
       "fr": "Réparation avancée",
-      "es": "Reparación avanzada"
+      "es": "Reparación avanzada",
+      "zh": "高级修复"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1737,7 +1898,8 @@
       "de": "Behebt starke Schäden und steigert die Qualität",
       "ja": "ひどい損傷を修復し画質を向上",
       "fr": "Répare les dégâts importants et améliore la qualité",
-      "es": "Repara daños graves y mejora la calidad"
+      "es": "Repara daños graves y mejora la calidad",
+      "zh": "修复严重损坏并提升质量"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1748,7 +1910,8 @@
       "de": "Negativ",
       "ja": "ネガ",
       "fr": "Négatif",
-      "es": "Negativo"
+      "es": "Negativo",
+      "zh": "负片"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1759,7 +1922,8 @@
       "de": "Höhere Auflösung",
       "ja": "高解像度",
       "fr": "Résolution augmentée",
-      "es": "Mayor resolución"
+      "es": "Mayor resolución",
+      "zh": "提高分辨率"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1770,7 +1934,8 @@
       "de": "Details angeben (optional)",
       "ja": "詳細を追加（任意）",
       "fr": "Ajouter des détails (facultatif)",
-      "es": "Añadir detalles (opcional)"
+      "es": "Añadir detalles (opcional)",
+      "zh": "补充细节（可选）"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1781,7 +1946,8 @@
       "de": "Beschreibe Details, die erhalten oder wiederhergestellt werden sollen, z. B. Augenfarbe, Kleidungsfarbe, fehlende Stellen.",
       "ja": "残したい・復元したい詳細を入力（例：目の色、服の色、欠けている部分）",
       "fr": "Décrivez les détails à préserver ou restaurer : couleur des yeux, des vêtements, parties manquantes.",
-      "es": "Describe detalles que conservar o restaurar, p. ej. color de ojos, color de la ropa o partes que faltan."
+      "es": "Describe detalles que conservar o restaurar, p. ej. color de ojos, color de la ropa o partes que faltan.",
+      "zh": "描述需要保留或修复的细节，例如眼睛颜色、衣服颜色、缺失的细节。"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1792,7 +1958,8 @@
       "de": "Der Checkout öffnet sich in einem neuen Tab. Dein Foto bleibt hier.",
       "ja": "決済は新しいタブで開きます。写真はこのままです。",
       "fr": "Le paiement s’ouvre dans un nouvel onglet. Votre photo reste ici.",
-      "es": "El pago se abre en una pestaña nueva. Tu foto se queda aquí."
+      "es": "El pago se abre en una pestaña nueva. Tu foto se queda aquí.",
+      "zh": "付款页面会在新标签页中打开，照片会保留在这里。"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1803,7 +1970,8 @@
       "de": "Ich habe Credits hinzugefügt",
       "ja": "クレジットを追加しました",
       "fr": "J’ai ajouté des crédits",
-      "es": "Ya añadí créditos"
+      "es": "Ya añadí créditos",
+      "zh": "我已购买积分"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1814,7 +1982,8 @@
       "de": "Im Verlauf gespeichert.",
       "ja": "履歴に保存しました。",
       "fr": "Enregistré dans votre historique.",
-      "es": "Guardado en tu historial."
+      "es": "Guardado en tu historial.",
+      "zh": "已保存到你的历史记录。"
     },
     "comment": "Browser upscaler cloud modes; preserve {placeholders} and product names."
   },
@@ -1825,7 +1994,8 @@
       "de": "In deinem Konto ansehen",
       "ja": "アカウントで見る",
       "fr": "Le voir dans votre compte",
-      "es": "Verlo en tu cuenta"
+      "es": "Verlo en tu cuenta",
+      "zh": "在账户中查看"
     },
     "comment": "Link to the account page's history, after a cloud result."
   },
@@ -1836,7 +2006,8 @@
       "de": "Konservativ",
       "ja": "控えめ",
       "fr": "Conservateur",
-      "es": "Conservador"
+      "es": "Conservador",
+      "zh": "保守"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1847,7 +2018,8 @@
       "de": "Behutsam",
       "ja": "慎重",
       "fr": "Prudent",
-      "es": "Cuidadoso"
+      "es": "Cuidadoso",
+      "zh": "谨慎"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1858,7 +2030,8 @@
       "de": "Ausgewogen",
       "ja": "バランス",
       "fr": "Équilibré",
-      "es": "Equilibrado"
+      "es": "Equilibrado",
+      "zh": "平衡"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1869,7 +2042,8 @@
       "de": "Kreativ",
       "ja": "クリエイティブ",
       "fr": "Créatif",
-      "es": "Creativo"
+      "es": "Creativo",
+      "zh": "创意"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1880,7 +2054,8 @@
       "de": "Künstlerisch",
       "ja": "アーティスティック",
       "fr": "Artistique",
-      "es": "Artístico"
+      "es": "Artístico",
+      "zh": "艺术"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1891,7 +2066,8 @@
       "de": "Kreativ vergrößern · {credits} Credits",
       "ja": "クリエイティブ高画質化・{credits}クレジット",
       "fr": "Agrandir · {credits} crédits",
-      "es": "Ampliar · {credits} créditos"
+      "es": "Ampliar · {credits} créditos",
+      "zh": "创意放大 · {credits} 积分"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1902,7 +2078,8 @@
       "de": "Restaurieren · {credits} Credits",
       "ja": "修復・{credits}クレジット",
       "fr": "Restaurer · {credits} crédits",
-      "es": "Restaurar · {credits} créditos"
+      "es": "Restaurar · {credits} créditos",
+      "zh": "修复 · {credits} 积分"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1913,7 +2090,8 @@
       "de": "Bereit zur Verarbeitung",
       "ja": "処理の準備ができました",
       "fr": "Prête à être traitée",
-      "es": "Lista para procesar"
+      "es": "Lista para procesar",
+      "zh": "可以开始处理"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1924,7 +2102,8 @@
       "de": "Dein Foto wird zur Verarbeitung hochgeladen und bleibt in deinem Verlauf, bis du es löschst.",
       "ja": "写真は処理のためにアップロードされ、削除するまで履歴に保存されます。",
       "fr": "Votre photo est envoyée pour traitement et conservée dans votre historique jusqu’à ce que vous la supprimiez.",
-      "es": "Tu foto se sube para procesarla y se guarda en tu historial hasta que la elimines."
+      "es": "Tu foto se sube para procesarla y se guarda en tu historial hasta que la elimines.",
+      "zh": "照片会上传进行处理，并保存在你的历史记录中，直到你将其删除。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1935,7 +2114,8 @@
       "de": "Foto wird vorbereitet",
       "ja": "写真を準備しています",
       "fr": "Préparation de la photo",
-      "es": "Preparando tu foto"
+      "es": "Preparando tu foto",
+      "zh": "正在准备照片"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1946,7 +2126,8 @@
       "de": "Verarbeitung in der Cloud",
       "ja": "クラウドで処理中",
       "fr": "Traitement dans le cloud",
-      "es": "Procesando en la nube"
+      "es": "Procesando en la nube",
+      "zh": "正在云端处理"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1957,7 +2138,8 @@
       "de": "Meist unter einer Minute. Lass diese Seite geöffnet.",
       "ja": "通常1分以内です。このページを開いたままにしてください。",
       "fr": "Généralement moins d’une minute. Gardez cette page ouverte.",
-      "es": "Suele tardar menos de un minuto. Mantén esta página abierta."
+      "es": "Suele tardar menos de un minuto. Mantén esta página abierta.",
+      "zh": "通常不到一分钟。请保持此页面打开。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1968,7 +2150,8 @@
       "de": "Lade das Ergebnis jetzt herunter: Es konnte nicht im Verlauf gespeichert werden.",
       "ja": "履歴に保存できなかったため、今すぐダウンロードしてください。",
       "fr": "Téléchargez le résultat maintenant : il n’a pas pu être enregistré dans votre historique.",
-      "es": "Descarga el resultado ahora: no se pudo guardar en tu historial."
+      "es": "Descarga el resultado ahora: no se pudo guardar en tu historial.",
+      "zh": "请立即下载结果：它未能保存到你的历史记录。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1979,7 +2162,8 @@
       "de": "Die Verarbeitung wurde nicht abgeschlossen, deine {credits} Credits wurden erstattet. Bitte versuche es erneut.",
       "ja": "処理が完了しなかったため、{credits}クレジットを返却しました。もう一度お試しください。",
       "fr": "Le traitement n’a pas abouti et vos {credits} crédits ont été rendus. Veuillez réessayer.",
-      "es": "El procesamiento no terminó y se devolvieron tus {credits} créditos. Inténtalo de nuevo."
+      "es": "El procesamiento no terminó y se devolvieron tus {credits} créditos. Inténtalo de nuevo.",
+      "zh": "处理未完成，{credits} 积分已退还。请重试。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1990,7 +2174,8 @@
       "de": "Die Verarbeitung wurde nicht abgeschlossen. Bitte versuche es erneut.",
       "ja": "処理が完了しませんでした。もう一度お試しください。",
       "fr": "Le traitement n’a pas abouti. Veuillez réessayer.",
-      "es": "El procesamiento no terminó. Inténtalo de nuevo."
+      "es": "El procesamiento no terminó. Inténtalo de nuevo.",
+      "zh": "处理未完成，请重试。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2001,7 +2186,8 @@
       "de": "Andere Fotos werden noch verarbeitet. Warte, bis sie fertig sind, und versuche es dann erneut.",
       "ja": "ほかの写真を処理中です。完了してからもう一度お試しください。",
       "fr": "D’autres photos sont en cours de traitement. Attendez la fin, puis réessayez.",
-      "es": "Otras fotos se están procesando. Espera a que terminen e inténtalo de nuevo."
+      "es": "Otras fotos se están procesando. Espera a que terminen e inténtalo de nuevo.",
+      "zh": "其他照片仍在处理中。请等待完成后再试。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2012,7 +2198,8 @@
       "de": "Dein Verlauf ist voll. Lösche gespeicherte Fotos in deinem Konto, um fortzufahren.",
       "ja": "履歴がいっぱいです。続けるにはアカウントで保存済みの写真を削除してください。",
       "fr": "Votre historique est plein. Supprimez des photos enregistrées dans votre compte pour continuer.",
-      "es": "Tu historial está lleno. Elimina fotos guardadas en tu cuenta para continuar."
+      "es": "Tu historial está lleno. Elimina fotos guardadas en tu cuenta para continuar.",
+      "zh": "你的历史记录已满。请在账户中删除已保存的照片后继续。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2023,7 +2210,8 @@
       "de": "Die Cloud-Verarbeitung ist gerade nicht verfügbar. Bitte versuche es später erneut.",
       "ja": "現在クラウド処理は利用できません。後でもう一度お試しください。",
       "fr": "Le traitement dans le cloud est indisponible pour le moment. Réessayez plus tard.",
-      "es": "El procesamiento en la nube no está disponible ahora. Inténtalo más tarde."
+      "es": "El procesamiento en la nube no está disponible ahora. Inténtalo más tarde.",
+      "zh": "云端处理暂时不可用，请稍后重试。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2034,7 +2222,8 @@
       "de": "UScale ist nicht erreichbar. Prüfe deine Verbindung und versuche es erneut.",
       "ja": "UScaleに接続できませんでした。接続を確認してもう一度お試しください。",
       "fr": "Impossible de joindre UScale. Vérifiez votre connexion et réessayez.",
-      "es": "No se pudo conectar con UScale. Revisa tu conexión e inténtalo de nuevo."
+      "es": "No se pudo conectar con UScale. Revisa tu conexión e inténtalo de nuevo.",
+      "zh": "无法连接到 UScale。请检查网络连接后重试。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2045,7 +2234,8 @@
       "de": "Dieses Foto ist zu groß zum Hochladen. Wähle eines unter 20 MB.",
       "ja": "写真が大きすぎてアップロードできません。20MB未満の写真を選んでください。",
       "fr": "Cette photo est trop lourde pour être envoyée. Choisissez-en une de moins de 20 Mo.",
-      "es": "Esta foto es demasiado grande para subirla. Elige una de menos de 20 MB."
+      "es": "Esta foto es demasiado grande para subirla. Elige una de menos de 20 MB.",
+      "zh": "这张照片太大，无法上传。请选择小于 20 MB 的照片。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2056,7 +2246,8 @@
       "de": "Dafür brauchst du {credits} Credits. Du hast {balance}.",
       "ja": "{credits}クレジットが必要です。残高は{balance}です。",
       "fr": "Il faut {credits} crédits. Vous en avez {balance}.",
-      "es": "Se necesitan {credits} créditos. Tienes {balance}."
+      "es": "Se necesitan {credits} créditos. Tienes {balance}.",
+      "zh": "需要 {credits} 积分，当前余额 {balance}。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2067,7 +2258,8 @@
       "de": "{price} · {credits} Credits",
       "ja": "{price}・{credits}クレジット",
       "fr": "{price} · {credits} crédits",
-      "es": "{price} · {credits} créditos"
+      "es": "{price} · {credits} créditos",
+      "zh": "{price} · {credits} 积分"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2078,7 +2270,8 @@
       "de": "Der Checkout wurde in einem neuen Tab geöffnet. Komm danach hierher zurück.",
       "ja": "決済を新しいタブで開きました。完了したらこちらに戻ってください。",
       "fr": "Le paiement s’est ouvert dans un nouvel onglet. Revenez ici une fois terminé.",
-      "es": "El pago se abrió en una pestaña nueva. Vuelve aquí cuando termines."
+      "es": "El pago se abrió en una pestaña nueva. Vuelve aquí cuando termines.",
+      "zh": "付款页面已在新标签页中打开。完成后请回到这里。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2089,7 +2282,8 @@
       "de": "Dein Foto ist restauriert",
       "ja": "写真を修復しました",
       "fr": "Votre photo est restaurée",
-      "es": "Tu foto está restaurada"
+      "es": "Tu foto está restaurada",
+      "zh": "照片已修复"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2100,7 +2294,8 @@
       "de": "Kreativ vergrößert · {resolution}",
       "ja": "クリエイティブ高画質化・{resolution}",
       "fr": "Agrandissement créatif · {resolution}",
-      "es": "Ampliación creativa · {resolution}"
+      "es": "Ampliación creativa · {resolution}",
+      "zh": "创意放大 · {resolution}"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2111,7 +2306,8 @@
       "de": "Ergebnis",
       "ja": "結果",
       "fr": "Résultat",
-      "es": "Resultado"
+      "es": "Resultado",
+      "zh": "结果"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2122,7 +2318,8 @@
       "de": "Dein verbessertes Foto",
       "ja": "高画質化した写真",
       "fr": "Votre photo améliorée",
-      "es": "Tu foto mejorada"
+      "es": "Tu foto mejorada",
+      "zh": "增强后的照片"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2133,7 +2330,8 @@
       "de": "Nicht mit erweiterter Reparatur verfügbar",
       "ja": "高度な修復では使用できません",
       "fr": "Indisponible avec la réparation avancée",
-      "es": "No disponible con reparación avanzada"
+      "es": "No disponible con reparación avanzada",
+      "zh": "使用“高级修复”时不可用"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2144,7 +2342,8 @@
       "de": "{credits} Credits",
       "ja": "{credits}クレジット",
       "fr": "{credits} crédits",
-      "es": "{credits} créditos"
+      "es": "{credits} créditos",
+      "zh": "{credits} 积分"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2155,7 +2354,8 @@
       "de": "Pro · In der Cloud",
       "ja": "Pro・クラウド",
       "fr": "Pro · Dans le cloud",
-      "es": "Pro · En la nube"
+      "es": "Pro · En la nube",
+      "zh": "Pro · 云端处理"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2166,7 +2366,8 @@
       "de": "Vergrößern mit natürlichen Details",
       "ja": "自然なディテールで高画質化",
       "fr": "Agrandir avec des détails naturels",
-      "es": "Amplía con detalle natural"
+      "es": "Amplía con detalle natural",
+      "zh": "放大并添加自然细节"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2177,7 +2378,8 @@
       "de": "Bis 8K mit neuen, natürlichen Details. In der Cloud verarbeitet, mit Credits.",
       "ja": "新しい自然なディテールで最大8Kに。クレジットを使ってクラウドで処理します。",
       "fr": "Jusqu’à 8K avec de nouveaux détails naturels. Traité dans le cloud avec des crédits.",
-      "es": "Hasta 8K con detalle nuevo y natural. Se procesa en la nube con créditos."
+      "es": "Hasta 8K con detalle nuevo y natural. Se procesa en la nube con créditos.",
+      "zh": "最高可达 8K，并添加新的自然细节。使用积分在云端处理。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2188,7 +2390,8 @@
       "de": "Alte Fotos restaurieren",
       "ja": "古い写真を修復",
       "fr": "Restaurer de vieilles photos",
-      "es": "Restaura fotos antiguas"
+      "es": "Restaura fotos antiguas",
+      "zh": "老照片修复"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2199,7 +2402,8 @@
       "de": "Entferne Kratzer und Schäden und bring Farbe zurück. In der Cloud verarbeitet, mit Credits.",
       "ja": "傷や損傷を取り除き、色を取り戻します。クレジットを使ってクラウドで処理します。",
       "fr": "Supprimez rayures et dégâts, et retrouvez les couleurs. Traité dans le cloud avec des crédits.",
-      "es": "Elimina rayones y daños, y recupera el color. Se procesa en la nube con créditos."
+      "es": "Elimina rayones y daños, y recupera el color. Se procesa en la nube con créditos.",
+      "zh": "去除划痕和损伤，还原色彩。使用积分在云端处理。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2210,7 +2414,8 @@
       "de": "UScale-Tools",
       "ja": "UScaleのツール",
       "fr": "Outils UScale",
-      "es": "Herramientas de UScale"
+      "es": "Herramientas de UScale",
+      "zh": "UScale 工具"
     },
     "comment": "Browser upscaler tool picker; preserve product names."
   },
@@ -2221,7 +2426,8 @@
       "de": "Fotos vergrößern",
       "ja": "写真を高画質化",
       "fr": "Agrandir des photos",
-      "es": "Ampliar fotos"
+      "es": "Ampliar fotos",
+      "zh": "图片放大"
     },
     "comment": "Browser upscaler tool picker; preserve product names."
   },
@@ -2232,7 +2438,8 @@
       "de": "Wähle ein Tool. Das Vergrößern ist kostenlos und läuft auf deinem Gerät; Pro-Tools laufen in der Cloud mit Credits.",
       "ja": "ツールを選んでください。高画質化は無料で端末上で処理されます。Proツールはクレジットを使ってクラウドで処理します。",
       "fr": "Choisissez un outil. L’agrandissement est gratuit et s’exécute sur votre appareil ; les outils Pro fonctionnent dans le cloud avec des crédits.",
-      "es": "Elige una herramienta. La ampliación es gratis y funciona en tu dispositivo; las herramientas Pro funcionan en la nube con créditos."
+      "es": "Elige una herramienta. La ampliación es gratis y funciona en tu dispositivo; las herramientas Pro funcionan en la nube con créditos.",
+      "zh": "选择一个工具开始。放大功能免费，在你的设备上运行；Pro 工具使用积分在云端运行。"
     },
     "comment": "Browser upscaler tool picker; preserve product names."
   },
@@ -2243,7 +2450,8 @@
       "de": "Alle Tools",
       "ja": "すべてのツール",
       "fr": "Tous les outils",
-      "es": "Todas las herramientas"
+      "es": "Todas las herramientas",
+      "zh": "全部工具"
     },
     "comment": "Browser upscaler tool picker; preserve product names."
   },
@@ -2254,7 +2462,8 @@
       "de": "Anmeldung wird geprüft…",
       "ja": "ログインを確認しています…",
       "fr": "Vérification de la connexion…",
-      "es": "Comprobando el inicio de sesión…"
+      "es": "Comprobando el inicio de sesión…",
+      "zh": "正在检查登录状态…"
     },
     "comment": "Browser upscaler tool picker; preserve product names."
   },
@@ -2265,7 +2474,8 @@
       "de": "Dein Foto wird zusammengesetzt",
       "ja": "写真を合成しています",
       "fr": "Assemblage de votre photo",
-      "es": "Uniendo tu foto"
+      "es": "Uniendo tu foto",
+      "zh": "正在拼合照片"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2276,7 +2486,8 @@
       "de": "Teil {index} von {total}",
       "ja": "{total}枚中{index}枚目",
       "fr": "Partie {index} sur {total}",
-      "es": "Parte {index} de {total}"
+      "es": "Parte {index} de {total}",
+      "zh": "第 {index}/{total} 部分"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2287,7 +2498,8 @@
       "de": "Die Teile werden verbunden",
       "ja": "パーツをつなぎ合わせています",
       "fr": "Fusion des parties",
-      "es": "Combinando las partes"
+      "es": "Combinando las partes",
+      "zh": "正在融合各部分"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2298,7 +2510,8 @@
       "de": "Wird in deinem Verlauf gespeichert",
       "ja": "履歴に保存しています",
       "fr": "Enregistrement dans votre historique",
-      "es": "Guardando en tu historial"
+      "es": "Guardando en tu historial",
+      "zh": "正在保存到历史记录"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2309,7 +2522,8 @@
       "de": "{credits} Credits",
       "ja": "{credits}クレジット",
       "fr": "{credits} crédits",
-      "es": "{credits} créditos"
+      "es": "{credits} créditos",
+      "zh": "{credits} 积分"
     },
     "comment": "Browser upscaler tool picker; preserve {placeholders}."
   },
@@ -2320,7 +2534,8 @@
       "de": "Deine Anmeldung konnte nicht geprüft werden. Prüfe deine Verbindung und versuche es erneut.",
       "ja": "ログイン状態を確認できませんでした。接続を確認してもう一度お試しください。",
       "fr": "Impossible de vérifier votre connexion au compte. Vérifiez votre connexion et réessayez.",
-      "es": "No pudimos comprobar tu inicio de sesión. Revisa tu conexión e inténtalo de nuevo."
+      "es": "No pudimos comprobar tu inicio de sesión. Revisa tu conexión e inténtalo de nuevo.",
+      "zh": "无法检查你的登录状态。请检查网络连接后重试。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2331,7 +2546,8 @@
       "de": "Zur Anmeldung",
       "ja": "ログインへ進む",
       "fr": "Aller à la connexion",
-      "es": "Ir al inicio de sesión"
+      "es": "Ir al inicio de sesión",
+      "zh": "前往登录"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2342,7 +2558,8 @@
       "de": "Dies ist die Testseite von UScale: Credits sind hier kostenlos, daher kann nur das Team sie kaufen und nutzen. Wenn du Entwickler bist, bitte darum, deine E-Mail in TEST_ALLOWED_EMAILS aufzunehmen.",
       "ja": "ここはUScaleのテストサイトです。クレジットが無料のため、購入と利用はチームに限られています。開発者の方は、メールアドレスをTEST_ALLOWED_EMAILSに追加するよう依頼してください。",
       "fr": "Ceci est le site de test d’UScale : les crédits y sont gratuits, leur achat et leur utilisation sont donc réservés à l’équipe. Si vous êtes développeur, demandez l’ajout de votre e-mail à TEST_ALLOWED_EMAILS.",
-      "es": "Este es el sitio de pruebas de UScale: aquí los créditos son gratis, así que comprarlos y usarlos está limitado al equipo. Si eres desarrollador, pide que añadan tu correo a TEST_ALLOWED_EMAILS."
+      "es": "Este es el sitio de pruebas de UScale: aquí los créditos son gratis, así que comprarlos y usarlos está limitado al equipo. Si eres desarrollador, pide que añadan tu correo a TEST_ALLOWED_EMAILS.",
+      "zh": "这是 UScale 的测试网站，积分在这里免费，因此只有团队成员可以购买和使用。如果你是开发者，请让团队把你的电子邮件地址添加到 TEST_ALLOWED_EMAILS。"
     },
     "comment": "Shown only on the test site; keep TEST_ALLOWED_EMAILS untranslated."
   }

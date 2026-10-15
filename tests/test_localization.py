@@ -24,8 +24,8 @@ class CatalogTests(unittest.TestCase):
         self.assertEqual(len(records), len(owners))
 
     def test_renderer_payloads_are_complete(self):
-        for locale in ("en", "ru", "de", "ja", "fr"):
-            data = catalog.load_locale(locale)
+        for locale in ("en", "ru", "de", "ja", "fr", "es", "zh"):
+            data = catalog.load_locale(locale, require_complete=True)
             self.assertEqual(data["lang"], locale)
             self.assertEqual(len(data["guide_pages"]), 10)
             self.assertEqual(len(data["docs"]), 3)
@@ -87,9 +87,9 @@ class CatalogTests(unittest.TestCase):
         # facts file and assert only which locale's price and marks end up in the copy.
         digits = str(site_build.RATING_COUNT)
         self.assertEqual(len(digits), 4, "regroup the expectations below")
-        grouped = {"en": ",", "fr": "\u00a0", "de": ".", "ru": "\u00a0", "ja": ","}
+        grouped = {"en": ",", "fr": "\u00a0", "de": ".", "ru": "\u00a0", "ja": ",", "zh": ","}
         # France and Germany space the percent sign off; the rest write it flush.
-        percent = {"en": "", "fr": "\u00a0", "de": "\u00a0", "ru": "", "ja": ""}
+        percent = {"en": "", "fr": "\u00a0", "de": "\u00a0", "ru": "", "ja": "", "zh": ""}
         template = "{rating_count} · {annual_price} · {off}"
         for lang in grouped:
             with self.subTest(lang=lang):
@@ -104,6 +104,7 @@ class CatalogTests(unittest.TestCase):
         self.assertEqual(site_build.locale_pricing("ru")["currency"], "RUB")
         self.assertEqual(site_build.locale_pricing("ja")["currency"], "JPY")
         self.assertEqual(site_build.locale_pricing("de")["currency"], "EUR")
+        self.assertEqual(site_build.locale_pricing("zh")["currency"], "CNY")
 
     def test_prices_are_written_the_way_each_store_writes_them(self):
         # Fixed amounts, so a price change in app_facts.json can't break this.
@@ -117,6 +118,8 @@ class CatalogTests(unittest.TestCase):
             (2690, "RUB", "ru", "2\u00a0690\u00a0\u20bd"),
             # Japanese groups and points like English, so only the currency differs.
             (5890, "JPY", "ja", "\u00a55,890"),
+            # The China store keeps the fen even on a round yuan price.
+            (189, "CNY", "zh", "\u00a5189.00"),
         ]
         for amount, currency, lang, expected in cases:
             with self.subTest(lang=lang, currency=currency):
@@ -125,6 +128,7 @@ class CatalogTests(unittest.TestCase):
     def test_rating_uses_the_locale_decimal_mark(self):
         self.assertEqual(site_build.rating_text("en"), "4.6")
         self.assertEqual(site_build.rating_text("ja"), "4.6")
+        self.assertEqual(site_build.rating_text("zh"), "4.6")
         self.assertEqual(site_build.rating_text("fr"), "4,6")
         self.assertEqual(site_build.rating_text("de"), "4,6")
         self.assertEqual(site_build.rating_text("es"), "4,6")
@@ -138,7 +142,7 @@ class CatalogTests(unittest.TestCase):
         """
         unpriced = next(
             code
-            for code in ("pt", "it", "ko", "zh", "hi", "tr")
+            for code in ("pt", "it", "ko", "hi", "tr")
             if code not in site_build._PRICING
         )
         self.assertEqual(
@@ -158,6 +162,7 @@ class CatalogTests(unittest.TestCase):
             "de": "Laden im App Store",
             "ru": "Загрузите в App Store",
             "ja": "App Storeからダウンロード",
+            "zh": "App Store 下载",
         }
         for locale, label in expected.items():
             button = site_build.appstore_btn(catalog.load_locale(locale))
@@ -184,7 +189,7 @@ class CatalogTests(unittest.TestCase):
             f"{key}[{locale}]: {label}"
             for key, record in records.items()
             for locale, text in record["localizations"].items()
-            if locale in ("de", "ru", "ja", "fr") and isinstance(text, str)
+            if locale in ("de", "ru", "ja", "fr", "es", "zh") and isinstance(text, str)
             for label in english_only
             if re.search(rf"(?<![\w\u201e\u00ab-]){re.escape(label)}(?![\w\u201c\u00bb])", text)
         ]

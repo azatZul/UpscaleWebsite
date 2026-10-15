@@ -81,7 +81,7 @@ LOCALES = [
 BY_CODE = {l[0]: l for l in LOCALES}
 # Locales whose official App Store badge puts the "App Store" service mark on
 # the first line and the translated "download" phrase under it.
-MARK_FIRST_LOCALES = frozenset({"ja"})
+MARK_FIRST_LOCALES = frozenset({"ja", "zh"})
 # Only locales represented in every localization section are indexable and shown
 # in the picker. Importing a complete locale automatically grows the cluster.
 LOCALIZED_CODES = tuple(
@@ -402,6 +402,8 @@ CURRENCIES = {
     "EUR": ("\u20ac", False, 2),
     "RUB": ("\u20bd", False, 0),
     "JPY": ("\u00a5", True, 0),
+    # The China store prints yuan with fen, "¥189.00".
+    "CNY": ("\u00a5", True, 2),
 }
 # Decimal and thousands separators, and whether a percent sign is spaced off.
 NUMBER_FORMATS = {
@@ -526,9 +528,9 @@ def english_date(value):
     parsed = date.fromisoformat(value)
     return f"{parsed.day} {MONTHS[parsed.month - 1]} {parsed.year}"
 
-def japanese_date(value):
-    """ISO date the way every Japanese page writes one. A bare ISO string is
-    legible there but reads as foreign, so 年月日 is worth the branch."""
+def cjk_date(value):
+    """ISO date the way every Japanese and Chinese page writes one. A bare ISO
+    string is legible there but reads as foreign, so 年月日 is worth the branch."""
     parsed = date.fromisoformat(value)
     return f"{parsed.year}年{parsed.month}月{parsed.day}日"
 
@@ -537,11 +539,11 @@ def date_tag(value, prefix="", english=False, lang=None):
 
     Most localized pages keep the ISO text — it reads the same in Latin and
     Cyrillic locales; the English-only legal pages spell the month out, and
-    Japanese takes its own 年月日 form."""
+    Japanese and Chinese take the shared 年月日 form."""
     if english:
         text = english_date(value)
-    elif lang == "ja":
-        text = japanese_date(value)
+    elif lang in ("ja", "zh"):
+        text = cjk_date(value)
     else:
         text = value
     return f'<time datetime="{value}">{esc(f"{prefix} {text}".strip())}</time>'
@@ -676,15 +678,16 @@ def appstore_btn(c, cls=""):
     The guidelines forbid recreating or restyling the badge, so the link is only
     a frame: it carries the site's shadow and hover lift, and both colourways
     are emitted so the theme can cross-fade between them the way the rest of the
-    palette does. The accessible name still has to be built here, and Japanese
-    inverts the lockup — the "App Store" service mark leads and the translated
-    modifier follows, which is the order the phrase reads in. French elides its
+    palette does. The accessible name still has to be built here. Japanese and
+    Chinese put the "App Store" service mark before the translated modifier;
+    Chinese separates them with a space, while Japanese joins them. French elides its
     article onto the mark ("Télécharger dans l’App Store"), so a lead ending in
     an apostrophe joins with no space, the way Apple's own artwork sets it."""
     lang = c["lang"]
     lead, mark = c["ui"]["download_on"], c["ui"]["app_store"]
     if lang in MARK_FIRST_LOCALES:
-        label = f"{mark}{lead}"
+        gap = "" if lang == "ja" else " "
+        label = f"{mark}{gap}{lead}"
     else:
         gap = "" if lead.endswith(("’", "'")) else " "
         label = f"{lead}{gap}{mark}"

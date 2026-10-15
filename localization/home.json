@@ -6,7 +6,8 @@
       "de": "Bildqualität verbessern am iPhone – KI-App | UScale",
       "ja": "iPhoneで写真をAI高画質化するアプリ｜UScale",
       "fr": "Améliorer la qualité d’une image avec l’IA | UScale",
-      "es": "Mejorar calidad de imagen con IA gratis | UScale"
+      "es": "Mejorar calidad de imagen con IA gratis | UScale",
+      "zh": "iPhone AI 画质修复：模糊图片变清晰｜UScale"
     },
     "comment": "Page or section title; preserve product names."
   },
@@ -17,7 +18,8 @@
       "de": "Bildqualität verbessern auf iPhone und iPad: Fotos schärfen, Bilder ohne Qualitätsverlust auf 4K vergrößern, Videos verbessern und alte Fotos restaurieren.",
       "ja": "UScaleはiPhone・iPad向けの無料AI写真高画質化アプリです。画像を鮮明にし、4K高画質化、動画の画質向上、古い写真の修復ができます。",
       "fr": "UScale améliore gratuitement vos images avec l’IA sur iPhone et iPad : défloutez, agrandissez en 4K, améliorez les vidéos et restaurez d’anciennes photos.",
-      "es": "Mejora la calidad de imagen con IA gratis con UScale. Quita el desenfoque, aumenta la resolución hasta 4K, mejora videos y restaura fotos antiguas."
+      "es": "Mejora la calidad de imagen con IA gratis con UScale. Quita el desenfoque, aumenta la resolución hasta 4K, mejora videos y restaura fotos antiguas.",
+      "zh": "UScale 是免费的 iPhone 和 iPad AI 画质修复 App：在本机让模糊图片变清晰、放大到 4K，还能修复视频画质，高清修复老照片。"
     },
     "comment": "Description copy; keep factual claims unchanged."
   },
@@ -28,7 +30,8 @@
       "de": "Die KI-App, die <em>Bilder schärft, vergrößert und restauriert</em> – direkt auf deinem iPhone",
       "ja": "iPhoneで写真を<em>鮮明化・高画質化・修復</em>するAIアプリ",
       "fr": "L’outil IA qui <em>défloute, agrandit et restaure vos photos</em> — directement sur votre iPhone",
-      "es": "Mejora la calidad de imagen con IA: <em>quita el desenfoque, aumenta la resolución y restaura</em> — directamente en tu iPhone"
+      "es": "Mejora la calidad de imagen con IA: <em>quita el desenfoque, aumenta la resolución y restaura</em> — directamente en tu iPhone",
+      "zh": "AI 画质修复：<em>去模糊、高清放大、修复老照片</em>，就在你的 iPhone 上"
     },
     "comment": "Contains HTML; translate visible text and preserve tags, attributes, and URLs."
   },
@@ -39,7 +42,8 @@
       "de": "Die KI-App, die Bilder schärft, vergrößert und restauriert – direkt auf deinem iPhone",
       "ja": "iPhoneで写真を鮮明化・高画質化・修復するAIアプリ",
       "fr": "L’outil IA qui défloute, agrandit et restaure vos photos — directement sur votre iPhone",
-      "es": "Mejora la calidad de imagen con IA: quita el desenfoque, aumenta la resolución y restaura — directamente en tu iPhone"
+      "es": "Mejora la calidad de imagen con IA: quita el desenfoque, aumenta la resolución y restaura — directamente en tu iPhone",
+      "zh": "AI 画质修复：去模糊、高清放大、修复老照片，就在你的 iPhone 上"
     }
   },
   "hero.sub": {
@@ -49,7 +53,8 @@
       "de": "Verbessere die Bildqualität unscharfer Aufnahmen, erhöhe die Auflösung auf 4K, mach Videos schärfer und repariere alte Familienfotos. Schärfen und Vergrößern laufen auf deinem Gerät; die Restaurierung übernimmt unsere Cloud-KI.",
       "ja": "ぼやけた画像を鮮明にし、4Kへ高画質化。動画の画質を良くし、古い家族写真も修復します。鮮明化と高画質化はデバイス上、写真修復はクラウドAIで処理します。",
       "fr": "Rendez les photos floues plus nettes, agrandissez les images jusqu’en 4K, améliorez la qualité des vidéos et restaurez les anciennes photos de famille. Le défloutage et l’agrandissement s’effectuent sur votre appareil ; la restauration est traitée par notre IA dans le cloud.",
-      "es": "Mejora la nitidez de fotos borrosas, aumenta la resolución de imágenes hasta 4K, mejora la calidad de video y repara fotos familiares antiguas. Quitar el desenfoque y aumentar la resolución se hacen en tu dispositivo; la restauración usa nuestra IA en la nube."
+      "es": "Mejora la nitidez de fotos borrosas, aumenta la resolución de imágenes hasta 4K, mejora la calidad de video y repara fotos familiares antiguas. Quitar el desenfoque y aumentar la resolución se hacen en tu dispositivo; la restauración usa nuestra IA en la nube.",
+      "zh": "让模糊图片变清晰，把图片放大到 4K，提升视频画质，修复珍贵的老照片。去模糊和放大在你的设备上完成，老照片修复由我们的云端 AI 模型处理。"
     }
   },
   "hero.rating_note": {
@@ -59,7 +64,8 @@
       "de": "{rating_count} Bewertungen",
       "ja": "App Storeで{rating_count}件の評価",
       "fr": "{rating_count} notes sur l’App Store",
-      "es": "{rating_count} valoraciones en App Store"
+      "es": "{rating_count} valoraciones en App Store",
+      "zh": "{rating_count} 个 App Store 评分"
     },
     "comment": "Preserve every {placeholder} exactly."
   },
@@ -70,7 +76,8 @@
       "de": "Kostenlos starten · iPhone & iPad · iOS {minimum_ios} oder neuer · Kein Konto nötig",
       "ja": "無料で開始 · iPhone・iPad · iOS {minimum_ios}以降 · アカウント不要",
       "fr": "Gratuit pour commencer · iPhone et iPad · iOS {minimum_ios} ou version ultérieure · Aucun compte requis",
-      "es": "Gratis para empezar · iPhone y iPad · iOS {minimum_ios} o posterior · Sin cuenta"
+      "es": "Gratis para empezar · iPhone y iPad · iOS {minimum_ios} o posterior · Sin cuenta",
+      "zh": "免费开始使用 · iPhone 和 iPad · iOS {minimum_ios} 或更高版本 · 无需账户"
     },
     "comment": "Preserve every {placeholder} exactly."
   },
@@ -81,7 +88,8 @@
       "de": "2× und 4× hochskalieren",
       "ja": "2×・4×高画質化",
       "fr": "Agrandissement 2× et 4×",
-      "es": "Aumento de resolución 2× y 4×"
+      "es": "Aumento de resolución 2× y 4×",
+      "zh": "2× 和 4× 放大"
     }
   },
   "hero.chips.1": {
@@ -91,7 +99,8 @@
       "de": "Fotos und Videos",
       "ja": "写真・ビデオ",
       "fr": "Photos et vidéos",
-      "es": "Fotos y video"
+      "es": "Fotos y video",
+      "zh": "照片和视频"
     }
   },
   "hero.chips.2": {
@@ -101,7 +110,8 @@
       "de": "Verarbeitung auf dem Gerät",
       "ja": "デバイス上で処理",
       "fr": "Traitement sur l’appareil",
-      "es": "Procesamiento en el dispositivo"
+      "es": "Procesamiento en el dispositivo",
+      "zh": "本地处理"
     }
   },
   "hero.chips.3": {
@@ -111,7 +121,8 @@
       "de": "Stapelverarbeitung",
       "ja": "一括処理",
       "fr": "Traitement par lot",
-      "es": "Procesamiento por lotes"
+      "es": "Procesamiento por lotes",
+      "zh": "批量处理"
     }
   },
   "hero.cmp_label": {
@@ -121,7 +132,8 @@
       "de": "Vorher-Nachher-Vergleich von mit UScale verbesserten Fotos",
       "ja": "UScaleで高画質化した写真の処理前後の比較",
       "fr": "Comparaison avant/après de photos améliorées avec UScale",
-      "es": "Comparación antes y después de fotos mejoradas con UScale"
+      "es": "Comparación antes y después de fotos mejoradas con UScale",
+      "zh": "UScale 处理前后的照片对比"
     }
   },
   "hero.before": {
@@ -131,7 +143,8 @@
       "de": "Vorher",
       "ja": "処理前",
       "fr": "Avant",
-      "es": "Antes"
+      "es": "Antes",
+      "zh": "处理前"
     }
   },
   "hero.after": {
@@ -141,7 +154,8 @@
       "de": "Nachher",
       "ja": "処理後",
       "fr": "Après",
-      "es": "Después"
+      "es": "Después",
+      "zh": "处理后"
     }
   },
   "hero.before_alt": {
@@ -151,7 +165,8 @@
       "de": "Unscharfes Foto mit niedriger Auflösung vor der KI-Verbesserung",
       "ja": "AI高画質化前のぼやけた低解像度写真",
       "fr": "Photo floue en basse résolution avant amélioration par IA",
-      "es": "Foto borrosa de baja resolución antes de mejorarla con IA"
+      "es": "Foto borrosa de baja resolución antes de mejorarla con IA",
+      "zh": "AI 画质修复前模糊、低分辨率的照片"
     },
     "comment": "Accessibility text describing an image."
   },
@@ -162,7 +177,8 @@
       "de": "Dasselbe Foto, mit UScale hochskaliert und geschärft",
       "ja": "UScaleで高画質化して鮮明にした同じ写真",
       "fr": "La même photo après agrandissement et amélioration de la netteté avec UScale",
-      "es": "La misma foto después de aumentar su resolución y nitidez con UScale"
+      "es": "La misma foto después de aumentar su resolución y nitidez con UScale",
+      "zh": "同一张照片经 UScale 放大并锐化后的效果"
     },
     "comment": "Accessibility text describing an image."
   },
@@ -173,7 +189,8 @@
       "de": "Zum Vergleichen ziehen",
       "ja": "ドラッグして比較",
       "fr": "Faites glisser pour comparer",
-      "es": "Arrastra para comparar"
+      "es": "Arrastra para comparar",
+      "zh": "拖动对比"
     }
   },
   "hero.shot": {
@@ -183,7 +200,8 @@
       "de": "Beispiel",
       "ja": "例",
       "fr": "Exemple",
-      "es": "Ejemplo"
+      "es": "Ejemplo",
+      "zh": "示例"
     }
   },
   "hero.shots_label": {
@@ -193,7 +211,8 @@
       "de": "Vorher-Nachher-Beispiel auswählen",
       "ja": "処理前後の例を選択",
       "fr": "Choisissez un exemple avant/après",
-      "es": "Elige un ejemplo de antes y después"
+      "es": "Elige un ejemplo de antes y después",
+      "zh": "选择一个处理前后示例"
     }
   },
   "hero.tab_labels.0": {
@@ -203,7 +222,8 @@
       "de": "Porträt hochskalieren",
       "ja": "ポートレート高画質化",
       "fr": "Agrandissement de portrait",
-      "es": "Mejora de retrato"
+      "es": "Mejora de retrato",
+      "zh": "人像放大"
     }
   },
   "hero.tab_labels.1": {
@@ -213,7 +233,8 @@
       "de": "Landschaft hochskalieren",
       "ja": "風景写真の高画質化",
       "fr": "Agrandissement de paysage",
-      "es": "Mejora de paisaje"
+      "es": "Mejora de paisaje",
+      "zh": "风景放大"
     }
   },
   "hero.tab_labels.2": {
@@ -223,7 +244,8 @@
       "de": "Altes Foto restaurieren",
       "ja": "古い写真の修復",
       "fr": "Restauration de photo ancienne",
-      "es": "Restaurar foto antigua"
+      "es": "Restaurar foto antigua",
+      "zh": "老照片修复"
     }
   },
   "hero.tab_labels.3": {
@@ -233,7 +255,8 @@
       "de": "Video hochskalieren",
       "ja": "動画の高画質化",
       "fr": "Amélioration vidéo",
-      "es": "Mejorar video"
+      "es": "Mejorar video",
+      "zh": "视频放大"
     }
   },
   "hero.tab_labels.4": {
@@ -243,7 +266,8 @@
       "de": "KI-Zeitlupe",
       "ja": "AIスローモーション",
       "fr": "Ralenti par IA",
-      "es": "Cámara lenta con IA"
+      "es": "Cámara lenta con IA",
+      "zh": "AI 慢动作"
     }
   },
   "reviews.eyebrow": {
@@ -253,7 +277,8 @@
       "de": "Bewertungen",
       "ja": "レビュー",
       "fr": "Avis",
-      "es": "Reseñas"
+      "es": "Reseñas",
+      "zh": "用户评价"
     }
   },
   "reviews.h2": {
@@ -263,7 +288,8 @@
       "de": "Das sagen Nutzer über UScale",
       "ja": "UScaleへの声",
       "fr": "Ce que les utilisateurs disent de UScale",
-      "es": "Lo que dicen de UScale"
+      "es": "Lo que dicen de UScale",
+      "zh": "大家怎么评价 UScale"
     }
   },
   "reviews.sub": {
@@ -273,7 +299,8 @@
       "de": "Echte Bewertungen direkt aus dem App Store.",
       "ja": "App Storeに寄せられた実際のレビューです。",
       "fr": "De vrais avis, directement depuis l’App Store.",
-      "es": "Reseñas reales, directamente desde App Store."
+      "es": "Reseñas reales, directamente desde App Store.",
+      "zh": "真实评价，来自 App Store。"
     }
   },
   "reviews.score_note": {
@@ -283,7 +310,8 @@
       "de": "{rating_count} Bewertungen",
       "ja": "App Storeで{rating_count}件の評価",
       "fr": "{rating_count} notes sur l’App Store",
-      "es": "{rating_count} valoraciones en App Store"
+      "es": "{rating_count} valoraciones en App Store",
+      "zh": "{rating_count} 个 App Store 评分"
     },
     "comment": "Preserve every {placeholder} exactly."
   },
@@ -294,7 +322,8 @@
       "de": "Mit 5 von 5 bewertet",
       "ja": "5点満点中5点の評価",
       "fr": "Noté 5 sur 5",
-      "es": "Valoración de 5 de 5"
+      "es": "Valoración de 5 de 5",
+      "zh": "5 星满分评价"
     },
     "comment": "Accessibility text describing an image."
   },
@@ -319,7 +348,8 @@
       "de": "Australien · Okt. 2025",
       "ja": "オーストラリア · 2025年10月",
       "fr": "Australie · oct. 2025",
-      "es": "Australia · oct 2025"
+      "es": "Australia · oct 2025",
+      "zh": "澳大利亚 · 2025年10月"
     }
   },
   "reviews.items.0.title": {
@@ -329,7 +359,8 @@
       "de": "Hochskalieren",
       "ja": "高画質化",
       "fr": "Agrandissement",
-      "es": "Mejora de calidad"
+      "es": "Mejora de calidad",
+      "zh": "放大"
     },
     "comment": "Page or section title; preserve product names."
   },
@@ -340,7 +371,8 @@
       "de": "Alle Funktionen arbeiten gut. Besonders gefällt mir der 4x-Effekt mit dem Eye Enhancer – er verbessert die Gesamtschärfe des Bildes enorm. Praktisch sind auch das automatische Speichern im Verlauf mit dem Namen des Effekts sowie die Möglichkeit, das Ergebnis in Fotos zu speichern oder zu teilen.",
       "ja": "どの機能もよく動きます。特にEye Enhancerを使った4×の効果が気に入っています。画像全体の鮮明さが見違えるほど変わります。エフェクト名付きで履歴に自動保存され、写真アプリへの保存や結果の共有ができるのも便利です。",
       "fr": "Toutes les fonctions marchent bien. J’aime particulièrement l’effet 4x avec Eye Enhancer : il améliore de façon spectaculaire la netteté générale de l’image. L’enregistrement automatique dans l’historique avec le nom de l’effet est appréciable, tout comme la possibilité d’enregistrer le résultat dans Photos ou de le partager.",
-      "es": "Todas las funciones funcionan bien. Me gusta especialmente el efecto 4x con Eye Enhancer; logra una diferencia espectacular en la nitidez general de la imagen. También agradezco que se guarde automáticamente en el historial con el nombre del efecto y que se pueda guardar en Fotos o compartir el resultado."
+      "es": "Todas las funciones funcionan bien. Me gusta especialmente el efecto 4x con Eye Enhancer; logra una diferencia espectacular en la nitidez general de la imagen. También agradezco que se guarde automáticamente en el historial con el nombre del efecto y que se pueda guardar en Fotos o compartir el resultado.",
+      "zh": "所有功能都很好用，我特别喜欢 4x 效果搭配眼部增强，整张图片的清晰度提升非常明显。处理结果会自动保存到历史记录并标注效果名称，这点很贴心，还可以存到相册或直接分享。"
     },
     "comment": "App Store review; preserve the reviewer's meaning and tone."
   },
@@ -365,7 +397,8 @@
       "de": "USA · Nov. 2025",
       "ja": "米国 · 2025年11月",
       "fr": "États-Unis · nov. 2025",
-      "es": "Estados Unidos · nov 2025"
+      "es": "Estados Unidos · nov 2025",
+      "zh": "美国 · 2025年11月"
     }
   },
   "reviews.items.1.title": {
@@ -375,7 +408,8 @@
       "de": "Tolle App",
       "ja": "素晴らしいアプリ",
       "fr": "Excellente app",
-      "es": "Excelente app"
+      "es": "Excelente app",
+      "zh": "很棒的 App"
     },
     "comment": "Page or section title; preserve product names."
   },
@@ -386,7 +420,8 @@
       "de": "Ich habe mehrere Apps zum Hochskalieren ausprobiert, und diese ist die beste. Sie verbessert Gesichter mühelos und mit hoher Auflösung, ohne Verzerrungen. Entwickelt diese App weiter, sie hat großes Potenzial.",
       "ja": "高画質化アプリをいくつか試しましたが、これが一番です。顔を簡単かつ高解像度で、歪みなく綺麗にできます。大きな可能性があるので、これからも開発を続けてください。",
       "fr": "J’ai essayé plusieurs apps d’agrandissement, et celle-ci est la meilleure. Elle améliore les visages très facilement, avec une excellente résolution et sans déformations. Continuez à développer cette app, elle a un grand potentiel.",
-      "es": "He probado varias apps para aumentar la resolución y esta es la mejor. Mejora los rostros con facilidad y gran resolución, sin distorsiones. Sigan desarrollando esta app, tiene mucho potencial."
+      "es": "He probado varias apps para aumentar la resolución y esta es la mejor. Mejora los rostros con facilidad y gran resolución, sin distorsiones. Sigan desarrollando esta app, tiene mucho potencial.",
+      "zh": "我试过好几款放大 App，这款是最好的。增强人脸很轻松，分辨率很高，也没有变形。请继续开发，这个 App 潜力很大。"
     },
     "comment": "App Store review; preserve the reviewer's meaning and tone."
   },
@@ -411,7 +446,8 @@
       "de": "Neuseeland · Okt. 2025",
       "ja": "ニュージーランド · 2025年10月",
       "fr": "Nouvelle-Zélande · oct. 2025",
-      "es": "Nueva Zelanda · oct 2025"
+      "es": "Nueva Zelanda · oct 2025",
+      "zh": "新西兰 · 2025年10月"
     }
   },
   "reviews.items.2.title": {
@@ -421,7 +457,8 @@
       "de": "Die einfachste Fotoverbesserung, die ich je genutzt habe",
       "ja": "今までで一番簡単な写真高画質化アプリ",
       "fr": "L’outil photo le plus simple que j’aie utilisé",
-      "es": "La app para mejorar fotos más fácil que he usado"
+      "es": "La app para mejorar fotos más fácil que he usado",
+      "zh": "我用过最简单的画质增强 App"
     },
     "comment": "Page or section title; preserve product names."
   },
@@ -432,7 +469,8 @@
       "de": "Klasse, benutzerfreundliche Oberfläche und einfaches Übertragen in die Fotos-App. Alles bleibt unkompliziert.",
       "ja": "素晴らしく、使いやすいインターフェースで、写真アプリへの転送も簡単です。すべてがシンプルです。",
       "fr": "Génial, interface conviviale et transfert vers Photos très simple. Tout reste facile.",
-      "es": "Excelente, interfaz fácil de usar y transferencia sencilla a la app Fotos. Todo se mantiene simple."
+      "es": "Excelente, interfaz fácil de usar y transferencia sencilla a la app Fotos. Todo se mantiene simple.",
+      "zh": "太棒了，界面友好，存到“照片” App 也很方便。一切都很简单。"
     },
     "comment": "App Store review; preserve the reviewer's meaning and tone."
   },
@@ -457,7 +495,8 @@
       "de": "USA · Feb. 2026",
       "ja": "米国 · 2026年2月",
       "fr": "États-Unis · févr. 2026",
-      "es": "Estados Unidos · feb 2026"
+      "es": "Estados Unidos · feb 2026",
+      "zh": "美国 · 2026年2月"
     }
   },
   "reviews.items.3.title": {
@@ -467,7 +506,8 @@
       "de": "Großartig",
       "ja": "素晴らしい",
       "fr": "Excellent",
-      "es": "Excelente"
+      "es": "Excelente",
+      "zh": "很棒"
     },
     "comment": "Page or section title; preserve product names."
   },
@@ -478,7 +518,8 @@
       "de": "Ich habe Hunderte Apps getestet und bin bei dieser vom Gesamtergebnis der Video- und Bildqualität wirklich beeindruckt.",
       "ja": "何百ものアプリを試しましたが、このアプリの動画と画像の仕上がりには本当に感動しました。",
       "fr": "J’ai testé des centaines d’apps et celle-ci m’impressionne vraiment par le résultat global sur la qualité des vidéos et des images.",
-      "es": "He probado cientos de apps y esta realmente me impresionó por el resultado general en la calidad de video e imagen."
+      "es": "He probado cientos de apps y esta realmente me impresionó por el resultado general en la calidad de video e imagen.",
+      "zh": "我测试过上百款 App，这款在视频和图片画质上的整体效果真的让我印象深刻。"
     },
     "comment": "App Store review; preserve the reviewer's meaning and tone."
   },
@@ -503,7 +544,8 @@
       "de": "Vereinigtes Königreich · März 2025",
       "ja": "英国 · 2025年3月",
       "fr": "Royaume-Uni · mars 2025",
-      "es": "Reino Unido · mar 2025"
+      "es": "Reino Unido · mar 2025",
+      "zh": "英国 · 2025年3月"
     }
   },
   "reviews.items.4.title": {
@@ -513,7 +555,8 @@
       "de": "Funktioniert hervorragend bei alten Fotos",
       "ja": "古い写真に最適",
       "fr": "Idéal pour les anciennes photos",
-      "es": "Funciona muy bien con fotos antiguas"
+      "es": "Funciona muy bien con fotos antiguas",
+      "zh": "修复老照片很好用"
     },
     "comment": "Page or section title; preserve product names."
   },
@@ -524,7 +567,8 @@
       "de": "Ich habe damit einige alte Facebook-Fotos repariert, und die App hat die Aufgabe erfüllt. Kann ich empfehlen.",
       "ja": "Facebookにあった古い写真を何枚か直すために使いましたが、きちんと仕上げてくれました。おすすめです。",
       "fr": "Je l’ai utilisée pour améliorer quelques anciennes photos Facebook et elle a parfaitement fait le travail. Je recommande.",
-      "es": "La usé para arreglar unas fotos antiguas de Facebook y cumplió perfectamente. La recomiendo."
+      "es": "La usé para arreglar unas fotos antiguas de Facebook y cumplió perfectamente. La recomiendo.",
+      "zh": "我用它修复了一些 Facebook 上的老照片，效果达到了预期。推荐。"
     },
     "comment": "App Store review; preserve the reviewer's meaning and tone."
   },
@@ -549,7 +593,8 @@
       "de": "USA · Sept. 2025",
       "ja": "米国 · 2025年9月",
       "fr": "États-Unis · sept. 2025",
-      "es": "Estados Unidos · sep 2025"
+      "es": "Estados Unidos · sep 2025",
+      "zh": "美国 · 2025年9月"
     }
   },
   "reviews.items.5.title": {
@@ -559,7 +604,8 @@
       "de": "Gute App",
       "ja": "良いアプリ",
       "fr": "Bonne app",
-      "es": "Buena app"
+      "es": "Buena app",
+      "zh": "好用的 App"
     },
     "comment": "Page or section title; preserve product names."
   },
@@ -570,7 +616,8 @@
       "de": "Sie repariert Gesichter hervorragend und entfernt Bildrauschen aus Fotos. Danke an die Entwickler! ❤️",
       "ja": "顔を綺麗にし、写真のノイズを除去する性能が素晴らしいです。開発者の皆さん、ありがとうございます。❤️",
       "fr": "Elle fait un excellent travail pour restaurer les visages et supprimer le bruit des photos. Merci aux développeurs ! ❤️",
-      "es": "Hace un gran trabajo al reparar rostros y eliminar el ruido de las fotos. ¡Gracias a los desarrolladores! ❤️"
+      "es": "Hace un gran trabajo al reparar rostros y eliminar el ruido de las fotos. ¡Gracias a los desarrolladores! ❤️",
+      "zh": "修复人脸和去除照片噪点的效果都很好。感谢开发者！❤️"
     },
     "comment": "App Store review; preserve the reviewer's meaning and tone."
   },
@@ -581,7 +628,8 @@
       "de": "Alles in einer App",
       "ja": "すべてを1つのアプリで",
       "fr": "Tout-en-un",
-      "es": "Todo en una sola app"
+      "es": "Todo en una sola app",
+      "zh": "一个 App 全搞定"
     }
   },
   "features.h2": {
@@ -591,7 +639,8 @@
       "de": "Eine App für bessere Fotos und Videos",
       "ja": "写真も動画も1つのアプリで高画質に",
       "fr": "Un seul outil pour améliorer vos photos et vidéos",
-      "es": "Una app para mejorar tus fotos y videos"
+      "es": "Una app para mejorar tus fotos y videos",
+      "zh": "一个 App，提升照片和视频画质"
     }
   },
   "features.sub": {
@@ -601,7 +650,8 @@
       "de": "Die meisten Fotoverbesserer schärfen nur Fotos. UScale skaliert auch Videos hoch, erstellt KI-Zeitlupen und restauriert beschädigte Abzüge. Die wichtigsten Werkzeuge laufen auf deinem Gerät; „Kreatives Hochskalieren“ und die Restaurierung nutzen die Cloud.",
       "ja": "多くの高画質化ツールは写真を鮮明にするだけです。UScaleなら動画の高画質化、AIスローモーション、傷んだプリント写真の修復もできます。主要ツールはデバイス上で動作し、「クリエイティブアップスケール」と写真修復にはクラウド処理を使用します。",
       "fr": "La plupart des outils d’amélioration se contentent d’accentuer la netteté des photos. UScale peut aussi agrandir les vidéos, créer des ralentis par IA et restaurer des tirages abîmés. Les outils principaux fonctionnent sur votre appareil ; l’« Amélioration créative » et la restauration utilisent le traitement dans le cloud.",
-      "es": "La mayoría de las apps de mejora solo aumentan la nitidez de las fotos. UScale también mejora videos, crea cámara lenta con IA y restaura copias impresas dañadas. Las herramientas principales funcionan en tu dispositivo; «Mejora Creativa» y la restauración usan procesamiento en la nube."
+      "es": "La mayoría de las apps de mejora solo aumentan la nitidez de las fotos. UScale también mejora videos, crea cámara lenta con IA y restaura copias impresas dañadas. Las herramientas principales funcionan en tu dispositivo; «Mejora Creativa» y la restauración usan procesamiento en la nube.",
+      "zh": "大多数画质增强 App 只能锐化照片。UScale 还能放大视频、生成 AI 慢动作、修复受损的老照片。核心工具在你的设备上运行，“创意放大”和老照片修复使用云端处理。"
     }
   },
   "features.items.0.icon": {
@@ -618,7 +668,8 @@
       "de": "Unscharfe Bilder schärfen",
       "ja": "ぼやけた画像を鮮明に",
       "fr": "Déflouter et rendre les photos plus nettes",
-      "es": "Quita el desenfoque y mejora la nitidez"
+      "es": "Quita el desenfoque y mejora la nitidez",
+      "zh": "模糊图片变清晰"
     }
   },
   "features.items.0.p": {
@@ -628,7 +679,8 @@
       "de": "Korrigiere weiche, verwackelte oder nicht fokussierte Aufnahmen. Die KI rekonstruiert Kanten und Strukturen, statt nur den Kontrast zu erhöhen. So bleiben Gesichter und feine Details natürlich.",
       "ja": "ピンぼけや手ぶれ、やわらかく不鮮明な画像を直します。AIが単にコントラストを強めるのではなく、輪郭と質感を再構成するため、顔や細部を自然に保てます。",
       "fr": "Corrigez les photos peu nettes, bougées ou mal mises au point. L’IA reconstruit les contours et les textures au lieu d’ajouter simplement du contraste, pour que les visages et les détails fins restent naturels.",
-      "es": "Corrige fotos poco nítidas, movidas o fuera de foco. La IA reconstruye bordes y texturas en lugar de limitarse a aumentar el contraste, para que los rostros y los detalles finos se vean naturales."
+      "es": "Corrige fotos poco nítidas, movidas o fuera de foco. La IA reconstruye bordes y texturas en lugar de limitarse a aumentar el contraste, para que los rostros y los detalles finos se vean naturales.",
+      "zh": "修复发虚、手抖或失焦的照片。AI 会重建边缘和纹理，而不只是提高对比度，因此人脸和细节依然自然。"
     }
   },
   "features.items.1.icon": {
@@ -645,7 +697,8 @@
       "de": "Bilder 2× und 4× hochskalieren",
       "ja": "画像を2×・4×高画質化",
       "fr": "Agrandir les images en 2× et 4×",
-      "es": "Aumenta imágenes 2× y 4×"
+      "es": "Aumenta imágenes 2× y 4×",
+      "zh": "图片放大 2× 和 4×"
     }
   },
   "features.items.1.p": {
@@ -655,7 +708,8 @@
       "de": "Mache aus einem kleinen Bild mit niedriger Auflösung eine druckfertige Datei. Das 4×-Modell rekonstruiert Details, statt Pixel zu einem unscharfen Durcheinander zu strecken.",
       "ja": "小さな低解像度画像を印刷に適したファイルに変えます。4×モデルはピクセルを引き伸ばしてぼやけさせるのではなく、細部を再構成します。",
       "fr": "Transformez une petite image en basse résolution en fichier prêt à imprimer. Le modèle 4× reconstruit les détails au lieu d’étirer les pixels en une image floue.",
-      "es": "Convierte una imagen pequeña y de baja resolución en un archivo listo para imprimir. El modelo 4× reconstruye los detalles en vez de estirar los píxeles hasta dejarlos borrosos."
+      "es": "Convierte una imagen pequeña y de baja resolución en un archivo listo para imprimir. El modelo 4× reconstruye los detalles en vez de estirar los píxeles hasta dejarlos borrosos.",
+      "zh": "把尺寸小、分辨率低的图片变成可以打印的文件。4× 模型会重建细节，而不是把像素拉伸成一片模糊。"
     }
   },
   "features.items.2.icon": {
@@ -672,7 +726,8 @@
       "de": "Videoqualität verbessern",
       "ja": "動画を高画質に",
       "fr": "Améliorer la qualité des vidéos",
-      "es": "Mejora la calidad de video"
+      "es": "Mejora la calidad de video",
+      "zh": "修复视频画质"
     }
   },
   "features.items.2.p": {
@@ -682,7 +737,8 @@
       "de": "Skaliere Videos hoch und bereinige sie wie Fotos – körnige Handyvideos, alte Camcorder-Aufnahmen und stark komprimierte Downloads.",
       "ja": "写真と同じように動画を高画質化し、ノイズを除去します。スマートフォンで撮った粒状の動画、古いビデオカメラの映像、圧縮率の高いダウンロード動画にも対応します。",
       "fr": "Agrandissez et nettoyez les vidéos comme les photos : clips granuleux pris au téléphone, anciennes séquences de caméscope et téléchargements fortement compressés.",
-      "es": "Aumenta la resolución y limpia el video igual que las fotos: clips granulados del teléfono, grabaciones de videocámaras antiguas y archivos descargados con mucha compresión."
+      "es": "Aumenta la resolución y limpia el video igual que las fotos: clips granulados del teléfono, grabaciones de videocámaras antiguas y archivos descargados con mucha compresión.",
+      "zh": "像处理照片一样放大和清理视频：满是噪点的手机视频、老式摄像机拍的录像，以及压缩严重的下载视频。"
     }
   },
   "features.items.3.icon": {
@@ -699,7 +755,8 @@
       "de": "KI-Zeitlupe",
       "ja": "AIスローモーション",
       "fr": "Ralenti par IA",
-      "es": "Cámara lenta con IA"
+      "es": "Cámara lenta con IA",
+      "zh": "AI 慢动作"
     }
   },
   "features.items.3.p": {
@@ -709,7 +766,8 @@
       "de": "Verwandle jedes normale Video in eine flüssige Zeitlupe. Die Bildinterpolation erzeugt fehlende Einzelbilder, sodass du nicht daran denken musst, vorher in Zeitlupe aufzunehmen.",
       "ja": "普通の動画を滑らかなスローモーションに変えます。フレーム補間で不足するフレームを生成するため、あらかじめスローモーションで撮影しておく必要はありません。",
       "fr": "Transformez n’importe quelle vidéo normale en ralenti fluide. L’interpolation d’images génère les images manquantes, sans avoir à penser à filmer à l’avance en mode ralenti.",
-      "es": "Convierte cualquier clip normal en un video fluido en cámara lenta. La interpolación de fotogramas genera los que faltan, así que no tienes que acordarte de grabar en cámara lenta."
+      "es": "Convierte cualquier clip normal en un video fluido en cámara lenta. La interpolación de fotogramas genera los que faltan, así que no tienes que acordarte de grabar en cámara lenta.",
+      "zh": "把任何普通视频变成流畅的慢动作。帧插值会生成缺少的帧，你再也不用记着用慢动作模式拍摄。"
     }
   },
   "features.items.4.icon": {
@@ -726,7 +784,8 @@
       "de": "Alte Fotos restaurieren",
       "ja": "古い写真を修復",
       "fr": "Restaurer les anciennes photos",
-      "es": "Restaura fotos antiguas"
+      "es": "Restaura fotos antiguas",
+      "zh": "老照片修复"
     }
   },
   "features.items.4.p": {
@@ -736,7 +795,8 @@
       "de": "Repariere Kratzer, Knicke, Staub und verblasste Farben auf eingescannten Abzügen. Die erweiterte Restaurierung bewältigt stark beschädigte und teilweise fehlende Bereiche.",
       "ja": "スキャンしたプリント写真の傷、折り目、ほこり、色あせを修復します。高度な写真修復では、損傷がひどい部分や一部が欠けた部分にも対応します。",
       "fr": "Réparez les rayures, plis, poussières et décolorations sur les tirages numérisés. La restauration avancée traite les zones très endommagées ou partiellement manquantes.",
-      "es": "Repara rayones, pliegues, polvo y pérdida de color en copias impresas escaneadas. La restauración avanzada corrige zonas muy dañadas o parcialmente perdidas."
+      "es": "Repara rayones, pliegues, polvo y pérdida de color en copias impresas escaneadas. La restauración avanzada corrige zonas muy dañadas o parcialmente perdidas.",
+      "zh": "修复扫描照片上的划痕、折痕、灰尘和褪色。高级修复能处理严重受损和部分缺失的区域。"
     }
   },
   "features.items.5.icon": {
@@ -753,7 +813,8 @@
       "de": "Schwarz-Weiß-Fotos kolorieren",
       "ja": "白黒写真をカラー化",
       "fr": "Coloriser les photos en noir et blanc",
-      "es": "Colorea fotos en blanco y negro"
+      "es": "Colorea fotos en blanco y negro",
+      "zh": "黑白照片上色"
     }
   },
   "features.items.5.p": {
@@ -763,7 +824,8 @@
       "de": "Färbe alte Schwarz-Weiß-Porträts, Hochzeitsfotos und Scans aus dem Familienarchiv mit einem Fingertipp glaubwürdig ein.",
       "ja": "昔の白黒ポートレート、結婚写真、家族の記録写真を、1回のタップで自然な色合いにカラー化します。",
       "fr": "Ajoutez des couleurs crédibles aux anciens portraits en noir et blanc, aux photos de mariage et aux scans d’archives familiales en un seul geste.",
-      "es": "Añade colores creíbles a retratos antiguos en blanco y negro, fotos de boda y escaneos del archivo familiar con un solo toque."
+      "es": "Añade colores creíbles a retratos antiguos en blanco y negro, fotos de boda y escaneos del archivo familiar con un solo toque.",
+      "zh": "轻点一下，就能为老式黑白人像、婚礼照片和家庭旧照扫描件添上自然可信的色彩。"
     }
   },
   "features.items.6.icon": {
@@ -780,7 +842,8 @@
       "de": "Dunkle Fotos aufhellen",
       "ja": "暗い写真を明るく",
       "fr": "Éclaircir les photos sombres",
-      "es": "Aclara fotos oscuras"
+      "es": "Aclara fotos oscuras",
+      "zh": "调亮暗光照片"
     }
   },
   "features.items.6.p": {
@@ -790,7 +853,8 @@
       "de": "Hole Details aus unterbelichteten Konzert-, Nacht- und Innenaufnahmen zurück – ohne das fleckige Rauschen, das beim bloßen Erhöhen der Belichtung entsteht.",
       "ja": "露出を上げるだけでは発生しやすい斑点状のノイズを抑えながら、露出不足のコンサート、夜間、室内写真の細部を取り戻します。",
       "fr": "Récupérez les détails des photos sous-exposées prises en concert, de nuit ou en intérieur, sans le bruit tacheté que produit une simple hausse de l’exposition.",
-      "es": "Recupera detalles en fotos subexpuestas de conciertos, de noche o en interiores sin el ruido con manchas que aparece al limitarse a subir la exposición."
+      "es": "Recupera detalles en fotos subexpuestas de conciertos, de noche o en interiores sin el ruido con manchas que aparece al limitarse a subir la exposición.",
+      "zh": "找回曝光不足的演唱会、夜景和室内照片中的细节，不会像单纯提高曝光那样出现斑驳的噪点。"
     }
   },
   "features.items.7.icon": {
@@ -807,7 +871,8 @@
       "de": "Gesichter verbessern",
       "ja": "顔を綺麗に",
       "fr": "Améliorer les visages",
-      "es": "Mejora los rostros"
+      "es": "Mejora los rostros",
+      "zh": "人脸修复"
     }
   },
   "features.items.7.p": {
@@ -817,7 +882,8 @@
       "de": "Ein spezielles Gesichtsmodell rekonstruiert Augen, Haut und Haare in Porträts und Gruppenfotos, auf denen alle etwas zu klein und unscharf sind.",
       "ja": "顔専用モデルが、人物や集合写真で小さく不鮮明に写った目、肌、髪を修復します。",
       "fr": "Un modèle dédié aux visages restaure les yeux, la peau et les cheveux dans les portraits et les photos de groupe où chacun apparaît un peu trop petit et un peu trop flou.",
-      "es": "Un modelo especializado para rostros restaura ojos, piel y cabello en retratos y fotos de grupo donde las personas quedaron demasiado pequeñas o poco nítidas."
+      "es": "Un modelo especializado para rostros restaura ojos, piel y cabello en retratos y fotos de grupo donde las personas quedaron demasiado pequeñas o poco nítidas.",
+      "zh": "专门的人脸模型能修复人像和合影中的眼睛、皮肤和头发，哪怕每个人都显得太小、太模糊。"
     }
   },
   "features.items.8.icon": {
@@ -834,7 +900,8 @@
       "de": "Stapelverarbeitung",
       "ja": "一括処理",
       "fr": "Traitement par lot",
-      "es": "Procesamiento por lotes"
+      "es": "Procesamiento por lotes",
+      "zh": "批量处理"
     }
   },
   "features.items.8.p": {
@@ -844,7 +911,8 @@
       "de": "Wähle eine ganze Reihe von Fotos aus und verbessere sie in einem Durchgang, statt jedes einzeln zu öffnen.",
       "ja": "写真を1枚ずつ開かずに、まとめて選択し、一度に高画質化できます。",
       "fr": "Sélectionnez tout un ensemble de photos et améliorez-les en une seule fois au lieu de les ouvrir une par une.",
-      "es": "Selecciona un conjunto completo de fotos y mejóralas en una sola pasada, en vez de abrirlas una por una."
+      "es": "Selecciona un conjunto completo de fotos y mejóralas en una sola pasada, en vez de abrirlas una por una.",
+      "zh": "一次选中整组照片，一起完成增强，不用一张张打开处理。"
     }
   },
   "screens.eyebrow": {
@@ -854,7 +922,8 @@
       "de": "In der App",
       "ja": "アプリ画面",
       "fr": "Dans l’app",
-      "es": "Dentro de la app"
+      "es": "Dentro de la app",
+      "zh": "App 内一览"
     }
   },
   "screens.h2": {
@@ -864,7 +933,8 @@
       "de": "UScale in Aktion",
       "ja": "UScaleの仕上がり",
       "fr": "Découvrez UScale en action",
-      "es": "Mira UScale en acción"
+      "es": "Mira UScale en acción",
+      "zh": "看看 UScale 的实际效果"
     }
   },
   "screens.sub": {
@@ -874,7 +944,8 @@
       "de": "Echte Vorher-Nachher-Ergebnisse aus der App, direkt aus dem Eintrag im App Store.",
       "ja": "App Store掲載画像から、アプリによる実際の処理前後をご覧いただけます。",
       "fr": "De vrais résultats avant/après de l’app, directement issus de sa fiche App Store.",
-      "es": "Resultados reales de antes y después de la app, directamente desde su ficha en App Store."
+      "es": "Resultados reales de antes y después de la app, directamente desde su ficha en App Store.",
+      "zh": "App 中真实的处理前后效果，直接取自 App Store 页面。"
     }
   },
   "screens.items.0.cap": {
@@ -884,7 +955,8 @@
       "de": "Bildqualität verbessern",
       "ja": "写真を高画質に",
       "fr": "Améliorer la qualité des photos",
-      "es": "Mejora la calidad de tus fotos"
+      "es": "Mejora la calidad de tus fotos",
+      "zh": "提升照片画质"
     }
   },
   "screens.items.0.alt": {
@@ -894,7 +966,8 @@
       "de": "UScale verbessert ein unscharfes Abschlussfoto in einer geteilten Vorher-Nachher-Ansicht",
       "ja": "UScaleでぼやけた卒業記念ポートレートを高画質化した処理前後の分割表示",
       "fr": "UScale améliore un portrait de remise de diplôme flou, présenté en comparaison avant/après",
-      "es": "UScale mejorando un retrato de graduación borroso, mostrado en una comparación dividida de antes y después"
+      "es": "UScale mejorando un retrato de graduación borroso, mostrado en una comparación dividida de antes y después",
+      "zh": "UScale 修复一张模糊的毕业照，左右分屏显示处理前后"
     },
     "comment": "Accessibility text describing an image."
   },
@@ -905,7 +978,8 @@
       "de": "Alte Fotos restaurieren",
       "ja": "古い写真を修復",
       "fr": "Restaurer les anciennes photos",
-      "es": "Restaura fotos antiguas"
+      "es": "Restaura fotos antiguas",
+      "zh": "老照片修复"
     }
   },
   "screens.items.1.alt": {
@@ -915,7 +989,8 @@
       "de": "Ein beschädigtes Familienfoto aus den 1950er-Jahren, mit UScale restauriert und koloriert",
       "ja": "UScaleで修復・カラー化した1950年代の傷んだ家族写真",
       "fr": "Une photo de famille abîmée des années 1950 restaurée et colorisée dans UScale",
-      "es": "Una foto familiar dañada de la década de 1950 restaurada y coloreada en UScale"
+      "es": "Una foto familiar dañada de la década de 1950 restaurada y coloreada en UScale",
+      "zh": "一张受损的 1950 年代全家福，在 UScale 中完成修复和上色"
     },
     "comment": "Accessibility text describing an image."
   },
@@ -926,7 +1001,8 @@
       "de": "Private Offline-Verarbeitung",
       "ja": "端末内で完結するオフライン処理",
       "fr": "Traitement privé hors ligne",
-      "es": "Procesamiento privado y sin conexión"
+      "es": "Procesamiento privado y sin conexión",
+      "zh": "私密的离线处理"
     }
   },
   "screens.items.2.alt": {
@@ -936,7 +1012,8 @@
       "de": "Ein unscharfes Outdoor-Foto, ohne Upload auf dem Gerät geschärft",
       "ja": "アップロードせずデバイス上で鮮明にした、ぼやけた屋外写真",
       "fr": "Une photo extérieure floue rendue plus nette sur l’appareil, sans envoi",
-      "es": "Una foto borrosa al aire libre con mayor nitidez tras procesarse en el dispositivo sin subirla"
+      "es": "Una foto borrosa al aire libre con mayor nitidez tras procesarse en el dispositivo sin subirla",
+      "zh": "一张模糊的户外照片在设备上变清晰，无需上传"
     },
     "comment": "Accessibility text describing an image."
   },
@@ -947,7 +1024,8 @@
       "de": "Jedes Foto oder Video hochskalieren",
       "ja": "写真も動画も高画質化",
       "fr": "Agrandir n’importe quelle photo ou vidéo",
-      "es": "Mejora cualquier foto o video"
+      "es": "Mejora cualquier foto o video",
+      "zh": "放大任何照片或视频"
     }
   },
   "screens.items.3.alt": {
@@ -957,7 +1035,8 @@
       "de": "Eine verpixelte Illustration, mit UScale hochskaliert; die Videozeitleiste ist sichtbar",
       "ja": "UScaleで高画質化したピクセルの粗いイラストと、表示された動画タイムライン",
       "fr": "Une illustration pixellisée agrandie dans UScale avec la timeline vidéo visible",
-      "es": "Una ilustración pixelada con mayor resolución en UScale y la línea de tiempo del video visible"
+      "es": "Una ilustración pixelada con mayor resolución en UScale y la línea de tiempo del video visible",
+      "zh": "一张像素化的插画在 UScale 中放大，可以看到视频时间轴"
     },
     "comment": "Accessibility text describing an image."
   },
@@ -968,7 +1047,8 @@
       "de": "Dunkle Fotos aufhellen",
       "ja": "暗い写真を明るく",
       "fr": "Éclaircir les photos sombres",
-      "es": "Aclara fotos oscuras"
+      "es": "Aclara fotos oscuras",
+      "zh": "调亮暗光照片"
     }
   },
   "screens.items.4.alt": {
@@ -978,7 +1058,8 @@
       "de": "Ein dunkles Konzertfoto, aufgehellt und mit wiederhergestellten Details in den Schatten",
       "ja": "影の細部を取り戻して明るくした暗いコンサート写真",
       "fr": "Une photo de concert sombre éclaircie avec des détails récupérés dans les ombres",
-      "es": "Una foto oscura de un concierto aclarada con detalles recuperados en las sombras"
+      "es": "Una foto oscura de un concierto aclarada con detalles recuperados en las sombras",
+      "zh": "一张昏暗的演唱会照片被调亮，暗部细节重新显现"
     },
     "comment": "Accessibility text describing an image."
   },
@@ -989,7 +1070,8 @@
       "de": "Erinnerungen schärfen",
       "ja": "思い出を鮮明に",
       "fr": "Défloutez vos souvenirs",
-      "es": "Devuelve nitidez a tus recuerdos"
+      "es": "Devuelve nitidez a tus recuerdos",
+      "zh": "让回忆变清晰"
     }
   },
   "screens.items.5.alt": {
@@ -999,7 +1081,8 @@
       "de": "Ein unscharfes Katzenfoto, mit dem Schärfewerkzeug von UScale geschärft",
       "ja": "UScaleの鮮明化ツールでくっきりさせた、ぼやけた猫の写真",
       "fr": "Une photo floue de chat rendue nette avec l’outil de défloutage de UScale",
-      "es": "Una foto borrosa de un gato con mayor nitidez gracias a la herramienta de UScale para quitar el desenfoque"
+      "es": "Una foto borrosa de un gato con mayor nitidez gracias a la herramienta de UScale para quitar el desenfoque",
+      "zh": "一张模糊的猫咪照片，用 UScale 的去模糊工具变清晰"
     },
     "comment": "Accessibility text describing an image."
   },
@@ -1010,7 +1093,8 @@
       "de": "Echte Ergebnisse",
       "ja": "実際の仕上がり",
       "fr": "Résultats réels",
-      "es": "Resultados reales"
+      "es": "Resultados reales",
+      "zh": "真实效果"
     }
   },
   "showcase.h2": {
@@ -1020,7 +1104,8 @@
       "de": "UScale in Aktion",
       "ja": "UScaleの仕上がり",
       "fr": "Découvrez UScale en action",
-      "es": "Mira UScale en acción"
+      "es": "Mira UScale en acción",
+      "zh": "看看 UScale 的实际效果"
     }
   },
   "showcase.sub": {
@@ -1037,7 +1122,8 @@
       "de": "Vorher-Nachher-Vergleich von mit UScale verbesserten Fotos und Videos",
       "ja": "UScaleで高画質化した写真と動画の処理前後の比較",
       "fr": "Comparaison avant/après de photos et vidéos améliorées avec UScale",
-      "es": "Comparación antes y después de fotos y videos mejorados con UScale"
+      "es": "Comparación antes y después de fotos y videos mejorados con UScale",
+      "zh": "UScale 处理前后的照片和视频对比"
     }
   },
   "showcase.tabs_label": {
@@ -1047,7 +1133,8 @@
       "de": "Vorher-Nachher-Beispiel auswählen",
       "ja": "処理前後の例を選択",
       "fr": "Choisissez un exemple avant/après",
-      "es": "Elige un ejemplo de antes y después"
+      "es": "Elige un ejemplo de antes y después",
+      "zh": "选择一个处理前后示例"
     }
   },
   "showcase.try": {
@@ -1057,7 +1144,8 @@
       "de": "Im Browser ausprobieren",
       "ja": "ブラウザで試す",
       "fr": "Essayer dans votre navigateur",
-      "es": "Pruébalo en tu navegador"
+      "es": "Pruébalo en tu navegador",
+      "zh": "在浏览器中试用"
     }
   },
   "showcase.on_device": {
@@ -1067,7 +1155,8 @@
       "de": "Auf dem Gerät verarbeitet",
       "ja": "デバイス上で処理",
       "fr": "Traité sur l’appareil",
-      "es": "Procesado en el dispositivo"
+      "es": "Procesado en el dispositivo",
+      "zh": "在设备上处理"
     }
   },
   "showcase.in_cloud": {
@@ -1077,7 +1166,8 @@
       "de": "In der Cloud verarbeitet",
       "ja": "クラウドで処理",
       "fr": "Traité dans le cloud",
-      "es": "Procesado en la nube"
+      "es": "Procesado en la nube",
+      "zh": "在云端处理"
     }
   },
   "showcase.tip_device_h": {
@@ -1087,7 +1177,8 @@
       "de": "Bleibt auf deinem iPhone",
       "ja": "iPhone内で完結",
       "fr": "Reste sur votre iPhone",
-      "es": "Se queda en tu iPhone"
+      "es": "Se queda en tu iPhone",
+      "zh": "留在你的 iPhone 上"
     }
   },
   "showcase.tip_device_p": {
@@ -1097,7 +1188,8 @@
       "de": "Die KI lief direkt auf dem iPhone. Deshalb hat dieses Foto das Gerät nie verlassen – kein Upload, kein Konto und auch offline verfügbar.",
       "ja": "AI処理はiPhone本体で行われるため、この写真がデバイス外に送信されることはありません。アップロードもアカウントも不要で、オフラインでも使えます。",
       "fr": "L’IA s’est exécutée directement sur l’iPhone : cette photo n’a donc jamais quitté l’appareil — aucun envoi, aucun compte, et cela fonctionne hors ligne.",
-      "es": "La IA se ejecutó en el propio iPhone, así que esta foto nunca salió del dispositivo: no se sube, no necesitas una cuenta y funciona sin conexión."
+      "es": "La IA se ejecutó en el propio iPhone, así que esta foto nunca salió del dispositivo: no se sube, no necesitas una cuenta y funciona sin conexión.",
+      "zh": "AI 直接在 iPhone 上运行，这张照片从未离开设备：无需上传，无需账户，离线也能用。"
     }
   },
   "showcase.tip_video_h": {
@@ -1107,7 +1199,8 @@
       "de": "Bleibt auf deinem iPhone",
       "ja": "iPhone内で完結",
       "fr": "Reste sur votre iPhone",
-      "es": "Se queda en tu iPhone"
+      "es": "Se queda en tu iPhone",
+      "zh": "留在你的 iPhone 上"
     }
   },
   "showcase.tip_video_p": {
@@ -1117,7 +1210,8 @@
       "de": "Jedes Einzelbild wurde direkt auf dem iPhone verarbeitet. Deshalb hat das Video das Gerät nie verlassen – kein Upload, kein Konto und auch offline verfügbar.",
       "ja": "すべてのフレームをiPhone本体で処理するため、この動画がデバイス外に送信されることはありません。アップロードもアカウントも不要で、オフラインでも使えます。",
       "fr": "Chaque image a été traitée directement sur l’iPhone : la vidéo n’a donc jamais quitté l’appareil — aucun envoi, aucun compte, et cela fonctionne hors ligne.",
-      "es": "Cada fotograma se procesó en el propio iPhone, así que el clip nunca salió del dispositivo: no se sube, no necesitas una cuenta y funciona sin conexión."
+      "es": "Cada fotograma se procesó en el propio iPhone, así que el clip nunca salió del dispositivo: no se sube, no necesitas una cuenta y funciona sin conexión.",
+      "zh": "每一帧都直接在 iPhone 上处理，这段视频从未离开设备：无需上传，无需账户，离线也能用。"
     }
   },
   "showcase.tip_cloud_h": {
@@ -1127,7 +1221,8 @@
       "de": "Mit unseren fortschrittlichen Modellen verarbeitet",
       "ja": "高度なモデルで処理",
       "fr": "Traité avec nos modèles avancés",
-      "es": "Procesado con nuestros modelos avanzados"
+      "es": "Procesado con nuestros modelos avanzados",
+      "zh": "由我们的高级模型处理"
     }
   },
   "showcase.tip_cloud_p": {
@@ -1137,7 +1232,8 @@
       "de": "Diese Modelle sind zu rechenintensiv für ein Smartphone. Deshalb führen wir diese Art der Verbesserung auf unseren Servern aus.",
       "ja": "これらのモデルはスマートフォンで動かすには大きすぎるため、この種類の高画質化はUScaleのサーバーで処理します。",
       "fr": "Ces modèles sont trop lourds pour fonctionner sur un téléphone, nous effectuons donc ce type d’amélioration sur nos serveurs.",
-      "es": "Estos modelos son demasiado pesados para ejecutarse en un teléfono, así que este tipo de mejora se procesa en nuestros servidores."
+      "es": "Estos modelos son demasiado pesados para ejecutarse en un teléfono, así que este tipo de mejora se procesa en nuestros servidores.",
+      "zh": "这些模型太大，无法在手机上运行，所以这类增强在我们的服务器上完成。"
     }
   },
   "showcase.tab_labels.0": {
@@ -1147,7 +1243,8 @@
       "de": "Porträt hochskalieren",
       "ja": "ポートレート高画質化",
       "fr": "Agrandissement de portrait",
-      "es": "Mejora de retrato"
+      "es": "Mejora de retrato",
+      "zh": "人像放大"
     }
   },
   "showcase.tab_labels.1": {
@@ -1157,7 +1254,8 @@
       "de": "Landschaft hochskalieren",
       "ja": "風景写真の高画質化",
       "fr": "Agrandissement de paysage",
-      "es": "Mejora de paisaje"
+      "es": "Mejora de paisaje",
+      "zh": "风景放大"
     }
   },
   "showcase.tab_labels.2": {
@@ -1167,7 +1265,8 @@
       "de": "Porträt in niedriger Qualität",
       "ja": "低画質ポートレート",
       "fr": "Portrait de faible qualité",
-      "es": "Retrato de baja calidad"
+      "es": "Retrato de baja calidad",
+      "zh": "低画质人像"
     }
   },
   "showcase.tab_labels.3": {
@@ -1177,7 +1276,8 @@
       "de": "Altes Foto restaurieren",
       "ja": "古い写真の修復",
       "fr": "Restauration de photo ancienne",
-      "es": "Restaurar foto antigua"
+      "es": "Restaurar foto antigua",
+      "zh": "老照片修复"
     }
   },
   "showcase.tab_labels.4": {
@@ -1187,7 +1287,8 @@
       "de": "Verblasstes Familienfoto",
       "ja": "色あせた家族写真",
       "fr": "Photo de famille décolorée",
-      "es": "Foto familiar descolorida"
+      "es": "Foto familiar descolorida",
+      "zh": "褪色的全家福"
     }
   },
   "showcase.tab_labels.5": {
@@ -1197,7 +1298,8 @@
       "de": "Historisches Porträt",
       "ja": "昔のポートレート",
       "fr": "Portrait ancien",
-      "es": "Retrato antiguo"
+      "es": "Retrato antiguo",
+      "zh": "复古人像"
     }
   },
   "showcase.tab_labels.6": {
@@ -1207,7 +1309,8 @@
       "de": "Video hochskalieren",
       "ja": "動画の高画質化",
       "fr": "Amélioration vidéo",
-      "es": "Mejorar video"
+      "es": "Mejorar video",
+      "zh": "视频放大"
     }
   },
   "showcase.tab_labels.7": {
@@ -1217,7 +1320,8 @@
       "de": "KI-Zeitlupe",
       "ja": "AIスローモーション",
       "fr": "Ralenti par IA",
-      "es": "Cámara lenta con IA"
+      "es": "Cámara lenta con IA",
+      "zh": "AI 慢动作"
     }
   },
   "how.eyebrow": {
@@ -1227,7 +1331,8 @@
       "de": "So funktioniert’s",
       "ja": "使い方",
       "fr": "Comment ça marche",
-      "es": "Cómo funciona"
+      "es": "Cómo funciona",
+      "zh": "使用方法"
     }
   },
   "how.h2": {
@@ -1237,7 +1342,8 @@
       "de": "Mit drei Fingertipps von unscharf zu scharf",
       "ja": "3回のタップでぼやけた画像を鮮明に",
       "fr": "Trois gestes pour passer du flou au net",
-      "es": "De borrosa a nítida en tres toques"
+      "es": "De borrosa a nítida en tres toques",
+      "zh": "轻点三下，模糊变清晰"
     }
   },
   "how.sub": {
@@ -1247,7 +1353,8 @@
       "de": "Keine Ebenen, Masken oder Anleitungen. Datei wählen, Werkzeug wählen, Ergebnis speichern.",
       "ja": "レイヤーもマスクも、難しいチュートリアルも不要です。ファイルとツールを選び、結果を保存するだけです。",
       "fr": "Pas de calques, pas de masques, pas de tutoriels. Choisissez un fichier, un outil, puis enregistrez le résultat.",
-      "es": "Sin capas, máscaras ni tutoriales. Elige un archivo, elige una herramienta y guarda el resultado."
+      "es": "Sin capas, máscaras ni tutoriales. Elige un archivo, elige una herramienta y guarda el resultado.",
+      "zh": "没有图层，没有蒙版，也不用看教程。选文件，选工具，保存结果。"
     }
   },
   "how.steps.0.h": {
@@ -1257,7 +1364,8 @@
       "de": "Foto oder Video auswählen",
       "ja": "写真または動画を選びます",
       "fr": "Choisissez une photo ou une vidéo",
-      "es": "Elige una foto o un video"
+      "es": "Elige una foto o un video",
+      "zh": "选择照片或视频"
     }
   },
   "how.steps.0.p": {
@@ -1267,7 +1375,8 @@
       "de": "Öffne UScale und wähle eine beliebige Datei aus deiner Mediathek – ein Handyfoto, einen eingescannten Abzug, einen Screenshot, ein heruntergeladenes Video oder einen ganzen Stapel Fotos.",
       "ja": "UScaleを開き、ライブラリからファイルを選びます。スマートフォンで撮った写真、スキャンしたプリント、スクリーンショット、ダウンロードした動画、複数の写真をまとめて選ぶこともできます。",
       "fr": "Ouvrez UScale et choisissez n’importe quel fichier de votre photothèque : une photo prise au téléphone, un tirage numérisé, une capture d’écran, une vidéo téléchargée ou tout un lot de photos.",
-      "es": "Abre UScale y elige cualquier archivo de tu fototeca: una foto del teléfono, una copia impresa escaneada, una captura de pantalla, un clip descargado o un lote completo de fotos."
+      "es": "Abre UScale y elige cualquier archivo de tu fototeca: una foto del teléfono, una copia impresa escaneada, una captura de pantalla, un clip descargado o un lote completo de fotos.",
+      "zh": "打开 UScale，从图库中选择任意文件：手机随手拍、扫描的照片、截图、下载的视频，或一整批照片。"
     }
   },
   "how.steps.1.h": {
@@ -1277,7 +1386,8 @@
       "de": "Verbesserung auswählen",
       "ja": "直したい点を選びます",
       "fr": "Choisissez quoi corriger",
-      "es": "Elige qué quieres mejorar"
+      "es": "Elige qué quieres mejorar",
+      "zh": "选择要修复的内容"
     }
   },
   "how.steps.1.p": {
@@ -1287,7 +1397,8 @@
       "de": "Verbessern, schärfen, 2× oder 4× hochskalieren, aufhellen, restaurieren, kolorieren oder verlangsamen. Jedes Werkzeug funktioniert mit einem Fingertipp und zeigt eine Live-Vorschau.",
       "ja": "高画質化、鮮明化、2×または4×への拡大、明るさ調整、修復、カラー化、スローモーションから選びます。どのツールも1回のタップで使え、プレビューをすぐに確認できます。",
       "fr": "Améliorez, défloutez, agrandissez en 2× ou 4×, éclaircissez, restaurez, colorisez ou ralentissez. Chaque outil s’utilise d’un seul geste et affiche un aperçu en direct.",
-      "es": "Mejora, quita el desenfoque, aumenta 2× o 4× la resolución, aclara, restaura, colorea o crea cámara lenta. Cada herramienta se activa con un solo toque y muestra una vista previa en tiempo real."
+      "es": "Mejora, quita el desenfoque, aumenta 2× o 4× la resolución, aclara, restaura, colorea o crea cámara lenta. Cada herramienta se activa con un solo toque y muestra una vista previa en tiempo real.",
+      "zh": "增强、去模糊、2× 或 4× 放大、调亮、修复、上色或慢动作。每个工具轻点一下即可使用，并显示实时预览。"
     }
   },
   "how.steps.2.h": {
@@ -1297,7 +1408,8 @@
       "de": "Vergleichen und speichern",
       "ja": "比較して保存します",
       "fr": "Comparez et enregistrez",
-      "es": "Compara y guarda"
+      "es": "Compara y guarda",
+      "zh": "对比并保存"
     }
   },
   "how.steps.2.p": {
@@ -1307,7 +1419,8 @@
       "de": "Ziehe den Vorher-Nachher-Regler, um das Ergebnis zu prüfen. Speichere es dann in deiner Mediathek oder teile es. Deine Originaldatei wird nie überschrieben.",
       "ja": "処理前後のスライダーを動かして結果を確認し、ライブラリに保存するか共有します。元のファイルが上書きされることはありません。",
       "fr": "Faites glisser le curseur avant/après pour vérifier le résultat, puis enregistrez-le dans votre photothèque ou partagez-le. Votre fichier d’origine n’est jamais remplacé.",
-      "es": "Arrastra el control de antes/después para comprobar el resultado y luego guárdalo en tu fototeca o compártelo. Tu archivo original nunca se sobrescribe."
+      "es": "Arrastra el control de antes/después para comprobar el resultado y luego guárdalo en tu fototeca o compártelo. Tu archivo original nunca se sobrescribe.",
+      "zh": "拖动处理前后滑块查看效果，然后保存到图库或分享。原始文件永远不会被覆盖。"
     }
   },
   "privacy.eyebrow": {
@@ -1317,7 +1430,8 @@
       "de": "Privatsphäre zuerst",
       "ja": "プライバシーを重視",
       "fr": "La confidentialité d’abord",
-      "es": "Privacidad ante todo"
+      "es": "Privacidad ante todo",
+      "zh": "隐私优先"
     }
   },
   "privacy.h2": {
@@ -1327,7 +1441,8 @@
       "de": "Die wichtigsten Verbesserungen laufen vollständig auf deinem Gerät",
       "ja": "主要な高画質化はすべてデバイス上で処理",
       "fr": "Les améliorations principales s’effectuent entièrement sur votre appareil",
-      "es": "Las mejoras principales se realizan por completo en tu dispositivo"
+      "es": "Las mejoras principales se realizan por completo en tu dispositivo",
+      "zh": "核心增强完全在你的设备上运行"
     }
   },
   "privacy.p": {
@@ -1337,7 +1452,8 @@
       "de": "Die wichtigsten Verbesserungen – Schärfen, Hochskalieren, Aufhellen, Gesichtsrestaurierung und Zeitlupe – laufen auf der Neural Engine in deinem Gerät. Es gibt keinen Upload, keine Warteschlange und du musst kein Konto erstellen.",
       "ja": "鮮明化、高画質化、明るさ調整、顔の修復、スローモーションといった主要な処理は、デバイス内のNeural Engineで実行されます。アップロードや処理待ちがなく、アカウント作成も不要です。",
       "fr": "Les améliorations principales — défloutage, agrandissement, éclaircissement, restauration des visages et ralenti — s’exécutent avec le Neural Engine de votre appareil. Aucun envoi, aucune file d’attente de traitement et aucun compte à créer.",
-      "es": "Las mejoras principales —quitar el desenfoque, aumentar la resolución, aclarar, restaurar rostros y crear cámara lenta— se ejecutan en el Neural Engine de tu dispositivo. No se suben archivos, no hay cola de procesamiento y no necesitas crear una cuenta."
+      "es": "Las mejoras principales —quitar el desenfoque, aumentar la resolución, aclarar, restaurar rostros y crear cámara lenta— se ejecutan en el Neural Engine de tu dispositivo. No se suben archivos, no hay cola de procesamiento y no necesitas crear una cuenta.",
+      "zh": "核心增强功能（去模糊、放大、调亮、人脸修复和慢动作）由设备内置的神经网络引擎运行。无需上传，无需排队，也无需创建账户。"
     }
   },
   "privacy.points.0": {
@@ -1347,7 +1463,8 @@
       "de": "Funktioniert im Flugmodus ganz ohne Internetverbindung",
       "ja": "インターネット接続なしの機内モードでも動作",
       "fr": "Fonctionne en mode avion, sans aucune connexion Internet",
-      "es": "Funciona en modo avión, sin conexión a internet"
+      "es": "Funciona en modo avión, sin conexión a internet",
+      "zh": "开启飞行模式也能用，完全不需要联网"
     }
   },
   "privacy.points.1": {
@@ -1357,7 +1474,8 @@
       "de": "Keine Anmeldung, keine E-Mail-Adresse, kein Scannen deiner Fotomediathek",
       "ja": "登録、メールアドレス、写真ライブラリのスキャンは不要",
       "fr": "Aucune inscription, aucune adresse e-mail, aucune analyse de votre photothèque",
-      "es": "Sin registro, sin correo electrónico y sin escanear tu fototeca"
+      "es": "Sin registro, sin correo electrónico y sin escanear tu fototeca",
+      "zh": "无需注册，无需邮箱，不扫描你的照片图库"
     }
   },
   "privacy.points.2": {
@@ -1367,7 +1485,8 @@
       "de": "Deine Originale bleiben unverändert – Ergebnisse werden als neue Kopien gespeichert",
       "ja": "元のファイルは変更せず、結果を新しいコピーとして保存",
       "fr": "Vos originaux restent intacts — les résultats sont enregistrés comme de nouvelles copies",
-      "es": "Tus originales quedan intactos; los resultados se guardan como copias nuevas"
+      "es": "Tus originales quedan intactos; los resultados se guardan como copias nuevas",
+      "zh": "原图保持不变，结果另存为新副本"
     }
   },
   "privacy.points.3": {
@@ -1377,7 +1496,8 @@
       "de": "Nur „Kreatives Hochskalieren“ und die erweiterte Restaurierung nutzen Cloud-KI – und nur, wenn du sie antippst",
       "ja": "クラウドAIを使うのは「クリエイティブアップスケール」と高度な写真修復のみで、選択した場合に限ります",
       "fr": "Seules l’« Amélioration créative » et la restauration avancée utilisent l’IA dans le cloud, uniquement lorsque vous les lancez",
-      "es": "Solo «Mejora Creativa» y la restauración avanzada usan IA en la nube, y solo cuando tú las activas"
+      "es": "Solo «Mejora Creativa» y la restauración avanzada usan IA en la nube, y solo cuando tú las activas",
+      "zh": "只有“创意放大”和所有老照片修复模式使用云端 AI 模型，且只在你轻点时使用"
     }
   },
   "privacy.img_alt": {
@@ -1387,7 +1507,8 @@
       "de": "UScale verbessert auf einem iPhone im Flugmodus offline ein Foto",
       "ja": "機内モードを有効にしたiPhoneで、UScaleが写真をオフライン高画質化している画面",
       "fr": "UScale améliore une photo hors ligne sur un iPhone avec le mode avion activé",
-      "es": "UScale mejorando una foto sin conexión en un iPhone con el modo avión activado"
+      "es": "UScale mejorando una foto sin conexión en un iPhone con el modo avión activado",
+      "zh": "UScale 在开启飞行模式的 iPhone 上离线增强照片"
     },
     "comment": "Accessibility text describing an image."
   },
@@ -1398,7 +1519,8 @@
       "de": "FAQ",
       "ja": "FAQ",
       "fr": "FAQ",
-      "es": "Preguntas frecuentes"
+      "es": "Preguntas frecuentes",
+      "zh": "常见问题"
     }
   },
   "faq.h2": {
@@ -1408,7 +1530,8 @@
       "de": "Häufig gestellte Fragen",
       "ja": "よくある質問",
       "fr": "Questions fréquentes",
-      "es": "Preguntas frecuentes"
+      "es": "Preguntas frecuentes",
+      "zh": "常见问题"
     }
   },
   "faq.sub": {
@@ -1418,7 +1541,8 @@
       "de": "Preise, Datenschutz und die Verarbeitung durch UScale auf deinem Gerät.",
       "ja": "料金、プライバシー、デバイス上でのUScaleの動作について説明します。",
       "fr": "Tarifs, confidentialité et fonctionnement de UScale sur votre appareil.",
-      "es": "Precios, privacidad y cómo funciona UScale en tu dispositivo."
+      "es": "Precios, privacidad y cómo funciona UScale en tu dispositivo.",
+      "zh": "价格、隐私，以及 UScale 如何在你的设备上运行。"
     }
   },
   "faq.learn_more": {
@@ -1428,7 +1552,8 @@
       "de": "Mehr erfahren",
       "ja": "詳しく見る",
       "fr": "En savoir plus",
-      "es": "Más información"
+      "es": "Más información",
+      "zh": "了解更多"
     }
   },
   "faq.items.0.q": {
@@ -1438,7 +1563,8 @@
       "de": "Was kostet UScale?",
       "ja": "UScaleの料金はいくらですか？",
       "fr": "Combien coûte UScale ?",
-      "es": "¿Cuánto cuesta UScale?"
+      "es": "¿Cuánto cuesta UScale?",
+      "zh": "UScale 多少钱？"
     }
   },
   "faq.items.0.a": {
@@ -1448,7 +1574,8 @@
       "de": "Die App ist für {free_photos_per_day} Fotoverbesserungen pro Tag kostenlos. Premium kostet {annual_price} pro Jahr und beginnt mit einer kostenlosen Testphase von {trial_days} Tagen, in der alle Funktionen freigeschaltet sind. Die Preise variieren je nach Region geringfügig.",
       "ja": "1日に{free_photos_per_day}枚まで無料で写真を高画質化できます。Premiumは年額{annual_price}で、すべての機能を使える{trial_days}日間の無料トライアルから始まります。料金は地域によって多少異なります。",
       "fr": "L’app permet gratuitement {free_photos_per_day} améliorations de photos par jour. Premium coûte {annual_price} par an et commence par un essai gratuit de {trial_days} jours avec toutes les fonctions débloquées. Les prix varient légèrement selon les régions.",
-      "es": "La app permite mejorar gratis {free_photos_per_day} fotos al día. Premium cuesta {annual_price} al año y comienza con una prueba gratis de {trial_days} días con todo desbloqueado. Los precios pueden variar ligeramente según la región."
+      "es": "La app permite mejorar gratis {free_photos_per_day} fotos al día. Premium cuesta {annual_price} al año y comienza con una prueba gratis de {trial_days} días con todo desbloqueado. Los precios pueden variar ligeramente según la región.",
+      "zh": "UScale 每天可免费增强 {free_photos_per_day} 张照片。Premium 年订阅为每年 {annual_price}，开始时有 {trial_days} 天免费试用，期间全部功能解锁。各地区价格略有不同。"
     },
     "comment": "Preserve every {placeholder} exactly."
   },
@@ -1466,7 +1593,8 @@
       "de": "Welche Sprachen unterstützt UScale?",
       "ja": "UScaleはどの言語に対応していますか？",
       "fr": "Quelles langues UScale prend-il en charge ?",
-      "es": "¿Qué idiomas admite UScale?"
+      "es": "¿Qué idiomas admite UScale?",
+      "zh": "UScale 支持哪些语言？"
     }
   },
   "faq.items.1.a": {
@@ -1476,7 +1604,8 @@
       "de": "UScale ist in 27 Sprachen verfügbar: Arabisch, Chinesisch (vereinfacht), Chinesisch (traditionell), Niederländisch, Englisch, Finnisch, Französisch, Deutsch, Hebräisch, Hindi, Ungarisch, Indonesisch, Italienisch, Japanisch, Koreanisch, Malaiisch, Norwegisch, Polnisch, Portugiesisch, Rumänisch, Russisch, Spanisch, Schwedisch, Thailändisch, Türkisch, Ukrainisch und Vietnamesisch.",
       "ja": "UScaleは27言語に対応しています。アラビア語、イタリア語、インドネシア語、ウクライナ語、英語、オランダ語、韓国語、スウェーデン語、スペイン語、タイ語、中国語（簡体字）、中国語（繁体字）、トルコ語、ドイツ語、日本語、ノルウェー語、ハンガリー語、ヒンディー語、フィンランド語、フランス語、ヘブライ語、ベトナム語、ポーランド語、ポルトガル語、マレー語、ルーマニア語、ロシア語です。",
       "fr": "UScale est disponible en 27 langues : arabe, chinois simplifié, chinois traditionnel, néerlandais, anglais, finnois, français, allemand, hébreu, hindi, hongrois, indonésien, italien, japonais, coréen, malais, norvégien, polonais, portugais, roumain, russe, espagnol, suédois, thaï, turc, ukrainien et vietnamien.",
-      "es": "UScale está disponible en 27 idiomas: árabe, chino simplificado, chino tradicional, neerlandés, inglés, finés, francés, alemán, hebreo, hindi, húngaro, indonesio, italiano, japonés, coreano, malayo, noruego, polaco, portugués, rumano, ruso, español, sueco, tailandés, turco, ucraniano y vietnamita."
+      "es": "UScale está disponible en 27 idiomas: árabe, chino simplificado, chino tradicional, neerlandés, inglés, finés, francés, alemán, hebreo, hindi, húngaro, indonesio, italiano, japonés, coreano, malayo, noruego, polaco, portugués, rumano, ruso, español, sueco, tailandés, turco, ucraniano y vietnamita.",
+      "zh": "UScale 支持 27 种语言：阿拉伯语、简体中文、繁体中文、荷兰语、英语、芬兰语、法语、德语、希伯来语、印地语、匈牙利语、印度尼西亚语、意大利语、日语、韩语、马来语、挪威语、波兰语、葡萄牙语、罗马尼亚语、俄语、西班牙语、瑞典语、泰语、土耳其语、乌克兰语和越南语。"
     }
   },
   "faq.items.1.href": {
@@ -1493,7 +1622,8 @@
       "de": "Wie verwendet UScale meine Daten?",
       "ja": "UScaleはデータをどのように使用しますか？",
       "fr": "Comment UScale utilise-t-il mes données ?",
-      "es": "¿Cómo usa UScale mis datos?"
+      "es": "¿Cómo usa UScale mis datos?",
+      "zh": "UScale 如何使用我的数据？"
     }
   },
   "faq.items.2.a": {
@@ -1503,7 +1633,8 @@
       "de": "Verbessern, Schärfen, Hochskalieren, Aufhellen, Gesichtsrestaurierung und Zeitlupe laufen auf deinem Gerät. Deshalb verlassen diese Fotos dein Smartphone nie. „Kreatives Hochskalieren“ und die erweiterte Restaurierung werden nur dann auf unseren Servern verarbeitet, wenn du sie auswählst. Das Ergebnis steht für begrenzte Zeit zum Herunterladen bereit und wird anschließend gelöscht. Es gibt kein Konto und keine Anmeldung.",
       "ja": "高画質化、鮮明化、明るさ調整、顔の修復、スローモーションはデバイス上で実行されるため、それらの写真がiPhoneやiPadの外に送信されることはありません。「クリエイティブアップスケール」と高度な写真修復は、選択した場合に限りUScaleのサーバーで処理します。結果は一定期間ダウンロードでき、その後削除されます。アカウント作成や登録は不要です。",
       "fr": "L’amélioration, le défloutage, l’agrandissement, l’éclaircissement, la restauration des visages et le ralenti s’effectuent sur votre appareil : ces photos ne quittent donc jamais votre téléphone. L’« Amélioration créative » et la restauration avancée sont traitées sur nos serveurs, uniquement lorsque vous les choisissez : le résultat reste disponible au téléchargement pendant une durée limitée, puis il est supprimé. Aucun compte ni inscription n’est nécessaire.",
-      "es": "Mejorar, quitar el desenfoque, aumentar la resolución, aclarar, restaurar rostros y crear cámara lenta se hacen en tu dispositivo, así que esas fotos nunca salen de tu teléfono. «Mejora Creativa» y la restauración avanzada se procesan en nuestros servidores, y solo cuando tú las eliges: el resultado queda disponible para descargar durante un tiempo limitado y luego se elimina. No necesitas cuenta ni registro."
+      "es": "Mejorar, quitar el desenfoque, aumentar la resolución, aclarar, restaurar rostros y crear cámara lenta se hacen en tu dispositivo, así que esas fotos nunca salen de tu teléfono. «Mejora Creativa» y la restauración avanzada se procesan en nuestros servidores, y solo cuando tú las eliges: el resultado queda disponible para descargar durante un tiempo limitado y luego se elimina. No necesitas cuenta ni registro.",
+      "zh": "增强、去模糊、放大、调亮、人脸修复和慢动作都在你的设备上运行，这些照片不会离开你的手机。“创意放大”和所有老照片修复模式在我们的服务器上处理，而且只在你选择它们时进行：结果会在有限时间内保留供下载，之后即被删除。无需账户，也无需注册。"
     }
   },
   "faq.items.2.href": {
@@ -1520,7 +1651,8 @@
       "de": "Ist mein iPhone oder iPad kompatibel?",
       "ja": "iPhoneやiPadで使えますか？",
       "fr": "Mon iPhone ou mon iPad est-il compatible ?",
-      "es": "¿Mi iPhone o iPad es compatible?"
+      "es": "¿Mi iPhone o iPad es compatible?",
+      "zh": "我的 iPhone 或 iPad 兼容吗？"
     }
   },
   "faq.items.3.a": {
@@ -1530,7 +1662,8 @@
       "de": "UScale benötigt iOS {minimum_ios} oder neuer und läuft auf iPhone und iPad. Auf dem iPad werden Vorher und Nachher nebeneinander angezeigt.",
       "ja": "UScaleはiOS {minimum_ios}以降に対応し、iPhoneとiPadで動作します。iPadでは処理前後の画像を並べて表示します。",
       "fr": "UScale nécessite iOS {minimum_ios} ou version ultérieure et fonctionne sur iPhone et iPad. Sur iPad, l’avant et l’après sont affichés côte à côte.",
-      "es": "UScale requiere iOS {minimum_ios} o posterior y funciona en iPhone y iPad. En iPad, el antes y el después se muestran uno al lado del otro."
+      "es": "UScale requiere iOS {minimum_ios} o posterior y funciona en iPhone y iPad. En iPad, el antes y el después se muestran uno al lado del otro.",
+      "zh": "UScale 需要 iOS {minimum_ios} 或更高版本，支持 iPhone 和 iPad。在 iPad 上，处理前后会并排显示。"
     },
     "comment": "Preserve every {placeholder} exactly."
   },
@@ -1548,7 +1681,8 @@
       "de": "Funktioniert UScale ohne Internetverbindung?",
       "ja": "UScaleはインターネット接続なしでも使えますか？",
       "fr": "UScale fonctionne-t-il sans connexion Internet ?",
-      "es": "¿UScale funciona sin conexión a internet?"
+      "es": "¿UScale funciona sin conexión a internet?",
+      "zh": "UScale 可以离线使用吗？"
     }
   },
   "faq.items.4.a": {
@@ -1558,7 +1692,8 @@
       "de": "Ja. Die Werkzeuge auf dem Gerät funktionieren im Flugmodus. Nur „Kreatives Hochskalieren“ und die erweiterte Restaurierung benötigen eine Verbindung.",
       "ja": "はい。デバイス上で処理するツールは機内モードでも使えます。接続が必要なのは「クリエイティブアップスケール」と高度な写真修復だけです。",
       "fr": "Oui. Les outils exécutés sur l’appareil fonctionnent en mode avion. Seules l’« Amélioration créative » et la restauration avancée nécessitent une connexion.",
-      "es": "Sí. Las herramientas que se ejecutan en el dispositivo funcionan en modo avión. Solo «Mejora Creativa» y la restauración avanzada necesitan conexión."
+      "es": "Sí. Las herramientas que se ejecutan en el dispositivo funcionan en modo avión. Solo «Mejora Creativa» y la restauración avanzada necesitan conexión.",
+      "zh": "可以。设备上的工具在飞行模式下也能使用。只有“创意放大”和所有老照片修复模式需要联网。"
     }
   },
   "faq.items.4.href": {
@@ -1575,7 +1710,8 @@
       "de": "Wie kündige ich mein Abonnement?",
       "ja": "サブスクリプションを解約するには？",
       "fr": "Comment résilier mon abonnement ?",
-      "es": "¿Cómo cancelo mi suscripción?"
+      "es": "¿Cómo cancelo mi suscripción?",
+      "zh": "如何取消订阅？"
     }
   },
   "faq.items.5.a": {
@@ -1585,7 +1721,8 @@
       "de": "Abonnements werden von Apple verwaltet. Öffne den App Store, tippe auf dein Profilbild, wähle „Abonnements“, dann UScale und kündige es dort. Wenn dir versehentlich etwas berechnet wurde, beantragst du die Erstattung bei Apple unter reportaproblem.apple.com.",
       "ja": "サブスクリプションはAppleが管理しています。App Storeを開き、プロフィール写真をタップして「サブスクリプション」を選択し、UScaleを選んで解約してください。誤って請求された場合は、reportaproblem.apple.comでAppleに返金を申請します。",
       "fr": "Les abonnements sont gérés par Apple. Ouvrez l’App Store, touchez votre photo de profil, choisissez Abonnements, sélectionnez UScale et résiliez-le depuis cet écran. Si vous avez été débité par erreur, demandez un remboursement à Apple sur reportaproblem.apple.com.",
-      "es": "Apple gestiona las suscripciones. Abre App Store, toca tu foto de perfil, elige Suscripciones, selecciona UScale y cancélala allí. Si te cobraron por error, solicita el reembolso a Apple en reportaproblem.apple.com."
+      "es": "Apple gestiona las suscripciones. Abre App Store, toca tu foto de perfil, elige Suscripciones, selecciona UScale y cancélala allí. Si te cobraron por error, solicita el reembolso a Apple en reportaproblem.apple.com.",
+      "zh": "订阅由 Apple 管理。打开 App Store，轻点你的头像，选择“订阅”，选中 UScale 后在那里取消。如果被误扣费，可以在 reportaproblem.apple.com 向 Apple 申请退款。"
     }
   },
   "faq.items.5.href": {
@@ -1602,7 +1739,8 @@
       "de": "Abonnements auf apple.com verwalten",
       "ja": "apple.comでサブスクリプションを管理",
       "fr": "Gérer les abonnements sur apple.com",
-      "es": "Administrar suscripciones en apple.com"
+      "es": "Administrar suscripciones en apple.com",
+      "zh": "在 apple.com 上管理订阅"
     }
   },
   "sale.title": {
@@ -1612,7 +1750,8 @@
       "de": "UScale Premium-Angebot – {off} Rabatt",
       "ja": "UScale Premiumセール — {off}オフ",
       "fr": "Promo UScale Premium — {off} de réduction",
-      "es": "Oferta de UScale Premium — {off} de descuento"
+      "es": "Oferta de UScale Premium — {off} de descuento",
+      "zh": "UScale Premium 限时优惠：立省 {off}"
     },
     "comment": "Page or section title; preserve product names. Preserve every {placeholder} exactly."
   },
@@ -1623,7 +1762,8 @@
       "de": "Sichere dir UScale Premium mit {off} Rabatt. Öffne die App über diesen Link; der Rabatt ist auf deinem Gerät eine Stunde lang aktiv.",
       "ja": "UScale Premiumを{off}オフで利用できます。このリンクからアプリを開くと、デバイスで1時間割引が有効になります。",
       "fr": "Débloquez UScale Premium avec {off} de réduction. Ouvrez l’app depuis ce lien : la remise reste active pendant une heure sur votre appareil.",
-      "es": "Obtén UScale Premium con {off} de descuento. Abre la app desde este enlace y el descuento estará activo durante una hora en tu dispositivo."
+      "es": "Obtén UScale Premium con {off} de descuento. Abre la app desde este enlace y el descuento estará activo durante una hora en tu dispositivo.",
+      "zh": "解锁 UScale Premium，立省 {off}。通过此链接打开 App，折扣将在你的设备上生效一小时。"
     },
     "comment": "Description copy; keep factual claims unchanged. Preserve every {placeholder} exactly."
   },
@@ -1634,7 +1774,8 @@
       "de": "Zeitlich begrenztes Angebot",
       "ja": "期間限定オファー",
       "fr": "Offre limitée",
-      "es": "Oferta por tiempo limitado"
+      "es": "Oferta por tiempo limitado",
+      "zh": "限时优惠"
     }
   },
   "sale.off": {
@@ -1644,7 +1785,8 @@
       "de": "{off} RABATT",
       "ja": "{off}オフ",
       "fr": "{off} DE RÉDUCTION",
-      "es": "{off} DE DESCUENTO"
+      "es": "{off} DE DESCUENTO",
+      "zh": "立省 {off}"
     },
     "comment": "Preserve every {placeholder} exactly."
   },
@@ -1655,7 +1797,8 @@
       "de": "Spare <em>{off}</em> bei Premium",
       "ja": "Premiumが<em>{off}</em>オフ",
       "fr": "Économisez <em>{off}</em> sur Premium",
-      "es": "Ahorra <em>{off}</em> en Premium"
+      "es": "Ahorra <em>{off}</em> en Premium",
+      "zh": "Premium 立省 <em>{off}</em>"
     },
     "comment": "Preserve every {placeholder} exactly. Contains HTML; translate visible text and preserve tags, attributes, and URLs."
   },
@@ -1666,7 +1809,8 @@
       "de": "Öffne diesen Link in UScale, um den rabattierten Premium-Preis für eine Stunde freizuschalten.",
       "ja": "このリンクをUScaleで開くと、Premiumの割引価格が1時間有効になります。",
       "fr": "Ouvrez ce lien dans UScale pour débloquer le tarif Premium réduit pendant une heure.",
-      "es": "Abre este enlace en UScale para activar el precio con descuento de Premium durante una hora."
+      "es": "Abre este enlace en UScale para activar el precio con descuento de Premium durante una hora.",
+      "zh": "在 UScale 中打开此链接，即可在一小时内享受 Premium 优惠价。"
     }
   },
   "sale.promo": {
@@ -1676,7 +1820,8 @@
       "de": "Aktionscode",
       "ja": "プロモコード",
       "fr": "Code promo",
-      "es": "Código promocional"
+      "es": "Código promocional",
+      "zh": "优惠码"
     }
   },
   "sale.open": {
@@ -1686,7 +1831,8 @@
       "de": "In App öffnen",
       "ja": "アプリで開く",
       "fr": "Ouvrir dans l’app",
-      "es": "Abrir en la app"
+      "es": "Abrir en la app",
+      "zh": "在 App 中打开"
     }
   },
   "sale.note": {
@@ -1696,7 +1842,8 @@
       "de": "Schon installiert? iOS öffnet UScale direkt über diesen Link. Noch keine App? Installiere sie und öffne denselben Link erneut.",
       "ja": "インストール済みの場合、iOSがこのリンクからUScaleを直接開きます。未インストールの場合は、インストール後に同じリンクをもう一度開いてください。",
       "fr": "UScale est déjà installé ? iOS l’ouvre directement depuis ce lien. Pas encore installé ? Installez-le, puis rouvrez le même lien.",
-      "es": "¿Ya la tienes instalada? iOS abre UScale directamente desde este enlace. ¿Aún no tienes la app? Instálala y vuelve a abrir el mismo enlace."
+      "es": "¿Ya la tienes instalada? iOS abre UScale directamente desde este enlace. ¿Aún no tienes la app? Instálala y vuelve a abrir el mismo enlace.",
+      "zh": "已经安装？iOS 会通过此链接直接打开 UScale。还没有安装？先安装，再重新打开同一链接。"
     }
   },
   "sale.badge": {
@@ -1706,7 +1853,8 @@
       "de": "Bestes Angebot",
       "ja": "最もお得",
       "fr": "Meilleur prix",
-      "es": "Mejor precio"
+      "es": "Mejor precio",
+      "zh": "最超值"
     }
   },
   "sale.image_alt": {
@@ -1716,7 +1864,8 @@
       "de": "UScale Premium in der App",
       "ja": "アプリ内のUScale Premium",
       "fr": "UScale Premium dans l’app",
-      "es": "UScale Premium en la app"
+      "es": "UScale Premium en la app",
+      "zh": "App 中的 UScale Premium"
     },
     "comment": "Accessibility text describing an image."
   },
@@ -1727,7 +1876,8 @@
       "de": "App öffnet sich noch nicht?",
       "ja": "アプリが開きませんか？",
       "fr": "L’app ne s’ouvre pas ?",
-      "es": "¿La app todavía no se abre?"
+      "es": "¿La app todavía no se abre?",
+      "zh": "App 还打不开？"
     }
   },
   "sale.cta_p": {
@@ -1737,7 +1887,8 @@
       "de": "Installiere UScale aus dem App Store und öffne denselben Angebotslink erneut – der Aktionscode bleibt verknüpft.",
       "ja": "App StoreからUScaleをインストールし、同じセールリンクをもう一度開いてください。プロモコードは引き継がれます。",
       "fr": "Installez UScale depuis l’App Store, puis ouvrez de nouveau ce même lien promotionnel — le code promo reste associé.",
-      "es": "Instala UScale desde App Store y vuelve a abrir este mismo enlace de oferta; el código promocional seguirá asociado."
+      "es": "Instala UScale desde App Store y vuelve a abrir este mismo enlace de oferta; el código promocional seguirá asociado.",
+      "zh": "从 App Store 安装 UScale，然后再次打开这个优惠链接，优惠码依然有效。"
     }
   },
   "faq.items.6.q": {

@@ -7,7 +7,7 @@
   "minimum_ios": "16",
   "rating": {
     "value": 4.6,
-    "count": 1632
+    "count": 1648
   },
   "free_limits": {
     "photos_per_day": 2
@@ -37,6 +37,10 @@
     "ja": {
       "currency": "JPY",
       "annual": 5890
+    },
+    "zh": {
+      "currency": "CNY",
+      "annual": 189
     }
   },
   "annual_trial_days": 3,
