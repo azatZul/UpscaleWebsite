@@ -6,7 +6,7 @@ may not.
 
 ## What we are building
 
-The `/free-upscale/` page gains paid cloud modes next to the free on-device one:
+The `/upscale/` page gains paid cloud modes next to the free on-device one:
 
 | Mode | Runs on | Cost | Options (mirroring iOS) |
 |---|---|---|---|

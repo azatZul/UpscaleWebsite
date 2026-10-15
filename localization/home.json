@@ -1137,15 +1137,15 @@
       "zh": "选择一个处理前后示例"
     }
   },
-  "showcase.try": {
+  "showcase.more": {
     "localizations": {
-      "en": "Try it in your browser",
-      "ru": "Попробовать в браузере",
-      "de": "Im Browser ausprobieren",
-      "ja": "ブラウザで試す",
-      "fr": "Essayer dans votre navigateur",
-      "es": "Pruébalo en tu navegador",
-      "zh": "在浏览器中试用"
+      "en": "See more examples",
+      "ru": "Смотреть больше примеров",
+      "de": "Weitere Beispiele ansehen",
+      "ja": "その他の例を見る",
+      "fr": "Voir plus d’exemples",
+      "es": "Ver más ejemplos",
+      "zh": "查看更多示例"
     }
   },
   "showcase.on_device": {

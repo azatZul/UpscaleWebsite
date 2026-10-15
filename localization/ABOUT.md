@@ -29,7 +29,8 @@ WaveSpeedAI, and Replicate unchanged.
 27 languages, so a reader following a guide sees their own language on every
 button. Take each label from
 `Upscaler/Upscaler/Resources/Localizable.xcstrings` in the app repository and
-quote it in the locale's own quotation marks (German `„…“`, Russian `«…»`) so a
+quote it in the locale's own quotation marks (German `„…“`, Russian `«…»`,
+Japanese `「…」`, Simplified Chinese `“…”`) so a
 verb-phrase label such as "Улучшить лица" reads as a control and not as an
 instruction. Never invent a translation for a label; if the app does not
 localize it, leave the English.

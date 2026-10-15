@@ -35,14 +35,15 @@
   },
   "tool.hero_link": {
     "localizations": {
-      "en": "Upscale photos",
-      "ru": "Увеличить фото",
-      "de": "Fotos vergrößern",
-      "ja": "写真を高画質化",
-      "fr": "Agrandir des photos",
-      "es": "Ampliar fotos",
-      "zh": "图片放大"
-    }
+      "en": "Or upscale online",
+      "ru": "Или увеличить онлайн",
+      "de": "Oder online vergrößern",
+      "ja": "またはオンラインで拡大",
+      "fr": "Ou agrandir en ligne",
+      "es": "O ampliar online",
+      "zh": "或在线放大"
+    },
+    "comment": "Hero button beside App Store and Google Play: an alternative to installing the app. Keep the label short enough for one row."
   },
   "tool.eyebrow": {
     "localizations": {

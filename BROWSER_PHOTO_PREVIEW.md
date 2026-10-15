@@ -1,8 +1,9 @@
 # Guarded browser photo preview
 
 The website's **Try for free** link, the hero link and the home banner open
-`/free-upscale/` (`/<locale>/free-upscale/` on localized pages; the old
-`/upscale/` redirects). `build/build.py` renders the page with the site's head,
+`/upscale/` (`/<locale>/upscale/` on localized pages). The worker redirects the
+old `/free-upscale/` there, keeping `?mode=` and defaulting to `device`.
+`build/build.py` renders the page with the site's head,
 theme, navigation and footer, and localizes it from `localization/tool.json`.
 The tool's runtime messages travel as one JSON table in `#tool-strings`; workers
 post message keys and `src/tool/i18n.js` words them, with durations pluralized by
@@ -67,8 +68,8 @@ them with `scripts/prepare_web_models.py` as described in
 remain outside Git.
 
 - `npm run build:preview` creates `.preview-dist` for Cloudflare Pages.
-- `npm run preview:tool` serves it at `http://127.0.0.1:4175/free-upscale/`.
-  The `free-upscale` entry in `.claude/launch.json` builds and serves in one step.
+- `npm run preview:tool` serves it at `http://127.0.0.1:4175/upscale/`.
+  The `upscale` entry in `.claude/launch.json` builds and serves in one step.
 - `npm run test:tool` verifies header guards, device policy, and pixel-exact
   stitching against the original tiler, including overlap and edge cases.
 - `python3.12 -m unittest discover -s tests` runs the existing site tests.

@@ -1,4 +1,4 @@
-/* Browser photo tool (/free-upscale/). Scoped to main.tool; the palette, theme,
+/* Browser photo tool (/upscale/). Scoped to main.tool; the palette, theme,
    nav, buttons and footer all come from site.css. */
 .tool [hidden]{display:none!important}
 .tool-wrap{max-width:1000px;padding-top:46px;padding-bottom:10px}

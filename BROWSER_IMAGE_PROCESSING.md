@@ -77,7 +77,7 @@ should live behind the same site or a model CDN with long-lived caching.
 
 ## Public single-photo preview (September 2026)
 
-`/free-upscale/` keeps one photo at a time: choose, upscale, compare and save. Its
+`/upscale/` keeps one photo at a time: choose, upscale, compare and save. Its
 result viewer follows the gallery at main commit `1baa444`: fitted comparison,
 expand/close controls and downloads below; the app card sits under the tool.
 

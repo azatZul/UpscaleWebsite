@@ -40,10 +40,10 @@ def asset_v(name):
 CSS_V = asset_v("site.css")
 JS_V = asset_v("site.js")
 
-# The free browser upscaler lives at /free-upscale/ in every locale. Its script
+# The free browser upscaler lives at /upscale/ in every locale. Its script
 # comes from the separate Vite build (npm run build:tool); without that build the
 # site still builds and simply leaves out the page, its links and the home banner.
-TOOL_PATH = "free-upscale"
+TOOL_PATH = "upscale"
 TOOL_MANIFEST = os.path.join(ROOT, "assets", "processor", "app", ".vite", "manifest.json")
 
 def _tool_script():
@@ -164,23 +164,23 @@ SCREENSHOTS = [f"{SHOTS}/screen_{i}.jpg" for i in range(1, 7)]
 SHOWCASE_TABS = [
     {"thumb": "/resources/before_after/girls_thumb.jpg",
      "before": "/resources/before_after/girls_before.jpg",
-     "after": "/resources/before_after/girls_after.jpg", "ratio": "1.5", "cloud": True, "tool": "creative",
+     "after": "/resources/before_after/girls_after.jpg", "ratio": "1.5", "cloud": True,
      "before_size": (840, 560), "after_size": (3010, 2006)},
     {"thumb": "/resources/before_after/upscale_photo_thumb.jpg",
      "before": "/resources/before_after/before_2.jpg",
-     "after": "/resources/before_after/after_2.jpg", "ratio": "1.5009", "tool": "device"},
+     "after": "/resources/before_after/after_2.jpg", "ratio": "1.5009"},
     {"thumb": "/resources/before_after/lowq_portrait_thumb.jpg",
      "before": "/resources/before_after/lowq_portrait_before.jpg",
-     "after": "/resources/before_after/lowq_portrait_after.jpg", "ratio": "1.1111", "cloud": True, "tool": "creative"},
+     "after": "/resources/before_after/lowq_portrait_after.jpg", "ratio": "1.1111", "cloud": True},
     {"thumb": "/resources/before_after/restore_kids_thumb.jpg",
      "before": "/resources/before_after/restore_kids_before.jpg",
-     "after": "/resources/before_after/restore_kids_after.jpg", "ratio": "1.0714", "cloud": True, "tool": "restore"},
+     "after": "/resources/before_after/restore_kids_after.jpg", "ratio": "1.0714", "cloud": True},
     {"thumb": "/resources/before_after/restore_family_thumb.jpg",
      "before": "/resources/before_after/restore_family_before.jpg",
-     "after": "/resources/before_after/restore_family_after.jpg", "ratio": "0.75", "cloud": True, "tool": "restore"},
+     "after": "/resources/before_after/restore_family_after.jpg", "ratio": "0.75", "cloud": True},
     {"thumb": "/resources/before_after/restore_portrait_thumb.jpg",
      "before": "/resources/before_after/restore_portrait_before.jpg",
-     "after": "/resources/before_after/restore_portrait_after.jpg", "ratio": "0.75", "cloud": True, "tool": "restore"},
+     "after": "/resources/before_after/restore_portrait_after.jpg", "ratio": "0.75", "cloud": True},
     {"thumb": "/resources/before_after/video_quality_thumb.jpg",
      "video": "/resources/before_after/before_after_3.mp4", "sound": True, "ratio": "1.375"},
     {"thumb": "/resources/before_after/slowmo_thumb.jpg",
@@ -260,6 +260,10 @@ CLOUD_SVG = ('<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor"
              '<circle cx="8.2" cy="13.6" r="3.3"/><circle cx="12.6" cy="11.2" r="4.7"/>'
              '<circle cx="16.4" cy="13.9" r="3.4"/>'
              '<rect x="4.9" y="13.8" width="14.9" height="4" rx="2"/></g></svg>')
+GALLERY_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '
+               'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+               '<rect x="3" y="4" width="18" height="14" rx="2"/><path d="m3 15 4.5-4.5 4 4L15 11l6 5.5"/>'
+               '<circle cx="9" cy="9" r="1.4"/></svg>')
 
 # Apple's official badge artwork, vendored by build/fetch_badges.py. The
 # guidelines require it be used unmodified, so the site supplies only the frame
@@ -681,7 +685,7 @@ def badge_width(lang):
         _BADGE_WIDTHS[lang] = round(float(box.group(1)) / 40 * BADGE_H, 1)
     return _BADGE_WIDTHS[lang]
 
-def appstore_btn(c, cls=""):
+def appstore_btn(c, cls="", badge_height=BADGE_H):
     """The App Store badge, as Apple's own artwork for this locale.
 
     The guidelines forbid recreating or restyling the badge, so the link is only
@@ -701,13 +705,13 @@ def appstore_btn(c, cls=""):
         gap = "" if lead.endswith(("’", "'")) else " "
         label = f"{lead}{gap}{mark}"
     label = esc(label)
-    width = badge_width(lang)
+    width = round(badge_width(lang) * badge_height / BADGE_H, 1)
     art = "".join(
         f'<img class="badge-{colour}" src="/resources/appstore/badges/{lang}-{colour}.svg" '
-        f'width="{width}" height="{BADGE_H}" alt="" decoding="async">'
+        f'width="{width}" height="{badge_height}" alt="" decoding="async">'
         for colour in ("black", "white"))
     return (f'<a class="appstore {cls}" href="{APPSTORE}" target="_blank" rel="noopener" '
-            f'data-cta="appstore" aria-label="{label}" style="width:{width}px">{art}</a>')
+            f'data-cta="appstore" aria-label="{label}" style="width:{width}px;height:{badge_height}px">{art}</a>')
 
 def googleplay_btn(c, badge_height=BADGE_H):
     """Google's localized artwork, including its supplied transparent padding."""
@@ -722,12 +726,12 @@ def googleplay_btn(c, badge_height=BADGE_H):
             f'<img src="/resources/googleplay/badges/{c["lang"]}.png" '
             'width="646" height="250" alt="" decoding="async"></a>')
 
-def store_buttons(c, ios_note=None):
+def store_buttons(c, ios_note=None, badge_height=BADGE_H):
     """Both mobile stores, with platform-specific captions when requested."""
     if ios_note is None:
-        return appstore_btn(c) + googleplay_btn(c)
-    return (store_badge(appstore_btn(c), ios_note)
-            + store_badge(googleplay_btn(c), c["cta"]["android_note"]))
+        return appstore_btn(c, badge_height=badge_height) + googleplay_btn(c, badge_height=badge_height)
+    return (store_badge(appstore_btn(c, badge_height=badge_height), ios_note)
+            + store_badge(googleplay_btn(c, badge_height=badge_height), c["cta"]["android_note"]))
 
 def guide_card(c, slug, home_prefix):
     """Render a guide card with an optional result thumbnail."""
@@ -1042,7 +1046,7 @@ def render_home(c, lang):
         <span><b>{rating}</b> \u00b7 {esc(h['rating_note'])}</span></div>
       <h1>{h['h1']}</h1>
       <p class="hero-sub">{esc(h['sub'])}</p>
-      <div class="hero-cta stores{' with-tool' if TOOL_SCRIPT else ''}">{store_buttons(c, h['note'])}{browser_tool_link(c, lang, hero=True)}</div>
+      <div class="hero-cta stores{' with-tool' if TOOL_SCRIPT else ''}">{store_buttons(c, h['note'], badge_height=44 if TOOL_SCRIPT else BADGE_H)}{browser_tool_link(c, lang, hero=True)}</div>
     </div>
     {hero_phone(c, h)}
     <ul class="chips hero-chips">{chips}</ul>
@@ -1083,8 +1087,6 @@ def render_home(c, lang):
                     if "video" in t
                     else f'data-before="{t["before"]}" data-after="{t["after"]}"')
             cloud = ' data-cloud="1"' if t.get("cloud") else ""
-            # The tool this example was made with, so the link below follows the tabs.
-            cloud += f' data-tool="{t["tool"]}"' if t.get("tool") and TOOL_SCRIPT else ""
             play = '<span class="play" aria-hidden="true">▶</span>' if "video" in t else ""
             sw_tabs.append(f'<button class="cmp-tab lg"{cloud} type="button" {data} '
                            f'data-ratio="{t["ratio"]}" aria-pressed="{"true" if i == 0 else "false"}">'
@@ -1097,16 +1099,11 @@ def render_home(c, lang):
             return (f'<span class="od-tip-v {cls}"><span class="od-tip-ic">{icon}</span>'
                     f'<span class="od-tip-tx"><b>{esc(sw[f"tip_{key}_h"])}</b>'
                     f'{esc(sw[f"tip_{key}_p"])}</span></span>')
-        # Run the example you are looking at, in the browser. Hidden for the
-        # video examples, which the web tool does not do.
-        first_tool = SHOWCASE_TABS[0].get("tool")
-        tool_base = rel_url(lang, TOOL_PATH)
-        showcase_try = (
-            f'<div class="sw-try"><a class="btn btn-p" id="showcase-try" data-showcase-try '
-            f'data-base="{tool_base}" data-cta="showcase_try" '
-            f'href="{tool_base}{"" if first_tool == "device" else f"?mode={first_tool}"}"'
-            f'{"" if first_tool else " hidden"}>{esc(sw["try"])}<span class="arrow" aria-hidden="true">→</span></a></div>'
-        ) if TOOL_SCRIPT else ""
+        # More examples live in the gallery (English only, rendered by the Worker).
+        showcase_gallery = (
+            f'<div class="sw-more"><a class="btn btn-g" href="/gallery" data-cta="showcase_gallery">'
+            f'{GALLERY_SVG}{esc(sw["more"])}<span class="arrow" aria-hidden="true">→</span></a></div>'
+        )
         badge_state = ((" cloud" if SHOWCASE_TABS[0].get("cloud") else "")
                        + (" vid" if SHOWCASE_TABS[0].get("video") else ""))
         badge = (f'<span class="on-device{badge_state}" tabindex="0" aria-describedby="od-tip">'
@@ -1133,7 +1130,7 @@ def render_home(c, lang):
       </div>
       <div class="cmp-tabs cmp-tabs-lg" role="group" aria-label="{esc(sw['tabs_label'])}">{''.join(sw_tabs)}</div>
     </div>
-    {showcase_try}
+    {showcase_gallery}
     {teaser}
   </div>
 </section>""")
@@ -2172,9 +2169,6 @@ def render_static_redirects():
         for page in ("terms", "privacy_policy", "support_page"):
             rules.append(f"{base}{page} {base}{page}.html 301")
             rules.append(f"{base}{page}/ {base}{page}.html 301")
-    if TOOL_SCRIPT:
-        # The preview first shipped at /upscale/.
-        rules += [f"/upscale/ /{TOOL_PATH}/ 301", f"/upscale /{TOOL_PATH}/ 301"]
     # Pages copied verbatim from static/ contribute no rules of their own; skip
     # any directory a rendered page already claimed.
     claimed = {rule.split(" ", 1)[0] for rule in rules}

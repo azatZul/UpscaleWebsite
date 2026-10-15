@@ -63,6 +63,39 @@ describe.sequential("album worker", () => {
       expect(await response.text(), path).toContain('<html');
     }
   });
+  it("serves the browser tool at /upscale/ with cross-origin isolation", async () => {
+    for (const path of ["/upscale/", "/de/upscale/"]) {
+      const response = await fetchWorker(path, { redirect: "manual" });
+      expect(response.status, path).toBe(200);
+      expect(response.headers.get("Location"), path).toBeNull();
+      expect(response.headers.get("Cross-Origin-Opener-Policy"), path).toBe("same-origin");
+      expect(response.headers.get("Cross-Origin-Embedder-Policy"), path).toBe("require-corp");
+      await response.body?.cancel();
+    }
+  });
+  it("redirects the old /free-upscale/ address and keeps a known mode", async () => {
+    const cases: Array<[string, string]> = [
+      ["/free-upscale/", "/upscale/?mode=device"],
+      ["/free-upscale", "/upscale/?mode=device"],
+      ["/free-upscale/index.html", "/upscale/?mode=device"],
+      ["/free-upscale/?mode=restore", "/upscale/?mode=restore"],
+      ["/free-upscale/?mode=creative", "/upscale/?mode=creative"],
+      ["/de/free-upscale/?mode=bogus", "/de/upscale/?mode=device"],
+      ["/free-upscale/?utm_source=x&mode=restore", "/upscale/?utm_source=x&mode=restore"],
+    ];
+    for (const [path, location] of cases) {
+      const response = await fetchWorker(path, { redirect: "manual" });
+      expect(response.status, path).toBe(301);
+      expect(response.headers.get("Location"), path).toBe(location);
+    }
+    const head = await fetchWorker("/free-upscale/", { method: "HEAD", redirect: "manual" });
+    expect(head.status).toBe(301);
+    expect(head.headers.get("Location")).toBe("/upscale/?mode=device");
+    const other = await fetchWorker("/free-upscale-other/", { redirect: "manual" });
+    expect(other.status).toBe(404);
+    expect(other.headers.get("Location")).toBeNull();
+    await other.body?.cancel();
+  });
   it("parses only valid single byte ranges", () => {
     expect(parseRange("bytes=2-4", 10)).toEqual({ offset: 2, length: 3, end: 4 });
     expect(parseRange("bytes=-3", 10)).toEqual({ offset: 7, length: 3, end: 9 });

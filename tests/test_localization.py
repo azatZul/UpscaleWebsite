@@ -53,7 +53,7 @@ class CatalogTests(unittest.TestCase):
                 strings = json.loads(match.group(1))
                 # Runtime placeholders survive the build's fact injection.
                 self.assertIn("{scale}", strings["upscale_button"], locale)
-                self.assertIn(f'<link rel="canonical" href="{site_build.url(locale, "free-upscale")}">', html)
+                self.assertIn(f'<link rel="canonical" href="{site_build.url(locale, site_build.TOOL_PATH)}">', html)
                 self.assertIn('src="/assets/processor/app/main-test.js"', html)
                 self.assertIn("uscale-theme", html)  # the shared theme boot
                 self.assertIn('class="theme-btn"', html)
@@ -61,8 +61,10 @@ class CatalogTests(unittest.TestCase):
                 self.assertIn('id="model-drawing"', html)
                 self.assertIn(f'>{c["tool"]["model_photo"]}</button>', html)
                 self.assertIn(f'>{c["tool"]["model_drawing"]}</button>', html)
-                self.assertIn(f'href="{site_build.rel_url(locale, "free-upscale")}"', site_build.nav(c, locale, "/"))
-            self.assertIn("/upscale/ /free-upscale/ 301", site_build.render_static_redirects())
+                self.assertIn(f'href="{site_build.rel_url(locale, site_build.TOOL_PATH)}"', site_build.nav(c, locale, "/"))
+            redirects = site_build.render_static_redirects()
+            self.assertIn("/upscale/ /upscale/index.html 200", redirects)
+            self.assertNotIn("free-upscale", redirects)
         finally:
             site_build.TOOL_SCRIPT = original
 

@@ -114,12 +114,12 @@ test('email link errors collapse to codes a person can act on', () => {
 });
 
 test('recognises a sign-in link landing, and strips it once used', () => {
-  const landing = 'https://upscales.app/account/?next=%2Ffree-upscale%2F%3Fmode%3Drestore'
+  const landing = 'https://upscales.app/account/?next=%2Fupscale%2F%3Fmode%3Drestore'
     + '&apiKey=AIza&oobCode=CODE123&mode=signIn&lang=en';
   assert.equal(looksLikeEmailLink(landing), true);
   assert.equal(looksLikeEmailLink('https://upscales.app/account/?mode=signIn'), false, 'no code, no link');
   assert.equal(looksLikeEmailLink('https://upscales.app/account/'), false);
   // ?next= survives, so finishing sign-in still returns to the tool.
-  assert.equal(withoutEmailLinkParams(landing), '/account/?next=%2Ffree-upscale%2F%3Fmode%3Drestore');
+  assert.equal(withoutEmailLinkParams(landing), '/account/?next=%2Fupscale%2F%3Fmode%3Drestore');
 });
 

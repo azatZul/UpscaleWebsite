@@ -27,6 +27,11 @@ const GALLERY_MEDIA_PATH = new RegExp(`^/media/(${ALBUM_ID})/gallery\\.jpg$`);
 const MEDIA_PATH = new RegExp(`^/media/(${ALBUM_ID})/(${ALBUM_ID})/(before|after)\\.webp$`);
 const DOWNLOAD_PATH = new RegExp(`^/download/(${ALBUM_ID})/(${ALBUM_ID})$`);
 const ZIP_PATH = new RegExp(`^/download/(${ALBUM_ID})/all\\.zip$`);
+// The browser tool moved from /free-upscale/ to /upscale/. Old links keep their
+// ?mode= when it names a tool mode (the list mirrors MODES in src/tool/main.js)
+// and otherwise open the free on-device tool.
+const LEGACY_TOOL_PATH = /^\/(?:([a-z]{2})\/)?free-upscale(?:\/|\/index\.html)?$/;
+const TOOL_MODES = new Set(["device", "creative", "restore"]);
 const SUPPORT_EMAIL = "alexandr.graschenkov91@gmail.com";
 
 const ICON_PREVIOUS = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.25 5.5 8.75 12 15.25 18.5"/></svg>`;
@@ -1256,6 +1261,13 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   return json({ error: "not_found" }, 404);
 }
 
+function redirectLegacyTool(url: URL, lang: string | undefined): Response {
+  const target = new URL(`/${lang ? `${lang}/` : ""}upscale/`, url);
+  target.search = url.search;
+  if (!TOOL_MODES.has(target.searchParams.get("mode") ?? "")) target.searchParams.set("mode", "device");
+  return new Response(null, { status: 301, headers: { Location: target.pathname + target.search } });
+}
+
 async function route(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
   const url = new URL(request.url);
   const isRead = request.method === "GET" || request.method === "HEAD";
@@ -1300,6 +1312,8 @@ async function route(request: Request, env: Env, ctx: ExecutionContext): Promise
   const download = DOWNLOAD_PATH.exec(url.pathname);
   if (download?.[1] && download[2]) return handleDownload(request, env, download[1], download[2]);
   if (dynamic) return plain("Not found", 404);
+  const legacyTool = isRead ? LEGACY_TOOL_PATH.exec(url.pathname) : null;
+  if (legacyTool) return redirectLegacyTool(url, legacyTool[1]);
   return env.ASSETS.fetch(request);
 }
 

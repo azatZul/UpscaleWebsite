@@ -319,10 +319,21 @@ html:lang(zh) h1,html:lang(zh) h2,html:lang(zh) h3,html:lang(zh) h4{
 .hero-note.reveal{opacity:0;transform:translateY(-4px);transition:opacity .22s ease,transform .22s ease}
 .store:has(a:hover) .hero-note.reveal,
 .store:focus-within .hero-note.reveal{opacity:1;transform:none}
-@media (hover:none){.hero-note.reveal{opacity:1;transform:none}}
+@media (hover:none){.hero-note.reveal{display:none}}
 @media (max-width:600px){.store{width:100%}}
-/* Let the browser tool wrap alongside the two mobile store options. */
-.hero-cta.with-tool > .btn{min-height:56px}
+/* Fit all three hero options on one row at desktop widths. */
+.hero-cta.with-tool{gap:12px}
+.hero-cta.with-tool > .btn{min-height:44px;padding:10px 12px;font-size:13.5px;gap:7px;white-space:nowrap}
+@media (hover:hover){
+  /* Hover captions share the entire row without stretching the badge columns. */
+  .hero-lead .stores{position:relative;margin-bottom:32px}
+  .hero-lead .store .hero-note{position:absolute;top:100%;left:0;right:0;
+    max-width:none;margin:12px 0 0;pointer-events:none;visibility:hidden}
+  .hero-lead .store:has(a:hover) .hero-note.reveal,
+  .hero-lead .store:focus-within .hero-note.reveal{visibility:visible}
+  .hero-lead .stores:has(a:hover) .store:not(:has(a:hover)) .hero-note.reveal{
+    visibility:hidden;opacity:0;transform:translateY(-4px)}
+}
 .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;list-style:none}
 .chips li{white-space:nowrap}
 .chips li{display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;color:var(--tx-2);
@@ -402,9 +413,9 @@ html:lang(zh) h1,html:lang(zh) h2,html:lang(zh) h3,html:lang(zh) h4{
 .cmp-wide .cmp-tag{top:18px;font-size:13.5px;padding:7px 14px}
 .cmp-wide .cmp-tag.l{left:18px} .cmp-wide .cmp-tag.r{right:18px}
 .cmp-tabs-lg{gap:16px;margin-top:22px;align-items:flex-start}
-/* Run the example you are looking at, in the browser. */
-.sw-try{display:flex;justify-content:center;margin-top:20px}
-.sw-try a[hidden]{display:none}
+/* Link to the gallery under the examples. */
+.sw-more{display:flex;justify-content:center;margin-top:20px}
+.sw-more .btn svg{width:18px;height:18px;flex:0 0 auto}
 .cmp-tab.lg{width:auto;aspect-ratio:auto;overflow:visible;border:0;border-radius:0;
   display:flex;flex-direction:column;align-items:center;gap:9px}
 .cmp-tab.lg .cmp-thumb{position:relative;display:block;width:118px;aspect-ratio:4/3;
