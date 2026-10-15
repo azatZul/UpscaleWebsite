@@ -621,5 +621,27 @@
       "zh": "Cookie 设置"
     },
     "comment": "Footer link that reopens the consent settings."
+  },
+  "ui.google_play_download": {
+    "localizations": {
+      "en": "Get it on Google Play",
+      "ru": "Доступно в Google Play",
+      "de": "Jetzt bei Google Play",
+      "ja": "Google Play で手に入れよう",
+      "fr": "Disponible sur Google Play",
+      "es": "Disponible en Google Play",
+      "zh": "在 Google Play 上获取"
+    }
+  },
+  "cta.android_note": {
+    "localizations": {
+      "en": "Available for Android",
+      "ru": "Доступно для Android",
+      "de": "Für Android verfügbar",
+      "ja": "Android 対応",
+      "fr": "Disponible sur Android",
+      "es": "Disponible para Android",
+      "zh": "适用于 Android"
+    }
   }
 }

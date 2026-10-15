@@ -29,6 +29,7 @@ with open(os.path.join(ROOT, "build", "app_facts.json"), encoding="utf-8") as f:
 
 SITE = APP_FACTS["site_url"]
 APPSTORE = APP_FACTS["app_store_url"]
+GOOGLEPLAY = APP_FACTS["google_play_url"]
 
 def asset_v(name):
     """short content hash, so a deploy busts the CSS/JS cache"""
@@ -266,6 +267,14 @@ CLOUD_SVG = ('<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor"
 BADGE_DIR = os.path.join(ROOT, "resources", "appstore", "badges")
 BADGE_H = 56
 _BADGE_WIDTHS = {}
+
+# Visible bounds in Google's 646×250 PNGs; the English asset has extra padding.
+GOOGLEPLAY_BOUNDS = {
+    "en": (41, 41, 564, 168),
+    "es": (0, 29, 646, 192), "fr": (0, 29, 646, 192),
+    "de": (0, 29, 646, 192), "ja": (0, 29, 646, 192),
+    "ru": (0, 29, 646, 192), "zh": (0, 29, 646, 192),
+}
 
 SPK_ON = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" '
           'stroke-linejoin="round" aria-hidden="true" class="ico-on">'
@@ -700,6 +709,26 @@ def appstore_btn(c, cls=""):
     return (f'<a class="appstore {cls}" href="{APPSTORE}" target="_blank" rel="noopener" '
             f'data-cta="appstore" aria-label="{label}" style="width:{width}px">{art}</a>')
 
+def googleplay_btn(c, badge_height=BADGE_H):
+    """Google's localized artwork, including its supplied transparent padding."""
+    left, top, width, height = GOOGLEPLAY_BOUNDS[c["lang"]]
+    scale = badge_height / height
+    style = (f"width:{width * scale:.3f}px;height:{badge_height}px;--gp-left:{-left * scale:.3f}px;"
+             f"--gp-top:{-top * scale:.3f}px;--gp-width:{646 * scale:.3f}px;"
+             f"--gp-height:{250 * scale:.3f}px")
+    return (f'<a class="googleplay" href="{GOOGLEPLAY}" target="_blank" rel="noopener" '
+            f'data-cta="googleplay" aria-label="{esc(c["ui"]["google_play_download"])}" '
+            f'style="{style}">'
+            f'<img src="/resources/googleplay/badges/{c["lang"]}.png" '
+            'width="646" height="250" alt="" decoding="async"></a>')
+
+def store_buttons(c, ios_note=None):
+    """Both mobile stores, with platform-specific captions when requested."""
+    if ios_note is None:
+        return appstore_btn(c) + googleplay_btn(c)
+    return (store_badge(appstore_btn(c), ios_note)
+            + store_badge(googleplay_btn(c), c["cta"]["android_note"]))
+
 def guide_card(c, slug, home_prefix):
     """Render a guide card with an optional result thumbnail."""
     meta = GUIDE_META[slug]
@@ -769,7 +798,8 @@ def store_badge(btn, note):
 
 def download_cta(c, h2=None, p=None, stores=None, section=True, sect_cls="sect", style=""):
     """Render the shared download CTA, optionally without its section wrapper."""
-    stores = stores or [(appstore_btn(c), c["cta"]["note"])]
+    stores = stores or [(appstore_btn(c), c["cta"]["note"]),
+                        (googleplay_btn(c), c["cta"]["android_note"])]
     badges = "".join(store_badge(btn, note) for btn, note in stores)
     card = f"""<div class="final"{f' style="{style}"' if style else ''}>
     <div class="final-app">
@@ -1012,7 +1042,7 @@ def render_home(c, lang):
         <span><b>{rating}</b> \u00b7 {esc(h['rating_note'])}</span></div>
       <h1>{h['h1']}</h1>
       <p class="hero-sub">{esc(h['sub'])}</p>
-      <div class="hero-cta stores{' with-tool' if TOOL_SCRIPT else ''}">{store_badge(appstore_btn(c), h['note'])}{browser_tool_link(c, lang, hero=True)}</div>
+      <div class="hero-cta stores{' with-tool' if TOOL_SCRIPT else ''}">{store_buttons(c, h['note'])}{browser_tool_link(c, lang, hero=True)}</div>
     </div>
     {hero_phone(c, h)}
     <ul class="chips hero-chips">{chips}</ul>
@@ -1342,8 +1372,8 @@ def render_guide(c, lang, slug):
     <div class="inline-cta">
       <img src="/resources/appstore/icon_512.png" width="66" height="66" loading="lazy"
            alt="{esc(c['ui']['icon_alt'])}">
-      <div><h3>{esc(g['cta_h'])}</h3><p>{esc(g['cta_p'])}</p></div>
-      {appstore_btn(c)}
+      <div class="inline-cta-copy"><h3>{esc(g['cta_h'])}</h3><p>{esc(g['cta_p'])}</p></div>
+      <div class="inline-stores">{store_buttons(c)}</div>
     </div>
 
     <h2>{esc(g['faq_h'])}</h2>
@@ -1627,7 +1657,9 @@ def render_compare_simple(c, lang):
         f'<a href="{a["url"]}" target="_blank" rel="noopener nofollow">{app_icon(a, 62)}'
         f'<b>{esc(a["name"])}</b><small>{esc(a["dev"])}</small>'
         f'<span>{esc(cp["apps"][a["id"]]["role"])}</span></a>'
-        f'<p>{esc(cp["apps"][a["id"]]["verdict"])}</p></li>' for a in COMPARE_APPS)
+        f'<p>{esc(cp["apps"][a["id"]]["verdict"])}</p>'
+        + (googleplay_btn(c, badge_height=48) if a["id"] == "uscale" else "")
+        + '</li>' for a in COMPARE_APPS)
     tests = ""
     for i, t in enumerate(cp["tests"]):
         tests += f"""<section class="vs-test" id="test-{t['id']}">
@@ -1686,7 +1718,9 @@ def render_compare(c, lang):
         f'<a href="{a["url"]}" target="_blank" rel="noopener nofollow">{app_icon(a, 62)}'
         f'<b>{esc(a["name"])}</b><small>{esc(a["dev"])}</small>'
         f'<span>{esc(cp["apps"][a["id"]]["role"])}</span></a>'
-        f'<p>{esc(cp["apps"][a["id"]]["verdict"])}</p></li>'
+        f'<p>{esc(cp["apps"][a["id"]]["verdict"])}</p>'
+        + (googleplay_btn(c, badge_height=48) if a["id"] == "uscale" else "")
+        + '</li>'
         for a in COMPARE_APPS)
 
     tests = ""
@@ -2035,8 +2069,8 @@ def render_tool(c, lang):
     <div class="inline-cta">
       <img src="/resources/appstore/icon_512.png" width="66" height="66" loading="lazy"
            alt="{esc(c['ui']['icon_alt'])}">
-      <div><h3>UScale</h3><p>{esc(tl['app_sub'])}</p></div>
-      {appstore_btn(c)}
+      <div class="inline-cta-copy"><h3>UScale</h3><p>{esc(tl['app_sub'])}</p></div>
+      <div class="inline-stores">{store_buttons(c)}</div>
     </div>
     <noscript><p class="notice">{esc(tl['noscript'])}</p></noscript>
   </div>
