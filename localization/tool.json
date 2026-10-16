@@ -22,28 +22,17 @@
       "zh": "在浏览器中免费把图片放大 2× 或 4×。无需注册，无需上传：图片在你的设备上处理。"
     }
   },
-  "tool.nav": {
-    "localizations": {
-      "en": "Upscale photos",
-      "ru": "Увеличить фото",
-      "de": "Fotos vergrößern",
-      "ja": "写真を高画質化",
-      "fr": "Agrandir des photos",
-      "es": "Ampliar fotos",
-      "zh": "图片放大"
-    }
-  },
   "tool.hero_link": {
     "localizations": {
-      "en": "Or upscale online",
-      "ru": "Или увеличить онлайн",
-      "de": "Oder online vergrößern",
-      "ja": "またはオンラインで拡大",
-      "fr": "Ou agrandir en ligne",
-      "es": "O ampliar online",
-      "zh": "或在线放大"
+      "en": "Upscale photos online",
+      "ru": "Увеличить фото онлайн",
+      "de": "Fotos online vergrößern",
+      "ja": "オンラインで写真を拡大",
+      "fr": "Agrandir des photos en ligne",
+      "es": "Ampliar fotos online",
+      "zh": "在线放大图片"
     },
-    "comment": "Hero button beside App Store and Google Play: an alternative to installing the app. Keep the label short enough for one row."
+    "comment": "Button label in the home page card that opens the free browser upscaler. Keep it short: tool.eyebrow is shown under it."
   },
   "tool.eyebrow": {
     "localizations": {
@@ -473,18 +462,6 @@
       "fr": "Agrandissez une photo 2× directement sur ce site, ou 4× sur ordinateur et iPad. Sans inscription ni envoi : la photo est traitée sur votre appareil.",
       "es": "Amplía una foto 2× directamente en esta web, o 4× en un ordenador o iPad. Sin registro ni subidas: la foto se procesa en tu dispositivo.",
       "zh": "在本网站直接把图片放大 2×，在电脑或 iPad 上可放大 4×。无需注册，无需上传：图片在你的设备上处理。"
-    },
-    "comment": "Home page banner that links to the free browser tool."
-  },
-  "tool.home.cta": {
-    "localizations": {
-      "en": "Upscale a photo",
-      "ru": "Увеличить фото",
-      "de": "Foto vergrößern",
-      "ja": "写真を高画質化",
-      "fr": "Agrandir une photo",
-      "es": "Ampliar una foto",
-      "zh": "放大图片"
     },
     "comment": "Home page banner that links to the free browser tool."
   },

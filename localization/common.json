@@ -633,6 +633,18 @@
       "zh": "在 Google Play 上获取"
     }
   },
+  "ui.mac_app_store_download": {
+    "localizations": {
+      "en": "Download on the Mac App Store",
+      "ru": "Загрузите в Mac App Store",
+      "de": "Laden im Mac App Store",
+      "ja": "Mac App Storeからダウンロード",
+      "fr": "Télécharger dans le Mac App Store",
+      "es": "Descárgalo en el Mac App Store",
+      "zh": "Mac App Store 下载"
+    },
+    "comment": "Accessible name of Apple's Mac App Store badge; follow the wording on Apple's localized artwork."
+  },
   "cta.android_note": {
     "localizations": {
       "en": "Available for Android",
@@ -643,5 +655,17 @@
       "es": "Disponible para Android",
       "zh": "适用于 Android"
     }
+  },
+  "cta.mac_note": {
+    "localizations": {
+      "en": "Mac with Apple silicon (M1 or later)",
+      "ru": "Mac с Apple silicon (M1 и новее)",
+      "de": "Mac mit Apple Silicon (M1 oder neuer)",
+      "ja": "Appleシリコン搭載Mac（M1以降）",
+      "fr": "Mac avec puce Apple (M1 ou ultérieur)",
+      "es": "Mac con chip de Apple (M1 o posterior)",
+      "zh": "搭载 Apple 芯片的 Mac（M1 或更新）"
+    },
+    "comment": "Hover caption under the Mac App Store badge."
   }
 }

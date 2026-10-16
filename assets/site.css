@@ -235,8 +235,9 @@ ul,ol{margin:0;padding:0}
    so both colourways ship as their official artwork -- rim and all -- and the
    link is only a frame: it keeps the site's shadow and hover lift, and matches
    the pill's own corner radius (8.44 of the artwork's 40 units, so 11.8px at
-   this height) so the shadow follows its edge and nothing gets clipped. */
-.appstore{display:block;position:relative;height:56px;border-radius:11.8px;
+   56px) so the shadow follows its edge and nothing gets clipped. The builder
+   passes the rendered height as --bh, so the corner holds at every size. */
+.appstore{display:block;position:relative;height:56px;border-radius:calc(var(--bh,56px) * .211);
   transition:.18s;box-shadow:var(--badge-sh)}
 .appstore:hover{transform:translateY(-2px);box-shadow:var(--badge-sh-h)}
 /* Stacked rather than swapped, so the badge cross-fades with the palette
@@ -257,9 +258,11 @@ ul,ol{margin:0;padding:0}
 :root[data-theme="light"] .appstore .badge-white{opacity:0}
 
 /* Scale each locale's visible badge to 56px high, preserving the official
-   artwork and its padding. The builder supplies the locale's image bounds. */
+   artwork and its padding. The builder supplies the locale's image bounds.
+   Google's guidelines forbid re-rounding the badge, so the frame follows the
+   artwork's own corner instead: about 20 of its 168px height. */
 .googleplay{display:block;position:relative;flex:0 0 auto;width:188px;height:56px;
-  border-radius:7px;box-shadow:var(--badge-sh);transition:.18s}
+  border-radius:calc(var(--bh,56px) * .12);box-shadow:var(--badge-sh);transition:.18s}
 .googleplay:hover{transform:translateY(-2px);box-shadow:var(--badge-sh-h)}
 .googleplay img{position:absolute;left:var(--gp-left);top:var(--gp-top);
   width:var(--gp-width);height:var(--gp-height);max-width:none;pointer-events:none}
@@ -320,10 +323,17 @@ html:lang(zh) h1,html:lang(zh) h2,html:lang(zh) h3,html:lang(zh) h4{
 .store:has(a:hover) .hero-note.reveal,
 .store:focus-within .hero-note.reveal{opacity:1;transform:none}
 @media (hover:none){.hero-note.reveal{display:none}}
-@media (max-width:600px){.store{width:100%}}
-/* Fit all three hero options on one row at desktop widths. */
-.hero-cta.with-tool{gap:12px}
-.hero-cta.with-tool > .btn{min-height:44px;padding:10px 12px;font-size:13.5px;gap:7px;white-space:nowrap}
+@media (max-width:600px){
+  .store{width:100%}
+  /* Hover captions are hidden on touch screens, so the hero badges can flow
+     side by side instead of taking a row each. */
+  .hero-lead .store{width:auto}
+  /* 40px instead of 48px lets App Store and Mac App Store share a row at 375px. */
+  .hero-lead .hero-cta a{zoom:.834}
+}
+/* Three badges share the hero row; a tighter gap keeps them on one line at
+   most desktop widths. Narrower columns and longer locales wrap to 2 + 1. */
+.hero-lead .stores{gap:14px}
 @media (hover:hover){
   /* Hover captions share the entire row without stretching the badge columns. */
   .hero-lead .stores{position:relative;margin-bottom:32px}
@@ -1396,6 +1406,8 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:64px 0 34
 /* Same card as the comparison teaser. The card itself stays still on hover; the
    comparison inside slides, the scale switch flips and the badges straighten. */
 .try-card{grid-template-columns:1fr 1fr}
+/* Straight after the hero, whose own bottom padding already separates them. */
+.hero-lead + #try-online{padding-top:0}
 .try-card .vs-card-copy h2{font-size:clamp(24px,2.9vw,33px);letter-spacing:-.028em;text-wrap:balance}
 .try-art{position:relative;padding:16px 18px 24px}
 .try-window{border:1px solid var(--line-2);border-radius:18px;background:var(--surface);overflow:hidden;
@@ -1431,6 +1443,23 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:64px 0 34
 .try-card:hover .try-scale span:first-child{background:none;color:var(--tx-2)}
 .try-card:hover .try-scale span:last-child{background:var(--acc);color:var(--ink)}
 .try-card:hover .try-free,.try-card:hover .try-device{transform:translateY(-5px)}
+/* The card's button: a globe, the label with its "free, in your browser" line,
+   and an arrow. The card is the link, so the button only reacts to its hover. */
+.tool-cta{display:inline-flex;align-items:center;gap:12px;margin-top:24px;min-height:58px;
+  padding:10px 22px 10px 18px;border-radius:16px;pointer-events:none;
+  background:var(--acc);color:var(--ink);box-shadow:0 14px 36px -12px var(--acc-glow);
+  transition:background .18s,box-shadow .18s}
+.tool-cta>svg{width:24px;height:24px;flex:0 0 auto}
+.tool-cta-tx{display:flex;flex-direction:column;gap:2px;line-height:1.2;text-align:left}
+.tool-cta-tx b{font-size:16px;font-weight:800}
+.tool-cta-tx small{font-size:13px;font-weight:600;opacity:.7}
+.tool-cta .arrow{font-size:18px;line-height:1;margin-left:4px;transition:transform .18s}
+.try-card:hover .tool-cta{background:var(--acc-d);box-shadow:0 18px 44px -12px var(--acc-glow)}
+.try-card:hover .tool-cta .arrow{transform:translateX(4px)}
+@media (max-width:600px){
+  .tool-cta{gap:10px;padding:10px 14px 10px 12px}
+  .tool-cta-tx b{font-size:15px}
+}
 @media(max-width:980px){
   .try-card{grid-template-columns:1fr}
   .try-art{width:100%;max-width:440px;margin:0 auto}

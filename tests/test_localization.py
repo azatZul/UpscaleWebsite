@@ -61,7 +61,10 @@ class CatalogTests(unittest.TestCase):
                 self.assertIn('id="model-drawing"', html)
                 self.assertIn(f'>{c["tool"]["model_photo"]}</button>', html)
                 self.assertIn(f'>{c["tool"]["model_drawing"]}</button>', html)
-                self.assertIn(f'href="{site_build.rel_url(locale, site_build.TOOL_PATH)}"', site_build.nav(c, locale, "/"))
+                # The home page's card under the hero is the way in; the header stays store-focused.
+                tool_href = f'href="{site_build.rel_url(locale, site_build.TOOL_PATH)}"'
+                self.assertIn(tool_href, site_build.tool_cta(c, locale))
+                self.assertNotIn(tool_href, site_build.nav(c, locale, "/"))
             redirects = site_build.render_static_redirects()
             self.assertIn("/upscale/ /upscale/index.html 200", redirects)
             self.assertNotIn("free-upscale", redirects)
@@ -169,6 +172,19 @@ class CatalogTests(unittest.TestCase):
         for locale, label in expected.items():
             button = site_build.appstore_btn(catalog.load_locale(locale))
             self.assertIn(f'aria-label="{label}"', button, locale)
+
+    def test_mac_app_store_badge_has_its_own_artwork_and_name(self):
+        """The Mac badge points at the same listing but names the Mac store."""
+        expected = {
+            "en": "Download on the Mac App Store",
+            "fr": "Télécharger dans le Mac App Store",
+            "ja": "Mac App Storeからダウンロード",
+        }
+        for locale, label in expected.items():
+            button = site_build.macappstore_btn(catalog.load_locale(locale))
+            self.assertIn(f'aria-label="{label}"', button, locale)
+            self.assertIn(f'/resources/appstore/badges/{locale}-mac-black.svg', button, locale)
+            self.assertIn('data-cta="macappstore"', button, locale)
 
     def test_translations_name_app_features_in_their_own_language(self):
         """Guides must not tell a translated reader to tap an English label.

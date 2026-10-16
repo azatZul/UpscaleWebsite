@@ -260,6 +260,11 @@ CLOUD_SVG = ('<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor"
              '<circle cx="8.2" cy="13.6" r="3.3"/><circle cx="12.6" cy="11.2" r="4.7"/>'
              '<circle cx="16.4" cy="13.9" r="3.4"/>'
              '<rect x="4.9" y="13.8" width="14.9" height="4" rx="2"/></g></svg>')
+# A plain globe: the "upscale online" button in the browser-tool card.
+GLOBE_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" '
+             'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+             '<circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19"/>'
+             '<path d="M12 2.5a14.5 14.5 0 0 1 0 19a14.5 14.5 0 0 1 0-19z"/></svg>')
 GALLERY_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '
                'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
                '<rect x="3" y="4" width="18" height="14" rx="2"/><path d="m3 15 4.5-4.5 4 4L15 11l6 5.5"/>'
@@ -270,6 +275,8 @@ GALLERY_SVG = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strok
 # around it; BADGE_H is the rendered height, well over Apple's 40px minimum.
 BADGE_DIR = os.path.join(ROOT, "resources", "appstore", "badges")
 BADGE_H = 56
+# The hero carries three badges side by side, so they are drawn a little smaller.
+HERO_BADGE_H = 48
 _BADGE_WIDTHS = {}
 
 # Visible bounds in Google's 646×250 PNGs; the English asset has extra padding.
@@ -670,20 +677,34 @@ def head(c, lang, title, desc, canonical, path="", og_image=None, extra_ld=None,
 <a class="skip-link" href="#main-content">{esc(c['ui'].get('skip_to_content', 'Skip to content'))}</a>
 """
 
-def badge_width(lang):
+def badge_width(lang, kind=""):
     """Rendered width of a locale's badge at BADGE_H, from the artwork's own
     aspect ratio. Apple draws every badge 40 units tall but lets the width
     follow the translated phrase — 108 for Japanese against 151 for Turkish —
-    so the width has to be read per locale rather than assumed."""
-    if lang not in _BADGE_WIDTHS:
-        path = os.path.join(BADGE_DIR, f"{lang}-black.svg")
+    so the width has to be read per locale rather than assumed. kind is the
+    file infix: "" for the App Store badge, "-mac" for the Mac App Store one."""
+    key = (lang, kind)
+    if key not in _BADGE_WIDTHS:
+        path = os.path.join(BADGE_DIR, f"{lang}{kind}-black.svg")
         with open(path, encoding="utf-8") as handle:
             head = handle.read(400)
         box = re.search(r'viewBox="0 0 ([\d.]+) 40"', head)
         if not box:
             raise SystemExit(f"{path}: no 40-unit-tall viewBox; re-run build/fetch_badges.py")
-        _BADGE_WIDTHS[lang] = round(float(box.group(1)) / 40 * BADGE_H, 1)
-    return _BADGE_WIDTHS[lang]
+        _BADGE_WIDTHS[key] = round(float(box.group(1)) / 40 * BADGE_H, 1)
+    return _BADGE_WIDTHS[key]
+
+def apple_badge(c, label, kind, cta, cls, badge_height):
+    """Link frame around one of Apple's badges, both colourways stacked."""
+    lang = c["lang"]
+    width = round(badge_width(lang, kind) * badge_height / BADGE_H, 1)
+    art = "".join(
+        f'<img class="badge-{colour}" src="/resources/appstore/badges/{lang}{kind}-{colour}.svg" '
+        f'width="{width}" height="{badge_height}" alt="" decoding="async">'
+        for colour in ("black", "white"))
+    return (f'<a class="appstore {cls}" href="{APPSTORE}" target="_blank" rel="noopener" '
+            f'data-cta="{cta}" aria-label="{esc(label)}" '
+            f'style="width:{width}px;height:{badge_height}px;--bh:{badge_height}px">{art}</a>')
 
 def appstore_btn(c, cls="", badge_height=BADGE_H):
     """The App Store badge, as Apple's own artwork for this locale.
@@ -704,20 +725,21 @@ def appstore_btn(c, cls="", badge_height=BADGE_H):
     else:
         gap = "" if lead.endswith(("’", "'")) else " "
         label = f"{lead}{gap}{mark}"
-    label = esc(label)
-    width = round(badge_width(lang) * badge_height / BADGE_H, 1)
-    art = "".join(
-        f'<img class="badge-{colour}" src="/resources/appstore/badges/{lang}-{colour}.svg" '
-        f'width="{width}" height="{badge_height}" alt="" decoding="async">'
-        for colour in ("black", "white"))
-    return (f'<a class="appstore {cls}" href="{APPSTORE}" target="_blank" rel="noopener" '
-            f'data-cta="appstore" aria-label="{label}" style="width:{width}px;height:{badge_height}px">{art}</a>')
+    return apple_badge(c, label, "", "appstore", cls, badge_height)
+
+def macappstore_btn(c, badge_height=BADGE_H):
+    """The Mac App Store badge. The iPhone app runs on Apple-silicon Macs from
+    the same listing, so it links to the same App Store page. Its accessible
+    name is one translated phrase: the App Store badge's lead-plus-mark split
+    does not carry over ("dans le Mac App Store", not "dans l’")."""
+    return apple_badge(c, c["ui"]["mac_app_store_download"], "-mac", "macappstore",
+                       "appstore-mac", badge_height)
 
 def googleplay_btn(c, badge_height=BADGE_H):
     """Google's localized artwork, including its supplied transparent padding."""
     left, top, width, height = GOOGLEPLAY_BOUNDS[c["lang"]]
     scale = badge_height / height
-    style = (f"width:{width * scale:.3f}px;height:{badge_height}px;--gp-left:{-left * scale:.3f}px;"
+    style = (f"width:{width * scale:.3f}px;height:{badge_height}px;--bh:{badge_height}px;--gp-left:{-left * scale:.3f}px;"
              f"--gp-top:{-top * scale:.3f}px;--gp-width:{646 * scale:.3f}px;"
              f"--gp-height:{250 * scale:.3f}px")
     return (f'<a class="googleplay" href="{GOOGLEPLAY}" target="_blank" rel="noopener" '
@@ -727,10 +749,12 @@ def googleplay_btn(c, badge_height=BADGE_H):
             'width="646" height="250" alt="" decoding="async"></a>')
 
 def store_buttons(c, ios_note=None, badge_height=BADGE_H):
-    """Both mobile stores, with platform-specific captions when requested."""
+    """Every store, with platform-specific captions when requested."""
     if ios_note is None:
-        return appstore_btn(c, badge_height=badge_height) + googleplay_btn(c, badge_height=badge_height)
+        return (appstore_btn(c, badge_height=badge_height) + macappstore_btn(c, badge_height=badge_height)
+                + googleplay_btn(c, badge_height=badge_height))
     return (store_badge(appstore_btn(c, badge_height=badge_height), ios_note)
+            + store_badge(macappstore_btn(c, badge_height=badge_height), c["cta"]["mac_note"])
             + store_badge(googleplay_btn(c, badge_height=badge_height), c["cta"]["android_note"]))
 
 def guide_card(c, slug, home_prefix):
@@ -803,6 +827,7 @@ def store_badge(btn, note):
 def download_cta(c, h2=None, p=None, stores=None, section=True, sect_cls="sect", style=""):
     """Render the shared download CTA, optionally without its section wrapper."""
     stores = stores or [(appstore_btn(c), c["cta"]["note"]),
+                        (macappstore_btn(c), c["cta"]["mac_note"]),
                         (googleplay_btn(c), c["cta"]["android_note"])]
     badges = "".join(store_badge(btn, note) for btn, note in stores)
     card = f"""<div class="final"{f' style="{style}"' if style else ''}>
@@ -857,7 +882,6 @@ def nav(c, lang, home_prefix, path="", on_home=False):
       <a href="{compare_href}">{esc(n.get('compare', 'Comparison'))}</a>
       <a href="{guides_href}">{esc(n['guides'])}</a>
       <a href="{home_prefix}#faq">{esc(n['faq'])}</a>
-      {browser_tool_link(c, lang)}
     </nav>
     <a class="nav-account" href="/account/" data-account-link data-signed-in-label="{esc(n['account'])}" data-credits-label="{esc(n['credits'])}"><svg class="nav-account-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.8 20c1.2-3.6 4-5.4 7.2-5.4s6 1.8 7.2 5.4"/></svg><span class="nav-account-avatar" aria-hidden="true"></span><span class="nav-account-text"><span class="nav-account-label">{esc(n['sign_in'])}</span><small class="nav-account-credits" hidden></small></span></a>
     {theme_toggle(c)}
@@ -865,16 +889,6 @@ def nav(c, lang, home_prefix, path="", on_home=False):
   </div>
 </header>
 """
-
-def browser_tool_link(c, lang, hero=False):
-    """Only advertise the browser tool when its separate build is present."""
-    if not TOOL_SCRIPT:
-        return ""
-    href = rel_url(lang, TOOL_PATH)
-    if hero:
-        return (f'<a class="btn btn-g" href="{href}">{esc(c["tool"]["hero_link"])} '
-                f'<span class="arrow" aria-hidden="true">→</span></a>')
-    return f'<a href="{href}">{esc(c["tool"]["nav"])}</a>'
 
 # Site-wide consent. Hidden until site.js finds no saved choice; Accept and Reject
 # share one style so neither is nudged. Analytics code reads the same choice.
@@ -1001,7 +1015,7 @@ def render_home(c, lang):
         "url": canonical, "inLanguage": BY_CODE[content_lang(c, lang)][4],
         "applicationCategory": "MultimediaApplication",
         "applicationSubCategory": "Photo & Video",
-        "operatingSystem": f'iOS {APP_FACTS["minimum_ios"]} or later',
+        "operatingSystem": f'iOS {APP_FACTS["minimum_ios"]} or later, macOS (Apple silicon)',
         "softwareVersion": APP_VERSION,
         "fileSize": APP_FACTS["file_size"],
         "description": m["description"],
@@ -1046,12 +1060,14 @@ def render_home(c, lang):
         <span><b>{rating}</b> \u00b7 {esc(h['rating_note'])}</span></div>
       <h1>{h['h1']}</h1>
       <p class="hero-sub">{esc(h['sub'])}</p>
-      <div class="hero-cta stores{' with-tool' if TOOL_SCRIPT else ''}">{store_buttons(c, h['note'], badge_height=44 if TOOL_SCRIPT else BADGE_H)}{browser_tool_link(c, lang, hero=True)}</div>
+      <div class="hero-cta stores">{store_buttons(c, h['note'], badge_height=HERO_BADGE_H)}</div>
     </div>
     {hero_phone(c, h)}
     <ul class="chips hero-chips">{chips}</ul>
   </div>
 </section>""")
+    # The browser upscaler, right under the hero: the no-install way to try it.
+    out.append(tool_cta(c, lang))
 
     # Reviews
     rv = c["reviews"]
@@ -1158,7 +1174,6 @@ def render_home(c, lang):
     <div class="steps">{steps}</div>
   </div>
 </section>""")
-    out.append(tool_cta(c, lang))
 
     # Privacy
     pts = c["privacy"]["points"]
@@ -1867,7 +1882,8 @@ def tool_cta(c, lang):
       <div class="vs-card-copy">
         <h2>{esc(th['h2'])}</h2>
         <p>{esc(th['p'])}</p>
-        <span class="btn btn-p vs-card-btn">{esc(th['cta'])}
+        <span class="tool-cta">{GLOBE_SVG}
+          <span class="tool-cta-tx"><b>{esc(c['tool']['hero_link'])}</b><small>{esc(c['tool']['eyebrow'])}</small></span>
           <span class="arrow" aria-hidden="true">→</span></span>
         <p class="hero-note">{esc(th['note'])}</p>
       </div>

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Vendor Apple's official "Download on the App Store" badge artwork.
+"""Vendor Apple's official "Download on the App Store" and "Download on the Mac
+App Store" badge artwork.
 
 Apple's marketing guidelines require the supplied artwork be used as-is —
 recreating or restyling the badge is not allowed, and the wording of the
@@ -19,7 +20,9 @@ import urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEST = os.path.join(ROOT, "resources", "appstore", "badges")
-API = "https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/{colour}/{tag}"
+API = "https://toolbox.marketingtools.apple.com/api/v2/badges/{product}/{colour}/{tag}"
+# Badge product -> the infix its files carry: en-black.svg, en-mac-black.svg.
+PRODUCTS = {"download-on-the-app-store": "", "download-on-the-mac-app-store": "-mac"}
 
 # Site locale -> the tag Apple files the artwork under. A locale missing from
 # this map, or one Apple has no badge for, falls back to the English badge —
@@ -34,10 +37,11 @@ APPLE_TAGS = {
 COLOURS = ("black", "white")
 
 
-def fetch(tag, colour):
+def fetch(product, tag, colour):
     """The artwork bytes, or None when Apple has no badge for this tag."""
     try:
-        with urllib.request.urlopen(API.format(colour=colour, tag=tag), timeout=30) as response:
+        url = API.format(product=product, colour=colour, tag=tag)
+        with urllib.request.urlopen(url, timeout=30) as response:
             return response.read()
     except urllib.error.HTTPError as error:
         if error.code == 404:
@@ -85,23 +89,24 @@ def main():
 
     os.makedirs(DEST, exist_ok=True)
     written = 0
-    for code, _seg, name, *_ in site_build.LOCALES:
-        tag = APPLE_TAGS.get(code)
-        for colour in COLOURS:
-            payload = fetch(tag, colour) if tag else None
-            source = tag
-            if payload is None:
-                payload = fetch(APPLE_TAGS["en"], colour)
-                source = f'{APPLE_TAGS["en"]} (no {code} badge)'
-            # payload = strip_border(payload, colour)
-            path = os.path.join(DEST, f"{code}-{colour}.svg")
-            with open(path, "wb") as handle:
-                handle.write(payload)
-            written += 1
-            if colour == "black":
-                box = re.search(rb'viewBox="0 0 ([\d.]+) 40"', payload)
-                width = box.group(1).decode() if box else "?"
-                print(f"  ✓ {code} ({name}) <- {source}, {width}×40")
+    for product, infix in PRODUCTS.items():
+        for code, _seg, name, *_ in site_build.LOCALES:
+            tag = APPLE_TAGS.get(code)
+            for colour in COLOURS:
+                payload = fetch(product, tag, colour) if tag else None
+                source = tag
+                if payload is None:
+                    payload = fetch(product, APPLE_TAGS["en"], colour)
+                    source = f'{APPLE_TAGS["en"]} (no {code} badge)'
+                # payload = strip_border(payload, colour)
+                path = os.path.join(DEST, f"{code}{infix}-{colour}.svg")
+                with open(path, "wb") as handle:
+                    handle.write(payload)
+                written += 1
+                if colour == "black":
+                    box = re.search(rb'viewBox="0 0 ([\d.]+) 40"', payload)
+                    width = box.group(1).decode() if box else "?"
+                    print(f"  ✓ {code}{infix} ({name}) <- {source}, {width}×40")
     print(f"Wrote {written} badge files into resources/appstore/badges/")
 
 
