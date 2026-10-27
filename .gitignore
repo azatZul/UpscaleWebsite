@@ -19,6 +19,9 @@ Thumbs.db
 *.bak
 .tmp/
 
+# Local audit screenshots
+/docs/*-2026-10-20.png
+
 # temporary source/target packages created by build/localize.py
 localization_work/
 
