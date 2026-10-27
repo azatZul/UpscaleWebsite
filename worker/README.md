@@ -33,6 +33,34 @@ Python tests, Worker checks, remote D1 migration and deploy as one sequence. Use
 `production` only after the staging smoke test; the Netlify deploy remains available
 as rollback.
 
+## Search indexing and HTTPS
+
+The public `/upscale/` page and its translated versions allow indexing and appear
+in `sitemap.xml` when the browser tool bundle is available. Preview packaging still
+adds a site-wide `noindex` header. Account pages and individual albums remain
+excluded from indexing.
+
+For the production domain, enable **SSL/TLS → Edge Certificates → Always Use HTTPS**
+in the Cloudflare dashboard for `upscales.app`. This is a zone setting, separate
+from the Worker deployment. It redirects HTTP before static assets or dynamic
+routes are served, without routing every asset through the Worker. The static
+`_redirects` file cannot select requests by scheme.
+See [Cloudflare's Always Use HTTPS documentation](https://developers.cloudflare.com/ssl/edge-certificates/additional-options/always-use-https/).
+
+Verify both the root and a localized tool URL without following redirects:
+
+```bash
+curl -I 'http://upscales.app/'
+curl -I 'http://upscales.app/ru/upscale/?mode=device&utm_source=https-check'
+```
+
+Both responses should return a permanent redirect to the same HTTPS URL,
+preserving the path and query string.
+
+Enabled on `upscales.app` on 2026-10-20. Verified HTTP 301 at the root and at
+`/ru/upscale/?mode=device&utm_source=https-check`, with the full path and query
+preserved; following the localized URL reaches HTTP 200 after one redirect.
+
 ## Paid album unlocks
 
 A locked album that is for sale shows an "Unlock" button. A visitor pays on Stripe

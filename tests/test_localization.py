@@ -6,6 +6,8 @@ import shutil
 import sys
 import tempfile
 import unittest
+import xml.etree.ElementTree as ET
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -54,6 +56,8 @@ class CatalogTests(unittest.TestCase):
                 # Runtime placeholders survive the build's fact injection.
                 self.assertIn("{scale}", strings["upscale_button"], locale)
                 self.assertIn(f'<link rel="canonical" href="{site_build.url(locale, site_build.TOOL_PATH)}">', html)
+                self.assertIn('content="index,follow,max-image-preview:large,max-snippet:-1"', html)
+                self.assertNotIn('noindex', html)
                 self.assertIn('src="/assets/processor/app/main-test.js"', html)
                 self.assertIn("uscale-theme", html)  # the shared theme boot
                 self.assertIn('class="theme-btn"', html)
@@ -155,19 +159,19 @@ class CatalogTests(unittest.TestCase):
         )
 
     def test_app_store_badge_reads_the_way_apple_sets_the_phrase(self):
-        """The badge artwork carries no text, so this is its accessible name.
+        """The accessible name preserves the artwork wording and adds context.
 
         Japanese leads with the service mark, and French elides the article onto
         it — "Télécharger dans l’ App Store" would be read out with a gap that
         Apple's own artwork does not have.
         """
         expected = {
-            "en": "Download on the App Store",
-            "fr": "Télécharger dans l’App Store",
-            "de": "Laden im App Store",
-            "ru": "Загрузите в App Store",
-            "ja": "App Storeからダウンロード",
-            "zh": "App Store 下载",
+            "en": "Download on the App Store — UScale for iPhone and iPad",
+            "fr": "Télécharger dans l’App Store — UScale pour iPhone et iPad",
+            "de": "Laden im App Store — UScale für iPhone und iPad",
+            "ru": "Загрузите в App Store — UScale для iPhone и iPad",
+            "ja": "App Storeからダウンロード — iPhone・iPad向けUScale",
+            "zh": "App Store 下载 — 适用于 iPhone 和 iPad 的 UScale",
         }
         for locale, label in expected.items():
             button = site_build.appstore_btn(catalog.load_locale(locale))
@@ -176,9 +180,9 @@ class CatalogTests(unittest.TestCase):
     def test_mac_app_store_badge_has_its_own_artwork_and_name(self):
         """The Mac badge points at the same listing but names the Mac store."""
         expected = {
-            "en": "Download on the Mac App Store",
-            "fr": "Télécharger dans le Mac App Store",
-            "ja": "Mac App Storeからダウンロード",
+            "en": "Download on the Mac App Store — UScale for Mac with Apple silicon (M1 or later)",
+            "fr": "Télécharger dans le Mac App Store — UScale pour Mac avec puce Apple (M1 ou ultérieur)",
+            "ja": "Mac App Storeからダウンロード — Appleシリコン搭載Mac（M1以降）向けUScale",
         }
         for locale, label in expected.items():
             button = site_build.macappstore_btn(catalog.load_locale(locale))
@@ -423,6 +427,29 @@ class CatalogTests(unittest.TestCase):
         self.assertIn('/assets/site.css?v=', shell)
         self.assertIn('/assets/site.js?v=', shell)
         self.assertIn('href="/gallery"', shell)
+
+    def test_sitemap_includes_only_available_tool_pages_with_language_alternates(self):
+        ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9",
+              "x": "http://www.w3.org/1999/xhtml"}
+        for script in (None, "/assets/processor/app/main-test.js"):
+            with self.subTest(script=script), patch.object(site_build, "TOOL_SCRIPT", script):
+                root = ET.fromstring(site_build.render_sitemap())
+                entries = {entry.find("s:loc", ns).text: entry
+                           for entry in root.findall("s:url", ns)}
+                for locale in site_build.LOCALIZED_CODES:
+                    target = site_build.url(locale, site_build.TOOL_PATH)
+                    if not script:
+                        self.assertNotIn(target, entries)
+                        continue
+                    entry = entries[target]
+                    alternates = {link.attrib["hreflang"]: link.attrib["href"]
+                                  for link in entry.findall("x:link", ns)}
+                    expected = {site_build.BY_CODE[code][4]: site_build.url(code, site_build.TOOL_PATH)
+                                for code in site_build.LOCALIZED_CODES}
+                    expected["x-default"] = site_build.url("en", site_build.TOOL_PATH)
+                    self.assertEqual(alternates, expected)
+                    self.assertEqual(entry.find("s:lastmod", ns).text,
+                                     site_build.APP_FACTS["page_updated"]["upscale"])
 
     def test_gallery_is_a_single_non_localized_sitemap_entry(self):
         sitemap = site_build.render_sitemap()

@@ -80,9 +80,6 @@ LOCALES = [
     ("tr", "tr",   "Turkish",              "Türkçe",      "tr",      "tr_TR", "tr"),
 ]
 BY_CODE = {l[0]: l for l in LOCALES}
-# Locales whose official App Store badge puts the "App Store" service mark on
-# the first line and the translated "download" phrase under it.
-MARK_FIRST_LOCALES = frozenset({"ja", "zh"})
 # Only locales represented in every localization section are indexable and shown
 # in the picker. Importing a complete locale automatically grows the cluster.
 LOCALIZED_CODES = tuple(
@@ -700,7 +697,8 @@ def apple_badge(c, label, kind, cta, cls, badge_height):
     width = round(badge_width(lang, kind) * badge_height / BADGE_H, 1)
     art = "".join(
         f'<img class="badge-{colour}" src="/resources/appstore/badges/{lang}{kind}-{colour}.svg" '
-        f'width="{width}" height="{badge_height}" alt="" decoding="async">'
+        f'width="{width}" height="{badge_height}" '
+        f'alt="{esc(label) if colour == "black" else ""}" decoding="async">'
         for colour in ("black", "white"))
     return (f'<a class="appstore {cls}" href="{APPSTORE}" target="_blank" rel="noopener" '
             f'data-cta="{cta}" aria-label="{esc(label)}" '
@@ -712,20 +710,9 @@ def appstore_btn(c, cls="", badge_height=BADGE_H):
     The guidelines forbid recreating or restyling the badge, so the link is only
     a frame: it carries the site's shadow and hover lift, and both colourways
     are emitted so the theme can cross-fade between them the way the rest of the
-    palette does. The accessible name still has to be built here. Japanese and
-    Chinese put the "App Store" service mark before the translated modifier;
-    Chinese separates them with a space, while Japanese joins them. French elides its
-    article onto the mark ("Télécharger dans l’App Store"), so a lead ending in
-    an apostrophe joins with no space, the way Apple's own artwork sets it."""
-    lang = c["lang"]
-    lead, mark = c["ui"]["download_on"], c["ui"]["app_store"]
-    if lang in MARK_FIRST_LOCALES:
-        gap = "" if lang == "ja" else " "
-        label = f"{mark}{gap}{lead}"
-    else:
-        gap = "" if lead.endswith(("’", "'")) else " "
-        label = f"{lead}{gap}{mark}"
-    return apple_badge(c, label, "", "appstore", cls, badge_height)
+    palette does. The localized name includes the badge wording, app and platform;
+    only one colourway has alt text so text extraction does not repeat it."""
+    return apple_badge(c, c["ui"]["app_store_download"], "", "appstore", cls, badge_height)
 
 def macappstore_btn(c, badge_height=BADGE_H):
     """The Mac App Store badge. The iPhone app runs on Apple-silicon Macs from
@@ -742,11 +729,12 @@ def googleplay_btn(c, badge_height=BADGE_H):
     style = (f"width:{width * scale:.3f}px;height:{badge_height}px;--bh:{badge_height}px;--gp-left:{-left * scale:.3f}px;"
              f"--gp-top:{-top * scale:.3f}px;--gp-width:{646 * scale:.3f}px;"
              f"--gp-height:{250 * scale:.3f}px")
+    label = esc(c["ui"]["google_play_download"])
     return (f'<a class="googleplay" href="{GOOGLEPLAY}" target="_blank" rel="noopener" '
-            f'data-cta="googleplay" aria-label="{esc(c["ui"]["google_play_download"])}" '
+            f'data-cta="googleplay" aria-label="{label}" '
             f'style="{style}">'
             f'<img src="/resources/googleplay/badges/{c["lang"]}.png" '
-            'width="646" height="250" alt="" decoding="async"></a>')
+            f'width="646" height="250" alt="{label}" decoding="async"></a>')
 
 def store_buttons(c, ios_note=None, badge_height=BADGE_H):
     """Every store, with platform-specific captions when requested."""
@@ -1670,8 +1658,7 @@ def render_compare_simple(c, lang):
         f'<b>{esc(a["name"])}</b><small>{esc(a["dev"])}</small>'
         f'<span>{esc(cp["apps"][a["id"]]["role"])}</span></a>'
         f'<p>{esc(cp["apps"][a["id"]]["verdict"])}</p>'
-        + (googleplay_btn(c, badge_height=48) if a["id"] == "uscale" else "")
-        + '</li>' for a in COMPARE_APPS)
+        '</li>' for a in COMPARE_APPS)
     tests = ""
     for i, t in enumerate(cp["tests"]):
         tests += f"""<section class="vs-test" id="test-{t['id']}">
@@ -1731,8 +1718,7 @@ def render_compare(c, lang):
         f'<b>{esc(a["name"])}</b><small>{esc(a["dev"])}</small>'
         f'<span>{esc(cp["apps"][a["id"]]["role"])}</span></a>'
         f'<p>{esc(cp["apps"][a["id"]]["verdict"])}</p>'
-        + (googleplay_btn(c, badge_height=48) if a["id"] == "uscale" else "")
-        + '</li>'
+        '</li>'
         for a in COMPARE_APPS)
 
     tests = ""
@@ -1894,8 +1880,7 @@ def tool_cta(c, lang):
 
 def render_tool(c, lang):
     """The browser upscaler page: site chrome and theme, the locale's copy, and
-    the tool's runtime strings for src/tool/i18n.js. Stays noindex while the
-    tool is a preview."""
+    the tool's runtime strings for src/tool/i18n.js."""
     tl, js = c["tool"], c["tool"]["js"]
     home_prefix = rel_url(lang)
     canonical = url(lang, TOOL_PATH)
@@ -1935,7 +1920,7 @@ def render_tool(c, lang):
         mode_tile("restore", esc(tl["mode_restore"]), restore_sub, "pro"),
     ])
     return (head(c, lang, tl["meta"]["title"], tl["meta"]["description"], canonical, path=TOOL_PATH,
-                 robots="noindex,follow", stylesheet="upscale.css")
+                 stylesheet="upscale.css")
             + nav(c, lang, home_prefix, TOOL_PATH)
             + f"""<main class="tool" id="main-content" tabindex="-1" data-step="pick">
   <div class="wrap tool-wrap">
@@ -2122,6 +2107,8 @@ def render_sitemap():
     entries = []
     paths = (["", "guides"] + [f"guides/{s}" for s in GUIDE_SLUGS]
              + ["compare", "support_page", "terms", "privacy_policy"])
+    if TOOL_SCRIPT:
+        paths.append(TOOL_PATH)
     for p in paths:
         for code in LOCALIZED_CODES:
             alts = "".join(

@@ -70,7 +70,10 @@ describe.sequential("album worker", () => {
       expect(response.headers.get("Location"), path).toBeNull();
       expect(response.headers.get("Cross-Origin-Opener-Policy"), path).toBe("same-origin");
       expect(response.headers.get("Cross-Origin-Embedder-Policy"), path).toBe("require-corp");
-      await response.body?.cancel();
+      expect(response.headers.get("X-Robots-Tag") ?? "", path).not.toContain("noindex");
+      const html = await response.text();
+      expect(html, path).toContain('content="index,follow,max-image-preview:large,max-snippet:-1"');
+      expect(html, path).not.toContain('noindex');
     }
   });
   it("redirects the old /free-upscale/ address and keeps a known mode", async () => {

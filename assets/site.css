@@ -266,8 +266,6 @@ ul,ol{margin:0;padding:0}
 .googleplay:hover{transform:translateY(-2px);box-shadow:var(--badge-sh-h)}
 .googleplay img{position:absolute;left:var(--gp-left);top:var(--gp-top);
   width:var(--gp-width);height:var(--gp-height);max-width:none;pointer-events:none}
-.vs-apps .googleplay{margin-top:20px}
-.vs-apps .googleplay img{width:var(--gp-width);height:var(--gp-height);border:0;border-radius:0;margin:0}
 
 /* ---------- shared section bits ---------- */
 section{position:relative}

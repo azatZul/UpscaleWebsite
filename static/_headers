@@ -19,13 +19,11 @@
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Embedder-Policy: require-corp
   Cache-Control: no-cache
-  X-Robots-Tag: noindex, nofollow
 
 /:lang/upscale/*
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Embedder-Policy: require-corp
   Cache-Control: no-cache
-  X-Robots-Tag: noindex, nofollow
 
 /assets/processor/*
   Cache-Control: public, max-age=31536000, immutable
