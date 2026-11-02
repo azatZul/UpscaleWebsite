@@ -1,0 +1,36 @@
+{
+  "kind": "product-ui",
+  "png": {
+    "filename": "gradient-uscale-2x.png",
+    "mime": "image/png",
+    "summary": "270 × 70 → 540 × 140 · PNG",
+    "execution": {
+      "backend": "wasm",
+      "requestedThreads": 8,
+      "effectiveThreads": 8
+    },
+    "checkerboard": true
+  },
+  "jpeg": {
+    "filename": "opaque-uscale-2x.jpg",
+    "mime": "image/jpeg",
+    "summary": "80 × 60 → 160 × 120 · JPEG"
+  },
+  "cancelled": true,
+  "passed": true,
+  "basic": {
+    "opaque": {
+      "passed": true,
+      "mismatches": 0
+    },
+    "faceAlpha": {
+      "passed": true,
+      "alphaError": 0,
+      "changed": 3024
+    }
+  },
+  "browser": "chromium",
+  "browserVersion": "151.0.7922.34",
+  "localPinnedFaceModel": true,
+  "errors": []
+}

@@ -27,7 +27,7 @@ export function configureRuntime() {
   // proves it can start the runtime reliably.
   const requestedThreads = Number(new URLSearchParams(location.search).get('threads'));
   ort.env.wasm.numThreads = crossOriginIsolated && requestedThreads > 1
-    ? Math.max(1, Math.min(4, requestedThreads, navigator.hardwareConcurrency || 2))
+    ? Math.max(1, Math.min(8, requestedThreads, navigator.hardwareConcurrency || 1))
     : 1;
   ort.env.logLevel = 'warning';
 }

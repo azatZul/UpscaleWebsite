@@ -1,0 +1,102 @@
+{
+  "kind": "transparent-face-pipeline",
+  "passed": true,
+  "detectedCount": 1,
+  "enhancedCount": 1,
+  "mime": "image/png",
+  "canEdit": true,
+  "alphaError": 0,
+  "selectionDifference": 158,
+  "reapplyError": 19,
+  "reapplyCompositeError": 2,
+  "opaqueReapplyError": 0,
+  "baseRoundTrip": {
+    "rgbError": 19,
+    "compositeError": 2,
+    "opaqueError": 0,
+    "alphaError": 0
+  },
+  "operations": [
+    {
+      "operation": "decode",
+      "model": "faces",
+      "elapsedMs": 2.8999999999999773
+    },
+    {
+      "operation": "scan",
+      "model": "faces",
+      "elapsedMs": 1.759999999999991
+    },
+    {
+      "operation": "initialize",
+      "model": "faces",
+      "elapsedMs": 0.06000000000005912
+    },
+    {
+      "operation": "download",
+      "model": "faces",
+      "elapsedMs": 3.4599999999999227
+    },
+    {
+      "operation": "initialize",
+      "model": "faces",
+      "elapsedMs": 261.0999999999999
+    },
+    {
+      "operation": "detect",
+      "model": "faces",
+      "elapsedMs": 375.6200000000001
+    },
+    {
+      "operation": "detect",
+      "model": "faces",
+      "elapsedMs": 424
+    },
+    {
+      "operation": "face",
+      "model": "faces",
+      "elapsedMs": 8.8599999999999
+    },
+    {
+      "operation": "initialize",
+      "model": "faces",
+      "elapsedMs": 0.2400000000000091
+    },
+    {
+      "operation": "download",
+      "model": "faces",
+      "elapsedMs": 568.3799999999999
+    },
+    {
+      "operation": "initialize",
+      "model": "faces",
+      "elapsedMs": 1449.04
+    },
+    {
+      "operation": "face",
+      "model": "faces",
+      "elapsedMs": 50265.92
+    },
+    {
+      "operation": "encode",
+      "model": "faces",
+      "pixels": 262144,
+      "elapsedMs": 10.57999999999447
+    }
+  ],
+  "basic": {
+    "opaque": {
+      "passed": true,
+      "mismatches": 0
+    },
+    "faceAlpha": {
+      "passed": true,
+      "alphaError": 0,
+      "changed": 3024
+    }
+  },
+  "browser": "firefox",
+  "browserVersion": "153.0",
+  "localPinnedFaceModel": true,
+  "errors": []
+}

@@ -1,0 +1,1071 @@
+{
+  "kind": "processing-regressions",
+  "createdAt": "2026-10-28T10:05:37.372Z",
+  "passed": true,
+  "methods": {
+    "importsDownloadsAdmissionExportsAndComposition": "Actual compiled product workers; failures injected by browser routing",
+    "ui": "Actual product page with controlled worker replies",
+    "ios": "User-agent emulation for stage policy, not a physical-device test"
+  },
+  "cachedFaceScale": {
+    "cases": [
+      {
+        "scale": 2,
+        "bounds": [
+          40,
+          40,
+          160,
+          160
+        ],
+        "alphaError": 0,
+        "operations": [
+          {
+            "operation": "composite",
+            "model": "composite",
+            "elapsedMs": 1.6400001049041748
+          },
+          {
+            "operation": "encode",
+            "model": "composite",
+            "pixels": 160000,
+            "elapsedMs": 8.085000038146973
+          }
+        ],
+        "passed": true
+      },
+      {
+        "scale": 4,
+        "bounds": [
+          40.25,
+          40.25,
+          159.75,
+          159.75
+        ],
+        "alphaError": 0,
+        "operations": [
+          {
+            "operation": "composite",
+            "model": "composite",
+            "elapsedMs": 2.700000047683716
+          },
+          {
+            "operation": "encode",
+            "model": "composite",
+            "pixels": 640000,
+            "elapsedMs": 7.6499998569488525
+          }
+        ],
+        "passed": true
+      }
+    ],
+    "passed": true
+  },
+  "adapterAndTiming": {
+    "preflight": [
+      {
+        "mode": "missing",
+        "group": "photo",
+        "passed": true,
+        "attempts": [
+          "webgpu",
+          "wasm"
+        ],
+        "operations": [
+          "decode",
+          "scan",
+          "prepare-rgb",
+          "initialize",
+          "decode",
+          "scan",
+          "prepare-rgb",
+          "initialize",
+          "download",
+          "initialize",
+          "tile",
+          "composite",
+          "encode"
+        ],
+        "retries": [
+          {
+            "from": {
+              "backend": "webgpu",
+              "threads": 1,
+              "attemptId": "1:0"
+            },
+            "to": {
+              "backend": "wasm",
+              "threads": 1
+            },
+            "error": {
+              "attemptId": "1:0",
+              "backend": "webgpu",
+              "requestedThreads": 1,
+              "model": "drawing-2",
+              "operation": "initialize",
+              "unit": 4,
+              "type": "error",
+              "code": "gpu",
+              "key": "err_engine_start"
+            },
+            "operation": "initialize"
+          }
+        ],
+        "diagnostics": [
+          {
+            "type": "asset-request",
+            "url": "/assets/processor/27917d9ea78a9acc-anime_2x_web.ort",
+            "backend": "wasm"
+          },
+          {
+            "type": "asset-request",
+            "url": "/assets/processor/ort-1.23.2/ort-wasm-simd-threaded.wasm",
+            "backend": "wasm"
+          },
+          {
+            "type": "asset-request",
+            "url": "/assets/processor/ort-1.23.2/ort-wasm-simd-threaded.wasm",
+            "backend": "wasm"
+          }
+        ]
+      },
+      {
+        "mode": "missing",
+        "group": "faces",
+        "passed": true,
+        "attempts": [
+          "webgpu",
+          "wasm"
+        ],
+        "operations": [
+          "decode",
+          "scan",
+          "initialize",
+          "decode",
+          "scan",
+          "initialize",
+          "download",
+          "initialize",
+          "detect"
+        ],
+        "retries": [
+          {
+            "from": {
+              "backend": "webgpu",
+              "threads": 1,
+              "attemptId": "1:0"
+            },
+            "to": {
+              "backend": "wasm",
+              "threads": 1
+            },
+            "error": {
+              "attemptId": "1:0",
+              "backend": "webgpu",
+              "requestedThreads": 1,
+              "model": "faces",
+              "operation": "initialize",
+              "unit": 2,
+              "type": "error",
+              "code": "gpu",
+              "key": "err_face"
+            },
+            "operation": "initialize"
+          }
+        ],
+        "diagnostics": [
+          {
+            "type": "asset-request",
+            "url": "/assets/processor/ebafce4e3c118d65-face_detector_yunet.onnx",
+            "backend": "wasm"
+          },
+          {
+            "type": "asset-request",
+            "url": "/assets/processor/ort-1.23.2/ort-wasm-simd-threaded.wasm",
+            "backend": "wasm"
+          }
+        ]
+      },
+      {
+        "mode": "null",
+        "group": "photo",
+        "passed": true,
+        "attempts": [
+          "webgpu",
+          "wasm"
+        ],
+        "operations": [
+          "decode",
+          "scan",
+          "prepare-rgb",
+          "initialize",
+          "decode",
+          "scan",
+          "prepare-rgb",
+          "initialize",
+          "download",
+          "initialize",
+          "tile",
+          "composite",
+          "encode"
+        ],
+        "retries": [
+          {
+            "from": {
+              "backend": "webgpu",
+              "threads": 1,
+              "attemptId": "1:0"
+            },
+            "to": {
+              "backend": "wasm",
+              "threads": 1
+            },
+            "error": {
+              "attemptId": "1:0",
+              "backend": "webgpu",
+              "requestedThreads": 1,
+              "model": "drawing-2",
+              "operation": "initialize",
+              "unit": 4,
+              "type": "error",
+              "code": "gpu",
+              "key": "err_engine_start"
+            },
+            "operation": "initialize"
+          }
+        ],
+        "diagnostics": [
+          {
+            "type": "gpu-probe",
+            "backend": "webgpu",
+            "caller": "product"
+          },
+          {
+            "type": "asset-request",
+            "url": "/assets/processor/27917d9ea78a9acc-anime_2x_web.ort",
+            "backend": "wasm"
+          },
+          {
+            "type": "asset-request",
+            "url": "/assets/processor/ort-1.23.2/ort-wasm-simd-threaded.wasm",
+            "backend": "wasm"
+          },
+          {
+            "type": "asset-request",
+            "url": "/assets/processor/ort-1.23.2/ort-wasm-simd-threaded.wasm",
+            "backend": "wasm"
+          }
+        ]
+      },
+      {
+        "mode": "null",
+        "group": "faces",
+        "passed": true,
+        "attempts": [
+          "webgpu",
+          "wasm"
+        ],
+        "operations": [
+          "decode",
+          "scan",
+          "initialize",
+          "decode",
+          "scan",
+          "initialize",
+          "download",
+          "initialize",
+          "detect"
+        ],
+        "retries": [
+          {
+            "from": {
+              "backend": "webgpu",
+              "threads": 1,
+              "attemptId": "1:0"
+            },
+            "to": {
+              "backend": "wasm",
+              "threads": 1
+            },
+            "error": {
+              "attemptId": "1:0",
+              "backend": "webgpu",
+              "requestedThreads": 1,
+              "model": "faces",
+              "operation": "initialize",
+              "unit": 2,
+              "type": "error",
+              "code": "gpu",
+              "key": "err_face"
+            },
+            "operation": "initialize"
+          }
+        ],
+        "diagnostics": [
+          {
+            "type": "gpu-probe",
+            "backend": "webgpu",
+            "caller": "product"
+          },
+          {
+            "type": "asset-request",
+            "url": "/assets/processor/ebafce4e3c118d65-face_detector_yunet.onnx",
+            "backend": "wasm"
+          },
+          {
+            "type": "asset-request",
+            "url": "/assets/processor/ort-1.23.2/ort-wasm-simd-threaded.wasm",
+            "backend": "wasm"
+          }
+        ]
+      },
+      {
+        "mode": "throw",
+        "group": "photo",
+        "passed": true,
+        "attempts": [
+          "webgpu",
+          "wasm"
+        ],
+        "operations": [
+          "decode",
+          "scan",
+          "prepare-rgb",
+          "initialize",
+          "decode",
+          "scan",
+          "prepare-rgb",
+          "initialize",
+          "download",
+          "initialize",
+          "tile",
+          "composite",
+          "encode"
+        ],
+        "retries": [
+          {
+            "from": {
+              "backend": "webgpu",
+              "threads": 1,
+              "attemptId": "1:0"
+            },
+            "to": {
+              "backend": "wasm",
+              "threads": 1
+            },
+            "error": {
+              "attemptId": "1:0",
+              "backend": "webgpu",
+              "requestedThreads": 1,
+              "model": "drawing-2",
+              "operation": "initialize",
+              "unit": 4,
+              "type": "error",
+              "code": "gpu",
+              "key": "err_engine_start"
+            },
+            "operation": "initialize"
+          }
+        ],
+        "diagnostics": [
+          {
+            "type": "gpu-probe",
+            "backend": "webgpu",
+            "caller": "product"
+          },
+          {
+            "type": "asset-request",
+            "url": "/assets/processor/27917d9ea78a9acc-anime_2x_web.ort",
+            "backend": "wasm"
+          },
+          {
+            "type": "asset-request",
+            "url": "/assets/processor/ort-1.23.2/ort-wasm-simd-threaded.wasm",
+            "backend": "wasm"
+          },
+          {
+            "type": "asset-request",
+            "url": "/assets/processor/ort-1.23.2/ort-wasm-simd-threaded.wasm",
+            "backend": "wasm"
+          }
+        ]
+      },
+      {
+        "mode": "throw",
+        "group": "faces",
+        "passed": true,
+        "attempts": [
+          "webgpu",
+          "wasm"
+        ],
+        "operations": [
+          "decode",
+          "scan",
+          "initialize",
+          "decode",
+          "scan",
+          "initialize",
+          "download",
+          "initialize",
+          "detect"
+        ],
+        "retries": [
+          {
+            "from": {
+              "backend": "webgpu",
+              "threads": 1,
+              "attemptId": "1:0"
+            },
+            "to": {
+              "backend": "wasm",
+              "threads": 1
+            },
+            "error": {
+              "attemptId": "1:0",
+              "backend": "webgpu",
+              "requestedThreads": 1,
+              "model": "faces",
+              "operation": "initialize",
+              "unit": 2,
+              "type": "error",
+              "code": "gpu",
+              "key": "err_face"
+            },
+            "operation": "initialize"
+          }
+        ],
+        "diagnostics": [
+          {
+            "type": "gpu-probe",
+            "backend": "webgpu",
+            "caller": "product"
+          },
+          {
+            "type": "asset-request",
+            "url": "/assets/processor/ebafce4e3c118d65-face_detector_yunet.onnx",
+            "backend": "wasm"
+          },
+          {
+            "type": "asset-request",
+            "url": "/assets/processor/ort-1.23.2/ort-wasm-simd-threaded.wasm",
+            "backend": "wasm"
+          }
+        ]
+      }
+    ],
+    "workingAdapter": {
+      "backend": "webgpu",
+      "detected": 1,
+      "enhanced": 1,
+      "productProbes": 1,
+      "adapterInfo": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "isFallbackAdapter": false
+      },
+      "libraryProbes": 3,
+      "passed": true
+    },
+    "currentEta": {
+      "first": {
+        "completed": 1,
+        "remainingMs": 15000
+      },
+      "last": {
+        "completed": 16,
+        "remainingMs": 0
+      },
+      "tiles": 16,
+      "totalMs": 46000,
+      "tilesMs": 16000
+    },
+    "passed": true
+  },
+  "importRecovery": {
+    "photo": {
+      "passed": true,
+      "attempts": [
+        "webgpu",
+        "wasm"
+      ],
+      "operations": [
+        "decode",
+        "scan",
+        "prepare-rgb",
+        "initialize",
+        "decode",
+        "scan",
+        "prepare-rgb",
+        "initialize",
+        "download",
+        "initialize",
+        "tile",
+        "composite",
+        "encode"
+      ],
+      "retries": [
+        {
+          "from": {
+            "backend": "webgpu",
+            "threads": 1,
+            "attemptId": "1:0"
+          },
+          "to": {
+            "backend": "wasm",
+            "threads": 1
+          },
+          "error": {
+            "attemptId": "1:0",
+            "backend": "webgpu",
+            "requestedThreads": 1,
+            "model": "drawing-2",
+            "operation": "initialize",
+            "unit": 4,
+            "type": "error",
+            "code": "gpu",
+            "key": "err_engine_start"
+          },
+          "operation": "initialize"
+        }
+      ],
+      "diagnostics": []
+    },
+    "faces": {
+      "passed": true,
+      "attempts": [
+        "webgpu",
+        "wasm"
+      ],
+      "operations": [
+        "decode",
+        "scan",
+        "initialize",
+        "download",
+        "initialize",
+        "decode",
+        "scan",
+        "initialize",
+        "download",
+        "initialize",
+        "detect"
+      ],
+      "retries": [
+        {
+          "from": {
+            "backend": "webgpu",
+            "threads": 1,
+            "attemptId": "1:0"
+          },
+          "to": {
+            "backend": "wasm",
+            "threads": 1
+          },
+          "error": {
+            "attemptId": "1:0",
+            "backend": "webgpu",
+            "requestedThreads": 1,
+            "model": "faces",
+            "operation": "initialize",
+            "unit": 2,
+            "type": "error",
+            "code": "gpu",
+            "key": "err_face"
+          },
+          "operation": "initialize"
+        }
+      ],
+      "diagnostics": []
+    }
+  },
+  "downloadFailures": {
+    "photo": {
+      "passed": true,
+      "error": {
+        "attemptId": "1:0",
+        "backend": "webgpu",
+        "requestedThreads": 1,
+        "model": "drawing-2",
+        "operation": "download",
+        "unit": 4,
+        "type": "error",
+        "code": "download",
+        "key": "err_download"
+      },
+      "attempts": [
+        "webgpu"
+      ],
+      "operations": [
+        "decode",
+        "scan",
+        "prepare-rgb",
+        "initialize",
+        "download"
+      ],
+      "retries": [],
+      "diagnostics": []
+    },
+    "faces": {
+      "passed": true,
+      "error": {
+        "attemptId": "1:0",
+        "backend": "webgpu",
+        "requestedThreads": 1,
+        "model": "faces",
+        "operation": "download",
+        "unit": 2,
+        "type": "error",
+        "code": "download",
+        "key": "err_download"
+      },
+      "attempts": [
+        "webgpu"
+      ],
+      "operations": [
+        "decode",
+        "scan",
+        "initialize",
+        "download"
+      ],
+      "retries": [],
+      "diagnostics": []
+    }
+  },
+  "admission": {
+    "cases": [
+      {
+        "width": 80,
+        "height": 60,
+        "transparent": false,
+        "lossless": false,
+        "mime": "image/jpeg",
+        "fullRgbAllocated": false,
+        "fullAlphaAllocated": false
+      },
+      {
+        "width": 3200,
+        "height": 3200,
+        "transparent": true,
+        "lossless": false,
+        "error": {
+          "code": "size",
+          "key": "err_png_size_2x",
+          "fallbackScale": 2
+        },
+        "fullRgbAllocated": false,
+        "fullAlphaAllocated": false
+      },
+      {
+        "width": 3200,
+        "height": 3200,
+        "transparent": false,
+        "lossless": true,
+        "error": {
+          "code": "size",
+          "key": "err_png_size_2x",
+          "fallbackScale": 2
+        },
+        "fullRgbAllocated": false,
+        "fullAlphaAllocated": false
+      }
+    ],
+    "exportFailures": [
+      {
+        "scale": 2,
+        "code": "export",
+        "key": "err_png_export"
+      },
+      {
+        "scale": 4,
+        "code": "export",
+        "key": "err_png_export_2x",
+        "fallbackScale": 2
+      }
+    ],
+    "passed": true,
+    "instrumentedWorkers": 5
+  },
+  "retryWithFaces": {
+    "passed": true,
+    "requests": [
+      {
+        "group": "faces",
+        "backend": "webgpu",
+        "threads": 1,
+        "hasFaces": false
+      },
+      {
+        "group": "faces",
+        "backend": "wasm",
+        "threads": 7,
+        "hasFaces": false
+      },
+      {
+        "group": "upscale",
+        "backend": "wasm",
+        "scale": 2,
+        "threads": 8,
+        "hasFaces": true,
+        "patches": 1
+      },
+      {
+        "group": "upscale",
+        "backend": "wasm",
+        "scale": 2,
+        "threads": 8,
+        "hasFaces": true,
+        "patches": 1
+      },
+      {
+        "group": "upscale",
+        "backend": "wasm",
+        "scale": 4,
+        "threads": 8,
+        "hasFaces": true,
+        "patches": 1
+      }
+    ],
+    "startFallback": [
+      false,
+      true,
+      true,
+      true
+    ],
+    "outcomeFallback": [
+      false,
+      true,
+      true,
+      true
+    ]
+  },
+  "faceCacheInvalidation": {
+    "passed": true
+  },
+  "newFileClearsCpu": {
+    "passed": true,
+    "requests": [
+      {
+        "group": "faces",
+        "backend": "webgpu",
+        "threads": 1,
+        "hasFaces": false
+      },
+      {
+        "group": "upscale",
+        "backend": "webgpu",
+        "scale": 4,
+        "threads": 1,
+        "hasFaces": true,
+        "patches": 1
+      }
+    ]
+  },
+  "iosStageIndependence": {
+    "passed": true,
+    "requests": [
+      {
+        "group": "faces",
+        "backend": "wasm",
+        "threads": 1,
+        "hasFaces": false
+      },
+      {
+        "group": "upscale",
+        "backend": "webgpu",
+        "scale": 2,
+        "threads": 1,
+        "hasFaces": true,
+        "patches": 0
+      },
+      {
+        "group": "upscale",
+        "backend": "webgpu",
+        "scale": 2,
+        "threads": 1,
+        "hasFaces": true,
+        "patches": 0
+      }
+    ]
+  },
+  "fallbackAnalytics": [
+    {
+      "name": "gpu-success",
+      "startFallback": false,
+      "outcomeFallback": false,
+      "requests": [
+        {
+          "group": "upscale",
+          "backend": "webgpu",
+          "scale": 2,
+          "threads": 1,
+          "hasFaces": false
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "native-cpu",
+      "startFallback": false,
+      "outcomeFallback": false,
+      "requests": [
+        {
+          "group": "upscale",
+          "backend": "wasm",
+          "scale": 2,
+          "threads": 8,
+          "hasFaces": false
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "ios-face-cpu",
+      "startFallback": false,
+      "outcomeFallback": false,
+      "requests": [
+        {
+          "group": "faces",
+          "backend": "wasm",
+          "threads": 1,
+          "hasFaces": false
+        },
+        {
+          "group": "upscale",
+          "backend": "webgpu",
+          "scale": 2,
+          "threads": 1,
+          "hasFaces": true,
+          "patches": 1
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "face-gpu-fallback",
+      "startFallback": false,
+      "outcomeFallback": true,
+      "requests": [
+        {
+          "group": "faces",
+          "backend": "webgpu",
+          "threads": 1,
+          "hasFaces": false
+        },
+        {
+          "group": "faces",
+          "backend": "wasm",
+          "threads": 7,
+          "hasFaces": false
+        },
+        {
+          "group": "upscale",
+          "backend": "webgpu",
+          "scale": 2,
+          "threads": 1,
+          "hasFaces": true,
+          "patches": 1
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "upscale-gpu-fallback",
+      "startFallback": false,
+      "outcomeFallback": true,
+      "requests": [
+        {
+          "group": "upscale",
+          "backend": "webgpu",
+          "scale": 2,
+          "threads": 1,
+          "hasFaces": false
+        },
+        {
+          "group": "upscale",
+          "backend": "wasm",
+          "scale": 2,
+          "threads": 8,
+          "hasFaces": false
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "cpu-thread-fallback",
+      "startFallback": false,
+      "outcomeFallback": false,
+      "requests": [
+        {
+          "group": "upscale",
+          "backend": "wasm",
+          "scale": 2,
+          "threads": 8,
+          "hasFaces": false
+        },
+        {
+          "group": "upscale",
+          "backend": "wasm",
+          "scale": 2,
+          "threads": 1,
+          "hasFaces": false
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "errorCodes": [
+    {
+      "code": "download",
+      "event": {
+        "platform": "web",
+        "environment": "local",
+        "locale": "en",
+        "screen": "free-upscale",
+        "mode": "normal2",
+        "scale": 2,
+        "model": "photo",
+        "face": true,
+        "custom_model": false,
+        "media": "images",
+        "batch_count": 1,
+        "size": "32x24",
+        "cpu_fallback": false,
+        "device_class": "desktop",
+        "result": "failed",
+        "progress": 0,
+        "duration_sec": 0,
+        "error_type": "download",
+        "error_stage": "faces",
+        "error_reason": "download",
+        "message": "err_download"
+      },
+      "passed": true
+    },
+    {
+      "code": "size",
+      "event": {
+        "platform": "web",
+        "environment": "local",
+        "locale": "en",
+        "screen": "free-upscale",
+        "mode": "normal2",
+        "scale": 2,
+        "model": "photo",
+        "face": true,
+        "custom_model": false,
+        "media": "images",
+        "batch_count": 1,
+        "size": "32x24",
+        "cpu_fallback": false,
+        "device_class": "desktop",
+        "result": "failed",
+        "progress": 0,
+        "duration_sec": 0,
+        "error_type": "face",
+        "error_stage": "faces",
+        "error_reason": "size",
+        "message": "err_face_limit"
+      },
+      "passed": true
+    },
+    {
+      "code": "format",
+      "event": {
+        "platform": "web",
+        "environment": "local",
+        "locale": "en",
+        "screen": "free-upscale",
+        "mode": "normal2",
+        "scale": 2,
+        "model": "photo",
+        "face": true,
+        "custom_model": false,
+        "media": "images",
+        "batch_count": 1,
+        "size": "32x24",
+        "cpu_fallback": false,
+        "device_class": "desktop",
+        "result": "failed",
+        "progress": 0,
+        "duration_sec": 0,
+        "error_type": "face",
+        "error_stage": "faces",
+        "error_reason": "format",
+        "message": "err_format"
+      },
+      "passed": true
+    },
+    {
+      "code": "runtime",
+      "event": {
+        "platform": "web",
+        "environment": "local",
+        "locale": "en",
+        "screen": "free-upscale",
+        "mode": "normal2",
+        "scale": 2,
+        "model": "photo",
+        "face": true,
+        "custom_model": false,
+        "media": "images",
+        "batch_count": 1,
+        "size": "32x24",
+        "cpu_fallback": false,
+        "device_class": "desktop",
+        "result": "failed",
+        "progress": 0,
+        "duration_sec": 0,
+        "error_type": "face",
+        "error_stage": "faces",
+        "error_reason": "runtime",
+        "message": "err_face"
+      },
+      "passed": true
+    }
+  ],
+  "scaleFallback": [
+    {
+      "scale": 2,
+      "offered": false,
+      "passed": true
+    },
+    {
+      "scale": 4,
+      "offered": true,
+      "passed": true
+    }
+  ],
+  "eta": [
+    {
+      "skippedTiles": 24,
+      "tile": "777",
+      "other": "keep",
+      "passed": true
+    },
+    {
+      "skippedTiles": 25,
+      "tile": "777",
+      "other": "keep",
+      "passed": true
+    },
+    {
+      "skippedTiles": 0,
+      "tile": "100",
+      "other": "keep",
+      "passed": true
+    }
+  ],
+  "basic": {
+    "opaque": {
+      "passed": true,
+      "mismatches": 0
+    },
+    "faceAlpha": {
+      "passed": true,
+      "alphaError": 0,
+      "changed": 3024
+    }
+  },
+  "browser": "chromium",
+  "browserVersion": "151.0.7922.34",
+  "localPinnedFaceModel": true,
+  "errors": []
+}

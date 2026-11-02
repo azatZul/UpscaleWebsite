@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 2,
+  "createdAt": "2026-10-27T12:57:14.247Z",
+  "kind": "png-acceptance",
+  "environment": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:153.0) Gecko/20100101 Firefox/153.0",
+    "platform": "MacIntel",
+    "maxTouchPoints": 0,
+    "hardwareConcurrency": 14,
+    "crossOriginIsolated": true,
+    "sharedMemory": true,
+    "webgpu": true
+  },
+  "assets": {
+    "runtime": "/assets/processor/ort-1.23.2",
+    "models": {
+      "photo": {
+        "2": {
+          "gpu": "/assets/processor/917d664366981211-normal_2x_web.onnx",
+          "cpu": "/assets/processor/9925a204e41ab72e-normal_2x_web.ort"
+        },
+        "4": {
+          "gpu": "/assets/processor/5038ca956f3ed202-normal_4x_web.onnx",
+          "cpu": "/assets/processor/1527e3c5453ca491-normal_4x_web.ort"
+        }
+      },
+      "drawing": {
+        "2": {
+          "gpu": "/assets/processor/e00170d304d397a0-anime_2x_web.onnx",
+          "cpu": "/assets/processor/27917d9ea78a9acc-anime_2x_web.ort"
+        },
+        "4": {
+          "gpu": "/assets/processor/dfc2249582113ca9-anime_4x_web.onnx",
+          "cpu": "/assets/processor/06247e72c6f210f4-anime_4x_web.ort"
+        }
+      }
+    },
+    "faceModel": {
+      "bytes": 85578722,
+      "parts": [
+        {
+          "url": "https://upscales.uk/web_models/face_512-7333260230803fbf.onnx",
+          "bytes": 85578722
+        }
+      ]
+    },
+    "vision": "/assets/processor/vision-1.0.1",
+    "faceFinder": "/assets/processor/ebafce4e3c118d65-face_detector_yunet.onnx",
+    "faceDetector": "/assets/processor/64184e229b263107-face_landmarker.task"
+  },
+  "passed": true,
+  "cases": [
+    {
+      "name": "gradient",
+      "modelKind": "drawing",
+      "scale": 2,
+      "alphaError": 0,
+      "compositeError": 2,
+      "mime": "image/png",
+      "width": 540,
+      "height": 140,
+      "fullMs": 72394.6,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "drawing-2",
+          "elapsedMs": 0.839999999999975
+        },
+        {
+          "operation": "scan",
+          "model": "drawing-2",
+          "elapsedMs": 1.1200000000000045
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-2",
+          "elapsedMs": 1.8000000000000114
+        },
+        {
+          "operation": "download",
+          "model": "drawing-2",
+          "elapsedMs": 34.51999999999998
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-2",
+          "elapsedMs": 210.18
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-2",
+          "elapsedMs": 36064.700000000004
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-2",
+          "elapsedMs": 36070.1
+        },
+        {
+          "operation": "encode",
+          "model": "drawing-2",
+          "pixels": 75600,
+          "elapsedMs": 0.020000000004074536
+        },
+        {
+          "operation": "composite",
+          "model": "drawing-2",
+          "elapsedMs": 0.01999999998952262
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "basic": {
+    "opaque": {
+      "passed": true,
+      "mismatches": 0
+    },
+    "faceAlpha": {
+      "passed": true,
+      "alphaError": 0,
+      "changed": 3024
+    }
+  },
+  "browser": "firefox",
+  "browserVersion": "153.0",
+  "localPinnedFaceModel": false,
+  "errors": []
+}

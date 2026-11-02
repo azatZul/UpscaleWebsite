@@ -1,0 +1,102 @@
+{
+  "kind": "transparent-face-pipeline",
+  "passed": true,
+  "detectedCount": 1,
+  "enhancedCount": 1,
+  "mime": "image/png",
+  "canEdit": true,
+  "alphaError": 0,
+  "selectionDifference": 164,
+  "reapplyError": 0,
+  "reapplyCompositeError": 0,
+  "opaqueReapplyError": 0,
+  "baseRoundTrip": {
+    "rgbError": 0,
+    "compositeError": 0,
+    "opaqueError": 0,
+    "alphaError": 0
+  },
+  "operations": [
+    {
+      "operation": "decode",
+      "model": "faces",
+      "elapsedMs": 2.509999990463257
+    },
+    {
+      "operation": "scan",
+      "model": "faces",
+      "elapsedMs": 1.9200000762939453
+    },
+    {
+      "operation": "initialize",
+      "model": "faces",
+      "elapsedMs": 0.029999971389770508
+    },
+    {
+      "operation": "download",
+      "model": "faces",
+      "elapsedMs": 13.240000009536743
+    },
+    {
+      "operation": "initialize",
+      "model": "faces",
+      "elapsedMs": 170.61500000953674
+    },
+    {
+      "operation": "detect",
+      "model": "faces",
+      "elapsedMs": 371.164999961853
+    },
+    {
+      "operation": "detect",
+      "model": "faces",
+      "elapsedMs": 69.56500005722046
+    },
+    {
+      "operation": "face",
+      "model": "faces",
+      "elapsedMs": 16.59500002861023
+    },
+    {
+      "operation": "initialize",
+      "model": "faces",
+      "elapsedMs": 0.6200001239776611
+    },
+    {
+      "operation": "download",
+      "model": "faces",
+      "elapsedMs": 1281.6799998283386
+    },
+    {
+      "operation": "initialize",
+      "model": "faces",
+      "elapsedMs": 250.83000016212463
+    },
+    {
+      "operation": "face",
+      "model": "faces",
+      "elapsedMs": 3061.2199997901917
+    },
+    {
+      "operation": "encode",
+      "model": "faces",
+      "pixels": 262144,
+      "elapsedMs": 8.835000038146973
+    }
+  ],
+  "basic": {
+    "opaque": {
+      "passed": true,
+      "mismatches": 0
+    },
+    "faceAlpha": {
+      "passed": true,
+      "alphaError": 0,
+      "changed": 3024
+    }
+  },
+  "browser": "chromium",
+  "browserVersion": "151.0.7922.34",
+  "localPinnedFaceModel": true,
+  "errors": []
+}

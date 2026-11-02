@@ -1,125 +1,119 @@
-import {assessPhoto, devicePolicy, estimateDuration, faceEditFits, PhotoError, SCALE, TILE_SIZE} from './capability.js';
+import {assessPhoto, assessPng, devicePolicy, faceEditFits, PhotoError, SCALE, TILE_SIZE} from './capability.js';
 import {inspectFile, parseImageHeader} from './image-info.js';
 import {assembleTiles, makeCanvas, sampleTile, thumbnail} from './tile-pipeline.js';
 import {compositePatches} from './face-composite.js';
 import {loadRuntime} from './runtime.js';
+import {applyBandAlpha, emptyTile, exportOptions, fillTransparentRgb, hasTransparency as classifyTransparency, JPEG, PNG, pngFailureDetails, readTransparency, sampleRgbTile} from './transparency.js';
+import {workerReporter} from './worker-status.js';
 
-const send = message => self.postMessage(message);
-const status = message => send({type: 'status', ...message});
-let source;
-let runtime;
-let plan;
-let policy;
 let busy = false;
-let ready = false;
-let faces = [];
-let detectedCount = 0;
-let faceEnabled = false;
-let modelKind = 'photo';
 
-async function release() {
-  source?.close(); source = null;
-  const active = runtime; runtime = null;
-  try { await active?.release(); } catch { /* Worker termination is the final cleanup. */ }
-}
-
-async function prepare({file, environment, forceCpu = false, autoStart = false, faceResults, scale = SCALE,
-  modelKind: requestedModelKind = 'photo'}) {
-  ready = false;
-  modelKind = requestedModelKind;
-  faces = faceResults?.faces || [];
-  detectedCount = faceResults?.detectedCount || 0;
-  faceEnabled = Boolean(faceResults);
-  await release();
-  policy = devicePolicy(environment);
-  plan = assessPhoto(await inspectFile(file), policy, scale);
-  try { source = await createImageBitmap(file, {imageOrientation: 'from-image'}); }
-  catch { throw new PhotoError('format', 'err_open'); }
-  // Decoders apply EXIF orientation. Trust actual decoded dimensions only
-  // after checking the header, and enforce the same policy again.
-  plan = assessPhoto({width: source.width, height: source.height, size: file.size}, policy, scale);
-  send({type: 'photo', plan, thumbnail: await thumbnail(source)});
-  runtime = await loadRuntime(forceCpu, status, false, scale, modelKind);
-  if (autoStart) { ready = true; await process(); return; }
-  status({phase: 'probe', title: 'measuring', detail: 'measuring_detail'});
-  const x = Math.max(0, Math.floor((source.width - TILE_SIZE) / 2));
-  const y = Math.max(0, Math.floor((source.height - TILE_SIZE) / 2));
-  const values = sampleTile(source, x, y);
-  await runtime.run(values); // First inference includes shader setup.
-  const started = performance.now();
-  const pixels = await runtime.run(values);
-  const tileMs = performance.now() - started;
-  const {canvas, context} = makeCanvas(512, 512);
+async function processPhoto({file, environment, execution = {}, forceCpu = false, faceResults, scale = SCALE,
+  modelKind = 'photo', benchmark = false}) {
+  const report = workerReporter(execution, `${modelKind}-${scale}`);
+  const status = report.status;
+  let source, runtime, output, prepared, imageInfo;
+  const policy = devicePolicy(environment);
+  const started = performance.now(), tileTimes = [];
+  // Undefined until an engine actually initialized; skipping inference is not
+  // evidence that the requested thread configuration was unavailable.
+  let effectiveThreads;
   try {
-    context.putImageData(new ImageData(pixels, 512, 512), 0, 0);
-    const blob = await canvas.convertToBlob({type: 'image/jpeg', quality: .96});
-    if (!blob.size) throw new Error('No output');
-  } catch { throw new PhotoError('export', 'err_export_probe'); }
-  finally { canvas.width = canvas.height = 1; }
-  ready = true;
-  send({type: 'ready', plan, backend: runtime.backend, tileMs, ...estimateDuration(tileMs, plan.tileCount)});
-}
-
-async function process() {
-  if (!ready || !source || !runtime) throw new PhotoError('runtime', 'err_check_again');
-  ready = false;
-  let output;
-  const started = performance.now();
-  try {
-    status({phase: 'process', progress: 0, title: 'upscaling', detail: 'upscaling_detail'});
+    report.begin('decode', {title: 'preparing', detail: 'preparing_detail'});
+    const info = await inspectFile(file);
+    let plan = assessPhoto(info, policy, scale);
+    try { source = await createImageBitmap(file, {imageOrientation: 'from-image', premultiplyAlpha: 'none'}); }
+    catch { throw new PhotoError('format', 'err_open'); }
+    imageInfo = {width: source.width, height: source.height, size: file.size};
+    plan = assessPhoto(imageInfo, policy, scale);
+    let hasTransparency = false;
+    if (info.format !== 'jpeg') {
+      report.begin('scan', {title: 'preparing', detail: 'preparing_detail'});
+      hasTransparency = await classifyTransparency(source, {onProgress: (completed, total) =>
+        status({completed, progress: completed / total, title: 'preparing', detail: 'preparing_detail'})});
+    }
+    const mime = hasTransparency || benchmark?.lossless ? PNG : JPEG;
+    if (mime === PNG) plan = assessPng(plan, policy, {size: file.size});
+    report({type: 'photo', plan, hasTransparency, thumbnail: await thumbnail(source, hasTransparency)});
+    if (hasTransparency) {
+      report.begin('prepare-rgb', {title: 'preparing', detail: 'preparing_detail'});
+      prepared = await readTransparency(source, {onProgress: (completed, total) =>
+        status({completed, progress: completed / total, title: 'preparing', detail: 'preparing_detail'})});
+      source.close(); source = null;
+      report.begin('prepare-rgb', {title: 'preparing', detail: 'preparing_detail'});
+      fillTransparentRgb(prepared.rgb, prepared.alpha, plan.width, plan.height);
+    } else prepared = null;
     const {canvas, context} = makeCanvas(plan.outputWidth, plan.outputHeight);
     output = canvas;
-    await assembleTiles(source.width, source.height,
-      async (x, y) => runtime.run(sampleTile(source, x, y)),
-      (data, width, height, y) => context.putImageData(new ImageData(data, width, height), 0, y),
-      (completed, total) => status({phase: 'process', progress: completed / total * .94,
-        title: 'upscaling', remainingMs: (performance.now() - started) / completed * (total - completed),
-        detail: 'upscaling_cancel_detail'}), plan.scale);
-    // Tile time alone drives the next photo's estimate. Face compositing and
-    // the export are excluded so a small photo does not inflate the figure.
-    const tilesMs = performance.now() - started;
-    source.close(); source = null;
-    // Release model memory before asking the encoder for a full-size export.
-    await runtime.release(); runtime = null;
-    // The face picker rebuilds the result from this faceless copy, so no model
-    // runs again for a new selection. Only kept where decoding it next to a
-    // second full-size canvas fits the device (see faceEditFits).
-    const canEdit = faceEnabled && faces.length > 0 && faceEditFits(plan, policy);
+    let skippedTiles = 0, completedTiles = 0, tileStarted = performance.now();
+    // An invisible image does not need a runtime or face model at all.
+    if (!hasTransparency || prepared.maxAlpha > 0) {
+      runtime = await loadRuntime(forceCpu, status, false, scale, modelKind, execution);
+      effectiveThreads = runtime.threads;
+      tileStarted = performance.now();
+      await assembleTiles(plan.width, plan.height, async (x, y) => {
+        report.begin('tile', {title: 'upscaling', detail: 'upscaling_cancel_detail', completed: completedTiles});
+        if (hasTransparency && emptyTile(prepared, x, y)) {
+          skippedTiles++; return new Uint8ClampedArray((TILE_SIZE * scale) ** 2 * 4);
+        }
+        const start = performance.now();
+        const result = await runtime.run(hasTransparency ? sampleRgbTile(prepared, x, y) : sampleTile(source, x, y));
+        if (benchmark) tileTimes.push(performance.now() - start);
+        return result;
+      }, (data, width, height, y) => {
+        // Alpha is restored after RGB blending. Do not mutate the band's RGB,
+        // which is still used to blend the following band.
+        if (hasTransparency) applyBandAlpha(data, prepared, y, height, scale);
+        context.putImageData(new ImageData(data, width, height), 0, y);
+      }, (completed, total) => {
+        completedTiles = completed;
+        status({operation: 'tile', completed, progress: completed / total * .94,
+          title: 'upscaling', remainingMs: (performance.now() - tileStarted) / completed * (total - completed),
+          detail: 'upscaling_cancel_detail'});
+      }, scale);
+    } else skippedTiles = plan.tileCount;
+    const tilesMs = performance.now() - tileStarted;
+    source?.close(); source = null; prepared = null;
+    await runtime?.release(); runtime = null;
+    const faces = faceResults?.faces || [];
+    const faceEnabled = Boolean(faceResults);
+    let canEdit = faceEnabled && faces.length > 0 && faceEditFits(plan, policy, {mime});
     let baseBlob;
     if (canEdit) {
-      status({phase: 'encode', progress: .95, title: 'encoding', detail: 'encoding_detail'});
-      baseBlob = await canvas.convertToBlob({type: 'image/jpeg', quality: .96});
-      if (!baseBlob.size) throw new Error('No base was encoded');
+      report.begin('encode', {title: 'encoding', detail: 'encoding_detail', pixels: plan.outputWidth * plan.outputHeight});
+      try { baseBlob = await canvas.convertToBlob(exportOptions(mime)); }
+      catch { throw new PhotoError('export', mime === PNG ? 'err_png_export' : 'err_save'); }
+      if (!baseBlob.size || baseBlob.type !== mime) throw new PhotoError('export', mime === PNG ? 'err_png_export' : 'err_save');
+      canEdit = faceEditFits(plan, policy, {mime, baseBytes: baseBlob.size});
+      if (!canEdit) baseBlob = undefined;
     }
+    report.begin('composite', {title: 'encoding', detail: 'encoding_detail'});
     const enhanced = faces.filter(face => face.patch);
-    await compositePatches(context, enhanced, plan.scale);
-    const faceCount = enhanced.length;
-    status({phase: 'encode' , progress: .97, title: 'encoding', detail: 'encoding_detail'});
-    const blob = await canvas.convertToBlob({type: 'image/jpeg', quality: .96});
-    if (!blob.size) throw new Error('No image was encoded');
-    // Verify that export preserved the requested dimensions.
-    const result = parseImageHeader(await blob.slice(0, 2 * 1024 * 1024).arrayBuffer());
-    if (result.width !== plan.outputWidth || result.height !== plan.outputHeight) throw new Error('Wrong export size');
-    send({type: 'done', blob, plan, modelKind, faceCount, detectedCount, faceEnabled, tilesMs, canEdit, baseBlob,
-      faces: canEdit ? faces : undefined,
+    await compositePatches(context, enhanced, scale);
+    report.begin('encode', {title: 'encoding', detail: 'encoding_detail', pixels: plan.outputWidth * plan.outputHeight});
+    let blob;
+    try { blob = await canvas.convertToBlob(exportOptions(mime)); }
+    catch { throw new PhotoError('export', mime === PNG ? 'err_png_export' : 'err_save'); }
+    if (!blob.size || blob.type !== mime) throw new PhotoError('export', mime === PNG ? 'err_png_export' : 'err_save');
+    let result;
+    try { result = parseImageHeader(await blob.slice(0, 2 * 1024 * 1024).arrayBuffer()); }
+    catch { throw new PhotoError('export', mime === PNG ? 'err_png_export' : 'err_save'); }
+    if (result.format !== (mime === PNG ? 'png' : 'jpeg') || result.width !== plan.outputWidth || result.height !== plan.outputHeight) throw new PhotoError('export', mime === PNG ? 'err_png_export' : 'err_save');
+    report({type: 'done', blob, mime, hasTransparency, plan, modelKind, faceCount: enhanced.length,
+      detectedCount: faceResults?.detectedCount || 0, faceEnabled, tilesMs, canEdit, baseBlob,
+      faces: canEdit ? faces : undefined, skippedTiles, tileTimes, effectiveThreads,
       totalMs: performance.now() - started});
   } catch (error) {
-    if (error instanceof PhotoError) throw error;
-    throw new PhotoError('export', 'err_save');
+    report({type: 'error', ...pngFailureDetails(error, imageInfo, policy, scale)});
   } finally {
-    faces = [];
+    source?.close(); prepared = null;
+    try { await runtime?.release(); } catch { /* Termination is final cleanup. */ }
     if (output) output.width = output.height = 1;
-    await release();
   }
 }
 
 self.onmessage = async ({data}) => {
-  if (busy || !['prepare', 'process'].includes(data.type)) return;
+  if (busy || data.type !== 'prepare') return;
   busy = true;
-  try { data.type === 'prepare' ? await prepare(data) : await process(); }
-  catch (error) {
-    ready = false;
-    send({type: 'error', code: error.code || 'runtime', key: error.key || 'err_finish', params: error.params});
-    await release();
-  } finally { busy = false; }
+  try { await processPhoto(data); } finally { busy = false; }
 };

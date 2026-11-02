@@ -7,7 +7,7 @@ const CORPORA = {
   face: '/benchmarks/ios/face/corpus.json',
 };
 
-const THRESHOLDS = {
+export const THRESHOLDS = {
   psnrMin: 42,
   ssimMin: 0.995,
   maeMax: 0.008,
@@ -108,7 +108,7 @@ function blockSsim(reference, candidate, width, height) {
   return total / blocks;
 }
 
-function measure(reference, candidate, width, height) {
+export function measure(reference, candidate, width, height) {
   let absolute = 0;
   let squared = 0;
   let maximum = 0;
@@ -146,7 +146,7 @@ function measure(reference, candidate, width, height) {
   };
 }
 
-function passes(metrics) {
+export function passes(metrics) {
   return metrics.psnr >= THRESHOLDS.psnrMin &&
     metrics.ssim >= THRESHOLDS.ssimMin &&
     metrics.mae <= THRESHOLDS.maeMax &&

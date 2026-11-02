@@ -1,0 +1,14 @@
+{
+  "kind": "release-local-verification",
+  "createdAt": "2026-10-28T10:08:43.068651+00:00",
+  "passed": true,
+  "jsTests": 123,
+  "pythonTests": 77,
+  "pythonSkipped": 0,
+  "workerTests": 153,
+  "typecheckPassed": true,
+  "buildPages": 126,
+  "workerCodeUnchangedByMobilePngLimit": true,
+  "physicalAcceptanceComplete": false,
+  "published": false
+}

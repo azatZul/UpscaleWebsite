@@ -1,3 +1,4 @@
+import {runCpuComparison, runPngAcceptance, runProductWorker, makePngFixture, verifyOpaqueInputParity, verifyFaceAlpha, verifyWorkerRecovery, verifyFaceThreadCache, verifyBackendImportRecovery, verifyCachedFaceScale, verifyTransparentFaces, compareDrawingScales} from './product-benchmark.js';
 import {runBenchmark} from './benchmark.js';
 import {runLiteRtBenchmark} from './litert_benchmark.js';
 import {decodeFile, processPhoto} from './image_pipeline.js';
@@ -189,6 +190,7 @@ async function displayBenchmark(kind, backend = elements.backend.value, runs = 1
 
 window.runUScaleBenchmark = displayBenchmark;
 window.uscaleHardware = hardwareSummary();
+window.uscaleProductLab = {runCpuComparison, runPngAcceptance, runProductWorker, makePngFixture, verifyOpaqueInputParity, verifyFaceAlpha, verifyWorkerRecovery, verifyFaceThreadCache, verifyBackendImportRecovery, verifyCachedFaceScale, verifyTransparentFaces, compareDrawingScales};
 
 if (new URLSearchParams(location.search).has('benchmark')) {
   elements.benchmarkPanel.hidden = false;

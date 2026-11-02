@@ -1,0 +1,13 @@
+{
+  "kind": "production-packaging-gate",
+  "createdAt": "2026-10-30T14:25:27.197976+00:00",
+  "passed": true,
+  "releaseAccepted": true,
+  "observedExitCode": 0,
+  "packagingStarted": true,
+  "packageFiles": 345,
+  "packageMiB": 130.7,
+  "published": false,
+  "physicalReport": "benchmarks/browser/2026-10-30/iphone-maximum-ui.json",
+  "note": "Used existing verified product build; removed one Finder .DS_Store from generated dist before successful packaging; no test suites rerun"
+}

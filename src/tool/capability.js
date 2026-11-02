@@ -51,6 +51,9 @@ export function devicePolicy(env = {}) {
     // conservative area-parity figure in maxInputPixelsForScale().
     maxInputPixels4x: mobile ? undefined : 13_000_000,
     maxOutputSide: mobile ? 8192 : 16384,
+    // Keep room for the displayed result and another decoded download. The
+    // former 52 MP ceiling failed the physical-iPhone UI/reopen acceptance.
+    maxPngOutputPixels: mobile ? 6144 * 4608 : undefined,
     memoryBudgetBytes: (lowMemory ? 256 : mobile ? 900 : 2048) * 1024 * 1024,
     mobile,
     lowMemory,
@@ -67,8 +70,27 @@ export function faceLimit(policy = devicePolicy()) {
 // Changing the face selection decodes the faceless base and draws it into a
 // second canvas of the same size, a peak assessPhoto() does not model. Offer
 // the face picker only where both surfaces fit with real margin.
-export function faceEditFits(plan, policy = devicePolicy()) {
-  return plan.outputWidth * plan.outputHeight * 4 * 2 + 96 * 1024 * 1024 <= policy.memoryBudgetBytes * .75;
+export function faceEditFits(plan, policy = devicePolicy(), {mime = 'image/jpeg', baseBytes = 0} = {}) {
+  const pixels = plan.outputWidth * plan.outputHeight;
+  // PNG can retain both encoded and decoded bases, plus an encoder buffer.
+  const bytes = pixels * (mime === 'image/png' ? 16 : 8) + baseBytes + 96 * 1024 * 1024;
+  return bytes <= policy.memoryBudgetBytes * .75;
+}
+
+export function assessPng(plan, policy = devicePolicy(), {size = 0} = {}) {
+  const input = plan.width * plan.height, output = plan.outputWidth * plan.outputHeight;
+  // Separate stages: decode + RGB/alpha + donor RGB + Uint16 distances + stripe;
+  // then inference/encoding. Count a worst-case encoded PNG and encoder scratch.
+  const stripe = plan.width * Math.min(256, plan.height) * 4;
+  const preparation = input * 13 + stripe + size;
+  const exportPeak = input * 4 + output * 12 + plan.outputWidth * 512 * plan.scale * 8 +
+    96 * 1024 * 1024 + size;
+  if ((policy.maxPngOutputPixels && output > policy.maxPngOutputPixels) ||
+      Math.max(preparation, exportPeak) > policy.memoryBudgetBytes ||
+      plan.width + plan.height - 2 >= 65535) {
+    throw new PhotoError('size', 'err_png_size');
+  }
+  return {...plan, estimatedPeakBytes: Math.max(preparation, exportPeak)};
 }
 
 // 4x is desktop-only: its output canvas is 4x the linear size of 2x's for the

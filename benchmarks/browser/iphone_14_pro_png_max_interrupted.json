@@ -1,0 +1,2997 @@
+{
+  "height": 3173,
+  "runs": [
+    {
+      "passed": true,
+      "fullMs": 758217.3,
+      "trace": [
+        {
+          "unit": 1,
+          "ms": 10.959999999991851,
+          "operation": "decode"
+        },
+        {
+          "unit": 2,
+          "ms": 203.2399999999907,
+          "operation": "scan"
+        },
+        {
+          "unit": 3,
+          "ms": 477.8199999999779,
+          "operation": "prepare-rgb"
+        },
+        {
+          "unit": 3,
+          "ms": 817.2999999999884,
+          "operation": "download"
+        },
+        {
+          "unit": 3,
+          "ms": 872.6599999999744,
+          "operation": "initialize"
+        },
+        {
+          "unit": 4,
+          "ms": 1085.4799999999814,
+          "operation": "tile"
+        },
+        {
+          "unit": 5,
+          "ms": 2018.5799999999872,
+          "operation": "tile"
+        },
+        {
+          "unit": 6,
+          "ms": 2895.819999999978,
+          "operation": "tile"
+        },
+        {
+          "unit": 7,
+          "ms": 3782.039999999979,
+          "operation": "tile"
+        },
+        {
+          "unit": 8,
+          "ms": 4651.3399999999965,
+          "operation": "tile"
+        },
+        {
+          "unit": 9,
+          "ms": 5519.220000000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 10,
+          "ms": 6386.5,
+          "operation": "tile"
+        },
+        {
+          "unit": 11,
+          "ms": 7276.239999999991,
+          "operation": "tile"
+        },
+        {
+          "unit": 12,
+          "ms": 8144.6999999999825,
+          "operation": "tile"
+        },
+        {
+          "unit": 13,
+          "ms": 9015.379999999976,
+          "operation": "tile"
+        },
+        {
+          "unit": 14,
+          "ms": 9897.139999999985,
+          "operation": "tile"
+        },
+        {
+          "unit": 15,
+          "ms": 10776.839999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 16,
+          "ms": 11863.479999999981,
+          "operation": "tile"
+        },
+        {
+          "unit": 17,
+          "ms": 13322.039999999979,
+          "operation": "tile"
+        },
+        {
+          "unit": 18,
+          "ms": 15531.940000000002,
+          "operation": "tile"
+        },
+        {
+          "unit": 19,
+          "ms": 18159.73999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 20,
+          "ms": 20834,
+          "operation": "tile"
+        },
+        {
+          "unit": 21,
+          "ms": 23497.579999999987,
+          "operation": "tile"
+        },
+        {
+          "unit": 22,
+          "ms": 26221.659999999974,
+          "operation": "tile"
+        },
+        {
+          "unit": 23,
+          "ms": 28952.01999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 24,
+          "ms": 31309.819999999978,
+          "operation": "tile"
+        },
+        {
+          "unit": 25,
+          "ms": 33791.399999999994,
+          "operation": "tile"
+        },
+        {
+          "unit": 26,
+          "ms": 36479.81999999998,
+          "operation": "tile"
+        },
+        {
+          "unit": 27,
+          "ms": 39219.06,
+          "operation": "tile"
+        },
+        {
+          "unit": 28,
+          "ms": 41900.119999999995,
+          "operation": "tile"
+        },
+        {
+          "unit": 29,
+          "ms": 44597.580000000016,
+          "operation": "tile"
+        },
+        {
+          "unit": 30,
+          "ms": 47300.45999999996,
+          "operation": "tile"
+        },
+        {
+          "unit": 31,
+          "ms": 50014.5,
+          "operation": "tile"
+        },
+        {
+          "unit": 32,
+          "ms": 52706.73999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 33,
+          "ms": 55419.59999999998,
+          "operation": "tile"
+        },
+        {
+          "unit": 34,
+          "ms": 58087.140000000014,
+          "operation": "tile"
+        },
+        {
+          "unit": 35,
+          "ms": 60854.640000000014,
+          "operation": "tile"
+        },
+        {
+          "unit": 36,
+          "ms": 63417.82000000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 37,
+          "ms": 65980.76000000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 38,
+          "ms": 68613.95999999996,
+          "operation": "tile"
+        },
+        {
+          "unit": 39,
+          "ms": 71332.89999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 40,
+          "ms": 74037.01999999996,
+          "operation": "tile"
+        },
+        {
+          "unit": 41,
+          "ms": 76741,
+          "operation": "tile"
+        },
+        {
+          "unit": 42,
+          "ms": 79486.27999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 43,
+          "ms": 82136.33999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 44,
+          "ms": 84828.77999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 45,
+          "ms": 87544.32,
+          "operation": "tile"
+        },
+        {
+          "unit": 46,
+          "ms": 90220.20000000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 47,
+          "ms": 92979.35999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 48,
+          "ms": 95686.79999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 49,
+          "ms": 98394.12,
+          "operation": "tile"
+        },
+        {
+          "unit": 50,
+          "ms": 101125.20000000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 51,
+          "ms": 103857.03999999998,
+          "operation": "tile"
+        },
+        {
+          "unit": 52,
+          "ms": 106580.94,
+          "operation": "tile"
+        },
+        {
+          "unit": 53,
+          "ms": 109290.76000000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 54,
+          "ms": 111961.71999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 55,
+          "ms": 114652.15999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 56,
+          "ms": 117350.21999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 57,
+          "ms": 120109.91999999998,
+          "operation": "tile"
+        },
+        {
+          "unit": 58,
+          "ms": 122865.15999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 59,
+          "ms": 125616.20000000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 60,
+          "ms": 128339.79999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 61,
+          "ms": 131116.74,
+          "operation": "tile"
+        },
+        {
+          "unit": 62,
+          "ms": 133805.56,
+          "operation": "tile"
+        },
+        {
+          "unit": 63,
+          "ms": 136517.08000000002,
+          "operation": "tile"
+        },
+        {
+          "unit": 64,
+          "ms": 139226.76,
+          "operation": "tile"
+        },
+        {
+          "unit": 65,
+          "ms": 141932.5,
+          "operation": "tile"
+        },
+        {
+          "unit": 66,
+          "ms": 144640.38,
+          "operation": "tile"
+        },
+        {
+          "unit": 67,
+          "ms": 147346.82,
+          "operation": "tile"
+        },
+        {
+          "unit": 68,
+          "ms": 150049.7,
+          "operation": "tile"
+        },
+        {
+          "unit": 69,
+          "ms": 152756.3,
+          "operation": "tile"
+        },
+        {
+          "unit": 70,
+          "ms": 155503.51999999996,
+          "operation": "tile"
+        },
+        {
+          "unit": 71,
+          "ms": 158216.77999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 72,
+          "ms": 160917.08000000002,
+          "operation": "tile"
+        },
+        {
+          "unit": 73,
+          "ms": 163619.27999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 74,
+          "ms": 166302.15999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 75,
+          "ms": 169025.76,
+          "operation": "tile"
+        },
+        {
+          "unit": 76,
+          "ms": 171671.91999999998,
+          "operation": "tile"
+        },
+        {
+          "unit": 77,
+          "ms": 174391.97999999998,
+          "operation": "tile"
+        },
+        {
+          "unit": 78,
+          "ms": 177136.65999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 79,
+          "ms": 179885.08000000002,
+          "operation": "tile"
+        },
+        {
+          "unit": 80,
+          "ms": 182651.21999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 81,
+          "ms": 185327.83999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 82,
+          "ms": 188062.3,
+          "operation": "tile"
+        },
+        {
+          "unit": 83,
+          "ms": 190783.18,
+          "operation": "tile"
+        },
+        {
+          "unit": 84,
+          "ms": 193272.56,
+          "operation": "tile"
+        },
+        {
+          "unit": 85,
+          "ms": 195963.58000000002,
+          "operation": "tile"
+        },
+        {
+          "unit": 86,
+          "ms": 198682.8,
+          "operation": "tile"
+        },
+        {
+          "unit": 87,
+          "ms": 201403.77999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 88,
+          "ms": 204113.83999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 89,
+          "ms": 206839.38,
+          "operation": "tile"
+        },
+        {
+          "unit": 90,
+          "ms": 209550.64,
+          "operation": "tile"
+        },
+        {
+          "unit": 91,
+          "ms": 212301.74,
+          "operation": "tile"
+        },
+        {
+          "unit": 92,
+          "ms": 215028.88,
+          "operation": "tile"
+        },
+        {
+          "unit": 93,
+          "ms": 217749.74,
+          "operation": "tile"
+        },
+        {
+          "unit": 94,
+          "ms": 220482.41999999998,
+          "operation": "tile"
+        },
+        {
+          "unit": 95,
+          "ms": 222923.94,
+          "operation": "tile"
+        },
+        {
+          "unit": 96,
+          "ms": 225601.77999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 97,
+          "ms": 228295.71999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 98,
+          "ms": 231010.51999999996,
+          "operation": "tile"
+        },
+        {
+          "unit": 99,
+          "ms": 233746.88,
+          "operation": "tile"
+        },
+        {
+          "unit": 100,
+          "ms": 236409.95999999996,
+          "operation": "tile"
+        },
+        {
+          "unit": 101,
+          "ms": 239119.7,
+          "operation": "tile"
+        },
+        {
+          "unit": 102,
+          "ms": 241819.12,
+          "operation": "tile"
+        },
+        {
+          "unit": 103,
+          "ms": 244516.62,
+          "operation": "tile"
+        },
+        {
+          "unit": 104,
+          "ms": 247236.47999999998,
+          "operation": "tile"
+        },
+        {
+          "unit": 105,
+          "ms": 249957.27999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 106,
+          "ms": 252649.68,
+          "operation": "tile"
+        },
+        {
+          "unit": 107,
+          "ms": 255331.86,
+          "operation": "tile"
+        },
+        {
+          "unit": 108,
+          "ms": 258043.24,
+          "operation": "tile"
+        },
+        {
+          "unit": 109,
+          "ms": 260745.21999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 110,
+          "ms": 263469.6,
+          "operation": "tile"
+        },
+        {
+          "unit": 111,
+          "ms": 266218.16,
+          "operation": "tile"
+        },
+        {
+          "unit": 112,
+          "ms": 268995.3,
+          "operation": "tile"
+        },
+        {
+          "unit": 113,
+          "ms": 271610.33999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 114,
+          "ms": 274138.18,
+          "operation": "tile"
+        },
+        {
+          "unit": 115,
+          "ms": 276873.82,
+          "operation": "tile"
+        },
+        {
+          "unit": 116,
+          "ms": 279581.89999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 117,
+          "ms": 282303.06,
+          "operation": "tile"
+        },
+        {
+          "unit": 118,
+          "ms": 285063.66,
+          "operation": "tile"
+        },
+        {
+          "unit": 119,
+          "ms": 287769.42,
+          "operation": "tile"
+        },
+        {
+          "unit": 120,
+          "ms": 290487.39999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 121,
+          "ms": 293208.7,
+          "operation": "tile"
+        },
+        {
+          "unit": 122,
+          "ms": 295952.72,
+          "operation": "tile"
+        },
+        {
+          "unit": 123,
+          "ms": 298673.64,
+          "operation": "tile"
+        },
+        {
+          "unit": 124,
+          "ms": 301375.45999999996,
+          "operation": "tile"
+        },
+        {
+          "unit": 125,
+          "ms": 304127.16,
+          "operation": "tile"
+        },
+        {
+          "unit": 126,
+          "ms": 306940.51999999996,
+          "operation": "tile"
+        },
+        {
+          "unit": 127,
+          "ms": 309674.11999999994,
+          "operation": "tile"
+        },
+        {
+          "unit": 128,
+          "ms": 312479.46,
+          "operation": "tile"
+        },
+        {
+          "unit": 129,
+          "ms": 315250.99999999994,
+          "operation": "tile"
+        },
+        {
+          "unit": 130,
+          "ms": 317981.48000000004,
+          "operation": "tile"
+        },
+        {
+          "unit": 131,
+          "ms": 320717.7,
+          "operation": "tile"
+        },
+        {
+          "unit": 132,
+          "ms": 323463.51999999996,
+          "operation": "tile"
+        },
+        {
+          "unit": 133,
+          "ms": 326182.10000000003,
+          "operation": "tile"
+        },
+        {
+          "unit": 134,
+          "ms": 328882.66,
+          "operation": "tile"
+        },
+        {
+          "unit": 135,
+          "ms": 331595.73999999993,
+          "operation": "tile"
+        },
+        {
+          "unit": 136,
+          "ms": 334286.99999999994,
+          "operation": "tile"
+        },
+        {
+          "unit": 137,
+          "ms": 337170.48000000004,
+          "operation": "tile"
+        },
+        {
+          "unit": 138,
+          "ms": 339861.54,
+          "operation": "tile"
+        },
+        {
+          "unit": 139,
+          "ms": 342530.92,
+          "operation": "tile"
+        },
+        {
+          "unit": 140,
+          "ms": 345292.75999999995,
+          "operation": "tile"
+        },
+        {
+          "unit": 141,
+          "ms": 348022.3,
+          "operation": "tile"
+        },
+        {
+          "unit": 142,
+          "ms": 350714.22000000003,
+          "operation": "tile"
+        },
+        {
+          "unit": 143,
+          "ms": 353424.36000000004,
+          "operation": "tile"
+        },
+        {
+          "unit": 144,
+          "ms": 356169.42,
+          "operation": "tile"
+        },
+        {
+          "unit": 145,
+          "ms": 358897.10000000003,
+          "operation": "tile"
+        },
+        {
+          "unit": 146,
+          "ms": 361604.2,
+          "operation": "tile"
+        },
+        {
+          "unit": 147,
+          "ms": 364326.2,
+          "operation": "tile"
+        },
+        {
+          "unit": 148,
+          "ms": 367088.58,
+          "operation": "tile"
+        },
+        {
+          "unit": 149,
+          "ms": 369791.86000000004,
+          "operation": "tile"
+        },
+        {
+          "unit": 150,
+          "ms": 372488.13999999996,
+          "operation": "tile"
+        },
+        {
+          "unit": 151,
+          "ms": 375229.34,
+          "operation": "tile"
+        },
+        {
+          "unit": 152,
+          "ms": 377977.7,
+          "operation": "tile"
+        },
+        {
+          "unit": 153,
+          "ms": 380708.61999999994,
+          "operation": "tile"
+        },
+        {
+          "unit": 154,
+          "ms": 383445.8,
+          "operation": "tile"
+        },
+        {
+          "unit": 155,
+          "ms": 386151.37999999995,
+          "operation": "tile"
+        },
+        {
+          "unit": 156,
+          "ms": 388895.82,
+          "operation": "tile"
+        },
+        {
+          "unit": 157,
+          "ms": 391588.44,
+          "operation": "tile"
+        },
+        {
+          "unit": 158,
+          "ms": 394294.82,
+          "operation": "tile"
+        },
+        {
+          "unit": 159,
+          "ms": 397089.51999999996,
+          "operation": "tile"
+        },
+        {
+          "unit": 160,
+          "ms": 399796.82,
+          "operation": "tile"
+        },
+        {
+          "unit": 161,
+          "ms": 402543.66,
+          "operation": "tile"
+        },
+        {
+          "unit": 162,
+          "ms": 405273.92,
+          "operation": "tile"
+        },
+        {
+          "unit": 163,
+          "ms": 408010.72000000003,
+          "operation": "tile"
+        },
+        {
+          "unit": 164,
+          "ms": 410764.25999999995,
+          "operation": "tile"
+        },
+        {
+          "unit": 165,
+          "ms": 413530.87999999995,
+          "operation": "tile"
+        },
+        {
+          "unit": 166,
+          "ms": 416259.22000000003,
+          "operation": "tile"
+        },
+        {
+          "unit": 167,
+          "ms": 418979.7,
+          "operation": "tile"
+        },
+        {
+          "unit": 168,
+          "ms": 421708.16,
+          "operation": "tile"
+        },
+        {
+          "unit": 169,
+          "ms": 424448.72000000003,
+          "operation": "tile"
+        },
+        {
+          "unit": 170,
+          "ms": 427187.22000000003,
+          "operation": "tile"
+        },
+        {
+          "unit": 171,
+          "ms": 429880.2,
+          "operation": "tile"
+        },
+        {
+          "unit": 172,
+          "ms": 432667.84,
+          "operation": "tile"
+        },
+        {
+          "unit": 173,
+          "ms": 435471.49999999994,
+          "operation": "tile"
+        },
+        {
+          "unit": 174,
+          "ms": 438168.27999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 175,
+          "ms": 440908.72000000003,
+          "operation": "tile"
+        },
+        {
+          "unit": 176,
+          "ms": 443617.18,
+          "operation": "tile"
+        },
+        {
+          "unit": 177,
+          "ms": 446326.60000000003,
+          "operation": "tile"
+        },
+        {
+          "unit": 178,
+          "ms": 449015.08,
+          "operation": "tile"
+        },
+        {
+          "unit": 179,
+          "ms": 451713.36000000004,
+          "operation": "tile"
+        },
+        {
+          "unit": 180,
+          "ms": 454409.11999999994,
+          "operation": "tile"
+        },
+        {
+          "unit": 181,
+          "ms": 457087.46,
+          "operation": "tile"
+        },
+        {
+          "unit": 182,
+          "ms": 459806.51999999996,
+          "operation": "tile"
+        },
+        {
+          "unit": 183,
+          "ms": 462524.25999999995,
+          "operation": "tile"
+        },
+        {
+          "unit": 184,
+          "ms": 465260.48000000004,
+          "operation": "tile"
+        },
+        {
+          "unit": 185,
+          "ms": 468032.11999999994,
+          "operation": "tile"
+        },
+        {
+          "unit": 186,
+          "ms": 470777.39999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 187,
+          "ms": 473569.8,
+          "operation": "tile"
+        },
+        {
+          "unit": 188,
+          "ms": 476338.82,
+          "operation": "tile"
+        },
+        {
+          "unit": 189,
+          "ms": 479053.54,
+          "operation": "tile"
+        },
+        {
+          "unit": 190,
+          "ms": 481720.34,
+          "operation": "tile"
+        },
+        {
+          "unit": 191,
+          "ms": 484413.16,
+          "operation": "tile"
+        },
+        {
+          "unit": 192,
+          "ms": 487111.16,
+          "operation": "tile"
+        },
+        {
+          "unit": 193,
+          "ms": 489831.99999999994,
+          "operation": "tile"
+        },
+        {
+          "unit": 194,
+          "ms": 492604.2,
+          "operation": "tile"
+        },
+        {
+          "unit": 195,
+          "ms": 495289.84,
+          "operation": "tile"
+        },
+        {
+          "unit": 196,
+          "ms": 498068.82,
+          "operation": "tile"
+        },
+        {
+          "unit": 197,
+          "ms": 500823.10000000003,
+          "operation": "tile"
+        },
+        {
+          "unit": 198,
+          "ms": 503565.18,
+          "operation": "tile"
+        },
+        {
+          "unit": 199,
+          "ms": 506316.84,
+          "operation": "tile"
+        },
+        {
+          "unit": 200,
+          "ms": 509025.34,
+          "operation": "tile"
+        },
+        {
+          "unit": 201,
+          "ms": 511713.94,
+          "operation": "tile"
+        },
+        {
+          "unit": 202,
+          "ms": 514411.68,
+          "operation": "tile"
+        },
+        {
+          "unit": 203,
+          "ms": 517131.51999999996,
+          "operation": "tile"
+        },
+        {
+          "unit": 204,
+          "ms": 519936.98000000004,
+          "operation": "tile"
+        },
+        {
+          "unit": 205,
+          "ms": 522689.27999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 206,
+          "ms": 525375.3200000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 207,
+          "ms": 528104.3400000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 208,
+          "ms": 530834.5,
+          "operation": "tile"
+        },
+        {
+          "unit": 209,
+          "ms": 533569.7,
+          "operation": "tile"
+        },
+        {
+          "unit": 210,
+          "ms": 536287.1000000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 211,
+          "ms": 539086.98,
+          "operation": "tile"
+        },
+        {
+          "unit": 212,
+          "ms": 541792.8799999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 213,
+          "ms": 544541.04,
+          "operation": "tile"
+        },
+        {
+          "unit": 214,
+          "ms": 547228.8799999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 215,
+          "ms": 549934,
+          "operation": "tile"
+        },
+        {
+          "unit": 216,
+          "ms": 552679.3400000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 217,
+          "ms": 555405.48,
+          "operation": "tile"
+        },
+        {
+          "unit": 218,
+          "ms": 558122.6599999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 219,
+          "ms": 560873.74,
+          "operation": "tile"
+        },
+        {
+          "unit": 220,
+          "ms": 563670.3200000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 221,
+          "ms": 566386.4199999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 222,
+          "ms": 569158.76,
+          "operation": "tile"
+        },
+        {
+          "unit": 223,
+          "ms": 571863.72,
+          "operation": "tile"
+        },
+        {
+          "unit": 224,
+          "ms": 574576.98,
+          "operation": "tile"
+        },
+        {
+          "unit": 225,
+          "ms": 577265.72,
+          "operation": "tile"
+        },
+        {
+          "unit": 226,
+          "ms": 579991.8,
+          "operation": "tile"
+        },
+        {
+          "unit": 227,
+          "ms": 582763.22,
+          "operation": "tile"
+        },
+        {
+          "unit": 228,
+          "ms": 585479.9199999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 229,
+          "ms": 588189.5800000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 230,
+          "ms": 590901.6599999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 231,
+          "ms": 593589,
+          "operation": "tile"
+        },
+        {
+          "unit": 232,
+          "ms": 596312.52,
+          "operation": "tile"
+        },
+        {
+          "unit": 233,
+          "ms": 598977.3600000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 234,
+          "ms": 601674.76,
+          "operation": "tile"
+        },
+        {
+          "unit": 235,
+          "ms": 604392.8999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 236,
+          "ms": 607104.44,
+          "operation": "tile"
+        },
+        {
+          "unit": 237,
+          "ms": 609843.28,
+          "operation": "tile"
+        },
+        {
+          "unit": 238,
+          "ms": 612580.22,
+          "operation": "tile"
+        },
+        {
+          "unit": 239,
+          "ms": 615320.3799999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 240,
+          "ms": 618048.98,
+          "operation": "tile"
+        },
+        {
+          "unit": 241,
+          "ms": 620743.0800000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 242,
+          "ms": 623474.9199999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 243,
+          "ms": 626217.1199999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 244,
+          "ms": 628922.3200000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 245,
+          "ms": 631608.52,
+          "operation": "tile"
+        },
+        {
+          "unit": 246,
+          "ms": 634304.3200000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 247,
+          "ms": 637038.3999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 248,
+          "ms": 639774.74,
+          "operation": "tile"
+        },
+        {
+          "unit": 249,
+          "ms": 642560.3,
+          "operation": "tile"
+        },
+        {
+          "unit": 250,
+          "ms": 645332.22,
+          "operation": "tile"
+        },
+        {
+          "unit": 251,
+          "ms": 648131.3,
+          "operation": "tile"
+        },
+        {
+          "unit": 252,
+          "ms": 650861.46,
+          "operation": "tile"
+        },
+        {
+          "unit": 253,
+          "ms": 653602.02,
+          "operation": "tile"
+        },
+        {
+          "unit": 254,
+          "ms": 656316.3400000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 255,
+          "ms": 659034.1799999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 256,
+          "ms": 661719.02,
+          "operation": "tile"
+        },
+        {
+          "unit": 257,
+          "ms": 664429.24,
+          "operation": "tile"
+        },
+        {
+          "unit": 258,
+          "ms": 667166.54,
+          "operation": "tile"
+        },
+        {
+          "unit": 259,
+          "ms": 669873.3999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 260,
+          "ms": 672577.9199999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 261,
+          "ms": 675280.96,
+          "operation": "tile"
+        },
+        {
+          "unit": 262,
+          "ms": 678037.6199999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 263,
+          "ms": 680820.76,
+          "operation": "tile"
+        },
+        {
+          "unit": 264,
+          "ms": 683588.6199999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 265,
+          "ms": 686307,
+          "operation": "tile"
+        },
+        {
+          "unit": 266,
+          "ms": 689015.44,
+          "operation": "tile"
+        },
+        {
+          "unit": 267,
+          "ms": 691785.1399999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 268,
+          "ms": 694516.8600000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 269,
+          "ms": 697207.3400000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 270,
+          "ms": 699997.8200000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 271,
+          "ms": 702695.6599999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 272,
+          "ms": 705438.8,
+          "operation": "tile"
+        },
+        {
+          "unit": 273,
+          "ms": 708185.52,
+          "operation": "tile"
+        },
+        {
+          "unit": 274,
+          "ms": 710896.3400000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 275,
+          "ms": 713613.0800000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 276,
+          "ms": 716326.1599999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 277,
+          "ms": 719006.6399999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 278,
+          "ms": 721704.8200000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 279,
+          "ms": 724396.04,
+          "operation": "tile"
+        },
+        {
+          "unit": 280,
+          "ms": 727156.8400000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 281,
+          "ms": 729958.8600000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 282,
+          "ms": 732652.76,
+          "operation": "tile"
+        },
+        {
+          "unit": 283,
+          "ms": 735344.54,
+          "operation": "tile"
+        },
+        {
+          "unit": 284,
+          "ms": 738042.96,
+          "operation": "tile"
+        },
+        {
+          "unit": 285,
+          "ms": 740718.6799999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 286,
+          "ms": 743382.96,
+          "operation": "tile"
+        },
+        {
+          "unit": 287,
+          "ms": 746113.1599999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 288,
+          "ms": 748807.98,
+          "operation": "tile"
+        },
+        {
+          "unit": 289,
+          "ms": 751586.48,
+          "operation": "encode"
+        },
+        {
+          "unit": 290,
+          "ms": 751586.6199999999,
+          "operation": "composite"
+        },
+        {
+          "unit": 291,
+          "ms": 751586.8600000001,
+          "operation": "encode"
+        }
+      ],
+      "dimensions": [
+        8192,
+        6346
+      ],
+      "canEdit": false,
+      "outputBytes": 182988123,
+      "totalMs": 756795,
+      "plan": {
+        "height": 3173,
+        "tileCount": 285,
+        "outputWidth": 8192,
+        "outputHeight": 6346,
+        "width": 4096,
+        "estimatedPeakBytes": 889175902,
+        "scale": 2
+      },
+      "alphaError": 0,
+      "sourceBytes": 45580126
+    },
+    {
+      "passed": true,
+      "fullMs": 755231.94,
+      "trace": [
+        {
+          "unit": 1,
+          "ms": 50.67999999993481,
+          "operation": "decode"
+        },
+        {
+          "unit": 2,
+          "ms": 265.03999999992084,
+          "operation": "scan"
+        },
+        {
+          "unit": 3,
+          "ms": 548.9399999999441,
+          "operation": "prepare-rgb"
+        },
+        {
+          "unit": 3,
+          "ms": 895.8999999999069,
+          "operation": "download"
+        },
+        {
+          "unit": 3,
+          "ms": 956.7799999999115,
+          "operation": "initialize"
+        },
+        {
+          "unit": 4,
+          "ms": 1193.5599999999395,
+          "operation": "tile"
+        },
+        {
+          "unit": 5,
+          "ms": 2122.899999999907,
+          "operation": "tile"
+        },
+        {
+          "unit": 6,
+          "ms": 2990.019999999902,
+          "operation": "tile"
+        },
+        {
+          "unit": 7,
+          "ms": 3862.159999999916,
+          "operation": "tile"
+        },
+        {
+          "unit": 8,
+          "ms": 4739.0599999999395,
+          "operation": "tile"
+        },
+        {
+          "unit": 9,
+          "ms": 5601.459999999963,
+          "operation": "tile"
+        },
+        {
+          "unit": 10,
+          "ms": 6461.760000000009,
+          "operation": "tile"
+        },
+        {
+          "unit": 11,
+          "ms": 7334.479999999981,
+          "operation": "tile"
+        },
+        {
+          "unit": 12,
+          "ms": 8200,
+          "operation": "tile"
+        },
+        {
+          "unit": 13,
+          "ms": 9060.359999999986,
+          "operation": "tile"
+        },
+        {
+          "unit": 14,
+          "ms": 9925.459999999963,
+          "operation": "tile"
+        },
+        {
+          "unit": 15,
+          "ms": 10960.79999999993,
+          "operation": "tile"
+        },
+        {
+          "unit": 16,
+          "ms": 12563,
+          "operation": "tile"
+        },
+        {
+          "unit": 17,
+          "ms": 15038.479999999981,
+          "operation": "tile"
+        },
+        {
+          "unit": 18,
+          "ms": 17719.439999999944,
+          "operation": "tile"
+        },
+        {
+          "unit": 19,
+          "ms": 20395.05999999994,
+          "operation": "tile"
+        },
+        {
+          "unit": 20,
+          "ms": 23085.399999999907,
+          "operation": "tile"
+        },
+        {
+          "unit": 21,
+          "ms": 25768.959999999963,
+          "operation": "tile"
+        },
+        {
+          "unit": 22,
+          "ms": 28488.079999999958,
+          "operation": "tile"
+        },
+        {
+          "unit": 23,
+          "ms": 31227.519999999902,
+          "operation": "tile"
+        },
+        {
+          "unit": 24,
+          "ms": 33676.73999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 25,
+          "ms": 36193.359999999986,
+          "operation": "tile"
+        },
+        {
+          "unit": 26,
+          "ms": 38877.97999999998,
+          "operation": "tile"
+        },
+        {
+          "unit": 27,
+          "ms": 41581.79999999993,
+          "operation": "tile"
+        },
+        {
+          "unit": 28,
+          "ms": 44296.159999999916,
+          "operation": "tile"
+        },
+        {
+          "unit": 29,
+          "ms": 46991.380000000005,
+          "operation": "tile"
+        },
+        {
+          "unit": 30,
+          "ms": 49707.97999999998,
+          "operation": "tile"
+        },
+        {
+          "unit": 31,
+          "ms": 52399.39999999991,
+          "operation": "tile"
+        },
+        {
+          "unit": 32,
+          "ms": 55113.09999999998,
+          "operation": "tile"
+        },
+        {
+          "unit": 33,
+          "ms": 57787.33999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 34,
+          "ms": 60425.55999999994,
+          "operation": "tile"
+        },
+        {
+          "unit": 35,
+          "ms": 63164.79999999993,
+          "operation": "tile"
+        },
+        {
+          "unit": 36,
+          "ms": 65773.79999999993,
+          "operation": "tile"
+        },
+        {
+          "unit": 37,
+          "ms": 68366.93999999994,
+          "operation": "tile"
+        },
+        {
+          "unit": 38,
+          "ms": 70939.56000000006,
+          "operation": "tile"
+        },
+        {
+          "unit": 39,
+          "ms": 73641.30000000005,
+          "operation": "tile"
+        },
+        {
+          "unit": 40,
+          "ms": 76363.52000000002,
+          "operation": "tile"
+        },
+        {
+          "unit": 41,
+          "ms": 79128.95999999996,
+          "operation": "tile"
+        },
+        {
+          "unit": 42,
+          "ms": 81875.5,
+          "operation": "tile"
+        },
+        {
+          "unit": 43,
+          "ms": 84551.30000000005,
+          "operation": "tile"
+        },
+        {
+          "unit": 44,
+          "ms": 87225.65999999992,
+          "operation": "tile"
+        },
+        {
+          "unit": 45,
+          "ms": 89941.07999999984,
+          "operation": "tile"
+        },
+        {
+          "unit": 46,
+          "ms": 92636.19999999995,
+          "operation": "tile"
+        },
+        {
+          "unit": 47,
+          "ms": 95336.37999999989,
+          "operation": "tile"
+        },
+        {
+          "unit": 48,
+          "ms": 98029,
+          "operation": "tile"
+        },
+        {
+          "unit": 49,
+          "ms": 100724.33999999985,
+          "operation": "tile"
+        },
+        {
+          "unit": 50,
+          "ms": 103413.73999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 51,
+          "ms": 106112.02000000002,
+          "operation": "tile"
+        },
+        {
+          "unit": 52,
+          "ms": 108773.85999999987,
+          "operation": "tile"
+        },
+        {
+          "unit": 53,
+          "ms": 111490.69999999995,
+          "operation": "tile"
+        },
+        {
+          "unit": 54,
+          "ms": 114241.26000000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 55,
+          "ms": 116979.59999999986,
+          "operation": "tile"
+        },
+        {
+          "unit": 56,
+          "ms": 119677.52000000002,
+          "operation": "tile"
+        },
+        {
+          "unit": 57,
+          "ms": 122371.61999999988,
+          "operation": "tile"
+        },
+        {
+          "unit": 58,
+          "ms": 125063.28000000003,
+          "operation": "tile"
+        },
+        {
+          "unit": 59,
+          "ms": 127768.69999999995,
+          "operation": "tile"
+        },
+        {
+          "unit": 60,
+          "ms": 130439.15999999992,
+          "operation": "tile"
+        },
+        {
+          "unit": 61,
+          "ms": 133187.59999999986,
+          "operation": "tile"
+        },
+        {
+          "unit": 62,
+          "ms": 135965.97999999998,
+          "operation": "tile"
+        },
+        {
+          "unit": 63,
+          "ms": 138657.65999999992,
+          "operation": "tile"
+        },
+        {
+          "unit": 64,
+          "ms": 141380.54000000004,
+          "operation": "tile"
+        },
+        {
+          "unit": 65,
+          "ms": 144131.17999999993,
+          "operation": "tile"
+        },
+        {
+          "unit": 66,
+          "ms": 146826.3799999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 67,
+          "ms": 149529.41999999993,
+          "operation": "tile"
+        },
+        {
+          "unit": 68,
+          "ms": 152240.59999999986,
+          "operation": "tile"
+        },
+        {
+          "unit": 69,
+          "ms": 154930.32000000007,
+          "operation": "tile"
+        },
+        {
+          "unit": 70,
+          "ms": 157614.91999999993,
+          "operation": "tile"
+        },
+        {
+          "unit": 71,
+          "ms": 160275.41999999993,
+          "operation": "tile"
+        },
+        {
+          "unit": 72,
+          "ms": 162927.02000000002,
+          "operation": "tile"
+        },
+        {
+          "unit": 73,
+          "ms": 165635.11999999988,
+          "operation": "tile"
+        },
+        {
+          "unit": 74,
+          "ms": 168313.21999999997,
+          "operation": "tile"
+        },
+        {
+          "unit": 75,
+          "ms": 171000.33999999985,
+          "operation": "tile"
+        },
+        {
+          "unit": 76,
+          "ms": 173700.56000000006,
+          "operation": "tile"
+        },
+        {
+          "unit": 77,
+          "ms": 176406.97999999998,
+          "operation": "tile"
+        },
+        {
+          "unit": 78,
+          "ms": 179119.95999999996,
+          "operation": "tile"
+        },
+        {
+          "unit": 79,
+          "ms": 181821.17999999993,
+          "operation": "tile"
+        },
+        {
+          "unit": 80,
+          "ms": 184552.06000000006,
+          "operation": "tile"
+        },
+        {
+          "unit": 81,
+          "ms": 187189.52000000002,
+          "operation": "tile"
+        },
+        {
+          "unit": 82,
+          "ms": 189853.09999999986,
+          "operation": "tile"
+        },
+        {
+          "unit": 83,
+          "ms": 192544.56000000006,
+          "operation": "tile"
+        },
+        {
+          "unit": 84,
+          "ms": 195158.69999999995,
+          "operation": "tile"
+        },
+        {
+          "unit": 85,
+          "ms": 197822.24,
+          "operation": "tile"
+        },
+        {
+          "unit": 86,
+          "ms": 200511.43999999994,
+          "operation": "tile"
+        },
+        {
+          "unit": 87,
+          "ms": 203190,
+          "operation": "tile"
+        },
+        {
+          "unit": 88,
+          "ms": 205860.97999999998,
+          "operation": "tile"
+        },
+        {
+          "unit": 89,
+          "ms": 208528.8999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 90,
+          "ms": 211253.3999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 91,
+          "ms": 213930.3799999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 92,
+          "ms": 216658.33999999985,
+          "operation": "tile"
+        },
+        {
+          "unit": 93,
+          "ms": 219336.41999999993,
+          "operation": "tile"
+        },
+        {
+          "unit": 94,
+          "ms": 221994.06000000006,
+          "operation": "tile"
+        },
+        {
+          "unit": 95,
+          "ms": 224478.43999999994,
+          "operation": "tile"
+        },
+        {
+          "unit": 96,
+          "ms": 227185.11999999988,
+          "operation": "tile"
+        },
+        {
+          "unit": 97,
+          "ms": 229864.85999999987,
+          "operation": "tile"
+        },
+        {
+          "unit": 98,
+          "ms": 232539.35999999987,
+          "operation": "tile"
+        },
+        {
+          "unit": 99,
+          "ms": 235285.24,
+          "operation": "tile"
+        },
+        {
+          "unit": 100,
+          "ms": 237971.85999999987,
+          "operation": "tile"
+        },
+        {
+          "unit": 101,
+          "ms": 240695.78000000003,
+          "operation": "tile"
+        },
+        {
+          "unit": 102,
+          "ms": 243429.91999999993,
+          "operation": "tile"
+        },
+        {
+          "unit": 103,
+          "ms": 246140.3799999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 104,
+          "ms": 248843.02000000002,
+          "operation": "tile"
+        },
+        {
+          "unit": 105,
+          "ms": 251540.91999999993,
+          "operation": "tile"
+        },
+        {
+          "unit": 106,
+          "ms": 254239.74,
+          "operation": "tile"
+        },
+        {
+          "unit": 107,
+          "ms": 256876.65999999992,
+          "operation": "tile"
+        },
+        {
+          "unit": 108,
+          "ms": 259603.85999999987,
+          "operation": "tile"
+        },
+        {
+          "unit": 109,
+          "ms": 262311.8799999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 110,
+          "ms": 265039.22,
+          "operation": "tile"
+        },
+        {
+          "unit": 111,
+          "ms": 267770.09999999986,
+          "operation": "tile"
+        },
+        {
+          "unit": 112,
+          "ms": 270483.1399999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 113,
+          "ms": 273107.43999999994,
+          "operation": "tile"
+        },
+        {
+          "unit": 114,
+          "ms": 275598.22,
+          "operation": "tile"
+        },
+        {
+          "unit": 115,
+          "ms": 278305.76,
+          "operation": "tile"
+        },
+        {
+          "unit": 116,
+          "ms": 280995.28,
+          "operation": "tile"
+        },
+        {
+          "unit": 117,
+          "ms": 283677.57999999984,
+          "operation": "tile"
+        },
+        {
+          "unit": 118,
+          "ms": 286397.22,
+          "operation": "tile"
+        },
+        {
+          "unit": 119,
+          "ms": 289081.45999999996,
+          "operation": "tile"
+        },
+        {
+          "unit": 120,
+          "ms": 291770.22,
+          "operation": "tile"
+        },
+        {
+          "unit": 121,
+          "ms": 294453.33999999985,
+          "operation": "tile"
+        },
+        {
+          "unit": 122,
+          "ms": 297182.22,
+          "operation": "tile"
+        },
+        {
+          "unit": 123,
+          "ms": 299874.02,
+          "operation": "tile"
+        },
+        {
+          "unit": 124,
+          "ms": 302541.59999999986,
+          "operation": "tile"
+        },
+        {
+          "unit": 125,
+          "ms": 305223.19999999995,
+          "operation": "tile"
+        },
+        {
+          "unit": 126,
+          "ms": 307927.52,
+          "operation": "tile"
+        },
+        {
+          "unit": 127,
+          "ms": 310637.69999999995,
+          "operation": "tile"
+        },
+        {
+          "unit": 128,
+          "ms": 313296.93999999994,
+          "operation": "tile"
+        },
+        {
+          "unit": 129,
+          "ms": 315972.45999999996,
+          "operation": "tile"
+        },
+        {
+          "unit": 130,
+          "ms": 318669.45999999996,
+          "operation": "tile"
+        },
+        {
+          "unit": 131,
+          "ms": 321346.30000000005,
+          "operation": "tile"
+        },
+        {
+          "unit": 132,
+          "ms": 324060.56000000006,
+          "operation": "tile"
+        },
+        {
+          "unit": 133,
+          "ms": 326751.78,
+          "operation": "tile"
+        },
+        {
+          "unit": 134,
+          "ms": 329426.78,
+          "operation": "tile"
+        },
+        {
+          "unit": 135,
+          "ms": 332120.6199999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 136,
+          "ms": 334822.69999999995,
+          "operation": "tile"
+        },
+        {
+          "unit": 137,
+          "ms": 337525.98,
+          "operation": "tile"
+        },
+        {
+          "unit": 138,
+          "ms": 340219.28,
+          "operation": "tile"
+        },
+        {
+          "unit": 139,
+          "ms": 342916.1199999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 140,
+          "ms": 345621.1399999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 141,
+          "ms": 348379.98,
+          "operation": "tile"
+        },
+        {
+          "unit": 142,
+          "ms": 351107.43999999994,
+          "operation": "tile"
+        },
+        {
+          "unit": 143,
+          "ms": 353747.6199999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 144,
+          "ms": 356450,
+          "operation": "tile"
+        },
+        {
+          "unit": 145,
+          "ms": 359134.6599999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 146,
+          "ms": 361805.6399999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 147,
+          "ms": 364509.74,
+          "operation": "tile"
+        },
+        {
+          "unit": 148,
+          "ms": 367192.6399999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 149,
+          "ms": 369896.3999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 150,
+          "ms": 372642.45999999996,
+          "operation": "tile"
+        },
+        {
+          "unit": 151,
+          "ms": 375399.35999999987,
+          "operation": "tile"
+        },
+        {
+          "unit": 152,
+          "ms": 378166.54000000004,
+          "operation": "tile"
+        },
+        {
+          "unit": 153,
+          "ms": 380880.04000000004,
+          "operation": "tile"
+        },
+        {
+          "unit": 154,
+          "ms": 383565.1399999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 155,
+          "ms": 386265.95999999996,
+          "operation": "tile"
+        },
+        {
+          "unit": 156,
+          "ms": 389010.3799999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 157,
+          "ms": 391677.95999999996,
+          "operation": "tile"
+        },
+        {
+          "unit": 158,
+          "ms": 394393.1599999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 159,
+          "ms": 397091.3799999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 160,
+          "ms": 399771.1199999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 161,
+          "ms": 402497.3999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 162,
+          "ms": 405190.67999999993,
+          "operation": "tile"
+        },
+        {
+          "unit": 163,
+          "ms": 407907.93999999994,
+          "operation": "tile"
+        },
+        {
+          "unit": 164,
+          "ms": 410600.95999999996,
+          "operation": "tile"
+        },
+        {
+          "unit": 165,
+          "ms": 413304.3999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 166,
+          "ms": 415997.04000000004,
+          "operation": "tile"
+        },
+        {
+          "unit": 167,
+          "ms": 418719.98,
+          "operation": "tile"
+        },
+        {
+          "unit": 168,
+          "ms": 421389.6599999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 169,
+          "ms": 424091.85999999987,
+          "operation": "tile"
+        },
+        {
+          "unit": 170,
+          "ms": 426794.5,
+          "operation": "tile"
+        },
+        {
+          "unit": 171,
+          "ms": 429520.3999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 172,
+          "ms": 432229.48,
+          "operation": "tile"
+        },
+        {
+          "unit": 173,
+          "ms": 434943.3799999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 174,
+          "ms": 437638.22,
+          "operation": "tile"
+        },
+        {
+          "unit": 175,
+          "ms": 440381.9199999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 176,
+          "ms": 443035.1199999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 177,
+          "ms": 445709.8999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 178,
+          "ms": 448427.22,
+          "operation": "tile"
+        },
+        {
+          "unit": 179,
+          "ms": 451110.3999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 180,
+          "ms": 453782.28,
+          "operation": "tile"
+        },
+        {
+          "unit": 181,
+          "ms": 456498.22,
+          "operation": "tile"
+        },
+        {
+          "unit": 182,
+          "ms": 459220.8799999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 183,
+          "ms": 461944.56000000006,
+          "operation": "tile"
+        },
+        {
+          "unit": 184,
+          "ms": 464645.85999999987,
+          "operation": "tile"
+        },
+        {
+          "unit": 185,
+          "ms": 467347.8999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 186,
+          "ms": 470061.95999999996,
+          "operation": "tile"
+        },
+        {
+          "unit": 187,
+          "ms": 472747.8999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 188,
+          "ms": 475464.04000000004,
+          "operation": "tile"
+        },
+        {
+          "unit": 189,
+          "ms": 478183.8999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 190,
+          "ms": 480809.1199999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 191,
+          "ms": 483516.04000000004,
+          "operation": "tile"
+        },
+        {
+          "unit": 192,
+          "ms": 486252.72,
+          "operation": "tile"
+        },
+        {
+          "unit": 193,
+          "ms": 488982.80000000005,
+          "operation": "tile"
+        },
+        {
+          "unit": 194,
+          "ms": 491765.74,
+          "operation": "tile"
+        },
+        {
+          "unit": 195,
+          "ms": 494439.72,
+          "operation": "tile"
+        },
+        {
+          "unit": 196,
+          "ms": 497131.33999999985,
+          "operation": "tile"
+        },
+        {
+          "unit": 197,
+          "ms": 499898.8799999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 198,
+          "ms": 502601.67999999993,
+          "operation": "tile"
+        },
+        {
+          "unit": 199,
+          "ms": 505282.82000000007,
+          "operation": "tile"
+        },
+        {
+          "unit": 200,
+          "ms": 508011.8799999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 201,
+          "ms": 510726.52,
+          "operation": "tile"
+        },
+        {
+          "unit": 202,
+          "ms": 513460.5,
+          "operation": "tile"
+        },
+        {
+          "unit": 203,
+          "ms": 516177.09999999986,
+          "operation": "tile"
+        },
+        {
+          "unit": 204,
+          "ms": 518891.5,
+          "operation": "tile"
+        },
+        {
+          "unit": 205,
+          "ms": 521588.82000000007,
+          "operation": "tile"
+        },
+        {
+          "unit": 206,
+          "ms": 524307.2,
+          "operation": "tile"
+        },
+        {
+          "unit": 207,
+          "ms": 526991.2,
+          "operation": "tile"
+        },
+        {
+          "unit": 208,
+          "ms": 529684.98,
+          "operation": "tile"
+        },
+        {
+          "unit": 209,
+          "ms": 532399.96,
+          "operation": "tile"
+        },
+        {
+          "unit": 210,
+          "ms": 535139.44,
+          "operation": "tile"
+        },
+        {
+          "unit": 211,
+          "ms": 537826.6599999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 212,
+          "ms": 540529.94,
+          "operation": "tile"
+        },
+        {
+          "unit": 213,
+          "ms": 543262.8799999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 214,
+          "ms": 545944.48,
+          "operation": "tile"
+        },
+        {
+          "unit": 215,
+          "ms": 548646.98,
+          "operation": "tile"
+        },
+        {
+          "unit": 216,
+          "ms": 551355.5999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 217,
+          "ms": 554037.74,
+          "operation": "tile"
+        },
+        {
+          "unit": 218,
+          "ms": 556760.4199999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 219,
+          "ms": 559452.3399999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 220,
+          "ms": 562148.5,
+          "operation": "tile"
+        },
+        {
+          "unit": 221,
+          "ms": 564846.8200000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 222,
+          "ms": 567572.1599999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 223,
+          "ms": 570273.96,
+          "operation": "tile"
+        },
+        {
+          "unit": 224,
+          "ms": 572977.4199999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 225,
+          "ms": 575677.52,
+          "operation": "tile"
+        },
+        {
+          "unit": 226,
+          "ms": 578362.3999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 227,
+          "ms": 581062.54,
+          "operation": "tile"
+        },
+        {
+          "unit": 228,
+          "ms": 583772.3999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 229,
+          "ms": 586474.3599999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 230,
+          "ms": 589181.6199999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 231,
+          "ms": 591898.96,
+          "operation": "tile"
+        },
+        {
+          "unit": 232,
+          "ms": 594634.1199999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 233,
+          "ms": 597329.0999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 234,
+          "ms": 600067.5799999998,
+          "operation": "tile"
+        },
+        {
+          "unit": 235,
+          "ms": 602789.5999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 236,
+          "ms": 605479.6799999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 237,
+          "ms": 608216.76,
+          "operation": "tile"
+        },
+        {
+          "unit": 238,
+          "ms": 610927.48,
+          "operation": "tile"
+        },
+        {
+          "unit": 239,
+          "ms": 613632.8200000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 240,
+          "ms": 616328.54,
+          "operation": "tile"
+        },
+        {
+          "unit": 241,
+          "ms": 619048.8599999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 242,
+          "ms": 621786.1199999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 243,
+          "ms": 624493.3,
+          "operation": "tile"
+        },
+        {
+          "unit": 244,
+          "ms": 627199.06,
+          "operation": "tile"
+        },
+        {
+          "unit": 245,
+          "ms": 629902.3599999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 246,
+          "ms": 632596.26,
+          "operation": "tile"
+        },
+        {
+          "unit": 247,
+          "ms": 635281.7,
+          "operation": "tile"
+        },
+        {
+          "unit": 248,
+          "ms": 637947.3599999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 249,
+          "ms": 640672.48,
+          "operation": "tile"
+        },
+        {
+          "unit": 250,
+          "ms": 643485.02,
+          "operation": "tile"
+        },
+        {
+          "unit": 251,
+          "ms": 646272.94,
+          "operation": "tile"
+        },
+        {
+          "unit": 252,
+          "ms": 648927.52,
+          "operation": "tile"
+        },
+        {
+          "unit": 253,
+          "ms": 651654.78,
+          "operation": "tile"
+        },
+        {
+          "unit": 254,
+          "ms": 654369.1399999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 255,
+          "ms": 657116.9199999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 256,
+          "ms": 659809.28,
+          "operation": "tile"
+        },
+        {
+          "unit": 257,
+          "ms": 662493.1599999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 258,
+          "ms": 665167.4199999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 259,
+          "ms": 667882.2,
+          "operation": "tile"
+        },
+        {
+          "unit": 260,
+          "ms": 670592.8200000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 261,
+          "ms": 673305.02,
+          "operation": "tile"
+        },
+        {
+          "unit": 262,
+          "ms": 675983.7,
+          "operation": "tile"
+        },
+        {
+          "unit": 263,
+          "ms": 678701.06,
+          "operation": "tile"
+        },
+        {
+          "unit": 264,
+          "ms": 681405.28,
+          "operation": "tile"
+        },
+        {
+          "unit": 265,
+          "ms": 684136.5,
+          "operation": "tile"
+        },
+        {
+          "unit": 266,
+          "ms": 686843.04,
+          "operation": "tile"
+        },
+        {
+          "unit": 267,
+          "ms": 689528.1599999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 268,
+          "ms": 692245.2,
+          "operation": "tile"
+        },
+        {
+          "unit": 269,
+          "ms": 694938.8599999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 270,
+          "ms": 697664.94,
+          "operation": "tile"
+        },
+        {
+          "unit": 271,
+          "ms": 700331.5,
+          "operation": "tile"
+        },
+        {
+          "unit": 272,
+          "ms": 703011.3999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 273,
+          "ms": 705722.26,
+          "operation": "tile"
+        },
+        {
+          "unit": 274,
+          "ms": 708441.98,
+          "operation": "tile"
+        },
+        {
+          "unit": 275,
+          "ms": 711153.8200000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 276,
+          "ms": 713842.8799999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 277,
+          "ms": 716544.3999999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 278,
+          "ms": 719221.94,
+          "operation": "tile"
+        },
+        {
+          "unit": 279,
+          "ms": 721915.1199999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 280,
+          "ms": 724635.0799999998,
+          "operation": "tile"
+        },
+        {
+          "unit": 281,
+          "ms": 727328.8,
+          "operation": "tile"
+        },
+        {
+          "unit": 282,
+          "ms": 730049.3200000001,
+          "operation": "tile"
+        },
+        {
+          "unit": 283,
+          "ms": 732783.6399999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 284,
+          "ms": 735484.5799999998,
+          "operation": "tile"
+        },
+        {
+          "unit": 285,
+          "ms": 738175.5799999998,
+          "operation": "tile"
+        },
+        {
+          "unit": 286,
+          "ms": 740855.3799999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 287,
+          "ms": 743513.8,
+          "operation": "tile"
+        },
+        {
+          "unit": 288,
+          "ms": 746163.1199999999,
+          "operation": "tile"
+        },
+        {
+          "unit": 289,
+          "ms": 748877.94,
+          "operation": "encode"
+        },
+        {
+          "unit": 290,
+          "ms": 748878.1199999999,
+          "operation": "composite"
+        },
+        {
+          "unit": 291,
+          "ms": 748878.2,
+          "operation": "encode"
+        }
+      ],
+      "dimensions": [
+        8192,
+        6346
+      ],
+      "canEdit": false,
+      "outputBytes": 182988123,
+      "totalMs": 753930.4,
+      "plan": {
+        "height": 3173,
+        "tileCount": 285,
+        "outputWidth": 8192,
+        "outputHeight": 6346,
+        "width": 4096,
+        "estimatedPeakBytes": 889175902,
+        "scale": 2
+      },
+      "alphaError": 0,
+      "sourceBytes": 45580126
+    }
+  ],
+  "width": 4096,
+  "run": 3,
+  "elapsedMs": 112357.21999999997,
+  "completed": 50,
+  "state": "interrupted",
+  "sourceBytes": 45580126,
+  "interruptedByUser": true,
+  "workerBundle": "processor.worker-B6R37tzW.js",
+  "device": {
+    "model": "iPhone 14 Pro",
+    "safariVersion": "27.2",
+    "hardwareConcurrency": 4
+  },
+  "passed": false
+}

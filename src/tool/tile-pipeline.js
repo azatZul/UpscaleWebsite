@@ -101,12 +101,14 @@ export async function assembleTiles(width, height, runTile, writeBand, onProgres
   }
 }
 
-export async function thumbnail(bitmap) {
+export async function thumbnail(bitmap, hasTransparency = false) {
   const ratio = Math.min(1, 640 / Math.max(bitmap.width, bitmap.height));
   const {canvas, context} = makeCanvas(Math.max(1, Math.round(bitmap.width * ratio)), Math.max(1, Math.round(bitmap.height * ratio)));
-  context.fillStyle = '#fff';
-  context.fillRect(0, 0, canvas.width, canvas.height);
+  if (!hasTransparency) {
+    context.fillStyle = '#fff';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+  }
   context.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
-  try { return await canvas.convertToBlob({type: 'image/jpeg', quality: .85}); }
+  try { return await canvas.convertToBlob(hasTransparency ? {type: 'image/png'} : {type: 'image/jpeg', quality: .85}); }
   finally { canvas.width = canvas.height = 1; }
 }

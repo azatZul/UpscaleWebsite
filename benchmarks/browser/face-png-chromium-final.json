@@ -1,0 +1,78 @@
+{
+  "kind": "transparent-face-pipeline",
+  "passed": true,
+  "detectedCount": 1,
+  "enhancedCount": 1,
+  "mime": "image/png",
+  "canEdit": true,
+  "alphaError": 0,
+  "selectionDifference": 164,
+  "reapplyError": 0,
+  "operations": [
+    {
+      "operation": "decode",
+      "model": "faces",
+      "elapsedMs": 2.444999933242798
+    },
+    {
+      "operation": "scan",
+      "model": "faces",
+      "elapsedMs": 1.9849998950958252
+    },
+    {
+      "operation": "download",
+      "model": "faces",
+      "elapsedMs": 5.914999961853027
+    },
+    {
+      "operation": "initialize",
+      "model": "faces",
+      "elapsedMs": 92.61500000953674
+    },
+    {
+      "operation": "detect",
+      "model": "faces",
+      "elapsedMs": 137.62000012397766
+    },
+    {
+      "operation": "detect",
+      "model": "faces",
+      "elapsedMs": 55.46499991416931
+    },
+    {
+      "operation": "face",
+      "model": "faces",
+      "elapsedMs": 14.495000123977661
+    },
+    {
+      "operation": "download",
+      "model": "faces",
+      "elapsedMs": 483.5499999523163
+    },
+    {
+      "operation": "initialize",
+      "model": "faces",
+      "elapsedMs": 203.0550000667572
+    },
+    {
+      "operation": "face",
+      "model": "faces",
+      "elapsedMs": 2173.0449998378754
+    }
+  ],
+  "basic": {
+    "opaque": {
+      "passed": true,
+      "mismatches": 0
+    },
+    "faceAlpha": {
+      "passed": true,
+      "alphaError": 0,
+      "changed": 3024
+    }
+  },
+  "browser": "chromium",
+  "browserVersion": "151.0.7922.34",
+  "localPinnedFaceModel": true,
+  "errors": []
+}

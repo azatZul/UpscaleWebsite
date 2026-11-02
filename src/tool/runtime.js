@@ -3,26 +3,34 @@ import {PhotoError, SCALE, TILE_SIZE} from './capability.js';
 import {resolveModelAsset} from './model-selection.js';
 import {tensorPixels} from './tile-pipeline.js';
 
-// The face finder shares this choice, so both ONNX models in a face pass load
-// the same engine build instead of two separate wasm heaps.
-export async function selectBackend(forceCpu) {
-  if (!forceCpu && navigator.gpu) {
-    try { if (await navigator.gpu.requestAdapter()) return 'webgpu'; } catch { /* CPU remains available. */ }
-  }
-  return 'wasm';
+import {requireGpuAdapter, selectBackend} from './gpu-backend.js';
+export {requireGpuAdapter, selectBackend} from './gpu-backend.js';
+
+let configured;
+export function wasmThreads(requested = 1, env = globalThis) {
+  if (!Number.isInteger(requested) || requested < 2 || !env.crossOriginIsolated ||
+      typeof env.SharedArrayBuffer !== 'function' || typeof env.Atomics !== 'object') return 1;
+  try {
+    new env.WebAssembly.Memory({initial: 1, maximum: 1, shared: true});
+    return Math.min(8, requested, env.navigator?.hardwareConcurrency || 1);
+  } catch { return 1; }
 }
 
-export async function importOrt(backend) {
+export async function importOrt(backend, execution = {}) {
   const ort = await import(/* @vite-ignore */ `${ASSETS.runtime}/${backend === 'webgpu' ? 'ort.webgpu.min.mjs' : 'ort.wasm.min.mjs'}`);
   ort.env.wasm.wasmPaths = `${ASSETS.runtime}/`;
-  ort.env.wasm.numThreads = 1;
+  const threads = backend === 'wasm' ? wasmThreads(execution.threads) : 1;
+  if (configured && (configured.backend !== backend || configured.threads !== threads)) {
+    throw new Error('A changed WASM configuration requires a fresh worker');
+  }
+  if (!configured) { ort.env.wasm.numThreads = threads; configured = {backend, threads}; }
   ort.env.wasm.proxy = false;
   ort.env.logLevel = 'error';
   return ort;
 }
 
-export async function loadRuntime(forceCpu, progress, face = false, scale = SCALE, modelKind = 'photo') {
-  const backend = await selectBackend(forceCpu);
+export async function loadRuntime(forceCpu, progress, face = false, scale = SCALE, modelKind = 'photo', execution = {}) {
+  const backend = execution.backend || await selectBackend(forceCpu);
   let model;
   try { model = face ? undefined : resolveModelAsset(ASSETS.models, modelKind, scale, backend); }
   catch { throw new PhotoError('runtime', 'err_engine_start'); }
@@ -31,25 +39,30 @@ export async function loadRuntime(forceCpu, progress, face = false, scale = SCAL
   let session;
   let ort;
   try {
+    progress({phase: 'initialize', title: 'loading_engine', detail: 'loading_engine_detail'});
+    if (backend === 'webgpu') await requireGpuAdapter();
+    ort = await importOrt(backend, execution);
     progress({phase: 'download', title: modelTitle, detail: 'loading_cached_detail'});
-    ort = await importOrt(backend);
-    const report = fraction => progress({phase: 'download', progress: fraction * .45, title: modelTitle, detail: 'stays_on_device'});
+    const report = (fraction, receivedBytes) => progress({phase: 'download', progress: fraction * .45, receivedBytes, title: modelTitle, detail: 'stays_on_device'});
     const modelBytes = face ? await downloadFace(report) : await download(model, report);
     const binary = backend === 'webgpu' ? 'ort-wasm-simd-threaded.asyncify.wasm' : 'ort-wasm-simd-threaded.wasm';
     // Fetch separately to report download progress instead of presenting it as
     // model compilation. ORT reads the identical versioned URL from HTTP cache.
-    await download(`${ASSETS.runtime}/${binary}`, fraction => progress({phase: 'download', progress: .45 + fraction * .55, title: 'loading_engine', detail: 'loading_engine_detail'}), false);
+    await download(`${ASSETS.runtime}/${binary}`, (fraction, receivedBytes) => progress({phase: 'download', progress: .45 + fraction * .55, receivedBytes, title: 'loading_engine', detail: 'loading_engine_detail'}), false);
     progress({phase: 'initialize', title: 'initializing', detail: 'initializing_detail'});
     session = await ort.InferenceSession.create(modelBytes, {
       executionProviders: [backend], graphOptimizationLevel: 'disabled',
       executionMode: 'sequential', enableCpuMemArena: true, enableMemPattern: true,
     });
+    progress({operation: 'initialize', completed: 1, backend, effectiveThreads: ort.env.wasm.numThreads,
+      requestedThreads: execution.threads || 1});
   } catch (error) {
     if (error.code === 'download') throw error;
     throw new PhotoError(backend === 'webgpu' ? 'gpu' : 'runtime', 'err_engine_start');
   }
   return {
     backend,
+    threads: ort.env.wasm.numThreads,
     async run(values) {
       const input = new ort.Tensor('float32', values, [1, 3, face ? 512 : TILE_SIZE, face ? 512 : TILE_SIZE]);
       let output;
@@ -66,7 +79,7 @@ export async function loadRuntime(forceCpu, progress, face = false, scale = SCAL
   };
 }
 
-async function download(url, onProgress, retain = true) {
+export async function download(url, onProgress = () => {}, retain = true) {
   let response;
   try { response = await fetch(url); } catch { throw new PhotoError('download', 'err_download'); }
   if (!response.ok) throw new PhotoError('download', 'err_unavailable');
@@ -81,10 +94,10 @@ async function download(url, onProgress, retain = true) {
       if (done) break;
       received += value.length;
       if (retain) chunks.push(value);
-      onProgress(total > 0 ? Math.min(1, received / total) : 0);
+      onProgress(total > 0 ? Math.min(1, received / total) : 0, received);
     }
   } catch { throw new PhotoError('download', 'err_interrupted'); }
-  onProgress(1);
+  onProgress(1, received);
   if (!retain) return;
   const result = new Uint8Array(received);
   let offset = 0;

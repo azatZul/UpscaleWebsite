@@ -1,0 +1,794 @@
+{
+  "largeEditorAdmission": {
+    "canEdit": false,
+    "passed": true,
+    "outputWidth": 8192,
+    "outputHeight": 6346
+  },
+  "backendPolicy": {
+    "facePasses": 2,
+    "passed": true,
+    "upscale": "webgpu",
+    "faceThreads": 1,
+    "cachedComposites": 4
+  },
+  "createdAt": "2026-10-28T07:45:45.810Z",
+  "environment": {
+    "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Mobile/15E148 Safari/604.1",
+    "hardwareConcurrency": 4,
+    "crossOriginIsolated": true,
+    "platform": "iPhone",
+    "maxTouchPoints": 5
+  },
+  "recovery": {
+    "effectiveThreads": 1,
+    "passed": true,
+    "rejected": [
+      2
+    ],
+    "attempts": [
+      {
+        "backend": "webgpu",
+        "threads": 1
+      },
+      {
+        "backend": "wasm",
+        "threads": 2
+      },
+      {
+        "backend": "wasm",
+        "threads": 1
+      }
+    ],
+    "mime": "image/png"
+  },
+  "method": "Physical Safari WebDriver tab; locally built HTML/UI/workers; pinned production models; no deployment",
+  "passed": true,
+  "operation": "encode",
+  "bundleSha256": {
+    "processor": "7a7a8e507b243df952164f7869a4115a2fd97a1631956305603f42041b55d02b",
+    "main": "5719e0c3ae0a104a9b46b567cba0db438d4ab2d64cc62b73c36ac7e15e11a14b",
+    "faces": "91cfe314142711f2a76b5b0053d0b6ad39d2e5705433455ff3fdb9e1ae99c890",
+    "composite": "cc3cfcc62075a115a4e12d59698e527858bb3467f3ebf6bfacd24977235989e4",
+    "html": "3ba1ab6e30829128bde0ac0f594ddccc48e7403912d67b3250116319c97fde5c",
+    "harness": "c381737ca6ac548c8f1c31541c784851686d70963d6d0eb858af86b305282f4e"
+  },
+  "completed": null,
+  "ui": {
+    "passed": true,
+    "cancelled": true,
+    "png": {
+      "mime": "image/png",
+      "filename": "gradient-uscale-2x.png"
+    },
+    "jpeg": {
+      "mime": "image/jpeg",
+      "filename": "opaque-uscale-2x.jpg"
+    }
+  },
+  "largeEditor": {
+    "passed": true,
+    "input": [
+      3072,
+      2304
+    ],
+    "dimensions": [
+      6144,
+      4608
+    ],
+    "samples": 128,
+    "selectionDifference": 43,
+    "reapplyError": 0,
+    "alphaError": 0
+  },
+  "step": "done",
+  "executions": [
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "gradient.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "opaque-reference.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "gradient.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "opaque-reference.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "hard-light.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "opaque-reference.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "hard-light.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "opaque-reference.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "hard-dark.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "opaque-reference.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "hard-dark.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "opaque-reference.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "shadow.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "opaque-reference.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "shadow.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "opaque-reference.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "holes.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "opaque-reference.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "holes.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "opaque-reference.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "alpha254.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "opaque-reference.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "alpha254.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "opaque-reference.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "faint.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "opaque-reference.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "faint.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "opaque-reference.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": null,
+      "mode": null,
+      "canEdit": false,
+      "file": "empty.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": null,
+      "mode": null,
+      "canEdit": false,
+      "file": "empty.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "webp.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "opaque-reference.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "webp.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "opaque-reference.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "group": "injected-fault",
+      "requestedThreads": 1,
+      "backend": "webgpu",
+      "file": "alpha254.png",
+      "mode": null
+    },
+    {
+      "group": "injected-fault",
+      "requestedThreads": 2,
+      "backend": "wasm",
+      "file": "alpha254.png",
+      "mode": null
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "alpha254.png",
+      "backend": "wasm",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "gradient.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": false,
+      "file": "opaque.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "group": "processor",
+      "requestedThreads": 1,
+      "backend": "webgpu",
+      "file": "gradient.png",
+      "mode": null
+    },
+    {
+      "requestedThreads": 1,
+      "result": "faces",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": null,
+      "file": "transparent-portrait.png",
+      "backend": "wasm",
+      "group": "faces"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": true,
+      "file": "transparent-portrait.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "applied",
+      "effectiveThreads": null,
+      "mode": null,
+      "canEdit": null,
+      "file": null,
+      "backend": "canvas",
+      "group": "composite"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "applied",
+      "effectiveThreads": null,
+      "mode": null,
+      "canEdit": null,
+      "file": null,
+      "backend": "canvas",
+      "group": "composite"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "faces",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": null,
+      "file": "large-transparent-portrait.png",
+      "backend": "wasm",
+      "group": "faces"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "done",
+      "effectiveThreads": 1,
+      "mode": null,
+      "canEdit": true,
+      "file": "large-transparent-portrait.png",
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "applied",
+      "effectiveThreads": null,
+      "mode": null,
+      "canEdit": null,
+      "file": null,
+      "backend": "canvas",
+      "group": "composite"
+    },
+    {
+      "requestedThreads": 1,
+      "result": "applied",
+      "effectiveThreads": null,
+      "mode": null,
+      "canEdit": null,
+      "file": null,
+      "backend": "canvas",
+      "group": "composite"
+    }
+  ],
+  "editor": {
+    "height": 1024,
+    "passed": true,
+    "mime": "image/png",
+    "width": 1024,
+    "faces": 1,
+    "selectionDifference": 163,
+    "reapplyError": 0,
+    "alphaError": 0,
+    "filename": "transparent-portrait-uscale-2x.png"
+  },
+  "warnings": [
+    "ResizeObserver loop completed with undelivered notifications.",
+    "ResizeObserver loop completed with undelivered notifications.",
+    "ResizeObserver loop completed with undelivered notifications."
+  ],
+  "kind": "physical-iphone-processing",
+  "matrix": [
+    {
+      "height": 140,
+      "passed": true,
+      "mime": "image/png",
+      "width": 540,
+      "modelKind": "photo",
+      "backend": "webgpu",
+      "compositeError": 0,
+      "alphaError": 0,
+      "name": "gradient",
+      "scale": 2
+    },
+    {
+      "height": 140,
+      "passed": true,
+      "mime": "image/png",
+      "width": 540,
+      "modelKind": "drawing",
+      "backend": "webgpu",
+      "compositeError": 0,
+      "alphaError": 0,
+      "name": "gradient",
+      "scale": 2
+    },
+    {
+      "height": 140,
+      "passed": true,
+      "mime": "image/png",
+      "width": 540,
+      "modelKind": "photo",
+      "backend": "webgpu",
+      "compositeError": 0,
+      "alphaError": 0,
+      "name": "hard-light",
+      "scale": 2
+    },
+    {
+      "height": 140,
+      "passed": true,
+      "mime": "image/png",
+      "width": 540,
+      "modelKind": "drawing",
+      "backend": "webgpu",
+      "compositeError": 0,
+      "alphaError": 0,
+      "name": "hard-light",
+      "scale": 2
+    },
+    {
+      "height": 140,
+      "passed": true,
+      "mime": "image/png",
+      "width": 540,
+      "modelKind": "photo",
+      "backend": "webgpu",
+      "compositeError": 0,
+      "alphaError": 0,
+      "name": "hard-dark",
+      "scale": 2
+    },
+    {
+      "height": 140,
+      "passed": true,
+      "mime": "image/png",
+      "width": 540,
+      "modelKind": "drawing",
+      "backend": "webgpu",
+      "compositeError": 0,
+      "alphaError": 0,
+      "name": "hard-dark",
+      "scale": 2
+    },
+    {
+      "height": 140,
+      "passed": true,
+      "mime": "image/png",
+      "width": 540,
+      "modelKind": "photo",
+      "backend": "webgpu",
+      "compositeError": 0,
+      "alphaError": 0,
+      "name": "shadow",
+      "scale": 2
+    },
+    {
+      "height": 140,
+      "passed": true,
+      "mime": "image/png",
+      "width": 540,
+      "modelKind": "drawing",
+      "backend": "webgpu",
+      "compositeError": 0,
+      "alphaError": 0,
+      "name": "shadow",
+      "scale": 2
+    },
+    {
+      "height": 140,
+      "passed": true,
+      "mime": "image/png",
+      "width": 540,
+      "modelKind": "photo",
+      "backend": "webgpu",
+      "compositeError": 0,
+      "alphaError": 0,
+      "name": "holes",
+      "scale": 2
+    },
+    {
+      "height": 140,
+      "passed": true,
+      "mime": "image/png",
+      "width": 540,
+      "modelKind": "drawing",
+      "backend": "webgpu",
+      "compositeError": 0,
+      "alphaError": 0,
+      "name": "holes",
+      "scale": 2
+    },
+    {
+      "height": 140,
+      "passed": true,
+      "mime": "image/png",
+      "width": 540,
+      "modelKind": "photo",
+      "backend": "webgpu",
+      "compositeError": 0,
+      "alphaError": 0,
+      "name": "alpha254",
+      "scale": 2
+    },
+    {
+      "height": 140,
+      "passed": true,
+      "mime": "image/png",
+      "width": 540,
+      "modelKind": "drawing",
+      "backend": "webgpu",
+      "compositeError": 0,
+      "alphaError": 0,
+      "name": "alpha254",
+      "scale": 2
+    },
+    {
+      "height": 140,
+      "passed": true,
+      "mime": "image/png",
+      "width": 540,
+      "modelKind": "photo",
+      "backend": "webgpu",
+      "compositeError": 0,
+      "alphaError": 0,
+      "name": "faint",
+      "scale": 2
+    },
+    {
+      "height": 140,
+      "passed": true,
+      "mime": "image/png",
+      "width": 540,
+      "modelKind": "drawing",
+      "backend": "webgpu",
+      "compositeError": 0,
+      "alphaError": 0,
+      "name": "faint",
+      "scale": 2
+    },
+    {
+      "height": 140,
+      "passed": true,
+      "mime": "image/png",
+      "width": 540,
+      "modelKind": "photo",
+      "backend": "webgpu",
+      "compositeError": 0,
+      "alphaError": 0,
+      "name": "empty",
+      "scale": 2
+    },
+    {
+      "height": 140,
+      "passed": true,
+      "mime": "image/png",
+      "width": 540,
+      "modelKind": "drawing",
+      "backend": "webgpu",
+      "compositeError": 0,
+      "alphaError": 0,
+      "name": "empty",
+      "scale": 2
+    },
+    {
+      "height": 140,
+      "passed": true,
+      "mime": "image/png",
+      "width": 540,
+      "modelKind": "photo",
+      "backend": "webgpu",
+      "compositeError": 0,
+      "alphaError": 0,
+      "name": "webp",
+      "scale": 2
+    },
+    {
+      "height": 140,
+      "passed": true,
+      "mime": "image/png",
+      "width": 540,
+      "modelKind": "drawing",
+      "backend": "webgpu",
+      "compositeError": 0,
+      "alphaError": 0,
+      "name": "webp",
+      "scale": 2
+    }
+  ],
+  "errors": []
+}

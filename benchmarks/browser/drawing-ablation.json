@@ -1,0 +1,354 @@
+{
+  "kind": "drawing-scale-ablation",
+  "environment": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+    "platform": "MacIntel",
+    "maxTouchPoints": 0,
+    "hardwareConcurrency": 14,
+    "deviceMemory": 32,
+    "crossOriginIsolated": true,
+    "sharedMemory": true,
+    "webgpu": true
+  },
+  "assets": {
+    "runtime": "/assets/processor/ort-1.23.2",
+    "models": {
+      "photo": {
+        "2": {
+          "gpu": "/assets/processor/917d664366981211-normal_2x_web.onnx",
+          "cpu": "/assets/processor/9925a204e41ab72e-normal_2x_web.ort"
+        },
+        "4": {
+          "gpu": "/assets/processor/5038ca956f3ed202-normal_4x_web.onnx",
+          "cpu": "/assets/processor/1527e3c5453ca491-normal_4x_web.ort"
+        }
+      },
+      "drawing": {
+        "2": {
+          "gpu": "/assets/processor/e00170d304d397a0-anime_2x_web.onnx",
+          "cpu": "/assets/processor/27917d9ea78a9acc-anime_2x_web.ort"
+        },
+        "4": {
+          "gpu": "/assets/processor/dfc2249582113ca9-anime_4x_web.onnx",
+          "cpu": "/assets/processor/06247e72c6f210f4-anime_4x_web.ort"
+        }
+      }
+    },
+    "faceModel": {
+      "bytes": 85578722,
+      "parts": [
+        {
+          "url": "https://upscales.uk/web_models/face_512-7333260230803fbf.onnx",
+          "bytes": 85578722
+        }
+      ]
+    },
+    "vision": "/assets/processor/vision-1.0.1",
+    "faceFinder": "/assets/processor/ebafce4e3c118d65-face_detector_yunet.onnx",
+    "faceDetector": "/assets/processor/64184e229b263107-face_landmarker.task"
+  },
+  "results": [
+    {
+      "name": "black",
+      "width": 1024,
+      "height": 1024,
+      "metrics": {
+        "mae": 2.617929650838846e-8,
+        "rmse": 0.000010132320264750435,
+        "maxError": 0.003921568859368563,
+        "psnr": 99.8858218276581,
+        "ssim": 0.9999998322305536,
+        "edgeMae": 5.9587806128217675e-8
+      },
+      "nativeMs": 1838.0049998760223,
+      "twoPassMs": 5947.179999828339
+    },
+    {
+      "name": "white",
+      "width": 1024,
+      "height": 1024,
+      "metrics": {
+        "mae": 5.11119537804916e-7,
+        "rmse": 0.00004606213612465393,
+        "maxError": 0.011764705181121826,
+        "psnr": 86.73311851126624,
+        "ssim": 0.9999978603834423,
+        "edgeMae": 0.0000012499656160958235
+      },
+      "nativeMs": 1758.4050002098083,
+      "twoPassMs": 5576.335000038147
+    },
+    {
+      "name": "gray",
+      "width": 1024,
+      "height": 1024,
+      "metrics": {
+        "mae": 0.009916190260696567,
+        "rmse": 0.01028211624124764,
+        "maxError": 0.019607841968536377,
+        "psnr": 39.75834981321736,
+        "ssim": 0.9927955894921316,
+        "edgeMae": 0.0021379980801835377
+      },
+      "nativeMs": 1757.4900000095367,
+      "twoPassMs": 5532.884999752045
+    },
+    {
+      "name": "gradient",
+      "width": 1024,
+      "height": 1024,
+      "metrics": {
+        "mae": 0.012751387287100494,
+        "rmse": 0.015976467774186764,
+        "maxError": 0.06666666269302368,
+        "psnr": 35.930384645303384,
+        "ssim": 0.9832052403731214,
+        "edgeMae": 0.002805178854995479
+      },
+      "nativeMs": 1779.0549998283386,
+      "twoPassMs": 5582.405000209808
+    },
+    {
+      "name": "checker",
+      "width": 1024,
+      "height": 1024,
+      "metrics": {
+        "mae": 0.01930585482953262,
+        "rmse": 0.03284203409995584,
+        "maxError": 0.31372549943625927,
+        "psnr": 29.671399046259687,
+        "ssim": 0.9634049444896552,
+        "edgeMae": 0.012104401458289815
+      },
+      "nativeMs": 1843.0199999809265,
+      "twoPassMs": 5556.585000038147
+    },
+    {
+      "name": "impulse",
+      "width": 1024,
+      "height": 1024,
+      "metrics": {
+        "mae": 0.00027247534569818654,
+        "rmse": 0.006582146232910125,
+        "maxError": 0.37647056579589844,
+        "psnr": 43.63264946775339,
+        "ssim": 0.9983137983313638,
+        "edgeMae": 0.00021076271292874422
+      },
+      "nativeMs": 1825.1749999523163,
+      "twoPassMs": 5520.870000123978
+    },
+    {
+      "name": "noise_seed_c0de",
+      "width": 1024,
+      "height": 1024,
+      "metrics": {
+        "mae": 0.031686356327658004,
+        "rmse": 0.04468913876347833,
+        "maxError": 0.3960784375667572,
+        "psnr": 26.995960297203673,
+        "ssim": 0.8818317777334382,
+        "edgeMae": 0.014875875694018796
+      },
+      "nativeMs": 1798.079999923706,
+      "twoPassMs": 5588.615000009537
+    },
+    {
+      "name": "minimum_16x16",
+      "width": 1024,
+      "height": 1024,
+      "metrics": {
+        "mae": 0.009880166984458594,
+        "rmse": 0.01385923091857879,
+        "maxError": 0.06666666269302368,
+        "psnr": 37.16521738161936,
+        "ssim": 0.9856958319599903,
+        "edgeMae": 0.0039007525651542935
+      },
+      "nativeMs": 1769.6749999523163,
+      "twoPassMs": 5545.814999818802
+    },
+    {
+      "name": "odd_31x47",
+      "width": 1024,
+      "height": 1024,
+      "metrics": {
+        "mae": 0.01232309518258005,
+        "rmse": 0.01551325199992496,
+        "maxError": 0.06666666269302368,
+        "psnr": 36.185943053939035,
+        "ssim": 0.9838138348232545,
+        "edgeMae": 0.00284601896831433
+      },
+      "nativeMs": 1783.9550001621246,
+      "twoPassMs": 5551.044999837875
+    },
+    {
+      "name": "asset_sky_original",
+      "width": 1024,
+      "height": 1024,
+      "metrics": {
+        "mae": 0.018300189534300976,
+        "rmse": 0.026327064371069128,
+        "maxError": 0.2862745216116309,
+        "psnr": 31.591951293779935,
+        "ssim": 0.952555860644199,
+        "edgeMae": 0.009729747992802178
+      },
+      "nativeMs": 1783.965000152588,
+      "twoPassMs": 5577.894999742508
+    },
+    {
+      "name": "asset_evan_original",
+      "width": 1024,
+      "height": 1024,
+      "metrics": {
+        "mae": 0.017384153524880652,
+        "rmse": 0.02903783112604938,
+        "maxError": 0.4156862944364548,
+        "psnr": 30.740716495778283,
+        "ssim": 0.9490979077844646,
+        "edgeMae": 0.010413770359905917
+      },
+      "nativeMs": 1803.255000114441,
+      "twoPassMs": 5639.709999799728
+    },
+    {
+      "name": "asset_face_preview_blured_2",
+      "width": 1024,
+      "height": 1024,
+      "metrics": {
+        "mae": 0.018431216108578674,
+        "rmse": 0.027302282993529745,
+        "maxError": 0.4196078460663557,
+        "psnr": 31.27602072216129,
+        "ssim": 0.9407860000791244,
+        "edgeMae": 0.010517128013558143
+      },
+      "nativeMs": 1803.8799998760223,
+      "twoPassMs": 5603.9800000190735
+    },
+    {
+      "name": "asset_lol_dark_2",
+      "width": 1024,
+      "height": 1024,
+      "metrics": {
+        "mae": 0.004744084854596912,
+        "rmse": 0.01071041678402583,
+        "maxError": 0.2823529541492462,
+        "psnr": 39.40387257499562,
+        "ssim": 0.9659467015840452,
+        "edgeMae": 0.004088067305010536
+      },
+      "nativeMs": 1792.8849999904633,
+      "twoPassMs": 5548.544999837875
+    },
+    {
+      "name": "asset_denoise_orig",
+      "width": 1024,
+      "height": 1024,
+      "metrics": {
+        "mae": 0.011387123265561794,
+        "rmse": 0.016286691687157063,
+        "maxError": 0.2980392128229141,
+        "psnr": 35.76334249790453,
+        "ssim": 0.9614870163209863,
+        "edgeMae": 0.005598781046132324
+      },
+      "nativeMs": 1784.3700001239777,
+      "twoPassMs": 5565.90499997139
+    },
+    {
+      "name": "asset_restore_original",
+      "width": 1024,
+      "height": 1024,
+      "metrics": {
+        "mae": 0.010349368746460641,
+        "rmse": 0.013394561896988223,
+        "maxError": 0.24313727021217346,
+        "psnr": 37.46142973045034,
+        "ssim": 0.9716433244722268,
+        "edgeMae": 0.00468228612145416
+      },
+      "nativeMs": 1784.9050002098083,
+      "twoPassMs": 5574.365000009537
+    },
+    {
+      "name": "asset_japan_blured",
+      "width": 1024,
+      "height": 1024,
+      "metrics": {
+        "mae": 0.014053537895907612,
+        "rmse": 0.02862278940042024,
+        "maxError": 0.3215686231851578,
+        "psnr": 30.8657608970737,
+        "ssim": 0.9092477196845926,
+        "edgeMae": 0.011780511229891509
+      },
+      "nativeMs": 1792.7400000095367,
+      "twoPassMs": 5612.964999914169
+    },
+    {
+      "name": "asset_girls_blured",
+      "width": 1024,
+      "height": 1024,
+      "metrics": {
+        "mae": 0.01772244877980489,
+        "rmse": 0.027011695825676547,
+        "maxError": 0.3294117748737335,
+        "psnr": 31.36896298888013,
+        "ssim": 0.94558920389033,
+        "edgeMae": 0.010412355640185236
+      },
+      "nativeMs": 1783.4700000286102,
+      "twoPassMs": 5555.525000095367
+    },
+    {
+      "name": "hero-anime",
+      "width": 1024,
+      "height": 776,
+      "metrics": {
+        "mae": 0.011170727352599752,
+        "rmse": 0.019021947754957032,
+        "maxError": 0.3137254938483238,
+        "psnr": 34.41490030956991,
+        "ssim": 0.9742614228689053,
+        "edgeMae": 0.007183066539610583
+      },
+      "nativeMs": 991.4849998950958,
+      "twoPassMs": 3501.8849997520447
+    },
+    {
+      "name": "anime-thumb",
+      "width": 1024,
+      "height": 768,
+      "metrics": {
+        "mae": 0.011258582770835406,
+        "rmse": 0.019393441385395793,
+        "maxError": 0.33725491166114807,
+        "psnr": 34.24690236193,
+        "ssim": 0.9731862890608368,
+        "edgeMae": 0.0072852753103487605
+      },
+      "nativeMs": 988.7200000286102,
+      "twoPassMs": 3577.295000076294
+    }
+  ],
+  "passed": true,
+  "interpretation": "Differences only; no ground truth and no automatic better/worse ranking.",
+  "basic": {
+    "opaque": {
+      "passed": true,
+      "mismatches": 0
+    },
+    "faceAlpha": {
+      "passed": true,
+      "alphaError": 0,
+      "changed": 3024
+    }
+  },
+  "browser": "chromium",
+  "browserVersion": "151.0.7922.34",
+  "localPinnedFaceModel": false,
+  "errors": []
+}

@@ -1,0 +1,5216 @@
+{
+  "keepActive": true,
+  "lastProgressAt": "2026-10-30T14:23:22.336Z",
+  "run": 3,
+  "step": "done",
+  "completed": null,
+  "events": [
+    {
+      "at": "2026-10-30T14:07:30.187Z",
+      "run": 1,
+      "type": "run-start",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:08:00.482Z",
+      "run": 1,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:08:30.728Z",
+      "run": 1,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:09:00.981Z",
+      "run": 1,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:09:31.225Z",
+      "run": 1,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:10:01.478Z",
+      "run": 1,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:10:31.742Z",
+      "run": 1,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:11:02.002Z",
+      "run": 1,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:11:32.269Z",
+      "run": 1,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:11:53.742Z",
+      "run": 1,
+      "type": "run-finish",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:11:53.742Z",
+      "run": 2,
+      "type": "run-start",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:12:02.792Z",
+      "run": 2,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:12:33.068Z",
+      "run": 2,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:13:03.317Z",
+      "run": 2,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:13:33.559Z",
+      "run": 2,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:14:03.780Z",
+      "run": 2,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:14:34.065Z",
+      "run": 2,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:15:04.332Z",
+      "run": 2,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:15:34.589Z",
+      "run": 2,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:16:04.864Z",
+      "run": 2,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:16:35.133Z",
+      "run": 2,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:16:52.008Z",
+      "run": 2,
+      "type": "run-finish",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:16:52.008Z",
+      "run": 3,
+      "type": "run-start",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:17:05.424Z",
+      "run": 3,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:17:35.726Z",
+      "run": 3,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:18:06.033Z",
+      "run": 3,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:18:36.343Z",
+      "run": 3,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:19:06.652Z",
+      "run": 3,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:19:36.990Z",
+      "run": 3,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:20:07.298Z",
+      "run": 3,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:20:37.658Z",
+      "run": 3,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:21:08.014Z",
+      "run": 3,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:21:38.299Z",
+      "run": 3,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:22:08.575Z",
+      "run": 3,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:22:38.904Z",
+      "run": 3,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:23:09.202Z",
+      "run": 3,
+      "type": "webdriver-keep-active",
+      "hidden": false
+    },
+    {
+      "at": "2026-10-30T14:23:31.748Z",
+      "run": 3,
+      "type": "run-finish",
+      "hidden": false
+    }
+  ],
+  "executions": [
+    {
+      "requestedThreads": 1,
+      "trace": [
+        {
+          "at": "2026-10-30T14:07:31.264Z",
+          "operation": "decode",
+          "unit": 1
+        },
+        {
+          "at": "2026-10-30T14:07:31.386Z",
+          "operation": "scan",
+          "unit": 2
+        },
+        {
+          "at": "2026-10-30T14:07:31.441Z",
+          "operation": "prepare-rgb",
+          "unit": 3
+        },
+        {
+          "at": "2026-10-30T14:07:31.553Z",
+          "operation": "prepare-rgb",
+          "unit": 4
+        },
+        {
+          "at": "2026-10-30T14:07:31.759Z",
+          "operation": "initialize",
+          "unit": 4
+        },
+        {
+          "at": "2026-10-30T14:07:31.851Z",
+          "operation": "download",
+          "unit": 4
+        },
+        {
+          "at": "2026-10-30T14:07:32.823Z",
+          "operation": "initialize",
+          "unit": 4
+        },
+        {
+          "at": "2026-10-30T14:07:33.170Z",
+          "operation": "tile",
+          "unit": 5
+        },
+        {
+          "at": "2026-10-30T14:07:34.773Z",
+          "operation": "tile",
+          "unit": 6
+        },
+        {
+          "at": "2026-10-30T14:07:35.783Z",
+          "operation": "tile",
+          "unit": 7
+        },
+        {
+          "at": "2026-10-30T14:07:36.797Z",
+          "operation": "tile",
+          "unit": 8
+        },
+        {
+          "at": "2026-10-30T14:07:37.807Z",
+          "operation": "tile",
+          "unit": 9
+        },
+        {
+          "at": "2026-10-30T14:07:38.803Z",
+          "operation": "tile",
+          "unit": 10
+        },
+        {
+          "at": "2026-10-30T14:07:39.812Z",
+          "operation": "tile",
+          "unit": 11
+        },
+        {
+          "at": "2026-10-30T14:07:40.812Z",
+          "operation": "tile",
+          "unit": 12
+        },
+        {
+          "at": "2026-10-30T14:07:41.856Z",
+          "operation": "tile",
+          "unit": 13
+        },
+        {
+          "at": "2026-10-30T14:07:42.858Z",
+          "operation": "tile",
+          "unit": 14
+        },
+        {
+          "at": "2026-10-30T14:07:43.968Z",
+          "operation": "tile",
+          "unit": 15
+        },
+        {
+          "at": "2026-10-30T14:07:45.159Z",
+          "operation": "tile",
+          "unit": 16
+        },
+        {
+          "at": "2026-10-30T14:07:46.557Z",
+          "operation": "tile",
+          "unit": 17
+        },
+        {
+          "at": "2026-10-30T14:07:48.080Z",
+          "operation": "tile",
+          "unit": 18
+        },
+        {
+          "at": "2026-10-30T14:07:49.601Z",
+          "operation": "tile",
+          "unit": 19
+        },
+        {
+          "at": "2026-10-30T14:07:51.199Z",
+          "operation": "tile",
+          "unit": 20
+        },
+        {
+          "at": "2026-10-30T14:07:52.769Z",
+          "operation": "tile",
+          "unit": 21
+        },
+        {
+          "at": "2026-10-30T14:07:54.334Z",
+          "operation": "tile",
+          "unit": 22
+        },
+        {
+          "at": "2026-10-30T14:07:55.871Z",
+          "operation": "tile",
+          "unit": 23
+        },
+        {
+          "at": "2026-10-30T14:07:57.505Z",
+          "operation": "tile",
+          "unit": 24
+        },
+        {
+          "at": "2026-10-30T14:07:59.315Z",
+          "operation": "tile",
+          "unit": 25
+        },
+        {
+          "at": "2026-10-30T14:08:01.069Z",
+          "operation": "tile",
+          "unit": 26
+        },
+        {
+          "at": "2026-10-30T14:08:02.795Z",
+          "operation": "tile",
+          "unit": 27
+        },
+        {
+          "at": "2026-10-30T14:08:04.527Z",
+          "operation": "tile",
+          "unit": 28
+        },
+        {
+          "at": "2026-10-30T14:08:06.222Z",
+          "operation": "tile",
+          "unit": 29
+        },
+        {
+          "at": "2026-10-30T14:08:07.893Z",
+          "operation": "tile",
+          "unit": 30
+        },
+        {
+          "at": "2026-10-30T14:08:09.489Z",
+          "operation": "tile",
+          "unit": 31
+        },
+        {
+          "at": "2026-10-30T14:08:11.244Z",
+          "operation": "tile",
+          "unit": 32
+        },
+        {
+          "at": "2026-10-30T14:08:12.856Z",
+          "operation": "tile",
+          "unit": 33
+        },
+        {
+          "at": "2026-10-30T14:08:14.377Z",
+          "operation": "tile",
+          "unit": 34
+        },
+        {
+          "at": "2026-10-30T14:08:15.922Z",
+          "operation": "tile",
+          "unit": 35
+        },
+        {
+          "at": "2026-10-30T14:08:17.509Z",
+          "operation": "tile",
+          "unit": 36
+        },
+        {
+          "at": "2026-10-30T14:08:19.198Z",
+          "operation": "tile",
+          "unit": 37
+        },
+        {
+          "at": "2026-10-30T14:08:20.941Z",
+          "operation": "tile",
+          "unit": 38
+        },
+        {
+          "at": "2026-10-30T14:08:22.554Z",
+          "operation": "tile",
+          "unit": 39
+        },
+        {
+          "at": "2026-10-30T14:08:24.093Z",
+          "operation": "tile",
+          "unit": 40
+        },
+        {
+          "at": "2026-10-30T14:08:25.583Z",
+          "operation": "tile",
+          "unit": 41
+        },
+        {
+          "at": "2026-10-30T14:08:27.117Z",
+          "operation": "tile",
+          "unit": 42
+        },
+        {
+          "at": "2026-10-30T14:08:28.792Z",
+          "operation": "tile",
+          "unit": 43
+        },
+        {
+          "at": "2026-10-30T14:08:30.505Z",
+          "operation": "tile",
+          "unit": 44
+        },
+        {
+          "at": "2026-10-30T14:08:32.106Z",
+          "operation": "tile",
+          "unit": 45
+        },
+        {
+          "at": "2026-10-30T14:08:33.695Z",
+          "operation": "tile",
+          "unit": 46
+        },
+        {
+          "at": "2026-10-30T14:08:35.308Z",
+          "operation": "tile",
+          "unit": 47
+        },
+        {
+          "at": "2026-10-30T14:08:37.027Z",
+          "operation": "tile",
+          "unit": 48
+        },
+        {
+          "at": "2026-10-30T14:08:38.712Z",
+          "operation": "tile",
+          "unit": 49
+        },
+        {
+          "at": "2026-10-30T14:08:40.454Z",
+          "operation": "tile",
+          "unit": 50
+        },
+        {
+          "at": "2026-10-30T14:08:42.065Z",
+          "operation": "tile",
+          "unit": 51
+        },
+        {
+          "at": "2026-10-30T14:08:43.670Z",
+          "operation": "tile",
+          "unit": 52
+        },
+        {
+          "at": "2026-10-30T14:08:45.308Z",
+          "operation": "tile",
+          "unit": 53
+        },
+        {
+          "at": "2026-10-30T14:08:46.917Z",
+          "operation": "tile",
+          "unit": 54
+        },
+        {
+          "at": "2026-10-30T14:08:48.532Z",
+          "operation": "tile",
+          "unit": 55
+        },
+        {
+          "at": "2026-10-30T14:08:50.162Z",
+          "operation": "tile",
+          "unit": 56
+        },
+        {
+          "at": "2026-10-30T14:08:51.783Z",
+          "operation": "tile",
+          "unit": 57
+        },
+        {
+          "at": "2026-10-30T14:08:53.545Z",
+          "operation": "tile",
+          "unit": 58
+        },
+        {
+          "at": "2026-10-30T14:08:55.164Z",
+          "operation": "tile",
+          "unit": 59
+        },
+        {
+          "at": "2026-10-30T14:08:56.786Z",
+          "operation": "tile",
+          "unit": 60
+        },
+        {
+          "at": "2026-10-30T14:08:58.433Z",
+          "operation": "tile",
+          "unit": 61
+        },
+        {
+          "at": "2026-10-30T14:09:00.165Z",
+          "operation": "tile",
+          "unit": 62
+        },
+        {
+          "at": "2026-10-30T14:09:01.763Z",
+          "operation": "tile",
+          "unit": 63
+        },
+        {
+          "at": "2026-10-30T14:09:03.351Z",
+          "operation": "tile",
+          "unit": 64
+        },
+        {
+          "at": "2026-10-30T14:09:04.903Z",
+          "operation": "tile",
+          "unit": 65
+        },
+        {
+          "at": "2026-10-30T14:09:06.443Z",
+          "operation": "tile",
+          "unit": 66
+        },
+        {
+          "at": "2026-10-30T14:09:08.032Z",
+          "operation": "tile",
+          "unit": 67
+        },
+        {
+          "at": "2026-10-30T14:09:09.744Z",
+          "operation": "tile",
+          "unit": 68
+        },
+        {
+          "at": "2026-10-30T14:09:11.485Z",
+          "operation": "tile",
+          "unit": 69
+        },
+        {
+          "at": "2026-10-30T14:09:13.246Z",
+          "operation": "tile",
+          "unit": 70
+        },
+        {
+          "at": "2026-10-30T14:09:14.985Z",
+          "operation": "tile",
+          "unit": 71
+        },
+        {
+          "at": "2026-10-30T14:09:16.766Z",
+          "operation": "tile",
+          "unit": 72
+        },
+        {
+          "at": "2026-10-30T14:09:18.393Z",
+          "operation": "tile",
+          "unit": 73
+        },
+        {
+          "at": "2026-10-30T14:09:20.153Z",
+          "operation": "tile",
+          "unit": 74
+        },
+        {
+          "at": "2026-10-30T14:09:21.928Z",
+          "operation": "tile",
+          "unit": 75
+        },
+        {
+          "at": "2026-10-30T14:09:23.698Z",
+          "operation": "tile",
+          "unit": 76
+        },
+        {
+          "at": "2026-10-30T14:09:25.453Z",
+          "operation": "tile",
+          "unit": 77
+        },
+        {
+          "at": "2026-10-30T14:09:27.282Z",
+          "operation": "tile",
+          "unit": 78
+        },
+        {
+          "at": "2026-10-30T14:09:29.076Z",
+          "operation": "tile",
+          "unit": 79
+        },
+        {
+          "at": "2026-10-30T14:09:30.900Z",
+          "operation": "tile",
+          "unit": 80
+        },
+        {
+          "at": "2026-10-30T14:09:32.659Z",
+          "operation": "tile",
+          "unit": 81
+        },
+        {
+          "at": "2026-10-30T14:09:34.413Z",
+          "operation": "tile",
+          "unit": 82
+        },
+        {
+          "at": "2026-10-30T14:09:36.162Z",
+          "operation": "tile",
+          "unit": 83
+        },
+        {
+          "at": "2026-10-30T14:09:37.871Z",
+          "operation": "tile",
+          "unit": 84
+        },
+        {
+          "at": "2026-10-30T14:09:39.647Z",
+          "operation": "tile",
+          "unit": 85
+        },
+        {
+          "at": "2026-10-30T14:09:41.512Z",
+          "operation": "tile",
+          "unit": 86
+        },
+        {
+          "at": "2026-10-30T14:09:43.269Z",
+          "operation": "tile",
+          "unit": 87
+        },
+        {
+          "at": "2026-10-30T14:09:45.049Z",
+          "operation": "tile",
+          "unit": 88
+        },
+        {
+          "at": "2026-10-30T14:09:46.809Z",
+          "operation": "tile",
+          "unit": 89
+        },
+        {
+          "at": "2026-10-30T14:09:48.576Z",
+          "operation": "tile",
+          "unit": 90
+        },
+        {
+          "at": "2026-10-30T14:09:50.356Z",
+          "operation": "tile",
+          "unit": 91
+        },
+        {
+          "at": "2026-10-30T14:09:52.131Z",
+          "operation": "tile",
+          "unit": 92
+        },
+        {
+          "at": "2026-10-30T14:09:53.838Z",
+          "operation": "tile",
+          "unit": 93
+        },
+        {
+          "at": "2026-10-30T14:09:55.498Z",
+          "operation": "tile",
+          "unit": 94
+        },
+        {
+          "at": "2026-10-30T14:09:57.184Z",
+          "operation": "tile",
+          "unit": 95
+        },
+        {
+          "at": "2026-10-30T14:09:59.021Z",
+          "operation": "tile",
+          "unit": 96
+        },
+        {
+          "at": "2026-10-30T14:10:01.244Z",
+          "operation": "tile",
+          "unit": 97
+        },
+        {
+          "at": "2026-10-30T14:10:03.133Z",
+          "operation": "tile",
+          "unit": 98
+        },
+        {
+          "at": "2026-10-30T14:10:04.902Z",
+          "operation": "tile",
+          "unit": 99
+        },
+        {
+          "at": "2026-10-30T14:10:06.732Z",
+          "operation": "tile",
+          "unit": 100
+        },
+        {
+          "at": "2026-10-30T14:10:08.492Z",
+          "operation": "tile",
+          "unit": 101
+        },
+        {
+          "at": "2026-10-30T14:10:10.147Z",
+          "operation": "tile",
+          "unit": 102
+        },
+        {
+          "at": "2026-10-30T14:10:11.835Z",
+          "operation": "tile",
+          "unit": 103
+        },
+        {
+          "at": "2026-10-30T14:10:13.523Z",
+          "operation": "tile",
+          "unit": 104
+        },
+        {
+          "at": "2026-10-30T14:10:15.235Z",
+          "operation": "tile",
+          "unit": 105
+        },
+        {
+          "at": "2026-10-30T14:10:17.004Z",
+          "operation": "tile",
+          "unit": 106
+        },
+        {
+          "at": "2026-10-30T14:10:18.771Z",
+          "operation": "tile",
+          "unit": 107
+        },
+        {
+          "at": "2026-10-30T14:10:20.545Z",
+          "operation": "tile",
+          "unit": 108
+        },
+        {
+          "at": "2026-10-30T14:10:22.304Z",
+          "operation": "tile",
+          "unit": 109
+        },
+        {
+          "at": "2026-10-30T14:10:24.061Z",
+          "operation": "tile",
+          "unit": 110
+        },
+        {
+          "at": "2026-10-30T14:10:25.767Z",
+          "operation": "tile",
+          "unit": 111
+        },
+        {
+          "at": "2026-10-30T14:10:27.527Z",
+          "operation": "tile",
+          "unit": 112
+        },
+        {
+          "at": "2026-10-30T14:10:29.257Z",
+          "operation": "tile",
+          "unit": 113
+        },
+        {
+          "at": "2026-10-30T14:10:30.998Z",
+          "operation": "tile",
+          "unit": 114
+        },
+        {
+          "at": "2026-10-30T14:10:32.802Z",
+          "operation": "tile",
+          "unit": 115
+        },
+        {
+          "at": "2026-10-30T14:10:34.582Z",
+          "operation": "tile",
+          "unit": 116
+        },
+        {
+          "at": "2026-10-30T14:10:36.621Z",
+          "operation": "tile",
+          "unit": 117
+        },
+        {
+          "at": "2026-10-30T14:10:38.641Z",
+          "operation": "tile",
+          "unit": 118
+        },
+        {
+          "at": "2026-10-30T14:10:40.527Z",
+          "operation": "tile",
+          "unit": 119
+        },
+        {
+          "at": "2026-10-30T14:10:42.265Z",
+          "operation": "tile",
+          "unit": 120
+        },
+        {
+          "at": "2026-10-30T14:10:44.002Z",
+          "operation": "tile",
+          "unit": 121
+        },
+        {
+          "at": "2026-10-30T14:10:45.691Z",
+          "operation": "tile",
+          "unit": 122
+        },
+        {
+          "at": "2026-10-30T14:10:47.419Z",
+          "operation": "tile",
+          "unit": 123
+        },
+        {
+          "at": "2026-10-30T14:10:49.183Z",
+          "operation": "tile",
+          "unit": 124
+        },
+        {
+          "at": "2026-10-30T14:10:50.957Z",
+          "operation": "tile",
+          "unit": 125
+        },
+        {
+          "at": "2026-10-30T14:10:52.733Z",
+          "operation": "tile",
+          "unit": 126
+        },
+        {
+          "at": "2026-10-30T14:10:54.530Z",
+          "operation": "tile",
+          "unit": 127
+        },
+        {
+          "at": "2026-10-30T14:10:56.295Z",
+          "operation": "tile",
+          "unit": 128
+        },
+        {
+          "at": "2026-10-30T14:10:58.060Z",
+          "operation": "tile",
+          "unit": 129
+        },
+        {
+          "at": "2026-10-30T14:10:59.827Z",
+          "operation": "tile",
+          "unit": 130
+        },
+        {
+          "at": "2026-10-30T14:11:01.599Z",
+          "operation": "tile",
+          "unit": 131
+        },
+        {
+          "at": "2026-10-30T14:11:03.353Z",
+          "operation": "tile",
+          "unit": 132
+        },
+        {
+          "at": "2026-10-30T14:11:05.108Z",
+          "operation": "tile",
+          "unit": 133
+        },
+        {
+          "at": "2026-10-30T14:11:06.859Z",
+          "operation": "tile",
+          "unit": 134
+        },
+        {
+          "at": "2026-10-30T14:11:08.624Z",
+          "operation": "tile",
+          "unit": 135
+        },
+        {
+          "at": "2026-10-30T14:11:10.388Z",
+          "operation": "tile",
+          "unit": 136
+        },
+        {
+          "at": "2026-10-30T14:11:12.108Z",
+          "operation": "tile",
+          "unit": 137
+        },
+        {
+          "at": "2026-10-30T14:11:13.914Z",
+          "operation": "tile",
+          "unit": 138
+        },
+        {
+          "at": "2026-10-30T14:11:15.762Z",
+          "operation": "tile",
+          "unit": 139
+        },
+        {
+          "at": "2026-10-30T14:11:17.485Z",
+          "operation": "tile",
+          "unit": 140
+        },
+        {
+          "at": "2026-10-30T14:11:19.102Z",
+          "operation": "tile",
+          "unit": 141
+        },
+        {
+          "at": "2026-10-30T14:11:20.809Z",
+          "operation": "tile",
+          "unit": 142
+        },
+        {
+          "at": "2026-10-30T14:11:22.512Z",
+          "operation": "tile",
+          "unit": 143
+        },
+        {
+          "at": "2026-10-30T14:11:24.263Z",
+          "operation": "tile",
+          "unit": 144
+        },
+        {
+          "at": "2026-10-30T14:11:26.045Z",
+          "operation": "tile",
+          "unit": 145
+        },
+        {
+          "at": "2026-10-30T14:11:27.753Z",
+          "operation": "tile",
+          "unit": 146
+        },
+        {
+          "at": "2026-10-30T14:11:29.514Z",
+          "operation": "tile",
+          "unit": 147
+        },
+        {
+          "at": "2026-10-30T14:11:31.305Z",
+          "operation": "tile",
+          "unit": 148
+        },
+        {
+          "at": "2026-10-30T14:11:33.079Z",
+          "operation": "tile",
+          "unit": 149
+        },
+        {
+          "at": "2026-10-30T14:11:34.819Z",
+          "operation": "tile",
+          "unit": 150
+        },
+        {
+          "at": "2026-10-30T14:11:36.544Z",
+          "operation": "tile",
+          "unit": 151
+        },
+        {
+          "at": "2026-10-30T14:11:38.288Z",
+          "operation": "tile",
+          "unit": 152
+        },
+        {
+          "at": "2026-10-30T14:11:40.016Z",
+          "operation": "tile",
+          "unit": 153
+        },
+        {
+          "at": "2026-10-30T14:11:41.717Z",
+          "operation": "tile",
+          "unit": 154
+        },
+        {
+          "at": "2026-10-30T14:11:43.488Z",
+          "operation": "tile",
+          "unit": 155
+        },
+        {
+          "at": "2026-10-30T14:11:45.199Z",
+          "operation": "tile",
+          "unit": 156
+        },
+        {
+          "at": "2026-10-30T14:11:47.007Z",
+          "operation": "composite",
+          "unit": 157
+        },
+        {
+          "at": "2026-10-30T14:11:47.008Z",
+          "operation": "encode",
+          "unit": 158
+        }
+      ],
+      "result": "done",
+      "mode": null,
+      "effectiveThreads": 1,
+      "file": "maximum-1.png",
+      "canEdit": false,
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "trace": [
+        {
+          "at": "2026-10-30T14:11:54.806Z",
+          "operation": "decode",
+          "unit": 1
+        },
+        {
+          "at": "2026-10-30T14:11:54.929Z",
+          "operation": "scan",
+          "unit": 2
+        },
+        {
+          "at": "2026-10-30T14:11:54.985Z",
+          "operation": "prepare-rgb",
+          "unit": 3
+        },
+        {
+          "at": "2026-10-30T14:11:55.088Z",
+          "operation": "prepare-rgb",
+          "unit": 4
+        },
+        {
+          "at": "2026-10-30T14:11:55.305Z",
+          "operation": "initialize",
+          "unit": 4
+        },
+        {
+          "at": "2026-10-30T14:11:55.313Z",
+          "operation": "download",
+          "unit": 4
+        },
+        {
+          "at": "2026-10-30T14:11:55.361Z",
+          "operation": "initialize",
+          "unit": 4
+        },
+        {
+          "at": "2026-10-30T14:11:55.643Z",
+          "operation": "tile",
+          "unit": 5
+        },
+        {
+          "at": "2026-10-30T14:11:56.826Z",
+          "operation": "tile",
+          "unit": 6
+        },
+        {
+          "at": "2026-10-30T14:11:58.012Z",
+          "operation": "tile",
+          "unit": 7
+        },
+        {
+          "at": "2026-10-30T14:11:59.430Z",
+          "operation": "tile",
+          "unit": 8
+        },
+        {
+          "at": "2026-10-30T14:12:01.580Z",
+          "operation": "tile",
+          "unit": 9
+        },
+        {
+          "at": "2026-10-30T14:12:03.696Z",
+          "operation": "tile",
+          "unit": 10
+        },
+        {
+          "at": "2026-10-30T14:12:05.346Z",
+          "operation": "tile",
+          "unit": 11
+        },
+        {
+          "at": "2026-10-30T14:12:06.848Z",
+          "operation": "tile",
+          "unit": 12
+        },
+        {
+          "at": "2026-10-30T14:12:08.316Z",
+          "operation": "tile",
+          "unit": 13
+        },
+        {
+          "at": "2026-10-30T14:12:09.871Z",
+          "operation": "tile",
+          "unit": 14
+        },
+        {
+          "at": "2026-10-30T14:12:11.526Z",
+          "operation": "tile",
+          "unit": 15
+        },
+        {
+          "at": "2026-10-30T14:12:13.237Z",
+          "operation": "tile",
+          "unit": 16
+        },
+        {
+          "at": "2026-10-30T14:12:14.960Z",
+          "operation": "tile",
+          "unit": 17
+        },
+        {
+          "at": "2026-10-30T14:12:16.607Z",
+          "operation": "tile",
+          "unit": 18
+        },
+        {
+          "at": "2026-10-30T14:12:18.267Z",
+          "operation": "tile",
+          "unit": 19
+        },
+        {
+          "at": "2026-10-30T14:12:20.048Z",
+          "operation": "tile",
+          "unit": 20
+        },
+        {
+          "at": "2026-10-30T14:12:21.969Z",
+          "operation": "tile",
+          "unit": 21
+        },
+        {
+          "at": "2026-10-30T14:12:23.801Z",
+          "operation": "tile",
+          "unit": 22
+        },
+        {
+          "at": "2026-10-30T14:12:25.485Z",
+          "operation": "tile",
+          "unit": 23
+        },
+        {
+          "at": "2026-10-30T14:12:27.130Z",
+          "operation": "tile",
+          "unit": 24
+        },
+        {
+          "at": "2026-10-30T14:12:29.136Z",
+          "operation": "tile",
+          "unit": 25
+        },
+        {
+          "at": "2026-10-30T14:12:31.583Z",
+          "operation": "tile",
+          "unit": 26
+        },
+        {
+          "at": "2026-10-30T14:12:34.170Z",
+          "operation": "tile",
+          "unit": 27
+        },
+        {
+          "at": "2026-10-30T14:12:36.282Z",
+          "operation": "tile",
+          "unit": 28
+        },
+        {
+          "at": "2026-10-30T14:12:37.986Z",
+          "operation": "tile",
+          "unit": 29
+        },
+        {
+          "at": "2026-10-30T14:12:39.549Z",
+          "operation": "tile",
+          "unit": 30
+        },
+        {
+          "at": "2026-10-30T14:12:41.157Z",
+          "operation": "tile",
+          "unit": 31
+        },
+        {
+          "at": "2026-10-30T14:12:42.861Z",
+          "operation": "tile",
+          "unit": 32
+        },
+        {
+          "at": "2026-10-30T14:12:44.605Z",
+          "operation": "tile",
+          "unit": 33
+        },
+        {
+          "at": "2026-10-30T14:12:46.402Z",
+          "operation": "tile",
+          "unit": 34
+        },
+        {
+          "at": "2026-10-30T14:12:48.158Z",
+          "operation": "tile",
+          "unit": 35
+        },
+        {
+          "at": "2026-10-30T14:12:49.929Z",
+          "operation": "tile",
+          "unit": 36
+        },
+        {
+          "at": "2026-10-30T14:12:51.707Z",
+          "operation": "tile",
+          "unit": 37
+        },
+        {
+          "at": "2026-10-30T14:12:53.577Z",
+          "operation": "tile",
+          "unit": 38
+        },
+        {
+          "at": "2026-10-30T14:12:55.600Z",
+          "operation": "tile",
+          "unit": 39
+        },
+        {
+          "at": "2026-10-30T14:12:57.588Z",
+          "operation": "tile",
+          "unit": 40
+        },
+        {
+          "at": "2026-10-30T14:12:59.355Z",
+          "operation": "tile",
+          "unit": 41
+        },
+        {
+          "at": "2026-10-30T14:13:01.135Z",
+          "operation": "tile",
+          "unit": 42
+        },
+        {
+          "at": "2026-10-30T14:13:02.930Z",
+          "operation": "tile",
+          "unit": 43
+        },
+        {
+          "at": "2026-10-30T14:13:04.621Z",
+          "operation": "tile",
+          "unit": 44
+        },
+        {
+          "at": "2026-10-30T14:13:06.336Z",
+          "operation": "tile",
+          "unit": 45
+        },
+        {
+          "at": "2026-10-30T14:13:08.132Z",
+          "operation": "tile",
+          "unit": 46
+        },
+        {
+          "at": "2026-10-30T14:13:09.905Z",
+          "operation": "tile",
+          "unit": 47
+        },
+        {
+          "at": "2026-10-30T14:13:11.704Z",
+          "operation": "tile",
+          "unit": 48
+        },
+        {
+          "at": "2026-10-30T14:13:13.462Z",
+          "operation": "tile",
+          "unit": 49
+        },
+        {
+          "at": "2026-10-30T14:13:15.228Z",
+          "operation": "tile",
+          "unit": 50
+        },
+        {
+          "at": "2026-10-30T14:13:17.006Z",
+          "operation": "tile",
+          "unit": 51
+        },
+        {
+          "at": "2026-10-30T14:13:18.803Z",
+          "operation": "tile",
+          "unit": 52
+        },
+        {
+          "at": "2026-10-30T14:13:20.589Z",
+          "operation": "tile",
+          "unit": 53
+        },
+        {
+          "at": "2026-10-30T14:13:22.363Z",
+          "operation": "tile",
+          "unit": 54
+        },
+        {
+          "at": "2026-10-30T14:13:24.173Z",
+          "operation": "tile",
+          "unit": 55
+        },
+        {
+          "at": "2026-10-30T14:13:25.968Z",
+          "operation": "tile",
+          "unit": 56
+        },
+        {
+          "at": "2026-10-30T14:13:27.787Z",
+          "operation": "tile",
+          "unit": 57
+        },
+        {
+          "at": "2026-10-30T14:13:29.599Z",
+          "operation": "tile",
+          "unit": 58
+        },
+        {
+          "at": "2026-10-30T14:13:31.550Z",
+          "operation": "tile",
+          "unit": 59
+        },
+        {
+          "at": "2026-10-30T14:13:33.339Z",
+          "operation": "tile",
+          "unit": 60
+        },
+        {
+          "at": "2026-10-30T14:13:35.141Z",
+          "operation": "tile",
+          "unit": 61
+        },
+        {
+          "at": "2026-10-30T14:13:36.933Z",
+          "operation": "tile",
+          "unit": 62
+        },
+        {
+          "at": "2026-10-30T14:13:38.690Z",
+          "operation": "tile",
+          "unit": 63
+        },
+        {
+          "at": "2026-10-30T14:13:40.476Z",
+          "operation": "tile",
+          "unit": 64
+        },
+        {
+          "at": "2026-10-30T14:13:42.285Z",
+          "operation": "tile",
+          "unit": 65
+        },
+        {
+          "at": "2026-10-30T14:13:44.136Z",
+          "operation": "tile",
+          "unit": 66
+        },
+        {
+          "at": "2026-10-30T14:13:45.975Z",
+          "operation": "tile",
+          "unit": 67
+        },
+        {
+          "at": "2026-10-30T14:13:47.766Z",
+          "operation": "tile",
+          "unit": 68
+        },
+        {
+          "at": "2026-10-30T14:13:49.556Z",
+          "operation": "tile",
+          "unit": 69
+        },
+        {
+          "at": "2026-10-30T14:13:51.304Z",
+          "operation": "tile",
+          "unit": 70
+        },
+        {
+          "at": "2026-10-30T14:13:53.099Z",
+          "operation": "tile",
+          "unit": 71
+        },
+        {
+          "at": "2026-10-30T14:13:54.880Z",
+          "operation": "tile",
+          "unit": 72
+        },
+        {
+          "at": "2026-10-30T14:13:56.675Z",
+          "operation": "tile",
+          "unit": 73
+        },
+        {
+          "at": "2026-10-30T14:13:58.495Z",
+          "operation": "tile",
+          "unit": 74
+        },
+        {
+          "at": "2026-10-30T14:14:00.263Z",
+          "operation": "tile",
+          "unit": 75
+        },
+        {
+          "at": "2026-10-30T14:14:02.042Z",
+          "operation": "tile",
+          "unit": 76
+        },
+        {
+          "at": "2026-10-30T14:14:03.940Z",
+          "operation": "tile",
+          "unit": 77
+        },
+        {
+          "at": "2026-10-30T14:14:05.744Z",
+          "operation": "tile",
+          "unit": 78
+        },
+        {
+          "at": "2026-10-30T14:14:07.535Z",
+          "operation": "tile",
+          "unit": 79
+        },
+        {
+          "at": "2026-10-30T14:14:09.406Z",
+          "operation": "tile",
+          "unit": 80
+        },
+        {
+          "at": "2026-10-30T14:14:11.240Z",
+          "operation": "tile",
+          "unit": 81
+        },
+        {
+          "at": "2026-10-30T14:14:13.132Z",
+          "operation": "tile",
+          "unit": 82
+        },
+        {
+          "at": "2026-10-30T14:14:14.912Z",
+          "operation": "tile",
+          "unit": 83
+        },
+        {
+          "at": "2026-10-30T14:14:16.707Z",
+          "operation": "tile",
+          "unit": 84
+        },
+        {
+          "at": "2026-10-30T14:14:18.547Z",
+          "operation": "tile",
+          "unit": 85
+        },
+        {
+          "at": "2026-10-30T14:14:20.339Z",
+          "operation": "tile",
+          "unit": 86
+        },
+        {
+          "at": "2026-10-30T14:14:22.329Z",
+          "operation": "tile",
+          "unit": 87
+        },
+        {
+          "at": "2026-10-30T14:14:24.487Z",
+          "operation": "tile",
+          "unit": 88
+        },
+        {
+          "at": "2026-10-30T14:14:26.476Z",
+          "operation": "tile",
+          "unit": 89
+        },
+        {
+          "at": "2026-10-30T14:14:28.343Z",
+          "operation": "tile",
+          "unit": 90
+        },
+        {
+          "at": "2026-10-30T14:14:30.135Z",
+          "operation": "tile",
+          "unit": 91
+        },
+        {
+          "at": "2026-10-30T14:14:31.938Z",
+          "operation": "tile",
+          "unit": 92
+        },
+        {
+          "at": "2026-10-30T14:14:33.595Z",
+          "operation": "tile",
+          "unit": 93
+        },
+        {
+          "at": "2026-10-30T14:14:35.413Z",
+          "operation": "tile",
+          "unit": 94
+        },
+        {
+          "at": "2026-10-30T14:14:37.218Z",
+          "operation": "tile",
+          "unit": 95
+        },
+        {
+          "at": "2026-10-30T14:14:39.223Z",
+          "operation": "tile",
+          "unit": 96
+        },
+        {
+          "at": "2026-10-30T14:14:41.600Z",
+          "operation": "tile",
+          "unit": 97
+        },
+        {
+          "at": "2026-10-30T14:14:44.018Z",
+          "operation": "tile",
+          "unit": 98
+        },
+        {
+          "at": "2026-10-30T14:14:46.095Z",
+          "operation": "tile",
+          "unit": 99
+        },
+        {
+          "at": "2026-10-30T14:14:47.842Z",
+          "operation": "tile",
+          "unit": 100
+        },
+        {
+          "at": "2026-10-30T14:14:49.543Z",
+          "operation": "tile",
+          "unit": 101
+        },
+        {
+          "at": "2026-10-30T14:14:51.244Z",
+          "operation": "tile",
+          "unit": 102
+        },
+        {
+          "at": "2026-10-30T14:14:53.186Z",
+          "operation": "tile",
+          "unit": 103
+        },
+        {
+          "at": "2026-10-30T14:14:55.382Z",
+          "operation": "tile",
+          "unit": 104
+        },
+        {
+          "at": "2026-10-30T14:14:57.341Z",
+          "operation": "tile",
+          "unit": 105
+        },
+        {
+          "at": "2026-10-30T14:14:59.173Z",
+          "operation": "tile",
+          "unit": 106
+        },
+        {
+          "at": "2026-10-30T14:15:01.101Z",
+          "operation": "tile",
+          "unit": 107
+        },
+        {
+          "at": "2026-10-30T14:15:03.089Z",
+          "operation": "tile",
+          "unit": 108
+        },
+        {
+          "at": "2026-10-30T14:15:05.053Z",
+          "operation": "tile",
+          "unit": 109
+        },
+        {
+          "at": "2026-10-30T14:15:06.996Z",
+          "operation": "tile",
+          "unit": 110
+        },
+        {
+          "at": "2026-10-30T14:15:08.919Z",
+          "operation": "tile",
+          "unit": 111
+        },
+        {
+          "at": "2026-10-30T14:15:10.884Z",
+          "operation": "tile",
+          "unit": 112
+        },
+        {
+          "at": "2026-10-30T14:15:12.889Z",
+          "operation": "tile",
+          "unit": 113
+        },
+        {
+          "at": "2026-10-30T14:15:14.851Z",
+          "operation": "tile",
+          "unit": 114
+        },
+        {
+          "at": "2026-10-30T14:15:17.201Z",
+          "operation": "tile",
+          "unit": 115
+        },
+        {
+          "at": "2026-10-30T14:15:19.503Z",
+          "operation": "tile",
+          "unit": 116
+        },
+        {
+          "at": "2026-10-30T14:15:21.308Z",
+          "operation": "tile",
+          "unit": 117
+        },
+        {
+          "at": "2026-10-30T14:15:23.086Z",
+          "operation": "tile",
+          "unit": 118
+        },
+        {
+          "at": "2026-10-30T14:15:25.093Z",
+          "operation": "tile",
+          "unit": 119
+        },
+        {
+          "at": "2026-10-30T14:15:27.100Z",
+          "operation": "tile",
+          "unit": 120
+        },
+        {
+          "at": "2026-10-30T14:15:29.084Z",
+          "operation": "tile",
+          "unit": 121
+        },
+        {
+          "at": "2026-10-30T14:15:31.091Z",
+          "operation": "tile",
+          "unit": 122
+        },
+        {
+          "at": "2026-10-30T14:15:33.059Z",
+          "operation": "tile",
+          "unit": 123
+        },
+        {
+          "at": "2026-10-30T14:15:35.099Z",
+          "operation": "tile",
+          "unit": 124
+        },
+        {
+          "at": "2026-10-30T14:15:37.109Z",
+          "operation": "tile",
+          "unit": 125
+        },
+        {
+          "at": "2026-10-30T14:15:39.127Z",
+          "operation": "tile",
+          "unit": 126
+        },
+        {
+          "at": "2026-10-30T14:15:41.145Z",
+          "operation": "tile",
+          "unit": 127
+        },
+        {
+          "at": "2026-10-30T14:15:43.169Z",
+          "operation": "tile",
+          "unit": 128
+        },
+        {
+          "at": "2026-10-30T14:15:45.181Z",
+          "operation": "tile",
+          "unit": 129
+        },
+        {
+          "at": "2026-10-30T14:15:47.196Z",
+          "operation": "tile",
+          "unit": 130
+        },
+        {
+          "at": "2026-10-30T14:15:49.199Z",
+          "operation": "tile",
+          "unit": 131
+        },
+        {
+          "at": "2026-10-30T14:15:51.242Z",
+          "operation": "tile",
+          "unit": 132
+        },
+        {
+          "at": "2026-10-30T14:15:53.295Z",
+          "operation": "tile",
+          "unit": 133
+        },
+        {
+          "at": "2026-10-30T14:15:55.328Z",
+          "operation": "tile",
+          "unit": 134
+        },
+        {
+          "at": "2026-10-30T14:15:57.383Z",
+          "operation": "tile",
+          "unit": 135
+        },
+        {
+          "at": "2026-10-30T14:15:59.467Z",
+          "operation": "tile",
+          "unit": 136
+        },
+        {
+          "at": "2026-10-30T14:16:01.525Z",
+          "operation": "tile",
+          "unit": 137
+        },
+        {
+          "at": "2026-10-30T14:16:03.634Z",
+          "operation": "tile",
+          "unit": 138
+        },
+        {
+          "at": "2026-10-30T14:16:05.707Z",
+          "operation": "tile",
+          "unit": 139
+        },
+        {
+          "at": "2026-10-30T14:16:07.803Z",
+          "operation": "tile",
+          "unit": 140
+        },
+        {
+          "at": "2026-10-30T14:16:09.860Z",
+          "operation": "tile",
+          "unit": 141
+        },
+        {
+          "at": "2026-10-30T14:16:11.938Z",
+          "operation": "tile",
+          "unit": 142
+        },
+        {
+          "at": "2026-10-30T14:16:14.029Z",
+          "operation": "tile",
+          "unit": 143
+        },
+        {
+          "at": "2026-10-30T14:16:16.191Z",
+          "operation": "tile",
+          "unit": 144
+        },
+        {
+          "at": "2026-10-30T14:16:18.250Z",
+          "operation": "tile",
+          "unit": 145
+        },
+        {
+          "at": "2026-10-30T14:16:20.346Z",
+          "operation": "tile",
+          "unit": 146
+        },
+        {
+          "at": "2026-10-30T14:16:22.448Z",
+          "operation": "tile",
+          "unit": 147
+        },
+        {
+          "at": "2026-10-30T14:16:24.573Z",
+          "operation": "tile",
+          "unit": 148
+        },
+        {
+          "at": "2026-10-30T14:16:26.698Z",
+          "operation": "tile",
+          "unit": 149
+        },
+        {
+          "at": "2026-10-30T14:16:28.838Z",
+          "operation": "tile",
+          "unit": 150
+        },
+        {
+          "at": "2026-10-30T14:16:30.983Z",
+          "operation": "tile",
+          "unit": 151
+        },
+        {
+          "at": "2026-10-30T14:16:33.145Z",
+          "operation": "tile",
+          "unit": 152
+        },
+        {
+          "at": "2026-10-30T14:16:35.267Z",
+          "operation": "tile",
+          "unit": 153
+        },
+        {
+          "at": "2026-10-30T14:16:37.421Z",
+          "operation": "tile",
+          "unit": 154
+        },
+        {
+          "at": "2026-10-30T14:16:39.593Z",
+          "operation": "tile",
+          "unit": 155
+        },
+        {
+          "at": "2026-10-30T14:16:41.780Z",
+          "operation": "tile",
+          "unit": 156
+        },
+        {
+          "at": "2026-10-30T14:16:44.016Z",
+          "operation": "composite",
+          "unit": 157
+        },
+        {
+          "at": "2026-10-30T14:16:44.016Z",
+          "operation": "encode",
+          "unit": 158
+        }
+      ],
+      "result": "done",
+      "mode": null,
+      "effectiveThreads": 1,
+      "file": "maximum-2.png",
+      "canEdit": false,
+      "backend": "webgpu",
+      "group": "processor"
+    },
+    {
+      "requestedThreads": 1,
+      "trace": [
+        {
+          "at": "2026-10-30T14:16:53.299Z",
+          "operation": "decode",
+          "unit": 1
+        },
+        {
+          "at": "2026-10-30T14:16:53.447Z",
+          "operation": "scan",
+          "unit": 2
+        },
+        {
+          "at": "2026-10-30T14:16:53.517Z",
+          "operation": "prepare-rgb",
+          "unit": 3
+        },
+        {
+          "at": "2026-10-30T14:16:53.630Z",
+          "operation": "prepare-rgb",
+          "unit": 4
+        },
+        {
+          "at": "2026-10-30T14:16:53.886Z",
+          "operation": "initialize",
+          "unit": 4
+        },
+        {
+          "at": "2026-10-30T14:16:53.891Z",
+          "operation": "download",
+          "unit": 4
+        },
+        {
+          "at": "2026-10-30T14:16:53.944Z",
+          "operation": "initialize",
+          "unit": 4
+        },
+        {
+          "at": "2026-10-30T14:16:54.251Z",
+          "operation": "tile",
+          "unit": 5
+        },
+        {
+          "at": "2026-10-30T14:16:55.518Z",
+          "operation": "tile",
+          "unit": 6
+        },
+        {
+          "at": "2026-10-30T14:16:56.954Z",
+          "operation": "tile",
+          "unit": 7
+        },
+        {
+          "at": "2026-10-30T14:17:00.002Z",
+          "operation": "tile",
+          "unit": 8
+        },
+        {
+          "at": "2026-10-30T14:17:02.792Z",
+          "operation": "tile",
+          "unit": 9
+        },
+        {
+          "at": "2026-10-30T14:17:04.599Z",
+          "operation": "tile",
+          "unit": 10
+        },
+        {
+          "at": "2026-10-30T14:17:06.571Z",
+          "operation": "tile",
+          "unit": 11
+        },
+        {
+          "at": "2026-10-30T14:17:08.968Z",
+          "operation": "tile",
+          "unit": 12
+        },
+        {
+          "at": "2026-10-30T14:17:11.316Z",
+          "operation": "tile",
+          "unit": 13
+        },
+        {
+          "at": "2026-10-30T14:17:13.558Z",
+          "operation": "tile",
+          "unit": 14
+        },
+        {
+          "at": "2026-10-30T14:17:15.772Z",
+          "operation": "tile",
+          "unit": 15
+        },
+        {
+          "at": "2026-10-30T14:17:18.037Z",
+          "operation": "tile",
+          "unit": 16
+        },
+        {
+          "at": "2026-10-30T14:17:20.338Z",
+          "operation": "tile",
+          "unit": 17
+        },
+        {
+          "at": "2026-10-30T14:17:22.615Z",
+          "operation": "tile",
+          "unit": 18
+        },
+        {
+          "at": "2026-10-30T14:17:24.904Z",
+          "operation": "tile",
+          "unit": 19
+        },
+        {
+          "at": "2026-10-30T14:17:27.219Z",
+          "operation": "tile",
+          "unit": 20
+        },
+        {
+          "at": "2026-10-30T14:17:29.508Z",
+          "operation": "tile",
+          "unit": 21
+        },
+        {
+          "at": "2026-10-30T14:17:31.830Z",
+          "operation": "tile",
+          "unit": 22
+        },
+        {
+          "at": "2026-10-30T14:17:34.149Z",
+          "operation": "tile",
+          "unit": 23
+        },
+        {
+          "at": "2026-10-30T14:17:36.548Z",
+          "operation": "tile",
+          "unit": 24
+        },
+        {
+          "at": "2026-10-30T14:17:39.383Z",
+          "operation": "tile",
+          "unit": 25
+        },
+        {
+          "at": "2026-10-30T14:17:42.859Z",
+          "operation": "tile",
+          "unit": 26
+        },
+        {
+          "at": "2026-10-30T14:17:45.280Z",
+          "operation": "tile",
+          "unit": 27
+        },
+        {
+          "at": "2026-10-30T14:17:47.439Z",
+          "operation": "tile",
+          "unit": 28
+        },
+        {
+          "at": "2026-10-30T14:17:49.644Z",
+          "operation": "tile",
+          "unit": 29
+        },
+        {
+          "at": "2026-10-30T14:17:51.879Z",
+          "operation": "tile",
+          "unit": 30
+        },
+        {
+          "at": "2026-10-30T14:17:54.213Z",
+          "operation": "tile",
+          "unit": 31
+        },
+        {
+          "at": "2026-10-30T14:17:56.591Z",
+          "operation": "tile",
+          "unit": 32
+        },
+        {
+          "at": "2026-10-30T14:17:58.852Z",
+          "operation": "tile",
+          "unit": 33
+        },
+        {
+          "at": "2026-10-30T14:18:01.194Z",
+          "operation": "tile",
+          "unit": 34
+        },
+        {
+          "at": "2026-10-30T14:18:03.617Z",
+          "operation": "tile",
+          "unit": 35
+        },
+        {
+          "at": "2026-10-30T14:18:06.013Z",
+          "operation": "tile",
+          "unit": 36
+        },
+        {
+          "at": "2026-10-30T14:18:08.441Z",
+          "operation": "tile",
+          "unit": 37
+        },
+        {
+          "at": "2026-10-30T14:18:11.157Z",
+          "operation": "tile",
+          "unit": 38
+        },
+        {
+          "at": "2026-10-30T14:18:13.884Z",
+          "operation": "tile",
+          "unit": 39
+        },
+        {
+          "at": "2026-10-30T14:18:16.245Z",
+          "operation": "tile",
+          "unit": 40
+        },
+        {
+          "at": "2026-10-30T14:18:18.437Z",
+          "operation": "tile",
+          "unit": 41
+        },
+        {
+          "at": "2026-10-30T14:18:20.836Z",
+          "operation": "tile",
+          "unit": 42
+        },
+        {
+          "at": "2026-10-30T14:18:23.431Z",
+          "operation": "tile",
+          "unit": 43
+        },
+        {
+          "at": "2026-10-30T14:18:25.874Z",
+          "operation": "tile",
+          "unit": 44
+        },
+        {
+          "at": "2026-10-30T14:18:28.296Z",
+          "operation": "tile",
+          "unit": 45
+        },
+        {
+          "at": "2026-10-30T14:18:30.734Z",
+          "operation": "tile",
+          "unit": 46
+        },
+        {
+          "at": "2026-10-30T14:18:33.248Z",
+          "operation": "tile",
+          "unit": 47
+        },
+        {
+          "at": "2026-10-30T14:18:35.731Z",
+          "operation": "tile",
+          "unit": 48
+        },
+        {
+          "at": "2026-10-30T14:18:38.192Z",
+          "operation": "tile",
+          "unit": 49
+        },
+        {
+          "at": "2026-10-30T14:18:40.711Z",
+          "operation": "tile",
+          "unit": 50
+        },
+        {
+          "at": "2026-10-30T14:18:43.240Z",
+          "operation": "tile",
+          "unit": 51
+        },
+        {
+          "at": "2026-10-30T14:18:45.699Z",
+          "operation": "tile",
+          "unit": 52
+        },
+        {
+          "at": "2026-10-30T14:18:48.179Z",
+          "operation": "tile",
+          "unit": 53
+        },
+        {
+          "at": "2026-10-30T14:18:50.652Z",
+          "operation": "tile",
+          "unit": 54
+        },
+        {
+          "at": "2026-10-30T14:18:53.131Z",
+          "operation": "tile",
+          "unit": 55
+        },
+        {
+          "at": "2026-10-30T14:18:55.634Z",
+          "operation": "tile",
+          "unit": 56
+        },
+        {
+          "at": "2026-10-30T14:18:58.131Z",
+          "operation": "tile",
+          "unit": 57
+        },
+        {
+          "at": "2026-10-30T14:19:00.633Z",
+          "operation": "tile",
+          "unit": 58
+        },
+        {
+          "at": "2026-10-30T14:19:03.119Z",
+          "operation": "tile",
+          "unit": 59
+        },
+        {
+          "at": "2026-10-30T14:19:05.614Z",
+          "operation": "tile",
+          "unit": 60
+        },
+        {
+          "at": "2026-10-30T14:19:08.117Z",
+          "operation": "tile",
+          "unit": 61
+        },
+        {
+          "at": "2026-10-30T14:19:10.729Z",
+          "operation": "tile",
+          "unit": 62
+        },
+        {
+          "at": "2026-10-30T14:19:13.256Z",
+          "operation": "tile",
+          "unit": 63
+        },
+        {
+          "at": "2026-10-30T14:19:15.898Z",
+          "operation": "tile",
+          "unit": 64
+        },
+        {
+          "at": "2026-10-30T14:19:18.507Z",
+          "operation": "tile",
+          "unit": 65
+        },
+        {
+          "at": "2026-10-30T14:19:20.943Z",
+          "operation": "tile",
+          "unit": 66
+        },
+        {
+          "at": "2026-10-30T14:19:23.500Z",
+          "operation": "tile",
+          "unit": 67
+        },
+        {
+          "at": "2026-10-30T14:19:26.021Z",
+          "operation": "tile",
+          "unit": 68
+        },
+        {
+          "at": "2026-10-30T14:19:28.549Z",
+          "operation": "tile",
+          "unit": 69
+        },
+        {
+          "at": "2026-10-30T14:19:31.089Z",
+          "operation": "tile",
+          "unit": 70
+        },
+        {
+          "at": "2026-10-30T14:19:33.647Z",
+          "operation": "tile",
+          "unit": 71
+        },
+        {
+          "at": "2026-10-30T14:19:36.227Z",
+          "operation": "tile",
+          "unit": 72
+        },
+        {
+          "at": "2026-10-30T14:19:38.761Z",
+          "operation": "tile",
+          "unit": 73
+        },
+        {
+          "at": "2026-10-30T14:19:41.339Z",
+          "operation": "tile",
+          "unit": 74
+        },
+        {
+          "at": "2026-10-30T14:19:43.920Z",
+          "operation": "tile",
+          "unit": 75
+        },
+        {
+          "at": "2026-10-30T14:19:46.448Z",
+          "operation": "tile",
+          "unit": 76
+        },
+        {
+          "at": "2026-10-30T14:19:49.063Z",
+          "operation": "tile",
+          "unit": 77
+        },
+        {
+          "at": "2026-10-30T14:19:51.576Z",
+          "operation": "tile",
+          "unit": 78
+        },
+        {
+          "at": "2026-10-30T14:19:54.166Z",
+          "operation": "tile",
+          "unit": 79
+        },
+        {
+          "at": "2026-10-30T14:19:56.766Z",
+          "operation": "tile",
+          "unit": 80
+        },
+        {
+          "at": "2026-10-30T14:19:59.442Z",
+          "operation": "tile",
+          "unit": 81
+        },
+        {
+          "at": "2026-10-30T14:20:02.035Z",
+          "operation": "tile",
+          "unit": 82
+        },
+        {
+          "at": "2026-10-30T14:20:04.597Z",
+          "operation": "tile",
+          "unit": 83
+        },
+        {
+          "at": "2026-10-30T14:20:07.311Z",
+          "operation": "tile",
+          "unit": 84
+        },
+        {
+          "at": "2026-10-30T14:20:10.088Z",
+          "operation": "tile",
+          "unit": 85
+        },
+        {
+          "at": "2026-10-30T14:20:13.018Z",
+          "operation": "tile",
+          "unit": 86
+        },
+        {
+          "at": "2026-10-30T14:20:15.509Z",
+          "operation": "tile",
+          "unit": 87
+        },
+        {
+          "at": "2026-10-30T14:20:17.926Z",
+          "operation": "tile",
+          "unit": 88
+        },
+        {
+          "at": "2026-10-30T14:20:20.537Z",
+          "operation": "tile",
+          "unit": 89
+        },
+        {
+          "at": "2026-10-30T14:20:23.144Z",
+          "operation": "tile",
+          "unit": 90
+        },
+        {
+          "at": "2026-10-30T14:20:25.672Z",
+          "operation": "tile",
+          "unit": 91
+        },
+        {
+          "at": "2026-10-30T14:20:28.299Z",
+          "operation": "tile",
+          "unit": 92
+        },
+        {
+          "at": "2026-10-30T14:20:31.237Z",
+          "operation": "tile",
+          "unit": 93
+        },
+        {
+          "at": "2026-10-30T14:20:35.199Z",
+          "operation": "tile",
+          "unit": 94
+        },
+        {
+          "at": "2026-10-30T14:20:37.892Z",
+          "operation": "tile",
+          "unit": 95
+        },
+        {
+          "at": "2026-10-30T14:20:40.684Z",
+          "operation": "tile",
+          "unit": 96
+        },
+        {
+          "at": "2026-10-30T14:20:43.800Z",
+          "operation": "tile",
+          "unit": 97
+        },
+        {
+          "at": "2026-10-30T14:20:46.800Z",
+          "operation": "tile",
+          "unit": 98
+        },
+        {
+          "at": "2026-10-30T14:20:49.414Z",
+          "operation": "tile",
+          "unit": 99
+        },
+        {
+          "at": "2026-10-30T14:20:52.024Z",
+          "operation": "tile",
+          "unit": 100
+        },
+        {
+          "at": "2026-10-30T14:20:54.420Z",
+          "operation": "tile",
+          "unit": 101
+        },
+        {
+          "at": "2026-10-30T14:20:56.895Z",
+          "operation": "tile",
+          "unit": 102
+        },
+        {
+          "at": "2026-10-30T14:20:59.499Z",
+          "operation": "tile",
+          "unit": 103
+        },
+        {
+          "at": "2026-10-30T14:21:02.163Z",
+          "operation": "tile",
+          "unit": 104
+        },
+        {
+          "at": "2026-10-30T14:21:04.812Z",
+          "operation": "tile",
+          "unit": 105
+        },
+        {
+          "at": "2026-10-30T14:21:07.388Z",
+          "operation": "tile",
+          "unit": 106
+        },
+        {
+          "at": "2026-10-30T14:21:10.119Z",
+          "operation": "tile",
+          "unit": 107
+        },
+        {
+          "at": "2026-10-30T14:21:12.691Z",
+          "operation": "tile",
+          "unit": 108
+        },
+        {
+          "at": "2026-10-30T14:21:15.322Z",
+          "operation": "tile",
+          "unit": 109
+        },
+        {
+          "at": "2026-10-30T14:21:17.970Z",
+          "operation": "tile",
+          "unit": 110
+        },
+        {
+          "at": "2026-10-30T14:21:20.591Z",
+          "operation": "tile",
+          "unit": 111
+        },
+        {
+          "at": "2026-10-30T14:21:23.136Z",
+          "operation": "tile",
+          "unit": 112
+        },
+        {
+          "at": "2026-10-30T14:21:25.793Z",
+          "operation": "tile",
+          "unit": 113
+        },
+        {
+          "at": "2026-10-30T14:21:28.509Z",
+          "operation": "tile",
+          "unit": 114
+        },
+        {
+          "at": "2026-10-30T14:21:31.773Z",
+          "operation": "tile",
+          "unit": 115
+        },
+        {
+          "at": "2026-10-30T14:21:34.419Z",
+          "operation": "tile",
+          "unit": 116
+        },
+        {
+          "at": "2026-10-30T14:21:36.898Z",
+          "operation": "tile",
+          "unit": 117
+        },
+        {
+          "at": "2026-10-30T14:21:39.537Z",
+          "operation": "tile",
+          "unit": 118
+        },
+        {
+          "at": "2026-10-30T14:21:42.334Z",
+          "operation": "tile",
+          "unit": 119
+        },
+        {
+          "at": "2026-10-30T14:21:44.955Z",
+          "operation": "tile",
+          "unit": 120
+        },
+        {
+          "at": "2026-10-30T14:21:47.660Z",
+          "operation": "tile",
+          "unit": 121
+        },
+        {
+          "at": "2026-10-30T14:21:50.217Z",
+          "operation": "tile",
+          "unit": 122
+        },
+        {
+          "at": "2026-10-30T14:21:52.844Z",
+          "operation": "tile",
+          "unit": 123
+        },
+        {
+          "at": "2026-10-30T14:21:55.535Z",
+          "operation": "tile",
+          "unit": 124
+        },
+        {
+          "at": "2026-10-30T14:21:58.158Z",
+          "operation": "tile",
+          "unit": 125
+        },
+        {
+          "at": "2026-10-30T14:22:00.829Z",
+          "operation": "tile",
+          "unit": 126
+        },
+        {
+          "at": "2026-10-30T14:22:03.503Z",
+          "operation": "tile",
+          "unit": 127
+        },
+        {
+          "at": "2026-10-30T14:22:06.132Z",
+          "operation": "tile",
+          "unit": 128
+        },
+        {
+          "at": "2026-10-30T14:22:08.779Z",
+          "operation": "tile",
+          "unit": 129
+        },
+        {
+          "at": "2026-10-30T14:22:11.411Z",
+          "operation": "tile",
+          "unit": 130
+        },
+        {
+          "at": "2026-10-30T14:22:14.052Z",
+          "operation": "tile",
+          "unit": 131
+        },
+        {
+          "at": "2026-10-30T14:22:16.657Z",
+          "operation": "tile",
+          "unit": 132
+        },
+        {
+          "at": "2026-10-30T14:22:19.290Z",
+          "operation": "tile",
+          "unit": 133
+        },
+        {
+          "at": "2026-10-30T14:22:21.905Z",
+          "operation": "tile",
+          "unit": 134
+        },
+        {
+          "at": "2026-10-30T14:22:24.566Z",
+          "operation": "tile",
+          "unit": 135
+        },
+        {
+          "at": "2026-10-30T14:22:27.213Z",
+          "operation": "tile",
+          "unit": 136
+        },
+        {
+          "at": "2026-10-30T14:22:29.832Z",
+          "operation": "tile",
+          "unit": 137
+        },
+        {
+          "at": "2026-10-30T14:22:32.528Z",
+          "operation": "tile",
+          "unit": 138
+        },
+        {
+          "at": "2026-10-30T14:22:35.166Z",
+          "operation": "tile",
+          "unit": 139
+        },
+        {
+          "at": "2026-10-30T14:22:37.756Z",
+          "operation": "tile",
+          "unit": 140
+        },
+        {
+          "at": "2026-10-30T14:22:40.408Z",
+          "operation": "tile",
+          "unit": 141
+        },
+        {
+          "at": "2026-10-30T14:22:42.945Z",
+          "operation": "tile",
+          "unit": 142
+        },
+        {
+          "at": "2026-10-30T14:22:45.538Z",
+          "operation": "tile",
+          "unit": 143
+        },
+        {
+          "at": "2026-10-30T14:22:48.216Z",
+          "operation": "tile",
+          "unit": 144
+        },
+        {
+          "at": "2026-10-30T14:22:50.840Z",
+          "operation": "tile",
+          "unit": 145
+        },
+        {
+          "at": "2026-10-30T14:22:53.415Z",
+          "operation": "tile",
+          "unit": 146
+        },
+        {
+          "at": "2026-10-30T14:22:56.070Z",
+          "operation": "tile",
+          "unit": 147
+        },
+        {
+          "at": "2026-10-30T14:22:58.664Z",
+          "operation": "tile",
+          "unit": 148
+        },
+        {
+          "at": "2026-10-30T14:23:01.302Z",
+          "operation": "tile",
+          "unit": 149
+        },
+        {
+          "at": "2026-10-30T14:23:03.922Z",
+          "operation": "tile",
+          "unit": 150
+        },
+        {
+          "at": "2026-10-30T14:23:06.560Z",
+          "operation": "tile",
+          "unit": 151
+        },
+        {
+          "at": "2026-10-30T14:23:09.214Z",
+          "operation": "tile",
+          "unit": 152
+        },
+        {
+          "at": "2026-10-30T14:23:11.887Z",
+          "operation": "tile",
+          "unit": 153
+        },
+        {
+          "at": "2026-10-30T14:23:14.468Z",
+          "operation": "tile",
+          "unit": 154
+        },
+        {
+          "at": "2026-10-30T14:23:17.055Z",
+          "operation": "tile",
+          "unit": 155
+        },
+        {
+          "at": "2026-10-30T14:23:19.690Z",
+          "operation": "tile",
+          "unit": 156
+        },
+        {
+          "at": "2026-10-30T14:23:22.336Z",
+          "operation": "composite",
+          "unit": 157
+        },
+        {
+          "at": "2026-10-30T14:23:22.337Z",
+          "operation": "encode",
+          "unit": 158
+        }
+      ],
+      "result": "done",
+      "mode": null,
+      "effectiveThreads": 1,
+      "file": "maximum-3.png",
+      "canEdit": false,
+      "backend": "webgpu",
+      "group": "processor"
+    }
+  ],
+  "wakeLockError": "NotAllowedError: Permission was denied",
+  "kind": "physical-iphone-maximum-ui",
+  "requestedRuns": 3,
+  "method": "Locally built product UI; pinned production models; sequential PNG display/download-Blob/reopen checks",
+  "createdAt": "2026-10-30T14:07:30.168Z",
+  "matrix": [],
+  "errors": [],
+  "operation": "encode",
+  "environment": {
+    "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Mobile/15E148 Safari/604.1",
+    "hardwareConcurrency": 4,
+    "crossOriginIsolated": true,
+    "platform": "iPhone",
+    "maxTouchPoints": 5
+  },
+  "height": 1728,
+  "warnings": [],
+  "width": 4096,
+  "runs": [
+    {
+      "passed": true,
+      "displayed": [
+        8192,
+        3456
+      ],
+      "execution": {
+        "requestedThreads": 1,
+        "trace": [
+          {
+            "at": "2026-10-30T14:07:31.264Z",
+            "operation": "decode",
+            "unit": 1
+          },
+          {
+            "at": "2026-10-30T14:07:31.386Z",
+            "operation": "scan",
+            "unit": 2
+          },
+          {
+            "at": "2026-10-30T14:07:31.441Z",
+            "operation": "prepare-rgb",
+            "unit": 3
+          },
+          {
+            "at": "2026-10-30T14:07:31.553Z",
+            "operation": "prepare-rgb",
+            "unit": 4
+          },
+          {
+            "at": "2026-10-30T14:07:31.759Z",
+            "operation": "initialize",
+            "unit": 4
+          },
+          {
+            "at": "2026-10-30T14:07:31.851Z",
+            "operation": "download",
+            "unit": 4
+          },
+          {
+            "at": "2026-10-30T14:07:32.823Z",
+            "operation": "initialize",
+            "unit": 4
+          },
+          {
+            "at": "2026-10-30T14:07:33.170Z",
+            "operation": "tile",
+            "unit": 5
+          },
+          {
+            "at": "2026-10-30T14:07:34.773Z",
+            "operation": "tile",
+            "unit": 6
+          },
+          {
+            "at": "2026-10-30T14:07:35.783Z",
+            "operation": "tile",
+            "unit": 7
+          },
+          {
+            "at": "2026-10-30T14:07:36.797Z",
+            "operation": "tile",
+            "unit": 8
+          },
+          {
+            "at": "2026-10-30T14:07:37.807Z",
+            "operation": "tile",
+            "unit": 9
+          },
+          {
+            "at": "2026-10-30T14:07:38.803Z",
+            "operation": "tile",
+            "unit": 10
+          },
+          {
+            "at": "2026-10-30T14:07:39.812Z",
+            "operation": "tile",
+            "unit": 11
+          },
+          {
+            "at": "2026-10-30T14:07:40.812Z",
+            "operation": "tile",
+            "unit": 12
+          },
+          {
+            "at": "2026-10-30T14:07:41.856Z",
+            "operation": "tile",
+            "unit": 13
+          },
+          {
+            "at": "2026-10-30T14:07:42.858Z",
+            "operation": "tile",
+            "unit": 14
+          },
+          {
+            "at": "2026-10-30T14:07:43.968Z",
+            "operation": "tile",
+            "unit": 15
+          },
+          {
+            "at": "2026-10-30T14:07:45.159Z",
+            "operation": "tile",
+            "unit": 16
+          },
+          {
+            "at": "2026-10-30T14:07:46.557Z",
+            "operation": "tile",
+            "unit": 17
+          },
+          {
+            "at": "2026-10-30T14:07:48.080Z",
+            "operation": "tile",
+            "unit": 18
+          },
+          {
+            "at": "2026-10-30T14:07:49.601Z",
+            "operation": "tile",
+            "unit": 19
+          },
+          {
+            "at": "2026-10-30T14:07:51.199Z",
+            "operation": "tile",
+            "unit": 20
+          },
+          {
+            "at": "2026-10-30T14:07:52.769Z",
+            "operation": "tile",
+            "unit": 21
+          },
+          {
+            "at": "2026-10-30T14:07:54.334Z",
+            "operation": "tile",
+            "unit": 22
+          },
+          {
+            "at": "2026-10-30T14:07:55.871Z",
+            "operation": "tile",
+            "unit": 23
+          },
+          {
+            "at": "2026-10-30T14:07:57.505Z",
+            "operation": "tile",
+            "unit": 24
+          },
+          {
+            "at": "2026-10-30T14:07:59.315Z",
+            "operation": "tile",
+            "unit": 25
+          },
+          {
+            "at": "2026-10-30T14:08:01.069Z",
+            "operation": "tile",
+            "unit": 26
+          },
+          {
+            "at": "2026-10-30T14:08:02.795Z",
+            "operation": "tile",
+            "unit": 27
+          },
+          {
+            "at": "2026-10-30T14:08:04.527Z",
+            "operation": "tile",
+            "unit": 28
+          },
+          {
+            "at": "2026-10-30T14:08:06.222Z",
+            "operation": "tile",
+            "unit": 29
+          },
+          {
+            "at": "2026-10-30T14:08:07.893Z",
+            "operation": "tile",
+            "unit": 30
+          },
+          {
+            "at": "2026-10-30T14:08:09.489Z",
+            "operation": "tile",
+            "unit": 31
+          },
+          {
+            "at": "2026-10-30T14:08:11.244Z",
+            "operation": "tile",
+            "unit": 32
+          },
+          {
+            "at": "2026-10-30T14:08:12.856Z",
+            "operation": "tile",
+            "unit": 33
+          },
+          {
+            "at": "2026-10-30T14:08:14.377Z",
+            "operation": "tile",
+            "unit": 34
+          },
+          {
+            "at": "2026-10-30T14:08:15.922Z",
+            "operation": "tile",
+            "unit": 35
+          },
+          {
+            "at": "2026-10-30T14:08:17.509Z",
+            "operation": "tile",
+            "unit": 36
+          },
+          {
+            "at": "2026-10-30T14:08:19.198Z",
+            "operation": "tile",
+            "unit": 37
+          },
+          {
+            "at": "2026-10-30T14:08:20.941Z",
+            "operation": "tile",
+            "unit": 38
+          },
+          {
+            "at": "2026-10-30T14:08:22.554Z",
+            "operation": "tile",
+            "unit": 39
+          },
+          {
+            "at": "2026-10-30T14:08:24.093Z",
+            "operation": "tile",
+            "unit": 40
+          },
+          {
+            "at": "2026-10-30T14:08:25.583Z",
+            "operation": "tile",
+            "unit": 41
+          },
+          {
+            "at": "2026-10-30T14:08:27.117Z",
+            "operation": "tile",
+            "unit": 42
+          },
+          {
+            "at": "2026-10-30T14:08:28.792Z",
+            "operation": "tile",
+            "unit": 43
+          },
+          {
+            "at": "2026-10-30T14:08:30.505Z",
+            "operation": "tile",
+            "unit": 44
+          },
+          {
+            "at": "2026-10-30T14:08:32.106Z",
+            "operation": "tile",
+            "unit": 45
+          },
+          {
+            "at": "2026-10-30T14:08:33.695Z",
+            "operation": "tile",
+            "unit": 46
+          },
+          {
+            "at": "2026-10-30T14:08:35.308Z",
+            "operation": "tile",
+            "unit": 47
+          },
+          {
+            "at": "2026-10-30T14:08:37.027Z",
+            "operation": "tile",
+            "unit": 48
+          },
+          {
+            "at": "2026-10-30T14:08:38.712Z",
+            "operation": "tile",
+            "unit": 49
+          },
+          {
+            "at": "2026-10-30T14:08:40.454Z",
+            "operation": "tile",
+            "unit": 50
+          },
+          {
+            "at": "2026-10-30T14:08:42.065Z",
+            "operation": "tile",
+            "unit": 51
+          },
+          {
+            "at": "2026-10-30T14:08:43.670Z",
+            "operation": "tile",
+            "unit": 52
+          },
+          {
+            "at": "2026-10-30T14:08:45.308Z",
+            "operation": "tile",
+            "unit": 53
+          },
+          {
+            "at": "2026-10-30T14:08:46.917Z",
+            "operation": "tile",
+            "unit": 54
+          },
+          {
+            "at": "2026-10-30T14:08:48.532Z",
+            "operation": "tile",
+            "unit": 55
+          },
+          {
+            "at": "2026-10-30T14:08:50.162Z",
+            "operation": "tile",
+            "unit": 56
+          },
+          {
+            "at": "2026-10-30T14:08:51.783Z",
+            "operation": "tile",
+            "unit": 57
+          },
+          {
+            "at": "2026-10-30T14:08:53.545Z",
+            "operation": "tile",
+            "unit": 58
+          },
+          {
+            "at": "2026-10-30T14:08:55.164Z",
+            "operation": "tile",
+            "unit": 59
+          },
+          {
+            "at": "2026-10-30T14:08:56.786Z",
+            "operation": "tile",
+            "unit": 60
+          },
+          {
+            "at": "2026-10-30T14:08:58.433Z",
+            "operation": "tile",
+            "unit": 61
+          },
+          {
+            "at": "2026-10-30T14:09:00.165Z",
+            "operation": "tile",
+            "unit": 62
+          },
+          {
+            "at": "2026-10-30T14:09:01.763Z",
+            "operation": "tile",
+            "unit": 63
+          },
+          {
+            "at": "2026-10-30T14:09:03.351Z",
+            "operation": "tile",
+            "unit": 64
+          },
+          {
+            "at": "2026-10-30T14:09:04.903Z",
+            "operation": "tile",
+            "unit": 65
+          },
+          {
+            "at": "2026-10-30T14:09:06.443Z",
+            "operation": "tile",
+            "unit": 66
+          },
+          {
+            "at": "2026-10-30T14:09:08.032Z",
+            "operation": "tile",
+            "unit": 67
+          },
+          {
+            "at": "2026-10-30T14:09:09.744Z",
+            "operation": "tile",
+            "unit": 68
+          },
+          {
+            "at": "2026-10-30T14:09:11.485Z",
+            "operation": "tile",
+            "unit": 69
+          },
+          {
+            "at": "2026-10-30T14:09:13.246Z",
+            "operation": "tile",
+            "unit": 70
+          },
+          {
+            "at": "2026-10-30T14:09:14.985Z",
+            "operation": "tile",
+            "unit": 71
+          },
+          {
+            "at": "2026-10-30T14:09:16.766Z",
+            "operation": "tile",
+            "unit": 72
+          },
+          {
+            "at": "2026-10-30T14:09:18.393Z",
+            "operation": "tile",
+            "unit": 73
+          },
+          {
+            "at": "2026-10-30T14:09:20.153Z",
+            "operation": "tile",
+            "unit": 74
+          },
+          {
+            "at": "2026-10-30T14:09:21.928Z",
+            "operation": "tile",
+            "unit": 75
+          },
+          {
+            "at": "2026-10-30T14:09:23.698Z",
+            "operation": "tile",
+            "unit": 76
+          },
+          {
+            "at": "2026-10-30T14:09:25.453Z",
+            "operation": "tile",
+            "unit": 77
+          },
+          {
+            "at": "2026-10-30T14:09:27.282Z",
+            "operation": "tile",
+            "unit": 78
+          },
+          {
+            "at": "2026-10-30T14:09:29.076Z",
+            "operation": "tile",
+            "unit": 79
+          },
+          {
+            "at": "2026-10-30T14:09:30.900Z",
+            "operation": "tile",
+            "unit": 80
+          },
+          {
+            "at": "2026-10-30T14:09:32.659Z",
+            "operation": "tile",
+            "unit": 81
+          },
+          {
+            "at": "2026-10-30T14:09:34.413Z",
+            "operation": "tile",
+            "unit": 82
+          },
+          {
+            "at": "2026-10-30T14:09:36.162Z",
+            "operation": "tile",
+            "unit": 83
+          },
+          {
+            "at": "2026-10-30T14:09:37.871Z",
+            "operation": "tile",
+            "unit": 84
+          },
+          {
+            "at": "2026-10-30T14:09:39.647Z",
+            "operation": "tile",
+            "unit": 85
+          },
+          {
+            "at": "2026-10-30T14:09:41.512Z",
+            "operation": "tile",
+            "unit": 86
+          },
+          {
+            "at": "2026-10-30T14:09:43.269Z",
+            "operation": "tile",
+            "unit": 87
+          },
+          {
+            "at": "2026-10-30T14:09:45.049Z",
+            "operation": "tile",
+            "unit": 88
+          },
+          {
+            "at": "2026-10-30T14:09:46.809Z",
+            "operation": "tile",
+            "unit": 89
+          },
+          {
+            "at": "2026-10-30T14:09:48.576Z",
+            "operation": "tile",
+            "unit": 90
+          },
+          {
+            "at": "2026-10-30T14:09:50.356Z",
+            "operation": "tile",
+            "unit": 91
+          },
+          {
+            "at": "2026-10-30T14:09:52.131Z",
+            "operation": "tile",
+            "unit": 92
+          },
+          {
+            "at": "2026-10-30T14:09:53.838Z",
+            "operation": "tile",
+            "unit": 93
+          },
+          {
+            "at": "2026-10-30T14:09:55.498Z",
+            "operation": "tile",
+            "unit": 94
+          },
+          {
+            "at": "2026-10-30T14:09:57.184Z",
+            "operation": "tile",
+            "unit": 95
+          },
+          {
+            "at": "2026-10-30T14:09:59.021Z",
+            "operation": "tile",
+            "unit": 96
+          },
+          {
+            "at": "2026-10-30T14:10:01.244Z",
+            "operation": "tile",
+            "unit": 97
+          },
+          {
+            "at": "2026-10-30T14:10:03.133Z",
+            "operation": "tile",
+            "unit": 98
+          },
+          {
+            "at": "2026-10-30T14:10:04.902Z",
+            "operation": "tile",
+            "unit": 99
+          },
+          {
+            "at": "2026-10-30T14:10:06.732Z",
+            "operation": "tile",
+            "unit": 100
+          },
+          {
+            "at": "2026-10-30T14:10:08.492Z",
+            "operation": "tile",
+            "unit": 101
+          },
+          {
+            "at": "2026-10-30T14:10:10.147Z",
+            "operation": "tile",
+            "unit": 102
+          },
+          {
+            "at": "2026-10-30T14:10:11.835Z",
+            "operation": "tile",
+            "unit": 103
+          },
+          {
+            "at": "2026-10-30T14:10:13.523Z",
+            "operation": "tile",
+            "unit": 104
+          },
+          {
+            "at": "2026-10-30T14:10:15.235Z",
+            "operation": "tile",
+            "unit": 105
+          },
+          {
+            "at": "2026-10-30T14:10:17.004Z",
+            "operation": "tile",
+            "unit": 106
+          },
+          {
+            "at": "2026-10-30T14:10:18.771Z",
+            "operation": "tile",
+            "unit": 107
+          },
+          {
+            "at": "2026-10-30T14:10:20.545Z",
+            "operation": "tile",
+            "unit": 108
+          },
+          {
+            "at": "2026-10-30T14:10:22.304Z",
+            "operation": "tile",
+            "unit": 109
+          },
+          {
+            "at": "2026-10-30T14:10:24.061Z",
+            "operation": "tile",
+            "unit": 110
+          },
+          {
+            "at": "2026-10-30T14:10:25.767Z",
+            "operation": "tile",
+            "unit": 111
+          },
+          {
+            "at": "2026-10-30T14:10:27.527Z",
+            "operation": "tile",
+            "unit": 112
+          },
+          {
+            "at": "2026-10-30T14:10:29.257Z",
+            "operation": "tile",
+            "unit": 113
+          },
+          {
+            "at": "2026-10-30T14:10:30.998Z",
+            "operation": "tile",
+            "unit": 114
+          },
+          {
+            "at": "2026-10-30T14:10:32.802Z",
+            "operation": "tile",
+            "unit": 115
+          },
+          {
+            "at": "2026-10-30T14:10:34.582Z",
+            "operation": "tile",
+            "unit": 116
+          },
+          {
+            "at": "2026-10-30T14:10:36.621Z",
+            "operation": "tile",
+            "unit": 117
+          },
+          {
+            "at": "2026-10-30T14:10:38.641Z",
+            "operation": "tile",
+            "unit": 118
+          },
+          {
+            "at": "2026-10-30T14:10:40.527Z",
+            "operation": "tile",
+            "unit": 119
+          },
+          {
+            "at": "2026-10-30T14:10:42.265Z",
+            "operation": "tile",
+            "unit": 120
+          },
+          {
+            "at": "2026-10-30T14:10:44.002Z",
+            "operation": "tile",
+            "unit": 121
+          },
+          {
+            "at": "2026-10-30T14:10:45.691Z",
+            "operation": "tile",
+            "unit": 122
+          },
+          {
+            "at": "2026-10-30T14:10:47.419Z",
+            "operation": "tile",
+            "unit": 123
+          },
+          {
+            "at": "2026-10-30T14:10:49.183Z",
+            "operation": "tile",
+            "unit": 124
+          },
+          {
+            "at": "2026-10-30T14:10:50.957Z",
+            "operation": "tile",
+            "unit": 125
+          },
+          {
+            "at": "2026-10-30T14:10:52.733Z",
+            "operation": "tile",
+            "unit": 126
+          },
+          {
+            "at": "2026-10-30T14:10:54.530Z",
+            "operation": "tile",
+            "unit": 127
+          },
+          {
+            "at": "2026-10-30T14:10:56.295Z",
+            "operation": "tile",
+            "unit": 128
+          },
+          {
+            "at": "2026-10-30T14:10:58.060Z",
+            "operation": "tile",
+            "unit": 129
+          },
+          {
+            "at": "2026-10-30T14:10:59.827Z",
+            "operation": "tile",
+            "unit": 130
+          },
+          {
+            "at": "2026-10-30T14:11:01.599Z",
+            "operation": "tile",
+            "unit": 131
+          },
+          {
+            "at": "2026-10-30T14:11:03.353Z",
+            "operation": "tile",
+            "unit": 132
+          },
+          {
+            "at": "2026-10-30T14:11:05.108Z",
+            "operation": "tile",
+            "unit": 133
+          },
+          {
+            "at": "2026-10-30T14:11:06.859Z",
+            "operation": "tile",
+            "unit": 134
+          },
+          {
+            "at": "2026-10-30T14:11:08.624Z",
+            "operation": "tile",
+            "unit": 135
+          },
+          {
+            "at": "2026-10-30T14:11:10.388Z",
+            "operation": "tile",
+            "unit": 136
+          },
+          {
+            "at": "2026-10-30T14:11:12.108Z",
+            "operation": "tile",
+            "unit": 137
+          },
+          {
+            "at": "2026-10-30T14:11:13.914Z",
+            "operation": "tile",
+            "unit": 138
+          },
+          {
+            "at": "2026-10-30T14:11:15.762Z",
+            "operation": "tile",
+            "unit": 139
+          },
+          {
+            "at": "2026-10-30T14:11:17.485Z",
+            "operation": "tile",
+            "unit": 140
+          },
+          {
+            "at": "2026-10-30T14:11:19.102Z",
+            "operation": "tile",
+            "unit": 141
+          },
+          {
+            "at": "2026-10-30T14:11:20.809Z",
+            "operation": "tile",
+            "unit": 142
+          },
+          {
+            "at": "2026-10-30T14:11:22.512Z",
+            "operation": "tile",
+            "unit": 143
+          },
+          {
+            "at": "2026-10-30T14:11:24.263Z",
+            "operation": "tile",
+            "unit": 144
+          },
+          {
+            "at": "2026-10-30T14:11:26.045Z",
+            "operation": "tile",
+            "unit": 145
+          },
+          {
+            "at": "2026-10-30T14:11:27.753Z",
+            "operation": "tile",
+            "unit": 146
+          },
+          {
+            "at": "2026-10-30T14:11:29.514Z",
+            "operation": "tile",
+            "unit": 147
+          },
+          {
+            "at": "2026-10-30T14:11:31.305Z",
+            "operation": "tile",
+            "unit": 148
+          },
+          {
+            "at": "2026-10-30T14:11:33.079Z",
+            "operation": "tile",
+            "unit": 149
+          },
+          {
+            "at": "2026-10-30T14:11:34.819Z",
+            "operation": "tile",
+            "unit": 150
+          },
+          {
+            "at": "2026-10-30T14:11:36.544Z",
+            "operation": "tile",
+            "unit": 151
+          },
+          {
+            "at": "2026-10-30T14:11:38.288Z",
+            "operation": "tile",
+            "unit": 152
+          },
+          {
+            "at": "2026-10-30T14:11:40.016Z",
+            "operation": "tile",
+            "unit": 153
+          },
+          {
+            "at": "2026-10-30T14:11:41.717Z",
+            "operation": "tile",
+            "unit": 154
+          },
+          {
+            "at": "2026-10-30T14:11:43.488Z",
+            "operation": "tile",
+            "unit": 155
+          },
+          {
+            "at": "2026-10-30T14:11:45.199Z",
+            "operation": "tile",
+            "unit": 156
+          },
+          {
+            "at": "2026-10-30T14:11:47.007Z",
+            "operation": "composite",
+            "unit": 157
+          },
+          {
+            "at": "2026-10-30T14:11:47.008Z",
+            "operation": "encode",
+            "unit": 158
+          }
+        ],
+        "result": "done",
+        "mode": null,
+        "effectiveThreads": 1,
+        "file": "maximum-1.png",
+        "canEdit": false,
+        "backend": "webgpu",
+        "group": "processor"
+      },
+      "dimensions": [
+        8192,
+        3456
+      ],
+      "fullMs": 262721.94,
+      "run": 1,
+      "outputBytes": 99651570,
+      "filename": "maximum-1-uscale-2x.png",
+      "alphaError": 0,
+      "sourceBytes": 24823653
+    },
+    {
+      "passed": true,
+      "displayed": [
+        8192,
+        3456
+      ],
+      "execution": {
+        "requestedThreads": 1,
+        "trace": [
+          {
+            "at": "2026-10-30T14:11:54.806Z",
+            "operation": "decode",
+            "unit": 1
+          },
+          {
+            "at": "2026-10-30T14:11:54.929Z",
+            "operation": "scan",
+            "unit": 2
+          },
+          {
+            "at": "2026-10-30T14:11:54.985Z",
+            "operation": "prepare-rgb",
+            "unit": 3
+          },
+          {
+            "at": "2026-10-30T14:11:55.088Z",
+            "operation": "prepare-rgb",
+            "unit": 4
+          },
+          {
+            "at": "2026-10-30T14:11:55.305Z",
+            "operation": "initialize",
+            "unit": 4
+          },
+          {
+            "at": "2026-10-30T14:11:55.313Z",
+            "operation": "download",
+            "unit": 4
+          },
+          {
+            "at": "2026-10-30T14:11:55.361Z",
+            "operation": "initialize",
+            "unit": 4
+          },
+          {
+            "at": "2026-10-30T14:11:55.643Z",
+            "operation": "tile",
+            "unit": 5
+          },
+          {
+            "at": "2026-10-30T14:11:56.826Z",
+            "operation": "tile",
+            "unit": 6
+          },
+          {
+            "at": "2026-10-30T14:11:58.012Z",
+            "operation": "tile",
+            "unit": 7
+          },
+          {
+            "at": "2026-10-30T14:11:59.430Z",
+            "operation": "tile",
+            "unit": 8
+          },
+          {
+            "at": "2026-10-30T14:12:01.580Z",
+            "operation": "tile",
+            "unit": 9
+          },
+          {
+            "at": "2026-10-30T14:12:03.696Z",
+            "operation": "tile",
+            "unit": 10
+          },
+          {
+            "at": "2026-10-30T14:12:05.346Z",
+            "operation": "tile",
+            "unit": 11
+          },
+          {
+            "at": "2026-10-30T14:12:06.848Z",
+            "operation": "tile",
+            "unit": 12
+          },
+          {
+            "at": "2026-10-30T14:12:08.316Z",
+            "operation": "tile",
+            "unit": 13
+          },
+          {
+            "at": "2026-10-30T14:12:09.871Z",
+            "operation": "tile",
+            "unit": 14
+          },
+          {
+            "at": "2026-10-30T14:12:11.526Z",
+            "operation": "tile",
+            "unit": 15
+          },
+          {
+            "at": "2026-10-30T14:12:13.237Z",
+            "operation": "tile",
+            "unit": 16
+          },
+          {
+            "at": "2026-10-30T14:12:14.960Z",
+            "operation": "tile",
+            "unit": 17
+          },
+          {
+            "at": "2026-10-30T14:12:16.607Z",
+            "operation": "tile",
+            "unit": 18
+          },
+          {
+            "at": "2026-10-30T14:12:18.267Z",
+            "operation": "tile",
+            "unit": 19
+          },
+          {
+            "at": "2026-10-30T14:12:20.048Z",
+            "operation": "tile",
+            "unit": 20
+          },
+          {
+            "at": "2026-10-30T14:12:21.969Z",
+            "operation": "tile",
+            "unit": 21
+          },
+          {
+            "at": "2026-10-30T14:12:23.801Z",
+            "operation": "tile",
+            "unit": 22
+          },
+          {
+            "at": "2026-10-30T14:12:25.485Z",
+            "operation": "tile",
+            "unit": 23
+          },
+          {
+            "at": "2026-10-30T14:12:27.130Z",
+            "operation": "tile",
+            "unit": 24
+          },
+          {
+            "at": "2026-10-30T14:12:29.136Z",
+            "operation": "tile",
+            "unit": 25
+          },
+          {
+            "at": "2026-10-30T14:12:31.583Z",
+            "operation": "tile",
+            "unit": 26
+          },
+          {
+            "at": "2026-10-30T14:12:34.170Z",
+            "operation": "tile",
+            "unit": 27
+          },
+          {
+            "at": "2026-10-30T14:12:36.282Z",
+            "operation": "tile",
+            "unit": 28
+          },
+          {
+            "at": "2026-10-30T14:12:37.986Z",
+            "operation": "tile",
+            "unit": 29
+          },
+          {
+            "at": "2026-10-30T14:12:39.549Z",
+            "operation": "tile",
+            "unit": 30
+          },
+          {
+            "at": "2026-10-30T14:12:41.157Z",
+            "operation": "tile",
+            "unit": 31
+          },
+          {
+            "at": "2026-10-30T14:12:42.861Z",
+            "operation": "tile",
+            "unit": 32
+          },
+          {
+            "at": "2026-10-30T14:12:44.605Z",
+            "operation": "tile",
+            "unit": 33
+          },
+          {
+            "at": "2026-10-30T14:12:46.402Z",
+            "operation": "tile",
+            "unit": 34
+          },
+          {
+            "at": "2026-10-30T14:12:48.158Z",
+            "operation": "tile",
+            "unit": 35
+          },
+          {
+            "at": "2026-10-30T14:12:49.929Z",
+            "operation": "tile",
+            "unit": 36
+          },
+          {
+            "at": "2026-10-30T14:12:51.707Z",
+            "operation": "tile",
+            "unit": 37
+          },
+          {
+            "at": "2026-10-30T14:12:53.577Z",
+            "operation": "tile",
+            "unit": 38
+          },
+          {
+            "at": "2026-10-30T14:12:55.600Z",
+            "operation": "tile",
+            "unit": 39
+          },
+          {
+            "at": "2026-10-30T14:12:57.588Z",
+            "operation": "tile",
+            "unit": 40
+          },
+          {
+            "at": "2026-10-30T14:12:59.355Z",
+            "operation": "tile",
+            "unit": 41
+          },
+          {
+            "at": "2026-10-30T14:13:01.135Z",
+            "operation": "tile",
+            "unit": 42
+          },
+          {
+            "at": "2026-10-30T14:13:02.930Z",
+            "operation": "tile",
+            "unit": 43
+          },
+          {
+            "at": "2026-10-30T14:13:04.621Z",
+            "operation": "tile",
+            "unit": 44
+          },
+          {
+            "at": "2026-10-30T14:13:06.336Z",
+            "operation": "tile",
+            "unit": 45
+          },
+          {
+            "at": "2026-10-30T14:13:08.132Z",
+            "operation": "tile",
+            "unit": 46
+          },
+          {
+            "at": "2026-10-30T14:13:09.905Z",
+            "operation": "tile",
+            "unit": 47
+          },
+          {
+            "at": "2026-10-30T14:13:11.704Z",
+            "operation": "tile",
+            "unit": 48
+          },
+          {
+            "at": "2026-10-30T14:13:13.462Z",
+            "operation": "tile",
+            "unit": 49
+          },
+          {
+            "at": "2026-10-30T14:13:15.228Z",
+            "operation": "tile",
+            "unit": 50
+          },
+          {
+            "at": "2026-10-30T14:13:17.006Z",
+            "operation": "tile",
+            "unit": 51
+          },
+          {
+            "at": "2026-10-30T14:13:18.803Z",
+            "operation": "tile",
+            "unit": 52
+          },
+          {
+            "at": "2026-10-30T14:13:20.589Z",
+            "operation": "tile",
+            "unit": 53
+          },
+          {
+            "at": "2026-10-30T14:13:22.363Z",
+            "operation": "tile",
+            "unit": 54
+          },
+          {
+            "at": "2026-10-30T14:13:24.173Z",
+            "operation": "tile",
+            "unit": 55
+          },
+          {
+            "at": "2026-10-30T14:13:25.968Z",
+            "operation": "tile",
+            "unit": 56
+          },
+          {
+            "at": "2026-10-30T14:13:27.787Z",
+            "operation": "tile",
+            "unit": 57
+          },
+          {
+            "at": "2026-10-30T14:13:29.599Z",
+            "operation": "tile",
+            "unit": 58
+          },
+          {
+            "at": "2026-10-30T14:13:31.550Z",
+            "operation": "tile",
+            "unit": 59
+          },
+          {
+            "at": "2026-10-30T14:13:33.339Z",
+            "operation": "tile",
+            "unit": 60
+          },
+          {
+            "at": "2026-10-30T14:13:35.141Z",
+            "operation": "tile",
+            "unit": 61
+          },
+          {
+            "at": "2026-10-30T14:13:36.933Z",
+            "operation": "tile",
+            "unit": 62
+          },
+          {
+            "at": "2026-10-30T14:13:38.690Z",
+            "operation": "tile",
+            "unit": 63
+          },
+          {
+            "at": "2026-10-30T14:13:40.476Z",
+            "operation": "tile",
+            "unit": 64
+          },
+          {
+            "at": "2026-10-30T14:13:42.285Z",
+            "operation": "tile",
+            "unit": 65
+          },
+          {
+            "at": "2026-10-30T14:13:44.136Z",
+            "operation": "tile",
+            "unit": 66
+          },
+          {
+            "at": "2026-10-30T14:13:45.975Z",
+            "operation": "tile",
+            "unit": 67
+          },
+          {
+            "at": "2026-10-30T14:13:47.766Z",
+            "operation": "tile",
+            "unit": 68
+          },
+          {
+            "at": "2026-10-30T14:13:49.556Z",
+            "operation": "tile",
+            "unit": 69
+          },
+          {
+            "at": "2026-10-30T14:13:51.304Z",
+            "operation": "tile",
+            "unit": 70
+          },
+          {
+            "at": "2026-10-30T14:13:53.099Z",
+            "operation": "tile",
+            "unit": 71
+          },
+          {
+            "at": "2026-10-30T14:13:54.880Z",
+            "operation": "tile",
+            "unit": 72
+          },
+          {
+            "at": "2026-10-30T14:13:56.675Z",
+            "operation": "tile",
+            "unit": 73
+          },
+          {
+            "at": "2026-10-30T14:13:58.495Z",
+            "operation": "tile",
+            "unit": 74
+          },
+          {
+            "at": "2026-10-30T14:14:00.263Z",
+            "operation": "tile",
+            "unit": 75
+          },
+          {
+            "at": "2026-10-30T14:14:02.042Z",
+            "operation": "tile",
+            "unit": 76
+          },
+          {
+            "at": "2026-10-30T14:14:03.940Z",
+            "operation": "tile",
+            "unit": 77
+          },
+          {
+            "at": "2026-10-30T14:14:05.744Z",
+            "operation": "tile",
+            "unit": 78
+          },
+          {
+            "at": "2026-10-30T14:14:07.535Z",
+            "operation": "tile",
+            "unit": 79
+          },
+          {
+            "at": "2026-10-30T14:14:09.406Z",
+            "operation": "tile",
+            "unit": 80
+          },
+          {
+            "at": "2026-10-30T14:14:11.240Z",
+            "operation": "tile",
+            "unit": 81
+          },
+          {
+            "at": "2026-10-30T14:14:13.132Z",
+            "operation": "tile",
+            "unit": 82
+          },
+          {
+            "at": "2026-10-30T14:14:14.912Z",
+            "operation": "tile",
+            "unit": 83
+          },
+          {
+            "at": "2026-10-30T14:14:16.707Z",
+            "operation": "tile",
+            "unit": 84
+          },
+          {
+            "at": "2026-10-30T14:14:18.547Z",
+            "operation": "tile",
+            "unit": 85
+          },
+          {
+            "at": "2026-10-30T14:14:20.339Z",
+            "operation": "tile",
+            "unit": 86
+          },
+          {
+            "at": "2026-10-30T14:14:22.329Z",
+            "operation": "tile",
+            "unit": 87
+          },
+          {
+            "at": "2026-10-30T14:14:24.487Z",
+            "operation": "tile",
+            "unit": 88
+          },
+          {
+            "at": "2026-10-30T14:14:26.476Z",
+            "operation": "tile",
+            "unit": 89
+          },
+          {
+            "at": "2026-10-30T14:14:28.343Z",
+            "operation": "tile",
+            "unit": 90
+          },
+          {
+            "at": "2026-10-30T14:14:30.135Z",
+            "operation": "tile",
+            "unit": 91
+          },
+          {
+            "at": "2026-10-30T14:14:31.938Z",
+            "operation": "tile",
+            "unit": 92
+          },
+          {
+            "at": "2026-10-30T14:14:33.595Z",
+            "operation": "tile",
+            "unit": 93
+          },
+          {
+            "at": "2026-10-30T14:14:35.413Z",
+            "operation": "tile",
+            "unit": 94
+          },
+          {
+            "at": "2026-10-30T14:14:37.218Z",
+            "operation": "tile",
+            "unit": 95
+          },
+          {
+            "at": "2026-10-30T14:14:39.223Z",
+            "operation": "tile",
+            "unit": 96
+          },
+          {
+            "at": "2026-10-30T14:14:41.600Z",
+            "operation": "tile",
+            "unit": 97
+          },
+          {
+            "at": "2026-10-30T14:14:44.018Z",
+            "operation": "tile",
+            "unit": 98
+          },
+          {
+            "at": "2026-10-30T14:14:46.095Z",
+            "operation": "tile",
+            "unit": 99
+          },
+          {
+            "at": "2026-10-30T14:14:47.842Z",
+            "operation": "tile",
+            "unit": 100
+          },
+          {
+            "at": "2026-10-30T14:14:49.543Z",
+            "operation": "tile",
+            "unit": 101
+          },
+          {
+            "at": "2026-10-30T14:14:51.244Z",
+            "operation": "tile",
+            "unit": 102
+          },
+          {
+            "at": "2026-10-30T14:14:53.186Z",
+            "operation": "tile",
+            "unit": 103
+          },
+          {
+            "at": "2026-10-30T14:14:55.382Z",
+            "operation": "tile",
+            "unit": 104
+          },
+          {
+            "at": "2026-10-30T14:14:57.341Z",
+            "operation": "tile",
+            "unit": 105
+          },
+          {
+            "at": "2026-10-30T14:14:59.173Z",
+            "operation": "tile",
+            "unit": 106
+          },
+          {
+            "at": "2026-10-30T14:15:01.101Z",
+            "operation": "tile",
+            "unit": 107
+          },
+          {
+            "at": "2026-10-30T14:15:03.089Z",
+            "operation": "tile",
+            "unit": 108
+          },
+          {
+            "at": "2026-10-30T14:15:05.053Z",
+            "operation": "tile",
+            "unit": 109
+          },
+          {
+            "at": "2026-10-30T14:15:06.996Z",
+            "operation": "tile",
+            "unit": 110
+          },
+          {
+            "at": "2026-10-30T14:15:08.919Z",
+            "operation": "tile",
+            "unit": 111
+          },
+          {
+            "at": "2026-10-30T14:15:10.884Z",
+            "operation": "tile",
+            "unit": 112
+          },
+          {
+            "at": "2026-10-30T14:15:12.889Z",
+            "operation": "tile",
+            "unit": 113
+          },
+          {
+            "at": "2026-10-30T14:15:14.851Z",
+            "operation": "tile",
+            "unit": 114
+          },
+          {
+            "at": "2026-10-30T14:15:17.201Z",
+            "operation": "tile",
+            "unit": 115
+          },
+          {
+            "at": "2026-10-30T14:15:19.503Z",
+            "operation": "tile",
+            "unit": 116
+          },
+          {
+            "at": "2026-10-30T14:15:21.308Z",
+            "operation": "tile",
+            "unit": 117
+          },
+          {
+            "at": "2026-10-30T14:15:23.086Z",
+            "operation": "tile",
+            "unit": 118
+          },
+          {
+            "at": "2026-10-30T14:15:25.093Z",
+            "operation": "tile",
+            "unit": 119
+          },
+          {
+            "at": "2026-10-30T14:15:27.100Z",
+            "operation": "tile",
+            "unit": 120
+          },
+          {
+            "at": "2026-10-30T14:15:29.084Z",
+            "operation": "tile",
+            "unit": 121
+          },
+          {
+            "at": "2026-10-30T14:15:31.091Z",
+            "operation": "tile",
+            "unit": 122
+          },
+          {
+            "at": "2026-10-30T14:15:33.059Z",
+            "operation": "tile",
+            "unit": 123
+          },
+          {
+            "at": "2026-10-30T14:15:35.099Z",
+            "operation": "tile",
+            "unit": 124
+          },
+          {
+            "at": "2026-10-30T14:15:37.109Z",
+            "operation": "tile",
+            "unit": 125
+          },
+          {
+            "at": "2026-10-30T14:15:39.127Z",
+            "operation": "tile",
+            "unit": 126
+          },
+          {
+            "at": "2026-10-30T14:15:41.145Z",
+            "operation": "tile",
+            "unit": 127
+          },
+          {
+            "at": "2026-10-30T14:15:43.169Z",
+            "operation": "tile",
+            "unit": 128
+          },
+          {
+            "at": "2026-10-30T14:15:45.181Z",
+            "operation": "tile",
+            "unit": 129
+          },
+          {
+            "at": "2026-10-30T14:15:47.196Z",
+            "operation": "tile",
+            "unit": 130
+          },
+          {
+            "at": "2026-10-30T14:15:49.199Z",
+            "operation": "tile",
+            "unit": 131
+          },
+          {
+            "at": "2026-10-30T14:15:51.242Z",
+            "operation": "tile",
+            "unit": 132
+          },
+          {
+            "at": "2026-10-30T14:15:53.295Z",
+            "operation": "tile",
+            "unit": 133
+          },
+          {
+            "at": "2026-10-30T14:15:55.328Z",
+            "operation": "tile",
+            "unit": 134
+          },
+          {
+            "at": "2026-10-30T14:15:57.383Z",
+            "operation": "tile",
+            "unit": 135
+          },
+          {
+            "at": "2026-10-30T14:15:59.467Z",
+            "operation": "tile",
+            "unit": 136
+          },
+          {
+            "at": "2026-10-30T14:16:01.525Z",
+            "operation": "tile",
+            "unit": 137
+          },
+          {
+            "at": "2026-10-30T14:16:03.634Z",
+            "operation": "tile",
+            "unit": 138
+          },
+          {
+            "at": "2026-10-30T14:16:05.707Z",
+            "operation": "tile",
+            "unit": 139
+          },
+          {
+            "at": "2026-10-30T14:16:07.803Z",
+            "operation": "tile",
+            "unit": 140
+          },
+          {
+            "at": "2026-10-30T14:16:09.860Z",
+            "operation": "tile",
+            "unit": 141
+          },
+          {
+            "at": "2026-10-30T14:16:11.938Z",
+            "operation": "tile",
+            "unit": 142
+          },
+          {
+            "at": "2026-10-30T14:16:14.029Z",
+            "operation": "tile",
+            "unit": 143
+          },
+          {
+            "at": "2026-10-30T14:16:16.191Z",
+            "operation": "tile",
+            "unit": 144
+          },
+          {
+            "at": "2026-10-30T14:16:18.250Z",
+            "operation": "tile",
+            "unit": 145
+          },
+          {
+            "at": "2026-10-30T14:16:20.346Z",
+            "operation": "tile",
+            "unit": 146
+          },
+          {
+            "at": "2026-10-30T14:16:22.448Z",
+            "operation": "tile",
+            "unit": 147
+          },
+          {
+            "at": "2026-10-30T14:16:24.573Z",
+            "operation": "tile",
+            "unit": 148
+          },
+          {
+            "at": "2026-10-30T14:16:26.698Z",
+            "operation": "tile",
+            "unit": 149
+          },
+          {
+            "at": "2026-10-30T14:16:28.838Z",
+            "operation": "tile",
+            "unit": 150
+          },
+          {
+            "at": "2026-10-30T14:16:30.983Z",
+            "operation": "tile",
+            "unit": 151
+          },
+          {
+            "at": "2026-10-30T14:16:33.145Z",
+            "operation": "tile",
+            "unit": 152
+          },
+          {
+            "at": "2026-10-30T14:16:35.267Z",
+            "operation": "tile",
+            "unit": 153
+          },
+          {
+            "at": "2026-10-30T14:16:37.421Z",
+            "operation": "tile",
+            "unit": 154
+          },
+          {
+            "at": "2026-10-30T14:16:39.593Z",
+            "operation": "tile",
+            "unit": 155
+          },
+          {
+            "at": "2026-10-30T14:16:41.780Z",
+            "operation": "tile",
+            "unit": 156
+          },
+          {
+            "at": "2026-10-30T14:16:44.016Z",
+            "operation": "composite",
+            "unit": 157
+          },
+          {
+            "at": "2026-10-30T14:16:44.016Z",
+            "operation": "encode",
+            "unit": 158
+          }
+        ],
+        "result": "done",
+        "mode": null,
+        "effectiveThreads": 1,
+        "file": "maximum-2.png",
+        "canEdit": false,
+        "backend": "webgpu",
+        "group": "processor"
+      },
+      "dimensions": [
+        8192,
+        3456
+      ],
+      "fullMs": 297333.22000000003,
+      "run": 2,
+      "outputBytes": 99651570,
+      "filename": "maximum-2-uscale-2x.png",
+      "alphaError": 0,
+      "sourceBytes": 24823653
+    },
+    {
+      "passed": true,
+      "displayed": [
+        8192,
+        3456
+      ],
+      "execution": {
+        "requestedThreads": 1,
+        "trace": [
+          {
+            "at": "2026-10-30T14:16:53.299Z",
+            "operation": "decode",
+            "unit": 1
+          },
+          {
+            "at": "2026-10-30T14:16:53.447Z",
+            "operation": "scan",
+            "unit": 2
+          },
+          {
+            "at": "2026-10-30T14:16:53.517Z",
+            "operation": "prepare-rgb",
+            "unit": 3
+          },
+          {
+            "at": "2026-10-30T14:16:53.630Z",
+            "operation": "prepare-rgb",
+            "unit": 4
+          },
+          {
+            "at": "2026-10-30T14:16:53.886Z",
+            "operation": "initialize",
+            "unit": 4
+          },
+          {
+            "at": "2026-10-30T14:16:53.891Z",
+            "operation": "download",
+            "unit": 4
+          },
+          {
+            "at": "2026-10-30T14:16:53.944Z",
+            "operation": "initialize",
+            "unit": 4
+          },
+          {
+            "at": "2026-10-30T14:16:54.251Z",
+            "operation": "tile",
+            "unit": 5
+          },
+          {
+            "at": "2026-10-30T14:16:55.518Z",
+            "operation": "tile",
+            "unit": 6
+          },
+          {
+            "at": "2026-10-30T14:16:56.954Z",
+            "operation": "tile",
+            "unit": 7
+          },
+          {
+            "at": "2026-10-30T14:17:00.002Z",
+            "operation": "tile",
+            "unit": 8
+          },
+          {
+            "at": "2026-10-30T14:17:02.792Z",
+            "operation": "tile",
+            "unit": 9
+          },
+          {
+            "at": "2026-10-30T14:17:04.599Z",
+            "operation": "tile",
+            "unit": 10
+          },
+          {
+            "at": "2026-10-30T14:17:06.571Z",
+            "operation": "tile",
+            "unit": 11
+          },
+          {
+            "at": "2026-10-30T14:17:08.968Z",
+            "operation": "tile",
+            "unit": 12
+          },
+          {
+            "at": "2026-10-30T14:17:11.316Z",
+            "operation": "tile",
+            "unit": 13
+          },
+          {
+            "at": "2026-10-30T14:17:13.558Z",
+            "operation": "tile",
+            "unit": 14
+          },
+          {
+            "at": "2026-10-30T14:17:15.772Z",
+            "operation": "tile",
+            "unit": 15
+          },
+          {
+            "at": "2026-10-30T14:17:18.037Z",
+            "operation": "tile",
+            "unit": 16
+          },
+          {
+            "at": "2026-10-30T14:17:20.338Z",
+            "operation": "tile",
+            "unit": 17
+          },
+          {
+            "at": "2026-10-30T14:17:22.615Z",
+            "operation": "tile",
+            "unit": 18
+          },
+          {
+            "at": "2026-10-30T14:17:24.904Z",
+            "operation": "tile",
+            "unit": 19
+          },
+          {
+            "at": "2026-10-30T14:17:27.219Z",
+            "operation": "tile",
+            "unit": 20
+          },
+          {
+            "at": "2026-10-30T14:17:29.508Z",
+            "operation": "tile",
+            "unit": 21
+          },
+          {
+            "at": "2026-10-30T14:17:31.830Z",
+            "operation": "tile",
+            "unit": 22
+          },
+          {
+            "at": "2026-10-30T14:17:34.149Z",
+            "operation": "tile",
+            "unit": 23
+          },
+          {
+            "at": "2026-10-30T14:17:36.548Z",
+            "operation": "tile",
+            "unit": 24
+          },
+          {
+            "at": "2026-10-30T14:17:39.383Z",
+            "operation": "tile",
+            "unit": 25
+          },
+          {
+            "at": "2026-10-30T14:17:42.859Z",
+            "operation": "tile",
+            "unit": 26
+          },
+          {
+            "at": "2026-10-30T14:17:45.280Z",
+            "operation": "tile",
+            "unit": 27
+          },
+          {
+            "at": "2026-10-30T14:17:47.439Z",
+            "operation": "tile",
+            "unit": 28
+          },
+          {
+            "at": "2026-10-30T14:17:49.644Z",
+            "operation": "tile",
+            "unit": 29
+          },
+          {
+            "at": "2026-10-30T14:17:51.879Z",
+            "operation": "tile",
+            "unit": 30
+          },
+          {
+            "at": "2026-10-30T14:17:54.213Z",
+            "operation": "tile",
+            "unit": 31
+          },
+          {
+            "at": "2026-10-30T14:17:56.591Z",
+            "operation": "tile",
+            "unit": 32
+          },
+          {
+            "at": "2026-10-30T14:17:58.852Z",
+            "operation": "tile",
+            "unit": 33
+          },
+          {
+            "at": "2026-10-30T14:18:01.194Z",
+            "operation": "tile",
+            "unit": 34
+          },
+          {
+            "at": "2026-10-30T14:18:03.617Z",
+            "operation": "tile",
+            "unit": 35
+          },
+          {
+            "at": "2026-10-30T14:18:06.013Z",
+            "operation": "tile",
+            "unit": 36
+          },
+          {
+            "at": "2026-10-30T14:18:08.441Z",
+            "operation": "tile",
+            "unit": 37
+          },
+          {
+            "at": "2026-10-30T14:18:11.157Z",
+            "operation": "tile",
+            "unit": 38
+          },
+          {
+            "at": "2026-10-30T14:18:13.884Z",
+            "operation": "tile",
+            "unit": 39
+          },
+          {
+            "at": "2026-10-30T14:18:16.245Z",
+            "operation": "tile",
+            "unit": 40
+          },
+          {
+            "at": "2026-10-30T14:18:18.437Z",
+            "operation": "tile",
+            "unit": 41
+          },
+          {
+            "at": "2026-10-30T14:18:20.836Z",
+            "operation": "tile",
+            "unit": 42
+          },
+          {
+            "at": "2026-10-30T14:18:23.431Z",
+            "operation": "tile",
+            "unit": 43
+          },
+          {
+            "at": "2026-10-30T14:18:25.874Z",
+            "operation": "tile",
+            "unit": 44
+          },
+          {
+            "at": "2026-10-30T14:18:28.296Z",
+            "operation": "tile",
+            "unit": 45
+          },
+          {
+            "at": "2026-10-30T14:18:30.734Z",
+            "operation": "tile",
+            "unit": 46
+          },
+          {
+            "at": "2026-10-30T14:18:33.248Z",
+            "operation": "tile",
+            "unit": 47
+          },
+          {
+            "at": "2026-10-30T14:18:35.731Z",
+            "operation": "tile",
+            "unit": 48
+          },
+          {
+            "at": "2026-10-30T14:18:38.192Z",
+            "operation": "tile",
+            "unit": 49
+          },
+          {
+            "at": "2026-10-30T14:18:40.711Z",
+            "operation": "tile",
+            "unit": 50
+          },
+          {
+            "at": "2026-10-30T14:18:43.240Z",
+            "operation": "tile",
+            "unit": 51
+          },
+          {
+            "at": "2026-10-30T14:18:45.699Z",
+            "operation": "tile",
+            "unit": 52
+          },
+          {
+            "at": "2026-10-30T14:18:48.179Z",
+            "operation": "tile",
+            "unit": 53
+          },
+          {
+            "at": "2026-10-30T14:18:50.652Z",
+            "operation": "tile",
+            "unit": 54
+          },
+          {
+            "at": "2026-10-30T14:18:53.131Z",
+            "operation": "tile",
+            "unit": 55
+          },
+          {
+            "at": "2026-10-30T14:18:55.634Z",
+            "operation": "tile",
+            "unit": 56
+          },
+          {
+            "at": "2026-10-30T14:18:58.131Z",
+            "operation": "tile",
+            "unit": 57
+          },
+          {
+            "at": "2026-10-30T14:19:00.633Z",
+            "operation": "tile",
+            "unit": 58
+          },
+          {
+            "at": "2026-10-30T14:19:03.119Z",
+            "operation": "tile",
+            "unit": 59
+          },
+          {
+            "at": "2026-10-30T14:19:05.614Z",
+            "operation": "tile",
+            "unit": 60
+          },
+          {
+            "at": "2026-10-30T14:19:08.117Z",
+            "operation": "tile",
+            "unit": 61
+          },
+          {
+            "at": "2026-10-30T14:19:10.729Z",
+            "operation": "tile",
+            "unit": 62
+          },
+          {
+            "at": "2026-10-30T14:19:13.256Z",
+            "operation": "tile",
+            "unit": 63
+          },
+          {
+            "at": "2026-10-30T14:19:15.898Z",
+            "operation": "tile",
+            "unit": 64
+          },
+          {
+            "at": "2026-10-30T14:19:18.507Z",
+            "operation": "tile",
+            "unit": 65
+          },
+          {
+            "at": "2026-10-30T14:19:20.943Z",
+            "operation": "tile",
+            "unit": 66
+          },
+          {
+            "at": "2026-10-30T14:19:23.500Z",
+            "operation": "tile",
+            "unit": 67
+          },
+          {
+            "at": "2026-10-30T14:19:26.021Z",
+            "operation": "tile",
+            "unit": 68
+          },
+          {
+            "at": "2026-10-30T14:19:28.549Z",
+            "operation": "tile",
+            "unit": 69
+          },
+          {
+            "at": "2026-10-30T14:19:31.089Z",
+            "operation": "tile",
+            "unit": 70
+          },
+          {
+            "at": "2026-10-30T14:19:33.647Z",
+            "operation": "tile",
+            "unit": 71
+          },
+          {
+            "at": "2026-10-30T14:19:36.227Z",
+            "operation": "tile",
+            "unit": 72
+          },
+          {
+            "at": "2026-10-30T14:19:38.761Z",
+            "operation": "tile",
+            "unit": 73
+          },
+          {
+            "at": "2026-10-30T14:19:41.339Z",
+            "operation": "tile",
+            "unit": 74
+          },
+          {
+            "at": "2026-10-30T14:19:43.920Z",
+            "operation": "tile",
+            "unit": 75
+          },
+          {
+            "at": "2026-10-30T14:19:46.448Z",
+            "operation": "tile",
+            "unit": 76
+          },
+          {
+            "at": "2026-10-30T14:19:49.063Z",
+            "operation": "tile",
+            "unit": 77
+          },
+          {
+            "at": "2026-10-30T14:19:51.576Z",
+            "operation": "tile",
+            "unit": 78
+          },
+          {
+            "at": "2026-10-30T14:19:54.166Z",
+            "operation": "tile",
+            "unit": 79
+          },
+          {
+            "at": "2026-10-30T14:19:56.766Z",
+            "operation": "tile",
+            "unit": 80
+          },
+          {
+            "at": "2026-10-30T14:19:59.442Z",
+            "operation": "tile",
+            "unit": 81
+          },
+          {
+            "at": "2026-10-30T14:20:02.035Z",
+            "operation": "tile",
+            "unit": 82
+          },
+          {
+            "at": "2026-10-30T14:20:04.597Z",
+            "operation": "tile",
+            "unit": 83
+          },
+          {
+            "at": "2026-10-30T14:20:07.311Z",
+            "operation": "tile",
+            "unit": 84
+          },
+          {
+            "at": "2026-10-30T14:20:10.088Z",
+            "operation": "tile",
+            "unit": 85
+          },
+          {
+            "at": "2026-10-30T14:20:13.018Z",
+            "operation": "tile",
+            "unit": 86
+          },
+          {
+            "at": "2026-10-30T14:20:15.509Z",
+            "operation": "tile",
+            "unit": 87
+          },
+          {
+            "at": "2026-10-30T14:20:17.926Z",
+            "operation": "tile",
+            "unit": 88
+          },
+          {
+            "at": "2026-10-30T14:20:20.537Z",
+            "operation": "tile",
+            "unit": 89
+          },
+          {
+            "at": "2026-10-30T14:20:23.144Z",
+            "operation": "tile",
+            "unit": 90
+          },
+          {
+            "at": "2026-10-30T14:20:25.672Z",
+            "operation": "tile",
+            "unit": 91
+          },
+          {
+            "at": "2026-10-30T14:20:28.299Z",
+            "operation": "tile",
+            "unit": 92
+          },
+          {
+            "at": "2026-10-30T14:20:31.237Z",
+            "operation": "tile",
+            "unit": 93
+          },
+          {
+            "at": "2026-10-30T14:20:35.199Z",
+            "operation": "tile",
+            "unit": 94
+          },
+          {
+            "at": "2026-10-30T14:20:37.892Z",
+            "operation": "tile",
+            "unit": 95
+          },
+          {
+            "at": "2026-10-30T14:20:40.684Z",
+            "operation": "tile",
+            "unit": 96
+          },
+          {
+            "at": "2026-10-30T14:20:43.800Z",
+            "operation": "tile",
+            "unit": 97
+          },
+          {
+            "at": "2026-10-30T14:20:46.800Z",
+            "operation": "tile",
+            "unit": 98
+          },
+          {
+            "at": "2026-10-30T14:20:49.414Z",
+            "operation": "tile",
+            "unit": 99
+          },
+          {
+            "at": "2026-10-30T14:20:52.024Z",
+            "operation": "tile",
+            "unit": 100
+          },
+          {
+            "at": "2026-10-30T14:20:54.420Z",
+            "operation": "tile",
+            "unit": 101
+          },
+          {
+            "at": "2026-10-30T14:20:56.895Z",
+            "operation": "tile",
+            "unit": 102
+          },
+          {
+            "at": "2026-10-30T14:20:59.499Z",
+            "operation": "tile",
+            "unit": 103
+          },
+          {
+            "at": "2026-10-30T14:21:02.163Z",
+            "operation": "tile",
+            "unit": 104
+          },
+          {
+            "at": "2026-10-30T14:21:04.812Z",
+            "operation": "tile",
+            "unit": 105
+          },
+          {
+            "at": "2026-10-30T14:21:07.388Z",
+            "operation": "tile",
+            "unit": 106
+          },
+          {
+            "at": "2026-10-30T14:21:10.119Z",
+            "operation": "tile",
+            "unit": 107
+          },
+          {
+            "at": "2026-10-30T14:21:12.691Z",
+            "operation": "tile",
+            "unit": 108
+          },
+          {
+            "at": "2026-10-30T14:21:15.322Z",
+            "operation": "tile",
+            "unit": 109
+          },
+          {
+            "at": "2026-10-30T14:21:17.970Z",
+            "operation": "tile",
+            "unit": 110
+          },
+          {
+            "at": "2026-10-30T14:21:20.591Z",
+            "operation": "tile",
+            "unit": 111
+          },
+          {
+            "at": "2026-10-30T14:21:23.136Z",
+            "operation": "tile",
+            "unit": 112
+          },
+          {
+            "at": "2026-10-30T14:21:25.793Z",
+            "operation": "tile",
+            "unit": 113
+          },
+          {
+            "at": "2026-10-30T14:21:28.509Z",
+            "operation": "tile",
+            "unit": 114
+          },
+          {
+            "at": "2026-10-30T14:21:31.773Z",
+            "operation": "tile",
+            "unit": 115
+          },
+          {
+            "at": "2026-10-30T14:21:34.419Z",
+            "operation": "tile",
+            "unit": 116
+          },
+          {
+            "at": "2026-10-30T14:21:36.898Z",
+            "operation": "tile",
+            "unit": 117
+          },
+          {
+            "at": "2026-10-30T14:21:39.537Z",
+            "operation": "tile",
+            "unit": 118
+          },
+          {
+            "at": "2026-10-30T14:21:42.334Z",
+            "operation": "tile",
+            "unit": 119
+          },
+          {
+            "at": "2026-10-30T14:21:44.955Z",
+            "operation": "tile",
+            "unit": 120
+          },
+          {
+            "at": "2026-10-30T14:21:47.660Z",
+            "operation": "tile",
+            "unit": 121
+          },
+          {
+            "at": "2026-10-30T14:21:50.217Z",
+            "operation": "tile",
+            "unit": 122
+          },
+          {
+            "at": "2026-10-30T14:21:52.844Z",
+            "operation": "tile",
+            "unit": 123
+          },
+          {
+            "at": "2026-10-30T14:21:55.535Z",
+            "operation": "tile",
+            "unit": 124
+          },
+          {
+            "at": "2026-10-30T14:21:58.158Z",
+            "operation": "tile",
+            "unit": 125
+          },
+          {
+            "at": "2026-10-30T14:22:00.829Z",
+            "operation": "tile",
+            "unit": 126
+          },
+          {
+            "at": "2026-10-30T14:22:03.503Z",
+            "operation": "tile",
+            "unit": 127
+          },
+          {
+            "at": "2026-10-30T14:22:06.132Z",
+            "operation": "tile",
+            "unit": 128
+          },
+          {
+            "at": "2026-10-30T14:22:08.779Z",
+            "operation": "tile",
+            "unit": 129
+          },
+          {
+            "at": "2026-10-30T14:22:11.411Z",
+            "operation": "tile",
+            "unit": 130
+          },
+          {
+            "at": "2026-10-30T14:22:14.052Z",
+            "operation": "tile",
+            "unit": 131
+          },
+          {
+            "at": "2026-10-30T14:22:16.657Z",
+            "operation": "tile",
+            "unit": 132
+          },
+          {
+            "at": "2026-10-30T14:22:19.290Z",
+            "operation": "tile",
+            "unit": 133
+          },
+          {
+            "at": "2026-10-30T14:22:21.905Z",
+            "operation": "tile",
+            "unit": 134
+          },
+          {
+            "at": "2026-10-30T14:22:24.566Z",
+            "operation": "tile",
+            "unit": 135
+          },
+          {
+            "at": "2026-10-30T14:22:27.213Z",
+            "operation": "tile",
+            "unit": 136
+          },
+          {
+            "at": "2026-10-30T14:22:29.832Z",
+            "operation": "tile",
+            "unit": 137
+          },
+          {
+            "at": "2026-10-30T14:22:32.528Z",
+            "operation": "tile",
+            "unit": 138
+          },
+          {
+            "at": "2026-10-30T14:22:35.166Z",
+            "operation": "tile",
+            "unit": 139
+          },
+          {
+            "at": "2026-10-30T14:22:37.756Z",
+            "operation": "tile",
+            "unit": 140
+          },
+          {
+            "at": "2026-10-30T14:22:40.408Z",
+            "operation": "tile",
+            "unit": 141
+          },
+          {
+            "at": "2026-10-30T14:22:42.945Z",
+            "operation": "tile",
+            "unit": 142
+          },
+          {
+            "at": "2026-10-30T14:22:45.538Z",
+            "operation": "tile",
+            "unit": 143
+          },
+          {
+            "at": "2026-10-30T14:22:48.216Z",
+            "operation": "tile",
+            "unit": 144
+          },
+          {
+            "at": "2026-10-30T14:22:50.840Z",
+            "operation": "tile",
+            "unit": 145
+          },
+          {
+            "at": "2026-10-30T14:22:53.415Z",
+            "operation": "tile",
+            "unit": 146
+          },
+          {
+            "at": "2026-10-30T14:22:56.070Z",
+            "operation": "tile",
+            "unit": 147
+          },
+          {
+            "at": "2026-10-30T14:22:58.664Z",
+            "operation": "tile",
+            "unit": 148
+          },
+          {
+            "at": "2026-10-30T14:23:01.302Z",
+            "operation": "tile",
+            "unit": 149
+          },
+          {
+            "at": "2026-10-30T14:23:03.922Z",
+            "operation": "tile",
+            "unit": 150
+          },
+          {
+            "at": "2026-10-30T14:23:06.560Z",
+            "operation": "tile",
+            "unit": 151
+          },
+          {
+            "at": "2026-10-30T14:23:09.214Z",
+            "operation": "tile",
+            "unit": 152
+          },
+          {
+            "at": "2026-10-30T14:23:11.887Z",
+            "operation": "tile",
+            "unit": 153
+          },
+          {
+            "at": "2026-10-30T14:23:14.468Z",
+            "operation": "tile",
+            "unit": 154
+          },
+          {
+            "at": "2026-10-30T14:23:17.055Z",
+            "operation": "tile",
+            "unit": 155
+          },
+          {
+            "at": "2026-10-30T14:23:19.690Z",
+            "operation": "tile",
+            "unit": 156
+          },
+          {
+            "at": "2026-10-30T14:23:22.336Z",
+            "operation": "composite",
+            "unit": 157
+          },
+          {
+            "at": "2026-10-30T14:23:22.337Z",
+            "operation": "encode",
+            "unit": 158
+          }
+        ],
+        "result": "done",
+        "mode": null,
+        "effectiveThreads": 1,
+        "file": "maximum-3.png",
+        "canEdit": false,
+        "backend": "webgpu",
+        "group": "processor"
+      },
+      "dimensions": [
+        8192,
+        3456
+      ],
+      "fullMs": 398581.38,
+      "run": 3,
+      "outputBytes": 99651570,
+      "filename": "maximum-3-uscale-2x.png",
+      "alphaError": 0,
+      "sourceBytes": 24823653
+    }
+  ],
+  "wakeLockGranted": false,
+  "passed": true,
+  "bundleSha256": {
+    "processor": "f27e1c19ced66131ffb105e0023366d106b1283a13c3952b8c864e73245c2a5d",
+    "main": "0212f8665e5cb34e6e3f9da49447b92f2cdd0c2beea6d5bb22bf85d1b4815fc0",
+    "faces": "0b591b2c4930f6bbbc148a29b7e91f172b437a2a810dcc1840f4f6807cb9204a",
+    "composite": "cc3cfcc62075a115a4e12d59698e527858bb3467f3ebf6bfacd24977235989e4",
+    "html": "3ba1ab6e30829128bde0ac0f594ddccc48e7403912d67b3250116319c97fde5c",
+    "harness": "b132a99633f6d49e5faaaa8cb03f4726223025ab91954c9287870b35a3012501"
+  }
+}

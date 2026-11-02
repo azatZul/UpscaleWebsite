@@ -1,0 +1,30 @@
+{
+  "status": "accepted",
+  "reviewedBy": "Codex, 2026-10-30: only the outstanding physical-iPhone maximum PNG series was rerun. Three consecutive 8192x3456 UI export/download-Blob/reopen checks passed on iPhone 14 Pro / Safari 27.2, alphaError=0 in all runs, no page errors or warnings. Product source and bundles match the previously tested 28 MP candidate. Mobile limit remains 28,311,552 output pixels.",
+  "pending": [],
+  "reports": [
+    "benchmarks/browser/2026-10-28/face-png-firefox.json",
+    "benchmarks/browser/2026-10-28/face-png-webkit.json",
+    "benchmarks/browser/2026-10-28/iphone-processing.json",
+    "benchmarks/browser/2026-10-28/lab-build.json",
+    "benchmarks/browser/2026-10-28/png-firefox.json",
+    "benchmarks/browser/2026-10-28/release-28mp/face-png-chromium.json",
+    "benchmarks/browser/2026-10-28/release-28mp/local-verification.json",
+    "benchmarks/browser/2026-10-28/release-28mp/png-chromium.json",
+    "benchmarks/browser/2026-10-28/release-28mp/png-webkit.json",
+    "benchmarks/browser/2026-10-28/release-28mp/recovery-chromium.json",
+    "benchmarks/browser/2026-10-28/release-28mp/regressions-chromium.json",
+    "benchmarks/browser/2026-10-28/release-28mp/thread-cache-chromium.json",
+    "benchmarks/browser/2026-10-28/release-28mp/ui-chromium.json",
+    "benchmarks/browser/2026-10-30/iphone-maximum-ui.json",
+    "benchmarks/browser/2026-10-30/packaging-gate.json",
+    "benchmarks/browser/cpu-face-chromium-final.json",
+    "benchmarks/browser/cpu-face-detect-chromium-final.json",
+    "benchmarks/browser/drawing-ablation.json",
+    "benchmarks/browser/face-png-chromium-final.json",
+    "benchmarks/browser/mac_chromium_151_product_cpu.json",
+    "benchmarks/browser/png-firefox-rgb-parity.json"
+  ],
+  "mobilePngOutputPixels": 28311552,
+  "acceptedAt": "2026-10-30T14:24:08.291653+00:00"
+}

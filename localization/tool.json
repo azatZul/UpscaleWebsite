@@ -527,13 +527,13 @@
   },
   "tool.js.idle_detail": {
     "localizations": {
-      "en": "Your photo stays on this device. The upscaler downloads once, and results are saved as JPEG with transparent areas on white.",
-      "ru": "Фото остаётся на вашем устройстве. Нейросеть загружается один раз, а результат сохраняется в JPEG — прозрачные области станут белыми.",
-      "de": "Dein Foto bleibt auf deinem Gerät. Der Upscaler wird einmal geladen, Ergebnisse werden als JPEG gespeichert, transparente Bereiche werden weiß.",
-      "ja": "写真はこのデバイスから送信されません。高画質化モデルのダウンロードは初回のみで、結果はJPEGで保存されます（透明部分は白になります）。",
-      "fr": "Votre photo reste sur cet appareil. Le moteur se télécharge une seule fois et les résultats sont enregistrés en JPEG, les zones transparentes sur fond blanc.",
-      "es": "Tu foto se queda en este dispositivo. El modelo se descarga una sola vez y el resultado se guarda en JPEG, con las zonas transparentes en blanco.",
-      "zh": "照片会保留在此设备上。放大模型只需下载一次，结果保存为 JPEG，透明区域会填充为白色。"
+      "en": "Your photo stays on this device. The upscaler downloads once. Transparent images are saved as PNG; other images are saved as JPEG.",
+      "ru": "Фото остаётся на вашем устройстве. Нейросеть загружается один раз. Изображения с прозрачностью сохраняются в PNG, остальные — в JPEG.",
+      "de": "Dein Foto bleibt auf deinem Gerät. Der Upscaler wird einmal geladen. Bilder mit Transparenz werden als PNG gespeichert, andere als JPEG.",
+      "ja": "写真はこのデバイスから送信されません。高画質化モデルのダウンロードは初回のみです。透明部分がある画像はPNG、それ以外はJPEGで保存されます。",
+      "fr": "Votre photo reste sur cet appareil. Le moteur se télécharge une seule fois. Les images transparentes sont enregistrées en PNG, les autres en JPEG.",
+      "es": "Tu foto se queda en este dispositivo. El modelo se descarga una sola vez. Las imágenes con transparencia se guardan en PNG y las demás en JPEG.",
+      "zh": "照片会保留在此设备上。放大模型只需下载一次。含透明区域的图片保存为 PNG，其他图片保存为 JPEG。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -630,18 +630,6 @@
       "fr": "Les grandes photos sont lentes dans un navigateur. Vous pouvez tout de même l’agrandir ici, ou profiter de toute la vitesse dans l’app.",
       "es": "Las fotos grandes van lentas en el navegador. Puedes ampliarla aquí de todos modos o usar la app a máxima velocidad.",
       "zh": "在浏览器中处理大尺寸照片较慢。你仍可在这里放大，或在 App 中全速处理。"
-    },
-    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
-  },
-  "tool.js.probe_detail": {
-    "localizations": {
-      "en": "Upscaling: {time}. Face enhancement adds time when enabled.",
-      "ru": "Увеличение: {time}. Улучшение лиц займёт дополнительное время.",
-      "de": "Vergrößern: {time}. Die Gesichtsverbesserung dauert zusätzlich.",
-      "ja": "高画質化：{time}。顔の強調を有効にすると時間が延びます。",
-      "fr": "Agrandissement : {time}. L’amélioration des visages ajoute du temps.",
-      "es": "Ampliación: {time}. Mejorar rostros añade tiempo.",
-      "zh": "放大：{time}。开启人脸增强会额外耗时。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -873,30 +861,6 @@
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
-  "tool.js.measuring": {
-    "localizations": {
-      "en": "Measuring processing speed",
-      "ru": "Измеряем скорость обработки",
-      "de": "Verarbeitungstempo wird gemessen",
-      "ja": "処理速度を測定しています",
-      "fr": "Mesure de la vitesse",
-      "es": "Midiendo la velocidad",
-      "zh": "正在测量处理速度"
-    },
-    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
-  },
-  "tool.js.measuring_detail": {
-    "localizations": {
-      "en": "Trying a small part of your photo first.",
-      "ru": "Сначала пробуем небольшой фрагмент фото.",
-      "de": "Zuerst wird ein kleiner Teil deines Fotos getestet.",
-      "ja": "まず写真の一部で試しています。",
-      "fr": "Test sur une petite partie de votre photo.",
-      "es": "Probando primero una pequeña parte de tu foto.",
-      "zh": "先试着处理照片的一小部分。"
-    },
-    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
-  },
   "tool.js.upscaling": {
     "localizations": {
       "en": "Upscaling your photo",
@@ -906,18 +870,6 @@
       "fr": "Agrandissement en cours",
       "es": "Ampliando tu foto",
       "zh": "正在放大照片"
-    },
-    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
-  },
-  "tool.js.upscaling_detail": {
-    "localizations": {
-      "en": "Keep this page open while it processes.",
-      "ru": "Не закрывайте страницу во время обработки.",
-      "de": "Lass diese Seite während der Verarbeitung geöffnet.",
-      "ja": "処理中はこのページを開いたままにしてください。",
-      "fr": "Gardez cette page ouverte pendant le traitement.",
-      "es": "Mantén esta página abierta mientras se procesa.",
-      "zh": "处理期间请保持此页面打开。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -1341,30 +1293,6 @@
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
-  "tool.js.err_export_probe": {
-    "localizations": {
-      "en": "This browser couldn’t prepare an image download. Try the app.",
-      "ru": "Браузер не смог подготовить файл для скачивания. Попробуйте приложение.",
-      "de": "Dieser Browser konnte keinen Bild-Download vorbereiten. Probier die App.",
-      "ja": "このブラウザでは画像のダウンロードを準備できませんでした。アプリをお試しください。",
-      "fr": "Ce navigateur n’a pas pu préparer le téléchargement. Essayez l’app.",
-      "es": "Este navegador no pudo preparar la descarga. Prueba la app.",
-      "zh": "此浏览器无法准备图片下载。请试试 App。"
-    },
-    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
-  },
-  "tool.js.err_check_again": {
-    "localizations": {
-      "en": "Choose the photo again and retry.",
-      "ru": "Выберите фото снова и повторите.",
-      "de": "Wähle das Foto erneut und versuch es noch einmal.",
-      "ja": "写真を選び直してもう一度お試しください。",
-      "fr": "Choisissez à nouveau la photo et réessayez.",
-      "es": "Vuelve a elegir la foto e inténtalo de nuevo.",
-      "zh": "请重新选择照片后重试。"
-    },
-    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
-  },
   "tool.js.err_save": {
     "localizations": {
       "en": "This browser couldn’t save the full-size result. Try a smaller photo or use the app.",
@@ -1410,30 +1338,6 @@
       "fr": "L’amélioration des visages n’a pas pu aboutir dans ce navigateur. Réessayez, désactivez-la ou utilisez l’app.",
       "es": "La mejora de rostros no pudo terminar en este navegador. Inténtalo de nuevo, desactívala o usa la app.",
       "zh": "人脸增强无法在此浏览器中完成。请重试、关闭人脸增强，或使用 App。"
-    },
-    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
-  },
-  "tool.js.err_face_stopped": {
-    "localizations": {
-      "en": "Face enhancement stopped. Turn it off and try again, or use the app.",
-      "ru": "Улучшение лиц остановилось. Выключите его и попробуйте снова или воспользуйтесь приложением.",
-      "de": "Die Gesichtsverbesserung wurde gestoppt. Schalte sie aus und versuch es erneut, oder nutze die App.",
-      "ja": "顔の強調が停止しました。オフにしてもう一度試すか、アプリをご利用ください。",
-      "fr": "L’amélioration des visages s’est arrêtée. Désactivez-la et réessayez, ou utilisez l’app.",
-      "es": "La mejora de rostros se detuvo. Desactívala e inténtalo de nuevo, o usa la app.",
-      "zh": "人脸增强已停止。请关闭后重试，或使用 App。"
-    },
-    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
-  },
-  "tool.js.err_face_start": {
-    "localizations": {
-      "en": "This browser couldn’t start face enhancement. Turn it off and try again, or use the app.",
-      "ru": "Браузер не смог запустить улучшение лиц. Выключите его и попробуйте снова или воспользуйтесь приложением.",
-      "de": "Dieser Browser konnte die Gesichtsverbesserung nicht starten. Schalte sie aus und versuch es erneut, oder nutze die App.",
-      "ja": "このブラウザでは顔の強調を開始できませんでした。オフにしてもう一度試すか、アプリをご利用ください。",
-      "fr": "Ce navigateur n’a pas pu lancer l’amélioration des visages. Désactivez-la et réessayez, ou utilisez l’app.",
-      "es": "Este navegador no pudo iniciar la mejora de rostros. Desactívala e inténtalo de nuevo, o usa la app.",
-      "zh": "此浏览器无法启动人脸增强。请关闭后重试，或使用 App。"
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
@@ -2540,5 +2444,49 @@
       "zh": "这是 UScale 的测试网站，积分在这里免费，因此只有团队成员可以购买和使用。如果你是开发者，请让团队把你的电子邮件地址添加到 TEST_ALLOWED_EMAILS。"
     },
     "comment": "Shown only on the test site; keep TEST_ALLOWED_EMAILS untranslated."
+  },
+  "tool.js.err_png_size": {
+    "localizations": {
+      "en": "This transparent image needs more memory to save as PNG. Choose a smaller image.",
+      "ru": "Для сохранения прозрачного изображения в PNG не хватает памяти. Выберите изображение поменьше.",
+      "de": "Dieses transparente Bild benötigt mehr Speicher für PNG. Wähle ein kleineres Bild.",
+      "ja": "透明PNGの保存に必要なメモリが足りません。小さい画像を選んでください。",
+      "fr": "Cette image transparente nécessite plus de mémoire pour le PNG. Choisissez une image plus petite.",
+      "es": "Esta imagen transparente necesita más memoria para guardarse en PNG. Elige una imagen más pequeña.",
+      "zh": "保存此透明图片为PNG需要更多内存。请选择较小的图片。"
+    }
+  },
+  "tool.js.err_png_export": {
+    "localizations": {
+      "en": "Could not save the transparent PNG. Try a smaller image; transparency has not been removed.",
+      "ru": "Не удалось сохранить прозрачный PNG. Попробуйте изображение поменьше. Прозрачность не удалена.",
+      "de": "Das transparente PNG konnte nicht gespeichert werden. Versuche ein kleineres Bild. Die Transparenz wurde nicht entfernt.",
+      "ja": "透明PNGを保存できませんでした。小さい画像をお試しください。透明度は削除されていません。",
+      "fr": "Impossible d’enregistrer le PNG transparent. Essayez une image plus petite. La transparence a été conservée.",
+      "es": "No se pudo guardar el PNG transparente. Prueba una imagen más pequeña. No se ha eliminado la transparencia.",
+      "zh": "无法保存透明PNG。请尝试较小的图片。透明度未被移除。"
+    }
+  },
+  "tool.js.err_png_size_2x": {
+    "localizations": {
+      "en": "This transparent image needs more memory to save as PNG. Choose a smaller image or try 2×.",
+      "ru": "Для сохранения прозрачного изображения в PNG не хватает памяти. Выберите изображение поменьше или попробуйте 2×.",
+      "de": "Dieses transparente Bild benötigt mehr Speicher für PNG. Wähle ein kleineres Bild oder versuche 2×.",
+      "ja": "透明画像をPNGで保存するためのメモリが足りません。小さい画像か2倍をお試しください。",
+      "fr": "Cette image transparente nécessite plus de mémoire pour le PNG. Choisissez une image plus petite ou essayez 2×.",
+      "es": "Esta imagen transparente necesita más memoria para guardarse en PNG. Elige una imagen más pequeña o prueba 2×.",
+      "zh": "保存此透明图片为PNG需要更多内存。请选择较小的图片或尝试2倍放大。"
+    }
+  },
+  "tool.js.err_png_export_2x": {
+    "localizations": {
+      "en": "Could not save the transparent PNG. Try a smaller image or 2×; transparency has not been removed.",
+      "ru": "Не удалось сохранить прозрачный PNG. Попробуйте изображение поменьше или 2×. Прозрачность не удалена.",
+      "de": "Das transparente PNG konnte nicht gespeichert werden. Versuche ein kleineres Bild oder 2×. Die Transparenz wurde nicht entfernt.",
+      "ja": "透明PNGを保存できませんでした。小さい画像か2倍をお試しください。透明度は削除されていません。",
+      "fr": "Impossible d’enregistrer le PNG transparent. Essayez une image plus petite ou 2×. La transparence a été conservée.",
+      "es": "No se pudo guardar el PNG transparente. Prueba una imagen más pequeña o 2×. No se ha eliminado la transparencia.",
+      "zh": "无法保存透明PNG。请尝试较小的图片或2倍放大。透明度未被移除。"
+    }
   }
 }

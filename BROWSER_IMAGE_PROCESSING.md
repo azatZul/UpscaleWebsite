@@ -139,3 +139,13 @@ handling without a GFPGAN download, mobile face admission rejection, optional
 face-off processing, keyboard comparison, expanded view, and a 390px layout.
 The new complete flow still needs testing on physical iPhones and Android
 phones; the iOS backend choice uses the earlier real-device findings.
+
+## PNG and verified CPU rollout (October 2026, not published)
+
+See [the implementation and acceptance record](docs/png-cpu-rollout.md) for the current local changes. Transparent PNG/WebP preserves alpha in PNG thumbnails, output and editable bases; opaque input keeps JPEG. Face input limits now follow the photo policy, with separate PNG/export/editor memory admission. The historical limits and JPEG-only base description above no longer describe this candidate. Shared worker attempts cover runtime crashes/timeouts and preserve completed faces/results. CPU profiles are enabled only for measured classes and exact runtime/model revisions.
+
+Physical-device PNG acceptance completed on October 30 at the mobile limit of 28,311,552 output pixels. Three consecutive 8192×3456 UI export/download-Blob/reopen checks passed on iPhone 14 Pro / Safari 27.2, with zero alpha error and no page errors or warnings. Product source and bundles matched the previously tested candidate; no other test suite was rerun. `benchmarks/browser/png-release.json` is accepted and production packaging succeeded. No deployment has been performed. The following paragraphs retain the earlier diagnostic history.
+
+The retained acceptance reports and a compact diagnostic history are indexed in `docs/png-cpu-rollout.md`; redundant intermediate reports and logs were moved to the ignored local browser-report archive. Physical iPhone PNG/WebP, recovery and both face-editor sizes passed after fixing Safari's empty crop for out-of-bounds ImageBitmap source rectangles. Both earlier maximum-size series lost their unattended Safari automation session during run three (last recorded tiles 146/285 and 268/285), including the diagnostic retry. The cause was unresolved; no new Safari/Jetsam crash report was found. Those four successful exports did not satisfy the three-consecutive-run gate at the old limit.
+
+A subsequent real-UI/reopen check at 52 MP failed during additional ImageBitmap/Canvas inspection, so the mobile PNG ceiling was reduced to 28,311,552 output pixels. At that ceiling, the first October 28 check passed; the user requested the phone back during run two, stopped deliberately at tile 32/152. A new three-run series completed on October 30 as described above. The reports and reproduction command are in the acceptance record.

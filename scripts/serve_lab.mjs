@@ -72,7 +72,7 @@ createServer((request, response) => {
   if (pathname.startsWith('/models/') || pathname.startsWith('/benchmarks/') || pathname.startsWith('/assets/lab/') || pathname.startsWith('/assets/processor/')) {
     response.setHeader('Cross-Origin-Resource-Policy', 'same-origin');
   }
-  if (pathname.startsWith('/assets/processor/')) {
+  if (pathname.startsWith('/assets/processor/') || pathname.startsWith('/assets/lab/')) {
     response.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
   }
   // Immutable payloads: the model files and the ORT engine binaries. Without

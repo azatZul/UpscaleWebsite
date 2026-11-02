@@ -1,0 +1,1603 @@
+{
+  "schemaVersion": 2,
+  "createdAt": "2026-10-27T13:06:27.021Z",
+  "kind": "product-cpu-comparison",
+  "group": "faces",
+  "modelKind": "photo",
+  "scale": 2,
+  "environment": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+    "platform": "MacIntel",
+    "maxTouchPoints": 0,
+    "hardwareConcurrency": 14,
+    "deviceMemory": 32,
+    "crossOriginIsolated": true,
+    "sharedMemory": true,
+    "webgpu": true
+  },
+  "identity": {
+    "os": "macos",
+    "engine": "chromium",
+    "version": 151,
+    "versionText": "151.0.7922.34",
+    "cores": 14,
+    "coreClass": "9-16",
+    "memoryClass": "high",
+    "mobile": false
+  },
+  "assets": {
+    "runtime": "/assets/processor/ort-1.23.2",
+    "models": {
+      "photo": {
+        "2": {
+          "gpu": "/assets/processor/917d664366981211-normal_2x_web.onnx",
+          "cpu": "/assets/processor/9925a204e41ab72e-normal_2x_web.ort"
+        },
+        "4": {
+          "gpu": "/assets/processor/5038ca956f3ed202-normal_4x_web.onnx",
+          "cpu": "/assets/processor/1527e3c5453ca491-normal_4x_web.ort"
+        }
+      },
+      "drawing": {
+        "2": {
+          "gpu": "/assets/processor/e00170d304d397a0-anime_2x_web.onnx",
+          "cpu": "/assets/processor/27917d9ea78a9acc-anime_2x_web.ort"
+        },
+        "4": {
+          "gpu": "/assets/processor/dfc2249582113ca9-anime_4x_web.onnx",
+          "cpu": "/assets/processor/06247e72c6f210f4-anime_4x_web.ort"
+        }
+      }
+    },
+    "faceModel": {
+      "bytes": 85578722,
+      "parts": [
+        {
+          "url": "https://upscales.uk/web_models/face_512-7333260230803fbf.onnx",
+          "bytes": 85578722
+        }
+      ]
+    },
+    "vision": "/assets/processor/vision-1.0.1",
+    "faceFinder": "/assets/processor/ebafce4e3c118d65-face_detector_yunet.onnx",
+    "faceDetector": "/assets/processor/64184e229b263107-face_landmarker.task"
+  },
+  "thresholds": {
+    "psnrMin": 42,
+    "ssimMin": 0.995,
+    "maeMax": 0.008,
+    "edgeMaeMax": 0.018
+  },
+  "pauseMs": 0,
+  "runs": 5,
+  "samples": [
+    {
+      "round": 0,
+      "requestedThreads": 1,
+      "effectiveThreads": 1,
+      "fullMs": 8552.694999933243,
+      "totalMs": 8547.769999980927,
+      "pauseMs": 0,
+      "maximumCompositeError": 0,
+      "qualityPassed": true,
+      "quality": [
+        {
+          "mae": 0,
+          "rmse": 0,
+          "maxError": 0,
+          "psnr": 120,
+          "ssim": 1,
+          "edgeMae": 0
+        }
+      ],
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "faces",
+          "elapsedMs": 2.509999990463257
+        },
+        {
+          "operation": "scan",
+          "model": "faces",
+          "elapsedMs": 1.8999998569488525
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 0.2200000286102295
+        },
+        {
+          "operation": "download",
+          "model": "faces",
+          "elapsedMs": 94.0550000667572
+        },
+        {
+          "operation": "initialize",
+          "model": "faces",
+          "elapsedMs": 203.1100001335144
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 8238.139999866486
+        },
+        {
+          "operation": "encode",
+          "model": "faces",
+          "pixels": 262144,
+          "elapsedMs": 7.815000057220459
+        }
+      ],
+      "faceCount": 1
+    },
+    {
+      "round": 0,
+      "requestedThreads": 2,
+      "effectiveThreads": 2,
+      "fullMs": 4610.045000076294,
+      "totalMs": 4603.734999895096,
+      "pauseMs": 0,
+      "maximumCompositeError": 1,
+      "qualityPassed": true,
+      "quality": [
+        {
+          "mae": 1.994612830458209e-8,
+          "rmse": 0.000008844213155282906,
+          "maxError": 0.003921568393707275,
+          "psnr": 101.0668159798321,
+          "ssim": 0.9999999917931491,
+          "edgeMae": 5.564528742369669e-8
+        }
+      ],
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "faces",
+          "elapsedMs": 2.4600000381469727
+        },
+        {
+          "operation": "scan",
+          "model": "faces",
+          "elapsedMs": 1.7799999713897705
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 0.14499998092651367
+        },
+        {
+          "operation": "download",
+          "model": "faces",
+          "elapsedMs": 92.89499998092651
+        },
+        {
+          "operation": "initialize",
+          "model": "faces",
+          "elapsedMs": 282.31500005722046
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 4216.954999923706
+        },
+        {
+          "operation": "encode",
+          "model": "faces",
+          "pixels": 262144,
+          "elapsedMs": 7.159999847412109
+        }
+      ],
+      "faceCount": 1
+    },
+    {
+      "round": 0,
+      "requestedThreads": 4,
+      "effectiveThreads": 4,
+      "fullMs": 2430.6849999427795,
+      "totalMs": 2425.1150000095367,
+      "pauseMs": 0,
+      "maximumCompositeError": 1,
+      "qualityPassed": true,
+      "quality": [
+        {
+          "mae": 7.978451321832836e-8,
+          "rmse": 0.000017688426310565812,
+          "maxError": 0.003921568393707275,
+          "psnr": 95.04621606655247,
+          "ssim": 0.9999998281793899,
+          "edgeMae": 1.8631311436243568e-7
+        }
+      ],
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "faces",
+          "elapsedMs": 2.4800000190734863
+        },
+        {
+          "operation": "scan",
+          "model": "faces",
+          "elapsedMs": 1.9500000476837158
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 0.14999985694885254
+        },
+        {
+          "operation": "download",
+          "model": "faces",
+          "elapsedMs": 94.34000015258789
+        },
+        {
+          "operation": "initialize",
+          "model": "faces",
+          "elapsedMs": 203.1399998664856
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 2115.9800000190735
+        },
+        {
+          "operation": "encode",
+          "model": "faces",
+          "pixels": 262144,
+          "elapsedMs": 7.025000095367432
+        }
+      ],
+      "faceCount": 1
+    },
+    {
+      "round": 0,
+      "requestedThreads": 7,
+      "effectiveThreads": 7,
+      "fullMs": 1604.7400000095367,
+      "totalMs": 1600.2750000953674,
+      "pauseMs": 0,
+      "maximumCompositeError": 1,
+      "qualityPassed": true,
+      "quality": [
+        {
+          "mae": 7.479798114218283e-8,
+          "rmse": 0.00001712674513035962,
+          "maxError": 0.003921568393707275,
+          "psnr": 95.32650330255491,
+          "ssim": 0.9999998142880275,
+          "edgeMae": 1.8168169271252151e-7
+        }
+      ],
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "faces",
+          "elapsedMs": 2.4200000762939453
+        },
+        {
+          "operation": "scan",
+          "model": "faces",
+          "elapsedMs": 1.7999999523162842
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 0.1399998664855957
+        },
+        {
+          "operation": "download",
+          "model": "faces",
+          "elapsedMs": 98.73499989509583
+        },
+        {
+          "operation": "initialize",
+          "model": "faces",
+          "elapsedMs": 207.11500000953674
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 1283.289999961853
+        },
+        {
+          "operation": "encode",
+          "model": "faces",
+          "pixels": 262144,
+          "elapsedMs": 6.75
+        }
+      ],
+      "faceCount": 1
+    },
+    {
+      "round": 0,
+      "requestedThreads": 8,
+      "effectiveThreads": 8,
+      "fullMs": 1479.664999961853,
+      "totalMs": 1474.789999961853,
+      "pauseMs": 0,
+      "maximumCompositeError": 1,
+      "qualityPassed": true,
+      "quality": [
+        {
+          "mae": 6.981144906603731e-8,
+          "rmse": 0.000016546007741333776,
+          "maxError": 0.003921568393707275,
+          "psnr": 95.62613553632934,
+          "ssim": 0.9999998351541067,
+          "edgeMae": 1.7589097640536756e-7
+        }
+      ],
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "faces",
+          "elapsedMs": 2.5849997997283936
+        },
+        {
+          "operation": "scan",
+          "model": "faces",
+          "elapsedMs": 1.875
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 0.16000008583068848
+        },
+        {
+          "operation": "download",
+          "model": "faces",
+          "elapsedMs": 91.45000004768372
+        },
+        {
+          "operation": "initialize",
+          "model": "faces",
+          "elapsedMs": 210.5550000667572
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 1160.9900000095367
+        },
+        {
+          "operation": "encode",
+          "model": "faces",
+          "pixels": 262144,
+          "elapsedMs": 7.144999980926514
+        }
+      ],
+      "faceCount": 1
+    },
+    {
+      "round": 1,
+      "requestedThreads": 8,
+      "effectiveThreads": 8,
+      "fullMs": 1524.6050000190735,
+      "totalMs": 1520.164999961853,
+      "pauseMs": 0,
+      "maximumCompositeError": 1,
+      "qualityPassed": true,
+      "quality": [
+        {
+          "mae": 6.981144906603731e-8,
+          "rmse": 0.000016546007741333776,
+          "maxError": 0.003921568393707275,
+          "psnr": 95.62613553632934,
+          "ssim": 0.9999998351541067,
+          "edgeMae": 1.7589097640536756e-7
+        }
+      ],
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "faces",
+          "elapsedMs": 2.484999895095825
+        },
+        {
+          "operation": "scan",
+          "model": "faces",
+          "elapsedMs": 1.9749999046325684
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 0.16499996185302734
+        },
+        {
+          "operation": "download",
+          "model": "faces",
+          "elapsedMs": 93.26500010490417
+        },
+        {
+          "operation": "initialize",
+          "model": "faces",
+          "elapsedMs": 206.83500003814697
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 1207.789999961853
+        },
+        {
+          "operation": "encode",
+          "model": "faces",
+          "pixels": 262144,
+          "elapsedMs": 7.640000104904175
+        }
+      ],
+      "faceCount": 1
+    },
+    {
+      "round": 1,
+      "requestedThreads": 7,
+      "effectiveThreads": 7,
+      "fullMs": 1636.9800000190735,
+      "totalMs": 1632.5800001621246,
+      "pauseMs": 0,
+      "maximumCompositeError": 1,
+      "qualityPassed": true,
+      "quality": [
+        {
+          "mae": 7.479798114218283e-8,
+          "rmse": 0.00001712674513035962,
+          "maxError": 0.003921568393707275,
+          "psnr": 95.32650330255491,
+          "ssim": 0.9999998142880275,
+          "edgeMae": 1.8168169271252151e-7
+        }
+      ],
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "faces",
+          "elapsedMs": 2.3550000190734863
+        },
+        {
+          "operation": "scan",
+          "model": "faces",
+          "elapsedMs": 1.8400001525878906
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 0.16499996185302734
+        },
+        {
+          "operation": "download",
+          "model": "faces",
+          "elapsedMs": 89.1399998664856
+        },
+        {
+          "operation": "initialize",
+          "model": "faces",
+          "elapsedMs": 204.06000018119812
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 1328
+        },
+        {
+          "operation": "encode",
+          "model": "faces",
+          "pixels": 262144,
+          "elapsedMs": 7
+        }
+      ],
+      "faceCount": 1
+    },
+    {
+      "round": 1,
+      "requestedThreads": 4,
+      "effectiveThreads": 4,
+      "fullMs": 2435.7549998760223,
+      "totalMs": 2431.6100001335144,
+      "pauseMs": 0,
+      "maximumCompositeError": 1,
+      "qualityPassed": true,
+      "quality": [
+        {
+          "mae": 7.978451321832836e-8,
+          "rmse": 0.000017688426310565812,
+          "maxError": 0.003921568393707275,
+          "psnr": 95.04621606655247,
+          "ssim": 0.9999998281793899,
+          "edgeMae": 1.8631311436243568e-7
+        }
+      ],
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "faces",
+          "elapsedMs": 2.5850000381469727
+        },
+        {
+          "operation": "scan",
+          "model": "faces",
+          "elapsedMs": 1.869999885559082
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 0.14499998092651367
+        },
+        {
+          "operation": "download",
+          "model": "faces",
+          "elapsedMs": 94.98499989509583
+        },
+        {
+          "operation": "initialize",
+          "model": "faces",
+          "elapsedMs": 202.27500009536743
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 2122.914999961853
+        },
+        {
+          "operation": "encode",
+          "model": "faces",
+          "pixels": 262144,
+          "elapsedMs": 6.805000066757202
+        }
+      ],
+      "faceCount": 1
+    },
+    {
+      "round": 1,
+      "requestedThreads": 2,
+      "effectiveThreads": 2,
+      "fullMs": 4510.084999799728,
+      "totalMs": 4505.634999990463,
+      "pauseMs": 0,
+      "maximumCompositeError": 1,
+      "qualityPassed": true,
+      "quality": [
+        {
+          "mae": 1.994612830458209e-8,
+          "rmse": 0.000008844213155282906,
+          "maxError": 0.003921568393707275,
+          "psnr": 101.0668159798321,
+          "ssim": 0.9999999917931491,
+          "edgeMae": 5.564528742369669e-8
+        }
+      ],
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "faces",
+          "elapsedMs": 2.4549999237060547
+        },
+        {
+          "operation": "scan",
+          "model": "faces",
+          "elapsedMs": 1.8250000476837158
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 0.15000009536743164
+        },
+        {
+          "operation": "download",
+          "model": "faces",
+          "elapsedMs": 92.86500000953674
+        },
+        {
+          "operation": "initialize",
+          "model": "faces",
+          "elapsedMs": 204.3349997997284
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 4196.945000171661
+        },
+        {
+          "operation": "encode",
+          "model": "faces",
+          "pixels": 262144,
+          "elapsedMs": 7.049999952316284
+        }
+      ],
+      "faceCount": 1
+    },
+    {
+      "round": 1,
+      "requestedThreads": 1,
+      "effectiveThreads": 1,
+      "fullMs": 8554.674999952316,
+      "totalMs": 8549.965000152588,
+      "pauseMs": 0,
+      "maximumCompositeError": 0,
+      "qualityPassed": true,
+      "quality": [
+        {
+          "mae": 0,
+          "rmse": 0,
+          "maxError": 0,
+          "psnr": 120,
+          "ssim": 1,
+          "edgeMae": 0
+        }
+      ],
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "faces",
+          "elapsedMs": 2.805000066757202
+        },
+        {
+          "operation": "scan",
+          "model": "faces",
+          "elapsedMs": 2.200000047683716
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 0.17999982833862305
+        },
+        {
+          "operation": "download",
+          "model": "faces",
+          "elapsedMs": 117.35000014305115
+        },
+        {
+          "operation": "initialize",
+          "model": "faces",
+          "elapsedMs": 203.23499989509583
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 8217.414999961853
+        },
+        {
+          "operation": "encode",
+          "model": "faces",
+          "pixels": 262144,
+          "elapsedMs": 6.7749998569488525
+        }
+      ],
+      "faceCount": 1
+    },
+    {
+      "round": 2,
+      "requestedThreads": 1,
+      "effectiveThreads": 1,
+      "fullMs": 8644.824999809265,
+      "totalMs": 8638.644999980927,
+      "pauseMs": 0,
+      "maximumCompositeError": 0,
+      "qualityPassed": true,
+      "quality": [
+        {
+          "mae": 0,
+          "rmse": 0,
+          "maxError": 0,
+          "psnr": 120,
+          "ssim": 1,
+          "edgeMae": 0
+        }
+      ],
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "faces",
+          "elapsedMs": 2.559999942779541
+        },
+        {
+          "operation": "scan",
+          "model": "faces",
+          "elapsedMs": 1.9049999713897705
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 0.14499998092651367
+        },
+        {
+          "operation": "download",
+          "model": "faces",
+          "elapsedMs": 100.28999996185303
+        },
+        {
+          "operation": "initialize",
+          "model": "faces",
+          "elapsedMs": 280.56500005722046
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 8245.759999990463
+        },
+        {
+          "operation": "encode",
+          "model": "faces",
+          "pixels": 262144,
+          "elapsedMs": 7.394999980926514
+        }
+      ],
+      "faceCount": 1
+    },
+    {
+      "round": 2,
+      "requestedThreads": 2,
+      "effectiveThreads": 2,
+      "fullMs": 4616.454999923706,
+      "totalMs": 4611.375,
+      "pauseMs": 0,
+      "maximumCompositeError": 1,
+      "qualityPassed": true,
+      "quality": [
+        {
+          "mae": 1.994612830458209e-8,
+          "rmse": 0.000008844213155282906,
+          "maxError": 0.003921568393707275,
+          "psnr": 101.0668159798321,
+          "ssim": 0.9999999917931491,
+          "edgeMae": 5.564528742369669e-8
+        }
+      ],
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "faces",
+          "elapsedMs": 2.5999999046325684
+        },
+        {
+          "operation": "scan",
+          "model": "faces",
+          "elapsedMs": 1.8900001049041748
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 0.14499998092651367
+        },
+        {
+          "operation": "download",
+          "model": "faces",
+          "elapsedMs": 100.4300000667572
+        },
+        {
+          "operation": "initialize",
+          "model": "faces",
+          "elapsedMs": 276.2449998855591
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 4222.965000152588
+        },
+        {
+          "operation": "encode",
+          "model": "faces",
+          "pixels": 262144,
+          "elapsedMs": 7.069999933242798
+        }
+      ],
+      "faceCount": 1
+    },
+    {
+      "round": 2,
+      "requestedThreads": 4,
+      "effectiveThreads": 4,
+      "fullMs": 2435.4349999427795,
+      "totalMs": 2430.694999933243,
+      "pauseMs": 0,
+      "maximumCompositeError": 1,
+      "qualityPassed": true,
+      "quality": [
+        {
+          "mae": 7.978451321832836e-8,
+          "rmse": 0.000017688426310565812,
+          "maxError": 0.003921568393707275,
+          "psnr": 95.04621606655247,
+          "ssim": 0.9999998281793899,
+          "edgeMae": 1.8631311436243568e-7
+        }
+      ],
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "faces",
+          "elapsedMs": 2.4100000858306885
+        },
+        {
+          "operation": "scan",
+          "model": "faces",
+          "elapsedMs": 1.8499999046325684
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 0.14499998092651367
+        },
+        {
+          "operation": "download",
+          "model": "faces",
+          "elapsedMs": 93.45000004768372
+        },
+        {
+          "operation": "initialize",
+          "model": "faces",
+          "elapsedMs": 204.27999997138977
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 2121.2450001239777
+        },
+        {
+          "operation": "encode",
+          "model": "faces",
+          "pixels": 262144,
+          "elapsedMs": 7.300000190734863
+        }
+      ],
+      "faceCount": 1
+    },
+    {
+      "round": 2,
+      "requestedThreads": 7,
+      "effectiveThreads": 7,
+      "fullMs": 1613.6850001811981,
+      "totalMs": 1609.125,
+      "pauseMs": 0,
+      "maximumCompositeError": 1,
+      "qualityPassed": true,
+      "quality": [
+        {
+          "mae": 7.479798114218283e-8,
+          "rmse": 0.00001712674513035962,
+          "maxError": 0.003921568393707275,
+          "psnr": 95.32650330255491,
+          "ssim": 0.9999998142880275,
+          "edgeMae": 1.8168169271252151e-7
+        }
+      ],
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "faces",
+          "elapsedMs": 2.4499998092651367
+        },
+        {
+          "operation": "scan",
+          "model": "faces",
+          "elapsedMs": 1.8600001335144043
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 0.18000006675720215
+        },
+        {
+          "operation": "download",
+          "model": "faces",
+          "elapsedMs": 92.46499991416931
+        },
+        {
+          "operation": "initialize",
+          "model": "faces",
+          "elapsedMs": 203.98499989509583
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 1301.2900002002716
+        },
+        {
+          "operation": "encode",
+          "model": "faces",
+          "pixels": 262144,
+          "elapsedMs": 6.869999885559082
+        }
+      ],
+      "faceCount": 1
+    },
+    {
+      "round": 2,
+      "requestedThreads": 8,
+      "effectiveThreads": 8,
+      "fullMs": 1493.8650000095367,
+      "totalMs": 1489.5599999427795,
+      "pauseMs": 0,
+      "maximumCompositeError": 1,
+      "qualityPassed": true,
+      "quality": [
+        {
+          "mae": 6.981144906603731e-8,
+          "rmse": 0.000016546007741333776,
+          "maxError": 0.003921568393707275,
+          "psnr": 95.62613553632934,
+          "ssim": 0.9999998351541067,
+          "edgeMae": 1.7589097640536756e-7
+        }
+      ],
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "faces",
+          "elapsedMs": 2.4049999713897705
+        },
+        {
+          "operation": "scan",
+          "model": "faces",
+          "elapsedMs": 1.7750000953674316
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 0.13499999046325684
+        },
+        {
+          "operation": "download",
+          "model": "faces",
+          "elapsedMs": 86.57999992370605
+        },
+        {
+          "operation": "initialize",
+          "model": "faces",
+          "elapsedMs": 208.55999994277954
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 1183.005000114441
+        },
+        {
+          "operation": "encode",
+          "model": "faces",
+          "pixels": 262144,
+          "elapsedMs": 7.065000057220459
+        }
+      ],
+      "faceCount": 1
+    },
+    {
+      "round": 3,
+      "requestedThreads": 8,
+      "effectiveThreads": 8,
+      "fullMs": 1522.4000000953674,
+      "totalMs": 1517.5049998760223,
+      "pauseMs": 0,
+      "maximumCompositeError": 1,
+      "qualityPassed": true,
+      "quality": [
+        {
+          "mae": 6.981144906603731e-8,
+          "rmse": 0.000016546007741333776,
+          "maxError": 0.003921568393707275,
+          "psnr": 95.62613553632934,
+          "ssim": 0.9999998351541067,
+          "edgeMae": 1.7589097640536756e-7
+        }
+      ],
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "faces",
+          "elapsedMs": 2.3950002193450928
+        },
+        {
+          "operation": "scan",
+          "model": "faces",
+          "elapsedMs": 1.8349997997283936
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 0.12999987602233887
+        },
+        {
+          "operation": "download",
+          "model": "faces",
+          "elapsedMs": 86.95000004768372
+        },
+        {
+          "operation": "initialize",
+          "model": "faces",
+          "elapsedMs": 209.0350000858307
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 1209.4300000667572
+        },
+        {
+          "operation": "encode",
+          "model": "faces",
+          "pixels": 262144,
+          "elapsedMs": 7.704999923706055
+        }
+      ],
+      "faceCount": 1
+    },
+    {
+      "round": 3,
+      "requestedThreads": 7,
+      "effectiveThreads": 7,
+      "fullMs": 1649.9000000953674,
+      "totalMs": 1645.3700001239777,
+      "pauseMs": 0,
+      "maximumCompositeError": 1,
+      "qualityPassed": true,
+      "quality": [
+        {
+          "mae": 7.479798114218283e-8,
+          "rmse": 0.00001712674513035962,
+          "maxError": 0.003921568393707275,
+          "psnr": 95.32650330255491,
+          "ssim": 0.9999998142880275,
+          "edgeMae": 1.8168169271252151e-7
+        }
+      ],
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "faces",
+          "elapsedMs": 2.634999990463257
+        },
+        {
+          "operation": "scan",
+          "model": "faces",
+          "elapsedMs": 2.059999942779541
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 0.16500020027160645
+        },
+        {
+          "operation": "download",
+          "model": "faces",
+          "elapsedMs": 87.43499994277954
+        },
+        {
+          "operation": "initialize",
+          "model": "faces",
+          "elapsedMs": 200.8399999141693
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 1345.2250001430511
+        },
+        {
+          "operation": "encode",
+          "model": "faces",
+          "pixels": 262144,
+          "elapsedMs": 6.96999979019165
+        }
+      ],
+      "faceCount": 1
+    },
+    {
+      "round": 3,
+      "requestedThreads": 4,
+      "effectiveThreads": 4,
+      "fullMs": 2419.375,
+      "totalMs": 2414.920000076294,
+      "pauseMs": 0,
+      "maximumCompositeError": 1,
+      "qualityPassed": true,
+      "quality": [
+        {
+          "mae": 7.978451321832836e-8,
+          "rmse": 0.000017688426310565812,
+          "maxError": 0.003921568393707275,
+          "psnr": 95.04621606655247,
+          "ssim": 0.9999998281793899,
+          "edgeMae": 1.8631311436243568e-7
+        }
+      ],
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "faces",
+          "elapsedMs": 2.6649999618530273
+        },
+        {
+          "operation": "scan",
+          "model": "faces",
+          "elapsedMs": 1.8900001049041748
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 0.18000006675720215
+        },
+        {
+          "operation": "download",
+          "model": "faces",
+          "elapsedMs": 93.19999980926514
+        },
+        {
+          "operation": "initialize",
+          "model": "faces",
+          "elapsedMs": 197.9300000667572
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 2112.109999895096
+        },
+        {
+          "operation": "encode",
+          "model": "faces",
+          "pixels": 262144,
+          "elapsedMs": 6.914999961853027
+        }
+      ],
+      "faceCount": 1
+    },
+    {
+      "round": 3,
+      "requestedThreads": 2,
+      "effectiveThreads": 2,
+      "fullMs": 4481.005000114441,
+      "totalMs": 4476.149999856949,
+      "pauseMs": 0,
+      "maximumCompositeError": 1,
+      "qualityPassed": true,
+      "quality": [
+        {
+          "mae": 1.994612830458209e-8,
+          "rmse": 0.000008844213155282906,
+          "maxError": 0.003921568393707275,
+          "psnr": 101.0668159798321,
+          "ssim": 0.9999999917931491,
+          "edgeMae": 5.564528742369669e-8
+        }
+      ],
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "faces",
+          "elapsedMs": 2.375
+        },
+        {
+          "operation": "scan",
+          "model": "faces",
+          "elapsedMs": 2.0899999141693115
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 0.2950000762939453
+        },
+        {
+          "operation": "download",
+          "model": "faces",
+          "elapsedMs": 87.5699999332428
+        },
+        {
+          "operation": "initialize",
+          "model": "faces",
+          "elapsedMs": 196.59999990463257
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 4180.335000038147
+        },
+        {
+          "operation": "encode",
+          "model": "faces",
+          "pixels": 262144,
+          "elapsedMs": 6.8399999141693115
+        }
+      ],
+      "faceCount": 1
+    },
+    {
+      "round": 3,
+      "requestedThreads": 1,
+      "effectiveThreads": 1,
+      "fullMs": 8542.650000095367,
+      "totalMs": 8536.875,
+      "pauseMs": 0,
+      "maximumCompositeError": 0,
+      "qualityPassed": true,
+      "quality": [
+        {
+          "mae": 0,
+          "rmse": 0,
+          "maxError": 0,
+          "psnr": 120,
+          "ssim": 1,
+          "edgeMae": 0
+        }
+      ],
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "faces",
+          "elapsedMs": 2.494999885559082
+        },
+        {
+          "operation": "scan",
+          "model": "faces",
+          "elapsedMs": 2.0400002002716064
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 0.17499995231628418
+        },
+        {
+          "operation": "download",
+          "model": "faces",
+          "elapsedMs": 91.18499994277954
+        },
+        {
+          "operation": "initialize",
+          "model": "faces",
+          "elapsedMs": 197.90499997138977
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 8235.914999961853
+        },
+        {
+          "operation": "encode",
+          "model": "faces",
+          "pixels": 262144,
+          "elapsedMs": 7.164999961853027
+        }
+      ],
+      "faceCount": 1
+    },
+    {
+      "round": 4,
+      "requestedThreads": 1,
+      "effectiveThreads": 1,
+      "fullMs": 8761.920000076294,
+      "totalMs": 8757.06500005722,
+      "pauseMs": 0,
+      "maximumCompositeError": 0,
+      "qualityPassed": true,
+      "quality": [
+        {
+          "mae": 0,
+          "rmse": 0,
+          "maxError": 0,
+          "psnr": 120,
+          "ssim": 1,
+          "edgeMae": 0
+        }
+      ],
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "faces",
+          "elapsedMs": 2.549999952316284
+        },
+        {
+          "operation": "scan",
+          "model": "faces",
+          "elapsedMs": 1.7800002098083496
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 0.1549999713897705
+        },
+        {
+          "operation": "download",
+          "model": "faces",
+          "elapsedMs": 99.27500009536743
+        },
+        {
+          "operation": "initialize",
+          "model": "faces",
+          "elapsedMs": 279.50499987602234
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 8366.495000123978
+        },
+        {
+          "operation": "encode",
+          "model": "faces",
+          "pixels": 262144,
+          "elapsedMs": 7.259999990463257
+        }
+      ],
+      "faceCount": 1
+    },
+    {
+      "round": 4,
+      "requestedThreads": 2,
+      "effectiveThreads": 2,
+      "fullMs": 4637.525000095367,
+      "totalMs": 4632.240000009537,
+      "pauseMs": 0,
+      "maximumCompositeError": 1,
+      "qualityPassed": true,
+      "quality": [
+        {
+          "mae": 1.994612830458209e-8,
+          "rmse": 0.000008844213155282906,
+          "maxError": 0.003921568393707275,
+          "psnr": 101.0668159798321,
+          "ssim": 0.9999999917931491,
+          "edgeMae": 5.564528742369669e-8
+        }
+      ],
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "faces",
+          "elapsedMs": 2.3399999141693115
+        },
+        {
+          "operation": "scan",
+          "model": "faces",
+          "elapsedMs": 1.9149999618530273
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 0.16499996185302734
+        },
+        {
+          "operation": "download",
+          "model": "faces",
+          "elapsedMs": 100.19000005722046
+        },
+        {
+          "operation": "initialize",
+          "model": "faces",
+          "elapsedMs": 280.4450001716614
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 4239.444999933243
+        },
+        {
+          "operation": "encode",
+          "model": "faces",
+          "pixels": 262144,
+          "elapsedMs": 7.740000009536743
+        }
+      ],
+      "faceCount": 1
+    },
+    {
+      "round": 4,
+      "requestedThreads": 4,
+      "effectiveThreads": 4,
+      "fullMs": 2449.1449999809265,
+      "totalMs": 2444.600000143051,
+      "pauseMs": 0,
+      "maximumCompositeError": 1,
+      "qualityPassed": true,
+      "quality": [
+        {
+          "mae": 7.978451321832836e-8,
+          "rmse": 0.000017688426310565812,
+          "maxError": 0.003921568393707275,
+          "psnr": 95.04621606655247,
+          "ssim": 0.9999998281793899,
+          "edgeMae": 1.8631311436243568e-7
+        }
+      ],
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "faces",
+          "elapsedMs": 2.5399999618530273
+        },
+        {
+          "operation": "scan",
+          "model": "faces",
+          "elapsedMs": 2.015000104904175
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 0.1700000762939453
+        },
+        {
+          "operation": "download",
+          "model": "faces",
+          "elapsedMs": 102.94000005722046
+        },
+        {
+          "operation": "initialize",
+          "model": "faces",
+          "elapsedMs": 200.17499995231628
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 2129.444999933243
+        },
+        {
+          "operation": "encode",
+          "model": "faces",
+          "pixels": 262144,
+          "elapsedMs": 7.295000076293945
+        }
+      ],
+      "faceCount": 1
+    },
+    {
+      "round": 4,
+      "requestedThreads": 7,
+      "effectiveThreads": 7,
+      "fullMs": 1616.9800000190735,
+      "totalMs": 1612.619999885559,
+      "pauseMs": 0,
+      "maximumCompositeError": 1,
+      "qualityPassed": true,
+      "quality": [
+        {
+          "mae": 7.479798114218283e-8,
+          "rmse": 0.00001712674513035962,
+          "maxError": 0.003921568393707275,
+          "psnr": 95.32650330255491,
+          "ssim": 0.9999998142880275,
+          "edgeMae": 1.8168169271252151e-7
+        }
+      ],
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "faces",
+          "elapsedMs": 2.68999981880188
+        },
+        {
+          "operation": "scan",
+          "model": "faces",
+          "elapsedMs": 1.880000114440918
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 0.1549999713897705
+        },
+        {
+          "operation": "download",
+          "model": "faces",
+          "elapsedMs": 95.47499990463257
+        },
+        {
+          "operation": "initialize",
+          "model": "faces",
+          "elapsedMs": 202.01500010490417
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 1303.619999885559
+        },
+        {
+          "operation": "encode",
+          "model": "faces",
+          "pixels": 262144,
+          "elapsedMs": 6.75
+        }
+      ],
+      "faceCount": 1
+    },
+    {
+      "round": 4,
+      "requestedThreads": 8,
+      "effectiveThreads": 8,
+      "fullMs": 1519.3450000286102,
+      "totalMs": 1514.789999961853,
+      "pauseMs": 0,
+      "maximumCompositeError": 1,
+      "qualityPassed": true,
+      "quality": [
+        {
+          "mae": 6.981144906603731e-8,
+          "rmse": 0.000016546007741333776,
+          "maxError": 0.003921568393707275,
+          "psnr": 95.62613553632934,
+          "ssim": 0.9999998351541067,
+          "edgeMae": 1.7589097640536756e-7
+        }
+      ],
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "faces",
+          "elapsedMs": 2.4700000286102295
+        },
+        {
+          "operation": "scan",
+          "model": "faces",
+          "elapsedMs": 1.880000114440918
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 0.17499995231628418
+        },
+        {
+          "operation": "download",
+          "model": "faces",
+          "elapsedMs": 94.95499992370605
+        },
+        {
+          "operation": "initialize",
+          "model": "faces",
+          "elapsedMs": 209.2900002002716
+        },
+        {
+          "operation": "face",
+          "model": "faces",
+          "elapsedMs": 1198.8700001239777
+        },
+        {
+          "operation": "encode",
+          "model": "faces",
+          "pixels": 262144,
+          "elapsedMs": 7.119999885559082
+        }
+      ],
+      "faceCount": 1
+    }
+  ],
+  "failures": [],
+  "summary": [
+    {
+      "threads": 1,
+      "runs": 5,
+      "medianMs": 8554.674999952316,
+      "stable": true
+    },
+    {
+      "threads": 2,
+      "runs": 5,
+      "medianMs": 4610.045000076294,
+      "stable": true
+    },
+    {
+      "threads": 4,
+      "runs": 5,
+      "medianMs": 2435.4349999427795,
+      "stable": true
+    },
+    {
+      "threads": 7,
+      "runs": 5,
+      "medianMs": 1616.9800000190735,
+      "stable": true
+    },
+    {
+      "threads": 8,
+      "runs": 5,
+      "medianMs": 1519.3450000286102,
+      "stable": true
+    }
+  ],
+  "winner": {
+    "threads": 8,
+    "gain": 0.8223959413961279
+  },
+  "passed": true,
+  "basic": {
+    "opaque": {
+      "passed": true,
+      "mismatches": 0
+    },
+    "faceAlpha": {
+      "passed": true,
+      "alphaError": 0,
+      "changed": 3024
+    }
+  },
+  "browser": "chromium",
+  "browserVersion": "151.0.7922.34",
+  "localPinnedFaceModel": true,
+  "errors": []
+}

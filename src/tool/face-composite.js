@@ -11,8 +11,12 @@ export function compositeFace(context, patch, transform, scale) {
   mask.addColorStop(0, '#fff'); mask.addColorStop(1, 'rgba(255,255,255,0)');
   ctx.fillStyle = mask; ctx.fillRect(0, 0, 512, 512);
   const t = inverseTransform(transform, scale);
-  context.setTransform(t.a, t.b, t.c, t.d, t.e, t.f);
-  context.drawImage(canvas, 0, 0); context.resetTransform();
+  context.save();
+  try {
+    context.globalCompositeOperation = 'source-atop';
+    context.setTransform(t.a, t.b, t.c, t.d, t.e, t.f);
+    context.drawImage(canvas, 0, 0);
+  } finally { context.restore(); }
   canvas.width = canvas.height = 1;
 }
 

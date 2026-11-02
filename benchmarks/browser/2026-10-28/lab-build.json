@@ -1,0 +1,111 @@
+{
+  "kind": "lab-build-preservation",
+  "createdAt": "2026-10-28T06:59:14.698Z",
+  "passed": true,
+  "steps": [
+    {
+      "command": "npm run build",
+      "entry": "main-6xhu50BC.js",
+      "manifestSha256": "b8f7ddc5d9f31a8e2d8f3f888448264566effa0fa94baf3b60870bd93d4f2681",
+      "checkedAssetPaths": [
+        "/assets/processor/06247e72c6f210f4-anime_4x_web.ort",
+        "/assets/processor/1527e3c5453ca491-normal_4x_web.ort",
+        "/assets/processor/27917d9ea78a9acc-anime_2x_web.ort",
+        "/assets/processor/5038ca956f3ed202-normal_4x_web.onnx",
+        "/assets/processor/64184e229b263107-face_landmarker.task",
+        "/assets/processor/917d664366981211-normal_2x_web.onnx",
+        "/assets/processor/9925a204e41ab72e-normal_2x_web.ort",
+        "/assets/processor/app/",
+        "/assets/processor/app/assets/face-edit.worker-C3dToR-Z.js",
+        "/assets/processor/app/assets/face.worker-BCZBo8ZV.js",
+        "/assets/processor/app/assets/processor.worker-BrQgod7v.js",
+        "/assets/processor/app/main-6xhu50BC.js",
+        "/assets/processor/dfc2249582113ca9-anime_4x_web.onnx",
+        "/assets/processor/e00170d304d397a0-anime_2x_web.onnx",
+        "/assets/processor/ebafce4e3c118d65-face_detector_yunet.onnx",
+        "/assets/processor/ort-1.23.2",
+        "/assets/processor/vision-1.0.1"
+      ],
+      "pages": [
+        "upscale/index.html",
+        "es/upscale/index.html",
+        "fr/upscale/index.html",
+        "de/upscale/index.html",
+        "ja/upscale/index.html",
+        "zh/upscale/index.html",
+        "ru/upscale/index.html"
+      ],
+      "passed": true
+    },
+    {
+      "command": "npm run build:lab; python3 build/build.py",
+      "run": 1,
+      "entry": "main-6xhu50BC.js",
+      "manifestSha256": "b8f7ddc5d9f31a8e2d8f3f888448264566effa0fa94baf3b60870bd93d4f2681",
+      "checkedAssetPaths": [
+        "/assets/processor/06247e72c6f210f4-anime_4x_web.ort",
+        "/assets/processor/1527e3c5453ca491-normal_4x_web.ort",
+        "/assets/processor/27917d9ea78a9acc-anime_2x_web.ort",
+        "/assets/processor/5038ca956f3ed202-normal_4x_web.onnx",
+        "/assets/processor/64184e229b263107-face_landmarker.task",
+        "/assets/processor/917d664366981211-normal_2x_web.onnx",
+        "/assets/processor/9925a204e41ab72e-normal_2x_web.ort",
+        "/assets/processor/app/",
+        "/assets/processor/app/assets/face-edit.worker-C3dToR-Z.js",
+        "/assets/processor/app/assets/face.worker-BCZBo8ZV.js",
+        "/assets/processor/app/assets/processor.worker-BrQgod7v.js",
+        "/assets/processor/app/main-6xhu50BC.js",
+        "/assets/processor/dfc2249582113ca9-anime_4x_web.onnx",
+        "/assets/processor/e00170d304d397a0-anime_2x_web.onnx",
+        "/assets/processor/ebafce4e3c118d65-face_detector_yunet.onnx",
+        "/assets/processor/ort-1.23.2",
+        "/assets/processor/vision-1.0.1"
+      ],
+      "pages": [
+        "upscale/index.html",
+        "es/upscale/index.html",
+        "fr/upscale/index.html",
+        "de/upscale/index.html",
+        "ja/upscale/index.html",
+        "zh/upscale/index.html",
+        "ru/upscale/index.html"
+      ],
+      "passed": true
+    },
+    {
+      "command": "npm run build:lab; python3 build/build.py",
+      "run": 2,
+      "entry": "main-6xhu50BC.js",
+      "manifestSha256": "b8f7ddc5d9f31a8e2d8f3f888448264566effa0fa94baf3b60870bd93d4f2681",
+      "checkedAssetPaths": [
+        "/assets/processor/06247e72c6f210f4-anime_4x_web.ort",
+        "/assets/processor/1527e3c5453ca491-normal_4x_web.ort",
+        "/assets/processor/27917d9ea78a9acc-anime_2x_web.ort",
+        "/assets/processor/5038ca956f3ed202-normal_4x_web.onnx",
+        "/assets/processor/64184e229b263107-face_landmarker.task",
+        "/assets/processor/917d664366981211-normal_2x_web.onnx",
+        "/assets/processor/9925a204e41ab72e-normal_2x_web.ort",
+        "/assets/processor/app/",
+        "/assets/processor/app/assets/face-edit.worker-C3dToR-Z.js",
+        "/assets/processor/app/assets/face.worker-BCZBo8ZV.js",
+        "/assets/processor/app/assets/processor.worker-BrQgod7v.js",
+        "/assets/processor/app/main-6xhu50BC.js",
+        "/assets/processor/dfc2249582113ca9-anime_4x_web.onnx",
+        "/assets/processor/e00170d304d397a0-anime_2x_web.onnx",
+        "/assets/processor/ebafce4e3c118d65-face_detector_yunet.onnx",
+        "/assets/processor/ort-1.23.2",
+        "/assets/processor/vision-1.0.1"
+      ],
+      "pages": [
+        "upscale/index.html",
+        "es/upscale/index.html",
+        "fr/upscale/index.html",
+        "de/upscale/index.html",
+        "ja/upscale/index.html",
+        "zh/upscale/index.html",
+        "ru/upscale/index.html"
+      ],
+      "passed": true
+    }
+  ]
+}

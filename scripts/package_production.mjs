@@ -1,5 +1,8 @@
 import {cp, mkdir, readdir, rm, stat, writeFile} from 'node:fs/promises';
 import {basename, join, relative, sep} from 'node:path';
+import {checkProcessingRelease} from './check_processing_release.mjs';
+
+await checkProcessingRelease();
 
 const root = new URL('../', import.meta.url).pathname;
 const source = join(root, 'dist');

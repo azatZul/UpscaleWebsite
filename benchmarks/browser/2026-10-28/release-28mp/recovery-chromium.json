@@ -1,0 +1,37 @@
+{
+  "kind": "worker-recovery",
+  "passed": true,
+  "attempts": [
+    {
+      "backend": "webgpu",
+      "threads": 1
+    },
+    {
+      "backend": "wasm",
+      "threads": 8
+    },
+    {
+      "backend": "wasm",
+      "threads": 1
+    }
+  ],
+  "remembered": [
+    8
+  ],
+  "effectiveThreads": 1,
+  "basic": {
+    "opaque": {
+      "passed": true,
+      "mismatches": 0
+    },
+    "faceAlpha": {
+      "passed": true,
+      "alphaError": 0,
+      "changed": 3024
+    }
+  },
+  "browser": "chromium",
+  "browserVersion": "151.0.7922.34",
+  "localPinnedFaceModel": true,
+  "errors": []
+}

@@ -1,0 +1,2558 @@
+{
+  "schemaVersion": 2,
+  "createdAt": "2026-10-28T10:04:18.714Z",
+  "kind": "png-acceptance",
+  "environment": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+    "platform": "MacIntel",
+    "maxTouchPoints": 0,
+    "hardwareConcurrency": 14,
+    "deviceMemory": 32,
+    "crossOriginIsolated": true,
+    "sharedMemory": true,
+    "webgpu": true
+  },
+  "assets": {
+    "runtime": "/assets/processor/ort-1.23.2",
+    "models": {
+      "photo": {
+        "2": {
+          "gpu": "/assets/processor/917d664366981211-normal_2x_web.onnx",
+          "cpu": "/assets/processor/9925a204e41ab72e-normal_2x_web.ort"
+        },
+        "4": {
+          "gpu": "/assets/processor/5038ca956f3ed202-normal_4x_web.onnx",
+          "cpu": "/assets/processor/1527e3c5453ca491-normal_4x_web.ort"
+        }
+      },
+      "drawing": {
+        "2": {
+          "gpu": "/assets/processor/e00170d304d397a0-anime_2x_web.onnx",
+          "cpu": "/assets/processor/27917d9ea78a9acc-anime_2x_web.ort"
+        },
+        "4": {
+          "gpu": "/assets/processor/dfc2249582113ca9-anime_4x_web.onnx",
+          "cpu": "/assets/processor/06247e72c6f210f4-anime_4x_web.ort"
+        }
+      }
+    },
+    "faceModel": {
+      "bytes": 85578722,
+      "parts": [
+        {
+          "url": "https://upscales.uk/web_models/face_512-7333260230803fbf.onnx",
+          "bytes": 85578722
+        }
+      ]
+    },
+    "vision": "/assets/processor/vision-1.0.1",
+    "faceFinder": "/assets/processor/ebafce4e3c118d65-face_detector_yunet.onnx",
+    "faceDetector": "/assets/processor/64184e229b263107-face_landmarker.task"
+  },
+  "passed": true,
+  "cases": [
+    {
+      "name": "gradient",
+      "modelKind": "photo",
+      "scale": 2,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 540,
+      "height": 140,
+      "fullMs": 7034.164999961853,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "photo-2",
+          "elapsedMs": 0.5299999713897705
+        },
+        {
+          "operation": "scan",
+          "model": "photo-2",
+          "elapsedMs": 0.5350000858306885
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-2",
+          "elapsedMs": 0.815000057220459
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-2",
+          "elapsedMs": 1.9100000858306885
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-2",
+          "elapsedMs": 3.0299999713897705
+        },
+        {
+          "operation": "download",
+          "model": "photo-2",
+          "elapsedMs": 37.99500012397766
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-2",
+          "elapsedMs": 107.67999982833862
+        },
+        {
+          "operation": "tile",
+          "model": "photo-2",
+          "elapsedMs": 3449.6900000572205
+        },
+        {
+          "operation": "tile",
+          "model": "photo-2",
+          "elapsedMs": 3426.444999933243
+        },
+        {
+          "operation": "composite",
+          "model": "photo-2",
+          "elapsedMs": 0.03500008583068848
+        },
+        {
+          "operation": "encode",
+          "model": "photo-2",
+          "pixels": 75600,
+          "elapsedMs": 1.1949999332427979
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "gradient",
+      "modelKind": "photo",
+      "scale": 4,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 1080,
+      "height": 280,
+      "fullMs": 7009.149999856949,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "photo-4",
+          "elapsedMs": 0.5499999523162842
+        },
+        {
+          "operation": "scan",
+          "model": "photo-4",
+          "elapsedMs": 0.5299999713897705
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-4",
+          "elapsedMs": 0.8399999141693115
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-4",
+          "elapsedMs": 1.7200000286102295
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-4",
+          "elapsedMs": 2.375
+        },
+        {
+          "operation": "download",
+          "model": "photo-4",
+          "elapsedMs": 32.09000015258789
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-4",
+          "elapsedMs": 113.63499999046326
+        },
+        {
+          "operation": "tile",
+          "model": "photo-4",
+          "elapsedMs": 3445.3849999904633
+        },
+        {
+          "operation": "tile",
+          "model": "photo-4",
+          "elapsedMs": 3403.180000066757
+        },
+        {
+          "operation": "composite",
+          "model": "photo-4",
+          "elapsedMs": 0.015000104904174805
+        },
+        {
+          "operation": "encode",
+          "model": "photo-4",
+          "pixels": 302400,
+          "elapsedMs": 4.8999998569488525
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "gradient",
+      "modelKind": "drawing",
+      "scale": 2,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 540,
+      "height": 140,
+      "fullMs": 3636.2599999904633,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "drawing-2",
+          "elapsedMs": 0.7649998664855957
+        },
+        {
+          "operation": "scan",
+          "model": "drawing-2",
+          "elapsedMs": 0.6449999809265137
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-2",
+          "elapsedMs": 0.8350000381469727
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-2",
+          "elapsedMs": 1.6299998760223389
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-2",
+          "elapsedMs": 3.81000018119812
+        },
+        {
+          "operation": "download",
+          "model": "drawing-2",
+          "elapsedMs": 29.725000143051147
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-2",
+          "elapsedMs": 95.68999981880188
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-2",
+          "elapsedMs": 1764.1150000095367
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-2",
+          "elapsedMs": 1733.7450001239777
+        },
+        {
+          "operation": "composite",
+          "model": "drawing-2",
+          "elapsedMs": 0.015000104904174805
+        },
+        {
+          "operation": "encode",
+          "model": "drawing-2",
+          "pixels": 75600,
+          "elapsedMs": 0.9449999332427979
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "gradient",
+      "modelKind": "drawing",
+      "scale": 4,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 1080,
+      "height": 280,
+      "fullMs": 3651.6050000190735,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "drawing-4",
+          "elapsedMs": 0.6399998664855957
+        },
+        {
+          "operation": "scan",
+          "model": "drawing-4",
+          "elapsedMs": 0.6200001239776611
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-4",
+          "elapsedMs": 0.8499999046325684
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-4",
+          "elapsedMs": 1.690000057220459
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-4",
+          "elapsedMs": 2.559999942779541
+        },
+        {
+          "operation": "download",
+          "model": "drawing-4",
+          "elapsedMs": 27.975000143051147
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-4",
+          "elapsedMs": 94.27499985694885
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-4",
+          "elapsedMs": 1757.4849998950958
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-4",
+          "elapsedMs": 1758.2749998569489
+        },
+        {
+          "operation": "composite",
+          "model": "drawing-4",
+          "elapsedMs": 0.009999990463256836
+        },
+        {
+          "operation": "encode",
+          "model": "drawing-4",
+          "pixels": 302400,
+          "elapsedMs": 3.5399999618530273
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "hard-light",
+      "modelKind": "photo",
+      "scale": 2,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 540,
+      "height": 140,
+      "fullMs": 6915.265000104904,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "photo-2",
+          "elapsedMs": 0.505000114440918
+        },
+        {
+          "operation": "scan",
+          "model": "photo-2",
+          "elapsedMs": 0.5499999523162842
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-2",
+          "elapsedMs": 0.6599998474121094
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-2",
+          "elapsedMs": 1.7000000476837158
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-2",
+          "elapsedMs": 2.3399999141693115
+        },
+        {
+          "operation": "download",
+          "model": "photo-2",
+          "elapsedMs": 26.53500008583069
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-2",
+          "elapsedMs": 96.8199999332428
+        },
+        {
+          "operation": "tile",
+          "model": "photo-2",
+          "elapsedMs": 3404.039999961853
+        },
+        {
+          "operation": "tile",
+          "model": "photo-2",
+          "elapsedMs": 3377.015000104904
+        },
+        {
+          "operation": "composite",
+          "model": "photo-2",
+          "elapsedMs": 0.014999866485595703
+        },
+        {
+          "operation": "encode",
+          "model": "photo-2",
+          "pixels": 75600,
+          "elapsedMs": 0.625
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "hard-light",
+      "modelKind": "photo",
+      "scale": 4,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 1080,
+      "height": 280,
+      "fullMs": 6938.774999856949,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "photo-4",
+          "elapsedMs": 0.5699999332427979
+        },
+        {
+          "operation": "scan",
+          "model": "photo-4",
+          "elapsedMs": 0.5500001907348633
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-4",
+          "elapsedMs": 0.7549998760223389
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-4",
+          "elapsedMs": 1.7000000476837158
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-4",
+          "elapsedMs": 2.4600000381469727
+        },
+        {
+          "operation": "download",
+          "model": "photo-4",
+          "elapsedMs": 26.43499994277954
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-4",
+          "elapsedMs": 99.07500004768372
+        },
+        {
+          "operation": "tile",
+          "model": "photo-4",
+          "elapsedMs": 3408.100000143051
+        },
+        {
+          "operation": "tile",
+          "model": "photo-4",
+          "elapsedMs": 3393.9049999713898
+        },
+        {
+          "operation": "composite",
+          "model": "photo-4",
+          "elapsedMs": 0.014999866485595703
+        },
+        {
+          "operation": "encode",
+          "model": "photo-4",
+          "pixels": 302400,
+          "elapsedMs": 1.005000114440918
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "hard-light",
+      "modelKind": "drawing",
+      "scale": 2,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 540,
+      "height": 140,
+      "fullMs": 3750.984999895096,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "drawing-2",
+          "elapsedMs": 0.6099998950958252
+        },
+        {
+          "operation": "scan",
+          "model": "drawing-2",
+          "elapsedMs": 0.630000114440918
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-2",
+          "elapsedMs": 0.880000114440918
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-2",
+          "elapsedMs": 1.9399998188018799
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-2",
+          "elapsedMs": 2.43500018119812
+        },
+        {
+          "operation": "download",
+          "model": "drawing-2",
+          "elapsedMs": 21.96500015258789
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-2",
+          "elapsedMs": 100.625
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-2",
+          "elapsedMs": 1860.375
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-2",
+          "elapsedMs": 1756.2000000476837
+        },
+        {
+          "operation": "composite",
+          "model": "drawing-2",
+          "elapsedMs": 0.029999971389770508
+        },
+        {
+          "operation": "encode",
+          "model": "drawing-2",
+          "pixels": 75600,
+          "elapsedMs": 0.9849998950958252
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "hard-light",
+      "modelKind": "drawing",
+      "scale": 4,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 1080,
+      "height": 280,
+      "fullMs": 3672.6100001335144,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "drawing-4",
+          "elapsedMs": 0.6349999904632568
+        },
+        {
+          "operation": "scan",
+          "model": "drawing-4",
+          "elapsedMs": 0.5350000858306885
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-4",
+          "elapsedMs": 0.8450000286102295
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-4",
+          "elapsedMs": 1.8250000476837158
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-4",
+          "elapsedMs": 2.5799999237060547
+        },
+        {
+          "operation": "download",
+          "model": "drawing-4",
+          "elapsedMs": 25.755000114440918
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-4",
+          "elapsedMs": 95.90499997138977
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-4",
+          "elapsedMs": 1779.2749998569489
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-4",
+          "elapsedMs": 1759.2799999713898
+        },
+        {
+          "operation": "composite",
+          "model": "drawing-4",
+          "elapsedMs": 0.014999866485595703
+        },
+        {
+          "operation": "encode",
+          "model": "drawing-4",
+          "pixels": 302400,
+          "elapsedMs": 1.2000000476837158
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "hard-dark",
+      "modelKind": "photo",
+      "scale": 2,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 540,
+      "height": 140,
+      "fullMs": 7095.609999895096,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "photo-2",
+          "elapsedMs": 0.6499998569488525
+        },
+        {
+          "operation": "scan",
+          "model": "photo-2",
+          "elapsedMs": 0.5350000858306885
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-2",
+          "elapsedMs": 0.7400000095367432
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-2",
+          "elapsedMs": 1.7300000190734863
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-2",
+          "elapsedMs": 3.5250000953674316
+        },
+        {
+          "operation": "download",
+          "model": "photo-2",
+          "elapsedMs": 40.68500018119812
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-2",
+          "elapsedMs": 113.61999988555908
+        },
+        {
+          "operation": "tile",
+          "model": "photo-2",
+          "elapsedMs": 3461.9700000286102
+        },
+        {
+          "operation": "tile",
+          "model": "photo-2",
+          "elapsedMs": 3466.079999923706
+        },
+        {
+          "operation": "composite",
+          "model": "photo-2",
+          "elapsedMs": 0.014999866485595703
+        },
+        {
+          "operation": "encode",
+          "model": "photo-2",
+          "pixels": 75600,
+          "elapsedMs": 0.6500000953674316
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "hard-dark",
+      "modelKind": "photo",
+      "scale": 4,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 1080,
+      "height": 280,
+      "fullMs": 7267.875,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "photo-4",
+          "elapsedMs": 0.7300000190734863
+        },
+        {
+          "operation": "scan",
+          "model": "photo-4",
+          "elapsedMs": 0.619999885559082
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-4",
+          "elapsedMs": 0.8450000286102295
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-4",
+          "elapsedMs": 1.619999885559082
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-4",
+          "elapsedMs": 2.3450000286102295
+        },
+        {
+          "operation": "download",
+          "model": "photo-4",
+          "elapsedMs": 33.90000009536743
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-4",
+          "elapsedMs": 100.53999996185303
+        },
+        {
+          "operation": "tile",
+          "model": "photo-4",
+          "elapsedMs": 3588.2149999141693
+        },
+        {
+          "operation": "tile",
+          "model": "photo-4",
+          "elapsedMs": 3533.460000038147
+        },
+        {
+          "operation": "composite",
+          "model": "photo-4",
+          "elapsedMs": 0.019999980926513672
+        },
+        {
+          "operation": "encode",
+          "model": "photo-4",
+          "pixels": 302400,
+          "elapsedMs": 1.1100001335144043
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "hard-dark",
+      "modelKind": "drawing",
+      "scale": 2,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 540,
+      "height": 140,
+      "fullMs": 3720.829999923706,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "drawing-2",
+          "elapsedMs": 0.75
+        },
+        {
+          "operation": "scan",
+          "model": "drawing-2",
+          "elapsedMs": 0.6700000762939453
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-2",
+          "elapsedMs": 0.8849999904632568
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-2",
+          "elapsedMs": 1.7650001049041748
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-2",
+          "elapsedMs": 2.6499998569488525
+        },
+        {
+          "operation": "download",
+          "model": "drawing-2",
+          "elapsedMs": 24.630000114440918
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-2",
+          "elapsedMs": 96.07000017166138
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-2",
+          "elapsedMs": 1802.9199998378754
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-2",
+          "elapsedMs": 1785.2249999046326
+        },
+        {
+          "operation": "composite",
+          "model": "drawing-2",
+          "elapsedMs": 0.009999990463256836
+        },
+        {
+          "operation": "encode",
+          "model": "drawing-2",
+          "pixels": 75600,
+          "elapsedMs": 0.6500000953674316
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "hard-dark",
+      "modelKind": "drawing",
+      "scale": 4,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 1080,
+      "height": 280,
+      "fullMs": 3829.8450000286102,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "drawing-4",
+          "elapsedMs": 0.5649998188018799
+        },
+        {
+          "operation": "scan",
+          "model": "drawing-4",
+          "elapsedMs": 0.6100001335144043
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-4",
+          "elapsedMs": 0.8650000095367432
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-4",
+          "elapsedMs": 1.7450001239776611
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-4",
+          "elapsedMs": 2.424999952316284
+        },
+        {
+          "operation": "download",
+          "model": "drawing-4",
+          "elapsedMs": 25.049999952316284
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-4",
+          "elapsedMs": 100.33999991416931
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-4",
+          "elapsedMs": 1881.2650001049042
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-4",
+          "elapsedMs": 1811.75
+        },
+        {
+          "operation": "composite",
+          "model": "drawing-4",
+          "elapsedMs": 0.019999980926513672
+        },
+        {
+          "operation": "encode",
+          "model": "drawing-4",
+          "pixels": 302400,
+          "elapsedMs": 1.0899999141693115
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "shadow",
+      "modelKind": "photo",
+      "scale": 2,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 540,
+      "height": 140,
+      "fullMs": 7278.704999923706,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "photo-2",
+          "elapsedMs": 0.8499999046325684
+        },
+        {
+          "operation": "scan",
+          "model": "photo-2",
+          "elapsedMs": 0.9100000858306885
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-2",
+          "elapsedMs": 1.1200001239776611
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-2",
+          "elapsedMs": 1.7849998474121094
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-2",
+          "elapsedMs": 2.4600000381469727
+        },
+        {
+          "operation": "download",
+          "model": "photo-2",
+          "elapsedMs": 36.545000076293945
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-2",
+          "elapsedMs": 109.20499992370605
+        },
+        {
+          "operation": "tile",
+          "model": "photo-2",
+          "elapsedMs": 3516.954999923706
+        },
+        {
+          "operation": "tile",
+          "model": "photo-2",
+          "elapsedMs": 3588.7400000095367
+        },
+        {
+          "operation": "composite",
+          "model": "photo-2",
+          "elapsedMs": 0.015000104904174805
+        },
+        {
+          "operation": "encode",
+          "model": "photo-2",
+          "pixels": 75600,
+          "elapsedMs": 1.7199997901916504
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "shadow",
+      "modelKind": "photo",
+      "scale": 4,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 1080,
+      "height": 280,
+      "fullMs": 7249.785000085831,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "photo-4",
+          "elapsedMs": 0.7349998950958252
+        },
+        {
+          "operation": "scan",
+          "model": "photo-4",
+          "elapsedMs": 0.8650000095367432
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-4",
+          "elapsedMs": 0.8050000667572021
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-4",
+          "elapsedMs": 1.6499998569488525
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-4",
+          "elapsedMs": 2.3949999809265137
+        },
+        {
+          "operation": "download",
+          "model": "photo-4",
+          "elapsedMs": 29.445000171661377
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-4",
+          "elapsedMs": 103.90999984741211
+        },
+        {
+          "operation": "tile",
+          "model": "photo-4",
+          "elapsedMs": 3566.5899999141693
+        },
+        {
+          "operation": "tile",
+          "model": "photo-4",
+          "elapsedMs": 3534.9500000476837
+        },
+        {
+          "operation": "composite",
+          "model": "photo-4",
+          "elapsedMs": 0.014999866485595703
+        },
+        {
+          "operation": "encode",
+          "model": "photo-4",
+          "pixels": 302400,
+          "elapsedMs": 4.28000020980835
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "shadow",
+      "modelKind": "drawing",
+      "scale": 2,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 540,
+      "height": 140,
+      "fullMs": 3833.3949999809265,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "drawing-2",
+          "elapsedMs": 0.8899998664855957
+        },
+        {
+          "operation": "scan",
+          "model": "drawing-2",
+          "elapsedMs": 0.8599998950958252
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-2",
+          "elapsedMs": 0.9100000858306885
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-2",
+          "elapsedMs": 1.809999942779541
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-2",
+          "elapsedMs": 2.640000104904175
+        },
+        {
+          "operation": "download",
+          "model": "drawing-2",
+          "elapsedMs": 31.585000038146973
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-2",
+          "elapsedMs": 99.45000004768372
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-2",
+          "elapsedMs": 1849.3799998760223
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-2",
+          "elapsedMs": 1839.4550001621246
+        },
+        {
+          "operation": "composite",
+          "model": "drawing-2",
+          "elapsedMs": 0.019999980926513672
+        },
+        {
+          "operation": "encode",
+          "model": "drawing-2",
+          "pixels": 75600,
+          "elapsedMs": 1.7100000381469727
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "shadow",
+      "modelKind": "drawing",
+      "scale": 4,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 1080,
+      "height": 280,
+      "fullMs": 4018.550000190735,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "drawing-4",
+          "elapsedMs": 0.8600001335144043
+        },
+        {
+          "operation": "scan",
+          "model": "drawing-4",
+          "elapsedMs": 0.9900000095367432
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-4",
+          "elapsedMs": 0.875
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-4",
+          "elapsedMs": 1.8550000190734863
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-4",
+          "elapsedMs": 3.6549999713897705
+        },
+        {
+          "operation": "download",
+          "model": "drawing-4",
+          "elapsedMs": 60.47500014305115
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-4",
+          "elapsedMs": 122.14999985694885
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-4",
+          "elapsedMs": 1924.7799999713898
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-4",
+          "elapsedMs": 1891.875
+        },
+        {
+          "operation": "composite",
+          "model": "drawing-4",
+          "elapsedMs": 0.315000057220459
+        },
+        {
+          "operation": "encode",
+          "model": "drawing-4",
+          "pixels": 302400,
+          "elapsedMs": 5.869999885559082
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "holes",
+      "modelKind": "photo",
+      "scale": 2,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 540,
+      "height": 140,
+      "fullMs": 7390.829999923706,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "photo-2",
+          "elapsedMs": 0.6550002098083496
+        },
+        {
+          "operation": "scan",
+          "model": "photo-2",
+          "elapsedMs": 0.7299997806549072
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-2",
+          "elapsedMs": 0.7750000953674316
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-2",
+          "elapsedMs": 1.6549999713897705
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-2",
+          "elapsedMs": 2.4749999046325684
+        },
+        {
+          "operation": "download",
+          "model": "photo-2",
+          "elapsedMs": 27.41000008583069
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-2",
+          "elapsedMs": 102.39499998092651
+        },
+        {
+          "operation": "tile",
+          "model": "photo-2",
+          "elapsedMs": 3602.9349999427795
+        },
+        {
+          "operation": "tile",
+          "model": "photo-2",
+          "elapsedMs": 3646.569999933243
+        },
+        {
+          "operation": "composite",
+          "model": "photo-2",
+          "elapsedMs": 0.02500009536743164
+        },
+        {
+          "operation": "encode",
+          "model": "photo-2",
+          "pixels": 75600,
+          "elapsedMs": 0.8550000190734863
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "holes",
+      "modelKind": "photo",
+      "scale": 4,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 1080,
+      "height": 280,
+      "fullMs": 7445.47000002861,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "photo-4",
+          "elapsedMs": 0.6099998950958252
+        },
+        {
+          "operation": "scan",
+          "model": "photo-4",
+          "elapsedMs": 0.7300000190734863
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-4",
+          "elapsedMs": 0.9149999618530273
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-4",
+          "elapsedMs": 1.7749998569488525
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-4",
+          "elapsedMs": 2.6700000762939453
+        },
+        {
+          "operation": "download",
+          "model": "photo-4",
+          "elapsedMs": 27.194999933242798
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-4",
+          "elapsedMs": 99.81500005722046
+        },
+        {
+          "operation": "tile",
+          "model": "photo-4",
+          "elapsedMs": 3651.1349999904633
+        },
+        {
+          "operation": "tile",
+          "model": "photo-4",
+          "elapsedMs": 3653.9249999523163
+        },
+        {
+          "operation": "composite",
+          "model": "photo-4",
+          "elapsedMs": 0.009999990463256836
+        },
+        {
+          "operation": "encode",
+          "model": "photo-4",
+          "pixels": 302400,
+          "elapsedMs": 2.244999885559082
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "holes",
+      "modelKind": "drawing",
+      "scale": 2,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 540,
+      "height": 140,
+      "fullMs": 4051.3849999904633,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "drawing-2",
+          "elapsedMs": 0.7049999237060547
+        },
+        {
+          "operation": "scan",
+          "model": "drawing-2",
+          "elapsedMs": 0.695000171661377
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-2",
+          "elapsedMs": 0.8250000476837158
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-2",
+          "elapsedMs": 1.8349997997283936
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-2",
+          "elapsedMs": 2.4850001335144043
+        },
+        {
+          "operation": "download",
+          "model": "drawing-2",
+          "elapsedMs": 27.855000019073486
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-2",
+          "elapsedMs": 108.11999988555908
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-2",
+          "elapsedMs": 1952.8849999904633
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-2",
+          "elapsedMs": 1950.0199999809265
+        },
+        {
+          "operation": "composite",
+          "model": "drawing-2",
+          "elapsedMs": 0.015000104904174805
+        },
+        {
+          "operation": "encode",
+          "model": "drawing-2",
+          "pixels": 75600,
+          "elapsedMs": 0.8250000476837158
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "holes",
+      "modelKind": "drawing",
+      "scale": 4,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 1080,
+      "height": 280,
+      "fullMs": 4087.6849999427795,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "drawing-4",
+          "elapsedMs": 0.7999999523162842
+        },
+        {
+          "operation": "scan",
+          "model": "drawing-4",
+          "elapsedMs": 1.614999771118164
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-4",
+          "elapsedMs": 0.8350000381469727
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-4",
+          "elapsedMs": 1.75
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-4",
+          "elapsedMs": 2.7699999809265137
+        },
+        {
+          "operation": "download",
+          "model": "drawing-4",
+          "elapsedMs": 35.65499997138977
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-4",
+          "elapsedMs": 124.98000001907349
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-4",
+          "elapsedMs": 1956.215000152588
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-4",
+          "elapsedMs": 1955.8100001811981
+        },
+        {
+          "operation": "composite",
+          "model": "drawing-4",
+          "elapsedMs": 0.019999980926513672
+        },
+        {
+          "operation": "encode",
+          "model": "drawing-4",
+          "pixels": 302400,
+          "elapsedMs": 1.3899998664855957
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "alpha254",
+      "modelKind": "photo",
+      "scale": 2,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 540,
+      "height": 140,
+      "fullMs": 8004.514999866486,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "photo-2",
+          "elapsedMs": 0.6500000953674316
+        },
+        {
+          "operation": "scan",
+          "model": "photo-2",
+          "elapsedMs": 0.9750001430511475
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-2",
+          "elapsedMs": 0.8199999332427979
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-2",
+          "elapsedMs": 1.5850000381469727
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-2",
+          "elapsedMs": 2.575000047683716
+        },
+        {
+          "operation": "download",
+          "model": "photo-2",
+          "elapsedMs": 68.80999994277954
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-2",
+          "elapsedMs": 127.45000004768372
+        },
+        {
+          "operation": "tile",
+          "model": "photo-2",
+          "elapsedMs": 3937.2549998760223
+        },
+        {
+          "operation": "tile",
+          "model": "photo-2",
+          "elapsedMs": 3849.4049999713898
+        },
+        {
+          "operation": "composite",
+          "model": "photo-2",
+          "elapsedMs": 0.019999980926513672
+        },
+        {
+          "operation": "encode",
+          "model": "photo-2",
+          "pixels": 75600,
+          "elapsedMs": 0.8500001430511475
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "alpha254",
+      "modelKind": "photo",
+      "scale": 4,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 1080,
+      "height": 280,
+      "fullMs": 7654.705000162125,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "photo-4",
+          "elapsedMs": 0.7399997711181641
+        },
+        {
+          "operation": "scan",
+          "model": "photo-4",
+          "elapsedMs": 2.7049999237060547
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-4",
+          "elapsedMs": 0.9900000095367432
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-4",
+          "elapsedMs": 1.7200000286102295
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-4",
+          "elapsedMs": 2.765000104904175
+        },
+        {
+          "operation": "download",
+          "model": "photo-4",
+          "elapsedMs": 33.35000014305115
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-4",
+          "elapsedMs": 119.32499980926514
+        },
+        {
+          "operation": "tile",
+          "model": "photo-4",
+          "elapsedMs": 3750.505000114441
+        },
+        {
+          "operation": "tile",
+          "model": "photo-4",
+          "elapsedMs": 3734.569999933243
+        },
+        {
+          "operation": "composite",
+          "model": "photo-4",
+          "elapsedMs": 0.015000104904174805
+        },
+        {
+          "operation": "encode",
+          "model": "photo-4",
+          "pixels": 302400,
+          "elapsedMs": 2.4549999237060547
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "alpha254",
+      "modelKind": "drawing",
+      "scale": 2,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 540,
+      "height": 140,
+      "fullMs": 3948.8150000572205,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "drawing-2",
+          "elapsedMs": 0.7100000381469727
+        },
+        {
+          "operation": "scan",
+          "model": "drawing-2",
+          "elapsedMs": 0.7599999904632568
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-2",
+          "elapsedMs": 0.9149999618530273
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-2",
+          "elapsedMs": 1.6449999809265137
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-2",
+          "elapsedMs": 2.6050000190734863
+        },
+        {
+          "operation": "download",
+          "model": "drawing-2",
+          "elapsedMs": 28.509999990463257
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-2",
+          "elapsedMs": 108.13499999046326
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-2",
+          "elapsedMs": 1910.7650001049042
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-2",
+          "elapsedMs": 1889.4700000286102
+        },
+        {
+          "operation": "composite",
+          "model": "drawing-2",
+          "elapsedMs": 0.019999980926513672
+        },
+        {
+          "operation": "encode",
+          "model": "drawing-2",
+          "pixels": 75600,
+          "elapsedMs": 0.7899999618530273
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "alpha254",
+      "modelKind": "drawing",
+      "scale": 4,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 1080,
+      "height": 280,
+      "fullMs": 3987.064999818802,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "drawing-4",
+          "elapsedMs": 0.7100000381469727
+        },
+        {
+          "operation": "scan",
+          "model": "drawing-4",
+          "elapsedMs": 0.6449999809265137
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-4",
+          "elapsedMs": 0.875
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-4",
+          "elapsedMs": 1.6649999618530273
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-4",
+          "elapsedMs": 2.815000057220459
+        },
+        {
+          "operation": "download",
+          "model": "drawing-4",
+          "elapsedMs": 33.90499997138977
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-4",
+          "elapsedMs": 104.28000020980835
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-4",
+          "elapsedMs": 1913.854999780655
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-4",
+          "elapsedMs": 1922.4850001335144
+        },
+        {
+          "operation": "composite",
+          "model": "drawing-4",
+          "elapsedMs": 0.040000200271606445
+        },
+        {
+          "operation": "encode",
+          "model": "drawing-4",
+          "pixels": 302400,
+          "elapsedMs": 1.4049999713897705
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "faint",
+      "modelKind": "photo",
+      "scale": 2,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 540,
+      "height": 140,
+      "fullMs": 7530.045000076294,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "photo-2",
+          "elapsedMs": 0.690000057220459
+        },
+        {
+          "operation": "scan",
+          "model": "photo-2",
+          "elapsedMs": 0.5299999713897705
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-2",
+          "elapsedMs": 0.815000057220459
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-2",
+          "elapsedMs": 1.6400001049041748
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-2",
+          "elapsedMs": 2.4749999046325684
+        },
+        {
+          "operation": "download",
+          "model": "photo-2",
+          "elapsedMs": 26.860000133514404
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-2",
+          "elapsedMs": 118.46499991416931
+        },
+        {
+          "operation": "tile",
+          "model": "photo-2",
+          "elapsedMs": 3667.2400000095367
+        },
+        {
+          "operation": "tile",
+          "model": "photo-2",
+          "elapsedMs": 3703.8099999427795
+        },
+        {
+          "operation": "composite",
+          "model": "photo-2",
+          "elapsedMs": 0.015000104904174805
+        },
+        {
+          "operation": "encode",
+          "model": "photo-2",
+          "pixels": 75600,
+          "elapsedMs": 3.430000066757202
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "faint",
+      "modelKind": "photo",
+      "scale": 4,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 1080,
+      "height": 280,
+      "fullMs": 7514.009999990463,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "photo-4",
+          "elapsedMs": 0.7450001239776611
+        },
+        {
+          "operation": "scan",
+          "model": "photo-4",
+          "elapsedMs": 0.5649998188018799
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-4",
+          "elapsedMs": 0.8599998950958252
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-4",
+          "elapsedMs": 1.6800000667572021
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-4",
+          "elapsedMs": 2.569999933242798
+        },
+        {
+          "operation": "download",
+          "model": "photo-4",
+          "elapsedMs": 29.03500008583069
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-4",
+          "elapsedMs": 108.18499994277954
+        },
+        {
+          "operation": "tile",
+          "model": "photo-4",
+          "elapsedMs": 3708.1100001335144
+        },
+        {
+          "operation": "tile",
+          "model": "photo-4",
+          "elapsedMs": 3655.7649998664856
+        },
+        {
+          "operation": "composite",
+          "model": "photo-4",
+          "elapsedMs": 0.019999980926513672
+        },
+        {
+          "operation": "encode",
+          "model": "photo-4",
+          "pixels": 302400,
+          "elapsedMs": 1.1650002002716064
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "faint",
+      "modelKind": "drawing",
+      "scale": 2,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 540,
+      "height": 140,
+      "fullMs": 3999.3949999809265,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "drawing-2",
+          "elapsedMs": 0.809999942779541
+        },
+        {
+          "operation": "scan",
+          "model": "drawing-2",
+          "elapsedMs": 0.7450001239776611
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-2",
+          "elapsedMs": 0.9200000762939453
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-2",
+          "elapsedMs": 2.0149998664855957
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-2",
+          "elapsedMs": 2.805000066757202
+        },
+        {
+          "operation": "download",
+          "model": "drawing-2",
+          "elapsedMs": 27.295000076293945
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-2",
+          "elapsedMs": 103.79999995231628
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-2",
+          "elapsedMs": 1935.4399998188019
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-2",
+          "elapsedMs": 1918.7400000095367
+        },
+        {
+          "operation": "composite",
+          "model": "drawing-2",
+          "elapsedMs": 0.02500009536743164
+        },
+        {
+          "operation": "encode",
+          "model": "drawing-2",
+          "pixels": 75600,
+          "elapsedMs": 0.815000057220459
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "faint",
+      "modelKind": "drawing",
+      "scale": 4,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 1080,
+      "height": 280,
+      "fullMs": 4022.164999961853,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "drawing-4",
+          "elapsedMs": 0.6699998378753662
+        },
+        {
+          "operation": "scan",
+          "model": "drawing-4",
+          "elapsedMs": 0.630000114440918
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-4",
+          "elapsedMs": 0.9449999332427979
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-4",
+          "elapsedMs": 1.619999885559082
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-4",
+          "elapsedMs": 2.555000066757202
+        },
+        {
+          "operation": "download",
+          "model": "drawing-4",
+          "elapsedMs": 26.179999828338623
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-4",
+          "elapsedMs": 108.94000005722046
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-4",
+          "elapsedMs": 1950.1949999332428
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-4",
+          "elapsedMs": 1924.5599999427795
+        },
+        {
+          "operation": "composite",
+          "model": "drawing-4",
+          "elapsedMs": 0.014999866485595703
+        },
+        {
+          "operation": "encode",
+          "model": "drawing-4",
+          "pixels": 302400,
+          "elapsedMs": 1.2300000190734863
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "empty",
+      "modelKind": "photo",
+      "scale": 2,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 540,
+      "height": 140,
+      "fullMs": 6.745000123977661,
+      "skippedTiles": 2,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "photo-2",
+          "elapsedMs": 0.5749998092651367
+        },
+        {
+          "operation": "scan",
+          "model": "photo-2",
+          "elapsedMs": 0.6850001811981201
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-2",
+          "elapsedMs": 0.8450000286102295
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-2",
+          "elapsedMs": 0.41499996185302734
+        },
+        {
+          "operation": "composite",
+          "model": "photo-2",
+          "elapsedMs": 0.015000104904174805
+        },
+        {
+          "operation": "encode",
+          "model": "photo-2",
+          "pixels": 75600,
+          "elapsedMs": 0.5449998378753662
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "empty",
+      "modelKind": "photo",
+      "scale": 4,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 1080,
+      "height": 280,
+      "fullMs": 7.265000104904175,
+      "skippedTiles": 2,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "photo-4",
+          "elapsedMs": 0.5699999332427979
+        },
+        {
+          "operation": "scan",
+          "model": "photo-4",
+          "elapsedMs": 0.5349998474121094
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-4",
+          "elapsedMs": 0.7899999618530273
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-4",
+          "elapsedMs": 0.41499996185302734
+        },
+        {
+          "operation": "composite",
+          "model": "photo-4",
+          "elapsedMs": 0.06000018119812012
+        },
+        {
+          "operation": "encode",
+          "model": "photo-4",
+          "pixels": 302400,
+          "elapsedMs": 1.1099998950958252
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "empty",
+      "modelKind": "drawing",
+      "scale": 2,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 540,
+      "height": 140,
+      "fullMs": 6.9049999713897705,
+      "skippedTiles": 2,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "drawing-2",
+          "elapsedMs": 0.7750000953674316
+        },
+        {
+          "operation": "scan",
+          "model": "drawing-2",
+          "elapsedMs": 0.5799999237060547
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-2",
+          "elapsedMs": 0.8499999046325684
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-2",
+          "elapsedMs": 0.4200000762939453
+        },
+        {
+          "operation": "composite",
+          "model": "drawing-2",
+          "elapsedMs": 0.02500009536743164
+        },
+        {
+          "operation": "encode",
+          "model": "drawing-2",
+          "pixels": 75600,
+          "elapsedMs": 0.5550000667572021
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "empty",
+      "modelKind": "drawing",
+      "scale": 4,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 1080,
+      "height": 280,
+      "fullMs": 6.870000123977661,
+      "skippedTiles": 2,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "drawing-4",
+          "elapsedMs": 0.6400001049041748
+        },
+        {
+          "operation": "scan",
+          "model": "drawing-4",
+          "elapsedMs": 0.5850000381469727
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-4",
+          "elapsedMs": 0.7950000762939453
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-4",
+          "elapsedMs": 0.39999985694885254
+        },
+        {
+          "operation": "composite",
+          "model": "drawing-4",
+          "elapsedMs": 0.015000104904174805
+        },
+        {
+          "operation": "encode",
+          "model": "drawing-4",
+          "pixels": 302400,
+          "elapsedMs": 0.9549999237060547
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "webp",
+      "modelKind": "photo",
+      "scale": 2,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 540,
+      "height": 140,
+      "fullMs": 7441.9800000190735,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "photo-2",
+          "elapsedMs": 0.6899998188018799
+        },
+        {
+          "operation": "scan",
+          "model": "photo-2",
+          "elapsedMs": 0.5550000667572021
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-2",
+          "elapsedMs": 0.7749998569488525
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-2",
+          "elapsedMs": 1.8100001811981201
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-2",
+          "elapsedMs": 2.625
+        },
+        {
+          "operation": "download",
+          "model": "photo-2",
+          "elapsedMs": 25.239999771118164
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-2",
+          "elapsedMs": 100.77000021934509
+        },
+        {
+          "operation": "tile",
+          "model": "photo-2",
+          "elapsedMs": 3664.9249999523163
+        },
+        {
+          "operation": "tile",
+          "model": "photo-2",
+          "elapsedMs": 3639.810000181198
+        },
+        {
+          "operation": "composite",
+          "model": "photo-2",
+          "elapsedMs": 0.015000104904174805
+        },
+        {
+          "operation": "encode",
+          "model": "photo-2",
+          "pixels": 75600,
+          "elapsedMs": 1.179999828338623
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "webp",
+      "modelKind": "photo",
+      "scale": 4,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 1080,
+      "height": 280,
+      "fullMs": 7489.25,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "photo-4",
+          "elapsedMs": 0.7049999237060547
+        },
+        {
+          "operation": "scan",
+          "model": "photo-4",
+          "elapsedMs": 0.6449999809265137
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-4",
+          "elapsedMs": 0.9250001907348633
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "photo-4",
+          "elapsedMs": 2.174999952316284
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-4",
+          "elapsedMs": 2.5799999237060547
+        },
+        {
+          "operation": "download",
+          "model": "photo-4",
+          "elapsedMs": 25.09500002861023
+        },
+        {
+          "operation": "initialize",
+          "model": "photo-4",
+          "elapsedMs": 102.08500003814697
+        },
+        {
+          "operation": "tile",
+          "model": "photo-4",
+          "elapsedMs": 3668.875
+        },
+        {
+          "operation": "tile",
+          "model": "photo-4",
+          "elapsedMs": 3678.1449999809265
+        },
+        {
+          "operation": "composite",
+          "model": "photo-4",
+          "elapsedMs": 0.009999990463256836
+        },
+        {
+          "operation": "encode",
+          "model": "photo-4",
+          "pixels": 302400,
+          "elapsedMs": 3.984999895095825
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "webp",
+      "modelKind": "drawing",
+      "scale": 2,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 540,
+      "height": 140,
+      "fullMs": 4035.329999923706,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "drawing-2",
+          "elapsedMs": 0.6949999332427979
+        },
+        {
+          "operation": "scan",
+          "model": "drawing-2",
+          "elapsedMs": 0.6299998760223389
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-2",
+          "elapsedMs": 0.8849999904632568
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-2",
+          "elapsedMs": 1.8900001049041748
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-2",
+          "elapsedMs": 2.7149999141693115
+        },
+        {
+          "operation": "download",
+          "model": "drawing-2",
+          "elapsedMs": 31.06000018119812
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-2",
+          "elapsedMs": 119.25999999046326
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-2",
+          "elapsedMs": 1970.1349999904633
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-2",
+          "elapsedMs": 1900.1299998760223
+        },
+        {
+          "operation": "composite",
+          "model": "drawing-2",
+          "elapsedMs": 0.4049999713897705
+        },
+        {
+          "operation": "encode",
+          "model": "drawing-2",
+          "pixels": 75600,
+          "elapsedMs": 1.0999999046325684
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "webp",
+      "modelKind": "drawing",
+      "scale": 4,
+      "alphaError": 0,
+      "compositeError": 0,
+      "mime": "image/png",
+      "width": 1080,
+      "height": 280,
+      "fullMs": 3961.7200000286102,
+      "effectiveThreads": 1,
+      "skippedTiles": 0,
+      "operations": [
+        {
+          "operation": "decode",
+          "model": "drawing-4",
+          "elapsedMs": 0.6800000667572021
+        },
+        {
+          "operation": "scan",
+          "model": "drawing-4",
+          "elapsedMs": 1.059999942779541
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-4",
+          "elapsedMs": 0.815000057220459
+        },
+        {
+          "operation": "prepare-rgb",
+          "model": "drawing-4",
+          "elapsedMs": 1.7699999809265137
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-4",
+          "elapsedMs": 2.9149999618530273
+        },
+        {
+          "operation": "download",
+          "model": "drawing-4",
+          "elapsedMs": 27.97000002861023
+        },
+        {
+          "operation": "initialize",
+          "model": "drawing-4",
+          "elapsedMs": 105.7900002002716
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-4",
+          "elapsedMs": 1911.8650000095367
+        },
+        {
+          "operation": "tile",
+          "model": "drawing-4",
+          "elapsedMs": 1900.789999961853
+        },
+        {
+          "operation": "composite",
+          "model": "drawing-4",
+          "elapsedMs": 0.014999866485595703
+        },
+        {
+          "operation": "encode",
+          "model": "drawing-4",
+          "pixels": 302400,
+          "elapsedMs": 3.8550000190734863
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "basic": {
+    "opaque": {
+      "passed": true,
+      "mismatches": 0
+    },
+    "faceAlpha": {
+      "passed": true,
+      "alphaError": 0,
+      "changed": 3024
+    }
+  },
+  "browser": "chromium",
+  "browserVersion": "151.0.7922.34",
+  "localPinnedFaceModel": false,
+  "errors": []
+}

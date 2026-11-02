@@ -1,0 +1,288 @@
+{
+  "kind": "thread-cache-regressions",
+  "createdAt": "2026-10-28T10:05:45.200Z",
+  "passed": true,
+  "method": "Actual compiled workers and actual UI with native device identity; only WebGPU disabled to select CPU",
+  "faceWorkers": {
+    "environment": {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36",
+      "platform": "MacIntel",
+      "maxTouchPoints": 0,
+      "hardwareConcurrency": 14,
+      "deviceMemory": 32,
+      "crossOriginIsolated": true,
+      "sharedMemory": true,
+      "webgpu": true
+    },
+    "identity": {
+      "os": "macos",
+      "engine": "chromium",
+      "version": 151,
+      "versionText": "151.0.7922.34",
+      "cores": 14,
+      "coreClass": "9-16",
+      "memoryClass": "high",
+      "mobile": false
+    },
+    "policy": {
+      "upscale": [
+        {
+          "backend": "wasm",
+          "threads": 8,
+          "failureKey": "uscale-cpu-failure:[\"cpu-v1-png-v1\",\"/assets/processor/ort-1.23.2\",{\"photo\":{\"2\":{\"gpu\":\"/assets/processor/917d664366981211-normal_2x_web.onnx\",\"cpu\":\"/assets/processor/9925a204e41ab72e-normal_2x_web.ort\"},\"4\":{\"gpu\":\"/assets/processor/5038ca956f3ed202-normal_4x_web.onnx\",\"cpu\":\"/assets/processor/1527e3c5453ca491-normal_4x_web.ort\"}},\"drawing\":{\"2\":{\"gpu\":\"/assets/processor/e00170d304d397a0-anime_2x_web.onnx\",\"cpu\":\"/assets/processor/27917d9ea78a9acc-anime_2x_web.ort\"},\"4\":{\"gpu\":\"/assets/processor/dfc2249582113ca9-anime_4x_web.onnx\",\"cpu\":\"/assets/processor/06247e72c6f210f4-anime_4x_web.ort\"}}},\"macos\",\"chromium\",151,\"9-16\",\"high\",\"upscale\",8]"
+        },
+        {
+          "backend": "wasm",
+          "threads": 1
+        }
+      ],
+      "faces": [
+        {
+          "backend": "wasm",
+          "threads": 7,
+          "failureKey": "uscale-cpu-failure:[\"cpu-v1-png-v1\",\"/assets/processor/ort-1.23.2\",[\"/assets/processor/ebafce4e3c118d65-face_detector_yunet.onnx\",\"/assets/processor/64184e229b263107-face_landmarker.task\",\"/assets/processor/vision-1.0.1\",[{\"url\":\"https://upscales.uk/web_models/face_512-7333260230803fbf.onnx\",\"bytes\":85578722}]],\"macos\",\"chromium\",151,\"9-16\",\"high\",\"faces\",7]"
+        },
+        {
+          "backend": "wasm",
+          "threads": 1
+        }
+      ]
+    },
+    "cases": [
+      {
+        "name": "empty-detect",
+        "requestedThreads": 7,
+        "threadCountPresent": false,
+        "type": "faces",
+        "patches": [],
+        "initializations": [],
+        "passed": true
+      },
+      {
+        "name": "empty-enhance",
+        "requestedThreads": 7,
+        "threadCountPresent": false,
+        "type": "enhanced",
+        "patches": [
+          false
+        ],
+        "initializations": [],
+        "passed": true
+      },
+      {
+        "name": "all-crops-transparent",
+        "requestedThreads": 7,
+        "threadCountPresent": false,
+        "type": "enhanced",
+        "patches": [
+          false
+        ],
+        "initializations": [],
+        "passed": true
+      },
+      {
+        "name": "yunet-without-gfpgan",
+        "requestedThreads": 7,
+        "effectiveThreads": 7,
+        "threadCountPresent": true,
+        "type": "faces",
+        "patches": [],
+        "initializations": [
+          {
+            "backend": "wasm",
+            "effectiveThreads": 7
+          }
+        ],
+        "passed": true
+      },
+      {
+        "name": "enhance-after-transparent-crop",
+        "requestedThreads": 7,
+        "effectiveThreads": 7,
+        "threadCountPresent": true,
+        "type": "enhanced",
+        "patches": [
+          false,
+          true
+        ],
+        "initializations": [
+          {
+            "backend": "wasm",
+            "effectiveThreads": 7
+          }
+        ],
+        "passed": true
+      }
+    ],
+    "failures": [],
+    "assets": {
+      "runtime": "/assets/processor/ort-1.23.2",
+      "models": {
+        "photo": {
+          "2": {
+            "gpu": "/assets/processor/917d664366981211-normal_2x_web.onnx",
+            "cpu": "/assets/processor/9925a204e41ab72e-normal_2x_web.ort"
+          },
+          "4": {
+            "gpu": "/assets/processor/5038ca956f3ed202-normal_4x_web.onnx",
+            "cpu": "/assets/processor/1527e3c5453ca491-normal_4x_web.ort"
+          }
+        },
+        "drawing": {
+          "2": {
+            "gpu": "/assets/processor/e00170d304d397a0-anime_2x_web.onnx",
+            "cpu": "/assets/processor/27917d9ea78a9acc-anime_2x_web.ort"
+          },
+          "4": {
+            "gpu": "/assets/processor/dfc2249582113ca9-anime_4x_web.onnx",
+            "cpu": "/assets/processor/06247e72c6f210f4-anime_4x_web.ort"
+          }
+        }
+      },
+      "faceModel": {
+        "bytes": 85578722,
+        "parts": [
+          {
+            "url": "https://upscales.uk/web_models/face_512-7333260230803fbf.onnx",
+            "bytes": 85578722
+          }
+        ]
+      },
+      "vision": "/assets/processor/vision-1.0.1",
+      "faceFinder": "/assets/processor/ebafce4e3c118d65-face_detector_yunet.onnx",
+      "faceDetector": "/assets/processor/64184e229b263107-face_landmarker.task"
+    },
+    "passed": true
+  },
+  "runs": [
+    {
+      "name": "empty",
+      "requests": [
+        {
+          "file": "empty.png",
+          "group": "faces",
+          "backend": "wasm",
+          "requestedThreads": 7,
+          "initializations": [],
+          "type": "faces",
+          "threadCountPresent": false,
+          "responseRequestedThreads": 7
+        },
+        {
+          "file": "empty.png",
+          "group": "upscale",
+          "backend": "wasm",
+          "requestedThreads": 8,
+          "initializations": [],
+          "type": "done",
+          "threadCountPresent": false,
+          "responseRequestedThreads": 8
+        }
+      ],
+      "outcome": {
+        "platform": "web",
+        "environment": "local",
+        "locale": "en",
+        "screen": "free-upscale",
+        "mode": "normal2",
+        "scale": 2,
+        "model": "photo",
+        "face": true,
+        "custom_model": false,
+        "media": "images",
+        "batch_count": 1,
+        "size": "32x24",
+        "cpu_fallback": false,
+        "device_class": "desktop",
+        "result": "success",
+        "progress": 1,
+        "duration_sec": 0.1,
+        "face_count": 0,
+        "detected_faces": 0,
+        "tile_count": 1,
+        "output_size": "64x48",
+        "backend": "wasm",
+        "requested_threads": 8,
+        "output_format": "image/png"
+      },
+      "cpuThreadsPresent": false,
+      "passed": true
+    },
+    {
+      "name": "alpha254",
+      "requests": [
+        {
+          "file": "alpha254.png",
+          "group": "faces",
+          "backend": "wasm",
+          "requestedThreads": 7,
+          "initializations": [
+            7
+          ],
+          "type": "faces",
+          "effectiveThreads": 7,
+          "threadCountPresent": true,
+          "responseRequestedThreads": 7
+        },
+        {
+          "file": "alpha254.png",
+          "group": "upscale",
+          "backend": "wasm",
+          "requestedThreads": 8,
+          "initializations": [
+            8
+          ],
+          "type": "done",
+          "effectiveThreads": 8,
+          "threadCountPresent": true,
+          "responseRequestedThreads": 8
+        }
+      ],
+      "outcome": {
+        "platform": "web",
+        "environment": "local",
+        "locale": "en",
+        "screen": "free-upscale",
+        "mode": "normal2",
+        "scale": 2,
+        "model": "photo",
+        "face": true,
+        "custom_model": false,
+        "media": "images",
+        "batch_count": 1,
+        "size": "32x24",
+        "cpu_fallback": false,
+        "device_class": "desktop",
+        "result": "success",
+        "progress": 1,
+        "duration_sec": 1.2,
+        "face_count": 0,
+        "detected_faces": 0,
+        "tile_count": 1,
+        "output_size": "64x48",
+        "backend": "wasm",
+        "requested_threads": 8,
+        "cpu_threads": 8,
+        "output_format": "image/png"
+      },
+      "cpuThreadsPresent": true,
+      "passed": true
+    }
+  ],
+  "failureKeys": [],
+  "basic": {
+    "opaque": {
+      "passed": true,
+      "mismatches": 0
+    },
+    "faceAlpha": {
+      "passed": true,
+      "alphaError": 0,
+      "changed": 3024
+    }
+  },
+  "browser": "chromium",
+  "browserVersion": "151.0.7922.34",
+  "localPinnedFaceModel": true,
+  "errors": []
+}

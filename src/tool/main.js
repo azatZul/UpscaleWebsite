@@ -11,6 +11,11 @@ import {AnalyticsAction, AnalyticsEvent, SCREEN, initAnalytics, modeValue} from 
 import {createCloud} from './cloud.js';
 import {createSession} from './account-link.js';
 import {createTopUp} from './topup.js';
+import {createAttemptController} from './attempt-controller.js';
+import {executionChoices, rememberThreadFailure} from './cpu-policy.js';
+import {exportExtension, PNG} from './transparency.js';
+import {ASSETS} from './assets.generated.js';
+import {learnedTileMs, processingFailureProperties} from './processing-policy.js';
 
 const {t, duration} = pageTranslator(document);
 const $ = id => document.getElementById(id);
@@ -30,7 +35,11 @@ const elements = Object.fromEntries(['photo-input', 'choose-photo', 'remove-phot
 const comparison = createComparison(elements['result-comparison'], elements['before-image'], elements['comparison-handle'],
   value => t('slider_value', {value}));
 const environment = {userAgent: navigator.userAgent, platform: navigator.platform,
-  maxTouchPoints: navigator.maxTouchPoints, deviceMemory: navigator.deviceMemory};
+  maxTouchPoints: navigator.maxTouchPoints, deviceMemory: navigator.deviceMemory,
+  hardwareConcurrency: navigator.hardwareConcurrency, crossOriginIsolated: globalThis.crossOriginIsolated,
+  sharedMemory: typeof SharedArrayBuffer === 'function', webgpu: Boolean(navigator.gpu)};
+let storage;
+try { storage = localStorage; } catch { /* Storage is optional. */ }
 const marker = 'uscale-preview-active-v1';
 const policy = devicePolicy(environment);
 const analytics = initAnalytics();
@@ -48,7 +57,6 @@ function rememberTileMs(ms, kind, factor) {
     if (ms > 0 && Number.isFinite(ms)) localStorage.setItem(tileMetricKey(kind, factor), String(Math.round(ms)));
   } catch { /* Storage is optional. */ }
 }
-let worker;
 let file;
 let scale = 2;
 let modelKind = 'photo';
@@ -62,17 +70,16 @@ let step = 'pick';
 const session = createSession();
 const topUp = createTopUp({elements, t, session, trackTap: (...args) => trackTap(...args)});
 const number = value => new Intl.NumberFormat(document.documentElement.lang || 'en').format(value);
-// idle (no photo) → assessing → ready → checking/processing → done, or error.
+// idle (no photo) → assessing → ready → processing → done, or error.
 let phase = 'idle';
-let forceCpu = false;
-let retriedGpu = false;
+let cpuRequested = false;
+let cpuFallback = false;
 let generation = 0;
 // Bumped per header check, so a slow check can't overwrite a newer photo.
 let selection = 0;
 let thumbnailUrl;
 let resultUrl;
 let originalUrl;
-let timer;
 let wakeLock;
 let supported = true;
 let errorCode;
@@ -86,18 +93,17 @@ let processingStartedAt;
 let outcomeTracked = true;
 let runProgress = 0;
 let popoverTimer;
-let runningFaces = false;
 let expanded = false;
 let lastResult;
+let completedFaces;
+let processingController;
+let applyController;
 // Picker state stays transferable: a faceless base plus cached face patches.
 let faceEdit;
 let faceChoice;
 let faceOpen = false;
 let applying = false;
 let applyToken = 0;
-let applyTimer;
-let applyWorker;
-let applyForceCpu = false;
 const panZoom = createPanZoom({root: elements['result-viewer'], stage: elements['result-stage'],
   frame: elements['result-comparison'], active: () => expanded});
 const stageObserver = new ResizeObserver(entries => {
@@ -189,6 +195,7 @@ function openFaces() {
   const {plan, faces} = faceEdit;
   faceChoice = faceEdit.applied.slice();
   elements['face-photo'].src = originalUrl;
+  elements['face-frame'].classList.toggle('has-transparency', lastResult?.mime === PNG);
   elements['face-frame'].style.aspectRatio = `${plan.width} / ${plan.height}`;
   elements['face-frame'].style.setProperty('--photo-ratio', plan.width / plan.height);
   elements['face-marks'].replaceChildren(...faces.map((face, index) => {
@@ -229,8 +236,7 @@ function closeFaces(restoreFocus = true) {
 
 function stopApply() {
   applyToken++;
-  applyWorker?.terminate(); applyWorker = null;
-  clearTimeout(applyTimer);
+  applyController?.cancel(); applyController = null;
   applying = false;
   if (!busy()) { wakeLock?.release().catch(() => {}); wakeLock = null; }
 }
@@ -243,19 +249,12 @@ function applyFailed(key, params) {
   refreshControls();
 }
 
-function applyWatchdog() {
-  clearTimeout(applyTimer);
-  if (!applying || document.hidden) return;
-  applyTimer = setTimeout(() => applyFailed('err_timeout'), 120_000);
-}
-
-function wireApplyWorker(active, token, onData) {
-  applyWorker?.terminate();
-  applyWorker = active;
-  active.onmessage = event => { if (token === applyToken) { applyWatchdog(); onData(event.data); } };
-  active.onerror = event => { event.preventDefault(); if (token === applyToken) applyFailed('err_face_apply'); };
-  active.onmessageerror = () => { if (token === applyToken) applyFailed('err_face_apply'); };
-  return active;
+function controllerFor(makeWorker, onData, onFailure, onRetry) {
+  const controller = createAttemptController({makeWorker, onMessage: onData, onFailure,
+    onRetry,
+    onRuntimeFailure: attempt => rememberThreadFailure(storage, attempt.failureKey)});
+  controller.setHidden(document.hidden);
+  return controller;
 }
 
 function applyFaces() {
@@ -263,52 +262,43 @@ function applyFaces() {
   if (sameSelection(faceChoice, faceEdit.applied)) { closeFaces(); return; }
   const token = ++applyToken;
   const choice = faceChoice.slice();
-  applying = true; applyForceCpu = forceCpu;
+  applying = true;
   setFaceStatus(t('applying_faces'));
-  refreshFaceEditor(); refreshControls(); applyWatchdog(); keepAwake();
+  refreshFaceEditor(); refreshControls(); keepAwake();
   const missing = pendingEnhancements(faceEdit.faces, choice);
   missing.length ? enhanceMissing(token, choice, missing) : rebuildResult(token, choice);
 }
 
 function enhanceMissing(token, choice, missing) {
-  try {
-    const active = wireApplyWorker(new Worker(new URL('./face.worker.js', import.meta.url)), token, data => {
-      if (data.type === 'status') setFaceStatus(t(data.title, data.params), data.progress);
-      else if (data.type === 'error') {
-        // Same GPU fallback as the first face pass, kept local so the upscaler
-        // is not pinned to CPU for the next photo.
-        if (data.code === 'gpu' && !applyForceCpu) { applyForceCpu = true; enhanceMissing(token, choice, missing); }
-        else applyFailed(data.key === 'err_face' ? 'err_face_apply' : data.key, data.params);
-      } else if (data.type === 'enhanced') {
-        active.terminate(); applyWorker = null;
-        for (const {index, patch} of data.faces) faceEdit.faces[index].patch = patch;
-        rebuildResult(token, choice);
-      }
-    });
-    active.postMessage({mode: 'enhance', file, environment, forceCpu: applyForceCpu,
-      faces: missing.map(index => ({index, transform: faceEdit.faces[index].transform}))});
-  } catch { applyFailed('err_face_apply'); }
+  applyController?.cancel();
+  applyController = controllerFor(() => new Worker(new URL('./face.worker.js', import.meta.url)), data => {
+    if (token !== applyToken) return;
+    if (data.type === 'status' && data.title) setFaceStatus(t(data.title, data.params), data.progress);
+    else if (data.type === 'enhanced') {
+      for (const {index, patch} of data.faces) faceEdit.faces[index].patch = patch;
+      rebuildResult(token, choice);
+    }
+  }, error => { if (token === applyToken) applyFailed(error.key === 'err_face' ? 'err_face_apply' : error.key, error.params); });
+  applyController.start({mode: 'enhance', file, environment,
+    faces: missing.map(index => ({index, transform: faceEdit.faces[index].transform}))},
+  executionChoices(environment, 'faces', {forceCpu: cpuRequested, storage, assets: ASSETS}));
 }
 
 function rebuildResult(token, choice) {
-  try {
-    const active = wireApplyWorker(new Worker(new URL('./face-edit.worker.js', import.meta.url), {type: 'module'}), token, data => {
-      if (data.type === 'status') setFaceStatus(t(data.title, data.params));
-      else if (data.type === 'error') applyFailed(data.key, data.params);
-      else if (data.type === 'applied') {
-        stopApply();
-        faceEdit.applied = choice; faceEdit.changed = true;
-        setResultBlob(data.blob);
-        renderSummary();
-        setStatus(t('done_title'), t('done_detail'));
-        // Re-enable Choose faces first, so closing can hand focus back to it.
-        refreshControls();
-        closeFaces();
-      }
-    });
-    active.postMessage({type: 'apply', base: faceEdit.baseBlob, plan: faceEdit.plan,
-      faces: selectedPatches(faceEdit.faces, choice)});
-  } catch { applyFailed('err_face_apply'); }
+  applyController?.cancel();
+  applyController = controllerFor(() => new Worker(new URL('./face-edit.worker.js', import.meta.url), {type: 'module'}), data => {
+    if (token !== applyToken) return;
+    if (data.type === 'status' && data.title) setFaceStatus(t(data.title, data.params));
+    else if (data.type === 'applied') {
+      stopApply();
+      faceEdit.applied = choice; faceEdit.changed = true;
+      setResultBlob(data.blob); renderSummary();
+      setStatus(t('done_title'), t('done_detail'));
+      refreshControls(); closeFaces();
+    }
+  }, error => { if (token === applyToken) applyFailed(error.key, error.params); });
+  applyController.start({type: 'apply', base: faceEdit.baseBlob, plan: faceEdit.plan,
+    faces: selectedPatches(faceEdit.faces, choice)}, [{backend: 'canvas', threads: 1}]);
 }
 
 function setResultBlob(blob) {
@@ -316,6 +306,8 @@ function setResultBlob(blob) {
   resultUrl = URL.createObjectURL(blob);
   elements['result-image'].src = resultUrl;
   elements['download-result'].href = resultUrl;
+  elements['download-result'].download = `${file.name.replace(/\.[^.]+$/, '') || 'photo'}-uscale-${lastResult.plan.scale}x.${exportExtension(blob.type)}`;
+  lastResult.mime = blob.type;
   if (previous) elements['result-image'].decode().catch(() => {}).finally(() => URL.revokeObjectURL(previous));
 }
 
@@ -324,14 +316,14 @@ function renderSummary() {
   const {plan, modelKind: kind, faceEnabled, detectedCount, faceCount} = lastResult;
   const faces = faceEdit || kind === 'drawing' ? '' : !faceEnabled ? t('faces_off')
     : faceCount ? t('faces_enhanced', {count: faceCount}) : t(detectedCount ? 'faces_none_suitable' : 'faces_none');
-  elements['result-summary'].textContent = `${dimensions(plan)} · JPEG${faces ? `; ${faces}` : ''}`;
+  elements['result-summary'].textContent = `${dimensions(plan)} · ${lastResult.mime === PNG ? 'PNG' : 'JPEG'}${faces ? `; ${faces}` : ''}`;
   elements['face-summary'].textContent = !faceEdit && faceCount && detectedCount > faceCount ? t('faces_partial') : '';
   if (faceEdit) {
     elements['choose-faces'].textContent = t('choose_faces', {count: faceEdit.applied.filter(Boolean).length, total: faceEdit.faces.length});
   }
 }
 
-const busy = () => ['checking', 'processing'].includes(phase);
+const busy = () => phase === 'processing';
 const locked = () => busy() || applying;
 const dimensions = plan => `${plan.width} × ${plan.height} → ${plan.outputWidth} × ${plan.outputHeight}`;
 
@@ -379,7 +371,7 @@ function refreshControls() {
   elements['choose-faces'].hidden = !faceEdit || phase !== 'done';
   elements['choose-faces'].disabled = applying;
   const appOnly = ['browser', 'size', 'format'].includes(errorCode);
-  const cpuRetry = failed && errorCode === 'gpu' && !forceCpu;
+  const cpuRetry = failed && errorCode === 'gpu' && !cpuRequested;
   const tryTwo = failed && scaleFallback;
   const retry = hasFile && failed && !appOnly && !cpuRetry && !tryTwo && supported;
   // A photo this device can't take is explained under the photo itself, where it
@@ -453,18 +445,9 @@ async function keepAwake() {
 
 function stopWorker() {
   generation++;
-  worker?.terminate(); worker = null;
-  clearTimeout(timer);
-  runningFaces = false;
+  processingController?.cancel(); processingController = null;
   remember(false);
   wakeLock?.release().catch(() => {}); wakeLock = null;
-}
-
-function watchdog() {
-  clearTimeout(timer);
-  // Cloud jobs report no progress to reset this, and may legitimately run longer.
-  if (document.hidden || !busy() || mode !== 'device') return;
-  timer = setTimeout(() => fail('timeout', 'err_timeout'), 120_000);
 }
 
 function clearOutput() {
@@ -477,6 +460,7 @@ function clearOutput() {
   elements['result-image'].removeAttribute('src');
   elements['result-image'].removeAttribute('crossorigin');
   elements['before-image'].removeAttribute('src');
+  elements['result-comparison'].classList.remove('has-transparency');
   elements['download-result'].removeAttribute('href');
   if (resultUrl) URL.revokeObjectURL(resultUrl);
   if (originalUrl) URL.revokeObjectURL(originalUrl);
@@ -485,19 +469,12 @@ function clearOutput() {
   comparison.reset();
 }
 
-function fail(code, key, params, offerScaleFallback = false) {
-  if (runningFaces && code === 'gpu' && !forceCpu) { startFaces(true); return; }
-  if (runningFaces && code !== 'download') code = 'face';
-  if (code === 'gpu' && !forceCpu && !retriedGpu) {
-    retriedGpu = true;
-    prepare(true, true);
-    return;
-  }
+function fail(code, key, params, offerScaleFallback = false, stage) {
   if (importSource) {
     analytics.trackEvent(AnalyticsEvent.mediaImportFailed, {source: importSource, count: 1, error_type: code, message: key});
     importSource = undefined;
   }
-  if (busy()) trackOutcome('failed', {error_type: code, message: key});
+  if (busy()) trackOutcome('failed', {...processingFailureProperties(code, stage), message: key});
   stopWorker();
   phase = 'error';
   errorCode = code;
@@ -511,8 +488,7 @@ function fail(code, key, params, offerScaleFallback = false) {
 
 function onMessage(data, current) {
   if (current !== generation) return;
-  watchdog();
-  if (data.type === 'status') {
+  if (data.type === 'status' && data.title) {
     const eta = Number.isFinite(data.remainingMs) && data.remainingMs > 5000
       ? `${t('remaining', {time: duration(data.remainingMs)})} ` : '';
     setStatus(t(data.title, data.params), eta + (data.detail ? t(data.detail, data.params) : ''), data.progress);
@@ -520,28 +496,20 @@ function onMessage(data, current) {
     if (thumbnailUrl) URL.revokeObjectURL(thumbnailUrl);
     thumbnailUrl = URL.createObjectURL(data.thumbnail);
     elements['source-thumb'].src = thumbnailUrl;
+    elements['source-thumb'].classList.toggle('has-transparency', Boolean(data.hasTransparency));
     elements['source-size'].textContent = dimensions(data.plan);
-  } else if (data.type === 'ready') {
-    phase = 'ready';
-    remember(false); clearTimeout(timer);
-    wakeLock?.release().catch(() => {}); wakeLock = null;
-    const time = duration(data.milliseconds);
-    setStatus(data.slow ? t('slow_title', {time}) : t('ready'), t('probe_detail', {time}));
-    refreshControls();
   } else if (data.type === 'faces') {
-    runningFaces = false;
-    prepare(forceCpu, true, data);
-  } else if (data.type === 'error') {
-    fail(data.code, data.key, data.params);
+    completedFaces = data;
+    prepare(data);
   } else if (data.type === 'done') {
     trackOutcome('success', {progress: 1, face_count: data.faceCount || 0, detected_faces: data.detectedCount || 0,
-      tile_count: data.plan.tileCount, output_size: `${data.plan.outputWidth}x${data.plan.outputHeight}`});
+      tile_count: data.plan.tileCount, output_size: `${data.plan.outputWidth}x${data.plan.outputHeight}`,
+      backend: data.backend, requested_threads: data.requestedThreads, cpu_threads: data.effectiveThreads, output_format: data.blob.type});
     stopWorker();
     // Only learn from a run long enough to amortise first-inference shader
     // setup. A four-tile photo would otherwise teach a badly pessimistic rate.
-    if (data.plan?.tileCount >= 16 && data.tilesMs) {
-      rememberTileMs(data.tilesMs / data.plan.tileCount, data.modelKind, data.plan.scale);
-    }
+    const tileMs = learnedTileMs(data);
+    if (tileMs !== undefined) rememberTileMs(tileMs, data.modelKind, data.plan.scale);
     showDeviceResult(data);
   }
 }
@@ -561,8 +529,9 @@ function showDeviceResult(data) {
   elements['result-image'].alt = t('result_alt', {scale: resultScale});
   elements['result-tag'].textContent = t('result_tag', {scale: resultScale});
   elements['download-result'].href = resultUrl;
-  elements['download-result'].download = `${file.name.replace(/\.[^.]+$/, '') || 'photo'}-uscale-${resultScale}x.jpg`;
-  lastResult = {plan: data.plan, modelKind: data.modelKind, faceEnabled: data.faceEnabled,
+  elements['download-result'].download = `${file.name.replace(/\.[^.]+$/, '') || 'photo'}-uscale-${resultScale}x.${exportExtension(data.blob.type)}`;
+  elements['result-comparison'].classList.toggle('has-transparency', Boolean(data.hasTransparency));
+  lastResult = {plan: data.plan, modelKind: data.modelKind, mime: data.blob.type, faceEnabled: data.faceEnabled,
     detectedCount: data.detectedCount, faceCount: data.faceCount};
   faceEdit = data.canEdit && data.faces?.length ? {baseBlob: data.baseBlob, plan: data.plan, faces: data.faces,
     applied: data.faces.map(face => Boolean(face.patch)), changed: false} : undefined;
@@ -575,49 +544,49 @@ function showDeviceResult(data) {
   elements.results.scrollIntoView({behavior: 'smooth', block: 'start'});
 }
 
-function prepare(cpu = false, autoStart = false, faceResults) {
+function prepare(faceResults = completedFaces) {
   if (!file || !supported) return;
-  stopWorker();
-  forceCpu = cpu;
-  clearOutput();
-  phase = autoStart ? 'processing' : 'checking';
+  stopWorker(); clearOutput();
+  phase = 'processing';
   errorCode = undefined; scaleFallback = false;
   elements.interrupted.hidden = true;
-  setStatus(t(cpu ? 'cpu_title' : 'preparing'), t(cpu ? 'cpu_detail' : 'preparing_detail'));
+  setStatus(t(cpuRequested ? 'cpu_title' : 'preparing'), t(cpuRequested ? 'cpu_detail' : 'preparing_detail'));
   refreshControls();
   const current = generation;
-  try {
-    worker = new Worker(new URL('./processor.worker.js', import.meta.url), {type: 'module'});
-    worker.onmessage = event => onMessage(event.data, current);
-    worker.onerror = event => { event.preventDefault(); if (current === generation) fail('runtime', 'err_task_stopped'); };
-    worker.onmessageerror = () => { if (current === generation) fail('runtime', 'err_result_read'); };
-    remember(true);
-    worker.postMessage({type: 'prepare', file, environment, forceCpu, autoStart, faceResults, scale, modelKind});
-    watchdog(); keepAwake();
-  } catch { fail('browser', 'err_worker_start'); }
+  processingController = controllerFor(() => new Worker(new URL('./processor.worker.js', import.meta.url), {type: 'module'}),
+    data => { if (current === generation) onMessage(data, current); },
+    error => { if (current === generation) {
+      fail(error.code, error.key, error.params, error.fallbackScale === 2, 'upscale');
+    } }, transition => { if (current === generation) recordRetry(transition); });
+  remember(true); keepAwake();
+  processingController.start({type: 'prepare', file, environment, faceResults, scale, modelKind},
+    executionChoices(environment, 'upscale', {forceCpu: cpuRequested, storage, assets: ASSETS}));
 }
 
-function startFaces(cpu = false) {
-  stopWorker(); forceCpu = cpu; runningFaces = true; phase = 'processing';
+function startFaces() {
+  stopWorker(); clearOutput();
+  phase = 'processing';
   errorCode = undefined; scaleFallback = false;
   const current = generation;
-  clearOutput();
   setStatus(t('finding_faces'), t('finding_faces_detail'));
-  refreshControls(); remember(true); watchdog(); keepAwake();
-  try {
-    worker = new Worker(new URL('./face.worker.js', import.meta.url));
-    worker.onmessage = event => onMessage(event.data, current);
-    worker.onerror = event => { event.preventDefault(); if (current === generation) fail('face', 'err_face_stopped'); };
-    worker.onmessageerror = () => { if (current === generation) fail('face', 'err_face_stopped'); };
-    worker.postMessage({file, environment, forceCpu});
-  } catch { fail('face', 'err_face_start'); }
+  refreshControls(); remember(true); keepAwake();
+  processingController = controllerFor(() => new Worker(new URL('./face.worker.js', import.meta.url)),
+    data => { if (current === generation) onMessage(data, current); },
+    error => { if (current === generation) {
+      fail(error.code, error.key, error.params, false, 'faces');
+    } }, transition => { if (current === generation) recordRetry(transition); });
+  processingController.start({file, environment}, executionChoices(environment, 'faces', {forceCpu: cpuRequested, storage, assets: ASSETS}));
+}
+
+function recordRetry({from, to}) {
+  if (from.backend === 'webgpu' && to.backend === 'wasm') cpuFallback = true;
 }
 
 // Same keys as the apps' processingOutcomeProperties, for the web's single photo.
 function runProperties() {
   return {screen: SCREEN, mode: mode === 'device' ? modeValue(modelKind, scale) : mode, scale, model: modelKind,
     face: shouldEnhanceFaces(modelKind, elements['enhance-faces'].checked), custom_model: false, media: 'images',
-    batch_count: 1, size: lastInfo ? `${lastInfo.width}x${lastInfo.height}` : '-', cpu_fallback: forceCpu,
+    batch_count: 1, size: lastInfo ? `${lastInfo.width}x${lastInfo.height}` : '-', cpu_fallback: cpuFallback,
     device_class: policy.mobile ? (policy.iPad ? 'ipad' : 'mobile') : 'desktop'};
 }
 function trackOutcome(result, extra) {
@@ -640,15 +609,16 @@ function requireSignIn(targetMode = mode) {
   location.assign(session.signInUrl(toolUrl(targetMode)));
 }
 
-function start() {
+function start({cpu = false} = {}) {
   if (!file || !supported || locked()) return;
   if (needsAccount(mode) && !session.state.identity) { requireSignIn(); return; }
+  if (mode === 'device') cpuRequested ||= cpu;
+  cpuFallback = mode === 'device' && cpuRequested;
   trackTap('start_processing', runProperties());
   if (mode !== 'device') { cloud.start(); return; }
   processingStartedAt = performance.now(); outcomeTracked = false; runProgress = 0;
-  retriedGpu = false;
-  if (shouldEnhanceFaces(modelKind, elements['enhance-faces'].checked)) startFaces(forceCpu);
-  else prepare(forceCpu, true);
+  if (shouldEnhanceFaces(modelKind, elements['enhance-faces'].checked) && completedFaces === undefined) startFaces();
+  else prepare();
 }
 
 // Decide from the file header alone, before downloading an engine or model.
@@ -747,7 +717,7 @@ function showScalePopover(text) {
 async function chooseFile(next, source = 'picker') {
   if (!next || locked() || !supported) return;
   stopWorker();
-  file = next; retriedGpu = false; forceCpu = false; tooLargeFor4x = false;
+  file = next; completedFaces = undefined; cpuRequested = false; cpuFallback = false; tooLargeFor4x = false;
   importSource = source; lastInfo = undefined;
   if (thumbnailUrl) URL.revokeObjectURL(thumbnailUrl);
   thumbnailUrl = URL.createObjectURL(file);
@@ -765,6 +735,7 @@ function setScale(value) {
   elements['process-photo'].textContent = t('upscale_button', {scale});
 }
 function setModelKind(value) {
+  if (modelKind !== value) completedFaces = undefined;
   modelKind = value;
   elements['model-photo'].setAttribute('aria-pressed', String(value === 'photo'));
   elements['model-drawing'].setAttribute('aria-pressed', String(value === 'drawing'));
@@ -801,6 +772,7 @@ document.addEventListener('pointerdown', event => {
 document.addEventListener('keydown', event => { if (event.key === 'Escape') hideScalePopover(); });
 // A finished or failed photo gets a fresh check, so the other setting can run.
 elements['enhance-faces'].addEventListener('change', () => {
+  completedFaces = undefined;
   trackTap('enhance_faces', {value: elements['enhance-faces'].checked});
   if (['done', 'error'].includes(phase)) assessCurrentFile();
 });
@@ -967,8 +939,7 @@ elements['process-photo'].addEventListener('click', () => { if (phase === 'ready
 elements.retry.addEventListener('click', () => { trackTap('retry', {reason: errorCode}); start(); });
 elements['cpu-retry'].addEventListener('click', () => {
   trackTap('cpu_retry');
-  processingStartedAt = performance.now(); outcomeTracked = false;
-  prepare(true, true);
+  start({cpu: true});
 });
 elements['try-2x'].addEventListener('click', () => { trackTap('try_2x'); setScale(2); assessCurrentFile(); });
 elements.cancel.addEventListener('click', () => {
@@ -982,7 +953,8 @@ elements.cancel.addEventListener('click', () => {
 function reset() {
   stopWorker(); selection++; phase = 'idle'; file = null;
   if (topUp.isOpen()) topUp.hide();
-  errorCode = undefined; scaleFallback = false; forceCpu = false; tooLargeFor4x = false;
+  errorCode = undefined; scaleFallback = false; cpuRequested = false; cpuFallback = false;
+  completedFaces = undefined; tooLargeFor4x = false;
   hideScalePopover();
   clearOutput(); idleStatus();
   elements['photo-input'].value = '';
@@ -1022,7 +994,8 @@ elements['drop-zone'].addEventListener('drop', event => {
 for (const eventName of ['dragover', 'drop']) window.addEventListener(eventName, event => { if (hasFiles(event)) event.preventDefault(); });
 
 document.addEventListener('visibilitychange', () => {
-  refreshControls(); watchdog(); applyWatchdog(); keepAwake();
+  refreshControls();
+  processingController?.setHidden(document.hidden); applyController?.setHidden(document.hidden); keepAwake();
   // Back from the checkout tab: pick up the new balance.
   if (!document.hidden && session.state.identity) session.refresh();
 });

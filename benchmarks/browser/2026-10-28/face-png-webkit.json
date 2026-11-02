@@ -1,0 +1,102 @@
+{
+  "kind": "transparent-face-pipeline",
+  "passed": true,
+  "detectedCount": 1,
+  "enhancedCount": 1,
+  "mime": "image/png",
+  "canEdit": true,
+  "alphaError": 0,
+  "selectionDifference": 167,
+  "reapplyError": 0,
+  "reapplyCompositeError": 0,
+  "opaqueReapplyError": 0,
+  "baseRoundTrip": {
+    "rgbError": 0,
+    "compositeError": 0,
+    "opaqueError": 0,
+    "alphaError": 0
+  },
+  "operations": [
+    {
+      "operation": "decode",
+      "model": "faces",
+      "elapsedMs": 7.159999999999968
+    },
+    {
+      "operation": "scan",
+      "model": "faces",
+      "elapsedMs": 5.220000000000027
+    },
+    {
+      "operation": "initialize",
+      "model": "faces",
+      "elapsedMs": 0.01999999999998181
+    },
+    {
+      "operation": "download",
+      "model": "faces",
+      "elapsedMs": 4.0400000000000205
+    },
+    {
+      "operation": "initialize",
+      "model": "faces",
+      "elapsedMs": 133.3
+    },
+    {
+      "operation": "detect",
+      "model": "faces",
+      "elapsedMs": 286.5799999999999
+    },
+    {
+      "operation": "detect",
+      "model": "faces",
+      "elapsedMs": 87.03999999999996
+    },
+    {
+      "operation": "face",
+      "model": "faces",
+      "elapsedMs": 13.819999999999936
+    },
+    {
+      "operation": "initialize",
+      "model": "faces",
+      "elapsedMs": 0.05999999999994543
+    },
+    {
+      "operation": "download",
+      "model": "faces",
+      "elapsedMs": 1491.72
+    },
+    {
+      "operation": "initialize",
+      "model": "faces",
+      "elapsedMs": 227.96000000000004
+    },
+    {
+      "operation": "face",
+      "model": "faces",
+      "elapsedMs": 2337.2999999999997
+    },
+    {
+      "operation": "encode",
+      "model": "faces",
+      "pixels": 262144,
+      "elapsedMs": 15.140000000000327
+    }
+  ],
+  "basic": {
+    "opaque": {
+      "passed": true,
+      "mismatches": 0
+    },
+    "faceAlpha": {
+      "passed": true,
+      "alphaError": 0,
+      "changed": 3024
+    }
+  },
+  "browser": "webkit",
+  "browserVersion": "26.5",
+  "localPinnedFaceModel": true,
+  "errors": []
+}
