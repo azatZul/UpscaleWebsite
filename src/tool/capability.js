@@ -8,8 +8,8 @@ export const MAX_FILE_BYTES = 50 * 1024 * 1024;
 // `key` names the message in the page's string table (see i18n.js); workers
 // pass it back to the page, which words it in the visitor's language.
 export class PhotoError extends Error {
-  constructor(code, key, params) {
-    super(key);
+  constructor(code, key, params, cause) {
+    super(key, cause === undefined ? undefined : {cause});
     this.name = 'PhotoError';
     this.code = code;
     this.key = key;

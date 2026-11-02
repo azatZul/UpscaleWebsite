@@ -1,5 +1,6 @@
 import {defineConfig} from 'vite';
 export default defineConfig({
+  define: {'import.meta.env.VITE_TOOL_BUILD': JSON.stringify(new Date().toISOString())},
   base: '/assets/processor/app/',
   publicDir: false,
   build: {

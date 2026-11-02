@@ -33,7 +33,7 @@ export async function loadRuntime(forceCpu, progress, face = false, scale = SCAL
   const backend = execution.backend || await selectBackend(forceCpu);
   let model;
   try { model = face ? undefined : resolveModelAsset(ASSETS.models, modelKind, scale, backend); }
-  catch { throw new PhotoError('runtime', 'err_engine_start'); }
+  catch (error) { throw new PhotoError('runtime', 'err_engine_start', undefined, error); }
   const modelTitle = face ? 'loading_faces' : 'loading_upscaler';
   const outputSide = face ? 512 : TILE_SIZE * scale;
   let session;
@@ -62,7 +62,7 @@ export async function loadRuntime(forceCpu, progress, face = false, scale = SCAL
       requestedThreads: execution.threads || 1});
   } catch (error) {
     if (error.code === 'download') throw error;
-    throw new PhotoError(backend === 'webgpu' ? 'gpu' : 'runtime', 'err_engine_start');
+    throw new PhotoError(backend === 'webgpu' ? 'gpu' : 'runtime', 'err_engine_start', undefined, error);
   }
   return {
     backend,
@@ -75,8 +75,8 @@ export async function loadRuntime(forceCpu, progress, face = false, scale = SCAL
         output = outputs[session.outputNames[0]];
         if (output.dims.join(',') !== `1,3,${outputSide},${outputSide}`) throw new Error('Unexpected output dimensions');
         return tensorPixels(await output.getData(), outputSide);
-      } catch {
-        throw new PhotoError(backend === 'webgpu' ? 'gpu' : 'runtime', 'err_processing');
+      } catch (error) {
+        throw new PhotoError(backend === 'webgpu' ? 'gpu' : 'runtime', 'err_processing', undefined, error);
       } finally { input.dispose(); output?.dispose(); }
     },
     async release() { await session.release(); },
@@ -85,8 +85,8 @@ export async function loadRuntime(forceCpu, progress, face = false, scale = SCAL
 
 export async function download(url, onProgress = () => {}, retain = true) {
   let response;
-  try { response = await fetch(url); } catch { throw new PhotoError('download', 'err_download'); }
-  if (!response.ok) throw new PhotoError('download', 'err_unavailable');
+  try { response = await fetch(url); } catch (error) { throw new PhotoError('download', 'err_download', undefined, error); }
+  if (!response.ok) throw new PhotoError('download', 'err_unavailable', undefined, new Error(`Model download HTTP ${response.status}`));
   // A compressed response's Content-Length counts wire bytes, while fetch
   // exposes decoded bytes. Without a comparable total, show an indeterminate
   // download until it really completes instead of inventing a percentage.
@@ -108,7 +108,7 @@ export async function download(url, onProgress = () => {}, retain = true) {
       if (retain) chunks.push(value);
       onProgress(total > 0 ? Math.min(1, received / total) : undefined, received);
     }
-  } catch { throw new PhotoError('download', 'err_interrupted'); }
+  } catch (error) { throw new PhotoError('download', 'err_interrupted', undefined, error); }
   onProgress(1, received);
   if (!retain) return;
   const result = new Uint8Array(received);
@@ -123,7 +123,7 @@ async function downloadFace(onProgress) {
   try {
     for (const part of ASSETS.faceModel.parts) {
       const response = await fetch(part.url);
-      if (!response.ok || !response.body) throw new Error('Missing model part');
+      if (!response.ok || !response.body) throw new Error(`Model part download HTTP ${response.status}; body ${Boolean(response.body)}`);
       const reader = response.body.getReader();
       let received = 0;
       while (true) {
@@ -139,5 +139,5 @@ async function downloadFace(onProgress) {
     }
     onProgress(1, offset);
     return bytes;
-  } catch { throw new PhotoError('download', 'err_face_download'); }
+  } catch (error) { throw new PhotoError('download', 'err_face_download', undefined, error); }
 }

@@ -5,7 +5,8 @@ export function requireGpuAdapter() {
   // YuNet and GFPGAN share one worker. Probe before any engine/model downloads,
   // and retain the result for the rest of that worker's lifetime.
   return adapterCheck ||= Promise.resolve().then(async () => {
-    try { if (await globalThis.navigator?.gpu?.requestAdapter()) return; } catch { /* Report a backend failure below. */ }
+    try { if (await globalThis.navigator?.gpu?.requestAdapter()) return; }
+    catch (error) { throw new PhotoError('gpu', 'err_engine_start', undefined, error); }
     throw new PhotoError('gpu', 'err_engine_start');
   });
 }

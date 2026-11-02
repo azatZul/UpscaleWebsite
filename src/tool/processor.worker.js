@@ -1,5 +1,6 @@
 import {assessPhoto, assessPng, devicePolicy, faceEditFits, PhotoError, SCALE, TILE_SIZE} from './capability.js';
 import {inspectFile, parseImageHeader} from './image-info.js';
+import {errorDetails} from './diagnostics.js';
 import {assembleTiles, makeCanvas, sampleTile, thumbnail} from './tile-pipeline.js';
 import {compositePatches} from './face-composite.js';
 import {loadRuntime} from './runtime.js';
@@ -23,7 +24,7 @@ async function processPhoto({file, environment, execution = {}, forceCpu = false
     const info = await inspectFile(file);
     let plan = assessPhoto(info, policy, scale);
     try { source = await createImageBitmap(file, {imageOrientation: 'from-image', premultiplyAlpha: 'none'}); }
-    catch { throw new PhotoError('format', 'err_open'); }
+    catch (error) { throw new PhotoError('format', 'err_open', undefined, error); }
     imageInfo = {width: source.width, height: source.height, size: file.size};
     plan = assessPhoto(imageInfo, policy, scale);
     let hasTransparency = false;
@@ -87,7 +88,7 @@ async function processPhoto({file, environment, execution = {}, forceCpu = false
     if (canEdit) {
       report.begin('encode', {title: 'encoding', detail: 'encoding_detail', progress: .95, pixels: plan.outputWidth * plan.outputHeight});
       try { baseBlob = await canvas.convertToBlob(exportOptions(mime)); }
-      catch { throw new PhotoError('export', mime === PNG ? 'err_png_export' : 'err_save'); }
+      catch (error) { throw new PhotoError('export', mime === PNG ? 'err_png_export' : 'err_save', undefined, error); }
       if (!baseBlob.size || baseBlob.type !== mime) throw new PhotoError('export', mime === PNG ? 'err_png_export' : 'err_save');
       canEdit = faceEditFits(plan, policy, {mime, baseBytes: baseBlob.size});
       if (!canEdit) baseBlob = undefined;
@@ -98,18 +99,18 @@ async function processPhoto({file, environment, execution = {}, forceCpu = false
     report.begin('encode', {title: 'encoding', detail: 'encoding_detail', progress: .97, pixels: plan.outputWidth * plan.outputHeight});
     let blob;
     try { blob = await canvas.convertToBlob(exportOptions(mime)); }
-    catch { throw new PhotoError('export', mime === PNG ? 'err_png_export' : 'err_save'); }
+    catch (error) { throw new PhotoError('export', mime === PNG ? 'err_png_export' : 'err_save', undefined, error); }
     if (!blob.size || blob.type !== mime) throw new PhotoError('export', mime === PNG ? 'err_png_export' : 'err_save');
     let result;
     try { result = parseImageHeader(await blob.slice(0, 2 * 1024 * 1024).arrayBuffer()); }
-    catch { throw new PhotoError('export', mime === PNG ? 'err_png_export' : 'err_save'); }
+    catch (error) { throw new PhotoError('export', mime === PNG ? 'err_png_export' : 'err_save', undefined, error); }
     if (result.format !== (mime === PNG ? 'png' : 'jpeg') || result.width !== plan.outputWidth || result.height !== plan.outputHeight) throw new PhotoError('export', mime === PNG ? 'err_png_export' : 'err_save');
     report({type: 'done', blob, mime, hasTransparency, plan, modelKind, faceCount: enhanced.length,
       detectedCount: faceResults?.detectedCount || 0, faceEnabled, tilesMs, canEdit, baseBlob,
       faces: canEdit ? faces : undefined, skippedTiles, tileTimes, effectiveThreads,
       totalMs: performance.now() - started});
   } catch (error) {
-    report({type: 'error', ...pngFailureDetails(error, imageInfo, policy, scale)});
+    report({type: 'error', ...pngFailureDetails(error, imageInfo, policy, scale), ...errorDetails(error)});
   } finally {
     source?.close(); prepared = null;
     try { await runtime?.release(); } catch { /* Termination is final cleanup. */ }

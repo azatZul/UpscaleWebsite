@@ -4,7 +4,7 @@ import {decodeYuNet, detectionGeometry, faceFinderInput, MAX_FACES} from './face
 import {download, importOrt, requireGpuAdapter, selectBackend} from './runtime.js';
 import {fillTransparentSurface} from './transparency.js';
 
-const backendError = backend => new PhotoError(backend === 'webgpu' ? 'gpu' : 'runtime');
+const backendError = (backend, cause) => new PhotoError(backend === 'webgpu' ? 'gpu' : 'runtime', undefined, undefined, cause);
 
 // Loads YuNet on the same engine the face model will use, so a face pass keeps
 // one wasm heap instead of two. See face-detect.js for why it replaced the
@@ -26,7 +26,7 @@ export async function loadFaceFinder(forceCpu, execution = {}, status = () => {}
     status({operation: 'initialize', completed: 1, effectiveThreads: ort.env.wasm.numThreads, backend});
   } catch (error) {
     if (error.code === 'download') throw error;
-    throw backendError(backend);
+    throw backendError(backend, error);
   }
   return {
     backend,
@@ -49,8 +49,8 @@ export async function loadFaceFinder(forceCpu, execution = {}, status = () => {}
         const tensors = {};
         for (const [name, tensor] of Object.entries(outputs)) tensors[name] = await tensor.getData();
         return decodeYuNet(tensors, geometry).slice(0, MAX_FACES);
-      } catch {
-        throw backendError(backend);
+      } catch (error) {
+        throw backendError(backend, error);
       } finally {
         input?.dispose();
         if (outputs) for (const tensor of Object.values(outputs)) tensor.dispose();

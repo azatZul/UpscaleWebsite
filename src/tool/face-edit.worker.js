@@ -4,6 +4,7 @@ import {parseImageHeader} from './image-info.js';
 import {makeCanvas} from './tile-pipeline.js';
 import {exportOptions, PNG} from './transparency.js';
 import {workerReporter} from './worker-status.js';
+import {errorDetails} from './diagnostics.js';
 
 // Rebuilds the result for a new face selection from the faceless base, never
 // from the previous result, so the background is re-encoded at most once.
@@ -31,7 +32,7 @@ async function apply({base, plan, faces}) {
     send({type: 'applied', blob});
   } catch (error) {
     if (error instanceof PhotoError) throw error;
-    throw new PhotoError('export', 'err_face_apply');
+    throw new PhotoError('export', 'err_face_apply', undefined, error);
   } finally {
     bitmap?.close();
     if (output) output.width = output.height = 1;
@@ -43,6 +44,7 @@ self.onmessage = async ({data}) => {
   busy = true;
   send = workerReporter(data.execution, 'composite');
   try { await apply(data); }
-  catch (error) { send({type: 'error', code: error.code || 'export', key: error.key || 'err_face_apply', params: error.params}); }
+  catch (error) { send({type: 'error', code: error.code || 'export', key: error.key || 'err_face_apply',
+    params: error.params, ...errorDetails(error)}); }
   finally { busy = false; }
 };

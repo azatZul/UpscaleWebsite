@@ -1,4 +1,5 @@
 import {ASSETS} from './assets.generated.js';
+import {errorDetails} from './diagnostics.js';
 import {alignmentPoints, alignmentQuality, isAligned, keypointPoints, similarity} from './face-geometry.js';
 import {loadRuntime} from './runtime.js';
 import {assessPhoto, devicePolicy, faceLimit, isAppleMobile, PhotoError} from './capability.js';
@@ -120,7 +121,7 @@ self.onmessage = async ({data: {mode = 'detect', file, environment, forceCpu, ex
     const limit = faceLimit(policy);
     if (info.width * info.height > limit) throw new PhotoError('face', 'err_face_limit', {mp: limit / 1_000_000});
     try { bitmap = await createImageBitmap(file, {imageOrientation: 'from-image', premultiplyAlpha: 'none'}); }
-    catch { throw new PhotoError('format', 'err_open'); }
+    catch (error) { throw new PhotoError('format', 'err_open', undefined, error); }
     let transparency = {hasTransparency: false, maxAlpha: 255};
     if (info.format !== 'jpeg') {
       report.begin('scan', {title: 'finding_faces', detail: 'finding_faces_check'});
@@ -161,7 +162,8 @@ self.onmessage = async ({data: {mode = 'detect', file, environment, forceCpu, ex
     report({type: 'faces', faces, detectedCount, hasTransparency, effectiveThreads, totalMs: performance.now() - started});
   } catch (error) {
     const own = ['download', 'face', 'size', 'format', 'browser'].includes(error.code);
-    report({type: 'error', code: error.code || 'face', key: own ? error.key : 'err_face', params: own ? error.params : undefined});
+    report({type: 'error', code: error.code || 'face', key: own ? error.key : 'err_face',
+      params: own ? error.params : undefined, ...errorDetails(error)});
   } finally {
     bitmap?.close();
     await finder?.release().catch(() => {});

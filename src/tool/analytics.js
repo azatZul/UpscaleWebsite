@@ -1,4 +1,5 @@
 import * as amplitude from '@amplitude/analytics-browser';
+import {diagnosticContext} from './diagnostics.js';
 
 // Mirrors the iOS and Android analytics helpers: the same Amplitude project, the
 // same generic `tap` action with element and screen, and the same named events,
@@ -152,6 +153,13 @@ export function initAnalytics({location = globalThis.location, document = global
   const local = host === 'localhost' || host === '127.0.0.1';
   const debug = local || new URLSearchParams(location?.search || '').has('analytics-debug');
   const context = {
+    diagnostic_id: globalThis.crypto?.randomUUID?.() || `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`,
+    ...diagnosticContext({location, document, navigator: globalThis.navigator,
+      crossOriginIsolated: globalThis.crossOriginIsolated, sharedMemory: typeof SharedArrayBuffer === 'function',
+      secure: globalThis.isSecureContext, worker: typeof Worker === 'function',
+      wasm: typeof WebAssembly === 'object', bitmap: typeof createImageBitmap === 'function',
+      offscreen: typeof OffscreenCanvas === 'function'}),
+    app_build: import.meta.env?.VITE_TOOL_BUILD || 'development',
     environment: local ? 'local' : host.endsWith('.pages.dev') ? 'preview' : 'production',
     locale: document?.documentElement?.lang || 'en',
   };

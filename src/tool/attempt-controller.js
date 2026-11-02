@@ -1,3 +1,5 @@
+import {errorDetails} from './diagnostics.js';
+
 const RETRY_OPERATIONS = new Set(['initialize', 'tile', 'detect', 'face']);
 
 // Maxima are evidence, not a claim about the speed of an arbitrary device.
@@ -68,14 +70,18 @@ export function createAttemptController({makeWorker, onMessage, onFailure, onRun
         if (['done', 'faces', 'enhanced', 'applied', 'benchmark'].includes(data.type)) { active = false; terminate(); }
         onMessage(data, config);
       };
-      worker.onerror = event => { event.preventDefault?.(); if (current()) failure({code: 'runtime', key: 'err_task_stopped'}); };
+      worker.onerror = event => { event.preventDefault?.(); if (current()) failure({code: 'runtime', key: 'err_task_stopped',
+        ...errorDetails(event.error || event.message || 'Worker stopped without an exception'),
+        error_line: event.lineno, error_column: event.colno}); };
       worker.onmessageerror = () => { if (current()) failure({code: 'runtime', key: 'err_result_read'}); };
       worker.postMessage({...payload, execution: config});
       arm();
-    } catch { failure({code: 'runtime', key: 'err_worker_start'}); }
+    } catch (error) { failure({code: 'runtime', key: 'err_worker_start', ...errorDetails(error)}); }
   }
   function failure(error) {
     if (!active) return;
+    error = {...error, operation: operation.operation, model: operation.model, backend: config.backend,
+      requested_threads: config.threads, attempt_index: attemptIndex};
     const retryable = RETRY_OPERATIONS.has(operation.operation) &&
       ['gpu', 'runtime', 'timeout'].includes(error.code);
     if (retryable && config.backend === 'wasm' && config.threads > 1) onRuntimeFailure(config, error);

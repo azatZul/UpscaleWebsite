@@ -16,6 +16,13 @@ import {executionChoices, rememberThreadFailure} from './cpu-policy.js';
 import {exportExtension, PNG} from './transparency.js';
 import {ASSETS} from './assets.generated.js';
 import {learnedTileMs, processingFailureProperties} from './processing-policy.js';
+import {attemptErrorProperties, installErrorDiagnostics} from './diagnostics.js';
+
+const analytics = initAnalytics();
+installErrorDiagnostics({analytics, state: () => {
+  try { return {...runProperties(), phase, progress: runProgress}; }
+  catch { return {screen: SCREEN, phase: 'startup'}; }
+}});
 
 const {t, duration} = pageTranslator(document);
 const $ = id => document.getElementById(id);
@@ -42,7 +49,6 @@ let storage;
 try { storage = localStorage; } catch { /* Storage is optional. */ }
 const marker = 'uscale-preview-active-v1';
 const policy = devicePolicy(environment);
-const analytics = initAnalytics();
 const trackTap = (element, properties) => analytics.trackAction(AnalyticsAction.tap, element, SCREEN, properties);
 
 // Estimating before any download needs a per-tile figure. Use the measured one
@@ -250,8 +256,18 @@ function applyFailed(key, params) {
 }
 
 function controllerFor(makeWorker, onData, onFailure, onRetry) {
-  const controller = createAttemptController({makeWorker, onMessage: onData, onFailure,
-    onRetry,
+  const controller = createAttemptController({makeWorker, onMessage: onData,
+    onFailure: (error, config) => {
+      analytics.trackEvent('device_processing_error', {...runProperties(), phase, progress: runProgress,
+        error_type: error.code, message: error.key, ...attemptErrorProperties(error)});
+      onFailure(error, config);
+    },
+    onRetry: transition => {
+      analytics.trackEvent('processing_retry', {...runProperties(), phase, ...attemptErrorProperties(transition.error),
+        error_type: transition.error.code, message: transition.error.key,
+        next_backend: transition.to.backend, next_threads: transition.to.threads});
+      onRetry?.(transition);
+    },
     onRuntimeFailure: attempt => rememberThreadFailure(storage, attempt.failureKey)});
   controller.setHidden(document.hidden);
   return controller;
@@ -469,12 +485,13 @@ function clearOutput() {
   comparison.reset();
 }
 
-function fail(code, key, params, offerScaleFallback = false, stage) {
+function fail(code, key, params, offerScaleFallback = false, stage, diagnostics) {
   if (importSource) {
     analytics.trackEvent(AnalyticsEvent.mediaImportFailed, {source: importSource, count: 1, error_type: code, message: key});
     importSource = undefined;
   }
-  if (busy()) trackOutcome('failed', {...processingFailureProperties(code, stage), message: key});
+  if (busy()) trackOutcome('failed', {...processingFailureProperties(code, stage), message: key,
+    ...attemptErrorProperties(diagnostics)});
   stopWorker();
   phase = 'error';
   errorCode = code;
@@ -556,7 +573,7 @@ function prepare(faceResults = completedFaces) {
   processingController = controllerFor(() => new Worker(new URL('./processor.worker.js', import.meta.url), {type: 'module'}),
     data => { if (current === generation) onMessage(data, current); },
     error => { if (current === generation) {
-      fail(error.code, error.key, error.params, error.fallbackScale === 2, 'upscale');
+      fail(error.code, error.key, error.params, error.fallbackScale === 2, 'upscale', error);
     } }, transition => { if (current === generation) recordRetry(transition); });
   remember(true); keepAwake();
   processingController.start({type: 'prepare', file, environment, faceResults, scale, modelKind},
@@ -573,7 +590,7 @@ function startFaces() {
   processingController = controllerFor(() => new Worker(new URL('./face.worker.js', import.meta.url)),
     data => { if (current === generation) onMessage(data, current); },
     error => { if (current === generation) {
-      fail(error.code, error.key, error.params, false, 'faces');
+      fail(error.code, error.key, error.params, false, 'faces', error);
     } }, transition => { if (current === generation) recordRetry(transition); });
   processingController.start({file, environment}, executionChoices(environment, 'faces', {forceCpu: cpuRequested, storage, assets: ASSETS}));
 }
@@ -617,6 +634,7 @@ function start({cpu = false} = {}) {
   trackTap('start_processing', runProperties());
   if (mode !== 'device') { cloud.start(); return; }
   processingStartedAt = performance.now(); outcomeTracked = false; runProgress = 0;
+  analytics.trackEvent('processing_started', runProperties());
   if (shouldEnhanceFaces(modelKind, elements['enhance-faces'].checked) && completedFaces === undefined) startFaces();
   else prepare();
 }

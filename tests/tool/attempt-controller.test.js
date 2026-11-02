@@ -55,6 +55,22 @@ test('retry callback reports only actual transitions, not initial or terminal at
   assert.equal(h.failures.length, 1);
 });
 
+test('worker crashes retain sanitized cause and last operation through retries and final failure', () => {
+  const h = harness(); h.controller.start({modelKind: 'photo', scale: 2}, choices);
+  h.workers[0].onmessage({data: {type: 'status', operation: 'tile'}});
+  h.workers[0].onerror({message: 'GPU device lost', lineno: 12, colno: 3});
+  assert.equal(h.retries[0].error.engine_message, 'GPU device lost');
+  assert.equal(h.retries[0].error.operation, 'tile');
+  assert.equal(h.retries[0].error.backend, 'webgpu');
+  h.workers[1].onerror({message: 'WASM initialization failed'});
+  h.workers[2].onerror({message: 'Failed https://example.com/worker.js?token=secret'});
+  assert.equal(h.failures[0].engine_message, 'Failed [url]');
+  assert.equal(h.failures[0].operation, 'initialize');
+  assert.equal(h.failures[0].model, 'photo-2');
+  assert.equal(h.failures[0].backend, 'wasm');
+  assert.equal(h.failures[0].attempt_index, 2);
+});
+
 test('identical status is not progress and background pause preserves remaining time', () => {
   const h = harness(); h.controller.start({}, choices);
   const status = {type: 'status', operation: 'tile', completed: 0};
