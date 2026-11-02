@@ -46,13 +46,20 @@ async function processPhoto({file, environment, execution = {}, forceCpu = false
     const {canvas, context} = makeCanvas(plan.outputWidth, plan.outputHeight);
     output = canvas;
     let skippedTiles = 0, completedTiles = 0, tileStarted = performance.now();
+    const tileStatus = completed => ({
+      title: 'upscaling', detail: 'upscaling_cancel_detail', completed,
+      progress: completed / plan.tileCount * .94,
+      remainingMs: completed > 0
+        ? (performance.now() - tileStarted) / completed * (plan.tileCount - completed) : undefined,
+    });
     // An invisible image does not need a runtime or face model at all.
     if (!hasTransparency || prepared.maxAlpha > 0) {
       runtime = await loadRuntime(forceCpu, status, false, scale, modelKind, execution);
       effectiveThreads = runtime.threads;
       tileStarted = performance.now();
       await assembleTiles(plan.width, plan.height, async (x, y) => {
-        report.begin('tile', {title: 'upscaling', detail: 'upscaling_cancel_detail', completed: completedTiles});
+        // Keep the last measured progress visible throughout the next inference.
+        report.begin('tile', tileStatus(completedTiles));
         if (hasTransparency && emptyTile(prepared, x, y)) {
           skippedTiles++; return new Uint8ClampedArray((TILE_SIZE * scale) ** 2 * 4);
         }
@@ -65,11 +72,9 @@ async function processPhoto({file, environment, execution = {}, forceCpu = false
         // which is still used to blend the following band.
         if (hasTransparency) applyBandAlpha(data, prepared, y, height, scale);
         context.putImageData(new ImageData(data, width, height), 0, y);
-      }, (completed, total) => {
+      }, completed => {
         completedTiles = completed;
-        status({operation: 'tile', completed, progress: completed / total * .94,
-          title: 'upscaling', remainingMs: (performance.now() - tileStarted) / completed * (total - completed),
-          detail: 'upscaling_cancel_detail'});
+        status({operation: 'tile', ...tileStatus(completed)});
       }, scale);
     } else skippedTiles = plan.tileCount;
     const tilesMs = performance.now() - tileStarted;
@@ -80,17 +85,17 @@ async function processPhoto({file, environment, execution = {}, forceCpu = false
     let canEdit = faceEnabled && faces.length > 0 && faceEditFits(plan, policy, {mime});
     let baseBlob;
     if (canEdit) {
-      report.begin('encode', {title: 'encoding', detail: 'encoding_detail', pixels: plan.outputWidth * plan.outputHeight});
+      report.begin('encode', {title: 'encoding', detail: 'encoding_detail', progress: .95, pixels: plan.outputWidth * plan.outputHeight});
       try { baseBlob = await canvas.convertToBlob(exportOptions(mime)); }
       catch { throw new PhotoError('export', mime === PNG ? 'err_png_export' : 'err_save'); }
       if (!baseBlob.size || baseBlob.type !== mime) throw new PhotoError('export', mime === PNG ? 'err_png_export' : 'err_save');
       canEdit = faceEditFits(plan, policy, {mime, baseBytes: baseBlob.size});
       if (!canEdit) baseBlob = undefined;
     }
-    report.begin('composite', {title: 'encoding', detail: 'encoding_detail'});
+    report.begin('composite', {title: 'encoding', detail: 'encoding_detail', progress: .96});
     const enhanced = faces.filter(face => face.patch);
     await compositePatches(context, enhanced, scale);
-    report.begin('encode', {title: 'encoding', detail: 'encoding_detail', pixels: plan.outputWidth * plan.outputHeight});
+    report.begin('encode', {title: 'encoding', detail: 'encoding_detail', progress: .97, pixels: plan.outputWidth * plan.outputHeight});
     let blob;
     try { blob = await canvas.convertToBlob(exportOptions(mime)); }
     catch { throw new PhotoError('export', mime === PNG ? 'err_png_export' : 'err_save'); }

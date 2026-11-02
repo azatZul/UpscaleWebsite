@@ -55,10 +55,10 @@ async function checkWorkerPreflightAndTiming(page) {
 
   const clockWorker = async route => {
     const response = await route.fetch();
-    const prefix = `let testClock=0;Object.defineProperty(performance,'now',{value:()=>testClock});
+    const prefix = `let testClock=0,testTileUnit;Object.defineProperty(performance,'now',{value:()=>testClock});
       const testPost=globalThis.postMessage.bind(globalThis);globalThis.postMessage=(data,...args)=>{
         if(data.operation==='initialize'&&data.completed===1)testClock=30000;
-        if(data.operation==='tile'&&data.type==='status'&&data.progress===undefined)testClock=30000+1000*(data.completed+1);
+        if(data.operation==='tile'&&data.type==='status'&&data.unit!==testTileUnit){testTileUnit=data.unit;testClock+=1000;}
         return testPost(data,...args)};`;
     await route.fulfill({response, body: prefix + await response.text()});
   };

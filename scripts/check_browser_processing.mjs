@@ -10,6 +10,7 @@ import {createReadStream} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {checkProcessingRegressions} from './check_processing_regressions.mjs';
 import {checkThreadCacheRegressions} from './check_thread_cache_regressions.mjs';
+import {checkProcessingProgress} from './check_processing_progress.mjs';
 
 const {values} = parseArgs({options: {
   browser: {type: 'string', default: 'chromium'}, suite: {type: 'string', default: 'png'},
@@ -18,8 +19,8 @@ const {values} = parseArgs({options: {
   runs: {type: 'string', default: '5'}, pause: {type: 'string'}, 'local-face-model': {type: 'boolean', default: false},
   detect: {type: 'boolean', default: false},
 }});
-if (!['chromium', 'firefox', 'webkit'].includes(values.browser) || !['png', 'cpu', 'ui', 'faces', 'recovery', 'face-png', 'drawing-ablation', 'regressions', 'thread-cache'].includes(values.suite)) {
-  throw new Error('Use --browser chromium|firefox|webkit --suite png|cpu|ui|faces|recovery|face-png|drawing-ablation|regressions|thread-cache');
+if (!['chromium', 'firefox', 'webkit'].includes(values.browser) || !['png', 'cpu', 'ui', 'progress', 'faces', 'recovery', 'face-png', 'drawing-ablation', 'regressions', 'thread-cache'].includes(values.suite)) {
+  throw new Error('Use --browser chromium|firefox|webkit --suite png|cpu|ui|progress|faces|recovery|face-png|drawing-ablation|regressions|thread-cache');
 }
 const output = resolve(values.output || `.web-model-work/browser-reports/${values.suite}-${values.browser}.json`);
 await mkdir(dirname(output), {recursive: true});
@@ -75,7 +76,9 @@ try {
   await page.waitForFunction(() => window.uscaleProductLab);
   const basic = await page.evaluate(async () => ({opaque: await uscaleProductLab.verifyOpaqueInputParity(),
     faceAlpha: await uscaleProductLab.verifyFaceAlpha()}));
-  if (values.suite === 'regressions') {
+  if (values.suite === 'progress') {
+    report = await checkProcessingProgress(page, values.url);
+  } else if (values.suite === 'regressions') {
     report = await checkProcessingRegressions(page, values.url);
   } else if (values.suite === 'thread-cache') {
     report = await checkThreadCacheRegressions(page, values.url);

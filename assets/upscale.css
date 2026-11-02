@@ -195,6 +195,7 @@
   transform:translate(var(--pan-x,0px),var(--pan-y,0px)) scale(var(--album-zoom,1))}
 .album-expanded-lock{overflow:hidden}
 .tool .inline-cta{max-width:760px;margin:56px auto 0}
+.tool .inline-stores{gap:16px}
 
 /* Mode picker, after the app's model picker: each mode's before/after photo
    behind its name, a dark fade for the text, and a gold Pro badge. Selecting a
@@ -315,13 +316,13 @@
   .result-comparison .cmp-tag{top:10px;font-size:12px;padding:5px 8px}
   .result-comparison .cmp-tag.l{left:10px}
   .result-comparison .cmp-tag.r{right:10px}
-  /* App banner: small icon beside the title and line, badge underneath. */
+  /* App banner: icon beside the copy, with all stores spanning the row below. */
   .tool .inline-cta{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:14px 12px;
     padding:16px;margin:36px auto 0}
   .tool .inline-cta>img{width:44px;height:44px;border-radius:11px}
   .tool .inline-cta h3{font-size:16px;margin-bottom:2px}
   .tool .inline-cta p{font-size:13.5px;line-height:1.4}
-  .tool .inline-cta>.appstore{grid-column:1/-1}
+  .tool .inline-stores{grid-column:1/-1;min-width:0;justify-content:center}
 }
 @media(prefers-reduced-motion:reduce){.tool *{scroll-behavior:auto!important;transition:none!important}}
 

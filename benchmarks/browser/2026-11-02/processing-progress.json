@@ -1,0 +1,498 @@
+{
+  "date": "2026-11-02",
+  "regressionCommit": "2e7e8d19b9ae3d8883a0e4d3407c3c3b997289d8",
+  "speedBaselineCommit": "43beddf",
+  "physicalIPhoneTested": false,
+  "sourceSha256": "3c76d151cc75da08b6d094dc061cbd1c6908afd0c8f860ffc7e0da140e22e77a",
+  "baselineReproduced": "show 0% during the first inference\n\nundefined !== 0\n",
+  "cpuSingleThreadComparison": [
+    {
+      "revision": "before-last-commit",
+      "fullMs": 9615.914999961853,
+      "tilesMs": 9490.635000228882,
+      "width": 1344,
+      "height": 64,
+      "mime": "image/jpeg"
+    },
+    {
+      "revision": "fixed",
+      "fullMs": 9590.405000209808,
+      "tilesMs": 9463.93499994278,
+      "width": 1344,
+      "height": 64,
+      "mime": "image/jpeg"
+    },
+    {
+      "revision": "before-last-commit",
+      "fullMs": 9557.905000209808,
+      "tilesMs": 9434.754999637604,
+      "width": 1344,
+      "height": 64,
+      "mime": "image/jpeg"
+    },
+    {
+      "revision": "fixed",
+      "fullMs": 9508.800000190735,
+      "tilesMs": 9385.865000247955,
+      "width": 1344,
+      "height": 64,
+      "mime": "image/jpeg"
+    }
+  ],
+  "browsers": [
+    {
+      "browser": "chromium",
+      "browserVersion": "151.0.7922.34",
+      "cases": [
+        {
+          "transparent": false,
+          "statuses": [
+            {
+              "operation": "tile",
+              "unit": 2,
+              "completed": 0,
+              "progress": 0,
+              "hidden": false,
+              "value": 0,
+              "label": "0%",
+              "detail": "Keep this page open. You can cancel at any time."
+            },
+            {
+              "operation": "tile",
+              "unit": 2,
+              "completed": 1,
+              "progress": 0.3133333333333333,
+              "remainingMs": 947.2200002670288,
+              "hidden": false,
+              "value": 0.3133333333333333,
+              "label": "31%",
+              "detail": "Keep this page open. You can cancel at any time."
+            },
+            {
+              "operation": "tile",
+              "unit": 3,
+              "completed": 1,
+              "progress": 0.3133333333333333,
+              "remainingMs": 947.2799997329712,
+              "hidden": false,
+              "value": 0.3133333333333333,
+              "label": "31%",
+              "detail": "Keep this page open. You can cancel at any time."
+            },
+            {
+              "operation": "tile",
+              "unit": 3,
+              "completed": 2,
+              "progress": 0.6266666666666666,
+              "remainingMs": 455.1099998950958,
+              "hidden": false,
+              "value": 0.6266666666666666,
+              "label": "63%",
+              "detail": "Keep this page open. You can cancel at any time."
+            },
+            {
+              "operation": "tile",
+              "unit": 4,
+              "completed": 2,
+              "progress": 0.6266666666666666,
+              "remainingMs": 455.1199998855591,
+              "hidden": false,
+              "value": 0.6266666666666666,
+              "label": "63%",
+              "detail": "Keep this page open. You can cancel at any time."
+            },
+            {
+              "operation": "tile",
+              "unit": 4,
+              "completed": 3,
+              "progress": 0.94,
+              "remainingMs": 0,
+              "hidden": false,
+              "value": 0.94,
+              "label": "94%",
+              "detail": "Keep this page open. You can cancel at any time."
+            },
+            {
+              "operation": "composite",
+              "unit": 5,
+              "progress": 0.96,
+              "hidden": false,
+              "value": 0.96,
+              "label": "96%",
+              "detail": "Saving the finished photo on this device."
+            },
+            {
+              "operation": "encode",
+              "unit": 6,
+              "progress": 0.97,
+              "hidden": false,
+              "value": 0.97,
+              "label": "97%",
+              "detail": "Saving the finished photo on this device."
+            }
+          ],
+          "output": {
+            "mime": "image/jpeg",
+            "width": 1344,
+            "height": 64
+          },
+          "passed": true
+        },
+        {
+          "transparent": true,
+          "statuses": [
+            {
+              "operation": "tile",
+              "unit": 5,
+              "completed": 0,
+              "progress": 0,
+              "hidden": false,
+              "value": 0,
+              "label": "0%",
+              "detail": "Keep this page open. You can cancel at any time."
+            },
+            {
+              "operation": "tile",
+              "unit": 5,
+              "completed": 1,
+              "progress": 0.3133333333333333,
+              "remainingMs": 908.9100008010864,
+              "hidden": false,
+              "value": 0.3133333333333333,
+              "label": "31%",
+              "detail": "Keep this page open. You can cancel at any time."
+            },
+            {
+              "operation": "tile",
+              "unit": 6,
+              "completed": 1,
+              "progress": 0.3133333333333333,
+              "remainingMs": 908.9700002670288,
+              "hidden": false,
+              "value": 0.3133333333333333,
+              "label": "31%",
+              "detail": "Keep this page open. You can cancel at any time."
+            },
+            {
+              "operation": "tile",
+              "unit": 6,
+              "completed": 2,
+              "progress": 0.6266666666666666,
+              "remainingMs": 445.3100001811981,
+              "hidden": false,
+              "value": 0.6266666666666666,
+              "label": "63%",
+              "detail": "Keep this page open. You can cancel at any time."
+            },
+            {
+              "operation": "tile",
+              "unit": 7,
+              "completed": 2,
+              "progress": 0.6266666666666666,
+              "remainingMs": 445.3275001049042,
+              "hidden": false,
+              "value": 0.6266666666666666,
+              "label": "63%",
+              "detail": "Keep this page open. You can cancel at any time."
+            },
+            {
+              "operation": "tile",
+              "unit": 7,
+              "completed": 3,
+              "progress": 0.94,
+              "remainingMs": 0,
+              "hidden": false,
+              "value": 0.94,
+              "label": "94%",
+              "detail": "Keep this page open. You can cancel at any time."
+            },
+            {
+              "operation": "composite",
+              "unit": 8,
+              "progress": 0.96,
+              "hidden": false,
+              "value": 0.96,
+              "label": "96%",
+              "detail": "Saving the finished photo on this device."
+            },
+            {
+              "operation": "encode",
+              "unit": 9,
+              "progress": 0.97,
+              "hidden": false,
+              "value": 0.97,
+              "label": "97%",
+              "detail": "Saving the finished photo on this device."
+            }
+          ],
+          "output": {
+            "mime": "image/png",
+            "width": 1344,
+            "height": 64
+          },
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "passed": true
+    },
+    {
+      "browser": "webkit",
+      "browserVersion": "26.5",
+      "cases": [
+        {
+          "transparent": false,
+          "statuses": [
+            {
+              "operation": "tile",
+              "unit": 2,
+              "completed": 0,
+              "progress": 0,
+              "hidden": false,
+              "value": 0,
+              "label": "0%",
+              "detail": "Keep this page open. You can cancel at any time."
+            },
+            {
+              "operation": "tile",
+              "unit": 2,
+              "completed": 1,
+              "progress": 0.3133333333333333,
+              "remainingMs": 6181.76,
+              "hidden": false,
+              "value": 0.3133333333333333,
+              "label": "31%",
+              "detail": "Time left: about 10 seconds. Keep this page open. You can cancel at any time."
+            },
+            {
+              "operation": "tile",
+              "unit": 3,
+              "completed": 1,
+              "progress": 0.3133333333333333,
+              "remainingMs": 6181.84,
+              "hidden": false,
+              "value": 0.3133333333333333,
+              "label": "31%",
+              "detail": "Time left: about 10 seconds. Keep this page open. You can cancel at any time."
+            },
+            {
+              "operation": "tile",
+              "unit": 3,
+              "completed": 2,
+              "progress": 0.6266666666666666,
+              "remainingMs": 3089.52,
+              "hidden": false,
+              "value": 0.6266666666666666,
+              "label": "63%",
+              "detail": "Keep this page open. You can cancel at any time."
+            },
+            {
+              "operation": "tile",
+              "unit": 4,
+              "completed": 2,
+              "progress": 0.6266666666666666,
+              "remainingMs": 3089.54,
+              "hidden": false,
+              "value": 0.6266666666666666,
+              "label": "63%",
+              "detail": "Keep this page open. You can cancel at any time."
+            },
+            {
+              "operation": "tile",
+              "unit": 4,
+              "completed": 3,
+              "progress": 0.94,
+              "remainingMs": 0,
+              "hidden": false,
+              "value": 0.94,
+              "label": "94%",
+              "detail": "Keep this page open. You can cancel at any time."
+            },
+            {
+              "operation": "composite",
+              "unit": 5,
+              "progress": 0.96,
+              "hidden": false,
+              "value": 0.96,
+              "label": "96%",
+              "detail": "Saving the finished photo on this device."
+            },
+            {
+              "operation": "encode",
+              "unit": 6,
+              "progress": 0.97,
+              "hidden": false,
+              "value": 0.97,
+              "label": "97%",
+              "detail": "Saving the finished photo on this device."
+            }
+          ],
+          "output": {
+            "mime": "image/jpeg",
+            "width": 1344,
+            "height": 64
+          },
+          "passed": true
+        },
+        {
+          "transparent": true,
+          "statuses": [
+            {
+              "operation": "tile",
+              "unit": 5,
+              "completed": 0,
+              "progress": 0,
+              "hidden": false,
+              "value": 0,
+              "label": "0%",
+              "detail": "Keep this page open. You can cancel at any time."
+            },
+            {
+              "operation": "tile",
+              "unit": 5,
+              "completed": 1,
+              "progress": 0.3133333333333333,
+              "remainingMs": 6299.24,
+              "hidden": false,
+              "value": 0.3133333333333333,
+              "label": "31%",
+              "detail": "Time left: about 10 seconds. Keep this page open. You can cancel at any time."
+            },
+            {
+              "operation": "tile",
+              "unit": 6,
+              "completed": 1,
+              "progress": 0.3133333333333333,
+              "remainingMs": 6299.32,
+              "hidden": false,
+              "value": 0.3133333333333333,
+              "label": "31%",
+              "detail": "Time left: about 10 seconds. Keep this page open. You can cancel at any time."
+            },
+            {
+              "operation": "tile",
+              "unit": 6,
+              "completed": 2,
+              "progress": 0.6266666666666666,
+              "remainingMs": 3138.53,
+              "hidden": false,
+              "value": 0.6266666666666666,
+              "label": "63%",
+              "detail": "Keep this page open. You can cancel at any time."
+            },
+            {
+              "operation": "tile",
+              "unit": 7,
+              "completed": 2,
+              "progress": 0.6266666666666666,
+              "remainingMs": 3138.55,
+              "hidden": false,
+              "value": 0.6266666666666666,
+              "label": "63%",
+              "detail": "Keep this page open. You can cancel at any time."
+            },
+            {
+              "operation": "tile",
+              "unit": 7,
+              "completed": 3,
+              "progress": 0.94,
+              "remainingMs": 0,
+              "hidden": false,
+              "value": 0.94,
+              "label": "94%",
+              "detail": "Keep this page open. You can cancel at any time."
+            },
+            {
+              "operation": "composite",
+              "unit": 8,
+              "progress": 0.96,
+              "hidden": false,
+              "value": 0.96,
+              "label": "96%",
+              "detail": "Saving the finished photo on this device."
+            },
+            {
+              "operation": "encode",
+              "unit": 9,
+              "progress": 0.97,
+              "hidden": false,
+              "value": 0.97,
+              "label": "97%",
+              "detail": "Saving the finished photo on this device."
+            }
+          ],
+          "output": {
+            "mime": "image/png",
+            "width": 1344,
+            "height": 64
+          },
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "passed": true
+    }
+  ],
+  "verification": {
+    "toolTestsPassed": 90,
+    "buildPages": 126,
+    "processingRegressionsPassed": true,
+    "regressionErrors": [],
+    "eta": {
+      "first": {
+        "completed": 1,
+        "remainingMs": 15000
+      },
+      "last": {
+        "completed": 16,
+        "remainingMs": 0
+      },
+      "tiles": 16,
+      "totalMs": 46000,
+      "tilesMs": 16000
+    }
+  },
+  "production": {
+    "origin": "https://upscales.app",
+    "versionId": "3074c4c6-6f2d-4698-8b71-208681f633de",
+    "ratingCount": 1686,
+    "checks": [
+      {
+        "engine": "chromium",
+        "passed": true,
+        "banner": {
+          "gridColumn": "1 / -1",
+          "gap": "16px",
+          "contained": true,
+          "noOverflow": true
+        },
+        "cssMatchesSource": true,
+        "cssSha256": "55a9f567158a761437aa3ab0727a579cf5f6bf4510783d08715cb49569175578",
+        "ratingCounts": [
+          1686
+        ],
+        "errors": [],
+        "warnings": []
+      },
+      {
+        "engine": "webkit",
+        "passed": true,
+        "banner": {
+          "gridColumn": "1 / -1",
+          "gap": "16px",
+          "contained": true,
+          "noOverflow": true
+        },
+        "cssMatchesSource": true,
+        "cssSha256": "55a9f567158a761437aa3ab0727a579cf5f6bf4510783d08715cb49569175578",
+        "ratingCounts": [
+          1686
+        ],
+        "errors": [],
+        "warnings": [
+          "ResizeObserver loop completed with undelivered notifications."
+        ]
+      }
+    ]
+  }
+}

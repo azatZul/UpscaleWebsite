@@ -55,6 +55,22 @@
 
 ## Воспроизведение
 
+Исправление от 2 ноября 2026: в `2e7e8d1` статус начала каждого тайла скрывал
+процент и ETA до следующего завершённого тайла; следующий статус снова сразу
+их скрывал. Теперь начало тайла сохраняет измеренный прогресс и ETA, а
+композиция/экспорт показывают 96–97%. Проверка `--suite progress` использует
+настоящие workers через публичный UI и проверяет каждый статус на трёх тайлах
+JPEG и прозрачного PNG. Она воспроизводит ошибку на исходном worker из коммита
+и проходит в Chromium 151 и Playwright WebKit 26.5 после исправления.
+[Отчёт](../benchmarks/browser/2026-11-02/processing-progress.json) также содержит
+два чередующихся сравнения CPU 1 с кодом до последнего коммита: заметного
+замедления на этом desktop-тесте нет. Физический iPhone повторно не проверялся;
+это исправление отображения, а не подтверждённое ускорение iOS.
+
+Общий production-релиз 2 ноября опубликован на `upscales.app`: исправление
+прогресса, мобильная раскладка store badges и счётчик 1686 отзывов.
+Cloudflare version: `3074c4c6-6f2d-4698-8b71-208681f633de`.
+
 ```sh
 npm run test:tool
 python3 -m unittest discover -s tests -p 'test_ios*.py'
@@ -69,6 +85,7 @@ node scripts/check_browser_processing.mjs --suite faces --detect --threads 1,2,4
 node scripts/check_browser_processing.mjs --suite face-png --local-face-model
 node scripts/check_browser_processing.mjs --suite recovery
 node scripts/check_browser_processing.mjs --suite ui
+node scripts/check_browser_processing.mjs --suite progress
 node scripts/check_browser_processing.mjs --suite regressions --local-face-model
 node scripts/check_browser_processing.mjs --suite thread-cache --local-face-model
 node scripts/check_browser_processing.mjs --suite drawing-ablation
