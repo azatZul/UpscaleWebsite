@@ -1,8 +1,10 @@
 import assert from 'node:assert/strict';
+import {assertDownloadProgress, captureDownloadProgress} from './check_download_progress.mjs';
 
 // Exercise real workers through the public UI. In particular, sample the UI
 // after every status, including the start of the next (slow) inference.
 export async function checkProcessingProgress(page, origin) {
+  await captureDownloadProgress(page);
   await page.addInitScript(() => {
     Object.defineProperty(navigator, 'gpu', {value: undefined});
     const NativeWorker = Worker;
@@ -36,7 +38,7 @@ export async function checkProcessingProgress(page, origin) {
     await page.locator('#photo-input').setInputFiles({name: transparent ? 'progress.png' : 'progress.jpg',
       mimeType: transparent ? 'image/png' : 'image/jpeg', buffer: Buffer.from(input)});
     if (await page.locator('#enhance-faces').isChecked()) await page.locator('#enhance-faces').uncheck();
-    await page.evaluate(() => { window.__processingStatuses = []; });
+    await page.evaluate(() => { window.__processingStatuses = []; window.__downloadStatuses = []; });
     await page.locator('#process-photo').click();
     await page.locator('#results').waitFor({state: 'visible', timeout: 180_000});
     const statuses = await page.evaluate(() => window.__processingStatuses);
@@ -58,7 +60,9 @@ export async function checkProcessingProgress(page, origin) {
       bitmap.close(); return result;
     });
     assert.deepEqual(output, {mime: transparent ? 'image/png' : 'image/jpeg', width: 1344, height: 64});
-    cases.push({transparent, statuses, output, passed: true});
+    const downloads = assertDownloadProgress(await page.evaluate(() => window.__downloadStatuses),
+      ['loading_upscaler']);
+    cases.push({transparent, statuses, downloads, output, passed: true});
     await page.locator('#another-photo').click();
   }
   return {kind: 'processing-progress-ui', cases, passed: true};

@@ -42,13 +42,17 @@ export async function loadRuntime(forceCpu, progress, face = false, scale = SCAL
     progress({phase: 'initialize', title: 'loading_engine', detail: 'loading_engine_detail'});
     if (backend === 'webgpu') await requireGpuAdapter();
     ort = await importOrt(backend, execution);
-    progress({phase: 'download', title: modelTitle, detail: 'loading_cached_detail'});
-    const report = (fraction, receivedBytes) => progress({phase: 'download', progress: fraction * .45, receivedBytes, title: modelTitle, detail: 'stays_on_device'});
+    progress({phase: 'download', progress: 0, title: modelTitle, detail: 'loading_cached_detail'});
+    // One download indicator: the model takes 90%, the engine the final 10%.
+    const report = (fraction, receivedBytes) => progress({phase: 'download',
+      progress: fraction === undefined ? undefined : fraction * .9, receivedBytes, title: modelTitle, detail: 'stays_on_device'});
     const modelBytes = face ? await downloadFace(report) : await download(model, report);
     const binary = backend === 'webgpu' ? 'ort-wasm-simd-threaded.asyncify.wasm' : 'ort-wasm-simd-threaded.wasm';
     // Fetch separately to report download progress instead of presenting it as
     // model compilation. ORT reads the identical versioned URL from HTTP cache.
-    await download(`${ASSETS.runtime}/${binary}`, (fraction, receivedBytes) => progress({phase: 'download', progress: .45 + fraction * .55, receivedBytes, title: 'loading_engine', detail: 'loading_engine_detail'}), false);
+    progress({phase: 'download', progress: .9, title: modelTitle, detail: 'stays_on_device'});
+    await download(`${ASSETS.runtime}/${binary}`, (fraction, receivedBytes) => progress({phase: 'download',
+      progress: .9 + (fraction ?? 0) * .1, receivedBytes, title: modelTitle, detail: 'stays_on_device'}), false);
     progress({phase: 'initialize', title: 'initializing', detail: 'initializing_detail'});
     session = await ort.InferenceSession.create(modelBytes, {
       executionProviders: [backend], graphOptimizationLevel: 'disabled',
@@ -83,8 +87,16 @@ export async function download(url, onProgress = () => {}, retain = true) {
   let response;
   try { response = await fetch(url); } catch { throw new PhotoError('download', 'err_download'); }
   if (!response.ok) throw new PhotoError('download', 'err_unavailable');
-  const total = Number(response.headers.get('content-length'));
-  if (!response.body) return retain ? new Uint8Array(await response.arrayBuffer()) : undefined;
+  // A compressed response's Content-Length counts wire bytes, while fetch
+  // exposes decoded bytes. Without a comparable total, show an indeterminate
+  // download until it really completes instead of inventing a percentage.
+  const encoding = response.headers.get('content-encoding');
+  const total = encoding && encoding !== 'identity' ? 0 : Number(response.headers.get('content-length'));
+  if (!response.body) {
+    const bytes = new Uint8Array(await response.arrayBuffer());
+    onProgress(1, bytes.length);
+    return retain ? bytes : undefined;
+  }
   const reader = response.body.getReader();
   const chunks = [];
   let received = 0;
@@ -94,7 +106,7 @@ export async function download(url, onProgress = () => {}, retain = true) {
       if (done) break;
       received += value.length;
       if (retain) chunks.push(value);
-      onProgress(total > 0 ? Math.min(1, received / total) : 0, received);
+      onProgress(total > 0 ? Math.min(1, received / total) : undefined, received);
     }
   } catch { throw new PhotoError('download', 'err_interrupted'); }
   onProgress(1, received);
@@ -120,11 +132,12 @@ async function downloadFace(onProgress) {
         if (received + value.length > part.bytes) throw new Error('Oversized model part');
         bytes.set(value, offset + received);
         received += value.length;
-        onProgress((offset + received) / bytes.length);
+        onProgress((offset + received) / bytes.length, offset + received);
       }
       if (received !== part.bytes) throw new Error('Incomplete model part');
       offset += received;
     }
+    onProgress(1, offset);
     return bytes;
   } catch { throw new PhotoError('download', 'err_face_download'); }
 }

@@ -1,0 +1,127 @@
+{
+  "date": "2026-11-02",
+  "sourceSha256": "ba4755c2f3290ba408d5d02d351ba06eed9e2a7772b9f0c99134f368abe30af7",
+  "rootCause": "MediaPipe 1.0.1 UA detection does not accept CriOS without a Version/ token; implicit canvas creation tries document.createElement inside a worker.",
+  "fix": "Pass an explicit OffscreenCanvas to FaceLandmarker.createFromOptions and release its backing surface on close.",
+  "physicalDevice": {
+    "environment": {
+      "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 27_2_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/156.0.8078.54 Mobile/15E148 Safari/604.1",
+      "platform": "iPhone",
+      "language": "ru",
+      "cores": 4,
+      "isolated": true,
+      "secure": true,
+      "gpu": true,
+      "bitmap": "function",
+      "canvas": "function"
+    },
+    "baselineFailures": [
+      {
+        "message": "Can't find variable: document",
+        "stage": "face-error"
+      },
+      {
+        "message": "Can't find variable: document",
+        "stage": "face-error"
+      }
+    ],
+    "fixedResult": [
+      {
+        "type": "faces",
+        "detected": 2,
+        "catalogued": 2,
+        "enhanced": 2
+      },
+      {
+        "type": "done"
+      }
+    ],
+    "userConfirmedSuccess": true
+  },
+  "automatedBrowsers": [
+    {
+      "kind": "ios-chrome-face-ui",
+      "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 27_2_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/156.0.8078.54 Mobile/15E148 Safari/604.1",
+      "executions": [
+        {
+          "type": "faces",
+          "backend": "wasm",
+          "detected": 1,
+          "enhanced": 1
+        },
+        {
+          "type": "done",
+          "faceCount": 1,
+          "backend": "wasm",
+          "faceEnabled": true
+        }
+      ],
+      "output": {
+        "width": 640,
+        "height": 640,
+        "mime": "image/jpeg"
+      },
+      "passed": true,
+      "basic": {
+        "opaque": {
+          "passed": true,
+          "mismatches": 0
+        },
+        "faceAlpha": {
+          "passed": true,
+          "alphaError": 0,
+          "changed": 3024
+        }
+      },
+      "browser": "chromium",
+      "browserVersion": "151.0.7922.34",
+      "localPinnedFaceModel": true,
+      "errors": []
+    },
+    {
+      "kind": "ios-chrome-face-ui",
+      "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 27_2_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/156.0.8078.54 Mobile/15E148 Safari/604.1",
+      "executions": [
+        {
+          "type": "faces",
+          "backend": "wasm",
+          "detected": 1,
+          "enhanced": 1
+        },
+        {
+          "type": "done",
+          "faceCount": 1,
+          "backend": "wasm",
+          "faceEnabled": true
+        }
+      ],
+      "output": {
+        "width": 640,
+        "height": 640,
+        "mime": "image/jpeg"
+      },
+      "passed": true,
+      "basic": {
+        "opaque": {
+          "passed": true,
+          "mismatches": 0
+        },
+        "faceAlpha": {
+          "passed": true,
+          "alphaError": 0,
+          "changed": 3024
+        }
+      },
+      "browser": "webkit",
+      "browserVersion": "26.5",
+      "localPinnedFaceModel": true,
+      "errors": [],
+      "warnings": [
+        "ResizeObserver loop completed with undelivered notifications."
+      ]
+    }
+  ],
+  "toolTestsPassed": 90,
+  "productionBuildPages": 126,
+  "deploymentStatus": "awaiting explicit approval after automatic approval review rejected deployment"
+}

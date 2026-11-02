@@ -1,0 +1,70 @@
+{
+  "date": "2026-11-02",
+  "runtimeSha256": "2d5c2d5b8e46a7a666057ad79c4e27a45ba0666264e5ff85e58623dfbf43678d",
+  "policy": {
+    "model": 0.9,
+    "engine": 0.1,
+    "singleDownloadStage": true
+  },
+  "browsers": [
+    {
+      "browser": "chromium",
+      "version": "151.0.7922.34",
+      "passed": true,
+      "downloads": [
+        [
+          {
+            "title": "loading_upscaler",
+            "start": 0,
+            "end": 1,
+            "samples": 230
+          }
+        ],
+        [
+          {
+            "title": "loading_upscaler",
+            "start": 0,
+            "end": 1,
+            "samples": 160
+          }
+        ]
+      ],
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "browser": "webkit",
+      "version": "26.5",
+      "passed": true,
+      "downloads": [
+        {
+          "title": "loading_faces",
+          "start": 0,
+          "end": 1,
+          "samples": 83
+        },
+        {
+          "title": "loading_upscaler",
+          "start": 0,
+          "end": 1,
+          "samples": 128
+        }
+      ],
+      "errors": [],
+      "warnings": [
+        "ResizeObserver loop completed with undelivered notifications."
+      ]
+    }
+  ],
+  "streamChecks": [
+    "known Content-Length",
+    "missing Content-Length",
+    "compressed Content-Length",
+    "response without a readable body"
+  ],
+  "productionPackage": {
+    "files": 345,
+    "pages": 126,
+    "published": false
+  }
+}

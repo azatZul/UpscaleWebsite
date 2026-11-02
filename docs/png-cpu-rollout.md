@@ -71,6 +71,25 @@ JPEG и прозрачного PNG. Она воспроизводит ошибк
 прогресса, мобильная раскладка store badges и счётчик 1686 отзывов.
 Cloudflare version: `3074c4c6-6f2d-4698-8b71-208681f633de`.
 
+Отдельная ошибка Chrome на iOS исправлена локально 2 ноября: MediaPipe 1.0.1
+считал `CriOS/... Safari/...` без `Version/` браузером без OffscreenCanvas и
+обращался к `document.createElement` внутри worker. Теперь граф FaceLandmarker
+получает явный OffscreenCanvas. На физическом iPhone / iOS 27.2.0 / Chrome 156
+два исходных запуска падали с `Can't find variable: document`; после исправления
+обнаружены и улучшены оба лица, готовое изображение получено и подтверждено
+пользователем. [Отчёт](../benchmarks/browser/2026-11-02/ios-chrome-faces.json)
+содержит также полный UI-тест с этим User-Agent в Chromium и WebKit. Проверка
+требует реальных landmarks/GFPGAN и готового JPEG; подмена только движка
+браузера без User-Agent эту ошибку не воспроизводила.
+
+Индикатор скачивания модели также скорректирован локально: вместо прежних
+45% на веса и 55% на движок используются 90% + 10%, с одной подписью и без
+нового этапа. Поэтому закэшированный движок больше не создаёт скачок с
+половины шкалы до завершения. Если Content-Length отсутствует или относится
+к сжатому HTTP-ответу, процент не выдумывается; полученные байты продолжают
+обновлять watchdog. Проверки `progress` и `ios-faces` проверяют отображаемые
+значения, достижение 90% и 100% и отсутствие отдельного этапа движка.
+
 ```sh
 npm run test:tool
 python3 -m unittest discover -s tests -p 'test_ios*.py'
@@ -86,6 +105,7 @@ node scripts/check_browser_processing.mjs --suite face-png --local-face-model
 node scripts/check_browser_processing.mjs --suite recovery
 node scripts/check_browser_processing.mjs --suite ui
 node scripts/check_browser_processing.mjs --suite progress
+node scripts/check_browser_processing.mjs --suite ios-faces --local-face-model
 node scripts/check_browser_processing.mjs --suite regressions --local-face-model
 node scripts/check_browser_processing.mjs --suite thread-cache --local-face-model
 node scripts/check_browser_processing.mjs --suite drawing-ablation

@@ -53,7 +53,12 @@ async function enhance(bitmap, transforms, cpuOnly, onRuntime, hasTransparency, 
 // and enhanced without being asked.
 async function catalogFaces(bitmap, found, hasTransparency) {
   const {FaceLandmarker, FilesetResolver} = await import(/* @vite-ignore */ `${ASSETS.vision}/vision_bundle.mjs`);
+  // MediaPipe's Safari UA check rejects CriOS (no Version/ token), then tries
+  // document.createElement inside this worker. An explicit canvas avoids that
+  // browser sniff and keeps the landmark graph on the supported worker path.
+  const graphCanvas = new OffscreenCanvas(1, 1);
   const landmarker = await FaceLandmarker.createFromOptions(await FilesetResolver.forVisionTasks(`${ASSETS.vision}/wasm`), {
+    canvas: graphCanvas,
     baseOptions: {modelAssetPath: ASSETS.faceDetector, delegate: 'CPU'},
     runningMode: 'IMAGE', numFaces: 1,
     minFaceDetectionConfidence: .5, minFacePresenceConfidence: .5,
@@ -93,6 +98,7 @@ async function catalogFaces(bitmap, found, hasTransparency) {
     }
   } finally {
     landmarker.close();
+    graphCanvas.width = graphCanvas.height = 1;
     cropCanvas.width = cropCanvas.height = 1;
   }
   return faces;

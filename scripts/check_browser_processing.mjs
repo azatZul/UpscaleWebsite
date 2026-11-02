@@ -11,6 +11,7 @@ import {fileURLToPath} from 'node:url';
 import {checkProcessingRegressions} from './check_processing_regressions.mjs';
 import {checkThreadCacheRegressions} from './check_thread_cache_regressions.mjs';
 import {checkProcessingProgress} from './check_processing_progress.mjs';
+import {checkIosFaces, IOS_CHROME_UA} from './check_ios_faces.mjs';
 
 const {values} = parseArgs({options: {
   browser: {type: 'string', default: 'chromium'}, suite: {type: 'string', default: 'png'},
@@ -19,8 +20,8 @@ const {values} = parseArgs({options: {
   runs: {type: 'string', default: '5'}, pause: {type: 'string'}, 'local-face-model': {type: 'boolean', default: false},
   detect: {type: 'boolean', default: false},
 }});
-if (!['chromium', 'firefox', 'webkit'].includes(values.browser) || !['png', 'cpu', 'ui', 'progress', 'faces', 'recovery', 'face-png', 'drawing-ablation', 'regressions', 'thread-cache'].includes(values.suite)) {
-  throw new Error('Use --browser chromium|firefox|webkit --suite png|cpu|ui|progress|faces|recovery|face-png|drawing-ablation|regressions|thread-cache');
+if (!['chromium', 'firefox', 'webkit'].includes(values.browser) || !['png', 'cpu', 'ui', 'progress', 'ios-faces', 'faces', 'recovery', 'face-png', 'drawing-ablation', 'regressions', 'thread-cache'].includes(values.suite)) {
+  throw new Error('Use --browser chromium|firefox|webkit --suite png|cpu|ui|progress|ios-faces|faces|recovery|face-png|drawing-ablation|regressions|thread-cache');
 }
 const output = resolve(values.output || `.web-model-work/browser-reports/${values.suite}-${values.browser}.json`);
 await mkdir(dirname(output), {recursive: true});
@@ -30,9 +31,16 @@ const playwright = await import(process.env.USCALE_PLAYWRIGHT_MODULE || 'playwri
 const browser = await playwright[values.browser].launch({headless: true,
   ...(values.browser === 'chromium' && values.suite === 'regressions'
     ? {args: ['--enable-unsafe-webgpu', ...(process.platform === 'darwin' ? ['--use-angle=metal'] : [])]} : {})});
-const page = await browser.newPage({viewport: {width: 1280, height: 1000}});
-const errors = [];
-page.on('pageerror', error => errors.push(error.message));
+const page = await browser.newPage(values.suite === 'ios-faces'
+  ? {userAgent: IOS_CHROME_UA, viewport: {width: 393, height: 852}, isMobile: true, hasTouch: true}
+  : {viewport: {width: 1280, height: 1000}});
+const errors = [], warnings = [];
+page.on('pageerror', error => {
+  // WebKit reports deferred ResizeObserver notifications as page errors,
+  // without a thrown JS exception. Preserve this known warning separately.
+  (values.browser === 'webkit' && error.message === 'ResizeObserver loop completed with undelivered notifications.'
+    ? warnings : errors).push(error.message);
+});
 let localFaceModel = false;
 let modelServer;
 if (values['local-face-model']) {
@@ -76,7 +84,9 @@ try {
   await page.waitForFunction(() => window.uscaleProductLab);
   const basic = await page.evaluate(async () => ({opaque: await uscaleProductLab.verifyOpaqueInputParity(),
     faceAlpha: await uscaleProductLab.verifyFaceAlpha()}));
-  if (values.suite === 'progress') {
+  if (values.suite === 'ios-faces') {
+    report = await checkIosFaces(page, values.url);
+  } else if (values.suite === 'progress') {
     report = await checkProcessingProgress(page, values.url);
   } else if (values.suite === 'regressions') {
     report = await checkProcessingRegressions(page, values.url);
@@ -175,8 +185,8 @@ try {
     report = {kind: 'product-ui', png, jpeg, cancelled, passed: jpeg.filename.endsWith('.jpg') && jpeg.mime === 'image/jpeg' && jpeg.summary.includes('JPEG') && png.filename.endsWith('.png') && png.mime === 'image/png' && png.summary.includes('PNG') && png.checkerboard && cancelled};
   }
   report = {...report, basic, browser: values.browser, browserVersion: browser.version(),
-    localPinnedFaceModel: localFaceModel, errors, passed: report.passed && basic.opaque.passed && basic.faceAlpha.passed && !errors.length};
-  console.log(JSON.stringify({passed: report.passed, cases: report.cases?.length, summary: report.summary, winner: report.winner, errors}));
+    localPinnedFaceModel: localFaceModel, errors, warnings, passed: report.passed && basic.opaque.passed && basic.faceAlpha.passed && !errors.length};
+  console.log(JSON.stringify({passed: report.passed, cases: report.cases?.length, summary: report.summary, winner: report.winner, errors, warnings}));
 } catch (error) {
   report = {passed: false, browser: values.browser, suite: values.suite, errors, error: error.stack};
   console.error(error.message);
