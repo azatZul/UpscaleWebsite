@@ -33,7 +33,7 @@ Mobile Lighthouse, three cold-load runs per page. Medians below; all settings, t
 - Both HTTP and HTTPS www tested: one 301 to canonical HTTPS retaining path and query. Rollback: disable the newly created rule and remove only the new www record.
 - Crawler settings before: Search Allow, Training Disallow, Agents Allow, Bot Preference Sync on. AI Crawl Control shows Baidu block off; PetalBot inherits Training policy. No broad WAF exceptions were added.
 - Original public robots response: `robots-before.txt`; UA probes: `bot-access-before.json`. UA probes cannot establish verified-bot treatment.
-- `build/crawler-policy.json` retains every original explicit Disallow except Baiduspider/PetalBot; Bot Preference Sync must be switched off only after this file is live, preserving the Training policy and verifying other crawler responses. If enforcement changes unexpectedly, restore Sync immediately.
+- `build/crawler-policy.json` retains every original explicit Disallow except Baiduspider/PetalBot; Bot Preference Sync was switched off after the source robots file was live. Confirmed Search Allow / Training Disallow / Agents Allow remain unchanged. Public robots has one general group and preserves all 30 other explicit restrictions. UA responses before/after are identical (including ClaudeBot 403); these probes do not verify real-bot classification. See `robots-after.txt` and `bot-access-after.json`.
 - After managing robots in source, review newly introduced crawlers manually; Cloudflare no longer supplies automatic robots additions.
 
 ## Attribution
@@ -56,3 +56,14 @@ Search Console Indexing report captured before publication, last updated 2026-10
 
 
 Release A published to production on 2026-11-05, commit `d58798e`, version `e4078899-f631-4286-84c6-d6f107e73102`. All 141 production routing checks passed (`production-a-routes.json`). Earliest B publication: 2026-11-12 after the actual A deployment time; earliest C: seven full days after B. Rollback A: `cd worker && npx wrangler rollback d51aac33-9782-4999-92c3-f999889a1cb9 --env production`; restore separately changed Cloudflare settings if appropriate.
+
+
+## Prepared release B (not published to production)
+
+Responsive variants cover hero, frame, guide cards, showcase, comparisons and tool mode previews. Sizes follow the existing CSS, candidates never upscale a source. WebP quality 90; if it would exceed the original byte size, the original is retained as the candidate. Original files remain available. Hero alternatives load on pointer/focus/selection rather than on page load. Both before/after candidates are updated when switching; crossfade still discards stale requests. No critical CSS or photo processing changes. No extra hero preload: there was no measured need with a baseline home LCP around one second.
+
+The first hero result uses 960 px / 89,470 bytes on a 390px DPR2 device, compared with the previous 222,206-byte original. On 1440px DPR1 it selects 1440px. Keyboard/touch switching and absence of unsolicited alternate loads passed (`images-browser-qa.json`). A separate existing browser processing UI suite passed for import/process/PNG download with no errors (`processing-ui.json`).
+
+After A, the same 15 production mobile Lighthouse runs have median LCP: home 1.12s, Russian home 1.09s, tool 3.41s, guide 2.05s, gallery 2.08s. CLS is zero for all. The tool still exceeds the 2.5s LCP target; no field INP conclusion is available. These are lab observations, not a causal SEO outcome (`performance-after-a.json`).
+
+B staging version `da86f663-eed8-4bd1-ba34-65dee2323241`; 141 routing checks passed before the final tool-preview-only asset addition, and final production build/model gates passed. Run reusable browser checks with an installed Playwright runtime: `USCALE_PLAYWRIGHT_MODULE=/path/to/playwright/index.mjs USCALE_TEST_CHANNEL=chrome node scripts/check_image_delivery.mjs` and `node scripts/check_404_browser.mjs` with the same environment. Set `USCALE_TEST_ORIGIN` to staging when required.

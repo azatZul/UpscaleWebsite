@@ -19,6 +19,7 @@ if sys.version_info < (3, 8):
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import localization_catalog
 from store_links import campaign_for, store_link
+from responsive_images import responsive_markup
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIST = os.path.join(ROOT, "dist")
@@ -342,7 +343,7 @@ def hero_phone(c, h):
     switch = (f'<div class="phone-dots" role="group" aria-label="{esc(h["shots_label"])}">'
               f'{dots}</div>') if len(HERO_SHOTS) > 1 else ""
     return f"""<div class="hero-stage">
-      <div class="phone cmp-wrap" data-follow="1" data-preload="1">
+      <div class="phone cmp-wrap" data-follow="1">
         <span class="phone-halo" aria-hidden="true"></span>
         <span class="phone-cast" aria-hidden="true"></span>
         <div class="phone-body">
@@ -617,7 +618,7 @@ def write(path, html):
     full = os.path.join(DIST, path)
     os.makedirs(os.path.dirname(full), exist_ok=True)
     with open(full, "w", encoding="utf-8") as f:
-        f.write(html)
+        f.write(responsive_markup(html))
 
 # Exclude OS metadata from published assets.
 # face_512.onnx is served from R2 (see src/tool/face-model.json), and at 85 MB it

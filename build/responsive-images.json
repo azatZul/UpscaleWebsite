@@ -1,0 +1,1573 @@
+{
+  "/resources/before_after/after_1.jpg": {
+    "width": 2732,
+    "height": 2328,
+    "original_bytes": 491134,
+    "variants": [
+      {
+        "src": "/resources/responsive/after_1-0411159dc7e7-480.webp",
+        "width": 480,
+        "height": 409,
+        "bytes": 30858
+      },
+      {
+        "src": "/resources/responsive/after_1-0411159dc7e7-960.webp",
+        "width": 960,
+        "height": 818,
+        "bytes": 79886
+      },
+      {
+        "src": "/resources/responsive/after_1-0411159dc7e7-1440.webp",
+        "width": 1440,
+        "height": 1227,
+        "bytes": 132598
+      },
+      {
+        "src": "/resources/responsive/after_1-0411159dc7e7-1920.webp",
+        "width": 1920,
+        "height": 1636,
+        "bytes": 189324
+      }
+    ]
+  },
+  "/resources/before_after/after_2.jpg": {
+    "width": 3284,
+    "height": 2188,
+    "original_bytes": 419572,
+    "variants": [
+      {
+        "src": "/resources/responsive/after_2-1e25b75f2cd3-480.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 20246
+      },
+      {
+        "src": "/resources/responsive/after_2-1e25b75f2cd3-960.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 57352
+      },
+      {
+        "src": "/resources/responsive/after_2-1e25b75f2cd3-1440.webp",
+        "width": 1440,
+        "height": 959,
+        "bytes": 95624
+      },
+      {
+        "src": "/resources/responsive/after_2-1e25b75f2cd3-1920.webp",
+        "width": 1920,
+        "height": 1279,
+        "bytes": 137388
+      }
+    ]
+  },
+  "/resources/before_after/anime_after_thumb.jpg": {
+    "width": 360,
+    "height": 270,
+    "original_bytes": 15946,
+    "variants": [
+      {
+        "src": "/resources/responsive/anime_after_thumb-4aab75773aaa-360.webp",
+        "width": 360,
+        "height": 270,
+        "bytes": 9094
+      }
+    ]
+  },
+  "/resources/before_after/anime_thumb.jpg": {
+    "width": 360,
+    "height": 270,
+    "original_bytes": 13240,
+    "variants": [
+      {
+        "src": "/resources/responsive/anime_thumb-cc0262976344-360.webp",
+        "width": 360,
+        "height": 270,
+        "bytes": 6292
+      }
+    ]
+  },
+  "/resources/before_after/before_1.jpg": {
+    "width": 683,
+    "height": 582,
+    "original_bytes": 71207,
+    "variants": [
+      {
+        "src": "/resources/responsive/before_1-72ffea8c9d13-480.webp",
+        "width": 480,
+        "height": 409,
+        "bytes": 32216
+      },
+      {
+        "src": "/resources/responsive/before_1-72ffea8c9d13-683.webp",
+        "width": 683,
+        "height": 582,
+        "bytes": 55116
+      }
+    ]
+  },
+  "/resources/before_after/before_2.jpg": {
+    "width": 821,
+    "height": 547,
+    "original_bytes": 59214,
+    "variants": [
+      {
+        "src": "/resources/responsive/before_2-c15cfa539016-480.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 20618
+      },
+      {
+        "src": "/resources/responsive/before_2-c15cfa539016-821.webp",
+        "width": 821,
+        "height": 547,
+        "bytes": 46180
+      }
+    ]
+  },
+  "/resources/before_after/brighten_after_thumb.jpg": {
+    "width": 360,
+    "height": 270,
+    "original_bytes": 25136,
+    "variants": [
+      {
+        "src": "/resources/responsive/brighten_after_thumb-6cd28b0f013b-360.webp",
+        "width": 360,
+        "height": 270,
+        "bytes": 18800
+      }
+    ]
+  },
+  "/resources/before_after/brighten_thumb.jpg": {
+    "width": 360,
+    "height": 270,
+    "original_bytes": 14884,
+    "variants": [
+      {
+        "src": "/resources/responsive/brighten_thumb-0df39e611117-360.webp",
+        "width": 360,
+        "height": 270,
+        "bytes": 7944
+      }
+    ]
+  },
+  "/resources/before_after/dark_after.jpg": {
+    "width": 3218,
+    "height": 2146,
+    "original_bytes": 700055,
+    "variants": [
+      {
+        "src": "/resources/responsive/dark_after-8a374e19d01c-480.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 30052
+      },
+      {
+        "src": "/resources/responsive/dark_after-8a374e19d01c-960.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 85980
+      },
+      {
+        "src": "/resources/responsive/dark_after-8a374e19d01c-1440.webp",
+        "width": 1440,
+        "height": 960,
+        "bytes": 154288
+      },
+      {
+        "src": "/resources/responsive/dark_after-8a374e19d01c-1920.webp",
+        "width": 1920,
+        "height": 1280,
+        "bytes": 246350
+      }
+    ]
+  },
+  "/resources/before_after/dark_before.jpg": {
+    "width": 3218,
+    "height": 2146,
+    "original_bytes": 240226,
+    "variants": [
+      {
+        "src": "/resources/responsive/dark_before-fda5f7c18aa7-480.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 11630
+      },
+      {
+        "src": "/resources/responsive/dark_before-fda5f7c18aa7-960.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 29172
+      },
+      {
+        "src": "/resources/responsive/dark_before-fda5f7c18aa7-1440.webp",
+        "width": 1440,
+        "height": 960,
+        "bytes": 52128
+      },
+      {
+        "src": "/resources/responsive/dark_before-fda5f7c18aa7-1920.webp",
+        "width": 1920,
+        "height": 1280,
+        "bytes": 83500
+      }
+    ]
+  },
+  "/resources/before_after/film_negative_after.jpg": {
+    "width": 4788,
+    "height": 3415,
+    "original_bytes": 2066308,
+    "variants": [
+      {
+        "src": "/resources/responsive/film_negative_after-5d3536d8039c-480.webp",
+        "width": 480,
+        "height": 342,
+        "bytes": 46248
+      },
+      {
+        "src": "/resources/responsive/film_negative_after-5d3536d8039c-960.webp",
+        "width": 960,
+        "height": 685,
+        "bytes": 145254
+      },
+      {
+        "src": "/resources/responsive/film_negative_after-5d3536d8039c-1440.webp",
+        "width": 1440,
+        "height": 1027,
+        "bytes": 283978
+      },
+      {
+        "src": "/resources/responsive/film_negative_after-5d3536d8039c-1920.webp",
+        "width": 1920,
+        "height": 1369,
+        "bytes": 465252
+      }
+    ]
+  },
+  "/resources/before_after/film_negative_after_thumb.jpg": {
+    "width": 360,
+    "height": 270,
+    "original_bytes": 31707,
+    "variants": [
+      {
+        "src": "/resources/responsive/film_negative_after_thumb-3b0b4b03cfca-360.webp",
+        "width": 360,
+        "height": 270,
+        "bytes": 25320
+      }
+    ]
+  },
+  "/resources/before_after/film_negative_before.jpg": {
+    "width": 1000,
+    "height": 713,
+    "original_bytes": 315032,
+    "variants": [
+      {
+        "src": "/resources/responsive/film_negative_before-87f833ab4abc-480.webp",
+        "width": 480,
+        "height": 342,
+        "bytes": 26004
+      },
+      {
+        "src": "/resources/responsive/film_negative_before-87f833ab4abc-960.webp",
+        "width": 960,
+        "height": 684,
+        "bytes": 67058
+      },
+      {
+        "src": "/resources/responsive/film_negative_before-87f833ab4abc-1000.webp",
+        "width": 1000,
+        "height": 713,
+        "bytes": 71280
+      }
+    ]
+  },
+  "/resources/before_after/film_negative_thumb.jpg": {
+    "width": 360,
+    "height": 270,
+    "original_bytes": 24369,
+    "variants": [
+      {
+        "src": "/resources/responsive/film_negative_thumb-3a821bd92d45-360.webp",
+        "width": 360,
+        "height": 270,
+        "bytes": 16492
+      }
+    ]
+  },
+  "/resources/before_after/girls_after.jpg": {
+    "width": 3010,
+    "height": 2006,
+    "original_bytes": 760193,
+    "variants": [
+      {
+        "src": "/resources/responsive/girls_after-68d566a8250f-480.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 53048
+      },
+      {
+        "src": "/resources/responsive/girls_after-68d566a8250f-960.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 153154
+      },
+      {
+        "src": "/resources/responsive/girls_after-68d566a8250f-1440.webp",
+        "width": 1440,
+        "height": 960,
+        "bytes": 268138
+      },
+      {
+        "src": "/resources/responsive/girls_after-68d566a8250f-1920.webp",
+        "width": 1920,
+        "height": 1280,
+        "bytes": 392830
+      }
+    ]
+  },
+  "/resources/before_after/girls_before.jpg": {
+    "width": 840,
+    "height": 560,
+    "original_bytes": 78460,
+    "variants": [
+      {
+        "src": "/resources/responsive/girls_before-ea71c8c391bf-480.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 40880
+      },
+      {
+        "src": "/resources/responsive/girls_before-ea71c8c391bf-840.webp",
+        "width": 840,
+        "height": 560,
+        "bytes": 76912
+      }
+    ]
+  },
+  "/resources/before_after/girls_thumb.jpg": {
+    "width": 360,
+    "height": 270,
+    "original_bytes": 25443,
+    "variants": [
+      {
+        "src": "/resources/before_after/girls_thumb.jpg",
+        "width": 360,
+        "height": 270,
+        "bytes": 25443
+      }
+    ]
+  },
+  "/resources/before_after/hero_anime_after.jpg": {
+    "width": 2000,
+    "height": 1518,
+    "original_bytes": 93929,
+    "variants": [
+      {
+        "src": "/resources/responsive/hero_anime_after-dcb9d7744f75-480.webp",
+        "width": 480,
+        "height": 364,
+        "bytes": 13758
+      },
+      {
+        "src": "/resources/responsive/hero_anime_after-dcb9d7744f75-960.webp",
+        "width": 960,
+        "height": 729,
+        "bytes": 35602
+      },
+      {
+        "src": "/resources/responsive/hero_anime_after-dcb9d7744f75-1440.webp",
+        "width": 1440,
+        "height": 1093,
+        "bytes": 60802
+      },
+      {
+        "src": "/resources/responsive/hero_anime_after-dcb9d7744f75-1920.webp",
+        "width": 1920,
+        "height": 1457,
+        "bytes": 88646
+      }
+    ]
+  },
+  "/resources/before_after/hero_anime_before.jpg": {
+    "width": 606,
+    "height": 460,
+    "original_bytes": 17942,
+    "variants": [
+      {
+        "src": "/resources/responsive/hero_anime_before-8ea31b845308-480.webp",
+        "width": 480,
+        "height": 364,
+        "bytes": 8686
+      },
+      {
+        "src": "/resources/responsive/hero_anime_before-8ea31b845308-606.webp",
+        "width": 606,
+        "height": 460,
+        "bytes": 11488
+      }
+    ]
+  },
+  "/resources/before_after/hero_girls_play_after.jpeg": {
+    "width": 2508,
+    "height": 1672,
+    "original_bytes": 489484,
+    "variants": [
+      {
+        "src": "/resources/responsive/hero_girls_play_after-26aa82da7cc7-480.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 45966
+      },
+      {
+        "src": "/resources/responsive/hero_girls_play_after-26aa82da7cc7-960.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 125088
+      },
+      {
+        "src": "/resources/responsive/hero_girls_play_after-26aa82da7cc7-1440.webp",
+        "width": 1440,
+        "height": 960,
+        "bytes": 217802
+      },
+      {
+        "src": "/resources/responsive/hero_girls_play_after-26aa82da7cc7-1920.webp",
+        "width": 1920,
+        "height": 1280,
+        "bytes": 319132
+      }
+    ]
+  },
+  "/resources/before_after/hero_girls_play_before.jpg": {
+    "width": 840,
+    "height": 560,
+    "original_bytes": 59112,
+    "variants": [
+      {
+        "src": "/resources/responsive/hero_girls_play_before-e1220a6030a8-480.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 28516
+      },
+      {
+        "src": "/resources/responsive/hero_girls_play_before-e1220a6030a8-840.webp",
+        "width": 840,
+        "height": 560,
+        "bytes": 52792
+      }
+    ]
+  },
+  "/resources/before_after/hero_spiderman_after.jpg": {
+    "width": 2000,
+    "height": 1118,
+    "original_bytes": 222206,
+    "variants": [
+      {
+        "src": "/resources/responsive/hero_spiderman_after-1ba8afc803a4-480.webp",
+        "width": 480,
+        "height": 268,
+        "bytes": 30804
+      },
+      {
+        "src": "/resources/responsive/hero_spiderman_after-1ba8afc803a4-960.webp",
+        "width": 960,
+        "height": 537,
+        "bytes": 89470
+      },
+      {
+        "src": "/resources/responsive/hero_spiderman_after-1ba8afc803a4-1440.webp",
+        "width": 1440,
+        "height": 805,
+        "bytes": 169124
+      },
+      {
+        "src": "/resources/before_after/hero_spiderman_after.jpg",
+        "width": 2000,
+        "height": 1118,
+        "bytes": 222206
+      }
+    ]
+  },
+  "/resources/before_after/hero_spiderman_before.jpg": {
+    "width": 823,
+    "height": 460,
+    "original_bytes": 55762,
+    "variants": [
+      {
+        "src": "/resources/responsive/hero_spiderman_before-c2e7d9ffc451-480.webp",
+        "width": 480,
+        "height": 268,
+        "bytes": 23296
+      },
+      {
+        "src": "/resources/responsive/hero_spiderman_before-c2e7d9ffc451-823.webp",
+        "width": 823,
+        "height": 460,
+        "bytes": 41292
+      }
+    ]
+  },
+  "/resources/before_after/lowq_portrait_after.jpg": {
+    "width": 1200,
+    "height": 1080,
+    "original_bytes": 151926,
+    "variants": [
+      {
+        "src": "/resources/responsive/lowq_portrait_after-56f3ce7bcecc-480.webp",
+        "width": 480,
+        "height": 432,
+        "bytes": 26700
+      },
+      {
+        "src": "/resources/responsive/lowq_portrait_after-56f3ce7bcecc-960.webp",
+        "width": 960,
+        "height": 864,
+        "bytes": 81342
+      },
+      {
+        "src": "/resources/responsive/lowq_portrait_after-56f3ce7bcecc-1200.webp",
+        "width": 1200,
+        "height": 1080,
+        "bytes": 116626
+      }
+    ]
+  },
+  "/resources/before_after/lowq_portrait_after_thumb.jpg": {
+    "width": 360,
+    "height": 270,
+    "original_bytes": 21647,
+    "variants": [
+      {
+        "src": "/resources/responsive/lowq_portrait_after_thumb-a8c62ad91e68-360.webp",
+        "width": 360,
+        "height": 270,
+        "bytes": 14658
+      }
+    ]
+  },
+  "/resources/before_after/lowq_portrait_before.jpg": {
+    "width": 400,
+    "height": 360,
+    "original_bytes": 18640,
+    "variants": [
+      {
+        "src": "/resources/responsive/lowq_portrait_before-c46ee0e63fd5-400.webp",
+        "width": 400,
+        "height": 360,
+        "bytes": 14408
+      }
+    ]
+  },
+  "/resources/before_after/lowq_portrait_thumb.jpg": {
+    "width": 360,
+    "height": 270,
+    "original_bytes": 17651,
+    "variants": [
+      {
+        "src": "/resources/responsive/lowq_portrait_thumb-6262934f3584-360.webp",
+        "width": 360,
+        "height": 270,
+        "bytes": 10512
+      }
+    ]
+  },
+  "/resources/before_after/negative_demo_off.jpg": {
+    "width": 1024,
+    "height": 757,
+    "original_bytes": 109803,
+    "variants": [
+      {
+        "src": "/resources/responsive/negative_demo_off-850716bd9740-480.webp",
+        "width": 480,
+        "height": 355,
+        "bytes": 28070
+      },
+      {
+        "src": "/resources/responsive/negative_demo_off-850716bd9740-960.webp",
+        "width": 960,
+        "height": 710,
+        "bytes": 103696
+      },
+      {
+        "src": "/resources/responsive/negative_demo_off-850716bd9740-1024.webp",
+        "width": 1024,
+        "height": 757,
+        "bytes": 109184
+      }
+    ]
+  },
+  "/resources/before_after/negative_demo_on.jpg": {
+    "width": 1024,
+    "height": 757,
+    "original_bytes": 113811,
+    "variants": [
+      {
+        "src": "/resources/responsive/negative_demo_on-0b8b6adf44d6-480.webp",
+        "width": 480,
+        "height": 355,
+        "bytes": 37736
+      },
+      {
+        "src": "/resources/before_after/negative_demo_on.jpg",
+        "width": 1024,
+        "height": 757,
+        "bytes": 113811
+      }
+    ]
+  },
+  "/resources/before_after/preview_3.jpg": {
+    "width": 641,
+    "height": 360,
+    "original_bytes": 20993,
+    "variants": [
+      {
+        "src": "/resources/responsive/preview_3-c3835c529cd7-480.webp",
+        "width": 480,
+        "height": 270,
+        "bytes": 9212
+      },
+      {
+        "src": "/resources/responsive/preview_3-c3835c529cd7-641.webp",
+        "width": 641,
+        "height": 360,
+        "bytes": 13152
+      }
+    ]
+  },
+  "/resources/before_after/preview_4.jpg": {
+    "width": 1280,
+    "height": 942,
+    "original_bytes": 145673,
+    "variants": [
+      {
+        "src": "/resources/responsive/preview_4-86c228db75e9-480.webp",
+        "width": 480,
+        "height": 353,
+        "bytes": 13568
+      },
+      {
+        "src": "/resources/responsive/preview_4-86c228db75e9-960.webp",
+        "width": 960,
+        "height": 706,
+        "bytes": 30312
+      },
+      {
+        "src": "/resources/responsive/preview_4-86c228db75e9-1280.webp",
+        "width": 1280,
+        "height": 942,
+        "bytes": 42022
+      }
+    ]
+  },
+  "/resources/before_after/restore_family_after.jpg": {
+    "width": 1200,
+    "height": 1600,
+    "original_bytes": 371533,
+    "variants": [
+      {
+        "src": "/resources/responsive/restore_family_after-d4fbdbe6bbd8-480.webp",
+        "width": 480,
+        "height": 640,
+        "bytes": 94638
+      },
+      {
+        "src": "/resources/responsive/restore_family_after-d4fbdbe6bbd8-960.webp",
+        "width": 960,
+        "height": 1280,
+        "bytes": 301120
+      },
+      {
+        "src": "/resources/before_after/restore_family_after.jpg",
+        "width": 1200,
+        "height": 1600,
+        "bytes": 371533
+      }
+    ]
+  },
+  "/resources/before_after/restore_family_after_thumb.jpg": {
+    "width": 360,
+    "height": 270,
+    "original_bytes": 42582,
+    "variants": [
+      {
+        "src": "/resources/responsive/restore_family_after_thumb-df8537fd14be-360.webp",
+        "width": 360,
+        "height": 270,
+        "bytes": 35908
+      }
+    ]
+  },
+  "/resources/before_after/restore_family_before.jpg": {
+    "width": 900,
+    "height": 1200,
+    "original_bytes": 129498,
+    "variants": [
+      {
+        "src": "/resources/responsive/restore_family_before-1fb9a0ed546d-480.webp",
+        "width": 480,
+        "height": 640,
+        "bytes": 52050
+      },
+      {
+        "src": "/resources/responsive/restore_family_before-1fb9a0ed546d-900.webp",
+        "width": 900,
+        "height": 1200,
+        "bytes": 107202
+      }
+    ]
+  },
+  "/resources/before_after/restore_family_thumb.jpg": {
+    "width": 360,
+    "height": 270,
+    "original_bytes": 32320,
+    "variants": [
+      {
+        "src": "/resources/responsive/restore_family_thumb-7448766bd55a-360.webp",
+        "width": 360,
+        "height": 270,
+        "bytes": 23558
+      }
+    ]
+  },
+  "/resources/before_after/restore_kids_after.jpg": {
+    "width": 1200,
+    "height": 1120,
+    "original_bytes": 205820,
+    "variants": [
+      {
+        "src": "/resources/responsive/restore_kids_after-29d6d321e42b-480.webp",
+        "width": 480,
+        "height": 448,
+        "bytes": 43852
+      },
+      {
+        "src": "/resources/responsive/restore_kids_after-29d6d321e42b-960.webp",
+        "width": 960,
+        "height": 896,
+        "bytes": 139106
+      },
+      {
+        "src": "/resources/responsive/restore_kids_after-29d6d321e42b-1200.webp",
+        "width": 1200,
+        "height": 1120,
+        "bytes": 193456
+      }
+    ]
+  },
+  "/resources/before_after/restore_kids_before.jpg": {
+    "width": 900,
+    "height": 840,
+    "original_bytes": 118989,
+    "variants": [
+      {
+        "src": "/resources/responsive/restore_kids_before-e536fde00ec0-480.webp",
+        "width": 480,
+        "height": 448,
+        "bytes": 43032
+      },
+      {
+        "src": "/resources/responsive/restore_kids_before-e536fde00ec0-900.webp",
+        "width": 900,
+        "height": 840,
+        "bytes": 111374
+      }
+    ]
+  },
+  "/resources/before_after/restore_kids_thumb.jpg": {
+    "width": 360,
+    "height": 270,
+    "original_bytes": 32555,
+    "variants": [
+      {
+        "src": "/resources/responsive/restore_kids_thumb-92c0ccc6906b-360.webp",
+        "width": 360,
+        "height": 270,
+        "bytes": 21702
+      }
+    ]
+  },
+  "/resources/before_after/restore_portrait_after.jpg": {
+    "width": 1200,
+    "height": 1600,
+    "original_bytes": 209958,
+    "variants": [
+      {
+        "src": "/resources/responsive/restore_portrait_after-0e32bf537eaa-480.webp",
+        "width": 480,
+        "height": 640,
+        "bytes": 48188
+      },
+      {
+        "src": "/resources/responsive/restore_portrait_after-0e32bf537eaa-960.webp",
+        "width": 960,
+        "height": 1280,
+        "bytes": 137474
+      },
+      {
+        "src": "/resources/responsive/restore_portrait_after-0e32bf537eaa-1200.webp",
+        "width": 1200,
+        "height": 1600,
+        "bytes": 192864
+      }
+    ]
+  },
+  "/resources/before_after/restore_portrait_after_thumb.jpg": {
+    "width": 360,
+    "height": 270,
+    "original_bytes": 25441,
+    "variants": [
+      {
+        "src": "/resources/responsive/restore_portrait_after_thumb-3c384ff3adfa-360.webp",
+        "width": 360,
+        "height": 270,
+        "bytes": 17426
+      }
+    ]
+  },
+  "/resources/before_after/restore_portrait_before.jpg": {
+    "width": 900,
+    "height": 1200,
+    "original_bytes": 93063,
+    "variants": [
+      {
+        "src": "/resources/responsive/restore_portrait_before-93987e4d7a6f-480.webp",
+        "width": 480,
+        "height": 640,
+        "bytes": 32514
+      },
+      {
+        "src": "/resources/responsive/restore_portrait_before-93987e4d7a6f-900.webp",
+        "width": 900,
+        "height": 1200,
+        "bytes": 74408
+      }
+    ]
+  },
+  "/resources/before_after/restore_portrait_thumb.jpg": {
+    "width": 360,
+    "height": 270,
+    "original_bytes": 24650,
+    "variants": [
+      {
+        "src": "/resources/responsive/restore_portrait_thumb-5113619c286a-360.webp",
+        "width": 360,
+        "height": 270,
+        "bytes": 12758
+      }
+    ]
+  },
+  "/resources/before_after/slowmo_thumb.jpg": {
+    "width": 1280,
+    "height": 942,
+    "original_bytes": 145673,
+    "variants": [
+      {
+        "src": "/resources/responsive/slowmo_thumb-86c228db75e9-480.webp",
+        "width": 480,
+        "height": 353,
+        "bytes": 13568
+      },
+      {
+        "src": "/resources/responsive/slowmo_thumb-86c228db75e9-960.webp",
+        "width": 960,
+        "height": 706,
+        "bytes": 30312
+      },
+      {
+        "src": "/resources/responsive/slowmo_thumb-86c228db75e9-1280.webp",
+        "width": 1280,
+        "height": 942,
+        "bytes": 42022
+      }
+    ]
+  },
+  "/resources/before_after/upscale_4k_thumb.jpg": {
+    "width": 360,
+    "height": 270,
+    "original_bytes": 26518,
+    "variants": [
+      {
+        "src": "/resources/responsive/upscale_4k_thumb-d258cc1d8ea7-360.webp",
+        "width": 360,
+        "height": 270,
+        "bytes": 18304
+      }
+    ]
+  },
+  "/resources/before_after/upscale_photo_thumb.jpg": {
+    "width": 360,
+    "height": 270,
+    "original_bytes": 18855,
+    "variants": [
+      {
+        "src": "/resources/responsive/upscale_photo_thumb-068b740f1cd2-360.webp",
+        "width": 360,
+        "height": 270,
+        "bytes": 12434
+      }
+    ]
+  },
+  "/resources/before_after/video_quality_thumb.jpg": {
+    "width": 360,
+    "height": 270,
+    "original_bytes": 15370,
+    "variants": [
+      {
+        "src": "/resources/responsive/video_quality_thumb-357a332e5abb-360.webp",
+        "width": 360,
+        "height": 270,
+        "bytes": 8164
+      }
+    ]
+  },
+  "/resources/compare/girls_blurbuster.jpg": {
+    "width": 1400,
+    "height": 933,
+    "original_bytes": 270948,
+    "variants": [
+      {
+        "src": "/resources/responsive/girls_blurbuster-058f7906316e-480.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 62024
+      },
+      {
+        "src": "/resources/responsive/girls_blurbuster-058f7906316e-960.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 173744
+      },
+      {
+        "src": "/resources/compare/girls_blurbuster.jpg",
+        "width": 1400,
+        "height": 933,
+        "bytes": 270948
+      }
+    ]
+  },
+  "/resources/compare/girls_enhancefox.jpg": {
+    "width": 1400,
+    "height": 933,
+    "original_bytes": 183635,
+    "variants": [
+      {
+        "src": "/resources/responsive/girls_enhancefox-26866048fdbb-480.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 51328
+      },
+      {
+        "src": "/resources/responsive/girls_enhancefox-26866048fdbb-960.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 122872
+      },
+      {
+        "src": "/resources/responsive/girls_enhancefox-26866048fdbb-1400.webp",
+        "width": 1400,
+        "height": 933,
+        "bytes": 182216
+      }
+    ]
+  },
+  "/resources/compare/girls_remini.jpg": {
+    "width": 1400,
+    "height": 933,
+    "original_bytes": 131895,
+    "variants": [
+      {
+        "src": "/resources/responsive/girls_remini-9a3c0d2cb612-480.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 35618
+      },
+      {
+        "src": "/resources/responsive/girls_remini-9a3c0d2cb612-960.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 79558
+      },
+      {
+        "src": "/resources/responsive/girls_remini-9a3c0d2cb612-1400.webp",
+        "width": 1400,
+        "height": 933,
+        "bytes": 126190
+      }
+    ]
+  },
+  "/resources/compare/girls_uscale.jpg": {
+    "width": 1400,
+    "height": 933,
+    "original_bytes": 222935,
+    "variants": [
+      {
+        "src": "/resources/responsive/girls_uscale-feb9ed82852e-480.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 52626
+      },
+      {
+        "src": "/resources/responsive/girls_uscale-feb9ed82852e-960.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 151932
+      },
+      {
+        "src": "/resources/compare/girls_uscale.jpg",
+        "width": 1400,
+        "height": 933,
+        "bytes": 222935
+      }
+    ]
+  },
+  "/resources/compare/spider_blurbuster.jpg": {
+    "width": 1400,
+    "height": 782,
+    "original_bytes": 182258,
+    "variants": [
+      {
+        "src": "/resources/responsive/spider_blurbuster-f85776d5b19c-480.webp",
+        "width": 480,
+        "height": 268,
+        "bytes": 38214
+      },
+      {
+        "src": "/resources/responsive/spider_blurbuster-f85776d5b19c-960.webp",
+        "width": 960,
+        "height": 536,
+        "bytes": 113008
+      },
+      {
+        "src": "/resources/compare/spider_blurbuster.jpg",
+        "width": 1400,
+        "height": 782,
+        "bytes": 182258
+      }
+    ]
+  },
+  "/resources/compare/spider_enhancefox.jpg": {
+    "width": 1400,
+    "height": 782,
+    "original_bytes": 129269,
+    "variants": [
+      {
+        "src": "/resources/responsive/spider_enhancefox-c10b87a70e52-480.webp",
+        "width": 480,
+        "height": 268,
+        "bytes": 33098
+      },
+      {
+        "src": "/resources/responsive/spider_enhancefox-c10b87a70e52-960.webp",
+        "width": 960,
+        "height": 536,
+        "bytes": 75780
+      },
+      {
+        "src": "/resources/responsive/spider_enhancefox-c10b87a70e52-1400.webp",
+        "width": 1400,
+        "height": 782,
+        "bytes": 115828
+      }
+    ]
+  },
+  "/resources/compare/spider_remini.jpg": {
+    "width": 1400,
+    "height": 782,
+    "original_bytes": 89421,
+    "variants": [
+      {
+        "src": "/resources/responsive/spider_remini-ff2c754b7dc5-480.webp",
+        "width": 480,
+        "height": 268,
+        "bytes": 21912
+      },
+      {
+        "src": "/resources/responsive/spider_remini-ff2c754b7dc5-960.webp",
+        "width": 960,
+        "height": 536,
+        "bytes": 47402
+      },
+      {
+        "src": "/resources/responsive/spider_remini-ff2c754b7dc5-1400.webp",
+        "width": 1400,
+        "height": 782,
+        "bytes": 71796
+      }
+    ]
+  },
+  "/resources/compare/spider_uscale.jpg": {
+    "width": 1400,
+    "height": 782,
+    "original_bytes": 149846,
+    "variants": [
+      {
+        "src": "/resources/responsive/spider_uscale-7e123f900056-480.webp",
+        "width": 480,
+        "height": 268,
+        "bytes": 30810
+      },
+      {
+        "src": "/resources/responsive/spider_uscale-7e123f900056-960.webp",
+        "width": 960,
+        "height": 536,
+        "bytes": 89052
+      },
+      {
+        "src": "/resources/compare/spider_uscale.jpg",
+        "width": 1400,
+        "height": 782,
+        "bytes": 149846
+      }
+    ]
+  },
+  "/resources/compare/z_girls2_before.jpg": {
+    "width": 640,
+    "height": 576,
+    "original_bytes": 29928,
+    "variants": [
+      {
+        "src": "/resources/responsive/z_girls2_before-e943ffce47cc-480.webp",
+        "width": 480,
+        "height": 432,
+        "bytes": 16582
+      },
+      {
+        "src": "/resources/responsive/z_girls2_before-e943ffce47cc-640.webp",
+        "width": 640,
+        "height": 576,
+        "bytes": 23450
+      }
+    ]
+  },
+  "/resources/compare/z_girls2_blurbuster.jpg": {
+    "width": 640,
+    "height": 576,
+    "original_bytes": 54945,
+    "variants": [
+      {
+        "src": "/resources/responsive/z_girls2_blurbuster-4548ed7b9db0-480.webp",
+        "width": 480,
+        "height": 432,
+        "bytes": 38152
+      },
+      {
+        "src": "/resources/responsive/z_girls2_blurbuster-4548ed7b9db0-640.webp",
+        "width": 640,
+        "height": 576,
+        "bytes": 54808
+      }
+    ]
+  },
+  "/resources/compare/z_girls2_enhancefox.jpg": {
+    "width": 640,
+    "height": 576,
+    "original_bytes": 29457,
+    "variants": [
+      {
+        "src": "/resources/responsive/z_girls2_enhancefox-4fd4de7a8ac5-480.webp",
+        "width": 480,
+        "height": 432,
+        "bytes": 16642
+      },
+      {
+        "src": "/resources/responsive/z_girls2_enhancefox-4fd4de7a8ac5-640.webp",
+        "width": 640,
+        "height": 576,
+        "bytes": 23778
+      }
+    ]
+  },
+  "/resources/compare/z_girls2_remini.jpg": {
+    "width": 640,
+    "height": 576,
+    "original_bytes": 31348,
+    "variants": [
+      {
+        "src": "/resources/responsive/z_girls2_remini-2cdb0c7d5a7f-480.webp",
+        "width": 480,
+        "height": 432,
+        "bytes": 17926
+      },
+      {
+        "src": "/resources/responsive/z_girls2_remini-2cdb0c7d5a7f-640.webp",
+        "width": 640,
+        "height": 576,
+        "bytes": 26444
+      }
+    ]
+  },
+  "/resources/compare/z_girls2_uscale.jpg": {
+    "width": 640,
+    "height": 576,
+    "original_bytes": 49150,
+    "variants": [
+      {
+        "src": "/resources/responsive/z_girls2_uscale-d1af4e7b9719-480.webp",
+        "width": 480,
+        "height": 432,
+        "bytes": 33006
+      },
+      {
+        "src": "/resources/responsive/z_girls2_uscale-d1af4e7b9719-640.webp",
+        "width": 640,
+        "height": 576,
+        "bytes": 48070
+      }
+    ]
+  },
+  "/resources/compare/z_girls_before.jpg": {
+    "width": 640,
+    "height": 576,
+    "original_bytes": 26418,
+    "variants": [
+      {
+        "src": "/resources/responsive/z_girls_before-10bf718cd616-480.webp",
+        "width": 480,
+        "height": 432,
+        "bytes": 14286
+      },
+      {
+        "src": "/resources/responsive/z_girls_before-10bf718cd616-640.webp",
+        "width": 640,
+        "height": 576,
+        "bytes": 19696
+      }
+    ]
+  },
+  "/resources/compare/z_girls_blurbuster.jpg": {
+    "width": 640,
+    "height": 576,
+    "original_bytes": 44467,
+    "variants": [
+      {
+        "src": "/resources/responsive/z_girls_blurbuster-749505c0f442-480.webp",
+        "width": 480,
+        "height": 432,
+        "bytes": 29094
+      },
+      {
+        "src": "/resources/responsive/z_girls_blurbuster-749505c0f442-640.webp",
+        "width": 640,
+        "height": 576,
+        "bytes": 40818
+      }
+    ]
+  },
+  "/resources/compare/z_girls_enhancefox.jpg": {
+    "width": 640,
+    "height": 576,
+    "original_bytes": 30802,
+    "variants": [
+      {
+        "src": "/resources/responsive/z_girls_enhancefox-aa3c1bb3b6c3-480.webp",
+        "width": 480,
+        "height": 432,
+        "bytes": 18168
+      },
+      {
+        "src": "/resources/responsive/z_girls_enhancefox-aa3c1bb3b6c3-640.webp",
+        "width": 640,
+        "height": 576,
+        "bytes": 24048
+      }
+    ]
+  },
+  "/resources/compare/z_girls_remini.jpg": {
+    "width": 640,
+    "height": 576,
+    "original_bytes": 29305,
+    "variants": [
+      {
+        "src": "/resources/responsive/z_girls_remini-d2ce9a8699ab-480.webp",
+        "width": 480,
+        "height": 432,
+        "bytes": 16672
+      },
+      {
+        "src": "/resources/responsive/z_girls_remini-d2ce9a8699ab-640.webp",
+        "width": 640,
+        "height": 576,
+        "bytes": 23384
+      }
+    ]
+  },
+  "/resources/compare/z_girls_uscale.jpg": {
+    "width": 640,
+    "height": 576,
+    "original_bytes": 38690,
+    "variants": [
+      {
+        "src": "/resources/responsive/z_girls_uscale-6ece7f479655-480.webp",
+        "width": 480,
+        "height": 432,
+        "bytes": 24388
+      },
+      {
+        "src": "/resources/responsive/z_girls_uscale-6ece7f479655-640.webp",
+        "width": 640,
+        "height": 576,
+        "bytes": 32618
+      }
+    ]
+  },
+  "/resources/compare/z_spider_before.jpg": {
+    "width": 640,
+    "height": 526,
+    "original_bytes": 35306,
+    "variants": [
+      {
+        "src": "/resources/responsive/z_spider_before-7c6e875b49b3-480.webp",
+        "width": 480,
+        "height": 394,
+        "bytes": 14920
+      },
+      {
+        "src": "/resources/responsive/z_spider_before-7c6e875b49b3-640.webp",
+        "width": 640,
+        "height": 526,
+        "bytes": 21840
+      }
+    ]
+  },
+  "/resources/compare/z_spider_blurbuster.jpg": {
+    "width": 640,
+    "height": 526,
+    "original_bytes": 66173,
+    "variants": [
+      {
+        "src": "/resources/responsive/z_spider_blurbuster-163e6e9dd545-480.webp",
+        "width": 480,
+        "height": 394,
+        "bytes": 49112
+      },
+      {
+        "src": "/resources/compare/z_spider_blurbuster.jpg",
+        "width": 640,
+        "height": 526,
+        "bytes": 66173
+      }
+    ]
+  },
+  "/resources/compare/z_spider_blurbuster_soft.jpg": {
+    "width": 640,
+    "height": 526,
+    "original_bytes": 29461,
+    "variants": [
+      {
+        "src": "/resources/responsive/z_spider_blurbuster_soft-ecd66f5a10b5-480.webp",
+        "width": 480,
+        "height": 394,
+        "bytes": 17040
+      },
+      {
+        "src": "/resources/responsive/z_spider_blurbuster_soft-ecd66f5a10b5-640.webp",
+        "width": 640,
+        "height": 526,
+        "bytes": 22936
+      }
+    ]
+  },
+  "/resources/compare/z_spider_enhancefox.jpg": {
+    "width": 640,
+    "height": 526,
+    "original_bytes": 39009,
+    "variants": [
+      {
+        "src": "/resources/responsive/z_spider_enhancefox-fcef60513259-480.webp",
+        "width": 480,
+        "height": 394,
+        "bytes": 24204
+      },
+      {
+        "src": "/resources/responsive/z_spider_enhancefox-fcef60513259-640.webp",
+        "width": 640,
+        "height": 526,
+        "bytes": 32370
+      }
+    ]
+  },
+  "/resources/compare/z_spider_remini.jpg": {
+    "width": 640,
+    "height": 526,
+    "original_bytes": 26242,
+    "variants": [
+      {
+        "src": "/resources/responsive/z_spider_remini-d993dbd81cbe-480.webp",
+        "width": 480,
+        "height": 394,
+        "bytes": 14074
+      },
+      {
+        "src": "/resources/responsive/z_spider_remini-d993dbd81cbe-640.webp",
+        "width": 640,
+        "height": 526,
+        "bytes": 20406
+      }
+    ]
+  },
+  "/resources/compare/z_spider_uscale.jpg": {
+    "width": 640,
+    "height": 526,
+    "original_bytes": 53275,
+    "variants": [
+      {
+        "src": "/resources/responsive/z_spider_uscale-2c404e4ba6be-480.webp",
+        "width": 480,
+        "height": 394,
+        "bytes": 37832
+      },
+      {
+        "src": "/resources/compare/z_spider_uscale.jpg",
+        "width": 640,
+        "height": 526,
+        "bytes": 53275
+      }
+    ]
+  },
+  "/resources/tool_modes/creative_after.jpg": {
+    "width": 925,
+    "height": 704,
+    "original_bytes": 42653,
+    "variants": [
+      {
+        "src": "/resources/responsive/creative_after-cab71653a934-480.webp",
+        "width": 480,
+        "height": 365,
+        "bytes": 17048
+      },
+      {
+        "src": "/resources/tool_modes/creative_after.jpg",
+        "width": 925,
+        "height": 704,
+        "bytes": 42653
+      }
+    ]
+  },
+  "/resources/tool_modes/creative_before.jpg": {
+    "width": 925,
+    "height": 704,
+    "original_bytes": 27586,
+    "variants": [
+      {
+        "src": "/resources/responsive/creative_before-565ce0d8e149-480.webp",
+        "width": 480,
+        "height": 365,
+        "bytes": 11558
+      },
+      {
+        "src": "/resources/responsive/creative_before-565ce0d8e149-925.webp",
+        "width": 925,
+        "height": 704,
+        "bytes": 23696
+      }
+    ]
+  },
+  "/resources/tool_modes/restore_after.jpg": {
+    "width": 925,
+    "height": 704,
+    "original_bytes": 47039,
+    "variants": [
+      {
+        "src": "/resources/responsive/restore_after-fece0931f14c-480.webp",
+        "width": 480,
+        "height": 365,
+        "bytes": 21192
+      },
+      {
+        "src": "/resources/tool_modes/restore_after.jpg",
+        "width": 925,
+        "height": 704,
+        "bytes": 47039
+      }
+    ]
+  },
+  "/resources/tool_modes/restore_before.jpg": {
+    "width": 925,
+    "height": 704,
+    "original_bytes": 78180,
+    "variants": [
+      {
+        "src": "/resources/responsive/restore_before-aa2829e41281-480.webp",
+        "width": 480,
+        "height": 365,
+        "bytes": 36150
+      },
+      {
+        "src": "/resources/tool_modes/restore_before.jpg",
+        "width": 925,
+        "height": 704,
+        "bytes": 78180
+      }
+    ]
+  },
+  "/resources/tool_modes/upscale_after.jpg": {
+    "width": 732,
+    "height": 494,
+    "original_bytes": 75901,
+    "variants": [
+      {
+        "src": "/resources/responsive/upscale_after-ceff2fa92a3c-480.webp",
+        "width": 480,
+        "height": 324,
+        "bytes": 28056
+      },
+      {
+        "src": "/resources/responsive/upscale_after-ceff2fa92a3c-732.webp",
+        "width": 732,
+        "height": 494,
+        "bytes": 45978
+      }
+    ]
+  },
+  "/resources/tool_modes/upscale_before.jpg": {
+    "width": 732,
+    "height": 494,
+    "original_bytes": 51355,
+    "variants": [
+      {
+        "src": "/resources/responsive/upscale_before-aebe4ddfb110-480.webp",
+        "width": 480,
+        "height": 324,
+        "bytes": 16380
+      },
+      {
+        "src": "/resources/responsive/upscale_before-aebe4ddfb110-732.webp",
+        "width": 732,
+        "height": 494,
+        "bytes": 26326
+      }
+    ]
+  },
+  "/resources/iphone_frame.png": {
+    "width": 2548,
+    "height": 1252,
+    "original_bytes": 52978,
+    "variants": [
+      {
+        "src": "/resources/responsive/iphone_frame-3d5db2b41917-480.webp",
+        "width": 480,
+        "height": 236,
+        "bytes": 5518
+      },
+      {
+        "src": "/resources/responsive/iphone_frame-3d5db2b41917-960.webp",
+        "width": 960,
+        "height": 472,
+        "bytes": 12990
+      },
+      {
+        "src": "/resources/responsive/iphone_frame-3d5db2b41917-1440.webp",
+        "width": 1440,
+        "height": 708,
+        "bytes": 21896
+      },
+      {
+        "src": "/resources/responsive/iphone_frame-3d5db2b41917-1920.webp",
+        "width": 1920,
+        "height": 943,
+        "bytes": 30108
+      }
+    ]
+  }
+}

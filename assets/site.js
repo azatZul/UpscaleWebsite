@@ -690,21 +690,30 @@
     /* Clicks can outrun the network: tag every request so a slow image that
        lands after a newer click is dropped instead of painting over it. */
     var fadeGen = 0;
-    var crossfade = function (beforeSrc, afterSrc, onshow) {
+    // Set sizes and candidates before src so a tab never retains the previous pair's srcset.
+    var setSource = function (image, src, srcset, sizes) {
+      if (sizes) image.sizes = sizes; else image.removeAttribute('sizes');
+      if (srcset) image.srcset = srcset; else image.removeAttribute('srcset');
+      image.src = src;
+    };
+    var tabSource = function (image, tab, side) {
+      setSource(image, tab.dataset[side], tab.dataset[side + 'Srcset'], tab.dataset[side + 'Sizes']);
+    };
+    var crossfade = function (beforeSrc, afterSrc, onshow, tab) {
       var gen = ++fadeGen;
       if (after.getAttribute('src') === afterSrc) {
         after.style.opacity = '1'; /* a fade we just cancelled may have hidden it */
         onshow();
         return;
       }
-      ghost.src = after.currentSrc || after.src;
+      setSource(ghost, after.currentSrc || after.src);
       after.style.opacity = '0';
       var pre = new Image(), done = false;
       var show = function () {
         if (done || gen !== fadeGen) return;
         done = true;
-        if (beforeSrc) before.src = beforeSrc;
-        after.src = afterSrc;
+        if (beforeSrc) tabSource(before, tab, 'before');
+        tabSource(after, tab, 'after');
         void after.offsetWidth; /* flush the 0 before transitioning back up */
         after.style.opacity = '1';
         onshow();
@@ -712,7 +721,7 @@
       pre.decoding = 'async';
       pre.onload = show;
       pre.onerror = show;
-      pre.src = afterSrc;
+      tabSource(pre, tab, 'after');
       if (pre.complete) show();
     };
     /* Home examples swap both sides at once, so hide the media and fade the new
@@ -802,43 +811,37 @@
           cmp.classList.remove('has-video', 'paused');
           if (mute) { mute.hidden = true; }
           if (ghost) {
-            crossfade(tab.dataset.before, tab.dataset.after, applyMeta);
+            crossfade(tab.dataset.before, tab.dataset.after, applyMeta, tab);
           } else {
             /* Clicking the pair already on screen has nothing new to fade in. */
             var fresh = wasVideo || before.getAttribute('src') !== tab.dataset.before ||
               after.getAttribute('src') !== tab.dataset.after;
-            before.src = tab.dataset.before;
-            after.src = tab.dataset.after;
+            tabSource(before, tab, 'before');
+            tabSource(after, tab, 'after');
             if (fadeIn && fresh) reveal([before, after]);
           }
           /* Keep the divider where the reader left it when only the result changes. */
           if (!root.dataset.keepPos) setPos(50);
         }
       });
-      if (ghost && tab.dataset.after) {
-        tab.addEventListener('pointerenter', function () {
-          var pre = new Image();
-          pre.decoding = 'async';
-          pre.src = tab.dataset.after;
-        }, { once: true });
+      // Load alternate pairs only after an expression of interest, including keyboard focus.
+      if (tab.dataset.after) {
+        var warmed = false;
+        var warm = function () {
+          if (warmed) return;
+          warmed = true;
+          ['before', 'after'].forEach(function (side) {
+            if (!tab.dataset[side]) return;
+            var pre = new Image();
+            pre.decoding = 'async';
+            tabSource(pre, tab, side);
+          });
+        };
+        tab.addEventListener('pointerenter', warm, { once: true });
+        tab.addEventListener('focus', warm, { once: true });
       }
     });
 
-    /* Preload alternate hero images after the initial page load. */
-    if (root.dataset.preload && tabs.length > 1) {
-      var warm = function () {
-        tabs.forEach(function (tab) {
-          [tab.dataset.before, tab.dataset.after].forEach(function (src) {
-            if (!src) return;
-            var img = new Image();
-            img.decoding = 'async';
-            img.src = src;
-          });
-        });
-      };
-      if (document.readyState === 'complete') setTimeout(warm, 500);
-      else window.addEventListener('load', function () { setTimeout(warm, 500); });
-    }
   });
 
   /* Shared result album carousel. Every slide is already in the markup, so the album
