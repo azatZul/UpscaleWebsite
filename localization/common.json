@@ -334,13 +334,13 @@
   },
   "footer.tagline": {
     "localizations": {
-      "en": "AI photo and video enhancement. Unblur and upscale with on-device tools; restore old photos with cloud AI. Features vary by platform.",
-      "ru": "Улучшение фото и видео с помощью ИИ. Убирайте размытие и повышайте разрешение локальными инструментами, восстанавливайте снимки с облачным ИИ. Набор функций зависит от платформы.",
-      "de": "Fotos und Videos mit KI verbessern. Unschärfe entfernen und auf dem Gerät hochskalieren, alte Fotos mit Cloud-KI restaurieren. Funktionen variieren je nach Plattform.",
-      "ja": "AIで写真・動画を高画質化。デバイス上のツールで鮮明化・高画質化し、クラウドAIで古い写真を修復します。機能はプラットフォームにより異なります。",
-      "fr": "Amélioration photo et vidéo par IA. Défloutez et agrandissez avec les outils sur l’appareil, restaurez avec l’IA dans le cloud. Les fonctions varient selon la plateforme.",
-      "es": "Mejora fotos y videos con IA. Quita el desenfoque y aumenta la resolución con herramientas locales; restaura fotos con IA en la nube. Las funciones varían según la plataforma.",
-      "zh": "AI 照片与视频画质提升。用本地工具去模糊、放大，用云端 AI 修复老照片。不同平台的功能有所不同。"
+      "en": "AI photo and video enhancement. Unblur and upscale on your device; restore old photos with cloud AI.",
+      "ru": "Улучшение фото и видео с помощью ИИ. Убирайте размытие и повышайте разрешение на устройстве, восстанавливайте снимки с облачным ИИ.",
+      "de": "Fotos und Videos mit KI verbessern. Unschärfe entfernen und auf dem Gerät hochskalieren, alte Fotos mit Cloud-KI restaurieren.",
+      "ja": "AIで写真・動画を高画質化。デバイス上のツールで鮮明化・高画質化し、クラウドAIで古い写真を修復します。",
+      "fr": "Amélioration photo et vidéo par IA. Défloutez et agrandissez sur votre appareil, restaurez avec l’IA dans le cloud.",
+      "es": "Mejora fotos y videos con IA. Quita el desenfoque y aumenta la resolución en tu dispositivo; restaura fotos con IA en la nube.",
+      "zh": "AI 照片与视频画质提升。在设备上去模糊、放大，用云端 AI 修复老照片。"
     }
   },
   "footer.product": {

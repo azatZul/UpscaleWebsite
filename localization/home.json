@@ -1,25 +1,25 @@
 {
   "meta.title": {
     "localizations": {
-      "en": "AI Photo Enhancer for iPhone & Android — Unblur & Upscale | UScale",
-      "ru": "Улучшить качество фото на iPhone и Android — нейросеть и 4K | UScale",
-      "de": "Bildqualität verbessern auf iPhone und Android – KI-App | UScale",
-      "ja": "iPhone・Androidで写真をAI高画質化するアプリ｜UScale",
+      "en": "AI Photo Enhancer for iPhone — Unblur & Upscale | UScale",
+      "ru": "Улучшить качество фото на iPhone — нейросеть и 4K | UScale",
+      "de": "Bildqualität verbessern am iPhone – KI-App | UScale",
+      "ja": "iPhoneで写真をAI高画質化するアプリ｜UScale",
       "fr": "Améliorer la qualité d’une image avec l’IA | UScale",
       "es": "Mejorar calidad de imagen con IA gratis | UScale",
-      "zh": "iPhone / Android AI 画质修复：模糊图片变清晰｜UScale"
+      "zh": "iPhone AI 画质修复：模糊图片变清晰｜UScale"
     },
     "comment": "Page or section title; preserve product names."
   },
   "meta.description": {
     "localizations": {
-      "en": "Unblur photos, upscale images to 4K and restore old photos with UScale. Available on iPhone, iPad, Android and Mac with Apple silicon. Features vary by platform.",
-      "ru": "Улучшайте качество фото: убирайте размытие, увеличивайте фото до 4K и восстанавливайте снимки. UScale для iPhone, iPad, Android и Mac с Apple silicon. Возможности зависят от платформы.",
-      "de": "Fotos schärfen, Bilder auf 4K vergrößern und alte Fotos restaurieren mit UScale. Für iPhone, iPad, Android und Mac mit Apple silicon. Funktionen variieren je nach Plattform.",
-      "ja": "UScaleで写真を鮮明化、4Kに高画質化し、古い写真を修復。iPhone・iPad・Android・Appleシリコン搭載Macに対応。利用できる機能はプラットフォームにより異なります。",
-      "fr": "Défloutez vos photos, agrandissez en 4K et restaurez vos souvenirs avec UScale. Sur iPhone, iPad, Android et Mac avec puce Apple. Les fonctions varient selon la plateforme.",
-      "es": "Mejora la calidad de imagen con IA: quita el desenfoque, aumenta hasta 4K y restaura fotos. UScale para iPhone, iPad, Android y Mac con chip de Apple. Las funciones varían según la plataforma.",
-      "zh": "用 UScale 让模糊图片变清晰、放大到 4K、修复老照片。支持 iPhone、iPad、Android 和搭载 Apple 芯片的 Mac。不同平台的功能有所不同。"
+      "en": "Unblur photos, upscale images to 4K and restore old photos with UScale. Available on iPhone, iPad, Android and Mac with Apple silicon.",
+      "ru": "Улучшайте качество фото: убирайте размытие, увеличивайте фото до 4K и восстанавливайте снимки. UScale для iPhone, iPad, Android и Mac с Apple silicon.",
+      "de": "Fotos schärfen, Bilder auf 4K vergrößern und alte Fotos restaurieren mit UScale. Für iPhone, iPad, Android und Mac mit Apple silicon.",
+      "ja": "UScaleで写真を鮮明化、4Kに高画質化し、古い写真を修復。iPhone・iPad・Android・Appleシリコン搭載Macに対応。",
+      "fr": "Défloutez vos photos, agrandissez en 4K et restaurez vos souvenirs avec UScale. Sur iPhone, iPad, Android et Mac avec puce Apple.",
+      "es": "Mejora la calidad de imagen con IA: quita el desenfoque, aumenta hasta 4K y restaura fotos. UScale para iPhone, iPad, Android y Mac con chip de Apple.",
+      "zh": "用 UScale 让模糊图片变清晰、放大到 4K、修复老照片。支持 iPhone、iPad、Android 和搭载 Apple 芯片的 Mac。"
     },
     "comment": "Description copy; keep factual claims unchanged."
   },
@@ -1447,13 +1447,13 @@
   },
   "privacy.p": {
     "localizations": {
-      "en": "Core enhancement — unblur, upscale, brighten, face restoration and slow motion — runs on the Neural Engine inside your device. There is no upload, no processing queue and no account to create.",
-      "ru": "Базовое улучшение — устранение размытия, повышение разрешения, осветление, работа с лицами и замедление видео — выполняется с помощью Neural Engine на вашем устройстве. Файлы никуда не загружаются, а регистрация не требуется.",
-      "de": "Die wichtigsten Verbesserungen – Schärfen, Hochskalieren, Aufhellen, Gesichtsrestaurierung und Zeitlupe – laufen auf der Neural Engine in deinem Gerät. Es gibt keinen Upload, keine Warteschlange und du musst kein Konto erstellen.",
-      "ja": "鮮明化、高画質化、明るさ調整、顔の修復、スローモーションといった主要な処理は、デバイス内のNeural Engineで実行されます。アップロードや処理待ちがなく、アカウント作成も不要です。",
-      "fr": "Les améliorations principales — défloutage, agrandissement, éclaircissement, restauration des visages et ralenti — s’exécutent avec le Neural Engine de votre appareil. Aucun envoi, aucune file d’attente de traitement et aucun compte à créer.",
-      "es": "Las mejoras principales —quitar el desenfoque, aumentar la resolución, aclarar, restaurar rostros y crear cámara lenta— se ejecutan en el Neural Engine de tu dispositivo. No se suben archivos, no hay cola de procesamiento y no necesitas crear una cuenta.",
-      "zh": "核心增强功能（去模糊、放大、调亮、人脸修复和慢动作）由设备内置的神经网络引擎运行。无需上传，无需排队，也无需创建账户。"
+      "en": "On iPhone and iPad, unblur, upscale, brighten, face restoration and slow motion run entirely on your device. These tools do not upload your files or require an account.",
+      "ru": "На iPhone и iPad устранение размытия, повышение разрешения, осветление, работа с лицами и замедление видео выполняются прямо на устройстве. Эти инструменты не загружают ваши файлы на сервер и не требуют регистрации.",
+      "de": "Auf iPhone und iPad laufen Schärfen, Hochskalieren, Aufhellen, Gesichtsrestaurierung und Zeitlupe vollständig auf deinem Gerät. Diese Werkzeuge laden deine Dateien nicht auf einen Server hoch und erfordern kein Konto.",
+      "ja": "iPhoneとiPadでは、鮮明化、高画質化、明るさ調整、顔の修復、スローモーションをすべてデバイス上で処理します。これらのツールはファイルをサーバーにアップロードせず、アカウントも不要です。",
+      "fr": "Sur iPhone et iPad, le défloutage, l’agrandissement, l’éclaircissement, la restauration des visages et le ralenti s’effectuent entièrement sur votre appareil. Ces outils n’envoient pas vos fichiers sur un serveur et ne nécessitent pas de compte.",
+      "es": "En iPhone y iPad, quitar el desenfoque, aumentar la resolución, aclarar, restaurar rostros y crear cámara lenta se realizan por completo en tu dispositivo. Estas herramientas no suben tus archivos a un servidor ni requieren una cuenta.",
+      "zh": "在 iPhone 和 iPad 上，去模糊、放大、调亮、人脸修复和慢动作均在设备上完成。这些工具不会将文件上传到服务器，也无需创建账户。"
     }
   },
   "privacy.points.0": {
@@ -1716,13 +1716,13 @@
   },
   "faq.items.5.a": {
     "localizations": {
-      "en": "Subscriptions are handled by Apple. Open the App Store, tap your profile picture, choose Subscriptions, select UScale and cancel it there. If you were charged by mistake, the refund is requested from Apple at reportaproblem.apple.com.",
-      "ru": "Подписками управляет Apple. Откройте App Store, нажмите фотографию профиля, выберите «Подписки», найдите UScale и отмените подписку. Если списание произошло по ошибке, запросите возврат на reportaproblem.apple.com.",
-      "de": "Abonnements werden von Apple verwaltet. Öffne den App Store, tippe auf dein Profilbild, wähle „Abonnements“, dann UScale und kündige es dort. Wenn dir versehentlich etwas berechnet wurde, beantragst du die Erstattung bei Apple unter reportaproblem.apple.com.",
-      "ja": "サブスクリプションはAppleが管理しています。App Storeを開き、プロフィール写真をタップして「サブスクリプション」を選択し、UScaleを選んで解約してください。誤って請求された場合は、reportaproblem.apple.comでAppleに返金を申請します。",
-      "fr": "Les abonnements sont gérés par Apple. Ouvrez l’App Store, touchez votre photo de profil, choisissez Abonnements, sélectionnez UScale et résiliez-le depuis cet écran. Si vous avez été débité par erreur, demandez un remboursement à Apple sur reportaproblem.apple.com.",
-      "es": "Apple gestiona las suscripciones. Abre App Store, toca tu foto de perfil, elige Suscripciones, selecciona UScale y cancélala allí. Si te cobraron por error, solicita el reembolso a Apple en reportaproblem.apple.com.",
-      "zh": "订阅由 Apple 管理。打开 App Store，轻点你的头像，选择“订阅”，选中 UScale 后在那里取消。如果被误扣费，可以在 reportaproblem.apple.com 向 Apple 申请退款。"
+      "en": "Cancel through the store where you subscribed. For App Store purchases, use the Apple subscription management link below, select UScale and cancel. For Google Play purchases, open Subscriptions in Google Play, select UScale and cancel. Request refunds through the same store; for App Store purchases, use reportaproblem.apple.com.",
+      "ru": "Отмените подписку в магазине, где её оформили. Для покупок в App Store откройте управление подписками Apple по ссылке ниже, выберите UScale и отмените подписку. Для покупок в Google Play откройте раздел «Подписки» в Google Play, выберите UScale и отмените подписку. Возврат платежа запрашивайте в том же магазине; для покупок в App Store — на reportaproblem.apple.com.",
+      "de": "Kündige im Store, in dem du das Abonnement abgeschlossen hast. Bei App-Store-Käufen öffnest du die Apple-Abonnementverwaltung über den Link unten, wählst UScale und kündigst. Bei Google-Play-Käufen öffnest du „Abos“ in Google Play, wählst UScale und kündigst. Erstattungen beantragst du beim jeweiligen Store; für App-Store-Käufe unter reportaproblem.apple.com.",
+      "ja": "登録したストアでサブスクリプションを解約してください。App Storeで購入した場合は、下のリンクからAppleのサブスクリプション管理を開き、UScaleを選んで解約します。Google Playで購入した場合は、Google Playの「定期購入」を開き、UScaleを選んで解約します。返金は購入したストアで申請してください。App Storeでの購入はreportaproblem.apple.comから申請できます。",
+      "fr": "Résiliez votre abonnement dans la boutique où vous l’avez souscrit. Pour un achat sur l’App Store, ouvrez la gestion des abonnements Apple via le lien ci-dessous, sélectionnez UScale et résiliez. Pour un achat sur Google Play, ouvrez la rubrique Abonnements de Google Play, sélectionnez UScale et résiliez. Demandez tout remboursement auprès de la même boutique ; pour l’App Store, sur reportaproblem.apple.com.",
+      "es": "Cancela la suscripción en la tienda donde la contrataste. Para compras en App Store, abre la gestión de suscripciones de Apple con el enlace de abajo, selecciona UScale y cancela. Para compras en Google Play, abre Suscripciones en Google Play, selecciona UScale y cancela. Solicita el reembolso en la misma tienda; para compras en App Store, en reportaproblem.apple.com.",
+      "zh": "请在订阅时使用的商店取消订阅。通过 App Store 购买的订阅，请打开下方的 Apple 订阅管理链接，选择 UScale 后取消。通过 Google Play 购买的订阅，请打开 Google Play 的“订阅”，选择 UScale 后取消。退款请向购买时使用的商店申请；App Store 购买可前往 reportaproblem.apple.com 申请。"
     }
   },
   "faq.items.5.href": {
@@ -1906,17 +1906,5 @@
     "locales": [
       "ru"
     ]
-  },
-  "hero.platforms": {
-    "localizations": {
-      "en": "For iPhone, iPad, Android and Mac with Apple silicon. Features vary by platform.",
-      "ru": "Для iPhone, iPad, Android и Mac с Apple silicon. Набор функций зависит от платформы.",
-      "de": "Für iPhone, iPad, Android und Mac mit Apple silicon. Die verfügbaren Funktionen variieren je nach Plattform.",
-      "ja": "iPhone・iPad・Android・Appleシリコン搭載Macに対応。利用できる機能はプラットフォームにより異なります。",
-      "fr": "Pour iPhone, iPad, Android et Mac avec puce Apple. Les fonctions disponibles varient selon la plateforme.",
-      "es": "Para iPhone, iPad, Android y Mac con chip de Apple. Las funciones disponibles varían según la plataforma.",
-      "zh": "适用于 iPhone、iPad、Android 和搭载 Apple 芯片的 Mac。不同平台提供的功能有所不同。"
-    },
-    "comment": "Homepage platform availability; do not imply identical features on every platform."
   }
 }

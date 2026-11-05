@@ -1069,7 +1069,6 @@ def render_home(c, lang):
         <span><b>{rating}</b> \u00b7 {esc(h['rating_note'])}</span></div>
       <h1>{h['h1']}</h1>
       <p class="hero-sub">{esc(h['sub'])}</p>
-      <p class="hero-platforms">{esc(h['platforms'])}</p>
       <div class="hero-cta stores">{store_buttons(c, h['note'], badge_height=HERO_BADGE_H)}</div>
     </div>
     {hero_phone(c, h)}
