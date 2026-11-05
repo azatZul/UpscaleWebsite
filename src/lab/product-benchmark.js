@@ -19,7 +19,7 @@ export function browserEnvironment() {
 }
 
 export function runProductWorker(request, {group = 'photo', backend = 'wasm', threads = 1, onProgress = () => {},
-  onRuntimeFailure = () => {}, signal} = {}) {
+  onRuntimeFailure = () => {}, signal, variant, profile = false, choices} = {}) {
   return new Promise((resolve, reject) => {
     const operations = [], started = performance.now();
     let last;
@@ -38,14 +38,14 @@ export function runProductWorker(request, {group = 'photo', backend = 'wasm', th
         resolve({...data, operations: operations.map(({start, key, ...item}) => item), fullMs: performance.now() - started});
       }
     }, onFailure(error) { cleanup(); reject(Object.assign(new Error(error.key), {
-      code: error.code, key: error.key, fallbackScale: error.fallbackScale, operations})); }});
+      code: error.code, key: error.key, fallbackScale: error.fallbackScale, engine_message: error.engine_message, operations})); }});
     const hidden = () => controller.setHidden(document.hidden);
     const abort = () => { controller.cancel(); cleanup(); reject(new DOMException('Cancelled', 'AbortError')); };
     const cleanup = () => { document.removeEventListener('visibilitychange', hidden); signal?.removeEventListener('abort', abort); };
     if (signal?.aborted) { abort(); return; }
     signal?.addEventListener('abort', abort, {once: true});
     document.addEventListener('visibilitychange', hidden); hidden();
-    controller.start({environment: browserEnvironment(), benchmark: true, ...request}, [{backend, threads}]);
+    controller.start({environment: browserEnvironment(), benchmark: true, ...request}, choices || [{backend, threads, variant, profile}]);
   });
 }
 

@@ -17,6 +17,7 @@ import {exportExtension, PNG} from './transparency.js';
 import {ASSETS} from './assets.generated.js';
 import {learnedTileMs, processingFailureProperties} from './processing-policy.js';
 import {attemptErrorProperties, installErrorDiagnostics} from './diagnostics.js';
+import {approvedPhoto4xCandidate, photo4xGpuVendor, photoExecutionChoices, savePhoto4xProfile, rememberPhoto4xFailure, PHOTO4X_RELEASE} from './photo4x-policy.js';
 
 const analytics = initAnalytics();
 installErrorDiagnostics({analytics, state: () => {
@@ -32,7 +33,7 @@ const elements = Object.fromEntries(['photo-input', 'choose-photo', 'remove-phot
   'download-result', 'another-photo', 'limit-note', 'interrupted', 'visibility-note', 'photo-stage', 'stage-title',
   'before-image', 'result-comparison', 'comparison-handle', 'enhance-faces',
   'face-summary', 'result-viewer', 'result-stage', 'expand-result', 'close-result', 'scale-2x', 'scale-4x', 'scale-popover',
-  'result-tag', 'result-title', 'model-photo', 'model-drawing', 'face-option', 'choose-faces', 'face-editor', 'face-stage',
+  'result-tag', 'result-title', 'quality-chip', 'quality-note', 'model-photo', 'model-drawing', 'face-option', 'choose-faces', 'face-editor', 'face-stage',
   'face-frame', 'face-photo', 'face-marks', 'face-apply', 'face-cancel', 'face-close', 'face-editor-title',
   'face-status', 'face-progress', 'photo-error', 'status', 'tool-options', 'choose-another', 'mode-device', 'mode-creative',
   'mode-restore', 'private-note', 'cloud-note', 'creative-options', 'creativity',
@@ -58,9 +59,9 @@ function knownTileMs() {
   catch { /* Storage is optional. */ }
   return policy.mobile ? DEFAULT_TILE_MS.mobile : DEFAULT_TILE_MS.desktop;
 }
-function rememberTileMs(ms, kind, factor) {
+function rememberTileMs(ms, kind, factor, variant, backend) {
   try {
-    if (ms > 0 && Number.isFinite(ms)) localStorage.setItem(tileMetricKey(kind, factor), String(Math.round(ms)));
+    if (ms > 0 && Number.isFinite(ms)) localStorage.setItem(tileMetricKey(kind, factor, variant, backend), String(Math.round(ms)));
   } catch { /* Storage is optional. */ }
 }
 let file;
@@ -96,8 +97,12 @@ let tooLargeFor4x = false;
 let importSource;
 let lastInfo;
 let processingStartedAt;
+// Set only once a Photo 4× preflight requested an adapter; started when its attempt begins.
+let photo4xAnalytics = {}, photo4xStartedAt;
 let outcomeTracked = true;
 let runProgress = 0;
+// The heavier model passed its forecast and is upscaling this photo now.
+let maxQuality = false;
 let popoverTimer;
 let expanded = false;
 let lastResult;
@@ -259,16 +264,21 @@ function controllerFor(makeWorker, onData, onFailure, onRetry) {
   const controller = createAttemptController({makeWorker, onMessage: onData,
     onFailure: (error, config) => {
       analytics.trackEvent('device_processing_error', {...runProperties(), phase, progress: runProgress,
-        error_type: error.code, message: error.key, ...attemptErrorProperties(error)});
+        error_type: error.code, message: error.key, ...attemptErrorProperties(error), ...photo4xAnalytics});
       onFailure(error, config);
     },
     onRetry: transition => {
       analytics.trackEvent('processing_retry', {...runProperties(), phase, ...attemptErrorProperties(transition.error),
         error_type: transition.error.code, message: transition.error.key,
-        next_backend: transition.to.backend, next_threads: transition.to.threads});
+        next_backend: transition.to.backend, next_threads: transition.to.threads, ...photo4xAnalytics,
+        // Wall time the heavy model cost this photo before the regular model restarts it.
+        ...(transition.from.variant && photo4xStartedAt !== undefined
+          ? {photo4x_elapsed_ms: Math.round(performance.now() - photo4xStartedAt)} : {})});
       onRetry?.(transition);
     },
-    onRuntimeFailure: attempt => rememberThreadFailure(storage, attempt.failureKey)});
+    onRuntimeFailure: (attempt, error) => attempt.variant
+      ? rememberPhoto4xFailure(storage, attempt.variant, error)
+      : rememberThreadFailure(storage, attempt.failureKey)});
   controller.setHidden(document.hidden);
   return controller;
 }
@@ -459,8 +469,15 @@ async function keepAwake() {
   } catch { /* Optional convenience only. */ }
 }
 
+function setMaxQuality(on) {
+  maxQuality = on;
+  elements['quality-chip'].hidden = !on;
+  elements.status.classList.toggle('is-max', on);
+}
+
 function stopWorker() {
   generation++;
+  setMaxQuality(false);
   processingController?.cancel(); processingController = null;
   remember(false);
   wakeLock?.release().catch(() => {}); wakeLock = null;
@@ -477,6 +494,8 @@ function clearOutput() {
   elements['result-image'].removeAttribute('crossorigin');
   elements['before-image'].removeAttribute('src');
   elements['result-comparison'].classList.remove('has-transparency');
+  elements['result-tag'].classList.remove('is-max');
+  elements['quality-note'].hidden = true;
   elements['download-result'].removeAttribute('href');
   if (resultUrl) URL.revokeObjectURL(resultUrl);
   if (originalUrl) URL.revokeObjectURL(originalUrl);
@@ -505,28 +524,52 @@ function fail(code, key, params, offerScaleFallback = false, stage, diagnostics)
 
 function onMessage(data, current) {
   if (current !== generation) return;
+  if (data.type === 'photo4x-profile') {
+    savePhoto4xProfile(storage, data.profileKey, data.profile);
+    return;
+  }
+  if (data.type === 'forecast') analytics.trackEvent('photo4x_selection', {
+    selected_model: data.forecast.allowed ? 'nomos-realplksr' : 'srvgg', reason: data.forecast.reason,
+    forecast_ms: data.forecast.milliseconds, cached_profile: Boolean(data.cached), ...photo4xAnalytics,
+  });
+  if (data.type === 'photo4x-projection') analytics.trackEvent('photo4x_selection', {
+    selected_model: 'srvgg', reason: 'projected-over-budget', forecast_ms: data.projectedMs,
+    completed_tiles: data.completed, total_tiles: data.total, ...photo4xAnalytics,
+  });
+  if (data.type === 'photo4x-reference' && !data.passed) analytics.trackEvent('photo4x_selection', {
+    selected_model: 'srvgg', reason: 'reference-mismatch', ...photo4xAnalytics,
+    mean_error: Number.isFinite(data.meanError) ? Math.round(data.meanError * 10) / 10 : undefined,
+    max_error: Number.isFinite(data.maxError) ? data.maxError : undefined,
+  });
   if (data.type === 'status' && data.title) {
     const eta = Number.isFinite(data.remainingMs) && data.remainingMs > 5000
       ? `${t('remaining', {time: duration(data.remainingMs)})} ` : '';
-    setStatus(t(data.title, data.params), eta + (data.detail ? t(data.detail, data.params) : ''), data.progress);
+    const detail = maxQuality && data.detail === 'upscaling_cancel_detail' ? 'max_quality_detail' : data.detail;
+    setStatus(t(data.title, data.params), eta + (detail ? t(detail, data.params) : ''), data.progress);
   } else if (data.type === 'photo') {
     if (thumbnailUrl) URL.revokeObjectURL(thumbnailUrl);
     thumbnailUrl = URL.createObjectURL(data.thumbnail);
     elements['source-thumb'].src = thumbnailUrl;
     elements['source-thumb'].classList.toggle('has-transparency', Boolean(data.hasTransparency));
     elements['source-size'].textContent = dimensions(data.plan);
+  } else if (data.type === 'forecast' && data.forecast.allowed) {
+    // Allowed only after the warm-up and measured tiles, so the badge never shows for a photo it then refuses.
+    setMaxQuality(true);
+    setStatus(t('upscaling'), `${t('remaining', {time: duration(data.forecast.milliseconds)})} ${t('max_quality_detail')}`, 0);
   } else if (data.type === 'faces') {
     completedFaces = data;
     prepare(data);
   } else if (data.type === 'done') {
     trackOutcome('success', {progress: 1, face_count: data.faceCount || 0, detected_faces: data.detectedCount || 0,
       tile_count: data.plan.tileCount, output_size: `${data.plan.outputWidth}x${data.plan.outputHeight}`,
-      backend: data.backend, requested_threads: data.requestedThreads, cpu_threads: data.effectiveThreads, output_format: data.blob.type});
+      backend: data.backend, requested_threads: data.requestedThreads, cpu_threads: data.effectiveThreads, output_format: data.blob.type,
+      selected_model: data.variant?.id || 'srvgg', model_revision: data.variant?.revision,
+      profile_reused: data.profileReused, calibration_ms: data.calibrationMs, upscale_export_ms: data.upscaleExportMs});
     stopWorker();
     // Only learn from a run long enough to amortise first-inference shader
     // setup. A four-tile photo would otherwise teach a badly pessimistic rate.
-    const tileMs = learnedTileMs(data);
-    if (tileMs !== undefined) rememberTileMs(tileMs, data.modelKind, data.plan.scale);
+    const tileMs = learnedTileMs(data.variant ? {...data, tilesMs: data.tilesMs + data.probeMs} : data);
+    if (tileMs !== undefined) rememberTileMs(tileMs, data.modelKind, data.plan.scale, data.variant, data.backend);
     showDeviceResult(data);
   }
 }
@@ -544,7 +587,10 @@ function showDeviceResult(data) {
   elements['result-comparison'].style.setProperty('--photo-ratio', data.plan.width / data.plan.height);
   const resultScale = data.plan.scale;
   elements['result-image'].alt = t('result_alt', {scale: resultScale});
-  elements['result-tag'].textContent = t('result_tag', {scale: resultScale});
+  // Only the model that really produced the photo decides the badge.
+  elements['result-tag'].textContent = t(data.variant ? 'result_tag_max' : 'result_tag', {scale: resultScale});
+  elements['result-tag'].classList.toggle('is-max', Boolean(data.variant));
+  elements['quality-note'].hidden = !data.variant;
   elements['download-result'].href = resultUrl;
   elements['download-result'].download = `${file.name.replace(/\.[^.]+$/, '') || 'photo'}-uscale-${resultScale}x.${exportExtension(data.blob.type)}`;
   elements['result-comparison'].classList.toggle('has-transparency', Boolean(data.hasTransparency));
@@ -561,7 +607,7 @@ function showDeviceResult(data) {
   elements.results.scrollIntoView({behavior: 'smooth', block: 'start'});
 }
 
-function prepare(faceResults = completedFaces) {
+async function prepare(faceResults = completedFaces) {
   if (!file || !supported) return;
   stopWorker(); clearOutput();
   phase = 'processing';
@@ -576,8 +622,21 @@ function prepare(faceResults = completedFaces) {
       fail(error.code, error.key, error.params, error.fallbackScale === 2, 'upscale', error);
     } }, transition => { if (current === generation) recordRetry(transition); });
   remember(true); keepAwake();
-  processingController.start({type: 'prepare', file, environment, faceResults, scale, modelKind},
-    executionChoices(environment, 'upscale', {forceCpu: cpuRequested, storage, assets: ASSETS}));
+  const choices = executionChoices(environment, 'upscale', {forceCpu: cpuRequested, storage, assets: ASSETS});
+  photo4xAnalytics = {}; photo4xStartedAt = undefined;
+  const variant = await approvedPhoto4xCandidate({environment, modelKind, scale, forceCpu: cpuRequested, storage},
+    async () => {
+      const adapter = await navigator.gpu?.requestAdapter();
+      // Photo 2× and 4× share the model; scale separates them in selection events.
+      if (current === generation) photo4xAnalytics = {gpu_vendor: photo4xGpuVendor(adapter?.info), scale};
+      return adapter;
+    });
+  if (current !== generation) return;
+  if (modelKind === 'photo' && PHOTO4X_RELEASE.scales.includes(scale)) analytics.trackEvent('photo4x_candidate', {
+    eligible: Boolean(variant), cached_profile: Boolean(variant?.cachedProfile), scale, ...photo4xAnalytics,
+  });
+  if (variant) photo4xStartedAt = performance.now();
+  processingController.start({type: 'prepare', file, environment, faceResults, scale, modelKind}, photoExecutionChoices(choices, variant));
 }
 
 function startFaces() {
@@ -597,6 +656,8 @@ function startFaces() {
 
 function recordRetry({from, to}) {
   if (from.backend === 'webgpu' && to.backend === 'wasm') cpuFallback = true;
+  // The photo restarts with the regular model; drop the badge without saying why.
+  if (from.variant) setMaxQuality(false);
 }
 
 // Same keys as the apps' processingOutcomeProperties, for the web's single photo.
@@ -610,7 +671,7 @@ function trackOutcome(result, extra) {
   if (outcomeTracked) return;
   outcomeTracked = true;
   analytics.trackEvent(AnalyticsEvent.processingCompleted, {...runProperties(), result, progress: runProgress,
-    duration_sec: Math.round((performance.now() - processingStartedAt) / 100) / 10, ...extra});
+    duration_sec: Math.round((performance.now() - processingStartedAt) / 100) / 10, ...photo4xAnalytics, ...extra});
 }
 
 // Upscaling on the device is free, unlimited and runs in the browser, so it

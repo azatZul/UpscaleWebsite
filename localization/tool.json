@@ -1041,6 +1041,66 @@
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
+  "tool.js.max_quality": {
+    "localizations": {
+      "en": "Max quality",
+      "ru": "Макс. качество",
+      "de": "Max. Qualität",
+      "ja": "最高画質",
+      "fr": "Qualité max.",
+      "es": "Calidad máx.",
+      "zh": "最高画质"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.max_quality_checking_detail": {
+    "localizations": {
+      "en": "Checking whether max-quality processing is available on your device.",
+      "ru": "Проверяем, доступна ли обработка в максимальном качестве на вашем устройстве.",
+      "de": "Wir prüfen, ob die Bearbeitung in maximaler Qualität auf deinem Gerät verfügbar ist.",
+      "ja": "お使いのデバイスで最高画質の処理が使えるか確認しています。",
+      "fr": "Nous vérifions si le traitement en qualité maximale est disponible sur votre appareil.",
+      "es": "Comprobando si el procesamiento en máxima calidad está disponible en tu dispositivo.",
+      "zh": "正在检查你的设备能否以最高画质处理。"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.max_quality_detail": {
+    "localizations": {
+      "en": "Your computer supports a more powerful neural network, so your photo is being processed in max quality. Keep this page open.",
+      "ru": "Ваш компьютер поддерживает более мощную нейросеть. Обрабатываем фото в максимальном качестве. Не закрывайте страницу.",
+      "de": "Dein Computer unterstützt ein leistungsstärkeres neuronales Netz. Wir bearbeiten dein Foto in maximaler Qualität. Lass diese Seite geöffnet.",
+      "ja": "お使いのコンピューターはより高性能なニューラルネットワークに対応しています。最高画質で処理中です。このページを開いたままにしてください。",
+      "fr": "Votre ordinateur prend en charge un réseau neuronal plus puissant. Nous traitons votre photo en qualité maximale. Gardez cette page ouverte.",
+      "es": "Tu ordenador admite una red neuronal más potente. Estamos procesando la foto en máxima calidad. Mantén esta página abierta.",
+      "zh": "你的电脑支持更强大的神经网络，正在以最高画质处理照片。请保持此页面打开。"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.result_tag_max": {
+    "localizations": {
+      "en": "Max quality · {scale}×",
+      "ru": "Макс. качество · {scale}×",
+      "de": "Max. Qualität · {scale}×",
+      "ja": "最高画質・{scale}倍",
+      "fr": "Qualité max. · {scale}×",
+      "es": "Calidad máx. · {scale}×",
+      "zh": "最高画质 · {scale}×"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.max_quality_result": {
+    "localizations": {
+      "en": "Processed by a more powerful neural network that restores fine detail. Free, right on your device.",
+      "ru": "Обработано более мощной нейросетью для восстановления мелких деталей. Бесплатно, прямо на вашем устройстве.",
+      "de": "Bearbeitet mit einem leistungsstärkeren neuronalen Netz, das feine Details wiederherstellt. Kostenlos, direkt auf deinem Gerät.",
+      "ja": "細部を復元する、より高性能なニューラルネットワークで処理しました。無料で、お使いのデバイス上で完結します。",
+      "fr": "Traitée par un réseau neuronal plus puissant qui restaure les détails fins. Gratuit, directement sur votre appareil.",
+      "es": "Procesada con una red neuronal más potente que recupera los detalles finos. Gratis y directamente en tu dispositivo.",
+      "zh": "已由更强大的神经网络处理，还原细微细节。免费，直接在你的设备上完成。"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
   "tool.js.result_alt": {
     "localizations": {
       "en": "Your photo upscaled {scale}×",

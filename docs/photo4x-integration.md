@@ -1,0 +1,202 @@
+# Automatic desktop Photo 4× integration
+
+Implemented 2026-11-03. No deployment performed.
+
+## Release and admission
+
+The single release descriptor is `src/tool/photo4x-release.js`. It enables the
+reviewed **NomosWebPhoto RealPLKSR FP16 GPU-only graph, tile 256, overlap 32**
+for desktop Chrome/Edge on macOS and Windows. Its 15,021,513 bytes have SHA-256
+`b9d2b0fad4830776a807ffad91efb9d56c91486b151c1192b6bfdeb4956ecd8a`.
+The author/model license and numerical conversion evidence are retained in
+[the model decision](photo4x-model-decision.md); `/licenses/` lists CC BY 4.0,
+Philip Hofmann (Helaman), original source, fixed dimensions, Softplus rewrite
+and FP16 conversion. No retraining.
+
+No hardware-name allowlist or VRAM guess is used. Hardware WebGPU, shader-f16,
+adapter and actual ORT device limits, successful GPU-only inference, photo
+memory limits and the five-minute forecast are mandatory. Known software
+adapters are rejected. A preflight adapter request is bounded to five seconds.
+Linux, Firefox and mobile/iPad do not request the new model. The regular SRVGG
+path and the public controls/API remain available.
+
+Every run warms up once, so shader compilation never counts as tile speed, then
+measures actual tiles: three on a new device, up to three with a cached profile.
+Measured tiles are reused in assembly. One/two-tile cached photos run only their
+useful tiles.
+First reject inference-only forecasts over 300,000 ms. If output cost evidence
+is missing, exercise the actual row-band tiler, alpha, face composition and
+encoder using deterministic high-entropy synthetic tiles and the existing
+output canvas. Release temporary Blobs before inference continues. This
+calibration has a worker check and an independent parent watchdog of 30 s.
+Both the calibration and total-budget watchdogs pause while the page is hidden
+and resume with their remaining time. Visibility is forwarded to the variant
+worker: its budget, projection and cost measurements exclude hidden intervals,
+and it waits for visibility before starting another probe or tile.
+
+The admission formula is max(tile timings) × actual tile count × margin plus
+measured output costs. Margin never falls below 1.25; output cost calibration
+also retains 25% headroom. Exact output width/height, MIME, alpha
+and optional extra face-base export have separate evidence. Preparation,
+warm-up/calibration and GFPGAN are reported separately from upscale/export.
+Saved tile speed, margin and output costs rise at once after a slower run and
+fall back by a quarter of the gap per faster run, so one outlier fades.
+
+## Photo 2× with the same model
+
+Added 2026-11-03. Photo 2× uses the same pinned 4× graph and the same
+admission, reference check, profile and failure suppression. There is no
+second model file. Each tile's 4× output is clipped and averaged over 2×2
+blocks before rounding (`tensorPixels` factor 2). The result is exactly the 4×
+result followed by a box downscale. Inference cost per tile is unchanged;
+assembly and export handle a quarter of the pixels. The warm-up reference
+still passes, because 2×2 averaging preserves the block means it compares.
+`PHOTO4X_RELEASE.scales` lists the served scales; removing `2` restores
+SRVGG for Photo 2× after a redeploy. Selection analytics carry `scale`.
+
+### What the user sees
+
+While the heavier model is being checked, the warm-up stage says it is
+checking whether max-quality processing is available on this device. Once
+the forecast allows it (always after the warm-up and measured tiles, cached
+profile or not), the status gains a gold "Max quality" chip, a gold progress
+bar and a line saying this computer supports a more powerful neural network.
+`stopWorker()` clears that state on completion, cancellation, failure or a
+new run. `recordRetry` clears it when an attempt with a variant falls back,
+and the user is told nothing about the fallback. The result's image tag
+("Max quality · 4×") and the note under it come only from `done.variant`,
+the model that really produced the photo. Animations stop under
+`prefers-reduced-motion`.
+
+The lab compared the alternatives on the 19-photo 2× corpus (`--scale 2`,
+`prepare_photo2x_corpus.py`): a graph with the 2×2 average folded into
+the last Conv (mean difference 0.002/255 from this path; Clip order
+differs), and 2xPublic RealPLKSR DySample (Apache 2.0). That model needs
+GridSample, which ORT Web 1.23.2 runs only on CPU. Neither was chosen. The
+folded graph would add a second 15 MB file for almost no speed gain. On the
+measured corpus, both heavy paths took 2.5–3.5× longer than SRVGG 2×, and
+paired PSNR against the references was mixed.
+
+## Output correctness and rolling projection
+
+Speed probes cannot show that an unmeasured GPU computes FP16 correctly. The
+warm-up tile is therefore a fixed deterministic synthetic input
+(`photo4x-reference.js`), and its output's 32×32 grid of RGB block means must
+match the corrected FP32 graph run on CPU (`photo4x-reference.generated.js`,
+regenerated by `scripts/prepare_photo4x_reference.py`): mean error ≤ 2 and every
+block ≤ 12 of 255. The FP16 graph differs by 0.02 mean / 1 max on CPU and on the
+M4 Pro GPU; black, grey and channel-swapped outputs miss by 36–150 mean. A
+mismatch is a GPU failure: 24-hour suppression and a full SRVGG restart. The
+build refuses a reference for another model revision, and the product fails
+closed without one. Lab screening of other graphs skips the check. This detects
+broken arithmetic (NaN, black, saturated, swapped, garbage), not fine texture
+differences; non-finite tile values were already rejected for every tile.
+
+The admission forecast happens once, but sustained speed can fall (fanless
+laptops throttle). After eight real tiles the worker projects
+elapsed + mean wall time of the last eight tiles × remaining tiles + export cost,
+without margin. If that exceeds 300,000 ms the run restarts on SRVGG at once
+instead of at the hard deadline, and the profile's tile speed rises to the
+observed inference time. Analytics records `projected-over-budget` and
+`reference-mismatch` reasons without image details. The rolling
+projection is covered by code review and the existing budget fallback path;
+a real throttled device has not been measured.
+
+## Returning visits and failures
+
+Versioned localStorage profiles have a seven-day TTL and store compatibility,
+conservative tile timing/margin and up to 16 output-path measurements. Keys
+include model/revision/precision/backend/tile configuration, ORT version, OS
+family/available OS token, browser family/major, available GPU identity,
+capabilities and limits. Browser patch updates preserve the profile unless
+capabilities change. Browser APIs can hide GPU/OS details; first working tiles
+and session creation therefore always validate the real current execution.
+When persistent storage is unavailable, bounded in-memory storage works for
+the tab. A new image format/size requires only missing output calibration.
+
+GPU/runtime/OOM/timeout/export failures suppress the model for 24 hours;
+download/integrity failures for 15 minutes. A rejected image budget is never a
+global model prohibition. Model weights use a content-addressed immutable HTTP
+URL and hash validation; browser cache eviction still permits a later download.
+
+Failures and rejected forecasts restart the entire input with SRVGG in a new
+worker. No tiles are mixed and Nomos never uses CPU. Per-operation watchdogs,
+the calibration watchdog and a 300,000 ms deadline cover hung workers as well
+as explicit errors. The deadline stops new tiles; once the last tile is done the
+result is composited, encoded and delivered rather than discarded. Cancellation clears all timers and never
+starts a fallback. Photos, names and full hardware/profile keys are not added
+to analytics; existing consent gates apply to decision/timing/error events.
+
+Unmeasured desktop GPUs are monitored through analytics instead. Once the
+preflight requests an adapter, Photo 4× candidate, selection, retry, error and
+completion events carry `gpu_vendor`: one of apple, nvidia, amd, intel,
+qualcomm, arm, other or unknown, never the adapter model, architecture or
+driver. A `processing_retry` from the heavy model adds `photo4x_elapsed_ms`,
+the wall time it cost before SRVGG restarted the photo. Split these by
+`browser_os`, `gpu_vendor` and `error_type`; a family with frequent retries or
+long elapsed times is removed with a release-descriptor change and redeploy
+(there is no remote switch).
+
+## Reproduction and verification
+
+Create the pinned Python environment from `scripts/photo4x-requirements.txt`,
+then prepare/install the reviewed graph before building:
+
+```sh
+.web-model-work/photo4x/venv/bin/python scripts/prepare_photo4x_models.py \
+  --models nomos-realplksr --sizes 256 --fp16 --webgpu-softplus
+node scripts/install_photo4x_release.mjs
+npm run build
+node scripts/serve_photo4x_lab.mjs
+```
+
+The installer and build reject changed bytes or an unvalidated ORT version.
+Conversion verification uses a deterministic center crop/rescale of the tracked
+`resources/before_after/film_negative_after.jpg`, whose hash and transform are
+recorded in the preparation manifest. Restoring the release graph requires no
+private laboratory photographs; the verification input does not alter model bytes.
+The production package includes only the selected graph under
+`/assets/processor/`; losing graphs, laboratory files and personal photos stay
+excluded. Existing regular photo/drawing/face assets are retained.
+
+With `USCALE_PLAYWRIGHT_MODULE` pointing to an installed Playwright module:
+
+```sh
+node scripts/check_photo4x_integration.mjs
+node scripts/check_photo4x_ui.mjs
+node scripts/check_photo4x_recovery.mjs
+npm run test:tool
+npm run build:production
+.web-model-work/photo4x/venv/bin/python scripts/summarize_photo4x_integration.py
+```
+
+Integration covers cold/next-day reuse, reference-output mismatch fallback, real 12 MP JPEG fallback, transparent
+PNG, GFPGAN with extra base export, cancellation, download/hash fallback, 2×,
+drawing and CPU exclusions. Product UI tests independently exercise first and
+return visits. The source/report hashes and measurements are in
+`benchmarks/browser/photo4x-integration.json`. Actual VRAM use is unavailable.
+New-path cold/return PNG pixels exactly match the reviewed graph; alpha error
+is zero on the transparent fixture.
+
+## Safari and unmeasured hardware
+
+Safari's independent release switch remains **false**. Actual installed Safari
+27.0 on macOS 26.7 was attempted: WebDriver session creation timed out even
+after user-authorized Remote Automation. A native-tab local acceptance harness
+also failed to deliver a report, so this is an **inconclusive environment run**,
+not proof that Safari lacks FP16 or cannot run the graph. Remote Automation
+and the developer-menu setting were both verified restored to off.
+
+The lab supports a repeatable native-Safari run without changing preferences:
+open `/lab/?benchmark=1&autobenchmark=photo4x-safari&report=photo4x-safari` on
+`serve_photo4x_lab.mjs`. It tests the strict GPU graph, PNG/JPEG, alpha, faces,
+cancellation and download recovery with a lab-only Safari gate override. Only
+a JSON report is posted to the loopback server. Enable the release's Safari
+switch only after that report passes; do not substitute Playwright WebKit for
+an actual Safari acceptance.
+
+Physical M1/8 GB, Windows NVIDIA/AMD and Intel iGPU are **not measured**. They
+may use the Chrome/Edge path only after local validation, per the approved
+rollout policy. M4 Pro/48 GB is the real GPU test device. The 12 MP conservative
+forecast exceeds five minutes, so automatic processing selects regular SRVGG
+even though the earlier unrestricted Nomos lab runs finished under five minutes.

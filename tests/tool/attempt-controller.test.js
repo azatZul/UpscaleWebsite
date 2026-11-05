@@ -128,3 +128,128 @@ test('streamed bytes are real progress even when Content-Length is absent', () =
   assert.notEqual(first, second);
   send(20); assert.equal([...h.scheduled.keys()][0], second);
 });
+
+test('heavy model fallback survives GPU deduplication, restarts on failure and ignores stale results', () => {
+  const variant = {id: 'nomos', revision: 'sha', precision: 'fp32', tileSize: 256, overlap: 32};
+  for (const [operation, code] of [['decode', 'budget'], ['scan', 'budget'], ['prepare-rgb', 'budget'], ['calibrate', 'budget'], ['download', 'download'], ['initialize', 'gpu'], ['probe', 'budget'], ['tile', 'runtime'], ['tile', 'timeout'], ['encode', 'export'], ['composite', 'runtime'], ['encode', 'timeout']]) {
+    const h = harness();
+    h.controller.start({file: 'same-input'}, [{backend: 'webgpu', threads: 1, variant, modelFallback: true, failureKey: 'nomos-only'}, ...choices]);
+    const original = h.workers[0];
+    original.onmessage({data: {type: 'status', operation}});
+    original.onmessage({data: {type: 'error', code}});
+    assert.equal(h.workers.length, 2, `${operation}/${code}`);
+    assert.equal(h.workers[1].config.backend, 'webgpu');
+    assert.equal(h.workers[1].config.variant, undefined);
+    assert.equal(h.workers[1].request.file, 'same-input');
+    original.onmessage({data: {type: 'done', blob: 'mixed-model-output'}});
+    assert.equal(h.messages.some(m => m.blob === 'mixed-model-output'), false);
+    assert.equal(original.stopped, true);
+    assert.equal(h.rejected.length, ['gpu', 'runtime', 'timeout', 'download', 'export'].includes(code) ? 1 : 0);
+    if (h.rejected.length) assert.equal(h.rejected[0].failureKey, 'nomos-only');
+  }
+});
+
+test('heavy-model budget and calibration watchdogs survive progress and are cleared on cancellation/fallback', () => {
+  const variant = {id: 'nomos', revision: 'sha', tileSize: 256, overlap: 32, precision: 'fp16'};
+  const configurations = [{backend: 'webgpu', threads: 1, variant, modelFallback: true}, choices[0]];
+  for (const operation of ['calibrate', 'tile']) {
+    const h = harness(); h.controller.start({}, configurations);
+    const original = h.workers[0];
+    if (operation === 'tile') original.onmessage({data: {type: 'photo4x-budget', elapsedMs: 1000}});
+    original.onmessage({data: {type: 'status', operation, completed: 1}});
+    const duration = operation === 'calibrate' ? 30_000 : 299_000;
+    const deadline = [...h.scheduled.values()].find(t => t.ms === duration);
+    assert.ok(deadline);
+    original.onmessage({data: {type: 'status', operation, completed: 2}});
+    assert.ok([...h.scheduled.values()].includes(deadline), 'progress cannot reset the overall limit');
+    deadline.fn();
+    assert.equal(h.workers.length, 2);
+    assert.equal(h.retries[0].error.code, 'budget');
+    assert.equal(h.rejected.length, 0, 'time budget is image-specific');
+    assert.equal(h.scheduled.size, 1, 'only the fallback operation watchdog survives');
+    h.controller.cancel();
+    assert.equal(h.scheduled.size, 0);
+    deadline.fn();
+    assert.equal(h.workers.length, 2);
+  }
+});
+
+test('heavy-model deadlines preserve their remaining time across background pauses', () => {
+  const variant = {id: 'nomos', revision: 'sha', tileSize: 256, overlap: 32};
+  for (const operation of ['calibrate', 'tile']) {
+    const h = harness();
+    h.controller.start({}, [{backend: 'webgpu', threads: 1, variant, modelFallback: true}, choices[0]]);
+    const worker = h.workers[0], limit = operation === 'calibrate' ? 30_000 : 299_000;
+    if (operation === 'tile') worker.onmessage({data: {type: 'photo4x-budget', elapsedMs: 1000}});
+    worker.onmessage({data: {type: 'status', operation, completed: 0}});
+    const original = [...h.scheduled.values()].find(t => t.ms === limit);
+    h.time(20); h.controller.setHidden(true);
+    assert.equal(h.scheduled.size, 0, operation);
+    assert.deepEqual(worker.request, {type: 'visibility', hidden: true});
+    h.time(600_020); original.fn();
+    assert.equal(h.retries.length, 0, 'a paused deadline cannot restart the photo');
+    worker.onmessage({data: {type: 'status', operation, completed: 1}});
+    assert.equal(h.scheduled.size, 0, 'background progress cannot arm a deadline');
+    h.controller.setHidden(false);
+    assert.deepEqual(worker.request, {type: 'visibility', hidden: false});
+    assert.ok([...h.scheduled.values()].some(t => t.ms === limit - 20));
+    h.time(600_030); h.controller.setHidden(true);
+    h.time(1_200_030); h.controller.setHidden(false);
+    const resumed = [...h.scheduled.values()].find(t => t.ms === limit - 30);
+    assert.ok(resumed, 'a second pause preserves rather than resets the remaining budget');
+    resumed.fn();
+    assert.equal(h.retries.length, 1);
+    assert.equal(h.retries[0].error.code, 'budget');
+    h.controller.cancel();
+    assert.equal(h.scheduled.size, 0);
+  }
+});
+
+test('a heavy-model deadline can begin or finish while the page is hidden', () => {
+  const variant = {id: 'nomos', revision: 'sha', tileSize: 256, overlap: 32};
+  const h = harness(); h.controller.setHidden(true);
+  h.controller.start({}, [{backend: 'webgpu', threads: 1, variant, modelFallback: true}, choices[0]]);
+  const worker = h.workers[0];
+  assert.equal(worker.request.hidden, true, 'the worker knows the initial visibility');
+  worker.onmessage({data: {type: 'status', operation: 'calibrate'}});
+  worker.onmessage({data: {type: 'status', operation: 'tile'}});
+  worker.onmessage({data: {type: 'photo4x-budget', elapsedMs: 1000}});
+  assert.equal(h.scheduled.size, 0);
+  h.time(600_000); h.controller.setHidden(false);
+  assert.ok([...h.scheduled.values()].some(t => t.ms === 299_000));
+  assert.ok(![...h.scheduled.values()].some(t => t.ms === 30_000), 'finished calibration stays closed');
+  h.controller.setHidden(true);
+  worker.onmessage({data: {type: 'photo4x-budget', done: true}});
+  h.controller.setHidden(false);
+  assert.ok(![...h.scheduled.values()].some(t => t.ms === 299_000), 'finished tiles keep the budget closed');
+  h.controller.setHidden(true); h.controller.cancel(); h.controller.setHidden(false);
+  assert.equal(h.scheduled.size, 0, 'cancelled deadlines cannot rearm on return');
+});
+
+test('a heavy-model run that finished its tiles is delivered even past the budget', () => {
+  const variant = {id: 'nomos', revision: 'sha', tileSize: 256, overlap: 32, precision: 'fp16'};
+  const h = harness(); h.controller.start({}, [{backend: 'webgpu', threads: 1, variant, modelFallback: true}, choices[0]]);
+  const worker = h.workers[0];
+  worker.onmessage({data: {type: 'photo4x-budget', elapsedMs: 1000}});
+  const deadline = [...h.scheduled.values()].find(t => t.ms === 299_000);
+  assert.ok(deadline);
+  worker.onmessage({data: {type: 'photo4x-budget', done: true}});
+  assert.equal([...h.scheduled.values()].includes(deadline), false);
+  worker.onmessage({data: {type: 'photo4x-budget', elapsedMs: 0}});
+  assert.equal([...h.scheduled.values()].some(t => t.ms === 300_000), false, 'a closed budget cannot be re-armed');
+  worker.onmessage({data: {type: 'status', operation: 'encode', progress: .97}});
+  worker.onmessage({data: {type: 'done', blob: 'photo4x'}});
+  assert.equal(h.workers.length, 1);
+  assert.equal(h.retries.length, 0);
+  assert.equal(h.messages.at(-1).blob, 'photo4x');
+});
+
+test('cancellation during a heavy-model probe never starts a fallback', () => {
+  const h = harness(), variant = {id: 'nomos', revision: 'sha', tileSize: 128, overlap: 16, precision: 'fp32'};
+  h.controller.start({}, [{backend: 'webgpu', threads: 1, variant, modelFallback: true}, ...choices]);
+  h.workers[0].onmessage({data: {type: 'status', operation: 'probe'}});
+  h.controller.cancel();
+  h.workers[0].onmessage({data: {type: 'error', code: 'budget'}});
+  assert.equal(h.workers.length, 1);
+  assert.equal(h.retries.length, 0);
+});

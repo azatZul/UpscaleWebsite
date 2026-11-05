@@ -936,6 +936,7 @@ def footer(c, lang, home_prefix, path=""):
           <li><a href="{rel_url(lang, 'support_page')}">{esc(f['help'])}</a></li>
           <li><a href="{rel_url(lang, 'privacy_policy')}">{esc(f['privacy'])}</a></li>
           <li><a href="{rel_url(lang, 'terms')}">{esc(f['terms'])}</a></li>
+          <li><a href="/licenses/">{esc(f['licenses'])}</a></li>
           <li><button class="consent-link" type="button" data-consent-open>{esc(c['consent']['footer_link'])}</button></li>
         </ul>
       </div>
@@ -2021,7 +2022,7 @@ def render_tool(c, lang):
         <button id="topup-refresh" class="text-button" type="button">{esc(tl['topup_refresh'])}</button>
       </div>
             <div class="tool-status is-quiet" id="status" role="status" aria-live="polite" aria-atomic="true">
-        <div class="status-head"><b id="status-title" hidden></b><span id="status-value"></span></div>
+        <div class="status-head"><b id="status-title" hidden></b><span class="quality-chip" id="quality-chip" hidden>{esc(js['max_quality'])}</span><span id="status-value"></span></div>
         <progress id="progress" max="1" value="0" aria-label="{esc(tl['progress_label'])}" hidden></progress>
         <p id="status-detail">{esc(js['idle_detail'])}</p>
       </div>
@@ -2052,6 +2053,7 @@ def render_tool(c, lang):
         <div class="album-details">
           <h2 id="result-title">{first(js['upscaled'])}</h2>
           <p id="result-summary"></p>
+          <p class="quality-note" id="quality-note" hidden>{esc(js['max_quality_result'])}</p>
           <p id="face-summary"></p>
           <p class="saved-note" id="saved-note" hidden>{esc(tl['saved_note'])} <a href="/account/#history">{esc(tl['saved_view'])}</a></p>
           <div class="album-actions">
@@ -2172,6 +2174,9 @@ def render_static_redirects():
         for page in ("terms", "privacy_policy", "support_page"):
             rules.append(f"{base}{page} {base}{page}.html 301")
             rules.append(f"{base}{page}/ {base}{page}.html 301")
+    # The model licenses page is English only and shared by every footer.
+    rules.append("/licenses/ /licenses/index.html 200")
+    rules.append("/licenses /licenses/ 301")
     # Pages copied verbatim from static/ contribute no rules of their own; skip
     # any directory a rendered page already claimed.
     claimed = {rule.split(" ", 1)[0] for rule in rules}
@@ -2184,6 +2189,36 @@ def render_static_redirects():
 
 
 # Build entry point
+def render_model_licenses(c):
+    """English attribution page, shared by all locale footers."""
+    path = 'licenses'
+    body = f'''<main class="wrap" id="main-content" tabindex="-1">
+  <nav class="crumbs" aria-label="{esc(c['ui'].get('breadcrumb', 'Breadcrumb'))}">
+    <a href="/">{esc(c['ui']['home'])}</a><span>&rsaquo;</span><span>Model licenses</span>
+  </nav>
+  <header class="doc-head">
+    <h1>Model licenses and acknowledgements</h1>
+    <p class="lead">Third-party AI models that run in the UScale browser tool, with their authors and licenses.</p>
+  </header>
+  <article class="doc doc-cards doc-solo"><div class="doc-card">
+    <section class="doc-sec"><h2>Photo 4×</h2>
+      <h3>4xNomosWebPhoto RealPLKSR</h3>
+      <p>This model is used automatically for Photo 4× on compatible desktop browsers after an on-device performance check.</p>
+      <p>Author: Philip Hofmann (Helaman). Source:
+        <a href="https://github.com/Phhofm/models/releases/tag/4xNomosWebPhoto_RealPLKSR">author's RealPLKSR release</a>.</p>
+      <p>RealPLKSR: <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International</a>,
+        explicitly declared in the <a href="https://huggingface.co/Phips/4xNomosWebPhoto_RealPLKSR/blob/49d5da1/README.md">author's model-card metadata</a>.
+        The evaluated ONNX parameters match the author's published weights.</p>
+      <p>Modifications by UScale: ONNX graph simplification and shape inference; fixed input dimensions 1×3×256×256;
+        a numerically checked Softplus decomposition for WebGPU; FP16 weights and computation, retaining FP32 input/output and Softplus arithmetic. No retraining.</p>
+      <p>No endorsement by the model author is implied.</p>
+    </section>
+  </div></article>
+</main>'''
+    return (head(c, 'en', 'Model licenses – UScale', 'Model attribution and license information.', f'{SITE}/licenses/', path=path, alternates=False)
+            + nav(c, 'en', '/', '') + body + footer(c, 'en', '/', ''))
+
+
 def main():
     requested = sys.argv[1:]
     langs = requested or list(LOCALIZED_CODES)
@@ -2220,6 +2255,8 @@ def main():
     write("sitemap.xml", render_sitemap())
     write("robots.txt", ROBOTS)
     write("_shell/album.html", render_album_shell())
+    english = inject_facts(localization_catalog.load_locale('en'), 'en')
+    write("licenses/index.html", render_model_licenses(english))
     copy_static()
     write("_redirects", render_static_redirects())
     if UNKNOWN_FACTS:

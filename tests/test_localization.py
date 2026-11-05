@@ -71,6 +71,7 @@ class CatalogTests(unittest.TestCase):
                 self.assertNotIn(tool_href, site_build.nav(c, locale, "/"))
             redirects = site_build.render_static_redirects()
             self.assertIn("/upscale/ /upscale/index.html 200", redirects)
+            self.assertIn("/licenses/ /licenses/index.html 200", redirects)
             self.assertNotIn("free-upscale", redirects)
         finally:
             site_build.TOOL_SCRIPT = original

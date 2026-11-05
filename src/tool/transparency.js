@@ -128,11 +128,11 @@ export function fillTransparentSurface(context, width, height) {
   return visible;
 }
 
-export function sampleRgbTile({rgb, width, height}, x, y) {
-  const plane = TILE_SIZE * TILE_SIZE, values = new Float32Array(plane * 3);
-  for (let ty = 0; ty < TILE_SIZE; ty++) for (let tx = 0; tx < TILE_SIZE; tx++) {
+export function sampleRgbTile({rgb, width, height}, x, y, tileSize = TILE_SIZE) {
+  const plane = tileSize * tileSize, values = new Float32Array(plane * 3);
+  for (let ty = 0; ty < tileSize; ty++) for (let tx = 0; tx < tileSize; tx++) {
     const p = (Math.min(height - 1, y + ty) * width + Math.min(width - 1, x + tx)) * 3;
-    const i = ty * TILE_SIZE + tx;
+    const i = ty * tileSize + tx;
     for (let c = 0; c < 3; c++) values[c * plane + i] = rgb[p + c] / 255;
   }
   return values;
@@ -154,11 +154,11 @@ export function applyBandAlpha(data, source, bandY, bandHeight, scale) {
   }
 }
 
-export function emptyTile(source, x, y) {
+export function emptyTile(source, x, y, tileSize = TILE_SIZE) {
   // Check the complete 256px tile plus bilinear support, a conservative superset
   // of its contribution and both blending seams.
   const left = Math.max(0, x - 1), top = Math.max(0, y - 1);
-  const right = Math.min(source.width, x + TILE_SIZE + 1), bottom = Math.min(source.height, y + TILE_SIZE + 1);
+  const right = Math.min(source.width, x + tileSize + 1), bottom = Math.min(source.height, y + tileSize + 1);
   for (let row = top; row < bottom; row++) for (let column = left; column < right; column++) {
     if (source.alpha[row * source.width + column]) return false;
   }

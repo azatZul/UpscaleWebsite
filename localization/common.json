@@ -436,6 +436,17 @@
       "zh": "使用条款"
     }
   },
+  "footer.licenses": {
+    "localizations": {
+      "en": "Model licenses",
+      "ru": "Лицензии моделей",
+      "de": "Modelllizenzen",
+      "ja": "モデルのライセンス",
+      "fr": "Licences des modèles",
+      "es": "Licencias de los modelos",
+      "zh": "模型许可"
+    }
+  },
   "footer.appstore": {
     "localizations": {
       "en": "App Store page",

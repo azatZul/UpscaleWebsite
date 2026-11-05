@@ -140,6 +140,39 @@
 @keyframes tool-scan{from{background-position:0 -60%}to{background-position:0 160%}}
 @keyframes tool-glow{0%,100%{box-shadow:0 0 0 2px color-mix(in srgb,var(--acc) 35%,transparent)}
   50%{box-shadow:0 0 0 4px color-mix(in srgb,var(--acc) 70%,transparent),0 0 26px color-mix(in srgb,var(--acc) 40%,transparent)}}
+/* Max quality: the heavier model passed its forecast on this device. Same gold as
+   the mode tiles' paid tag, but with a sparkle, never a coin: it costs nothing.
+   Only the chip, the bar and the result tag move; the cards stay still. */
+.tool{--gold:linear-gradient(135deg,#f7d98b,#d4a03c);--gold-tx:#1b1406;
+  --sparkle:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 1.5c.7 5.2 3 8 10.5 10.5C15 14.5 12.7 17.3 12 22.5 11.3 17.3 9 14.5 1.5 12 9 9.5 11.3 6.7 12 1.5z'/%3E%3C/svg%3E")}
+.status-head{flex-wrap:wrap;row-gap:6px}
+.quality-chip,.result-comparison .cmp-tag.r.is-max{display:inline-flex;align-items:center;gap:5px;color:var(--gold-tx);
+  background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.75) 50%,transparent 65%) no-repeat,var(--gold);
+  background-size:250% 100%,100% 100%;background-position:150% 0,0 0}
+.quality-chip{align-self:center;padding:3px 10px 3px 8px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.01em;
+  line-height:1.3;white-space:nowrap;box-shadow:0 1px 8px -2px rgba(212,160,60,.65);animation:quality-shine 1.6s ease-in-out .2s 2 both}
+.quality-chip::before,.result-comparison .cmp-tag.r.is-max::before{content:"";flex:0 0 auto;width:12px;height:12px;
+  background:currentColor;-webkit-mask:var(--sparkle) center/contain no-repeat;mask:var(--sparkle) center/contain no-repeat}
+.tool-status.is-max{border-color:color-mix(in srgb,#d4a03c 65%,var(--line));
+  box-shadow:0 0 0 1px color-mix(in srgb,#d4a03c 18%,transparent),0 10px 30px -18px rgba(212,160,60,.9)}
+/* Two layers: only the light (first) moves; the gold underneath stays put. */
+.tool-status.is-max progress::-webkit-progress-value{
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent) no-repeat,var(--gold);
+  background-size:40% 100%,100% 100%;animation:quality-bar 1.4s linear infinite}
+.tool-status.is-max progress::-moz-progress-bar{
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent) no-repeat,var(--gold);
+  background-size:40% 100%,100% 100%;animation:quality-bar 1.4s linear infinite}
+/* Leaves room for the short "Original" tag on the left; ellipsis only as a last resort. */
+.result-comparison .cmp-tag.r.is-max{max-width:calc(100% - 120px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  animation:quality-shine 1.6s ease-in-out .5s 1 both}
+.result-comparison .cmp-tag.r.is-max::before{width:11px;height:11px}
+.album-details .quality-note{max-width:52ch;margin:8px auto 0;font-size:13.5px;color:var(--tx-2)}
+@keyframes quality-shine{from{background-position:150% 0,0 0}to{background-position:-50% 0,0 0}}
+@keyframes quality-bar{from{background-position:-70% 0,0 0}to{background-position:170% 0,0 0}}
+@media(prefers-reduced-motion:reduce){
+  .quality-chip,.result-comparison .cmp-tag.r.is-max,
+  .tool-status.is-max progress::-webkit-progress-value,.tool-status.is-max progress::-moz-progress-bar{animation:none}
+}
 @media(prefers-reduced-motion:reduce){
   .tool-status.is-busy progress::-webkit-progress-value{animation:none}
   .tool-status.is-busy progress::-moz-progress-bar{animation:none}

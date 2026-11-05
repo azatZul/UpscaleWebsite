@@ -33,6 +33,9 @@ await mkdir(new URL('ort/', output), {recursive: true});
 for (const fileName of [
   'ort-wasm-simd-threaded.asyncify.mjs',
   'ort-wasm-simd-threaded.asyncify.wasm',
+  // The lab's own pipeline imports onnxruntime-web/all, whose WebGPU backend is JSEP.
+  'ort-wasm-simd-threaded.jsep.mjs',
+  'ort-wasm-simd-threaded.jsep.wasm',
   'ort-wasm-simd-threaded.mjs',
   'ort-wasm-simd-threaded.wasm',
 ]) {

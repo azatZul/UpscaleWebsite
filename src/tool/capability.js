@@ -1,3 +1,5 @@
+import {tileGeometry} from './tile-geometry.js';
+
 export const TILE_SIZE = 256;
 export const OVERLAP = 16;
 export const STRIDE = TILE_SIZE - OVERLAP * 2;
@@ -117,7 +119,8 @@ export function maxInputPixelsForScale(policy, scale) {
 // measured per-device value once a photo has been processed.
 export const DEFAULT_TILE_MS = {mobile: 2000, desktop: 700};
 
-export function assessPhoto({width, height, size = 0}, policy = devicePolicy(), scale = SCALE) {
+export function assessPhoto({width, height, size = 0}, policy = devicePolicy(), scale = SCALE, geometry) {
+  const {tileSize, stride} = tileGeometry(geometry);
   if (![width, height].every(n => Number.isSafeInteger(n) && n > 0)) {
     throw new PhotoError('format', 'err_unreadable');
   }
@@ -129,13 +132,13 @@ export function assessPhoto({width, height, size = 0}, policy = devicePolicy(), 
   const maxInputPixels = maxInputPixelsForScale(policy, scale);
   // Allow for decoder/bitmap, destination canvas, export scratch space, the
   // inference engine, and two row bands. This is deliberately an estimate.
-  const estimatedPeakBytes = pixels * 36 + 96 * 1024 * 1024 + outputWidth * 512 * 8;
+  const estimatedPeakBytes = pixels * 36 + 96 * 1024 * 1024 + outputWidth * tileSize * scale * 8;
   if (pixels > maxInputPixels || Math.max(outputWidth, outputHeight) > policy.maxOutputSide ||
       estimatedPeakBytes > policy.memoryBudgetBytes) {
     throw new PhotoError('size', 'err_too_large', {scale, mp: maxInputPixels / 1_000_000});
   }
   return {width, height, outputWidth, outputHeight, scale,
-    tileCount: Math.ceil(width / STRIDE) * Math.ceil(height / STRIDE), estimatedPeakBytes};
+    tileCount: Math.ceil(width / stride) * Math.ceil(height / stride), estimatedPeakBytes};
 }
 
 export function estimateDuration(tileMs, tileCount) {

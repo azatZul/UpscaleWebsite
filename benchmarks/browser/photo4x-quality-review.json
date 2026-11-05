@@ -1,0 +1,308 @@
+{
+  "schemaVersion": 1,
+  "reviewDate": "2026-11-03",
+  "reviewer": "user",
+  "sourceFile": "photo4x-diverse-review.json",
+  "sourceSha256": "cb5ff6d5f6b3fb6602893909cf497bf668e5084d9d3296f96442b0530776ed51",
+  "blindKeySha256": "252768d8c8c0750f5fe770fbde05f7d25e16b5845a9f1bdace3fc33ce2b8ffa6",
+  "protocol": {
+    "referenceLongSideMax": 2048,
+    "scale": 4,
+    "referenceResize": "Lanczos, dimensions divisible by 4",
+    "clean": "Bicubic downscale by 4; lossless PNG; no artificial noise or scratches",
+    "mild": "Same downscale, Gaussian blur sigma 0.45 LR pixels, JPEG quality85 4:2:0; decoded to PNG",
+    "scope": "Controlled degradation, not a full simulation of real camera blur. User photos remain separate without ground truth."
+  },
+  "caseCount": 19,
+  "counts": {
+    "current": 0,
+    "nomos-esrgan": 2,
+    "nomos-realplksr": 14,
+    "tie": 3,
+    "none": 0
+  },
+  "byTrack": {
+    "real": {
+      "nomos-realplksr": 1,
+      "nomos-esrgan": 2
+    },
+    "clean": {
+      "tie": 2,
+      "nomos-realplksr": 10
+    },
+    "mild": {
+      "tie": 1,
+      "nomos-realplksr": 3
+    }
+  },
+  "ratings": [
+    {
+      "case": "real-parrot",
+      "track": "real",
+      "choice": "B",
+      "selected": "nomos-realplksr",
+      "mapping": {
+        "A": "current",
+        "B": "nomos-realplksr",
+        "C": "nomos-esrgan"
+      },
+      "notes": "B и C очень похоже, но всеже B чуть более естественно выглядит"
+    },
+    {
+      "case": "real-eiffel",
+      "track": "real",
+      "choice": "B",
+      "selected": "nomos-esrgan",
+      "mapping": {
+        "A": "nomos-realplksr",
+        "B": "nomos-esrgan",
+        "C": "current"
+      },
+      "notes": "Качественней детали, меньше артефактов"
+    },
+    {
+      "case": "real-girls",
+      "track": "real",
+      "choice": "B",
+      "selected": "nomos-esrgan",
+      "mapping": {
+        "A": "current",
+        "B": "nomos-esrgan",
+        "C": "nomos-realplksr"
+      },
+      "notes": "В варианте B чуть меньше артефактов, хотя и C тоже очень хорош"
+    },
+    {
+      "case": "web-portrait-hair-clean",
+      "track": "clean",
+      "choice": "tie",
+      "selected": "tie",
+      "mapping": {
+        "A": "current",
+        "B": "nomos-esrgan",
+        "C": "nomos-realplksr"
+      },
+      "notes": "B/C одинаковы, не могу сказать что лучше",
+      "tiedModelsFromNotes": [
+        "nomos-esrgan",
+        "nomos-realplksr"
+      ]
+    },
+    {
+      "case": "web-portrait-hair-mild",
+      "track": "mild",
+      "choice": "tie",
+      "selected": "tie",
+      "mapping": {
+        "A": "nomos-esrgan",
+        "B": "current",
+        "C": "nomos-realplksr"
+      },
+      "notes": "A/C очень близки по уровеню, небольшие артефакты в обоих в разных участках",
+      "tiedModelsFromNotes": [
+        "nomos-esrgan",
+        "nomos-realplksr"
+      ]
+    },
+    {
+      "case": "web-portrait-cloth-clean",
+      "track": "clean",
+      "choice": "A",
+      "selected": "nomos-realplksr",
+      "mapping": {
+        "A": "nomos-realplksr",
+        "B": "nomos-esrgan",
+        "C": "current"
+      },
+      "notes": "Чуть более естественные волосы"
+    },
+    {
+      "case": "web-portrait-beard-clean",
+      "track": "clean",
+      "choice": "B",
+      "selected": "nomos-realplksr",
+      "mapping": {
+        "A": "current",
+        "B": "nomos-realplksr",
+        "C": "nomos-esrgan"
+      },
+      "notes": "Детали местами более реалистичные"
+    },
+    {
+      "case": "web-cat-clean",
+      "track": "clean",
+      "choice": "B",
+      "selected": "nomos-realplksr",
+      "mapping": {
+        "A": "current",
+        "B": "nomos-realplksr",
+        "C": "nomos-esrgan"
+      },
+      "notes": "Чуть более атурально B чем C"
+    },
+    {
+      "case": "web-bird-clean",
+      "track": "clean",
+      "choice": "C",
+      "selected": "nomos-realplksr",
+      "mapping": {
+        "A": "current",
+        "B": "nomos-esrgan",
+        "C": "nomos-realplksr"
+      },
+      "notes": "На варианте B сильней эффект боке бросается лишний"
+    },
+    {
+      "case": "web-bird-mild",
+      "track": "mild",
+      "choice": "B",
+      "selected": "nomos-realplksr",
+      "mapping": {
+        "A": "current",
+        "B": "nomos-realplksr",
+        "C": "nomos-esrgan"
+      },
+      "notes": "Меньше артефактов"
+    },
+    {
+      "case": "web-market-clean",
+      "track": "clean",
+      "choice": "C",
+      "selected": "nomos-realplksr",
+      "mapping": {
+        "A": "current",
+        "B": "nomos-esrgan",
+        "C": "nomos-realplksr"
+      },
+      "notes": "Хотя на B человек чуть четче получился, но волокна чуть лучше на C"
+    },
+    {
+      "case": "web-forest-clean",
+      "track": "clean",
+      "choice": "C",
+      "selected": "nomos-realplksr",
+      "mapping": {
+        "A": "nomos-esrgan",
+        "B": "current",
+        "C": "nomos-realplksr"
+      },
+      "notes": "Меньше эффекта боке чем на A"
+    },
+    {
+      "case": "web-landscape-clean",
+      "track": "clean",
+      "choice": "B",
+      "selected": "nomos-realplksr",
+      "mapping": {
+        "A": "nomos-esrgan",
+        "B": "nomos-realplksr",
+        "C": "current"
+      },
+      "notes": ""
+    },
+    {
+      "case": "web-night-signs-clean",
+      "track": "clean",
+      "choice": "tie",
+      "selected": "tie",
+      "mapping": {
+        "A": "nomos-esrgan",
+        "B": "current",
+        "C": "nomos-realplksr"
+      },
+      "notes": "A/C примерно одинаковы",
+      "tiedModelsFromNotes": [
+        "nomos-esrgan",
+        "nomos-realplksr"
+      ]
+    },
+    {
+      "case": "web-night-signs-mild",
+      "track": "mild",
+      "choice": "C",
+      "selected": "nomos-realplksr",
+      "mapping": {
+        "A": "nomos-esrgan",
+        "B": "current",
+        "C": "nomos-realplksr"
+      },
+      "notes": ""
+    },
+    {
+      "case": "web-night-stone-clean",
+      "track": "clean",
+      "choice": "A",
+      "selected": "nomos-realplksr",
+      "mapping": {
+        "A": "nomos-realplksr",
+        "B": "current",
+        "C": "nomos-esrgan"
+      },
+      "notes": "Меньше артефактов чем в. С"
+    },
+    {
+      "case": "web-phone-cafe-clean",
+      "track": "clean",
+      "choice": "B",
+      "selected": "nomos-realplksr",
+      "mapping": {
+        "A": "current",
+        "B": "nomos-realplksr",
+        "C": "nomos-esrgan"
+      },
+      "notes": "Меньше артефактов боке чем в C"
+    },
+    {
+      "case": "web-phone-cafe-mild",
+      "track": "mild",
+      "choice": "C",
+      "selected": "nomos-realplksr",
+      "mapping": {
+        "A": "nomos-esrgan",
+        "B": "current",
+        "C": "nomos-realplksr"
+      },
+      "notes": ""
+    },
+    {
+      "case": "web-architecture-clean",
+      "track": "clean",
+      "choice": "C",
+      "selected": "nomos-realplksr",
+      "mapping": {
+        "A": "nomos-esrgan",
+        "B": "current",
+        "C": "nomos-realplksr"
+      },
+      "notes": ""
+    }
+  ],
+  "qualityWinner": {
+    "id": "nomos-realplksr",
+    "revision": "b9d2b0fad4830776a807ffad91efb9d56c91486b151c1192b6bfdeb4956ecd8a",
+    "sha256": "b9d2b0fad4830776a807ffad91efb9d56c91486b151c1192b6bfdeb4956ecd8a",
+    "precision": "fp16",
+    "tileSize": 256,
+    "bytes": 15021513,
+    "requires": {
+      "features": [
+        "shader-f16"
+      ],
+      "gpuOnly": true,
+      "limits": {
+        "maxBufferSize": 33554432,
+        "maxStorageBufferBindingSize": 33554432
+      }
+    },
+    "overlap": 32,
+    "outrightPreferences": 14
+  },
+  "status": "quality-review-complete-device-acceptance-pending",
+  "limitations": [
+    "One reviewer; subjective preferences, not statistical proof.",
+    "Sixteen controlled cases come from twelve sources, not sixteen independent photos.",
+    "ESRGAN preferred on two of the three real user inputs; retain this exception.",
+    "Crisp/external references were not selectable A/B/C candidates.",
+    "Ratings do not approve untested devices or publication of weights."
+  ]
+}

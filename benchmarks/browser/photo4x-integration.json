@@ -1,0 +1,514 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-03T09:29:09.485325+00:00",
+  "passed": true,
+  "deployed": false,
+  "modelSha256": "b9d2b0fad4830776a807ffad91efb9d56c91486b151c1192b6bfdeb4956ecd8a",
+  "release": {
+    "enabled": true,
+    "licenseApproved": true,
+    "runtimeVersion": "1.23.2",
+    "browsers": {
+      "chrome": true,
+      "edge": true,
+      "safari": false
+    },
+    "winner": {
+      "id": "nomos-realplksr",
+      "revision": "b9d2b0fad4830776a807ffad91efb9d56c91486b151c1192b6bfdeb4956ecd8a",
+      "sha256": "b9d2b0fad4830776a807ffad91efb9d56c91486b151c1192b6bfdeb4956ecd8a",
+      "bytes": 15021513,
+      "sourceFile": "photo4x-realplksr-fp16-gpu.onnx",
+      "url": "/assets/processor/b9d2b0fad4830776-photo4x-realplksr-fp16-gpu.onnx",
+      "precision": "fp16",
+      "tileSize": 256,
+      "overlap": 32,
+      "scale": 4,
+      "requires": {
+        "gpuOnly": true,
+        "features": [
+          "shader-f16"
+        ],
+        "limits": {
+          "maxBufferSize": 33554432,
+          "maxStorageBufferBindingSize": 33554432
+        }
+      }
+    }
+  },
+  "physicalDevice": {
+    "chip": "Apple M4 Pro",
+    "unifiedMemoryGiB": 48,
+    "macOS": "26.7",
+    "browser": "151.0.7922.34",
+    "hardwareWebGPU": true,
+    "unsafeGpuFlags": false,
+    "vram": null,
+    "vramReason": "Not reliably exposed by browser APIs"
+  },
+  "integration": {
+    "passed": true,
+    "rawReport": ".web-model-work/photo4x/results/integration/report.json",
+    "rawSha256": "a6a97bb57c6a1b507fc3efbdbd0cc59b05e4ca05720aa9f42d5fd8c5d941cf9d",
+    "createdAt": "2026-11-03T08:39:11.741Z",
+    "cases": [
+      {
+        "name": "cold",
+        "passed": true,
+        "model": "nomos-realplksr",
+        "wallMs": 10701.989999771118,
+        "warmupMs": 799.3900003433228,
+        "calibrationMs": 170.875,
+        "profileReused": false,
+        "forecast": {
+          "allowed": true,
+          "milliseconds": 11304,
+          "reason": "within-budget"
+        },
+        "upscaleExportMs": 9048.58499956131,
+        "mime": "image/png",
+        "dimensions": [
+          1864,
+          2800
+        ],
+        "faceCount": 0,
+        "canEdit": false
+      },
+      {
+        "name": "next-day",
+        "passed": true,
+        "model": "nomos-realplksr",
+        "wallMs": 10895.829999923706,
+        "warmupMs": 800.4700002670288,
+        "calibrationMs": 0,
+        "profileReused": true,
+        "forecast": {
+          "allowed": true,
+          "milliseconds": 11522,
+          "reason": "within-budget"
+        },
+        "upscaleExportMs": 9443.784999847412,
+        "mime": "image/png",
+        "dimensions": [
+          1864,
+          2800
+        ],
+        "faceCount": 0,
+        "canEdit": false
+      },
+      {
+        "name": "large",
+        "passed": true,
+        "model": "srvgg",
+        "wallMs": 83535.71499967575,
+        "warmupMs": 0,
+        "calibrationMs": 0,
+        "profileReused": false,
+        "upscaleExportMs": 83208.60500049591,
+        "mime": "image/jpeg",
+        "dimensions": [
+          16128,
+          12096
+        ],
+        "faceCount": 0,
+        "canEdit": false
+      },
+      {
+        "name": "transparent",
+        "passed": true,
+        "model": "nomos-realplksr",
+        "wallMs": 1906.7400002479553,
+        "warmupMs": 787.1349997520447,
+        "calibrationMs": 6.934999942779541,
+        "profileReused": true,
+        "forecast": {
+          "allowed": true,
+          "milliseconds": 939,
+          "reason": "within-budget"
+        },
+        "upscaleExportMs": 744.1050004959106,
+        "mime": "image/png",
+        "dimensions": [
+          260,
+          188
+        ],
+        "faceCount": 0,
+        "canEdit": false
+      },
+      {
+        "name": "transparent-cached",
+        "passed": true,
+        "model": "nomos-realplksr",
+        "wallMs": 1879.659999847412,
+        "warmupMs": 780.3450002670288,
+        "calibrationMs": 0,
+        "profileReused": true,
+        "forecast": {
+          "allowed": true,
+          "milliseconds": 939,
+          "reason": "within-budget"
+        },
+        "upscaleExportMs": 742.1650004386902,
+        "mime": "image/png",
+        "dimensions": [
+          260,
+          188
+        ],
+        "faceCount": 0,
+        "canEdit": false
+      },
+      {
+        "name": "faces",
+        "passed": true,
+        "model": "nomos-realplksr",
+        "wallMs": 10796.91000032425,
+        "warmupMs": 799.3399996757507,
+        "calibrationMs": 223.07999992370605,
+        "profileReused": true,
+        "forecast": {
+          "allowed": true,
+          "milliseconds": 11807,
+          "reason": "within-budget"
+        },
+        "upscaleExportMs": 9159.864999771118,
+        "mime": "image/png",
+        "dimensions": [
+          1864,
+          2800
+        ],
+        "faceCount": 2,
+        "canEdit": true
+      },
+      {
+        "name": "faces-cached",
+        "passed": true,
+        "model": "nomos-realplksr",
+        "wallMs": 10402.754999637604,
+        "warmupMs": 794.9599995613098,
+        "calibrationMs": 0,
+        "profileReused": true,
+        "forecast": {
+          "allowed": true,
+          "milliseconds": 11905,
+          "reason": "within-budget"
+        },
+        "upscaleExportMs": 9234.550000190735,
+        "mime": "image/png",
+        "dimensions": [
+          1864,
+          2800
+        ],
+        "faceCount": 2,
+        "canEdit": true
+      },
+      {
+        "name": "cancel-calibration",
+        "passed": true
+      },
+      {
+        "name": "download-fallback",
+        "passed": true,
+        "model": "srvgg",
+        "wallMs": 4293.554999828339,
+        "warmupMs": 0,
+        "calibrationMs": 0,
+        "profileReused": false,
+        "upscaleExportMs": 4026.8250002861023,
+        "mime": "image/png",
+        "dimensions": [
+          1864,
+          2800
+        ],
+        "faceCount": 0,
+        "canEdit": false
+      },
+      {
+        "name": "hash-fallback",
+        "passed": true,
+        "model": "srvgg",
+        "wallMs": 4510.594999790192,
+        "warmupMs": 0,
+        "calibrationMs": 0,
+        "profileReused": false,
+        "upscaleExportMs": 4203.869999885559,
+        "mime": "image/png",
+        "dimensions": [
+          1864,
+          2800
+        ],
+        "faceCount": 0,
+        "canEdit": false
+      },
+      {
+        "name": "reference-fallback",
+        "passed": true,
+        "model": "srvgg",
+        "wallMs": 5460.385000228882,
+        "warmupMs": 0,
+        "calibrationMs": 0,
+        "profileReused": false,
+        "upscaleExportMs": 4062.2699999809265,
+        "mime": "image/png",
+        "dimensions": [
+          1864,
+          2800
+        ],
+        "faceCount": 0,
+        "canEdit": false
+      },
+      {
+        "name": "scale2",
+        "passed": true,
+        "model": "srvgg",
+        "wallMs": 666.0500001907349,
+        "warmupMs": 0,
+        "calibrationMs": 0,
+        "profileReused": false,
+        "upscaleExportMs": 417.79500007629395,
+        "mime": "image/png",
+        "dimensions": [
+          158,
+          122
+        ],
+        "faceCount": 0,
+        "canEdit": false
+      },
+      {
+        "name": "drawing",
+        "passed": true,
+        "model": "srvgg",
+        "wallMs": 500.164999961853,
+        "warmupMs": 0,
+        "calibrationMs": 0,
+        "profileReused": false,
+        "upscaleExportMs": 253.46000003814697,
+        "mime": "image/png",
+        "dimensions": [
+          316,
+          244
+        ],
+        "faceCount": 0,
+        "canEdit": false
+      },
+      {
+        "name": "cpu",
+        "passed": true,
+        "model": "srvgg",
+        "wallMs": 3260.050000190735,
+        "warmupMs": 0,
+        "calibrationMs": 0,
+        "profileReused": false,
+        "upscaleExportMs": 3140.460000038147,
+        "mime": "image/png",
+        "dimensions": [
+          316,
+          244
+        ],
+        "faceCount": 0,
+        "canEdit": false
+      }
+    ]
+  },
+  "tinyCache": {
+    "passed": true,
+    "rawReport": ".web-model-work/photo4x/results/tiny-cache/report.json",
+    "rawSha256": "9a20880111a16038490e5dc35c9e77a0526ff55f85fc5ba33d10cab1a23463a0",
+    "createdAt": "2026-11-03T08:43:16.492Z",
+    "cases": [
+      {
+        "name": "transparent",
+        "passed": true,
+        "model": "nomos-realplksr",
+        "wallMs": 3415.9500002861023,
+        "warmupMs": 801.6849999427795,
+        "calibrationMs": 6.610000133514404,
+        "profileReused": false,
+        "forecast": {
+          "allowed": true,
+          "milliseconds": 2809,
+          "reason": "within-budget"
+        },
+        "upscaleExportMs": 2237.3200001716614,
+        "mime": "image/png",
+        "dimensions": [
+          260,
+          188
+        ],
+        "faceCount": 0,
+        "canEdit": false
+      },
+      {
+        "name": "transparent-cached",
+        "passed": true,
+        "model": "nomos-realplksr",
+        "wallMs": 1896.965000152588,
+        "warmupMs": 785.4100003242493,
+        "calibrationMs": 0,
+        "profileReused": true,
+        "forecast": {
+          "allowed": true,
+          "milliseconds": 945,
+          "reason": "within-budget"
+        },
+        "upscaleExportMs": 757.7649998664856,
+        "mime": "image/png",
+        "dimensions": [
+          260,
+          188
+        ],
+        "faceCount": 0,
+        "canEdit": false
+      }
+    ]
+  },
+  "ui": {
+    "passed": true,
+    "rawReport": ".web-model-work/photo4x/results/integration-ui/report.json",
+    "rawSha256": "9584ed7df04d758fd75e744a9cfa5e06945afaf54921b69cefcd2eb1608d4a6d",
+    "createdAt": "2026-11-03T09:27:47.073Z",
+    "cases": [
+      {
+        "name": "first-visit",
+        "passed": true,
+        "model": "nomos-realplksr",
+        "warmupMs": 835.5349998474121,
+        "calibrationMs": 158.9800000190735,
+        "profileReused": false,
+        "forecast": {
+          "allowed": true,
+          "milliseconds": 12479,
+          "reason": "within-budget"
+        },
+        "mime": "image/jpeg"
+      },
+      {
+        "name": "return-visit",
+        "passed": true,
+        "model": "nomos-realplksr",
+        "warmupMs": 821.9699997901917,
+        "calibrationMs": 0,
+        "profileReused": true,
+        "forecast": {
+          "allowed": true,
+          "milliseconds": 12369,
+          "reason": "within-budget"
+        },
+        "mime": "image/jpeg"
+      }
+    ]
+  },
+  "recovery": {
+    "passed": true,
+    "rawReport": ".web-model-work/photo4x/recovery.json",
+    "rawSha256": "844f3cf6381f1f7a40c6476201a56185c340b41327ad81f814e2c05bd3ec355a",
+    "createdAt": "2026-11-03T08:42:24.593Z",
+    "cases": [
+      {
+        "mode": "download",
+        "passed": true
+      },
+      {
+        "mode": "hash",
+        "passed": true
+      },
+      {
+        "mode": "requirements",
+        "passed": true
+      },
+      {
+        "mode": "budget",
+        "passed": true
+      },
+      {
+        "mode": "missing-evidence",
+        "passed": true
+      },
+      {
+        "mode": "mobile",
+        "passed": true
+      },
+      {
+        "mode": "cpu",
+        "passed": true
+      },
+      {
+        "mode": "drawing",
+        "passed": true
+      },
+      {
+        "mode": "scale2",
+        "passed": true
+      },
+      {
+        "mode": "transparent",
+        "passed": true
+      },
+      {
+        "mode": "cancel",
+        "passed": true
+      },
+      {
+        "mode": "accepted",
+        "passed": true
+      },
+      {
+        "mode": "accepted-transparent",
+        "passed": true
+      }
+    ]
+  },
+  "productRegressions": {
+    "passed": true,
+    "rawReport": ".web-model-work/photo4x/results/product-regressions-integration.json",
+    "rawSha256": "2a0cc694798cc16aa89c322a4e0b1795d340ece44663096e383e098ef35b17cd",
+    "createdAt": "2026-11-03T09:28:59.728Z",
+    "cases": []
+  },
+  "imageParity": {
+    "reviewedGraphMaxChannelError": 0,
+    "returnVisitMaxChannelError": 0,
+    "transparentMaxAlphaError": 0.0
+  },
+  "automatedChecks": {
+    "nodeToolTestsPassed": 121,
+    "modelConversionTestsPassed": 2,
+    "localizationTestsPassed": 27
+  },
+  "packaging": {
+    "files": 347,
+    "bytes": 152097389,
+    "selectedGraphHashVerified": true,
+    "privateOrUnapprovedArtifacts": [],
+    "licensePagePresent": true
+  },
+  "safari": {
+    "enabled": false,
+    "passed": false,
+    "status": "inconclusive-environment",
+    "version": "27.0",
+    "webdriver": "Session creation timed out after temporary user-authorized Remote Automation",
+    "nativeHarness": "Actual Safari local tab did not deliver a JSON acceptance report",
+    "temporaryPreferencesRestored": {
+      "remoteAutomation": false,
+      "showDeveloperFeatures": false
+    }
+  },
+  "unmeasuredPhysicalDevices": [
+    "M1 / 8 GB",
+    "Windows / NVIDIA",
+    "Windows / AMD",
+    "Windows / Intel iGPU"
+  ],
+  "unmeasuredDevicePolicy": "Desktop Chrome/Edge require local validation, never admission by hardware name",
+  "productSourceSha256": {
+    "src/tool/photo4x-release.js": "4feea26279e8bc8add203ba5b375d942ddbaf61d11fe7c398d25f4f8c35e904a",
+    "src/tool/photo4x-policy.js": "278d538e76bba01968e1d26bd4defabc3c0cb97d7a28d36a5ece92302bdf5149",
+    "src/tool/photo4x-calibration.js": "1bf57d954f937f5a535918966eaddf5cfae9ec201e91ac1272ddc3cb8e709f63",
+    "src/tool/processor.worker.js": "b263df57793175ad3a5f6d0260b5dbe669eeb14af967708e3a4f99ee99a46015",
+    "src/tool/runtime.js": "87e625087944dd1713b1210fd1fa8472adfd28dcd359112cdafac591f3857c03",
+    "src/tool/attempt-controller.js": "61e54a6b34c924d4a38f211fc0906b7e2e3ed9b35d613cd537fb4bbc2235b50b",
+    "src/tool/main.js": "5a1ad63e28fa7e2ab6bcfb589eac4be25e0a6192bd69d2135d8768f240ee3efb",
+    "scripts/prepare_tool_assets.mjs": "3ada76d76e06b3808da06a5dab4e6b9fc72335a6b2929a8886928a8b19110e5d",
+    "build/build.py": "5a76cab7e6fabc43ac500804c0c8234ddefbe6571b5fab43cae367ddc2b71996"
+  }
+}

@@ -16,6 +16,13 @@
       "autoPort": true
     },
     {
+      "name": "photo4x-lab",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "npm run build && USCALE_LAB_PORT=${PORT:-4189} exec node scripts/serve_photo4x_lab.mjs"],
+      "port": 4189,
+      "url": "http://127.0.0.1:4189"
+    },
+    {
       "name": "albums-worker",
       "runtimeExecutable": "npx",
       "runtimeArgs": ["wrangler", "dev", "--port", "8788", "--cwd", "worker"],

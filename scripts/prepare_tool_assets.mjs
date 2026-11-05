@@ -1,6 +1,7 @@
 import {createHash} from 'node:crypto';
 import {cp, mkdir, readFile, writeFile, rm} from 'node:fs/promises';
 import {join} from 'node:path';
+import {PHOTO4X_RELEASE} from '../src/tool/photo4x-release.js';
 const root = new URL('../', import.meta.url).pathname;
 const output = join(root, 'assets/processor');
 const modelSpecs = [];
@@ -21,6 +22,18 @@ for (const {file} of modelSpecs) {
     throw new Error(`Missing ${file}. Restore the approved photo and drawing model artifacts described in BROWSER_IMAGE_PROCESSING.md before building the preview.`);
   }
 }
+let photo4xBytes;
+if (PHOTO4X_RELEASE.enabled && PHOTO4X_RELEASE.licenseApproved && PHOTO4X_RELEASE.winner) {
+  const spec = PHOTO4X_RELEASE.winner;
+  try { photo4xBytes = await readFile(join(root, 'static/models', spec.sourceFile)); }
+  catch { throw new Error(`Missing ${spec.sourceFile}. Run scripts/prepare_photo4x_models.py with --models nomos-realplksr --sizes 256 --fp16 --webgpu-softplus, then scripts/install_photo4x_release.mjs.`); }
+  if (photo4xBytes.length !== spec.bytes || createHash('sha256').update(photo4xBytes).digest('hex') !== spec.sha256) {
+    throw new Error('Photo 4x release artifact does not match its approved SHA-256/size');
+  }
+  // Without a matching warm-up reference every device would reject the model.
+  const {PHOTO4X_REFERENCE} = await import('../src/tool/photo4x-reference.generated.js');
+  if (PHOTO4X_REFERENCE.revision !== spec.revision) throw new Error('Regenerate the Photo 4x reference with scripts/prepare_photo4x_reference.py');
+}
 const finder = await readFile(join(root, 'static/models/face_detector_yunet.onnx'));
 const detector = await readFile(join(root, 'static/models/face_landmarker.task'));
 // This directory contains generated assets only. Keep deployments free of
@@ -28,6 +41,7 @@ const detector = await readFile(join(root, 'static/models/face_landmarker.task')
 await rm(output, {recursive: true, force: true});
 await mkdir(output, {recursive: true});
 const ortPackage = JSON.parse(await readFile(join(root, 'node_modules/onnxruntime-web/package.json'), 'utf8'));
+if (photo4xBytes && ortPackage.version !== PHOTO4X_RELEASE.runtimeVersion) throw new Error('Revalidate the Photo 4x release after changing ONNX Runtime');
 const runtime = `/assets/processor/ort-${ortPackage.version}`;
 await mkdir(join(root, runtime), {recursive: true});
 for (const name of ['ort.webgpu.min.mjs', 'ort.wasm.min.mjs',
@@ -36,6 +50,10 @@ for (const name of ['ort.webgpu.min.mjs', 'ort.wasm.min.mjs',
   await cp(join(root, 'node_modules/onnxruntime-web/dist', name), join(root, runtime, name));
 }
 const assets = {runtime, models: {photo: {}, drawing: {}}};
+if (photo4xBytes) {
+  assets.photo4x = PHOTO4X_RELEASE.winner.url;
+  await writeFile(join(root, assets.photo4x), photo4xBytes);
+}
 for (const {modelKind, scale, key, file} of modelSpecs) {
   assets.models[modelKind][scale] ||= {};
   const bytes = modelBytes.get(file);

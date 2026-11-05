@@ -3,6 +3,7 @@ import {runBenchmark} from './benchmark.js';
 import {runLiteRtBenchmark} from './litert_benchmark.js';
 import {decodeFile, processPhoto} from './image_pipeline.js';
 import {configureRuntime, hardwareSummary} from './runtime.js';
+import {photo4xReference, automaticPhoto4x, safariPhoto4xAcceptance} from './photo4x.js';
 
 configureRuntime();
 
@@ -190,7 +191,7 @@ async function displayBenchmark(kind, backend = elements.backend.value, runs = 1
 
 window.runUScaleBenchmark = displayBenchmark;
 window.uscaleHardware = hardwareSummary();
-window.uscaleProductLab = {runCpuComparison, runPngAcceptance, runProductWorker, makePngFixture, verifyOpaqueInputParity, verifyFaceAlpha, verifyWorkerRecovery, verifyFaceThreadCache, verifyBackendImportRecovery, verifyCachedFaceScale, verifyTransparentFaces, compareDrawingScales};
+window.uscaleProductLab = {runCpuComparison, runPngAcceptance, runProductWorker, makePngFixture, verifyOpaqueInputParity, verifyFaceAlpha, verifyWorkerRecovery, verifyFaceThreadCache, verifyBackendImportRecovery, verifyCachedFaceScale, verifyTransparentFaces, compareDrawingScales, photo4xReference, automaticPhoto4x};
 
 if (new URLSearchParams(location.search).has('benchmark')) {
   elements.benchmarkPanel.hidden = false;
@@ -202,14 +203,17 @@ elements.benchmarkFace.addEventListener('click', () => displayBenchmark('face').
 async function runAutomatedBenchmark() {
   const parameters = new URLSearchParams(location.search);
   const kind = parameters.get('autobenchmark');
-  if (!['upscale', 'face', 'litert-upscale'].includes(kind)) return;
+  if (!['upscale', 'face', 'litert-upscale', 'photo4x-safari'].includes(kind)) return;
   const backend = parameters.get('backend') || 'auto';
   const runs = Math.max(1, Math.min(5, Number(parameters.get('runs')) || 1));
   const caseLimit = Math.max(1, Math.min(100, Number(parameters.get('cases')) || 100));
   const reportId = parameters.get('report');
   let payload;
   try {
-    if (kind === 'litert-upscale') {
+    if (kind === 'photo4x-safari') {
+      payload = await safariPhoto4xAcceptance(message => { elements.benchmarkOutput.textContent = message; });
+      elements.benchmarkOutput.textContent = JSON.stringify(payload, null, 2);
+    } else if (kind === 'litert-upscale') {
       elements.benchmarkOutput.textContent = 'Starting LiteRT…';
       payload = await runLiteRtBenchmark(backend === 'auto' ? 'webgpu' : backend, {
         caseLimit,

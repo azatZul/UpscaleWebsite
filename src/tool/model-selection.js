@@ -1,3 +1,5 @@
+import {variantKey} from './photo4x-policy.js';
+
 export const MODEL_KINDS = ['photo', 'drawing'];
 
 export function isModelKind(value) {
@@ -17,8 +19,9 @@ export function shouldEnhanceFaces(modelKind, checked) {
   return modelKind === 'photo' && checked;
 }
 
-export function tileMetricKey(modelKind, scale) {
+export function tileMetricKey(modelKind, scale, variant, backend = 'webgpu') {
   if (!isModelKind(modelKind)) throw new Error(`Unknown model kind: ${modelKind}`);
   if (![2, 4].includes(scale)) throw new Error(`Unknown upscale scale: ${scale}`);
-  return `uscale-tile-ms-v2-${modelKind}-${scale}`;
+  return variant ? `uscale-tile-ms-v3-${modelKind}-${scale}-${variantKey(variant, backend)}`
+    : `uscale-tile-ms-v2-${modelKind}-${scale}`;
 }

@@ -62,3 +62,45 @@ test('invalid inference output is rejected instead of saving corrupt pixels', ()
   const values=modelOutput(0);values[27]=NaN;
   assert.throws(()=>tensorPixels(values),{code:'runtime'});
 });
+
+test('Photo 2× from a 4× tile averages clipped values before rounding', () => {
+  const side = 4, plane = side * side, values = new Float32Array(plane * 3);
+  const block = (channel, x, y, numbers) => [0, 1, side, side + 1].forEach((offset, i) => {
+    values[channel * plane + y * side + x + offset] = numbers[i];
+  });
+  // Red, top-left: 1.4 clips to 1, so (1 + 0 + 0.5 + 0.25) / 4. Green, top-right: -1 clips to 0.
+  block(0, 0, 0, [1.4, 0, 0.5, 0.25]);
+  block(1, 2, 0, [1, -1, 1, 1]);
+  const pixels = tensorPixels(values, 2, 2);
+  assert.equal(pixels.length, 2 * 2 * 4);
+  assert.equal(pixels[0], Math.round(1.75 / 4 * 255));
+  assert.equal(pixels[4 + 1], Math.round(3 / 4 * 255));
+  assert.deepEqual([...pixels].filter((_, i) => i % 4 === 3), [255, 255, 255, 255]);
+  values[plane * 2 + 15] = NaN;
+  assert.throws(() => tensorPixels(values, 2, 2), {code: 'runtime'});
+  assert.throws(() => tensorPixels(new Float32Array(plane * 3), 4, 2), {code: 'runtime'});
+});
+
+test('all tile sizes and overlaps preserve globally identical pixels across seams and short edges', async () => {
+  const width = 269, height = 311, scale = 4;
+  for (const tileSize of [128, 256]) for (const overlap of [16, 32]) {
+    const outputWidth = width * scale, outputHeight = height * scale;
+    const actual = new Uint8ClampedArray(outputWidth * outputHeight * 4);
+    let count = 0;
+    await assembleTiles(width, height, async (tx, ty) => {
+      const pixels = new Uint8ClampedArray(tileSize * tileSize * scale * scale * 4);
+      for (let y = 0; y < tileSize * scale; y++) for (let x = 0; x < tileSize * scale; x++) {
+        const i = (y * tileSize * scale + x) * 4;
+        pixels[i] = (tx * scale + x) % 251; pixels[i + 1] = (ty * scale + y) % 253;
+        pixels[i + 2] = 73; pixels[i + 3] = 255;
+      }
+      return pixels;
+    }, (band, w, h, y) => actual.set(band, y * w * 4), () => count++, scale, {tileSize, overlap});
+    for (let y = 0; y < outputHeight; y++) for (let x = 0; x < outputWidth; x++) {
+      const i = (y * outputWidth + x) * 4;
+      assert.equal(actual[i], x % 251); assert.equal(actual[i + 1], y % 253);
+      assert.equal(actual[i + 2], 73); assert.equal(actual[i + 3], 255);
+    }
+    assert.equal(count, Math.ceil(width / (tileSize - overlap * 2)) * Math.ceil(height / (tileSize - overlap * 2)));
+  }
+});

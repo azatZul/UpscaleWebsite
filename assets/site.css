@@ -1038,6 +1038,8 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:64px 0 34
 .doc-toc a.is-active{color:var(--acc-tx);background:var(--acc-soft)}
 
 .doc-cards{max-width:none;margin:0;padding:0}
+/* A single card under .doc-head, without the table of contents beside it. */
+.doc-cards.doc-solo{max-width:880px;padding:26px 0 20px}
 .doc-card{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-l);
   padding:34px 34px 38px;margin-bottom:16px}
 .doc-card.is-contact{border-color:var(--acc-line);
