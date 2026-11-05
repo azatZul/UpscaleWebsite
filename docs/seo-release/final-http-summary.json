@@ -1,0 +1,49 @@
+{
+  "www": [
+    {
+      "url": "http://www.upscales.app/ru/?mode=device&utm_source=seo-check",
+      "status": 301,
+      "location": "https://upscales.app/ru/?mode=device&utm_source=seo-check"
+    },
+    {
+      "url": "https://www.upscales.app/ru/?mode=device&utm_source=seo-check",
+      "status": 301,
+      "location": "https://upscales.app/ru/?mode=device&utm_source=seo-check"
+    }
+  ],
+  "robots_single_general_group": true,
+  "robots_baidu_petal_allowed": true,
+  "other_bot_restrictions_retained": true,
+  "home_sitemap_dates": [
+    {
+      "url": "https://upscales.app/",
+      "lastmod": "2026-11-05"
+    },
+    {
+      "url": "https://upscales.app/es/",
+      "lastmod": "2026-11-05"
+    },
+    {
+      "url": "https://upscales.app/fr/",
+      "lastmod": "2026-11-05"
+    },
+    {
+      "url": "https://upscales.app/de/",
+      "lastmod": "2026-11-05"
+    },
+    {
+      "url": "https://upscales.app/ja/",
+      "lastmod": "2026-11-05"
+    },
+    {
+      "url": "https://upscales.app/zh/",
+      "lastmod": "2026-11-05"
+    },
+    {
+      "url": "https://upscales.app/ru/",
+      "lastmod": "2026-11-05"
+    }
+  ],
+  "public_production_noindex_absent": true,
+  "request_user_agent": "Mozilla/5.0"
+}

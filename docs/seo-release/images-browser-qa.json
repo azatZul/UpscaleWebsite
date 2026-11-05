@@ -6,27 +6,27 @@
     },
     "dpr": 2,
     "idleImages": [
-      "https://uscale-site-staging.sharrikk.workers.dev/resources/appstore/icon_180.png",
-      "https://uscale-site-staging.sharrikk.workers.dev/resources/flags/us.png",
-      "https://uscale-site-staging.sharrikk.workers.dev/resources/appstore/badges/en-black.svg",
-      "https://uscale-site-staging.sharrikk.workers.dev/resources/appstore/badges/en-white.svg",
-      "https://uscale-site-staging.sharrikk.workers.dev/resources/appstore/badges/en-mac-black.svg",
-      "https://uscale-site-staging.sharrikk.workers.dev/resources/appstore/badges/en-mac-white.svg",
-      "https://uscale-site-staging.sharrikk.workers.dev/resources/googleplay/badges/en.png",
-      "https://uscale-site-staging.sharrikk.workers.dev/resources/responsive/hero_spiderman_after-1ba8afc803a4-960.webp",
-      "https://uscale-site-staging.sharrikk.workers.dev/resources/responsive/hero_spiderman_before-c2e7d9ffc451-823.webp",
-      "https://uscale-site-staging.sharrikk.workers.dev/resources/responsive/iphone_frame-3d5db2b41917-960.webp",
-      "https://uscale-site-staging.sharrikk.workers.dev/resources/responsive/lowq_portrait_after-56f3ce7bcecc-960.webp",
-      "https://uscale-site-staging.sharrikk.workers.dev/resources/responsive/lowq_portrait_before-c46ee0e63fd5-400.webp"
+      "https://upscales.app/resources/appstore/icon_180.png",
+      "https://upscales.app/resources/flags/us.png",
+      "https://upscales.app/resources/appstore/badges/en-black.svg",
+      "https://upscales.app/resources/appstore/badges/en-white.svg",
+      "https://upscales.app/resources/appstore/badges/en-mac-black.svg",
+      "https://upscales.app/resources/appstore/badges/en-mac-white.svg",
+      "https://upscales.app/resources/googleplay/badges/en.png",
+      "https://upscales.app/resources/responsive/hero_spiderman_after-1ba8afc803a4-960.webp",
+      "https://upscales.app/resources/responsive/hero_spiderman_before-c2e7d9ffc451-823.webp",
+      "https://upscales.app/resources/responsive/iphone_frame-3d5db2b41917-960.webp",
+      "https://upscales.app/resources/responsive/lowq_portrait_after-56f3ce7bcecc-960.webp",
+      "https://upscales.app/resources/responsive/lowq_portrait_before-c46ee0e63fd5-400.webp"
     ],
     "first": {
-      "src": "https://uscale-site-staging.sharrikk.workers.dev/resources/responsive/hero_spiderman_after-1ba8afc803a4-960.webp",
+      "src": "https://upscales.app/resources/responsive/hero_spiderman_after-1ba8afc803a4-960.webp",
       "srcset": "/resources/responsive/hero_spiderman_after-1ba8afc803a4-480.webp 480w, /resources/responsive/hero_spiderman_after-1ba8afc803a4-960.webp 960w, /resources/responsive/hero_spiderman_after-1ba8afc803a4-1440.webp 1440w, /resources/before_after/hero_spiderman_after.jpg 2000w",
       "sizes": "(max-width:692px) 104vw, (max-width:980px) 720px, (max-width:1505px) 89vw, 1340px",
       "width": 389.046875
     },
     "second": {
-      "src": "https://uscale-site-staging.sharrikk.workers.dev/resources/responsive/hero_girls_play_after-26aa82da7cc7-960.webp",
+      "src": "https://upscales.app/resources/responsive/hero_girls_play_after-26aa82da7cc7-960.webp",
       "srcset": "/resources/responsive/hero_girls_play_after-26aa82da7cc7-480.webp 480w, /resources/responsive/hero_girls_play_after-26aa82da7cc7-960.webp 960w, /resources/responsive/hero_girls_play_after-26aa82da7cc7-1440.webp 1440w, /resources/responsive/hero_girls_play_after-26aa82da7cc7-1920.webp 1920w",
       "sizes": "(max-width:692px) 104vw, (max-width:980px) 720px, (max-width:1505px) 89vw, 1340px"
     },
@@ -40,27 +40,27 @@
     },
     "dpr": 1,
     "idleImages": [
-      "https://uscale-site-staging.sharrikk.workers.dev/resources/appstore/icon_180.png",
-      "https://uscale-site-staging.sharrikk.workers.dev/resources/flags/us.png",
-      "https://uscale-site-staging.sharrikk.workers.dev/resources/appstore/badges/en-black.svg",
-      "https://uscale-site-staging.sharrikk.workers.dev/resources/appstore/badges/en-white.svg",
-      "https://uscale-site-staging.sharrikk.workers.dev/resources/appstore/badges/en-mac-black.svg",
-      "https://uscale-site-staging.sharrikk.workers.dev/resources/appstore/badges/en-mac-white.svg",
-      "https://uscale-site-staging.sharrikk.workers.dev/resources/googleplay/badges/en.png",
-      "https://uscale-site-staging.sharrikk.workers.dev/resources/responsive/hero_spiderman_after-1ba8afc803a4-1440.webp",
-      "https://uscale-site-staging.sharrikk.workers.dev/resources/responsive/hero_spiderman_before-c2e7d9ffc451-823.webp",
-      "https://uscale-site-staging.sharrikk.workers.dev/resources/responsive/iphone_frame-3d5db2b41917-1440.webp",
-      "https://uscale-site-staging.sharrikk.workers.dev/resources/responsive/lowq_portrait_after-56f3ce7bcecc-1200.webp",
-      "https://uscale-site-staging.sharrikk.workers.dev/resources/responsive/lowq_portrait_before-c46ee0e63fd5-400.webp"
+      "https://upscales.app/resources/appstore/icon_180.png",
+      "https://upscales.app/resources/flags/us.png",
+      "https://upscales.app/resources/appstore/badges/en-black.svg",
+      "https://upscales.app/resources/appstore/badges/en-white.svg",
+      "https://upscales.app/resources/appstore/badges/en-mac-black.svg",
+      "https://upscales.app/resources/appstore/badges/en-mac-white.svg",
+      "https://upscales.app/resources/googleplay/badges/en.png",
+      "https://upscales.app/resources/responsive/hero_spiderman_after-1ba8afc803a4-1440.webp",
+      "https://upscales.app/resources/responsive/hero_spiderman_before-c2e7d9ffc451-823.webp",
+      "https://upscales.app/resources/responsive/iphone_frame-3d5db2b41917-1440.webp",
+      "https://upscales.app/resources/responsive/lowq_portrait_after-56f3ce7bcecc-1200.webp",
+      "https://upscales.app/resources/responsive/lowq_portrait_before-c46ee0e63fd5-400.webp"
     ],
     "first": {
-      "src": "https://uscale-site-staging.sharrikk.workers.dev/resources/responsive/hero_spiderman_after-1ba8afc803a4-1440.webp",
+      "src": "https://upscales.app/resources/responsive/hero_spiderman_after-1ba8afc803a4-1440.webp",
       "srcset": "/resources/responsive/hero_spiderman_after-1ba8afc803a4-480.webp 480w, /resources/responsive/hero_spiderman_after-1ba8afc803a4-960.webp 960w, /resources/responsive/hero_spiderman_after-1ba8afc803a4-1440.webp 1440w, /resources/before_after/hero_spiderman_after.jpg 2000w",
       "sizes": "(max-width:692px) 104vw, (max-width:980px) 720px, (max-width:1505px) 89vw, 1340px",
       "width": 908.296875
     },
     "second": {
-      "src": "https://uscale-site-staging.sharrikk.workers.dev/resources/responsive/hero_girls_play_after-26aa82da7cc7-1440.webp",
+      "src": "https://upscales.app/resources/responsive/hero_girls_play_after-26aa82da7cc7-1440.webp",
       "srcset": "/resources/responsive/hero_girls_play_after-26aa82da7cc7-480.webp 480w, /resources/responsive/hero_girls_play_after-26aa82da7cc7-960.webp 960w, /resources/responsive/hero_girls_play_after-26aa82da7cc7-1440.webp 1440w, /resources/responsive/hero_girls_play_after-26aa82da7cc7-1920.webp 1920w",
       "sizes": "(max-width:692px) 104vw, (max-width:980px) 720px, (max-width:1505px) 89vw, 1340px"
     },

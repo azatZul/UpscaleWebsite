@@ -10,13 +10,21 @@
     "rollback_version": "d51aac33-9782-4999-92c3-f999889a1cb9"
   },
   "release_b": {
-    "status": "prepared",
-    "branch": "codex/seo-release-b"
+    "status": "published",
+    "branch": "codex/seo-release-b",
+    "source_commit": "67d9ab9",
+    "version": "7885ad5a-5d84-43a2-83eb-38d6de87c9a5",
+    "published_on": "2026-11-05",
+    "rollback_version": "92d7e215-1406-43e2-90f6-ccc6172e11b0"
   },
   "release_c": {
-    "status": "prepared",
+    "status": "published",
     "branch": "codex/seo-release-c",
-    "update_shared_home_lastmod_on_publication": true
+    "update_shared_home_lastmod_on_publication": true,
+    "source_commit": "9bfc26c",
+    "version": "d22aef2e-5754-4f2c-8e4b-4a5ce59ad76a",
+    "published_on": "2026-11-05",
+    "rollback_version": "7885ad5a-5d84-43a2-83eb-38d6de87c9a5"
   },
   "followups_days": [
     7,
@@ -24,9 +32,25 @@
   ],
   "unverified": [
     "Actual Android Install Referrer ingestion and store-attributed install counts",
-    "Individual live URL Inspection by language; index report baseline is delayed",
+    "Live URL Inspection captured EN/RU/ES as indexed; remaining four locales have only the delayed Indexing report baseline",
     "Field INP/CrUX when enough data exists"
   ],
   "rollout_decision": "User requested prompt same-day B/C publication on 2026-11-05; keep separate deployments and rollback points.",
-  "automation_status": "not_created"
+  "automation_status": "not_created",
+  "search_console_after_c": {
+    "sitemap": "accepted",
+    "reindex_confirmed": [
+      "en",
+      "ru"
+    ],
+    "reindex_submitted_confirmation_unverified": [
+      "es"
+    ],
+    "other_home_locales_in_updated_sitemap": [
+      "fr",
+      "de",
+      "ja",
+      "zh"
+    ]
+  }
 }

@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-05",
+  "sitemap": "https://upscales.app/sitemap.xml",
+  "sitemap_submission": "accepted",
+  "manual_url_checks": [
+    {
+      "url": "https://upscales.app/",
+      "indexed": true,
+      "reindex": "accepted"
+    },
+    {
+      "url": "https://upscales.app/ru/",
+      "indexed": true,
+      "reindex": "accepted"
+    },
+    {
+      "url": "https://upscales.app/es/",
+      "indexed": true,
+      "reindex": "submitted_confirmation_unverified"
+    }
+  ],
+  "other_home_locales_covered_by_updated_sitemap": [
+    "fr",
+    "de",
+    "ja",
+    "zh"
+  ],
+  "note": "Chrome was switched away from Search Console after the Spanish request started; its completion was not observed. No further browser-window discovery was attempted."
+}

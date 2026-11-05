@@ -58,7 +58,7 @@ Search Console Indexing report captured before publication, last updated 2026-10
 Release A published to production on 2026-11-05, commit `d58798e`, version `e4078899-f631-4286-84c6-d6f107e73102`. All 141 production routing checks passed (`production-a-routes.json`). The user removed the seven-day release pauses on 2026-11-05: correct platform availability and image delivery promptly, retaining separate commits, deployments and rollback points. The 7/28-day measurements remain observational follow-ups. Rollback A: `cd worker && npx wrangler rollback d51aac33-9782-4999-92c3-f999889a1cb9 --env production`; restore separately changed Cloudflare settings if appropriate.
 
 
-## Prepared release B (not published to production)
+## Release B
 
 Responsive variants cover hero, frame, guide cards, showcase, comparisons and tool mode previews. Sizes follow the existing CSS, candidates never upscale a source. WebP quality 90; if it would exceed the original byte size, the original is retained as the candidate. Original files remain available. Hero alternatives load on pointer/focus/selection rather than on page load. Both before/after candidates are updated when switching; crossfade still discards stale requests. No critical CSS or photo processing changes. No extra hero preload: there was no measured need with a baseline home LCP around one second.
 
@@ -69,7 +69,7 @@ After A, the same 15 production mobile Lighthouse runs have median LCP: home 1.1
 B staging version `da86f663-eed8-4bd1-ba34-65dee2323241`; 141 routing checks passed before the final tool-preview-only asset addition, and final production build/model gates passed. Run reusable browser checks with an installed Playwright runtime: `USCALE_PLAYWRIGHT_MODULE=/path/to/playwright/index.mjs USCALE_TEST_CHANNEL=chrome node scripts/check_image_delivery.mjs` and `node scripts/check_404_browser.mjs` with the same environment. Set `USCALE_TEST_ORIGIN` to staging when required.
 
 
-## Prepared release C (not published to production)
+## Release C
 
 Seven home pages use platform-neutral H1 and matching social descriptions. Existing iPhone-specific titles retain iPhone and add Android; French/Spanish neutral titles are preserved. A separate visible line lists iPhone, iPad, Android and Apple-silicon Mac and states that features vary. Existing on-device/cloud distinctions remain. Guide editorial copy, titles/descriptions, URLs, social image descriptions and dates are preserved; all 70 guide bodies and head metadata were compared between the old and new home contexts. Shared footer branding is now platform-neutral. Android guides are deferred.
 
@@ -81,6 +81,29 @@ Final checks after inheriting the A analytics correction: 86 Python tests (one e
 
 The optional model-conversion suite was then run in its existing isolated environment (`.web-model-work/photo4x/venv`) rather than skipped: all 3 tests passed. Latest staging C version: `b1117ac8-0dec-4218-adde-ef98ee810736`; all 141 routes and live browser 404/image checks passed.
 
-Automatic rollout/follow-up was proposed but has not been enabled: unattended future production deployments require separate explicit confirmation. Until granted, B/C publication and the 7/28-day follow-ups remain manual. No background job was created.
+No unattended publication or follow-up job was created. B/C were published during the active session at the user’s request; 7/28-day observations remain manual.
 
 Production-browser consent QA passed with all Amplitude requests and store navigation intercepted: zero analytics before consent/after rejection, one tap per click after acceptance, no query in payload and no events after revocation (`consent-browser-qa.json`). No real QA events were sent to Amplitude.
+
+
+## Production completion — same-day rollout
+
+The user requested immediate B/C publication instead of the original weekly pauses. B published from `67d9ab9`, Worker `7885ad5a-5d84-43a2-83eb-38d6de87c9a5`; rollback to A `92d7e215-1406-43e2-90f6-ccc6172e11b0`. B passed all 141 production route checks and actual browser image selection/switching checks. C published from `9bfc26c`, Worker `d22aef2e-5754-4f2c-8e4b-4a5ce59ad76a`; rollback to B `7885ad5a-5d84-43a2-83eb-38d6de87c9a5`. Both published on 2026-11-05. Shared home lastmod matches the actual publication day. No DB migrations ran.
+
+The per-release 7/28-day comparisons are now combined follow-ups for the same-day rollout; effects of individual changes cannot be isolated from these observations. No background automation has been created.
+
+Final same-settings production mobile Lighthouse medians (three runs/page, `performance-after-c.json`):
+
+| Page | Performance | LCP | CLS |
+| --- | ---: | ---: | ---: |
+| `/` | 100 | 0.97 s | 0 |
+| `/ru/` | 100 | 1.05 s | 0 |
+| `/upscale/` | 94 | 3.09 s | 0 |
+| `/guides/unblur-photo-iphone.html` | 100 | 1.68 s | 0 |
+| `/gallery` | 97 | 1.81 s | 0 |
+
+Home, Russian home, guide and gallery meet the lab LCP target in this sample. The tool remains above 2.5 seconds (3.09s); no field INP data or causal SEO conclusion is claimed. Final www/robots/sitemap and absence of production staging-noindex are verified (`final-http-summary.json`).
+
+Search Console accepted the updated sitemap after C. EN and RU homes were confirmed indexed and their reindex requests accepted. ES was confirmed indexed; a reindex request started but its completion was not observed after Chrome switched away. FR/DE/JA/ZH are included in the updated sitemap; no new manual reindex request for them is claimed. See `search-console-submission.json`. The older Indexing report's count of seven indexed URLs was delayed and must not be interpreted as current language coverage.
+
+Remaining data checks are explicit: actual Android Install Referrer ingestion/store-attributed downloads, sufficiently sampled field INP, and 7/28-day organic/conversion observations. This repository has no Android implementation to verify; encoded Play links alone do not establish install attribution.
