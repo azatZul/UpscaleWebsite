@@ -1,0 +1,26 @@
+[
+  {
+    "name": "dark",
+    "status": 404,
+    "external": [],
+    "errors": [],
+    "bad": [],
+    "passed": true
+  },
+  {
+    "name": "mobile-reduced",
+    "status": 404,
+    "external": [],
+    "errors": [],
+    "bad": [],
+    "passed": true
+  },
+  {
+    "name": "no-js",
+    "status": 404,
+    "external": [],
+    "errors": [],
+    "bad": [],
+    "passed": true
+  }
+]

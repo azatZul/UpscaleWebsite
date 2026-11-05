@@ -669,5 +669,101 @@
       "zh": "搭载 Apple 芯片的 Mac（M1 或更新）"
     },
     "comment": "Hover caption under the Mac App Store badge."
+  },
+  "not_found.title": {
+    "localizations": {
+      "en": "Page not found — UScale",
+      "ru": "Страница не найдена — UScale",
+      "es": "Página no encontrada — UScale",
+      "fr": "Page introuvable — UScale",
+      "de": "Seite nicht gefunden — UScale",
+      "ja": "ページが見つかりません — UScale",
+      "zh": "找不到页面 — UScale"
+    },
+    "comment": "Standalone 404 page. No external dependencies or analytics."
+  },
+  "not_found.headline": {
+    "localizations": {
+      "en": "Page lost. Clarity restored.",
+      "ru": "Страница потерялась. Чёткость вернули.",
+      "es": "La página se perdió. La nitidez volvió.",
+      "fr": "Page perdue. Netteté retrouvée.",
+      "de": "Seite verloren. Schärfe zurück.",
+      "ja": "ページは迷子に。写真はくっきり。",
+      "zh": "页面走丢了，清晰找回了。"
+    },
+    "comment": "Standalone 404 page. No external dependencies or analytics."
+  },
+  "not_found.description": {
+    "localizations": {
+      "en": "We couldn’t find this page. But your photos can still find their best version.",
+      "ru": "Эту страницу найти не удалось. Зато ваши фотографии всё ещё могут стать лучше.",
+      "es": "No encontramos esta página. Pero tus fotos todavía pueden verse mejor.",
+      "fr": "Cette page est introuvable. Vos photos, elles, peuvent toujours retrouver leur éclat.",
+      "de": "Diese Seite konnten wir nicht finden. Deine Fotos können trotzdem noch besser aussehen.",
+      "ja": "このページは見つかりませんでした。でも、写真はもっときれいにできます。",
+      "zh": "没有找到这个页面，但你的照片依然可以变得更清晰。"
+    },
+    "comment": "Standalone 404 page. No external dependencies or analytics."
+  },
+  "not_found.home": {
+    "localizations": {
+      "en": "Back to home",
+      "ru": "На главную",
+      "es": "Volver al inicio",
+      "fr": "Retour à l’accueil",
+      "de": "Zur Startseite",
+      "ja": "ホームに戻る",
+      "zh": "返回首页"
+    },
+    "comment": "Standalone 404 page. No external dependencies or analytics."
+  },
+  "not_found.before": {
+    "localizations": {
+      "en": "Before",
+      "ru": "До",
+      "es": "Antes",
+      "fr": "Avant",
+      "de": "Vorher",
+      "ja": "処理前",
+      "zh": "处理前"
+    },
+    "comment": "Standalone 404 page. No external dependencies or analytics."
+  },
+  "not_found.after": {
+    "localizations": {
+      "en": "After",
+      "ru": "После",
+      "es": "Después",
+      "fr": "Après",
+      "de": "Nachher",
+      "ja": "処理後",
+      "zh": "处理后"
+    },
+    "comment": "Standalone 404 page. No external dependencies or analytics."
+  },
+  "not_found.slider": {
+    "localizations": {
+      "en": "Drag to bring 404 into focus",
+      "ru": "Передвиньте ползунок, чтобы сделать 404 чётче",
+      "es": "Arrastra para enfocar el 404",
+      "fr": "Faites glisser pour rendre le 404 net",
+      "de": "Verschiebe den Regler, um 404 scharf zu stellen",
+      "ja": "スライダーを動かして404を鮮明にする",
+      "zh": "拖动滑块，让404变清晰"
+    },
+    "comment": "Standalone 404 page. No external dependencies or analytics."
+  },
+  "not_found.status": {
+    "localizations": {
+      "en": "Page not found",
+      "ru": "Страница не найдена",
+      "es": "Página no encontrada",
+      "fr": "Page introuvable",
+      "de": "Seite nicht gefunden",
+      "ja": "ページが見つかりません",
+      "zh": "找不到页面"
+    },
+    "comment": "Standalone 404 page. No external dependencies or analytics."
   }
 }

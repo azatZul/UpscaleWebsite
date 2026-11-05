@@ -655,7 +655,7 @@ html:lang(zh) h1,html:lang(zh) h2,html:lang(zh) h3,html:lang(zh) h4{
   .guide:hover .guide-thumb .after,.guide:focus-visible .guide-thumb .after{opacity:1;transform:none}
 }
 @media (prefers-reduced-motion:reduce){.guide-thumb .after{transform:none;transition:opacity .2s ease}}
-.guide h3{font-size:17px;line-height:1.3;margin-bottom:6px}
+.guide :is(h2,h3){font-size:17px;line-height:1.3;margin-bottom:6px}
 .guide p{font-size:14px;color:var(--tx-3);line-height:1.5}
 .guide .arrow{margin-left:auto;color:var(--tx-3);flex:0 0 auto;font-size:20px;transition:.2s}
 .guide:hover .arrow{color:var(--acc-tx);transform:translateX(3px)}
@@ -700,7 +700,7 @@ html:lang(zh) h1,html:lang(zh) h2,html:lang(zh) h3,html:lang(zh) h4{
 /* ---------- footer ---------- */
 footer{border-top:1px solid var(--line);background:var(--bg-2);padding:64px 0 34px;margin-top:80px}
 .fgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}
-.fgrid h4{font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--tx-3);margin-bottom:16px;font-weight:750}
+.fgrid h2{font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--tx-3);margin-bottom:16px;font-weight:750}
 .fgrid ul{list-style:none;display:grid;gap:10px}
 .fgrid a{color:var(--tx-2);font-size:14.5px}
 .fgrid a:hover{color:var(--acc-tx)}

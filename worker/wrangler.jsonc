@@ -8,7 +8,15 @@
     "directory": "../.deploy-dist",
     "binding": "ASSETS",
     "html_handling": "none",
+    "not_found_handling": "404-page",
     "run_worker_first": [
+      "/free-upscale*",
+      "/es/free-upscale*",
+      "/fr/free-upscale*",
+      "/de/free-upscale*",
+      "/ja/free-upscale*",
+      "/zh/free-upscale*",
+      "/ru/free-upscale*",
       "/gallery",
       "/gallery/*",
       "/media/*",
@@ -59,7 +67,7 @@
       "name": "uscale-site-staging",
       "workers_dev": true,
       "triggers": { "crons": ["*/10 * * * *"] },
-      "vars": { "FIREBASE_PROJECT_ID": "upscaler-e9010", "AURALENS_URL": "https://auralens-406817559814.us-central1.run.app", "STRIPE_MODE": "test" },
+      "vars": { "FIREBASE_PROJECT_ID": "upscaler-e9010", "AURALENS_URL": "https://auralens-406817559814.us-central1.run.app", "STRIPE_MODE": "test", "INDEXING_DISABLED": "true" },
       "d1_databases": [
         {
           "binding": "DB",

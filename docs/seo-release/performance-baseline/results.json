@@ -1,0 +1,4430 @@
+[
+  {
+    "page": "/",
+    "run": 1,
+    "fetchTime": "2026-11-05T12:34:38.697Z",
+    "lighthouseVersion": "13.6.0",
+    "score": 1,
+    "LCP": 950.472,
+    "CLS": 0,
+    "FCP": 950.472,
+    "TBT": 0,
+    "finalUrl": "https://upscales.app/",
+    "metrics": {
+      "firstContentfulPaint": 950,
+      "largestContentfulPaint": 950,
+      "interactive": 950,
+      "speedIndex": 2698,
+      "totalBlockingTime": 0,
+      "maxPotentialFID": 16,
+      "cumulativeLayoutShift": 0,
+      "cumulativeLayoutShiftMainFrame": 0,
+      "timeToFirstByte": 500,
+      "observedTimeOrigin": 0,
+      "observedTimeOriginTs": 2598038650022,
+      "observedNavigationStart": 0,
+      "observedNavigationStartTs": 2598038650022,
+      "observedFirstPaint": 1357,
+      "observedFirstPaintTs": 2598040007472,
+      "observedFirstContentfulPaint": 1357,
+      "observedFirstContentfulPaintTs": 2598040007472,
+      "observedFirstContentfulPaintAllFrames": 1357,
+      "observedFirstContentfulPaintAllFramesTs": 2598040007472,
+      "observedLargestContentfulPaint": 1357,
+      "observedLargestContentfulPaintTs": 2598040007472,
+      "observedLargestContentfulPaintAllFrames": 1357,
+      "observedLargestContentfulPaintAllFramesTs": 2598040007472,
+      "observedTraceEnd": 3973,
+      "observedTraceEndTs": 2598042623189,
+      "observedLoad": 605,
+      "observedLoadTs": 2598039255160,
+      "observedDomContentLoaded": 490,
+      "observedDomContentLoadedTs": 2598039140391,
+      "observedCumulativeLayoutShift": 0,
+      "observedCumulativeLayoutShiftMainFrame": 0,
+      "observedFirstVisualChange": 1653,
+      "observedFirstVisualChangeTs": 2598040303022,
+      "observedLastVisualChange": 1841,
+      "observedLastVisualChangeTs": 2598040491022,
+      "observedSpeedIndex": 1655,
+      "observedSpeedIndexTs": 2598040305260
+    },
+    "LCPDetails": {
+      "type": "list",
+      "items": [
+        {
+          "type": "table",
+          "headings": [
+            {
+              "key": "label",
+              "valueType": "text",
+              "label": "Subpart"
+            },
+            {
+              "key": "duration",
+              "valueType": "ms",
+              "label": "Duration"
+            }
+          ],
+          "items": [
+            {
+              "subpart": "timeToFirstByte",
+              "label": "Time to first byte",
+              "duration": 316.921
+            },
+            {
+              "subpart": "elementRenderDelay",
+              "label": "Element render delay",
+              "duration": 1040.529
+            }
+          ]
+        },
+        {
+          "type": "node",
+          "lhId": "page-0-H1",
+          "path": "1,HTML,1,BODY,3,MAIN,0,SECTION,0,DIV,0,DIV,1,H1",
+          "selector": "section.hero > div.wrap > div.hero-copy > h1",
+          "boundingRect": {
+            "top": 201,
+            "bottom": 414,
+            "left": 22,
+            "right": 390,
+            "width": 368,
+            "height": 213
+          },
+          "snippet": "<h1>",
+          "nodeLabel": "The AI photo enhancer that unblurs, upscales and restores — right on your iPhone"
+        }
+      ]
+    },
+    "network": [
+      {
+        "url": "https://upscales.app/",
+        "transferSize": 11613,
+        "resourceType": "Document"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_180.png",
+        "transferSize": 16613,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.css?v=2506e1f1",
+        "transferSize": 25904,
+        "resourceType": "Stylesheet"
+      },
+      {
+        "url": "https://upscales.app/resources/flags/us.png",
+        "transferSize": 3195,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-black.svg",
+        "transferSize": 4443,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-white.svg",
+        "transferSize": 4433,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-mac-black.svg",
+        "transferSize": 4897,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-mac-white.svg",
+        "transferSize": 4884,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/googleplay/badges/en.png",
+        "transferSize": 5357,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_spiderman_after.jpg",
+        "transferSize": 222684,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_spiderman_before.jpg",
+        "transferSize": 56232,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/iphone_frame.png",
+        "transferSize": 53441,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.js?v=2994820a",
+        "transferSize": 13941,
+        "resourceType": "Script"
+      },
+      {
+        "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230a0b11'%3…",
+        "transferSize": 0,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/lowq_portrait_after.jpg",
+        "transferSize": 152402,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/lowq_portrait_before.jpg",
+        "transferSize": 19093,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/girls_after.jpg",
+        "transferSize": 760758,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/girls_before.jpg",
+        "transferSize": 78926,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/girls_thumb.jpg",
+        "transferSize": 25908,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/upscale_photo_thumb.jpg",
+        "transferSize": 19305,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/lowq_portrait_thumb.jpg",
+        "transferSize": 18108,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/restore_kids_thumb.jpg",
+        "transferSize": 33017,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/restore_family_thumb.jpg",
+        "transferSize": 32774,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/restore_portrait_thumb.jpg",
+        "transferSize": 25108,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/video_quality_thumb.jpg",
+        "transferSize": 15835,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/slowmo_thumb.jpg",
+        "transferSize": 146160,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_512.png",
+        "transferSize": 115680,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/competitors/remini.jpg",
+        "transferSize": 13727,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/competitors/blurbuster.jpg",
+        "transferSize": 18802,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/competitors/enhancefox.jpg",
+        "transferSize": 11934,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_512.png",
+        "transferSize": 0,
+        "resourceType": "Other"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_girls_play_before.jpg",
+        "transferSize": 59576,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_girls_play_after.jpeg",
+        "transferSize": 489983,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_anime_before.jpg",
+        "transferSize": 18402,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_anime_after.jpg",
+        "transferSize": 94398,
+        "resourceType": "Image"
+      }
+    ],
+    "settings": {
+      "output": [
+        "json"
+      ],
+      "maxWaitForFcp": 30000,
+      "maxWaitForLoad": 45000,
+      "pauseAfterFcpMs": 1000,
+      "pauseAfterLoadMs": 1000,
+      "networkQuietThresholdMs": 1000,
+      "cpuQuietThresholdMs": 1000,
+      "formFactor": "mobile",
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "throttlingMethod": "simulate",
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      },
+      "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+      "auditMode": false,
+      "gatherMode": false,
+      "clearStorageTypes": [
+        "file_systems",
+        "shader_cache",
+        "service_workers",
+        "cache_storage"
+      ],
+      "disableStorageReset": false,
+      "debugNavigation": false,
+      "channel": "cli",
+      "usePassiveGathering": false,
+      "disableFullPageScreenshot": false,
+      "skipAboutBlank": false,
+      "blankPage": "about:blank",
+      "ignoreStatusCode": false,
+      "locale": "en-US",
+      "blockedUrlPatterns": null,
+      "additionalTraceCategories": null,
+      "extraHeaders": null,
+      "precomputedLanternData": null,
+      "onlyAudits": null,
+      "onlyCategories": [
+        "performance"
+      ],
+      "skipAudits": null
+    },
+    "environment": {
+      "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+      "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "benchmarkIndex": 4014,
+      "credits": {}
+    },
+    "warnings": [],
+    "LCPElement": null
+  },
+  {
+    "page": "/",
+    "run": 2,
+    "fetchTime": "2026-11-05T12:34:50.442Z",
+    "lighthouseVersion": "13.6.0",
+    "score": 1,
+    "LCP": 933.4845,
+    "CLS": 0,
+    "FCP": 933.4845,
+    "TBT": 0,
+    "finalUrl": "https://upscales.app/",
+    "metrics": {
+      "firstContentfulPaint": 933,
+      "largestContentfulPaint": 933,
+      "interactive": 933,
+      "speedIndex": 1076,
+      "totalBlockingTime": 0,
+      "maxPotentialFID": 16,
+      "cumulativeLayoutShift": 0,
+      "cumulativeLayoutShiftMainFrame": 0,
+      "timeToFirstByte": 483,
+      "observedTimeOrigin": 0,
+      "observedTimeOriginTs": 2598050406036,
+      "observedNavigationStart": 0,
+      "observedNavigationStartTs": 2598050406036,
+      "observedFirstPaint": 476,
+      "observedFirstPaintTs": 2598050881874,
+      "observedFirstContentfulPaint": 476,
+      "observedFirstContentfulPaintTs": 2598050881874,
+      "observedFirstContentfulPaintAllFrames": 476,
+      "observedFirstContentfulPaintAllFramesTs": 2598050881874,
+      "observedLargestContentfulPaint": 476,
+      "observedLargestContentfulPaintTs": 2598050881874,
+      "observedLargestContentfulPaintAllFrames": 476,
+      "observedLargestContentfulPaintAllFramesTs": 2598050881874,
+      "observedTraceEnd": 3454,
+      "observedTraceEndTs": 2598053860438,
+      "observedLoad": 524,
+      "observedLoadTs": 2598050929903,
+      "observedDomContentLoaded": 449,
+      "observedDomContentLoadedTs": 2598050854602,
+      "observedCumulativeLayoutShift": 0,
+      "observedCumulativeLayoutShiftMainFrame": 0,
+      "observedFirstVisualChange": 495,
+      "observedFirstVisualChangeTs": 2598050901036,
+      "observedLastVisualChange": 1173,
+      "observedLastVisualChangeTs": 2598051579036,
+      "observedSpeedIndex": 502,
+      "observedSpeedIndexTs": 2598050907988
+    },
+    "LCPDetails": {
+      "type": "list",
+      "items": [
+        {
+          "type": "table",
+          "headings": [
+            {
+              "key": "label",
+              "valueType": "text",
+              "label": "Subpart"
+            },
+            {
+              "key": "duration",
+              "valueType": "ms",
+              "label": "Duration"
+            }
+          ],
+          "items": [
+            {
+              "subpart": "timeToFirstByte",
+              "label": "Time to first byte",
+              "duration": 210.77
+            },
+            {
+              "subpart": "elementRenderDelay",
+              "label": "Element render delay",
+              "duration": 265.068
+            }
+          ]
+        },
+        {
+          "type": "node",
+          "lhId": "page-0-H1",
+          "path": "1,HTML,1,BODY,3,MAIN,0,SECTION,0,DIV,0,DIV,1,H1",
+          "selector": "section.hero > div.wrap > div.hero-copy > h1",
+          "boundingRect": {
+            "top": 201,
+            "bottom": 414,
+            "left": 22,
+            "right": 390,
+            "width": 368,
+            "height": 213
+          },
+          "snippet": "<h1>",
+          "nodeLabel": "The AI photo enhancer that unblurs, upscales and restores — right on your iPhone"
+        }
+      ]
+    },
+    "network": [
+      {
+        "url": "https://upscales.app/",
+        "transferSize": 11614,
+        "resourceType": "Document"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_180.png",
+        "transferSize": 16613,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.css?v=2506e1f1",
+        "transferSize": 25903,
+        "resourceType": "Stylesheet"
+      },
+      {
+        "url": "https://upscales.app/resources/flags/us.png",
+        "transferSize": 3194,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-black.svg",
+        "transferSize": 4444,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-white.svg",
+        "transferSize": 4433,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-mac-black.svg",
+        "transferSize": 4900,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-mac-white.svg",
+        "transferSize": 4892,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/googleplay/badges/en.png",
+        "transferSize": 5349,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_spiderman_after.jpg",
+        "transferSize": 222686,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_spiderman_before.jpg",
+        "transferSize": 56233,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/iphone_frame.png",
+        "transferSize": 53435,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.js?v=2994820a",
+        "transferSize": 13943,
+        "resourceType": "Script"
+      },
+      {
+        "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230a0b11'%3…",
+        "transferSize": 0,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/lowq_portrait_after.jpg",
+        "transferSize": 152413,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/lowq_portrait_before.jpg",
+        "transferSize": 19097,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/girls_after.jpg",
+        "transferSize": 760769,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/girls_before.jpg",
+        "transferSize": 78925,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/girls_thumb.jpg",
+        "transferSize": 25902,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/upscale_photo_thumb.jpg",
+        "transferSize": 19304,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/lowq_portrait_thumb.jpg",
+        "transferSize": 18107,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/restore_kids_thumb.jpg",
+        "transferSize": 33022,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/restore_family_thumb.jpg",
+        "transferSize": 32784,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/restore_portrait_thumb.jpg",
+        "transferSize": 25107,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/video_quality_thumb.jpg",
+        "transferSize": 15819,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/slowmo_thumb.jpg",
+        "transferSize": 146163,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_512.png",
+        "transferSize": 115657,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/competitors/remini.jpg",
+        "transferSize": 13728,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/competitors/blurbuster.jpg",
+        "transferSize": 18797,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/competitors/enhancefox.jpg",
+        "transferSize": 11935,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_512.png",
+        "transferSize": 0,
+        "resourceType": "Other"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_girls_play_before.jpg",
+        "transferSize": 59577,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_girls_play_after.jpeg",
+        "transferSize": 489985,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_anime_before.jpg",
+        "transferSize": 18395,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_anime_after.jpg",
+        "transferSize": 94400,
+        "resourceType": "Image"
+      }
+    ],
+    "settings": {
+      "output": [
+        "json"
+      ],
+      "maxWaitForFcp": 30000,
+      "maxWaitForLoad": 45000,
+      "pauseAfterFcpMs": 1000,
+      "pauseAfterLoadMs": 1000,
+      "networkQuietThresholdMs": 1000,
+      "cpuQuietThresholdMs": 1000,
+      "formFactor": "mobile",
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "throttlingMethod": "simulate",
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      },
+      "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+      "auditMode": false,
+      "gatherMode": false,
+      "clearStorageTypes": [
+        "file_systems",
+        "shader_cache",
+        "service_workers",
+        "cache_storage"
+      ],
+      "disableStorageReset": false,
+      "debugNavigation": false,
+      "channel": "cli",
+      "usePassiveGathering": false,
+      "disableFullPageScreenshot": false,
+      "skipAboutBlank": false,
+      "blankPage": "about:blank",
+      "ignoreStatusCode": false,
+      "locale": "en-US",
+      "blockedUrlPatterns": null,
+      "additionalTraceCategories": null,
+      "extraHeaders": null,
+      "precomputedLanternData": null,
+      "onlyAudits": null,
+      "onlyCategories": [
+        "performance"
+      ],
+      "skipAudits": null
+    },
+    "environment": {
+      "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+      "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "benchmarkIndex": 3964.5,
+      "credits": {}
+    },
+    "warnings": [],
+    "LCPElement": null
+  },
+  {
+    "page": "/",
+    "run": 3,
+    "fetchTime": "2026-11-05T12:35:01.641Z",
+    "lighthouseVersion": "13.6.0",
+    "score": 1,
+    "LCP": 1101,
+    "CLS": 0,
+    "FCP": 1101,
+    "TBT": 22,
+    "finalUrl": "https://upscales.app/",
+    "metrics": {
+      "firstContentfulPaint": 1101,
+      "largestContentfulPaint": 1101,
+      "interactive": 2164,
+      "speedIndex": 1920,
+      "totalBlockingTime": 22,
+      "maxPotentialFID": 94,
+      "cumulativeLayoutShift": 0,
+      "cumulativeLayoutShiftMainFrame": 0,
+      "timeToFirstByte": 450,
+      "observedTimeOrigin": 0,
+      "observedTimeOriginTs": 2598061591846,
+      "observedNavigationStart": 0,
+      "observedNavigationStartTs": 2598061591846,
+      "observedFirstPaint": 552,
+      "observedFirstPaintTs": 2598062143430,
+      "observedFirstContentfulPaint": 552,
+      "observedFirstContentfulPaintTs": 2598062143430,
+      "observedFirstContentfulPaintAllFrames": 552,
+      "observedFirstContentfulPaintAllFramesTs": 2598062143430,
+      "observedLargestContentfulPaint": 552,
+      "observedLargestContentfulPaintTs": 2598062143430,
+      "observedLargestContentfulPaintAllFrames": 552,
+      "observedLargestContentfulPaintAllFramesTs": 2598062143430,
+      "observedTraceEnd": 3426,
+      "observedTraceEndTs": 2598065018247,
+      "observedLoad": 515,
+      "observedLoadTs": 2598062106996,
+      "observedDomContentLoaded": 488,
+      "observedDomContentLoadedTs": 2598062079435,
+      "observedCumulativeLayoutShift": 0,
+      "observedCumulativeLayoutShiftMainFrame": 0,
+      "observedFirstVisualChange": 557,
+      "observedFirstVisualChangeTs": 2598062148846,
+      "observedLastVisualChange": 1198,
+      "observedLastVisualChangeTs": 2598062789846,
+      "observedSpeedIndex": 564,
+      "observedSpeedIndexTs": 2598062156074
+    },
+    "LCPDetails": {
+      "type": "list",
+      "items": [
+        {
+          "type": "table",
+          "headings": [
+            {
+              "key": "label",
+              "valueType": "text",
+              "label": "Subpart"
+            },
+            {
+              "key": "duration",
+              "valueType": "ms",
+              "label": "Duration"
+            }
+          ],
+          "items": [
+            {
+              "subpart": "timeToFirstByte",
+              "label": "Time to first byte",
+              "duration": 269.32399951171874
+            },
+            {
+              "subpart": "elementRenderDelay",
+              "label": "Element render delay",
+              "duration": 282.26000048828126
+            }
+          ]
+        },
+        {
+          "type": "node",
+          "lhId": "page-0-H1",
+          "path": "1,HTML,1,BODY,3,MAIN,0,SECTION,0,DIV,0,DIV,1,H1",
+          "selector": "section.hero > div.wrap > div.hero-copy > h1",
+          "boundingRect": {
+            "top": 201,
+            "bottom": 414,
+            "left": 22,
+            "right": 390,
+            "width": 368,
+            "height": 213
+          },
+          "snippet": "<h1>",
+          "nodeLabel": "The AI photo enhancer that unblurs, upscales and restores — right on your iPhone"
+        }
+      ]
+    },
+    "network": [
+      {
+        "url": "https://upscales.app/",
+        "transferSize": 11614,
+        "resourceType": "Document"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_180.png",
+        "transferSize": 16613,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.css?v=2506e1f1",
+        "transferSize": 25895,
+        "resourceType": "Stylesheet"
+      },
+      {
+        "url": "https://upscales.app/resources/flags/us.png",
+        "transferSize": 3192,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-black.svg",
+        "transferSize": 4446,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-white.svg",
+        "transferSize": 4436,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-mac-black.svg",
+        "transferSize": 4895,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-mac-white.svg",
+        "transferSize": 4890,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/googleplay/badges/en.png",
+        "transferSize": 5354,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_spiderman_after.jpg",
+        "transferSize": 222706,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_spiderman_before.jpg",
+        "transferSize": 56230,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/iphone_frame.png",
+        "transferSize": 53442,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.js?v=2994820a",
+        "transferSize": 13936,
+        "resourceType": "Script"
+      },
+      {
+        "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230a0b11'%3…",
+        "transferSize": 0,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/lowq_portrait_after.jpg",
+        "transferSize": 152408,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/lowq_portrait_before.jpg",
+        "transferSize": 19089,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/girls_after.jpg",
+        "transferSize": 760736,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/girls_before.jpg",
+        "transferSize": 78924,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/girls_thumb.jpg",
+        "transferSize": 25909,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/upscale_photo_thumb.jpg",
+        "transferSize": 19306,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/lowq_portrait_thumb.jpg",
+        "transferSize": 18109,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/restore_kids_thumb.jpg",
+        "transferSize": 33011,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/restore_family_thumb.jpg",
+        "transferSize": 32782,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/restore_portrait_thumb.jpg",
+        "transferSize": 25113,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/video_quality_thumb.jpg",
+        "transferSize": 15826,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/slowmo_thumb.jpg",
+        "transferSize": 146156,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_512.png",
+        "transferSize": 115657,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/competitors/remini.jpg",
+        "transferSize": 13727,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/competitors/blurbuster.jpg",
+        "transferSize": 18807,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/competitors/enhancefox.jpg",
+        "transferSize": 11928,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_512.png",
+        "transferSize": 0,
+        "resourceType": "Other"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_girls_play_before.jpg",
+        "transferSize": 59582,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_girls_play_after.jpeg",
+        "transferSize": 489989,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_anime_before.jpg",
+        "transferSize": 18396,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_anime_after.jpg",
+        "transferSize": 94391,
+        "resourceType": "Image"
+      }
+    ],
+    "settings": {
+      "output": [
+        "json"
+      ],
+      "maxWaitForFcp": 30000,
+      "maxWaitForLoad": 45000,
+      "pauseAfterFcpMs": 1000,
+      "pauseAfterLoadMs": 1000,
+      "networkQuietThresholdMs": 1000,
+      "cpuQuietThresholdMs": 1000,
+      "formFactor": "mobile",
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "throttlingMethod": "simulate",
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      },
+      "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+      "auditMode": false,
+      "gatherMode": false,
+      "clearStorageTypes": [
+        "file_systems",
+        "shader_cache",
+        "service_workers",
+        "cache_storage"
+      ],
+      "disableStorageReset": false,
+      "debugNavigation": false,
+      "channel": "cli",
+      "usePassiveGathering": false,
+      "disableFullPageScreenshot": false,
+      "skipAboutBlank": false,
+      "blankPage": "about:blank",
+      "ignoreStatusCode": false,
+      "locale": "en-US",
+      "blockedUrlPatterns": null,
+      "additionalTraceCategories": null,
+      "extraHeaders": null,
+      "precomputedLanternData": null,
+      "onlyAudits": null,
+      "onlyCategories": [
+        "performance"
+      ],
+      "skipAudits": null
+    },
+    "environment": {
+      "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+      "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "benchmarkIndex": 3985,
+      "credits": {}
+    },
+    "warnings": [],
+    "LCPElement": null
+  },
+  {
+    "page": "/ru/",
+    "run": 1,
+    "fetchTime": "2026-11-05T12:35:12.621Z",
+    "lighthouseVersion": "13.6.0",
+    "score": 0.96,
+    "LCP": 1113,
+    "CLS": 0,
+    "FCP": 1113,
+    "TBT": 20.5,
+    "finalUrl": "https://upscales.app/ru/",
+    "metrics": {
+      "firstContentfulPaint": 1113,
+      "largestContentfulPaint": 1113,
+      "interactive": 2761,
+      "speedIndex": 4928,
+      "totalBlockingTime": 21,
+      "maxPotentialFID": 91,
+      "cumulativeLayoutShift": 0,
+      "cumulativeLayoutShiftMainFrame": 0,
+      "timeToFirstByte": 450,
+      "observedTimeOrigin": 0,
+      "observedTimeOriginTs": 2598072590724,
+      "observedNavigationStart": 0,
+      "observedNavigationStartTs": 2598072590724,
+      "observedFirstPaint": 2547,
+      "observedFirstPaintTs": 2598075137961,
+      "observedFirstContentfulPaint": 2547,
+      "observedFirstContentfulPaintTs": 2598075137961,
+      "observedFirstContentfulPaintAllFrames": 2547,
+      "observedFirstContentfulPaintAllFramesTs": 2598075137961,
+      "observedLargestContentfulPaint": 2547,
+      "observedLargestContentfulPaintTs": 2598075137961,
+      "observedLargestContentfulPaintAllFrames": 2547,
+      "observedLargestContentfulPaintAllFramesTs": 2598075137961,
+      "observedTraceEnd": 4873,
+      "observedTraceEndTs": 2598077463633,
+      "observedLoad": 539,
+      "observedLoadTs": 2598073129841,
+      "observedDomContentLoaded": 538,
+      "observedDomContentLoadedTs": 2598073128850,
+      "observedCumulativeLayoutShift": 0,
+      "observedCumulativeLayoutShiftMainFrame": 0,
+      "observedFirstVisualChange": 2550,
+      "observedFirstVisualChangeTs": 2598075140724,
+      "observedLastVisualChange": 2716,
+      "observedLastVisualChangeTs": 2598075306724,
+      "observedSpeedIndex": 2552,
+      "observedSpeedIndexTs": 2598075142483
+    },
+    "LCPDetails": {
+      "type": "list",
+      "items": [
+        {
+          "type": "table",
+          "headings": [
+            {
+              "key": "label",
+              "valueType": "text",
+              "label": "Subpart"
+            },
+            {
+              "key": "duration",
+              "valueType": "ms",
+              "label": "Duration"
+            }
+          ],
+          "items": [
+            {
+              "subpart": "timeToFirstByte",
+              "label": "Time to first byte",
+              "duration": 298.29700048828124
+            },
+            {
+              "subpart": "elementRenderDelay",
+              "label": "Element render delay",
+              "duration": 2248.9399995117187
+            }
+          ]
+        },
+        {
+          "type": "node",
+          "lhId": "page-0-H1",
+          "path": "1,HTML,1,BODY,3,MAIN,0,SECTION,0,DIV,0,DIV,1,H1",
+          "selector": "section.hero > div.wrap > div.hero-copy > h1",
+          "boundingRect": {
+            "top": 201,
+            "bottom": 506,
+            "left": 22,
+            "right": 390,
+            "width": 368,
+            "height": 305
+          },
+          "snippet": "<h1>",
+          "nodeLabel": "Улучшайте качество фото: убирайте размытие, увеличивайте разрешение и восстанав…"
+        }
+      ]
+    },
+    "network": [
+      {
+        "url": "https://upscales.app/ru/",
+        "transferSize": 14065,
+        "resourceType": "Document"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_180.png",
+        "transferSize": 16615,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.css?v=2506e1f1",
+        "transferSize": 25902,
+        "resourceType": "Stylesheet"
+      },
+      {
+        "url": "https://upscales.app/resources/flags/ru.png",
+        "transferSize": 842,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/ru-black.svg",
+        "transferSize": 4615,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/ru-white.svg",
+        "transferSize": 4594,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/ru-mac-black.svg",
+        "transferSize": 5079,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/ru-mac-white.svg",
+        "transferSize": 5052,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/googleplay/badges/ru.png",
+        "transferSize": 17931,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_spiderman_after.jpg",
+        "transferSize": 222685,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_spiderman_before.jpg",
+        "transferSize": 56220,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/iphone_frame.png",
+        "transferSize": 53438,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.js?v=2994820a",
+        "transferSize": 13939,
+        "resourceType": "Script"
+      },
+      {
+        "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230a0b11'%3…",
+        "transferSize": 0,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_512.png",
+        "transferSize": 115656,
+        "resourceType": "Other"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_girls_play_before.jpg",
+        "transferSize": 59581,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_girls_play_after.jpeg",
+        "transferSize": 489985,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_anime_before.jpg",
+        "transferSize": 18393,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_anime_after.jpg",
+        "transferSize": 94399,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/lowq_portrait_after.jpg",
+        "transferSize": 152403,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/lowq_portrait_before.jpg",
+        "transferSize": 19099,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/girls_after.jpg",
+        "transferSize": 760724,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/girls_before.jpg",
+        "transferSize": 78922,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/girls_thumb.jpg",
+        "transferSize": 25904,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/upscale_photo_thumb.jpg",
+        "transferSize": 19307,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/lowq_portrait_thumb.jpg",
+        "transferSize": 18106,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/restore_kids_thumb.jpg",
+        "transferSize": 33010,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/restore_family_thumb.jpg",
+        "transferSize": 32773,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/restore_portrait_thumb.jpg",
+        "transferSize": 25103,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/video_quality_thumb.jpg",
+        "transferSize": 15829,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/slowmo_thumb.jpg",
+        "transferSize": 146144,
+        "resourceType": "Image"
+      }
+    ],
+    "settings": {
+      "output": [
+        "json"
+      ],
+      "maxWaitForFcp": 30000,
+      "maxWaitForLoad": 45000,
+      "pauseAfterFcpMs": 1000,
+      "pauseAfterLoadMs": 1000,
+      "networkQuietThresholdMs": 1000,
+      "cpuQuietThresholdMs": 1000,
+      "formFactor": "mobile",
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "throttlingMethod": "simulate",
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      },
+      "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+      "auditMode": false,
+      "gatherMode": false,
+      "clearStorageTypes": [
+        "file_systems",
+        "shader_cache",
+        "service_workers",
+        "cache_storage"
+      ],
+      "disableStorageReset": false,
+      "debugNavigation": false,
+      "channel": "cli",
+      "usePassiveGathering": false,
+      "disableFullPageScreenshot": false,
+      "skipAboutBlank": false,
+      "blankPage": "about:blank",
+      "ignoreStatusCode": false,
+      "locale": "en-US",
+      "blockedUrlPatterns": null,
+      "additionalTraceCategories": null,
+      "extraHeaders": null,
+      "precomputedLanternData": null,
+      "onlyAudits": null,
+      "onlyCategories": [
+        "performance"
+      ],
+      "skipAudits": null
+    },
+    "environment": {
+      "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+      "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "benchmarkIndex": 4020,
+      "credits": {}
+    },
+    "warnings": [],
+    "LCPElement": null
+  },
+  {
+    "page": "/ru/",
+    "run": 2,
+    "fetchTime": "2026-11-05T12:35:25.170Z",
+    "lighthouseVersion": "13.6.0",
+    "score": 1,
+    "LCP": 1097.0259999999998,
+    "CLS": 0,
+    "FCP": 1097.0259999999998,
+    "TBT": 21.5,
+    "finalUrl": "https://upscales.app/ru/",
+    "metrics": {
+      "firstContentfulPaint": 1097,
+      "largestContentfulPaint": 1097,
+      "interactive": 2756,
+      "speedIndex": 2089,
+      "totalBlockingTime": 22,
+      "maxPotentialFID": 93,
+      "cumulativeLayoutShift": 0,
+      "cumulativeLayoutShiftMainFrame": 0,
+      "timeToFirstByte": 473,
+      "observedTimeOrigin": 0,
+      "observedTimeOriginTs": 2598085141462,
+      "observedNavigationStart": 0,
+      "observedNavigationStartTs": 2598085141462,
+      "observedFirstPaint": 520,
+      "observedFirstPaintTs": 2598085661025,
+      "observedFirstContentfulPaint": 520,
+      "observedFirstContentfulPaintTs": 2598085661025,
+      "observedFirstContentfulPaintAllFrames": 520,
+      "observedFirstContentfulPaintAllFramesTs": 2598085661025,
+      "observedLargestContentfulPaint": 520,
+      "observedLargestContentfulPaintTs": 2598085661025,
+      "observedLargestContentfulPaintAllFrames": 520,
+      "observedLargestContentfulPaintAllFramesTs": 2598085661025,
+      "observedTraceEnd": 3388,
+      "observedTraceEndTs": 2598088529211,
+      "observedLoad": 480,
+      "observedLoadTs": 2598085621212,
+      "observedDomContentLoaded": 467,
+      "observedDomContentLoadedTs": 2598085608211,
+      "observedCumulativeLayoutShift": 0,
+      "observedCumulativeLayoutShiftMainFrame": 0,
+      "observedFirstVisualChange": 522,
+      "observedFirstVisualChangeTs": 2598085663462,
+      "observedLastVisualChange": 1183,
+      "observedLastVisualChangeTs": 2598086324462,
+      "observedSpeedIndex": 529,
+      "observedSpeedIndexTs": 2598085670581
+    },
+    "LCPDetails": {
+      "type": "list",
+      "items": [
+        {
+          "type": "table",
+          "headings": [
+            {
+              "key": "label",
+              "valueType": "text",
+              "label": "Subpart"
+            },
+            {
+              "key": "duration",
+              "valueType": "ms",
+              "label": "Duration"
+            }
+          ],
+          "items": [
+            {
+              "subpart": "timeToFirstByte",
+              "label": "Time to first byte",
+              "duration": 247.353
+            },
+            {
+              "subpart": "elementRenderDelay",
+              "label": "Element render delay",
+              "duration": 272.21
+            }
+          ]
+        },
+        {
+          "type": "node",
+          "lhId": "page-0-H1",
+          "path": "1,HTML,1,BODY,3,MAIN,0,SECTION,0,DIV,0,DIV,1,H1",
+          "selector": "section.hero > div.wrap > div.hero-copy > h1",
+          "boundingRect": {
+            "top": 201,
+            "bottom": 506,
+            "left": 22,
+            "right": 390,
+            "width": 368,
+            "height": 305
+          },
+          "snippet": "<h1>",
+          "nodeLabel": "Улучшайте качество фото: убирайте размытие, увеличивайте разрешение и восстанав…"
+        }
+      ]
+    },
+    "network": [
+      {
+        "url": "https://upscales.app/ru/",
+        "transferSize": 14062,
+        "resourceType": "Document"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_180.png",
+        "transferSize": 16609,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.css?v=2506e1f1",
+        "transferSize": 25900,
+        "resourceType": "Stylesheet"
+      },
+      {
+        "url": "https://upscales.app/resources/flags/ru.png",
+        "transferSize": 841,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/ru-black.svg",
+        "transferSize": 4605,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/ru-white.svg",
+        "transferSize": 4594,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/ru-mac-black.svg",
+        "transferSize": 5074,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/ru-mac-white.svg",
+        "transferSize": 5056,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/googleplay/badges/ru.png",
+        "transferSize": 17936,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_spiderman_after.jpg",
+        "transferSize": 222684,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_spiderman_before.jpg",
+        "transferSize": 56235,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/iphone_frame.png",
+        "transferSize": 53439,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.js?v=2994820a",
+        "transferSize": 13999,
+        "resourceType": "Script"
+      },
+      {
+        "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230a0b11'%3…",
+        "transferSize": 0,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/lowq_portrait_after.jpg",
+        "transferSize": 152397,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/lowq_portrait_before.jpg",
+        "transferSize": 19092,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/girls_after.jpg",
+        "transferSize": 760767,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/girls_before.jpg",
+        "transferSize": 78933,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/girls_thumb.jpg",
+        "transferSize": 25899,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/upscale_photo_thumb.jpg",
+        "transferSize": 19317,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/lowq_portrait_thumb.jpg",
+        "transferSize": 18104,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/restore_kids_thumb.jpg",
+        "transferSize": 33015,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/restore_family_thumb.jpg",
+        "transferSize": 32775,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/restore_portrait_thumb.jpg",
+        "transferSize": 25108,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/video_quality_thumb.jpg",
+        "transferSize": 15825,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/slowmo_thumb.jpg",
+        "transferSize": 146145,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_512.png",
+        "transferSize": 115658,
+        "resourceType": "Other"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_girls_play_before.jpg",
+        "transferSize": 59582,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_girls_play_after.jpeg",
+        "transferSize": 489980,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_anime_before.jpg",
+        "transferSize": 18394,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_anime_after.jpg",
+        "transferSize": 94395,
+        "resourceType": "Image"
+      }
+    ],
+    "settings": {
+      "output": [
+        "json"
+      ],
+      "maxWaitForFcp": 30000,
+      "maxWaitForLoad": 45000,
+      "pauseAfterFcpMs": 1000,
+      "pauseAfterLoadMs": 1000,
+      "networkQuietThresholdMs": 1000,
+      "cpuQuietThresholdMs": 1000,
+      "formFactor": "mobile",
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "throttlingMethod": "simulate",
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      },
+      "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+      "auditMode": false,
+      "gatherMode": false,
+      "clearStorageTypes": [
+        "file_systems",
+        "shader_cache",
+        "service_workers",
+        "cache_storage"
+      ],
+      "disableStorageReset": false,
+      "debugNavigation": false,
+      "channel": "cli",
+      "usePassiveGathering": false,
+      "disableFullPageScreenshot": false,
+      "skipAboutBlank": false,
+      "blankPage": "about:blank",
+      "ignoreStatusCode": false,
+      "locale": "en-US",
+      "blockedUrlPatterns": null,
+      "additionalTraceCategories": null,
+      "extraHeaders": null,
+      "precomputedLanternData": null,
+      "onlyAudits": null,
+      "onlyCategories": [
+        "performance"
+      ],
+      "skipAudits": null
+    },
+    "environment": {
+      "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+      "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "benchmarkIndex": 4004,
+      "credits": {}
+    },
+    "warnings": [],
+    "LCPElement": null
+  },
+  {
+    "page": "/ru/",
+    "run": 3,
+    "fetchTime": "2026-11-05T12:35:36.112Z",
+    "lighthouseVersion": "13.6.0",
+    "score": 1,
+    "LCP": 926.406,
+    "CLS": 0,
+    "FCP": 926.406,
+    "TBT": 0,
+    "finalUrl": "https://upscales.app/ru/",
+    "metrics": {
+      "firstContentfulPaint": 926,
+      "largestContentfulPaint": 926,
+      "interactive": 926,
+      "speedIndex": 1072,
+      "totalBlockingTime": 0,
+      "maxPotentialFID": 16,
+      "cumulativeLayoutShift": 0,
+      "cumulativeLayoutShiftMainFrame": 0,
+      "timeToFirstByte": 476,
+      "observedTimeOrigin": 0,
+      "observedTimeOriginTs": 2598096069417,
+      "observedNavigationStart": 0,
+      "observedNavigationStartTs": 2598096069417,
+      "observedFirstPaint": 494,
+      "observedFirstPaintTs": 2598096562970,
+      "observedFirstContentfulPaint": 494,
+      "observedFirstContentfulPaintTs": 2598096562970,
+      "observedFirstContentfulPaintAllFrames": 494,
+      "observedFirstContentfulPaintAllFramesTs": 2598096562970,
+      "observedLargestContentfulPaint": 494,
+      "observedLargestContentfulPaintTs": 2598096562970,
+      "observedLargestContentfulPaintAllFrames": 494,
+      "observedLargestContentfulPaintAllFramesTs": 2598096562970,
+      "observedTraceEnd": 3399,
+      "observedTraceEndTs": 2598099468475,
+      "observedLoad": 483,
+      "observedLoadTs": 2598096552012,
+      "observedDomContentLoaded": 463,
+      "observedDomContentLoadedTs": 2598096532587,
+      "observedCumulativeLayoutShift": 0,
+      "observedCumulativeLayoutShiftMainFrame": 0,
+      "observedFirstVisualChange": 493,
+      "observedFirstVisualChangeTs": 2598096562417,
+      "observedLastVisualChange": 1181,
+      "observedLastVisualChangeTs": 2598097250417,
+      "observedSpeedIndex": 501,
+      "observedSpeedIndexTs": 2598096570306
+    },
+    "LCPDetails": {
+      "type": "list",
+      "items": [
+        {
+          "type": "table",
+          "headings": [
+            {
+              "key": "label",
+              "valueType": "text",
+              "label": "Subpart"
+            },
+            {
+              "key": "duration",
+              "valueType": "ms",
+              "label": "Duration"
+            }
+          ],
+          "items": [
+            {
+              "subpart": "timeToFirstByte",
+              "label": "Time to first byte",
+              "duration": 219.358
+            },
+            {
+              "subpart": "elementRenderDelay",
+              "label": "Element render delay",
+              "duration": 274.195
+            }
+          ]
+        },
+        {
+          "type": "node",
+          "lhId": "page-0-H1",
+          "path": "1,HTML,1,BODY,3,MAIN,0,SECTION,0,DIV,0,DIV,1,H1",
+          "selector": "section.hero > div.wrap > div.hero-copy > h1",
+          "boundingRect": {
+            "top": 201,
+            "bottom": 506,
+            "left": 22,
+            "right": 390,
+            "width": 368,
+            "height": 305
+          },
+          "snippet": "<h1>",
+          "nodeLabel": "Улучшайте качество фото: убирайте размытие, увеличивайте разрешение и восстанав…"
+        }
+      ]
+    },
+    "network": [
+      {
+        "url": "https://upscales.app/ru/",
+        "transferSize": 14065,
+        "resourceType": "Document"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_180.png",
+        "transferSize": 16614,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.css?v=2506e1f1",
+        "transferSize": 25899,
+        "resourceType": "Stylesheet"
+      },
+      {
+        "url": "https://upscales.app/resources/flags/ru.png",
+        "transferSize": 841,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/ru-black.svg",
+        "transferSize": 4612,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/ru-white.svg",
+        "transferSize": 4594,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/ru-mac-black.svg",
+        "transferSize": 5073,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/ru-mac-white.svg",
+        "transferSize": 5049,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/googleplay/badges/ru.png",
+        "transferSize": 17934,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_spiderman_after.jpg",
+        "transferSize": 222680,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_spiderman_before.jpg",
+        "transferSize": 56234,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/iphone_frame.png",
+        "transferSize": 53440,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.js?v=2994820a",
+        "transferSize": 13941,
+        "resourceType": "Script"
+      },
+      {
+        "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230a0b11'%3…",
+        "transferSize": 0,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/lowq_portrait_after.jpg",
+        "transferSize": 152397,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/lowq_portrait_before.jpg",
+        "transferSize": 19089,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/girls_after.jpg",
+        "transferSize": 760756,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/girls_before.jpg",
+        "transferSize": 78927,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/girls_thumb.jpg",
+        "transferSize": 25903,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/upscale_photo_thumb.jpg",
+        "transferSize": 19305,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/lowq_portrait_thumb.jpg",
+        "transferSize": 18115,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/restore_kids_thumb.jpg",
+        "transferSize": 33016,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/restore_family_thumb.jpg",
+        "transferSize": 32780,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/restore_portrait_thumb.jpg",
+        "transferSize": 25111,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/video_quality_thumb.jpg",
+        "transferSize": 15826,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/slowmo_thumb.jpg",
+        "transferSize": 146142,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_512.png",
+        "transferSize": 115663,
+        "resourceType": "Other"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_girls_play_before.jpg",
+        "transferSize": 59579,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_girls_play_after.jpeg",
+        "transferSize": 489990,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_anime_before.jpg",
+        "transferSize": 18402,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/hero_anime_after.jpg",
+        "transferSize": 94394,
+        "resourceType": "Image"
+      }
+    ],
+    "settings": {
+      "output": [
+        "json"
+      ],
+      "maxWaitForFcp": 30000,
+      "maxWaitForLoad": 45000,
+      "pauseAfterFcpMs": 1000,
+      "pauseAfterLoadMs": 1000,
+      "networkQuietThresholdMs": 1000,
+      "cpuQuietThresholdMs": 1000,
+      "formFactor": "mobile",
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "throttlingMethod": "simulate",
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      },
+      "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+      "auditMode": false,
+      "gatherMode": false,
+      "clearStorageTypes": [
+        "file_systems",
+        "shader_cache",
+        "service_workers",
+        "cache_storage"
+      ],
+      "disableStorageReset": false,
+      "debugNavigation": false,
+      "channel": "cli",
+      "usePassiveGathering": false,
+      "disableFullPageScreenshot": false,
+      "skipAboutBlank": false,
+      "blankPage": "about:blank",
+      "ignoreStatusCode": false,
+      "locale": "en-US",
+      "blockedUrlPatterns": null,
+      "additionalTraceCategories": null,
+      "extraHeaders": null,
+      "precomputedLanternData": null,
+      "onlyAudits": null,
+      "onlyCategories": [
+        "performance"
+      ],
+      "skipAudits": null
+    },
+    "environment": {
+      "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+      "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "benchmarkIndex": 4035,
+      "credits": {}
+    },
+    "warnings": [],
+    "LCPElement": null
+  },
+  {
+    "page": "/upscale/",
+    "run": 1,
+    "fetchTime": "2026-11-05T12:35:47.206Z",
+    "lighthouseVersion": "13.6.0",
+    "score": 0.92,
+    "LCP": 3394.6684999999998,
+    "CLS": 0,
+    "FCP": 1069.6685,
+    "TBT": 0,
+    "finalUrl": "https://upscales.app/upscale/",
+    "metrics": {
+      "firstContentfulPaint": 1070,
+      "largestContentfulPaint": 3395,
+      "interactive": 3417,
+      "speedIndex": 1454,
+      "totalBlockingTime": 0,
+      "maxPotentialFID": 16,
+      "cumulativeLayoutShift": 0,
+      "cumulativeLayoutShiftMainFrame": 0,
+      "lcpLoadDelay": 934,
+      "lcpLoadDuration": 1053,
+      "timeToFirstByte": 470,
+      "observedTimeOrigin": 0,
+      "observedTimeOriginTs": 2598107176766,
+      "observedNavigationStart": 0,
+      "observedNavigationStartTs": 2598107176766,
+      "observedFirstPaint": 724,
+      "observedFirstPaintTs": 2598107900496,
+      "observedFirstContentfulPaint": 724,
+      "observedFirstContentfulPaintTs": 2598107900496,
+      "observedFirstContentfulPaintAllFrames": 724,
+      "observedFirstContentfulPaintAllFramesTs": 2598107900496,
+      "observedLargestContentfulPaint": 729,
+      "observedLargestContentfulPaintTs": 2598107905862,
+      "observedLargestContentfulPaintAllFrames": 729,
+      "observedLargestContentfulPaintAllFramesTs": 2598107905862,
+      "observedTraceEnd": 3063,
+      "observedTraceEndTs": 2598110239443,
+      "observedLoad": 568,
+      "observedLoadTs": 2598107744791,
+      "observedDomContentLoaded": 565,
+      "observedDomContentLoadedTs": 2598107742244,
+      "observedCumulativeLayoutShift": 0,
+      "observedCumulativeLayoutShiftMainFrame": 0,
+      "observedFirstVisualChange": 724,
+      "observedFirstVisualChangeTs": 2598107900766,
+      "observedLastVisualChange": 1219,
+      "observedLastVisualChangeTs": 2598108395766,
+      "observedSpeedIndex": 733,
+      "observedSpeedIndexTs": 2598107909864
+    },
+    "LCPDetails": {
+      "type": "list",
+      "items": [
+        {
+          "type": "table",
+          "headings": [
+            {
+              "key": "label",
+              "valueType": "text",
+              "label": "Subpart"
+            },
+            {
+              "key": "duration",
+              "valueType": "ms",
+              "label": "Duration"
+            }
+          ],
+          "items": [
+            {
+              "subpart": "timeToFirstByte",
+              "label": "Time to first byte",
+              "duration": 288.843
+            },
+            {
+              "subpart": "resourceLoadDelay",
+              "label": "Resource load delay",
+              "duration": 9.208
+            },
+            {
+              "subpart": "resourceLoadDuration",
+              "label": "Resource load duration",
+              "duration": 229.525
+            },
+            {
+              "subpart": "elementRenderDelay",
+              "label": "Element render delay",
+              "duration": 201.52
+            }
+          ]
+        },
+        {
+          "type": "node",
+          "lhId": "page-5-IMG",
+          "path": "1,HTML,1,BODY,3,MAIN,0,DIV,0,SECTION,1,DIV,1,BUTTON,0,SPAN,0,IMG",
+          "selector": "div#mode-picker > button#mode-creative > span.mode-preview > img.mode-after",
+          "boundingRect": {
+            "top": 495,
+            "bottom": 671,
+            "left": 22,
+            "right": 390,
+            "width": 368,
+            "height": 176
+          },
+          "snippet": "<img class=\"mode-after\" src=\"/resources/tool_modes/creative_after.jpg\" width=\"925\" height=\"704\" alt=\"\" decoding=\"async\">",
+          "nodeLabel": "div#mode-picker > button#mode-creative > span.mode-preview > img.mode-after"
+        }
+      ]
+    },
+    "network": [
+      {
+        "url": "https://upscales.app/upscale/",
+        "transferSize": 11122,
+        "resourceType": "Document"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_180.png",
+        "transferSize": 16616,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.css?v=2506e1f1",
+        "transferSize": 25905,
+        "resourceType": "Stylesheet"
+      },
+      {
+        "url": "https://upscales.app/assets/upscale.css?v=32270a31",
+        "transferSize": 9896,
+        "resourceType": "Stylesheet"
+      },
+      {
+        "url": "https://upscales.app/resources/flags/us.png",
+        "transferSize": 3191,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/tool_modes/upscale_after.jpg",
+        "transferSize": 76369,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/tool_modes/upscale_before.jpg",
+        "transferSize": 51814,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/tool_modes/creative_after.jpg",
+        "transferSize": 43112,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/tool_modes/creative_before.jpg",
+        "transferSize": 28052,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/tool_modes/restore_after.jpg",
+        "transferSize": 47507,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/tool_modes/restore_before.jpg",
+        "transferSize": 78659,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/restore_modes/mode_restore.jpg",
+        "transferSize": 9749,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/restore_modes/mode_colorize.jpg",
+        "transferSize": 11987,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/restore_modes/mode_enhanced_colorize.jpg",
+        "transferSize": 11381,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/restore_modes/mode_advanced_fix.jpg",
+        "transferSize": 31095,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-black.svg",
+        "transferSize": 4488,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-white.svg",
+        "transferSize": 4438,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-mac-black.svg",
+        "transferSize": 4906,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-mac-white.svg",
+        "transferSize": 4887,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/googleplay/badges/en.png",
+        "transferSize": 5357,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/processor/app/main-SfGM18xp.js",
+        "transferSize": 93447,
+        "resourceType": "Script"
+      },
+      {
+        "url": "https://upscales.app/assets/site.js?v=2994820a",
+        "transferSize": 13942,
+        "resourceType": "Script"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_512.png",
+        "transferSize": 115656,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_512.png",
+        "transferSize": 0,
+        "resourceType": "Other"
+      }
+    ],
+    "settings": {
+      "output": [
+        "json"
+      ],
+      "maxWaitForFcp": 30000,
+      "maxWaitForLoad": 45000,
+      "pauseAfterFcpMs": 1000,
+      "pauseAfterLoadMs": 1000,
+      "networkQuietThresholdMs": 1000,
+      "cpuQuietThresholdMs": 1000,
+      "formFactor": "mobile",
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "throttlingMethod": "simulate",
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      },
+      "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+      "auditMode": false,
+      "gatherMode": false,
+      "clearStorageTypes": [
+        "file_systems",
+        "shader_cache",
+        "service_workers",
+        "cache_storage"
+      ],
+      "disableStorageReset": false,
+      "debugNavigation": false,
+      "channel": "cli",
+      "usePassiveGathering": false,
+      "disableFullPageScreenshot": false,
+      "skipAboutBlank": false,
+      "blankPage": "about:blank",
+      "ignoreStatusCode": false,
+      "locale": "en-US",
+      "blockedUrlPatterns": null,
+      "additionalTraceCategories": null,
+      "extraHeaders": null,
+      "precomputedLanternData": null,
+      "onlyAudits": null,
+      "onlyCategories": [
+        "performance"
+      ],
+      "skipAudits": null
+    },
+    "environment": {
+      "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+      "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "benchmarkIndex": 3961.5,
+      "credits": {}
+    },
+    "warnings": [],
+    "LCPElement": null
+  },
+  {
+    "page": "/upscale/",
+    "run": 2,
+    "fetchTime": "2026-11-05T12:35:57.929Z",
+    "lighthouseVersion": "13.6.0",
+    "score": 0.92,
+    "LCP": 3391.3055,
+    "CLS": 0,
+    "FCP": 1066.3055,
+    "TBT": 0,
+    "finalUrl": "https://upscales.app/upscale/",
+    "metrics": {
+      "firstContentfulPaint": 1066,
+      "largestContentfulPaint": 3391,
+      "interactive": 3414,
+      "speedIndex": 1086,
+      "totalBlockingTime": 0,
+      "maxPotentialFID": 16,
+      "cumulativeLayoutShift": 0,
+      "cumulativeLayoutShiftMainFrame": 0,
+      "lcpLoadDelay": 1126,
+      "lcpLoadDuration": 1418,
+      "timeToFirstByte": 466,
+      "observedTimeOrigin": 0,
+      "observedTimeOriginTs": 2598117890367,
+      "observedNavigationStart": 0,
+      "observedNavigationStartTs": 2598117890367,
+      "observedFirstPaint": 446,
+      "observedFirstPaintTs": 2598118336499,
+      "observedFirstContentfulPaint": 446,
+      "observedFirstContentfulPaintTs": 2598118336499,
+      "observedFirstContentfulPaintAllFrames": 446,
+      "observedFirstContentfulPaintAllFramesTs": 2598118336499,
+      "observedLargestContentfulPaint": 452,
+      "observedLargestContentfulPaintTs": 2598118342329,
+      "observedLargestContentfulPaintAllFrames": 452,
+      "observedLargestContentfulPaintAllFramesTs": 2598118342329,
+      "observedTraceEnd": 2838,
+      "observedTraceEndTs": 2598120727881,
+      "observedLoad": 420,
+      "observedLoadTs": 2598118309892,
+      "observedDomContentLoaded": 207,
+      "observedDomContentLoadedTs": 2598118097863,
+      "observedCumulativeLayoutShift": 0,
+      "observedCumulativeLayoutShiftMainFrame": 0,
+      "observedFirstVisualChange": 464,
+      "observedFirstVisualChangeTs": 2598118354367,
+      "observedLastVisualChange": 1110,
+      "observedLastVisualChangeTs": 2598119000367,
+      "observedSpeedIndex": 471,
+      "observedSpeedIndexTs": 2598118361640
+    },
+    "LCPDetails": {
+      "type": "list",
+      "items": [
+        {
+          "type": "table",
+          "headings": [
+            {
+              "key": "label",
+              "valueType": "text",
+              "label": "Subpart"
+            },
+            {
+              "key": "duration",
+              "valueType": "ms",
+              "label": "Duration"
+            }
+          ],
+          "items": [
+            {
+              "subpart": "timeToFirstByte",
+              "label": "Time to first byte",
+              "duration": 204.65800048828126
+            },
+            {
+              "subpart": "resourceLoadDelay",
+              "label": "Resource load delay",
+              "duration": 6.99599951171875
+            },
+            {
+              "subpart": "resourceLoadDuration",
+              "label": "Resource load duration",
+              "duration": 189.596
+            },
+            {
+              "subpart": "elementRenderDelay",
+              "label": "Element render delay",
+              "duration": 50.712
+            }
+          ]
+        },
+        {
+          "type": "node",
+          "lhId": "page-2-IMG",
+          "path": "1,HTML,1,BODY,3,MAIN,0,DIV,0,SECTION,1,DIV,0,BUTTON,0,SPAN,0,IMG",
+          "selector": "div#mode-picker > button#mode-device > span.mode-preview > img.mode-after",
+          "boundingRect": {
+            "top": 307,
+            "bottom": 483,
+            "left": 22,
+            "right": 390,
+            "width": 368,
+            "height": 176
+          },
+          "snippet": "<img class=\"mode-after\" src=\"/resources/tool_modes/upscale_after.jpg\" width=\"732\" height=\"494\" alt=\"\" decoding=\"async\">",
+          "nodeLabel": "div#mode-picker > button#mode-device > span.mode-preview > img.mode-after"
+        }
+      ]
+    },
+    "network": [
+      {
+        "url": "https://upscales.app/upscale/",
+        "transferSize": 11118,
+        "resourceType": "Document"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_180.png",
+        "transferSize": 16617,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.css?v=2506e1f1",
+        "transferSize": 25908,
+        "resourceType": "Stylesheet"
+      },
+      {
+        "url": "https://upscales.app/assets/upscale.css?v=32270a31",
+        "transferSize": 9892,
+        "resourceType": "Stylesheet"
+      },
+      {
+        "url": "https://upscales.app/resources/flags/us.png",
+        "transferSize": 3195,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/tool_modes/upscale_after.jpg",
+        "transferSize": 76369,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/tool_modes/upscale_before.jpg",
+        "transferSize": 51818,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/tool_modes/creative_after.jpg",
+        "transferSize": 43114,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/tool_modes/creative_before.jpg",
+        "transferSize": 28045,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/tool_modes/restore_after.jpg",
+        "transferSize": 47499,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/tool_modes/restore_before.jpg",
+        "transferSize": 78645,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/restore_modes/mode_restore.jpg",
+        "transferSize": 9749,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/restore_modes/mode_colorize.jpg",
+        "transferSize": 11989,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/restore_modes/mode_enhanced_colorize.jpg",
+        "transferSize": 11385,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/restore_modes/mode_advanced_fix.jpg",
+        "transferSize": 31092,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-black.svg",
+        "transferSize": 4444,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-white.svg",
+        "transferSize": 4479,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-mac-black.svg",
+        "transferSize": 4897,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-mac-white.svg",
+        "transferSize": 4890,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/googleplay/badges/en.png",
+        "transferSize": 5355,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/processor/app/main-SfGM18xp.js",
+        "transferSize": 93439,
+        "resourceType": "Script"
+      },
+      {
+        "url": "https://upscales.app/assets/site.js?v=2994820a",
+        "transferSize": 13945,
+        "resourceType": "Script"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_512.png",
+        "transferSize": 115655,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_512.png",
+        "transferSize": 0,
+        "resourceType": "Other"
+      }
+    ],
+    "settings": {
+      "output": [
+        "json"
+      ],
+      "maxWaitForFcp": 30000,
+      "maxWaitForLoad": 45000,
+      "pauseAfterFcpMs": 1000,
+      "pauseAfterLoadMs": 1000,
+      "networkQuietThresholdMs": 1000,
+      "cpuQuietThresholdMs": 1000,
+      "formFactor": "mobile",
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "throttlingMethod": "simulate",
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      },
+      "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+      "auditMode": false,
+      "gatherMode": false,
+      "clearStorageTypes": [
+        "file_systems",
+        "shader_cache",
+        "service_workers",
+        "cache_storage"
+      ],
+      "disableStorageReset": false,
+      "debugNavigation": false,
+      "channel": "cli",
+      "usePassiveGathering": false,
+      "disableFullPageScreenshot": false,
+      "skipAboutBlank": false,
+      "blankPage": "about:blank",
+      "ignoreStatusCode": false,
+      "locale": "en-US",
+      "blockedUrlPatterns": null,
+      "additionalTraceCategories": null,
+      "extraHeaders": null,
+      "precomputedLanternData": null,
+      "onlyAudits": null,
+      "onlyCategories": [
+        "performance"
+      ],
+      "skipAudits": null
+    },
+    "environment": {
+      "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+      "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "benchmarkIndex": 4008.5,
+      "credits": {}
+    },
+    "warnings": [],
+    "LCPElement": null
+  },
+  {
+    "page": "/upscale/",
+    "run": 3,
+    "fetchTime": "2026-11-05T12:36:08.403Z",
+    "lighthouseVersion": "13.6.0",
+    "score": 0.92,
+    "LCP": 3390.484,
+    "CLS": 0,
+    "FCP": 1065.484,
+    "TBT": 0,
+    "finalUrl": "https://upscales.app/upscale/",
+    "metrics": {
+      "firstContentfulPaint": 1065,
+      "largestContentfulPaint": 3390,
+      "interactive": 3413,
+      "speedIndex": 1095,
+      "totalBlockingTime": 0,
+      "maxPotentialFID": 16,
+      "cumulativeLayoutShift": 0,
+      "cumulativeLayoutShiftMainFrame": 0,
+      "lcpLoadDelay": 1181,
+      "lcpLoadDuration": 1342,
+      "timeToFirstByte": 465,
+      "observedTimeOrigin": 0,
+      "observedTimeOriginTs": 2598128367742,
+      "observedNavigationStart": 0,
+      "observedNavigationStartTs": 2598128367742,
+      "observedFirstPaint": 449,
+      "observedFirstPaintTs": 2598128816404,
+      "observedFirstContentfulPaint": 449,
+      "observedFirstContentfulPaintTs": 2598128816404,
+      "observedFirstContentfulPaintAllFrames": 449,
+      "observedFirstContentfulPaintAllFramesTs": 2598128816404,
+      "observedLargestContentfulPaint": 451,
+      "observedLargestContentfulPaintTs": 2598128818609,
+      "observedLargestContentfulPaintAllFrames": 451,
+      "observedLargestContentfulPaintAllFramesTs": 2598128818609,
+      "observedTraceEnd": 2849,
+      "observedTraceEndTs": 2598131216911,
+      "observedLoad": 437,
+      "observedLoadTs": 2598128804635,
+      "observedDomContentLoaded": 434,
+      "observedDomContentLoadedTs": 2598128801907,
+      "observedCumulativeLayoutShift": 0,
+      "observedCumulativeLayoutShiftMainFrame": 0,
+      "observedFirstVisualChange": 471,
+      "observedFirstVisualChangeTs": 2598128838742,
+      "observedLastVisualChange": 1106,
+      "observedLastVisualChangeTs": 2598129473742,
+      "observedSpeedIndex": 478,
+      "observedSpeedIndexTs": 2598128845699
+    },
+    "LCPDetails": {
+      "type": "list",
+      "items": [
+        {
+          "type": "table",
+          "headings": [
+            {
+              "key": "label",
+              "valueType": "text",
+              "label": "Subpart"
+            },
+            {
+              "key": "duration",
+              "valueType": "ms",
+              "label": "Duration"
+            }
+          ],
+          "items": [
+            {
+              "subpart": "timeToFirstByte",
+              "label": "Time to first byte",
+              "duration": 209.132
+            },
+            {
+              "subpart": "resourceLoadDelay",
+              "label": "Resource load delay",
+              "duration": 6.845
+            },
+            {
+              "subpart": "resourceLoadDuration",
+              "label": "Resource load duration",
+              "duration": 181.392
+            },
+            {
+              "subpart": "elementRenderDelay",
+              "label": "Element render delay",
+              "duration": 53.498
+            }
+          ]
+        },
+        {
+          "type": "node",
+          "lhId": "page-5-IMG",
+          "path": "1,HTML,1,BODY,3,MAIN,0,DIV,0,SECTION,1,DIV,1,BUTTON,0,SPAN,0,IMG",
+          "selector": "div#mode-picker > button#mode-creative > span.mode-preview > img.mode-after",
+          "boundingRect": {
+            "top": 495,
+            "bottom": 671,
+            "left": 22,
+            "right": 390,
+            "width": 368,
+            "height": 176
+          },
+          "snippet": "<img class=\"mode-after\" src=\"/resources/tool_modes/creative_after.jpg\" width=\"925\" height=\"704\" alt=\"\" decoding=\"async\">",
+          "nodeLabel": "div#mode-picker > button#mode-creative > span.mode-preview > img.mode-after"
+        }
+      ]
+    },
+    "network": [
+      {
+        "url": "https://upscales.app/upscale/",
+        "transferSize": 11120,
+        "resourceType": "Document"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_180.png",
+        "transferSize": 16617,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.css?v=2506e1f1",
+        "transferSize": 25890,
+        "resourceType": "Stylesheet"
+      },
+      {
+        "url": "https://upscales.app/assets/upscale.css?v=32270a31",
+        "transferSize": 9896,
+        "resourceType": "Stylesheet"
+      },
+      {
+        "url": "https://upscales.app/resources/flags/us.png",
+        "transferSize": 3188,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/tool_modes/upscale_after.jpg",
+        "transferSize": 76366,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/tool_modes/upscale_before.jpg",
+        "transferSize": 51826,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/tool_modes/creative_after.jpg",
+        "transferSize": 43112,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/tool_modes/creative_before.jpg",
+        "transferSize": 28044,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/tool_modes/restore_after.jpg",
+        "transferSize": 47502,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/tool_modes/restore_before.jpg",
+        "transferSize": 78648,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/restore_modes/mode_restore.jpg",
+        "transferSize": 9761,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/restore_modes/mode_colorize.jpg",
+        "transferSize": 11987,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/restore_modes/mode_enhanced_colorize.jpg",
+        "transferSize": 11378,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/restore_modes/mode_advanced_fix.jpg",
+        "transferSize": 31090,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-black.svg",
+        "transferSize": 4441,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-white.svg",
+        "transferSize": 4436,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-mac-black.svg",
+        "transferSize": 4899,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-mac-white.svg",
+        "transferSize": 4888,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/googleplay/badges/en.png",
+        "transferSize": 5354,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/processor/app/main-SfGM18xp.js",
+        "transferSize": 93444,
+        "resourceType": "Script"
+      },
+      {
+        "url": "https://upscales.app/assets/site.js?v=2994820a",
+        "transferSize": 13951,
+        "resourceType": "Script"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_512.png",
+        "transferSize": 115654,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_512.png",
+        "transferSize": 0,
+        "resourceType": "Other"
+      }
+    ],
+    "settings": {
+      "output": [
+        "json"
+      ],
+      "maxWaitForFcp": 30000,
+      "maxWaitForLoad": 45000,
+      "pauseAfterFcpMs": 1000,
+      "pauseAfterLoadMs": 1000,
+      "networkQuietThresholdMs": 1000,
+      "cpuQuietThresholdMs": 1000,
+      "formFactor": "mobile",
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "throttlingMethod": "simulate",
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      },
+      "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+      "auditMode": false,
+      "gatherMode": false,
+      "clearStorageTypes": [
+        "file_systems",
+        "shader_cache",
+        "service_workers",
+        "cache_storage"
+      ],
+      "disableStorageReset": false,
+      "debugNavigation": false,
+      "channel": "cli",
+      "usePassiveGathering": false,
+      "disableFullPageScreenshot": false,
+      "skipAboutBlank": false,
+      "blankPage": "about:blank",
+      "ignoreStatusCode": false,
+      "locale": "en-US",
+      "blockedUrlPatterns": null,
+      "additionalTraceCategories": null,
+      "extraHeaders": null,
+      "precomputedLanternData": null,
+      "onlyAudits": null,
+      "onlyCategories": [
+        "performance"
+      ],
+      "skipAudits": null
+    },
+    "environment": {
+      "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+      "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "benchmarkIndex": 3969.5,
+      "credits": {}
+    },
+    "warnings": [],
+    "LCPElement": null
+  },
+  {
+    "page": "/guides/unblur-photo-iphone.html",
+    "run": 1,
+    "fetchTime": "2026-11-05T12:36:19.008Z",
+    "lighthouseVersion": "13.6.0",
+    "score": 0.99,
+    "LCP": 2176.365,
+    "CLS": 0,
+    "FCP": 1015.365,
+    "TBT": 0,
+    "finalUrl": "https://upscales.app/guides/unblur-photo-iphone.html",
+    "metrics": {
+      "firstContentfulPaint": 1015,
+      "largestContentfulPaint": 2176,
+      "interactive": 2184,
+      "speedIndex": 1429,
+      "totalBlockingTime": 0,
+      "maxPotentialFID": 36,
+      "cumulativeLayoutShift": 0,
+      "cumulativeLayoutShiftMainFrame": 0,
+      "lcpLoadDelay": 370,
+      "lcpLoadDuration": 1136,
+      "timeToFirstByte": 565,
+      "observedTimeOrigin": 0,
+      "observedTimeOriginTs": 2598138994112,
+      "observedNavigationStart": 0,
+      "observedNavigationStartTs": 2598138994112,
+      "observedFirstPaint": 480,
+      "observedFirstPaintTs": 2598139473966,
+      "observedFirstContentfulPaint": 480,
+      "observedFirstContentfulPaintTs": 2598139473966,
+      "observedFirstContentfulPaintAllFrames": 480,
+      "observedFirstContentfulPaintAllFramesTs": 2598139473966,
+      "observedLargestContentfulPaint": 500,
+      "observedLargestContentfulPaintTs": 2598139494311,
+      "observedLargestContentfulPaintAllFrames": 500,
+      "observedLargestContentfulPaintAllFramesTs": 2598139494311,
+      "observedTraceEnd": 2897,
+      "observedTraceEndTs": 2598141890991,
+      "observedLoad": 476,
+      "observedLoadTs": 2598139470196,
+      "observedDomContentLoaded": 421,
+      "observedDomContentLoadedTs": 2598139414864,
+      "observedCumulativeLayoutShift": 0,
+      "observedCumulativeLayoutShiftMainFrame": 0,
+      "observedFirstVisualChange": 485,
+      "observedFirstVisualChangeTs": 2598139479112,
+      "observedLastVisualChange": 1140,
+      "observedLastVisualChangeTs": 2598140134112,
+      "observedSpeedIndex": 493,
+      "observedSpeedIndexTs": 2598139486739
+    },
+    "LCPDetails": {
+      "type": "list",
+      "items": [
+        {
+          "type": "table",
+          "headings": [
+            {
+              "key": "label",
+              "valueType": "text",
+              "label": "Subpart"
+            },
+            {
+              "key": "duration",
+              "valueType": "ms",
+              "label": "Duration"
+            }
+          ],
+          "items": [
+            {
+              "subpart": "timeToFirstByte",
+              "label": "Time to first byte",
+              "duration": 209.393
+            },
+            {
+              "subpart": "resourceLoadDelay",
+              "label": "Resource load delay",
+              "duration": 4.731
+            },
+            {
+              "subpart": "resourceLoadDuration",
+              "label": "Resource load duration",
+              "duration": 261.719
+            },
+            {
+              "subpart": "elementRenderDelay",
+              "label": "Element render delay",
+              "duration": 24.356
+            }
+          ]
+        },
+        {
+          "type": "node",
+          "lhId": "page-0-IMG",
+          "path": "1,HTML,1,BODY,3,MAIN,1,ARTICLE,3,FIGURE,0,DIV,0,IMG",
+          "selector": "article.art > figure.guide-media > div.cmp > img.a-img",
+          "boundingRect": {
+            "top": 378,
+            "bottom": 707,
+            "left": 23,
+            "right": 389,
+            "width": 366,
+            "height": 329
+          },
+          "snippet": "<img class=\"a-img\" src=\"/resources/before_after/lowq_portrait_after.jpg\" width=\"1200\" height=\"1080\" alt=\"Unblurring a blurry photo on iPhone with UScale — before and after compari…\" fetchpriority=\"high\" decoding=\"async\">",
+          "nodeLabel": "Unblurring a blurry photo on iPhone with UScale — before and after comparison"
+        }
+      ]
+    },
+    "network": [
+      {
+        "url": "https://upscales.app/guides/unblur-photo-iphone.html",
+        "transferSize": 7416,
+        "resourceType": "Document"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_180.png",
+        "transferSize": 16613,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.css?v=2506e1f1",
+        "transferSize": 25900,
+        "resourceType": "Stylesheet"
+      },
+      {
+        "url": "https://upscales.app/resources/flags/us.png",
+        "transferSize": 3188,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/lowq_portrait_after.jpg",
+        "transferSize": 152400,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/lowq_portrait_before.jpg",
+        "transferSize": 19094,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-black.svg",
+        "transferSize": 4443,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-white.svg",
+        "transferSize": 4437,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-mac-black.svg",
+        "transferSize": 4898,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-mac-white.svg",
+        "transferSize": 4890,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/googleplay/badges/en.png",
+        "transferSize": 5359,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.js?v=2994820a",
+        "transferSize": 13940,
+        "resourceType": "Script"
+      },
+      {
+        "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230a0b11'%3…",
+        "transferSize": 0,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_512.png",
+        "transferSize": 115655,
+        "resourceType": "Other"
+      }
+    ],
+    "settings": {
+      "output": [
+        "json"
+      ],
+      "maxWaitForFcp": 30000,
+      "maxWaitForLoad": 45000,
+      "pauseAfterFcpMs": 1000,
+      "pauseAfterLoadMs": 1000,
+      "networkQuietThresholdMs": 1000,
+      "cpuQuietThresholdMs": 1000,
+      "formFactor": "mobile",
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "throttlingMethod": "simulate",
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      },
+      "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+      "auditMode": false,
+      "gatherMode": false,
+      "clearStorageTypes": [
+        "file_systems",
+        "shader_cache",
+        "service_workers",
+        "cache_storage"
+      ],
+      "disableStorageReset": false,
+      "debugNavigation": false,
+      "channel": "cli",
+      "usePassiveGathering": false,
+      "disableFullPageScreenshot": false,
+      "skipAboutBlank": false,
+      "blankPage": "about:blank",
+      "ignoreStatusCode": false,
+      "locale": "en-US",
+      "blockedUrlPatterns": null,
+      "additionalTraceCategories": null,
+      "extraHeaders": null,
+      "precomputedLanternData": null,
+      "onlyAudits": null,
+      "onlyCategories": [
+        "performance"
+      ],
+      "skipAudits": null
+    },
+    "environment": {
+      "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+      "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "benchmarkIndex": 3913.5,
+      "credits": {}
+    },
+    "warnings": [],
+    "LCPElement": null
+  },
+  {
+    "page": "/guides/unblur-photo-iphone.html",
+    "run": 2,
+    "fetchTime": "2026-11-05T12:36:29.392Z",
+    "lighthouseVersion": "13.6.0",
+    "score": 0.94,
+    "LCP": 2618,
+    "CLS": 0,
+    "FCP": 930,
+    "TBT": 0,
+    "finalUrl": "https://upscales.app/guides/unblur-photo-iphone.html",
+    "metrics": {
+      "firstContentfulPaint": 930,
+      "largestContentfulPaint": 2618,
+      "interactive": 2618,
+      "speedIndex": 4417,
+      "totalBlockingTime": 0,
+      "maxPotentialFID": 38,
+      "cumulativeLayoutShift": 0,
+      "cumulativeLayoutShiftMainFrame": 0,
+      "lcpLoadDelay": 2,
+      "lcpLoadDuration": 242,
+      "timeToFirstByte": 501,
+      "observedTimeOrigin": 0,
+      "observedTimeOriginTs": 2598149360036,
+      "observedNavigationStart": 0,
+      "observedNavigationStartTs": 2598149360036,
+      "observedFirstPaint": 2637,
+      "observedFirstPaintTs": 2598151996548,
+      "observedFirstContentfulPaint": 2637,
+      "observedFirstContentfulPaintTs": 2598151996548,
+      "observedFirstContentfulPaintAllFrames": 2637,
+      "observedFirstContentfulPaintAllFramesTs": 2598151996548,
+      "observedLargestContentfulPaint": 2637,
+      "observedLargestContentfulPaintTs": 2598151996548,
+      "observedLargestContentfulPaintAllFrames": 2637,
+      "observedLargestContentfulPaintAllFramesTs": 2598151996548,
+      "observedTraceEnd": 4971,
+      "observedTraceEndTs": 2598154330652,
+      "observedLoad": 750,
+      "observedLoadTs": 2598150110192,
+      "observedDomContentLoaded": 713,
+      "observedDomContentLoadedTs": 2598150072538,
+      "observedCumulativeLayoutShift": 0,
+      "observedCumulativeLayoutShiftMainFrame": 0,
+      "observedFirstVisualChange": 2638,
+      "observedFirstVisualChangeTs": 2598151998036,
+      "observedLastVisualChange": 2806,
+      "observedLastVisualChangeTs": 2598152166036,
+      "observedSpeedIndex": 2640,
+      "observedSpeedIndexTs": 2598151999995
+    },
+    "LCPDetails": {
+      "type": "list",
+      "items": [
+        {
+          "type": "table",
+          "headings": [
+            {
+              "key": "label",
+              "valueType": "text",
+              "label": "Subpart"
+            },
+            {
+              "key": "duration",
+              "valueType": "ms",
+              "label": "Duration"
+            }
+          ],
+          "items": [
+            {
+              "subpart": "timeToFirstByte",
+              "label": "Time to first byte",
+              "duration": 500.547
+            },
+            {
+              "subpart": "resourceLoadDelay",
+              "label": "Resource load delay",
+              "duration": 4.982
+            },
+            {
+              "subpart": "resourceLoadDuration",
+              "label": "Resource load duration",
+              "duration": 244.434
+            },
+            {
+              "subpart": "elementRenderDelay",
+              "label": "Element render delay",
+              "duration": 1886.549
+            }
+          ]
+        },
+        {
+          "type": "node",
+          "lhId": "page-0-IMG",
+          "path": "1,HTML,1,BODY,3,MAIN,1,ARTICLE,3,FIGURE,0,DIV,0,IMG",
+          "selector": "article.art > figure.guide-media > div.cmp > img.a-img",
+          "boundingRect": {
+            "top": 378,
+            "bottom": 707,
+            "left": 23,
+            "right": 389,
+            "width": 366,
+            "height": 329
+          },
+          "snippet": "<img class=\"a-img\" src=\"/resources/before_after/lowq_portrait_after.jpg\" width=\"1200\" height=\"1080\" alt=\"Unblurring a blurry photo on iPhone with UScale — before and after compari…\" fetchpriority=\"high\" decoding=\"async\">",
+          "nodeLabel": "Unblurring a blurry photo on iPhone with UScale — before and after comparison"
+        }
+      ]
+    },
+    "network": [
+      {
+        "url": "https://upscales.app/guides/unblur-photo-iphone.html",
+        "transferSize": 7414,
+        "resourceType": "Document"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_180.png",
+        "transferSize": 16612,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.css?v=2506e1f1",
+        "transferSize": 25903,
+        "resourceType": "Stylesheet"
+      },
+      {
+        "url": "https://upscales.app/resources/flags/us.png",
+        "transferSize": 3191,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/lowq_portrait_after.jpg",
+        "transferSize": 152410,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/lowq_portrait_before.jpg",
+        "transferSize": 19100,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-black.svg",
+        "transferSize": 4445,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-white.svg",
+        "transferSize": 4435,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-mac-black.svg",
+        "transferSize": 4897,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-mac-white.svg",
+        "transferSize": 4888,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/googleplay/badges/en.png",
+        "transferSize": 5358,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.js?v=2994820a",
+        "transferSize": 13938,
+        "resourceType": "Script"
+      },
+      {
+        "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230a0b11'%3…",
+        "transferSize": 0,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_512.png",
+        "transferSize": 115660,
+        "resourceType": "Other"
+      }
+    ],
+    "settings": {
+      "output": [
+        "json"
+      ],
+      "maxWaitForFcp": 30000,
+      "maxWaitForLoad": 45000,
+      "pauseAfterFcpMs": 1000,
+      "pauseAfterLoadMs": 1000,
+      "networkQuietThresholdMs": 1000,
+      "cpuQuietThresholdMs": 1000,
+      "formFactor": "mobile",
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "throttlingMethod": "simulate",
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      },
+      "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+      "auditMode": false,
+      "gatherMode": false,
+      "clearStorageTypes": [
+        "file_systems",
+        "shader_cache",
+        "service_workers",
+        "cache_storage"
+      ],
+      "disableStorageReset": false,
+      "debugNavigation": false,
+      "channel": "cli",
+      "usePassiveGathering": false,
+      "disableFullPageScreenshot": false,
+      "skipAboutBlank": false,
+      "blankPage": "about:blank",
+      "ignoreStatusCode": false,
+      "locale": "en-US",
+      "blockedUrlPatterns": null,
+      "additionalTraceCategories": null,
+      "extraHeaders": null,
+      "precomputedLanternData": null,
+      "onlyAudits": null,
+      "onlyCategories": [
+        "performance"
+      ],
+      "skipAudits": null
+    },
+    "environment": {
+      "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+      "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "benchmarkIndex": 4034,
+      "credits": {}
+    },
+    "warnings": [],
+    "LCPElement": null
+  },
+  {
+    "page": "/guides/unblur-photo-iphone.html",
+    "run": 3,
+    "fetchTime": "2026-11-05T12:36:41.889Z",
+    "lighthouseVersion": "13.6.0",
+    "score": 0.99,
+    "LCP": 2031.341,
+    "CLS": 0,
+    "FCP": 906.341,
+    "TBT": 0,
+    "finalUrl": "https://upscales.app/guides/unblur-photo-iphone.html",
+    "metrics": {
+      "firstContentfulPaint": 906,
+      "largestContentfulPaint": 2031,
+      "interactive": 2039,
+      "speedIndex": 980,
+      "totalBlockingTime": 0,
+      "maxPotentialFID": 16,
+      "cumulativeLayoutShift": 0,
+      "cumulativeLayoutShiftMainFrame": 0,
+      "lcpLoadDelay": 818,
+      "lcpLoadDuration": 683,
+      "timeToFirstByte": 456,
+      "observedTimeOrigin": 0,
+      "observedTimeOriginTs": 2598161859485,
+      "observedNavigationStart": 0,
+      "observedNavigationStartTs": 2598161859485,
+      "observedFirstPaint": 425,
+      "observedFirstPaintTs": 2598162284787,
+      "observedFirstContentfulPaint": 425,
+      "observedFirstContentfulPaintTs": 2598162284787,
+      "observedFirstContentfulPaintAllFrames": 425,
+      "observedFirstContentfulPaintAllFramesTs": 2598162284787,
+      "observedLargestContentfulPaint": 455,
+      "observedLargestContentfulPaintTs": 2598162314441,
+      "observedLargestContentfulPaintAllFrames": 455,
+      "observedLargestContentfulPaintAllFramesTs": 2598162314441,
+      "observedTraceEnd": 2928,
+      "observedTraceEndTs": 2598164787332,
+      "observedLoad": 439,
+      "observedLoadTs": 2598162298168,
+      "observedDomContentLoaded": 392,
+      "observedDomContentLoadedTs": 2598162251082,
+      "observedCumulativeLayoutShift": 0,
+      "observedCumulativeLayoutShiftMainFrame": 0,
+      "observedFirstVisualChange": 432,
+      "observedFirstVisualChangeTs": 2598162291485,
+      "observedLastVisualChange": 1087,
+      "observedLastVisualChangeTs": 2598162946485,
+      "observedSpeedIndex": 441,
+      "observedSpeedIndexTs": 2598162300580
+    },
+    "LCPDetails": {
+      "type": "list",
+      "items": [
+        {
+          "type": "table",
+          "headings": [
+            {
+              "key": "label",
+              "valueType": "text",
+              "label": "Subpart"
+            },
+            {
+              "key": "duration",
+              "valueType": "ms",
+              "label": "Duration"
+            }
+          ],
+          "items": [
+            {
+              "subpart": "timeToFirstByte",
+              "label": "Time to first byte",
+              "duration": 281.1489995117187
+            },
+            {
+              "subpart": "resourceLoadDelay",
+              "label": "Resource load delay",
+              "duration": 3.93800048828125
+            },
+            {
+              "subpart": "resourceLoadDuration",
+              "label": "Resource load duration",
+              "duration": 153.374
+            },
+            {
+              "subpart": "elementRenderDelay",
+              "label": "Element render delay",
+              "duration": 16.495
+            }
+          ]
+        },
+        {
+          "type": "node",
+          "lhId": "page-0-IMG",
+          "path": "1,HTML,1,BODY,3,MAIN,1,ARTICLE,3,FIGURE,0,DIV,0,IMG",
+          "selector": "article.art > figure.guide-media > div.cmp > img.a-img",
+          "boundingRect": {
+            "top": 378,
+            "bottom": 707,
+            "left": 23,
+            "right": 389,
+            "width": 366,
+            "height": 329
+          },
+          "snippet": "<img class=\"a-img\" src=\"/resources/before_after/lowq_portrait_after.jpg\" width=\"1200\" height=\"1080\" alt=\"Unblurring a blurry photo on iPhone with UScale — before and after compari…\" fetchpriority=\"high\" decoding=\"async\">",
+          "nodeLabel": "Unblurring a blurry photo on iPhone with UScale — before and after comparison"
+        }
+      ]
+    },
+    "network": [
+      {
+        "url": "https://upscales.app/guides/unblur-photo-iphone.html",
+        "transferSize": 7417,
+        "resourceType": "Document"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_180.png",
+        "transferSize": 16616,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.css?v=2506e1f1",
+        "transferSize": 25901,
+        "resourceType": "Stylesheet"
+      },
+      {
+        "url": "https://upscales.app/resources/flags/us.png",
+        "transferSize": 3190,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/lowq_portrait_after.jpg",
+        "transferSize": 152399,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/before_after/lowq_portrait_before.jpg",
+        "transferSize": 19097,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-black.svg",
+        "transferSize": 4447,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-white.svg",
+        "transferSize": 4437,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-mac-black.svg",
+        "transferSize": 4902,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-mac-white.svg",
+        "transferSize": 4885,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/googleplay/badges/en.png",
+        "transferSize": 5350,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.js?v=2994820a",
+        "transferSize": 13938,
+        "resourceType": "Script"
+      },
+      {
+        "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230a0b11'%3…",
+        "transferSize": 0,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_512.png",
+        "transferSize": 115662,
+        "resourceType": "Other"
+      }
+    ],
+    "settings": {
+      "output": [
+        "json"
+      ],
+      "maxWaitForFcp": 30000,
+      "maxWaitForLoad": 45000,
+      "pauseAfterFcpMs": 1000,
+      "pauseAfterLoadMs": 1000,
+      "networkQuietThresholdMs": 1000,
+      "cpuQuietThresholdMs": 1000,
+      "formFactor": "mobile",
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "throttlingMethod": "simulate",
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      },
+      "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+      "auditMode": false,
+      "gatherMode": false,
+      "clearStorageTypes": [
+        "file_systems",
+        "shader_cache",
+        "service_workers",
+        "cache_storage"
+      ],
+      "disableStorageReset": false,
+      "debugNavigation": false,
+      "channel": "cli",
+      "usePassiveGathering": false,
+      "disableFullPageScreenshot": false,
+      "skipAboutBlank": false,
+      "blankPage": "about:blank",
+      "ignoreStatusCode": false,
+      "locale": "en-US",
+      "blockedUrlPatterns": null,
+      "additionalTraceCategories": null,
+      "extraHeaders": null,
+      "precomputedLanternData": null,
+      "onlyAudits": null,
+      "onlyCategories": [
+        "performance"
+      ],
+      "skipAudits": null
+    },
+    "environment": {
+      "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+      "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "benchmarkIndex": 4016.5,
+      "credits": {}
+    },
+    "warnings": [],
+    "LCPElement": null
+  },
+  {
+    "page": "/gallery",
+    "run": 1,
+    "fetchTime": "2026-11-05T12:36:52.289Z",
+    "lighthouseVersion": "13.6.0",
+    "score": 0.97,
+    "LCP": 1808.116,
+    "CLS": 0,
+    "FCP": 920.116,
+    "TBT": 6.5,
+    "finalUrl": "https://upscales.app/gallery",
+    "metrics": {
+      "firstContentfulPaint": 920,
+      "largestContentfulPaint": 1808,
+      "interactive": 1816,
+      "speedIndex": 4253,
+      "totalBlockingTime": 7,
+      "maxPotentialFID": 63,
+      "cumulativeLayoutShift": 0,
+      "cumulativeLayoutShiftMainFrame": 0,
+      "lcpLoadDelay": 606,
+      "lcpLoadDuration": 246,
+      "timeToFirstByte": 470,
+      "observedTimeOrigin": 0,
+      "observedTimeOriginTs": 2598172261958,
+      "observedNavigationStart": 0,
+      "observedNavigationStartTs": 2598172261958,
+      "observedFirstPaint": 2551,
+      "observedFirstPaintTs": 2598174812765,
+      "observedFirstContentfulPaint": 2551,
+      "observedFirstContentfulPaintTs": 2598174812765,
+      "observedFirstContentfulPaintAllFrames": 2551,
+      "observedFirstContentfulPaintAllFramesTs": 2598174812765,
+      "observedLargestContentfulPaint": 2552,
+      "observedLargestContentfulPaintTs": 2598174813817,
+      "observedLargestContentfulPaintAllFrames": 2552,
+      "observedLargestContentfulPaintAllFramesTs": 2598174813817,
+      "observedTraceEnd": 4869,
+      "observedTraceEndTs": 2598177130782,
+      "observedLoad": 562,
+      "observedLoadTs": 2598172823660,
+      "observedDomContentLoaded": 561,
+      "observedDomContentLoadedTs": 2598172823005,
+      "observedCumulativeLayoutShift": 0,
+      "observedCumulativeLayoutShiftMainFrame": 0,
+      "observedFirstVisualChange": 2551,
+      "observedFirstVisualChangeTs": 2598174812958,
+      "observedLastVisualChange": 2729,
+      "observedLastVisualChangeTs": 2598174990958,
+      "observedSpeedIndex": 2558,
+      "observedSpeedIndexTs": 2598174819692
+    },
+    "LCPDetails": {
+      "type": "list",
+      "items": [
+        {
+          "type": "table",
+          "headings": [
+            {
+              "key": "label",
+              "valueType": "text",
+              "label": "Subpart"
+            },
+            {
+              "key": "duration",
+              "valueType": "ms",
+              "label": "Duration"
+            }
+          ],
+          "items": [
+            {
+              "subpart": "timeToFirstByte",
+              "label": "Time to first byte",
+              "duration": 432.32800048828125
+            },
+            {
+              "subpart": "resourceLoadDelay",
+              "label": "Resource load delay",
+              "duration": 1085.4179995117188
+            },
+            {
+              "subpart": "resourceLoadDuration",
+              "label": "Resource load duration",
+              "duration": 348.105
+            },
+            {
+              "subpart": "elementRenderDelay",
+              "label": "Element render delay",
+              "duration": 686.008
+            }
+          ]
+        },
+        {
+          "type": "node",
+          "lhId": "page-0-IMG",
+          "path": "1,HTML,1,BODY,3,MAIN,2,DIV,0,A,0,IMG",
+          "selector": "main#main-content > div.gallery-grid > a.gallery-card > img.gallery-preview",
+          "boundingRect": {
+            "top": 347,
+            "bottom": 621,
+            "left": 23,
+            "right": 389,
+            "width": 366,
+            "height": 275
+          },
+          "snippet": "<img class=\"gallery-preview\" src=\"/media/G71JT6QA3ZRMN7033NYY7ASV9J/gallery.jpg?v=gallery-v2.jpg\" width=\"960\" height=\"720\" loading=\"lazy\" decoding=\"async\" alt=\"Before and after: Restoration\">",
+          "nodeLabel": "Before and after: Restoration"
+        }
+      ]
+    },
+    "network": [
+      {
+        "url": "https://upscales.app/gallery",
+        "transferSize": 10992,
+        "resourceType": "Document"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_180.png",
+        "transferSize": 16616,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.css?v=2506e1f1",
+        "transferSize": 25904,
+        "resourceType": "Stylesheet"
+      },
+      {
+        "url": "https://upscales.app/resources/flags/us.png",
+        "transferSize": 3195,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-black.svg",
+        "transferSize": 4447,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-white.svg",
+        "transferSize": 4436,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-mac-black.svg",
+        "transferSize": 4893,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-mac-white.svg",
+        "transferSize": 4887,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/googleplay/badges/en.png",
+        "transferSize": 5352,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.js?v=2994820a",
+        "transferSize": 14001,
+        "resourceType": "Script"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_512.png",
+        "transferSize": 115653,
+        "resourceType": "Other"
+      },
+      {
+        "url": "https://upscales.app/media/G71JT6QA3ZRMN7033NYY7ASV9J/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 94288,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/media/GPVFQ8HSFA3P0QQQXDKNFA2B0Y/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 81340,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/media/BM2P13NHSCK1TFMDH68652JTSZ/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 82653,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/media/ZRTTQE87HXEHGSR9N33FCCW6PA/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 84883,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/media/ZSH6YSKZNJ79T4JK0YZ9J92F23/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 82775,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/media/P5JST8R19AJEHWE26KWRZW1252/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 62634,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/media/XKVKKC1ACGF3PAVVG63EZ84SAT/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 68867,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/media/HNZTF7PJBMEYVXP2X6BBMZ77N1/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 75359,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/media/2326Z664B00MGNSE0YN5CJR9J1/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 81386,
+        "resourceType": "Image"
+      }
+    ],
+    "settings": {
+      "output": [
+        "json"
+      ],
+      "maxWaitForFcp": 30000,
+      "maxWaitForLoad": 45000,
+      "pauseAfterFcpMs": 1000,
+      "pauseAfterLoadMs": 1000,
+      "networkQuietThresholdMs": 1000,
+      "cpuQuietThresholdMs": 1000,
+      "formFactor": "mobile",
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "throttlingMethod": "simulate",
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      },
+      "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+      "auditMode": false,
+      "gatherMode": false,
+      "clearStorageTypes": [
+        "file_systems",
+        "shader_cache",
+        "service_workers",
+        "cache_storage"
+      ],
+      "disableStorageReset": false,
+      "debugNavigation": false,
+      "channel": "cli",
+      "usePassiveGathering": false,
+      "disableFullPageScreenshot": false,
+      "skipAboutBlank": false,
+      "blankPage": "about:blank",
+      "ignoreStatusCode": false,
+      "locale": "en-US",
+      "blockedUrlPatterns": null,
+      "additionalTraceCategories": null,
+      "extraHeaders": null,
+      "precomputedLanternData": null,
+      "onlyAudits": null,
+      "onlyCategories": [
+        "performance"
+      ],
+      "skipAudits": null
+    },
+    "environment": {
+      "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+      "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "benchmarkIndex": 4026,
+      "credits": {}
+    },
+    "warnings": [],
+    "LCPElement": null
+  },
+  {
+    "page": "/gallery",
+    "run": 2,
+    "fetchTime": "2026-11-05T12:37:04.668Z",
+    "lighthouseVersion": "13.6.0",
+    "score": 0.97,
+    "LCP": 1865.83,
+    "CLS": 0,
+    "FCP": 986.83,
+    "TBT": 2,
+    "finalUrl": "https://upscales.app/gallery",
+    "metrics": {
+      "firstContentfulPaint": 987,
+      "largestContentfulPaint": 1866,
+      "interactive": 1873,
+      "speedIndex": 4298,
+      "totalBlockingTime": 2,
+      "maxPotentialFID": 54,
+      "cumulativeLayoutShift": 0,
+      "cumulativeLayoutShiftMainFrame": 0,
+      "lcpLoadDelay": 574,
+      "lcpLoadDuration": 192,
+      "timeToFirstByte": 537,
+      "observedTimeOrigin": 0,
+      "observedTimeOriginTs": 2598184612204,
+      "observedNavigationStart": 0,
+      "observedNavigationStartTs": 2598184612204,
+      "observedFirstPaint": 2569,
+      "observedFirstPaintTs": 2598187180784,
+      "observedFirstContentfulPaint": 2569,
+      "observedFirstContentfulPaintTs": 2598187180784,
+      "observedFirstContentfulPaintAllFrames": 2569,
+      "observedFirstContentfulPaintAllFramesTs": 2598187180784,
+      "observedLargestContentfulPaint": 2570,
+      "observedLargestContentfulPaintTs": 2598187182127,
+      "observedLargestContentfulPaintAllFrames": 2570,
+      "observedLargestContentfulPaintAllFramesTs": 2598187182127,
+      "observedTraceEnd": 4885,
+      "observedTraceEndTs": 2598189496936,
+      "observedLoad": 588,
+      "observedLoadTs": 2598185199802,
+      "observedDomContentLoaded": 587,
+      "observedDomContentLoadedTs": 2598185199445,
+      "observedCumulativeLayoutShift": 0,
+      "observedCumulativeLayoutShiftMainFrame": 0,
+      "observedFirstVisualChange": 2569,
+      "observedFirstVisualChangeTs": 2598187181204,
+      "observedLastVisualChange": 2740,
+      "observedLastVisualChangeTs": 2598187352204,
+      "observedSpeedIndex": 2574,
+      "observedSpeedIndexTs": 2598187186261
+    },
+    "LCPDetails": {
+      "type": "list",
+      "items": [
+        {
+          "type": "table",
+          "headings": [
+            {
+              "key": "label",
+              "valueType": "text",
+              "label": "Subpart"
+            },
+            {
+              "key": "duration",
+              "valueType": "ms",
+              "label": "Duration"
+            }
+          ],
+          "items": [
+            {
+              "subpart": "timeToFirstByte",
+              "label": "Time to first byte",
+              "duration": 377.22999951171874
+            },
+            {
+              "subpart": "resourceLoadDelay",
+              "label": "Resource load delay",
+              "duration": 1151.8980004882812
+            },
+            {
+              "subpart": "resourceLoadDuration",
+              "label": "Resource load duration",
+              "duration": 265.121
+            },
+            {
+              "subpart": "elementRenderDelay",
+              "label": "Element render delay",
+              "duration": 775.674
+            }
+          ]
+        },
+        {
+          "type": "node",
+          "lhId": "page-0-IMG",
+          "path": "1,HTML,1,BODY,3,MAIN,2,DIV,0,A,0,IMG",
+          "selector": "main#main-content > div.gallery-grid > a.gallery-card > img.gallery-preview",
+          "boundingRect": {
+            "top": 347,
+            "bottom": 621,
+            "left": 23,
+            "right": 389,
+            "width": 366,
+            "height": 275
+          },
+          "snippet": "<img class=\"gallery-preview\" src=\"/media/G71JT6QA3ZRMN7033NYY7ASV9J/gallery.jpg?v=gallery-v2.jpg\" width=\"960\" height=\"720\" loading=\"lazy\" decoding=\"async\" alt=\"Before and after: Restoration\">",
+          "nodeLabel": "Before and after: Restoration"
+        }
+      ]
+    },
+    "network": [
+      {
+        "url": "https://upscales.app/gallery",
+        "transferSize": 11062,
+        "resourceType": "Document"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_180.png",
+        "transferSize": 16610,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.css?v=2506e1f1",
+        "transferSize": 25898,
+        "resourceType": "Stylesheet"
+      },
+      {
+        "url": "https://upscales.app/resources/flags/us.png",
+        "transferSize": 3188,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-black.svg",
+        "transferSize": 4443,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-white.svg",
+        "transferSize": 4430,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-mac-black.svg",
+        "transferSize": 4896,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-mac-white.svg",
+        "transferSize": 4920,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/googleplay/badges/en.png",
+        "transferSize": 5350,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.js?v=2994820a",
+        "transferSize": 14001,
+        "resourceType": "Script"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_512.png",
+        "transferSize": 115656,
+        "resourceType": "Other"
+      },
+      {
+        "url": "https://upscales.app/media/G71JT6QA3ZRMN7033NYY7ASV9J/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 94270,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/media/GPVFQ8HSFA3P0QQQXDKNFA2B0Y/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 81334,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/media/BM2P13NHSCK1TFMDH68652JTSZ/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 82644,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/media/ZRTTQE87HXEHGSR9N33FCCW6PA/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 84875,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/media/ZSH6YSKZNJ79T4JK0YZ9J92F23/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 82755,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/media/P5JST8R19AJEHWE26KWRZW1252/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 62630,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/media/XKVKKC1ACGF3PAVVG63EZ84SAT/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 68870,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/media/HNZTF7PJBMEYVXP2X6BBMZ77N1/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 75357,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/media/2326Z664B00MGNSE0YN5CJR9J1/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 81383,
+        "resourceType": "Image"
+      }
+    ],
+    "settings": {
+      "output": [
+        "json"
+      ],
+      "maxWaitForFcp": 30000,
+      "maxWaitForLoad": 45000,
+      "pauseAfterFcpMs": 1000,
+      "pauseAfterLoadMs": 1000,
+      "networkQuietThresholdMs": 1000,
+      "cpuQuietThresholdMs": 1000,
+      "formFactor": "mobile",
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "throttlingMethod": "simulate",
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      },
+      "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+      "auditMode": false,
+      "gatherMode": false,
+      "clearStorageTypes": [
+        "file_systems",
+        "shader_cache",
+        "service_workers",
+        "cache_storage"
+      ],
+      "disableStorageReset": false,
+      "debugNavigation": false,
+      "channel": "cli",
+      "usePassiveGathering": false,
+      "disableFullPageScreenshot": false,
+      "skipAboutBlank": false,
+      "blankPage": "about:blank",
+      "ignoreStatusCode": false,
+      "locale": "en-US",
+      "blockedUrlPatterns": null,
+      "additionalTraceCategories": null,
+      "extraHeaders": null,
+      "precomputedLanternData": null,
+      "onlyAudits": null,
+      "onlyCategories": [
+        "performance"
+      ],
+      "skipAudits": null
+    },
+    "environment": {
+      "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+      "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "benchmarkIndex": 3990,
+      "credits": {}
+    },
+    "warnings": [],
+    "LCPElement": null
+  },
+  {
+    "page": "/gallery",
+    "run": 3,
+    "fetchTime": "2026-11-05T12:37:17.136Z",
+    "lighthouseVersion": "13.6.0",
+    "score": 1,
+    "LCP": 1687.1660000000002,
+    "CLS": 0,
+    "FCP": 937.166,
+    "TBT": 0,
+    "finalUrl": "https://upscales.app/gallery",
+    "metrics": {
+      "firstContentfulPaint": 937,
+      "largestContentfulPaint": 1687,
+      "interactive": 1687,
+      "speedIndex": 963,
+      "totalBlockingTime": 0,
+      "maxPotentialFID": 16,
+      "cumulativeLayoutShift": 0,
+      "cumulativeLayoutShiftMainFrame": 0,
+      "lcpLoadDelay": 482,
+      "lcpLoadDuration": 698,
+      "timeToFirstByte": 487,
+      "observedTimeOrigin": 0,
+      "observedTimeOriginTs": 2598197107477,
+      "observedNavigationStart": 0,
+      "observedNavigationStartTs": 2598197107477,
+      "observedFirstPaint": 362,
+      "observedFirstPaintTs": 2598197469181,
+      "observedFirstContentfulPaint": 362,
+      "observedFirstContentfulPaintTs": 2598197469181,
+      "observedFirstContentfulPaintAllFrames": 362,
+      "observedFirstContentfulPaintAllFramesTs": 2598197469181,
+      "observedLargestContentfulPaint": 573,
+      "observedLargestContentfulPaintTs": 2598197680878,
+      "observedLargestContentfulPaintAllFrames": 573,
+      "observedLargestContentfulPaintAllFramesTs": 2598197680878,
+      "observedTraceEnd": 2939,
+      "observedTraceEndTs": 2598200046975,
+      "observedLoad": 339,
+      "observedLoadTs": 2598197446788,
+      "observedDomContentLoaded": 335,
+      "observedDomContentLoadedTs": 2598197442894,
+      "observedCumulativeLayoutShift": 0,
+      "observedCumulativeLayoutShiftMainFrame": 0,
+      "observedFirstVisualChange": 376,
+      "observedFirstVisualChangeTs": 2598197483477,
+      "observedLastVisualChange": 1024,
+      "observedLastVisualChangeTs": 2598198131477,
+      "observedSpeedIndex": 420,
+      "observedSpeedIndexTs": 2598197527356
+    },
+    "LCPDetails": {
+      "type": "list",
+      "items": [
+        {
+          "type": "table",
+          "headings": [
+            {
+              "key": "label",
+              "valueType": "text",
+              "label": "Subpart"
+            },
+            {
+              "key": "duration",
+              "valueType": "ms",
+              "label": "Duration"
+            }
+          ],
+          "items": [
+            {
+              "subpart": "timeToFirstByte",
+              "label": "Time to first byte",
+              "duration": 216.18099951171874
+            },
+            {
+              "subpart": "resourceLoadDelay",
+              "label": "Resource load delay",
+              "duration": 113.06200048828126
+            },
+            {
+              "subpart": "resourceLoadDuration",
+              "label": "Resource load duration",
+              "duration": 237.579
+            },
+            {
+              "subpart": "elementRenderDelay",
+              "label": "Element render delay",
+              "duration": 6.579
+            }
+          ]
+        },
+        {
+          "type": "node",
+          "lhId": "page-0-IMG",
+          "path": "1,HTML,1,BODY,3,MAIN,2,DIV,0,A,0,IMG",
+          "selector": "main#main-content > div.gallery-grid > a.gallery-card > img.gallery-preview",
+          "boundingRect": {
+            "top": 347,
+            "bottom": 621,
+            "left": 23,
+            "right": 389,
+            "width": 366,
+            "height": 275
+          },
+          "snippet": "<img class=\"gallery-preview\" src=\"/media/G71JT6QA3ZRMN7033NYY7ASV9J/gallery.jpg?v=gallery-v2.jpg\" width=\"960\" height=\"720\" loading=\"lazy\" decoding=\"async\" alt=\"Before and after: Restoration\">",
+          "nodeLabel": "Before and after: Restoration"
+        }
+      ]
+    },
+    "network": [
+      {
+        "url": "https://upscales.app/gallery",
+        "transferSize": 11137,
+        "resourceType": "Document"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_180.png",
+        "transferSize": 16614,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.css?v=2506e1f1",
+        "transferSize": 25903,
+        "resourceType": "Stylesheet"
+      },
+      {
+        "url": "https://upscales.app/resources/flags/us.png",
+        "transferSize": 3189,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-black.svg",
+        "transferSize": 4445,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-white.svg",
+        "transferSize": 4438,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-mac-black.svg",
+        "transferSize": 4890,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/badges/en-mac-white.svg",
+        "transferSize": 4922,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/googleplay/badges/en.png",
+        "transferSize": 5351,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/assets/site.js?v=2994820a",
+        "transferSize": 13937,
+        "resourceType": "Script"
+      },
+      {
+        "url": "https://upscales.app/media/G71JT6QA3ZRMN7033NYY7ASV9J/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 94264,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/media/GPVFQ8HSFA3P0QQQXDKNFA2B0Y/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 81332,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/media/BM2P13NHSCK1TFMDH68652JTSZ/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 82650,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/media/ZRTTQE87HXEHGSR9N33FCCW6PA/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 84879,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/media/ZSH6YSKZNJ79T4JK0YZ9J92F23/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 82764,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/media/P5JST8R19AJEHWE26KWRZW1252/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 62629,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/media/XKVKKC1ACGF3PAVVG63EZ84SAT/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 68869,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/media/HNZTF7PJBMEYVXP2X6BBMZ77N1/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 75353,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/media/2326Z664B00MGNSE0YN5CJR9J1/gallery.jpg?v=gallery-v2.jpg",
+        "transferSize": 81371,
+        "resourceType": "Image"
+      },
+      {
+        "url": "https://upscales.app/resources/appstore/icon_512.png",
+        "transferSize": 115664,
+        "resourceType": "Other"
+      }
+    ],
+    "settings": {
+      "output": [
+        "json"
+      ],
+      "maxWaitForFcp": 30000,
+      "maxWaitForLoad": 45000,
+      "pauseAfterFcpMs": 1000,
+      "pauseAfterLoadMs": 1000,
+      "networkQuietThresholdMs": 1000,
+      "cpuQuietThresholdMs": 1000,
+      "formFactor": "mobile",
+      "throttling": {
+        "rttMs": 150,
+        "throughputKbps": 1638.4,
+        "requestLatencyMs": 562.5,
+        "downloadThroughputKbps": 1474.5600000000002,
+        "uploadThroughputKbps": 675,
+        "cpuSlowdownMultiplier": 4
+      },
+      "throttlingMethod": "simulate",
+      "screenEmulation": {
+        "mobile": true,
+        "width": 412,
+        "height": 823,
+        "deviceScaleFactor": 1.75,
+        "disabled": false
+      },
+      "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36",
+      "auditMode": false,
+      "gatherMode": false,
+      "clearStorageTypes": [
+        "file_systems",
+        "shader_cache",
+        "service_workers",
+        "cache_storage"
+      ],
+      "disableStorageReset": false,
+      "debugNavigation": false,
+      "channel": "cli",
+      "usePassiveGathering": false,
+      "disableFullPageScreenshot": false,
+      "skipAboutBlank": false,
+      "blankPage": "about:blank",
+      "ignoreStatusCode": false,
+      "locale": "en-US",
+      "blockedUrlPatterns": null,
+      "additionalTraceCategories": null,
+      "extraHeaders": null,
+      "precomputedLanternData": null,
+      "onlyAudits": null,
+      "onlyCategories": [
+        "performance"
+      ],
+      "skipAudits": null
+    },
+    "environment": {
+      "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+      "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "benchmarkIndex": 3995,
+      "credits": {}
+    },
+    "warnings": [],
+    "LCPElement": null
+  }
+]

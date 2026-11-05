@@ -11,6 +11,7 @@ const excludedRoots = new Set(['models', 'benchmarks', 'lab']);
 const excludedAssets = new Set(['lab', 'lab.css']);
 const requiredFiles = [
   'index.html',
+  '404.html',
   '_headers',
   '_redirects',
   'robots.txt',
@@ -36,6 +37,7 @@ for (const entry of await readdir(join(source, 'assets'))) {
 
 // The Vite manifest is a build input consumed by build.py, not a runtime asset.
 await rm(join(output, 'assets', 'processor', 'app', '.vite'), {recursive: true, force: true});
+await rm(join(output, 'assets', 'marketing', '.vite'), {recursive: true, force: true});
 // Finder can add .DS_Store after package validation and before Wrangler uploads.
 await writeFile(join(output, '.assetsignore'), '**/.DS_Store\n');
 

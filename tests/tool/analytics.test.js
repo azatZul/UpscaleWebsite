@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {AnalyticsAction, AnalyticsEvent, createAnalytics, forgetIdentity, modeValue, storedConsent, webIdentity}
+import {AnalyticsAction, AnalyticsEvent, createAnalytics, forgetIdentity, initAnalytics, modeValue, storedConsent, webIdentity}
   from '../../src/tool/analytics.js';
 
 const memory = (entries = {}) => {
@@ -14,6 +14,26 @@ const memory = (entries = {}) => {
     keys: () => [...map.keys()],
   };
 };
+
+test('tool never initializes production analytics on staging, preview or localhost even after consent', () => {
+  const originalDebug = console.debug;
+  const logs = [];
+  console.debug = (...args) => logs.push(args);
+  try {
+    for (const hostname of ['localhost', '127.0.0.1', 'uscale-site-staging.sharrikk.workers.dev', 'preview.upscales.app', 'preview.pages.dev']) {
+      const storage = memory({'uscale-consent': JSON.stringify({v: 1, analytics: true})});
+      const analytics = initAnalytics({location: {hostname, pathname: '/upscale/', search: ''},
+        document: {documentElement: {lang: 'en'}, addEventListener() {}}, storage});
+      analytics.trackEvent('tap', {element: 'appstore'});
+      analytics.flush();
+      assert.equal(storage.getItem('uscale-analytics-id-v1'), null);
+      assert.ok(logs.some(row => row[0] === '[analytics] tap'));
+      logs.length = 0;
+    }
+  } finally {
+    console.debug = originalDebug;
+  }
+});
 
 function fakeClient() {
   const calls = [];

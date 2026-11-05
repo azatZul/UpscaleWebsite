@@ -1,0 +1,22 @@
+[
+  {
+    "ua": "Mozilla/5.0",
+    "status": 200
+  },
+  {
+    "ua": "GPTBot",
+    "status": 200
+  },
+  {
+    "ua": "ClaudeBot",
+    "status": 403
+  },
+  {
+    "ua": "PetalBot",
+    "status": 200
+  },
+  {
+    "ua": "Baiduspider",
+    "status": 200
+  }
+]

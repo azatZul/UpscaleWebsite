@@ -1,0 +1,200 @@
+Window: "Индексирование страниц", App: Google Chrome.
+1 стандартное окно Индексирование страниц - Google Chrome (Александр), URL: search.google.com/search-console/index?resource_id=sc-domain%3Aupscales.app, Secondary Actions: Raise
+	2 container Индексирование страниц - Google Chrome (Александр), URL: search.google.com/search-console/index?resource_id=sc-domain%3Aupscales.app
+		3 container
+			4 панель инструментов
+				5 кнопка Назад
+				6 кнопка (disabled) Вперед
+				7 кнопка Перезагрузить
+				8 кнопка Домашняя страница
+				9 container
+					10 всплывающая кнопка Сведения о сайте
+					11 текстовое поле (settable) Адресная строка и строка поиска, Value: search.google.com/search-console/index?resource_id=sc-domain%3Aupscales.app, Placeholder: Запрос в Google или URL
+					12 кнопка Добавить страницу в закладки
+				13 container
+					14 всплывающая кнопка Adblock Plus
+У расширения есть доступ к этому сайту
+					15 всплывающая кнопка Google Переводчик
+
+Перевод – левая кнопка мыши.
+Параметры – правая кнопка мыши.
+У расширения есть доступ к этому сайту
+					16 всплывающая кнопка Open Claude
+У расширения есть доступ к этому сайту
+					17 всплывающая кнопка Расширения
+				18 флажок Скачанные файлы
+				19 кнопка Управляйте воспроизведением музыки, видео и других медиафайлов
+				20 кнопка Александр
+				21 всплывающая кнопка Перезапустить и обновить
+			22 container
+				23 область прокрутки
+					24 HTML-содержание Индексирование страниц, URL: search.google.com/search-console/index?resource_id=sc-domain%3Aupscales.app
+						25 container
+							26 container
+								27 кнопка Главное меню
+								28 link Google Search Console, Value: search.google.com/search-console?resource_id=sc-domain%3Aupscales.app
+								29 container
+									30 поле со списком (settable) Проверка всех URL на ресурсе upscales.app
+									31 кнопка Поиск
+								32 кнопка Справка
+								33 кнопка Пользовательские настройки
+								34 container
+									35 кнопка Непрочитанных сообщений: 3
+									36 текст 3
+								37 container
+									38 кнопка Приложения Google
+									39 кнопка Аккаунт Google: Александр Гращенков (sharrikk@gmail.com)
+							40 container navigational drawer
+								41 container
+									42 container Основной
+										43 всплывающая кнопка Ресурс
+											44 изображение значок сайта
+											45 поле со списком upscales.app
+										46 container
+											47 link Обзор, Value: search.google.com/search-console?resource_id=sc-domain%3Aupscales.app
+											48 link Статистика, Value: search.google.com/search-console/performance/insights?resource_id=sc-domain%3Aupscales.app
+											49 container
+												50 link Эффективность, Value: search.google.com/search-console/performance/search-analytics?resource_id=sc-domain%3Aupscales.app
+												51 кнопка Раздел "Эффективность" в отчете
+											52 кнопка Проверка URL
+											53 container
+												54 текст Индексирование
+												55 кнопка Раздел "Индексирование" в отчете
+												56 link Страницы, Value: search.google.com/search-console/index?resource_id=sc-domain%3Aupscales.app
+												57 link Видео, Value: search.google.com/search-console/video-index?resource_id=sc-domain%3Aupscales.app
+												58 link Файлы Sitemap, Value: search.google.com/search-console/sitemaps?resource_id=sc-domain%3Aupscales.app
+												59 link Удаления, Value: search.google.com/search-console/removals?resource_id=sc-domain%3Aupscales.app
+											60 container
+												61 текст Качество
+												62 кнопка Раздел "Качество" в отчете
+												63 link Core Web Vitals, Value: search.google.com/search-console/core-web-vitals?resource_id=sc-domain%3Aupscales.app
+												64 link HTTPS, Value: search.google.com/search-console/https?resource_id=sc-domain%3Aupscales.app
+											65 container
+												66 текст Улучшения
+												67 кнопка Раздел "Улучшения" в отчете
+												68 link Строки навигации, Value: search.google.com/search-console/r/breadcrumbs?resource_id=sc-domain%3Aupscales.app
+												69 link Проверка кода, Value: search.google.com/search-console/r/review-snippet?resource_id=sc-domain%3Aupscales.app
+											70 container
+												71 текст Проблемы безопасности и меры, принятые вручную
+												72 кнопка Раздел "Проблемы безопасности и меры, принятые вручную" в отчете
+											73 link Отчет о ссылках, Value: search.google.com/search-console/links?resource_id=sc-domain%3Aupscales.app
+											74 link Достижения, Value: search.google.com/search-console/achievements?resource_id=sc-domain%3Aupscales.app
+											75 link Настройки, Value: search.google.com/search-console/settings?resource_id=sc-domain%3Aupscales.app
+											76 кнопка Отправить отзыв
+											77 кнопка Общие сведения о Search Console
+											78 link Конфиденциальность, Value: myaccount.google.com/privacypolicy?hl=ru
+											79 link Условия использования, Value: myaccount.google.com/termsofservice?hl=ru
+							80 container
+								81 container Строки навигации
+									82 заголовок Индексирование страниц, Value: 1
+										83 текст Индексирование страниц
+								84 всплывающая кнопка ЭКСПОРТИРОВАТЬ
+								85 список
+									86 text (selected) Все обработанные страницы Все отправленные страницы Только страницы, которые не были отправлены https://upscales.app/sitemap.xml
+								87 container
+									88 text Последнее обновление:  23.10.2026
+								89 container
+									90 container
+										91 кнопка Не проиндексировано 116 3 причины
+										92 container
+											93 кнопка null
+										94 кнопка Проиндексированные 7
+										95 container
+											96 кнопка null
+										97 флажок Показы, Value: 0
+											98 container
+										99 текст Показы
+									100 link Посмотреть данные об индексированных страницах, Value: search.google.com/search-console/index/drilldown?resource_id=sc-domain%3Aupscales.app&pages=ALL_URLS
+									101 текст Почему эти страницы не индексируются
+									102 текст Страницы, которые не удалось проиндексировать, не могут появляться в результатах поиска Google.
+									103 всплывающая кнопка Фильтрация по строкам таблицы
+									104 таблица
+										105 row
+											106 заголовок столбца
+												107 текст Причина
+											108 заголовок столбца
+												109 текст Источник
+												110 container
+													111 кнопка null
+											112 заголовок столбца
+												113 текст Проверка
+											114 заголовок столбца
+												115 текст Тенденция
+											116 заголовок столбца
+												117 текст Страницы
+										118 row
+											119 ячейка
+												120 текст Страница с переадресацией
+											121 ячейка
+												122 текст Сайт
+											123 ячейка
+												124 текст Не начато
+											125 ячейка
+												126 изображение
+											127 ячейка
+												128 текст 1
+										129 row
+											130 ячейка
+												131 текст Обнаружена, не проиндексирована
+											132 ячейка
+												133 текст Системы Google
+											134 ячейка
+												135 текст Не начато
+											136 ячейка
+												137 изображение
+											138 ячейка
+												139 текст 113
+										140 row
+											141 ячейка
+												142 текст Страница просканирована, но пока не проиндексирована
+											143 ячейка
+												144 текст Системы Google
+											145 ячейка
+												146 текст Не начато
+											147 ячейка
+												148 изображение
+											149 ячейка
+												150 текст 2
+									151 текст Строк на странице:
+									152 список Количество строк на страницу
+										153 text 5 10 25 50 100 250 500
+									154 текст 1–3 из 3
+								155 container
+									156 text Индексирование страниц Узнайте, какие страницы на вашем сайте может или не может проиндексировать Google и почему.
+									157 container
+										158 container Подробнее
+									159 container
+										160 container Закрыть
+							161 text Новинка!  Узнайте, как посетители находят в Google Поиске ваш контент из  Instagram ,  TikTok ,  X  и с  YouTube .
+							162 кнопка Закрыть
+			163 всплывающая кнопка Вкладка поиска
+			164 container
+				165 группа вкладок
+					166 вкладка (selected, settable, boolean) Индексирование страниц, Value: on
+						167 кнопка Закрыть
+					168 вкладка (settable, boolean) App Store Connect, Value: off
+						169 кнопка Закрыть
+					170 вкладка (settable, boolean) Security | Settings | upscales.app | Sharrikk@gmail.com's Account | Cloudflare, Value: off
+						171 кнопка Закрыть
+			172 кнопка Новая вкладка
+	173 кнопка закрытия
+	174 кнопка полноэкранного режима Help: эта кнопка позволяет также изменять масштаб окна, Secondary Actions: изменить масштаб окна
+	175 кнопка свертывания
+176 menu bar
+	177 Chrome
+	178 Файл
+	179 Правка
+	180 Вид
+	181 История
+	182 Закладки
+	183 Профили
+	184 Вкладка
+	185 Окно
+	186 Справка
+
+The focused UI element is 56 link Страницы, Value: search.google.com/search-console/index?resource_id=sc-domain%3Aupscales.app
+
+The following is a diff from the previous accessibility tree for Window: "Индексирование страниц" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 254
++							256 text Индексирование страниц Новинка!  Узнайте, как посетители находят в Google Поиске ваш контент из  Instagram ,  TikTok ,  X  и с  YouTube .
+The focused UI element is 24 HTML-содержание Индексирование страниц, URL: search.google.com/search-console/index/drilldown?resource_id=sc-domain%3Aupscales.app&pages=ALL_URLS

@@ -50,3 +50,6 @@ src/tool/assets.generated.js
 worker/node_modules/
 worker/.wrangler/
 tools/album/.venv/
+
+# Standalone marketing analytics build
+assets/marketing/

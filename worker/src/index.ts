@@ -30,7 +30,7 @@ const ZIP_PATH = new RegExp(`^/download/(${ALBUM_ID})/all\\.zip$`);
 // The browser tool moved from /free-upscale/ to /upscale/. Old links keep their
 // ?mode= when it names a tool mode (the list mirrors MODES in src/tool/main.js)
 // and otherwise open the free on-device tool.
-const LEGACY_TOOL_PATH = /^\/(?:([a-z]{2})\/)?free-upscale(?:\/|\/index\.html)?$/;
+const LEGACY_TOOL_PATH = /^\/(?:(es|fr|de|ja|zh|ru)\/)?free-upscale(?:\/|\/index\.html)?$/;
 const TOOL_MODES = new Set(["device", "creative", "restore"]);
 const SUPPORT_EMAIL = "alexandr.graschenkov91@gmail.com";
 
@@ -265,6 +265,9 @@ async function renderGallery(request: Request, env: Env): Promise<Response> {
     title: "Photo restoration gallery — UScale",
     description: "Explore real before-and-after photo restorations and AI upscales created with UScale.",
     canonical,
+    image: `${new URL(request.url).origin}/resources/gallery-social.png`,
+    imageMime: "image/png", imageWidth: 1200, imageHeight: 630,
+    imageAlt: "UScale photo restoration — before and after",
     robots: "index,follow,max-image-preview:large,max-snippet:-1",
   }), body, "public, max-age=0, s-maxage=60");
 }
@@ -1319,16 +1322,23 @@ async function route(request: Request, env: Env, ctx: ExecutionContext): Promise
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    let response: Response;
     try {
-      return await route(request, env, ctx);
+      response = await route(request, env, ctx);
     } catch (error) {
       console.error(JSON.stringify({
         event: "unhandled_request_error",
         path: new URL(request.url).pathname,
         error: error instanceof Error ? error.message : String(error),
       }));
-      return plain("Internal server error", 500);
+      response = plain("Internal server error", 500);
     }
+    if (env.INDEXING_DISABLED === "true") {
+      const headers = new Headers(response.headers);
+      headers.set("X-Robots-Tag", "noindex, nofollow");
+      return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+    }
+    return response;
   },
   // Every 10 minutes (wrangler.jsonc triggers): refund jobs whose request
   // died, and push queued album refunds forward.

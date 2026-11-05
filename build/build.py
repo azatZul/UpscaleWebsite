@@ -18,6 +18,7 @@ if sys.version_info < (3, 8):
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import localization_catalog
+from store_links import campaign_for, store_link
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIST = os.path.join(ROOT, "dist")
@@ -39,6 +40,15 @@ def asset_v(name):
 
 CSS_V = asset_v("site.css")
 JS_V = asset_v("site.js")
+
+def marketing_script():
+    try:
+        with open(os.path.join(ROOT, "assets", "marketing", ".vite", "manifest.json")) as f:
+            return "/assets/marketing/" + json.load(f)["src/marketing/main.js"]["file"]
+    except (OSError, KeyError, ValueError):
+        return None
+
+MARKETING_SCRIPT = marketing_script()
 
 # The free browser upscaler lives at /upscale/ in every locale. Its script
 # comes from the separate Vite build (npm run build:tool); without that build the
@@ -622,6 +632,14 @@ def copy_static():
     shutil.copytree(STATIC, DIST, ignore=IGNORE, dirs_exist_ok=True)
 
 # Shared markup
+def organization():
+    return {"@context": "https://schema.org", "@type": "Organization", "@id": SITE + "/#organization",
+            "name": "UScale", "url": SITE + "/", "logo": SITE + "/resources/appstore/icon_512.png",
+            "email": "alexandr.graschenkov91@gmail.com",
+            "contactPoint": {"@type": "ContactPoint", "contactType": "customer support",
+                             "email": "alexandr.graschenkov91@gmail.com"}}
+
+
 def head(c, lang, title, desc, canonical, path="", og_image=None, extra_ld=None, robots=None,
          alternates=True, dynamic_meta=False, stylesheet=None):
     L = BY_CODE[lang]
@@ -667,6 +685,7 @@ def head(c, lang, title, desc, canonical, path="", og_image=None, extra_ld=None,
   <link rel="apple-touch-icon" href="/resources/appstore/icon_180.png">
   <link rel="preload" as="image" href="/resources/appstore/icon_180.png">
   <link rel="stylesheet" href="/assets/site.css?v={CSS_V}">{page_css}
+  {ld(organization())}
   {extra_ld or ''}
 </head>
 <body>
@@ -700,7 +719,7 @@ def apple_badge(c, label, kind, cta, cls, badge_height):
         f'width="{width}" height="{badge_height}" '
         f'alt="{esc(label) if colour == "black" else ""}" decoding="async">'
         for colour in ("black", "white"))
-    return (f'<a class="appstore {cls}" href="{APPSTORE}" target="_blank" rel="noopener" '
+    return (f'<a class="appstore {cls}" href="{esc(store_link(APP_FACTS, cta, c.get("_campaign", "site_other")))}" target="_blank" rel="noopener" '
             f'data-cta="{cta}" aria-label="{esc(label)}" '
             f'style="width:{width}px;height:{badge_height}px;--bh:{badge_height}px">{art}</a>')
 
@@ -730,7 +749,7 @@ def googleplay_btn(c, badge_height=BADGE_H):
              f"--gp-top:{-top * scale:.3f}px;--gp-width:{646 * scale:.3f}px;"
              f"--gp-height:{250 * scale:.3f}px")
     label = esc(c["ui"]["google_play_download"])
-    return (f'<a class="googleplay" href="{GOOGLEPLAY}" target="_blank" rel="noopener" '
+    return (f'<a class="googleplay" href="{esc(store_link(APP_FACTS, "googleplay", c.get("_campaign", "site_other")))}" target="_blank" rel="noopener" '
             f'data-cta="googleplay" aria-label="{label}" '
             f'style="{style}">'
             f'<img src="/resources/googleplay/badges/{c["lang"]}.png" '
@@ -745,7 +764,7 @@ def store_buttons(c, ios_note=None, badge_height=BADGE_H):
             + store_badge(macappstore_btn(c, badge_height=badge_height), c["cta"]["mac_note"])
             + store_badge(googleplay_btn(c, badge_height=badge_height), c["cta"]["android_note"]))
 
-def guide_card(c, slug, home_prefix):
+def guide_card(c, slug, home_prefix, heading="h3"):
     """Render a guide card with an optional result thumbnail."""
     meta = GUIDE_META[slug]
     thumb = (f'<img src="{meta["shot"]}" width="78" height="98" loading="lazy" decoding="async" alt="">')
@@ -754,7 +773,7 @@ def guide_card(c, slug, home_prefix):
                  f'<img class="after" src="{meta["shot_after"]}" width="78" height="98" '
                  f'loading="lazy" decoding="async" alt="" aria-hidden="true"></span>')
     return (f'<a class="guide" href="{home_prefix}guides/{slug}.html">{thumb}'
-            f'<div><h3>{esc(c["guide_pages"][slug]["card_title"])}</h3>'
+            f'<div><{heading}>{esc(c["guide_pages"][slug]["card_title"])}</{heading}>'
             f'<p>{esc(c["guide_pages"][slug]["card_desc"])}</p></div>'
             f'<span class="arrow" aria-hidden="true">→</span></a>')
 
@@ -917,7 +936,7 @@ def footer(c, lang, home_prefix, path=""):
         <p>{esc(f['tagline'])}</p>
       </div>
       <div>
-        <h4>{esc(f['product'])}</h4>
+        <h2>{esc(f['product'])}</h2>
         <ul>
           <li><a href="{home_prefix}#examples">{esc(c['nav']['screens'])}</a></li>
           <li><a href="{home_prefix}#how">{esc(c['nav']['how'])}</a></li>
@@ -927,11 +946,11 @@ def footer(c, lang, home_prefix, path=""):
         </ul>
       </div>
       <div>
-        <h4>{esc(c['nav']['guides'])}</h4>
+        <h2>{esc(c['nav']['guides'])}</h2>
         <ul>{guide_links}<li><a href="{home_prefix}guides/">{esc(f['all_guides'])}</a></li></ul>
       </div>
       <div>
-        <h4>{esc(f['support'])}</h4>
+        <h2>{esc(f['support'])}</h2>
         <ul>
           <li><a href="{rel_url(lang, 'support_page')}">{esc(f['help'])}</a></li>
           <li><a href="{rel_url(lang, 'privacy_policy')}">{esc(f['privacy'])}</a></li>
@@ -949,6 +968,7 @@ def footer(c, lang, home_prefix, path=""):
 </footer>
 {consent_banner(c, lang)}
 <script src="/assets/site.js?v={JS_V}" defer></script>
+{f'<script type="module" src="{MARKETING_SCRIPT}"></script>' if MARKETING_SCRIPT and path != TOOL_PATH else ""}
 </body>
 </html>
 """
@@ -992,6 +1012,7 @@ def compare_teaser(c, lang):
 
 # Landing page
 def render_home(c, lang):
+    c = {**c, "_campaign": "site_home"}
     seg = BY_CODE[lang][1]
     home_prefix = f"/{seg}/" if seg else "/"
     canonical = url(lang)
@@ -1012,8 +1033,7 @@ def render_home(c, lang):
         "screenshot": [f"{SITE}{s}" for s in SCREENSHOTS],
         "downloadUrl": APPSTORE, "installUrl": APPSTORE,
         "author": {"@type": "Person", "name": "Alexandr Graschenkov"},
-        "publisher": {"@type": "Organization", "name": "UScale", "url": SITE,
-                      "logo": f"{SITE}/resources/appstore/icon_512.png"},
+        "publisher": {"@id": SITE + "/#organization"},
         "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD",
                    "availability": "https://schema.org/InStock", "url": APPSTORE},
         "aggregateRating": {"@type": "AggregateRating", "ratingValue": RATING,
@@ -1031,8 +1051,7 @@ def render_home(c, lang):
     }
     site_ld = {"@context": "https://schema.org", "@type": "WebSite", "name": "UScale",
                "url": canonical, "inLanguage": BY_CODE[content_lang(c, lang)][4],
-               "publisher": {"@type": "Organization", "name": "UScale", "url": SITE,
-                             "logo": f"{SITE}/resources/appstore/icon_512.png"}}
+               "publisher": {"@id": SITE + "/#organization"}}
 
     out = [head(c, lang, m["title"], m["description"], canonical,
                 extra_ld=ld(app_ld) + ld(faq_ld) + ld(site_ld))]
@@ -1231,6 +1250,7 @@ def render_home(c, lang):
 
 # Guide hub
 def render_guides_index(c, lang):
+    c = {**c, "_campaign": "site_guides"}
     seg = BY_CODE[lang][1]
     home_prefix = f"/{seg}/" if seg else "/"
     canonical = url(lang, "guides")
@@ -1246,7 +1266,7 @@ def render_guides_index(c, lang):
                             "url": url(lang, f"guides/{s}")} for s in GUIDE_SLUGS]}
 
     cards = "".join(
-        guide_card(c, s, home_prefix) for s in GUIDE_SLUGS)
+        guide_card(c, s, home_prefix, heading="h2") for s in GUIDE_SLUGS)
 
     return (head(c, lang, gi["title"], gi["description"], canonical, path="guides",
                  extra_ld=ld(crumbs_ld) + ld(list_ld))
@@ -1267,6 +1287,7 @@ def render_guides_index(c, lang):
 
 # Guide page
 def render_guide(c, lang, slug):
+    c = {**c, "_campaign": "site_guides"}
     seg = BY_CODE[lang][1]
     home_prefix = f"/{seg}/" if seg else "/"
     path = f"guides/{slug}"
@@ -1296,7 +1317,7 @@ def render_guide(c, lang, slug):
     crumbs_ld = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": c["ui"]["home"], "item": url(lang)},
         {"@type": "ListItem", "position": 2, "name": c["nav"]["guides"], "item": url(lang, "guides")},
-        {"@type": "ListItem", "position": 3, "name": g["h1"], "item": canonical}]}
+        {"@type": "ListItem", "position": 3, "name": g["card_title"], "item": canonical}]}
 
     steps = "".join(
         f'<li id="step-{i + 1}"><strong>{esc(s["h"])}</strong><span>{esc(s["p"])}</span></li>'
@@ -1387,7 +1408,12 @@ def render_guide(c, lang, slug):
 
     return (head(c, lang, g["title"], g["description"], canonical, path=path,
                  og_image=f"{SITE}{meta.get('og', meta['shot'])}",
-                 extra_ld=ld(howto_ld) + ld(faq_ld) + ld(crumbs_ld))
+                 extra_ld=ld(howto_ld) + ld(faq_ld) + ld(crumbs_ld) + ld({
+                     "@context": "https://schema.org", "@type": "Article", "@id": canonical + "#article",
+                     "url": canonical, "mainEntityOfPage": canonical, "headline": g["h1"],
+                     "image": f"{SITE}{meta.get('og', meta['shot'])}", "inLanguage": BY_CODE[lang][4],
+                     "author": {"@id": SITE + "/#organization"}, "publisher": {"@id": SITE + "/#organization"},
+                     "dateModified": updated_for(path)}))
             + nav(c, lang, home_prefix, path)
             + body
             + footer(c, lang, home_prefix, path))
@@ -2131,11 +2157,14 @@ def render_sitemap():
             '        xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
             + "\n".join(entries) + "\n</urlset>\n")
 
-ROBOTS = f"""User-agent: *
-Allow: /
+def render_robots():
+    with open(os.path.join(ROOT, "build", "crawler-policy.json")) as handle:
+        agents = json.load(handle)["disallow"]
+    return (f"User-agent: *\nContent-Signal: search=yes,ai-train=no,use=reference\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n\n"
+            + "\n\n".join(f"User-agent: {agent}\nDisallow: /" for agent in agents) + "\n")
 
-Sitemap: {SITE}/sitemap.xml
-"""
+ROBOTS = render_robots()
+
 
 def static_index_directories():
     """Directories under static/ that hold an index.html.
@@ -2163,6 +2192,7 @@ def render_static_redirects():
         base = f"/{segment}/" if segment else "/"
         directories = (base, base + "guides/") + ((base + TOOL_PATH + "/",) if TOOL_SCRIPT else ())
         for directory in directories:
+            rules.append(f"{directory}index.html {directory} 301")
             rules.append(f"{directory} {directory}index.html 200")
             if directory != "/":
                 rules.append(f"{directory.rstrip('/')} {directory} 301")
@@ -2175,6 +2205,7 @@ def render_static_redirects():
             rules.append(f"{base}{page} {base}{page}.html 301")
             rules.append(f"{base}{page}/ {base}{page}.html 301")
     # The model licenses page is English only and shared by every footer.
+    rules.append("/licenses/index.html /licenses/ 301")
     rules.append("/licenses/ /licenses/index.html 200")
     rules.append("/licenses /licenses/ 301")
     # Pages copied verbatim from static/ contribute no rules of their own; skip
@@ -2186,6 +2217,39 @@ def render_static_redirects():
         rules.append(f"{directory} {directory}index.html 200")
         rules.append(f"{directory.rstrip('/')} {directory} 301")
     return "\n".join(rules) + "\n"
+
+
+def render_not_found(c, lang):
+    """Self-contained error page, including under COEP-protected tool paths."""
+    n = c["not_found"]
+    home = rel_url(lang)
+    guides = rel_url(lang, "guides")
+    artwork = '<svg viewBox="0 0 800 300" aria-hidden="true"><text x="400" y="251" text-anchor="middle" font-size="300">404</text></svg>'
+    badges = store_buttons({**c, "_campaign": "site_other"})
+    return f"""<!doctype html>
+<html lang="{BY_CODE[lang][4]}"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,follow"><title>{esc(n['title'])}</title>
+<meta name="description" content="{esc(n['description'])}">
+<meta name="theme-color" content="#07080d">{THEME_BOOT}
+<link rel="icon" href="/resources/appstore/icon_180.png">
+<link rel="stylesheet" href="/assets/site.css?v={CSS_V}">
+<link rel="stylesheet" href="/assets/not-found.css?v={asset_v('not-found.css')}">
+</head><body class="error-page">
+<header class="wrap error-nav"><a class="error-brand" href="{home}"><img src="/resources/appstore/icon_180.png" width="40" height="40" alt="">UScale</a>
+<nav class="error-links"><a href="{home}">{esc(c['ui']['home'])}</a><a href="{guides}">{esc(c['nav']['guides'])}</a></nav></header>
+<main class="error-main"><p class="error-kicker">{esc(n['status'])}</p>
+<div class="error-comparison">
+<div class="error-art error-sharp">{artwork}</div>
+<div class="error-before">{artwork}</div>
+<div class="error-divider" aria-hidden="true"></div>
+<div class="error-labels" aria-hidden="true"><span>{esc(n['before'])}</span><span>{esc(n['after'])}</span></div>
+<input id="clarity" type="range" min="0" max="100" value="50" aria-label="{esc(n['slider'])}" disabled>
+</div><h1>{esc(n['headline'])}</h1><p class="error-copy">{esc(n['description'])}</p>
+<div class="error-stores">{badges}</div><a class="error-return" href="{home}"><span aria-hidden="true">←</span>{esc(n['home'])}</a></main>
+<footer class="error-bottom">UScale · {esc(c['footer']['made'])}</footer>
+<script src="/assets/not-found.js?v={asset_v('not-found.js')}" defer></script>
+</body></html>"""
 
 
 # Build entry point
@@ -2241,6 +2305,7 @@ def main():
         seg = BY_CODE[code][1]
         base = seg + "/" if seg else ""
         write(f"{base}index.html", render_home(c, code)); built += 1
+        write(f"{base}404.html", render_not_found(c, code))
         write(f"{base}guides/index.html", render_guides_index(c, code)); built += 1
         for slug in GUIDE_SLUGS:
             if slug in c["guide_pages"]:
