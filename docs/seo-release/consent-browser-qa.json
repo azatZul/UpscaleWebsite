@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "production_origin": true,
+  "all_analytics_requests_intercepted": true,
+  "store_navigation_intercepted": true,
+  "events_before_consent": 0,
+  "events_after_rejection": 0,
+  "taps_after_acceptance": 1,
+  "no_duplicate_tap": true,
+  "no_query_in_payload": true,
+  "no_events_after_revocation": true,
+  "event_properties": {
+    "platform": "web",
+    "environment": "production",
+    "locale": "en",
+    "page_path": "/",
+    "page_type": "home",
+    "element": "appstore",
+    "screen": "home",
+    "store": "app_store",
+    "placement": "hero"
+  },
+  "errors": []
+}

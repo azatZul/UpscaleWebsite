@@ -503,6 +503,7 @@ html:lang(zh) h1,html:lang(zh) h2,html:lang(zh) h3,html:lang(zh) h4{
 }
 .hero-lead .hero-grid{grid-template-columns:1.16fr .84fr;gap:40px}
 .hero-stage{position:relative;align-self:stretch;min-height:clamp(320px,34vw,430px)}
+.hero-platforms{max-width:560px;margin:16px 0 0;color:var(--tx-2);font-size:14px;line-height:1.55}
 .hero-stage .phone{
   --pw:clamp(660px,89vw,1340px);
   --sh:calc(var(--pw)*.4439);

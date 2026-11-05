@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "baseline_commit": "5195713",
+  "release_a": {
+    "status": "published",
+    "branch": "codex/seo-release-a",
+    "source_commit": "3367611e314213b22056974ffb45f428ac5ea334",
+    "version": "92d7e215-1406-43e2-90f6-ccc6172e11b0",
+    "published_by_utc": "2026-11-05T13:22:38Z",
+    "rollback_version": "d51aac33-9782-4999-92c3-f999889a1cb9"
+  },
+  "release_b": {
+    "status": "prepared",
+    "branch": "codex/seo-release-b"
+  },
+  "release_c": {
+    "status": "prepared",
+    "branch": "codex/seo-release-c",
+    "update_shared_home_lastmod_on_publication": true
+  },
+  "followups_days": [
+    7,
+    28
+  ],
+  "unverified": [
+    "Actual Android Install Referrer ingestion and store-attributed install counts",
+    "Individual live URL Inspection by language; index report baseline is delayed",
+    "Field INP/CrUX when enough data exists"
+  ],
+  "rollout_decision": "User requested prompt same-day B/C publication on 2026-11-05; keep separate deployments and rollback points.",
+  "automation_status": "not_created"
+}

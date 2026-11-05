@@ -1,49 +1,49 @@
 {
   "meta.title": {
     "localizations": {
-      "en": "AI Photo Enhancer for iPhone — Unblur & Upscale | UScale",
-      "ru": "Улучшить качество фото на iPhone — нейросеть и 4K | UScale",
-      "de": "Bildqualität verbessern am iPhone – KI-App | UScale",
-      "ja": "iPhoneで写真をAI高画質化するアプリ｜UScale",
+      "en": "AI Photo Enhancer for iPhone & Android — Unblur & Upscale | UScale",
+      "ru": "Улучшить качество фото на iPhone и Android — нейросеть и 4K | UScale",
+      "de": "Bildqualität verbessern auf iPhone und Android – KI-App | UScale",
+      "ja": "iPhone・Androidで写真をAI高画質化するアプリ｜UScale",
       "fr": "Améliorer la qualité d’une image avec l’IA | UScale",
       "es": "Mejorar calidad de imagen con IA gratis | UScale",
-      "zh": "iPhone AI 画质修复：模糊图片变清晰｜UScale"
+      "zh": "iPhone / Android AI 画质修复：模糊图片变清晰｜UScale"
     },
     "comment": "Page or section title; preserve product names."
   },
   "meta.description": {
     "localizations": {
-      "en": "UScale is a free AI photo enhancer for iPhone and iPad. Unblur photos and upscale images to 4K right on your device, improve video quality and restore old photos.",
-      "ru": "Улучшить качество фото на iPhone и iPad бесплатно: убрать размытие, увеличить фото до 4K без потери качества, восстановить старые снимки и улучшить видео.",
-      "de": "Bildqualität verbessern auf iPhone und iPad: Fotos schärfen, Bilder ohne Qualitätsverlust auf 4K vergrößern, Videos verbessern und alte Fotos restaurieren.",
-      "ja": "UScaleはiPhone・iPad向けの無料AI写真高画質化アプリです。画像を鮮明にし、4K高画質化、動画の画質向上、古い写真の修復ができます。",
-      "fr": "UScale améliore gratuitement vos images avec l’IA sur iPhone et iPad : défloutez, agrandissez en 4K, améliorez les vidéos et restaurez d’anciennes photos.",
-      "es": "Mejora la calidad de imagen con IA gratis con UScale. Quita el desenfoque, aumenta la resolución hasta 4K, mejora videos y restaura fotos antiguas.",
-      "zh": "UScale 是免费的 iPhone 和 iPad AI 画质修复 App：在本机让模糊图片变清晰、放大到 4K，还能修复视频画质，高清修复老照片。"
+      "en": "Unblur photos, upscale images to 4K and restore old photos with UScale. Available on iPhone, iPad, Android and Mac with Apple silicon. Features vary by platform.",
+      "ru": "Улучшайте качество фото: убирайте размытие, увеличивайте фото до 4K и восстанавливайте снимки. UScale для iPhone, iPad, Android и Mac с Apple silicon. Возможности зависят от платформы.",
+      "de": "Fotos schärfen, Bilder auf 4K vergrößern und alte Fotos restaurieren mit UScale. Für iPhone, iPad, Android und Mac mit Apple silicon. Funktionen variieren je nach Plattform.",
+      "ja": "UScaleで写真を鮮明化、4Kに高画質化し、古い写真を修復。iPhone・iPad・Android・Appleシリコン搭載Macに対応。利用できる機能はプラットフォームにより異なります。",
+      "fr": "Défloutez vos photos, agrandissez en 4K et restaurez vos souvenirs avec UScale. Sur iPhone, iPad, Android et Mac avec puce Apple. Les fonctions varient selon la plateforme.",
+      "es": "Mejora la calidad de imagen con IA: quita el desenfoque, aumenta hasta 4K y restaura fotos. UScale para iPhone, iPad, Android y Mac con chip de Apple. Las funciones varían según la plataforma.",
+      "zh": "用 UScale 让模糊图片变清晰、放大到 4K、修复老照片。支持 iPhone、iPad、Android 和搭载 Apple 芯片的 Mac。不同平台的功能有所不同。"
     },
     "comment": "Description copy; keep factual claims unchanged."
   },
   "hero.h1": {
     "localizations": {
-      "en": "The AI photo enhancer that <em>unblurs, upscales and restores</em> — right on your iPhone",
-      "ru": "Улучшайте качество фото: <em>убирайте размытие, увеличивайте разрешение и восстанавливайте снимки</em> — прямо на iPhone",
-      "de": "Die KI-App, die <em>Bilder schärft, vergrößert und restauriert</em> – direkt auf deinem iPhone",
-      "ja": "iPhoneで写真を<em>鮮明化・高画質化・修復</em>するAIアプリ",
-      "fr": "L’outil IA qui <em>défloute, agrandit et restaure vos photos</em> — directement sur votre iPhone",
-      "es": "Mejora la calidad de imagen con IA: <em>quita el desenfoque, aumenta la resolución y restaura</em> — directamente en tu iPhone",
-      "zh": "AI 画质修复：<em>去模糊、高清放大、修复老照片</em>，就在你的 iPhone 上"
+      "en": "The AI photo enhancer that <em>unblurs, upscales and restores</em> your photos.",
+      "ru": "Улучшайте качество фото: <em>убирайте размытие, увеличивайте разрешение и восстанавливайте снимки</em>",
+      "de": "Die KI-App, die deine Fotos <em>schärft, vergrößert und restauriert</em>.",
+      "ja": "写真を<em>鮮明化・高画質化・修復</em>するAIアプリ",
+      "fr": "L’outil IA qui <em>défloute, agrandit et restaure</em> vos photos.",
+      "es": "Mejora la calidad de tus fotos con IA: <em>quita el desenfoque, aumenta la resolución y restaura</em>.",
+      "zh": "AI 画质修复：<em>去模糊、高清放大、修复老照片</em>"
     },
     "comment": "Contains HTML; translate visible text and preserve tags, attributes, and URLs."
   },
   "hero.h1_plain": {
     "localizations": {
-      "en": "The AI photo enhancer that unblurs, upscales and restores — right on your iPhone",
-      "ru": "Улучшайте качество фото: убирайте размытие, увеличивайте разрешение и восстанавливайте снимки — прямо на iPhone",
-      "de": "Die KI-App, die Bilder schärft, vergrößert und restauriert – direkt auf deinem iPhone",
-      "ja": "iPhoneで写真を鮮明化・高画質化・修復するAIアプリ",
-      "fr": "L’outil IA qui défloute, agrandit et restaure vos photos — directement sur votre iPhone",
-      "es": "Mejora la calidad de imagen con IA: quita el desenfoque, aumenta la resolución y restaura — directamente en tu iPhone",
-      "zh": "AI 画质修复：去模糊、高清放大、修复老照片，就在你的 iPhone 上"
+      "en": "The AI photo enhancer that unblurs, upscales and restores your photos.",
+      "ru": "Улучшайте качество фото: убирайте размытие, увеличивайте разрешение и восстанавливайте снимки",
+      "de": "Die KI-App, die deine Fotos schärft, vergrößert und restauriert.",
+      "ja": "写真を鮮明化・高画質化・修復するAIアプリ",
+      "fr": "L’outil IA qui défloute, agrandit et restaure vos photos.",
+      "es": "Mejora la calidad de tus fotos con IA: quita el desenfoque, aumenta la resolución y restaura.",
+      "zh": "AI 画质修复：去模糊、高清放大、修复老照片"
     }
   },
   "hero.sub": {
@@ -1906,5 +1906,17 @@
     "locales": [
       "ru"
     ]
+  },
+  "hero.platforms": {
+    "localizations": {
+      "en": "For iPhone, iPad, Android and Mac with Apple silicon. Features vary by platform.",
+      "ru": "Для iPhone, iPad, Android и Mac с Apple silicon. Набор функций зависит от платформы.",
+      "de": "Für iPhone, iPad, Android und Mac mit Apple silicon. Die verfügbaren Funktionen variieren je nach Plattform.",
+      "ja": "iPhone・iPad・Android・Appleシリコン搭載Macに対応。利用できる機能はプラットフォームにより異なります。",
+      "fr": "Pour iPhone, iPad, Android et Mac avec puce Apple. Les fonctions disponibles varient selon la plateforme.",
+      "es": "Para iPhone, iPad, Android y Mac con chip de Apple. Las funciones disponibles varían según la plataforma.",
+      "zh": "适用于 iPhone、iPad、Android 和搭载 Apple 芯片的 Mac。不同平台提供的功能有所不同。"
+    },
+    "comment": "Homepage platform availability; do not imply identical features on every platform."
   }
 }

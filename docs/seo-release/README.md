@@ -4,8 +4,8 @@
 
 - Source baseline: `5195713`; production rollback version: `d51aac33-9782-4999-92c3-f999889a1cb9` (2026-11-04).
 - A: technical SEO, custom localized 404, consent-gated marketing analytics and fixed store campaigns.
-- B: image delivery. Publish no earlier than seven full days after A.
-- C: cross-platform home positioning. Publish no earlier than seven full days after B.
+- B: image delivery, deployed separately after A passes production checks.
+- C: cross-platform home positioning, deployed separately after B passes production checks.
 - Each release requires its own staging checks, production version and ledger entry. No database migrations.
 
 ## Captured baseline
@@ -48,14 +48,14 @@ Search Console Indexing report captured before publication, last updated 2026-10
 
 ## Release A validation
 
-- Python: 84 tests passed, one existing skip. Node tool/marketing: 131 passed. Worker types/typecheck/regressions: 169 passed.
+- Python: 84 checks, including one optional model-suite skip (run separately below). Node tool/marketing: 131 passed. Worker types/typecheck/regressions: 169 passed.
 - Production package built with existing PNG and Photo 4× release gates, 359 files / 146.3 MiB. Production Wrangler dry run passed.
 - Installed Wrangler 4.129.0 and final staging: all 141 route checks passed. Staging version `1ef87c45-a667-4282-8861-21634f6acdd2`.
 - Isolated browser checks: dark theme, mobile touch/reduced motion, keyboard Home/End and JavaScript disabled passed. All 404 subresources returned 200, no third-party requests or page errors, COEP require-corp retained. See `404-browser-qa.json`.
 - No photo processing/model code changed. Existing processing regression and packaging gates passed; a new full image corpus benchmark was not necessary for this release.
 
 
-Release A published to production on 2026-11-05, commit `d58798e`, version `e4078899-f631-4286-84c6-d6f107e73102`. All 141 production routing checks passed (`production-a-routes.json`). Earliest B publication: 2026-11-12 after the actual A deployment time; earliest C: seven full days after B. Rollback A: `cd worker && npx wrangler rollback d51aac33-9782-4999-92c3-f999889a1cb9 --env production`; restore separately changed Cloudflare settings if appropriate.
+Release A published to production on 2026-11-05, commit `d58798e`, version `e4078899-f631-4286-84c6-d6f107e73102`. All 141 production routing checks passed (`production-a-routes.json`). The user removed the seven-day release pauses on 2026-11-05: correct platform availability and image delivery promptly, retaining separate commits, deployments and rollback points. The 7/28-day measurements remain observational follow-ups. Rollback A: `cd worker && npx wrangler rollback d51aac33-9782-4999-92c3-f999889a1cb9 --env production`; restore separately changed Cloudflare settings if appropriate.
 
 
 ## Prepared release B (not published to production)
@@ -67,3 +67,20 @@ The first hero result uses 960 px / 89,470 bytes on a 390px DPR2 device, compare
 After A, the same 15 production mobile Lighthouse runs have median LCP: home 1.12s, Russian home 1.09s, tool 3.41s, guide 2.05s, gallery 2.08s. CLS is zero for all. The tool still exceeds the 2.5s LCP target; no field INP conclusion is available. These are lab observations, not a causal SEO outcome (`performance-after-a.json`).
 
 B staging version `da86f663-eed8-4bd1-ba34-65dee2323241`; 141 routing checks passed before the final tool-preview-only asset addition, and final production build/model gates passed. Run reusable browser checks with an installed Playwright runtime: `USCALE_PLAYWRIGHT_MODULE=/path/to/playwright/index.mjs USCALE_TEST_CHANNEL=chrome node scripts/check_image_delivery.mjs` and `node scripts/check_404_browser.mjs` with the same environment. Set `USCALE_TEST_ORIGIN` to staging when required.
+
+
+## Prepared release C (not published to production)
+
+Seven home pages use platform-neutral H1 and matching social descriptions. Existing iPhone-specific titles retain iPhone and add Android; French/Spanish neutral titles are preserved. A separate visible line lists iPhone, iPad, Android and Apple-silicon Mac and states that features vary. Existing on-device/cloud distinctions remain. Guide editorial copy, titles/descriptions, URLs, social image descriptions and dates are preserved; all 70 guide bodies and head metadata were compared between the old and new home contexts. Shared footer branding is now platform-neutral. Android guides are deferred.
+
+`page_updated.home` is the only date source changed; all seven home sitemap entries show 2026-11-05. At C publication, set that shared value to the actual release date and rebuild. Guide dates must stay unchanged. Mobile checks passed on all seven locales (`home-positioning-qa.json`).
+
+A final review also fixed the pre-existing browser tool host classification: only `upscales.app` may send analytics; localhost and every preview/staging host log locally. Node regression covers saved consent on five non-production hosts. Actual staging browser with consent=true emitted debug screen/tap events and made zero Amplitude requests. This correction belongs to the amended A commit `3367611` and is inherited by B/C. Production A version after correction: `92d7e215-1406-43e2-90f6-ccc6172e11b0`.
+
+Final checks after inheriting the A analytics correction: 86 Python tests (one existing optional skip), 132 Node tool/marketing tests, 169 Worker tests/typecheck, production build/model release gates. Final production A routing: 141/141. Staging C retains noindex on static/dynamic/error responses.
+
+The optional model-conversion suite was then run in its existing isolated environment (`.web-model-work/photo4x/venv`) rather than skipped: all 3 tests passed. Latest staging C version: `b1117ac8-0dec-4218-adde-ef98ee810736`; all 141 routes and live browser 404/image checks passed.
+
+Automatic rollout/follow-up was proposed but has not been enabled: unattended future production deployments require separate explicit confirmation. Until granted, B/C publication and the 7/28-day follow-ups remain manual. No background job was created.
+
+Production-browser consent QA passed with all Amplitude requests and store navigation intercepted: zero analytics before consent/after rejection, one tap per click after acceptance, no query in payload and no events after revocation (`consent-browser-qa.json`). No real QA events were sent to Amplitude.

@@ -660,11 +660,12 @@ def head(c, lang, title, desc, canonical, path="", og_image=None, extra_ld=None,
   <link rel="canonical" href="{canonical}">
   {alts}
   <meta name="robots" content="{robots or 'index,follow,max-image-preview:large,max-snippet:-1'}">"""
+    image_alt = c["ui"].get("guide_social_image_alt", c["hero"]["h1_plain"]) if path.startswith("guides") else c["hero"]["h1_plain"]
     social = "" if dynamic_meta else f"""<meta property="og:title" content="{esc(title)}">
   <meta property="og:description" content="{esc(desc)}">
   <meta property="og:url" content="{canonical}">
   <meta property="og:image" content="{og_image}">
-  <meta property="og:image:alt" content="{esc(c['hero']['h1_plain'])}">
+  <meta property="og:image:alt" content="{esc(image_alt)}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{esc(title)}">
   <meta name="twitter:description" content="{esc(desc)}">
@@ -1069,6 +1070,7 @@ def render_home(c, lang):
         <span><b>{rating}</b> \u00b7 {esc(h['rating_note'])}</span></div>
       <h1>{h['h1']}</h1>
       <p class="hero-sub">{esc(h['sub'])}</p>
+      <p class="hero-platforms">{esc(h['platforms'])}</p>
       <div class="hero-cta stores">{store_buttons(c, h['note'], badge_height=HERO_BADGE_H)}</div>
     </div>
     {hero_phone(c, h)}

@@ -313,8 +313,8 @@
     "localizations": {
       "en": "Free to start, no account. On-device tools keep your pictures on your phone.",
       "ru": "Начните бесплатно — регистрация не требуется. При локальной обработке фотографии останутся на вашем устройстве.",
-      "de": "Kostenlos starten, ohne Konto. Bei der Verarbeitung auf dem Gerät bleiben deine Bilder auf deinem iPhone.",
-      "ja": "無料で始められ、アカウントは不要です。デバイス上で処理するツールなら、写真はiPhoneの中に留まります。",
+      "de": "Kostenlos starten, ohne Konto. Bei der lokalen Verarbeitung bleiben deine Bilder auf deinem Gerät.",
+      "ja": "無料で始められ、アカウントは不要です。デバイス上で処理するツールなら、写真はデバイスの中に留まります。",
       "fr": "Essayez gratuitement, sans compte. Les outils sur l’appareil gardent vos photos sur votre téléphone.",
       "es": "Empieza gratis, sin cuenta. Las herramientas en el dispositivo mantienen tus fotos en tu teléfono.",
       "zh": "免费开始，无需账户。本地处理的工具会让照片始终留在你的手机上。"
@@ -334,13 +334,13 @@
   },
   "footer.tagline": {
     "localizations": {
-      "en": "AI photo and video enhancer for iPhone and iPad. Unblur and upscale on your device, restore old photos with cloud AI.",
-      "ru": "Приложение для улучшения фото и видео с помощью ИИ на iPhone и iPad. Убирайте размытие и повышайте разрешение на устройстве, а старые снимки восстанавливайте с помощью облачного ИИ.",
-      "de": "KI-Verbesserung für Fotos und Videos auf iPhone und iPad. Entferne Unschärfe und skaliere Fotos auf deinem Gerät hoch, restauriere alte Fotos mit Cloud-KI.",
-      "ja": "iPhoneとiPad向けのAI写真・動画高画質化アプリです。デバイス上でぼやけを鮮明にして解像度を上げ、古い写真はクラウドAIで修復します。",
-      "fr": "Outil IA pour améliorer les photos et vidéos sur iPhone et iPad. Défloutez et agrandissez sur votre appareil, restaurez les photos anciennes avec l’IA dans le cloud.",
-      "es": "Mejora fotos y videos con IA en iPhone y iPad. Corrige el desenfoque y aumenta la resolución en tu dispositivo; restaura fotos antiguas con IA en la nube.",
-      "zh": "适用于 iPhone 和 iPad 的 AI 照片与视频画质修复 App。在设备上去模糊、放大，用云端 AI 模型修复老照片。"
+      "en": "AI photo and video enhancement. Unblur and upscale with on-device tools; restore old photos with cloud AI. Features vary by platform.",
+      "ru": "Улучшение фото и видео с помощью ИИ. Убирайте размытие и повышайте разрешение локальными инструментами, восстанавливайте снимки с облачным ИИ. Набор функций зависит от платформы.",
+      "de": "Fotos und Videos mit KI verbessern. Unschärfe entfernen und auf dem Gerät hochskalieren, alte Fotos mit Cloud-KI restaurieren. Funktionen variieren je nach Plattform.",
+      "ja": "AIで写真・動画を高画質化。デバイス上のツールで鮮明化・高画質化し、クラウドAIで古い写真を修復します。機能はプラットフォームにより異なります。",
+      "fr": "Amélioration photo et vidéo par IA. Défloutez et agrandissez avec les outils sur l’appareil, restaurez avec l’IA dans le cloud. Les fonctions varient selon la plateforme.",
+      "es": "Mejora fotos y videos con IA. Quita el desenfoque y aumenta la resolución con herramientas locales; restaura fotos con IA en la nube. Las funciones varían según la plataforma.",
+      "zh": "AI 照片与视频画质提升。用本地工具去模糊、放大，用云端 AI 修复老照片。不同平台的功能有所不同。"
     }
   },
   "footer.product": {
@@ -765,5 +765,17 @@
       "zh": "找不到页面"
     },
     "comment": "Standalone 404 page. No external dependencies or analytics."
+  },
+  "ui.guide_social_image_alt": {
+    "localizations": {
+      "en": "The AI photo enhancer that unblurs, upscales and restores — right on your iPhone",
+      "ru": "Улучшайте качество фото: убирайте размытие, увеличивайте разрешение и восстанавливайте снимки — прямо на iPhone",
+      "de": "Die KI-App, die Bilder schärft, vergrößert und restauriert – direkt auf deinem iPhone",
+      "ja": "iPhoneで写真を鮮明化・高画質化・修復するAIアプリ",
+      "fr": "L’outil IA qui défloute, agrandit et restaure vos photos — directement sur votre iPhone",
+      "es": "Mejora la calidad de imagen con IA: quita el desenfoque, aumenta la resolución y restaura — directamente en tu iPhone",
+      "zh": "AI 画质修复：去模糊、高清放大、修复老照片，就在你的 iPhone 上"
+    },
+    "comment": "Keep existing guide social-image descriptions when homepage positioning changes."
   }
 }

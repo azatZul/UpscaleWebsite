@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "requests": [],
+  "debug": [
+    "debug: [analytics] [Amplitude] Screen Viewed {platform: web, diagnostic_id: 91d62d61-0c9b-49cf-93e2-ac64fb61a2b1, diagnostic_version: 1, browser_os: macos, browser_engine: chromium}",
+    "debug: [analytics] tap {platform: web, diagnostic_id: 91d62d61-0c9b-49cf-93e2-ac64fb61a2b1, diagnostic_version: 1, browser_os: macos, browser_engine: chromium}"
+  ]
+}

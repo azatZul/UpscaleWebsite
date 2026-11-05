@@ -1,0 +1,65 @@
+[
+  {
+    "lang": "en",
+    "path": "/",
+    "h1": "The AI photo enhancer that unblurs, upscales and restores your photos.",
+    "title": "AI Photo Enhancer for iPhone & Android — Unblur & Upscale | UScale",
+    "platforms": "For iPhone, iPad, Android and Mac with Apple silicon. Features vary by platform.",
+    "errors": [],
+    "passed": true
+  },
+  {
+    "lang": "ru",
+    "path": "/ru/",
+    "h1": "Улучшайте качество фото: убирайте размытие, увеличивайте разрешение и восстанавливайте снимки",
+    "title": "Улучшить качество фото на iPhone и Android — нейросеть и 4K | UScale",
+    "platforms": "Для iPhone, iPad, Android и Mac с Apple silicon. Набор функций зависит от платформы.",
+    "errors": [],
+    "passed": true
+  },
+  {
+    "lang": "es",
+    "path": "/es/",
+    "h1": "Mejora la calidad de tus fotos con IA: quita el desenfoque, aumenta la resolución y restaura.",
+    "title": "Mejorar calidad de imagen con IA gratis | UScale",
+    "platforms": "Para iPhone, iPad, Android y Mac con chip de Apple. Las funciones disponibles varían según la plataforma.",
+    "errors": [],
+    "passed": true
+  },
+  {
+    "lang": "fr",
+    "path": "/fr/",
+    "h1": "L’outil IA qui défloute, agrandit et restaure vos photos.",
+    "title": "Améliorer la qualité d’une image avec l’IA | UScale",
+    "platforms": "Pour iPhone, iPad, Android et Mac avec puce Apple. Les fonctions disponibles varient selon la plateforme.",
+    "errors": [],
+    "passed": true
+  },
+  {
+    "lang": "de",
+    "path": "/de/",
+    "h1": "Die KI-App, die deine Fotos schärft, vergrößert und restauriert.",
+    "title": "Bildqualität verbessern auf iPhone und Android – KI-App | UScale",
+    "platforms": "Für iPhone, iPad, Android und Mac mit Apple silicon. Die verfügbaren Funktionen variieren je nach Plattform.",
+    "errors": [],
+    "passed": true
+  },
+  {
+    "lang": "ja",
+    "path": "/ja/",
+    "h1": "写真を鮮明化・高画質化・修復するAIアプリ",
+    "title": "iPhone・Androidで写真をAI高画質化するアプリ｜UScale",
+    "platforms": "iPhone・iPad・Android・Appleシリコン搭載Macに対応。利用できる機能はプラットフォームにより異なります。",
+    "errors": [],
+    "passed": true
+  },
+  {
+    "lang": "zh",
+    "path": "/zh/",
+    "h1": "AI 画质修复：去模糊、高清放大、修复老照片",
+    "title": "iPhone / Android AI 画质修复：模糊图片变清晰｜UScale",
+    "platforms": "适用于 iPhone、iPad、Android 和搭载 Apple 芯片的 Mac。不同平台提供的功能有所不同。",
+    "errors": [],
+    "passed": true
+  }
+]
