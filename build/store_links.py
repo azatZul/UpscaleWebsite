@@ -2,13 +2,6 @@
 from urllib.parse import urlencode, urlsplit, urlunsplit, parse_qsl
 
 
-def campaign_for(path):
-    path = path.strip("/")
-    if not path:
-        return "site_home"
-    return "site_guides" if path == "guides" or path.startswith("guides/") else "site_other"
-
-
 def store_link(facts, store, campaign):
     base = facts["google_play_url" if store == "googleplay" else "app_store_url"]
     parts = urlsplit(base)

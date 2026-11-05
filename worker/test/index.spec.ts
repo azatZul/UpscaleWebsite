@@ -115,6 +115,7 @@ describe.sequential("album worker", () => {
     const html = await response.text();
     expect(response.status).toBe(200);
     expect(response.headers.get("Cache-Control")).toContain("s-maxage=60");
+    expect(response.headers.get("Content-Security-Policy")).toContain("connect-src 'self' https://api2.amplitude.com;");
     expect(html).toContain(`/gallery/${FEATURED}`);
     expect(html).not.toContain(`/gallery/${PRIVATE}`);
     expect(html).toContain("&lt;Album 01&gt;");
@@ -153,6 +154,7 @@ describe.sequential("album worker", () => {
     expect(response.status).toBe(200);
     expect(response.headers.get("Cache-Control")).toBe("private, no-store");
     expect(response.headers.get("X-Robots-Tag")).toContain("noindex");
+    expect(response.headers.get("Content-Security-Policy")).toContain("connect-src 'self' https://api2.amplitude.com;");
     expect(html).toContain('property="og:image"');
     expect(html).toContain('class="cmp-wrap"');
     expect(html).toContain('data-album-carousel');
@@ -224,7 +226,10 @@ describe.sequential("album worker", () => {
     expect(unauthenticated.status).toBe(401);
     expect(await unauthenticated.text()).toBe(JSON.stringify({ error: "unauthorized" }));
     // Non-/api dynamic paths keep rejecting writes outright.
-    expect((await fetchWorker("/gallery", { method: "POST" })).status).toBe(405);
+    const methodNotAllowed = await fetchWorker("/gallery", { method: "POST" });
+    expect(methodNotAllowed.status).toBe(405);
+    expect(methodNotAllowed.headers.get("Content-Security-Policy")).toContain("connect-src 'self';");
+    await methodNotAllowed.body?.cancel();
   });
 
   it("renders twenty comparisons in position order with lazy loading and no hero-follow", async () => {

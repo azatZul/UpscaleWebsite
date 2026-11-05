@@ -18,7 +18,7 @@ if sys.version_info < (3, 8):
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import localization_catalog
-from store_links import campaign_for, store_link
+from store_links import store_link
 from responsive_images import responsive_markup
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -31,7 +31,6 @@ with open(os.path.join(ROOT, "build", "app_facts.json"), encoding="utf-8") as f:
 
 SITE = APP_FACTS["site_url"]
 APPSTORE = APP_FACTS["app_store_url"]
-GOOGLEPLAY = APP_FACTS["google_play_url"]
 
 def asset_v(name):
     """short content hash, so a deploy busts the CSS/JS cache"""
@@ -2240,15 +2239,15 @@ def render_not_found(c, lang):
 <link rel="stylesheet" href="/assets/not-found.css?v={asset_v('not-found.css')}">
 </head><body class="error-page">
 <header class="wrap error-nav"><a class="error-brand" href="{home}"><img src="/resources/appstore/icon_180.png" width="40" height="40" alt="">UScale</a>
-<nav class="error-links"><a href="{home}">{esc(c['ui']['home'])}</a><a href="{guides}">{esc(c['nav']['guides'])}</a></nav></header>
-<main class="error-main"><p class="error-kicker">{esc(n['status'])}</p>
+<div class="error-actions"><nav class="error-links"><a href="{home}">{esc(c['ui']['home'])}</a><a href="{guides}">{esc(c['nav']['guides'])}</a></nav>{theme_toggle(c)}</div></header>
+<main class="error-main">
 <div class="error-comparison">
-<div class="error-art error-sharp">{artwork}</div>
-<div class="error-before">{artwork}</div>
+<div class="error-fallback">{artwork}</div>
+<canvas class="error-sharp" aria-hidden="true"></canvas>
+<canvas class="error-pixels" aria-hidden="true"></canvas>
 <div class="error-divider" aria-hidden="true"></div>
-<div class="error-labels" aria-hidden="true"><span>{esc(n['before'])}</span><span>{esc(n['after'])}</span></div>
 <input id="clarity" type="range" min="0" max="100" value="50" aria-label="{esc(n['slider'])}" disabled>
-</div><h1>{esc(n['headline'])}</h1><p class="error-copy">{esc(n['description'])}</p>
+</div><h1>{esc(n['status'])}</h1><p class="error-copy">{esc(n['description'])}</p>
 <div class="error-stores">{badges}</div><a class="error-return" href="{home}"><span aria-hidden="true">←</span>{esc(n['home'])}</a></main>
 <footer class="error-bottom">UScale · {esc(c['footer']['made'])}</footer>
 <script src="/assets/not-found.js?v={asset_v('not-found.js')}" defer></script>

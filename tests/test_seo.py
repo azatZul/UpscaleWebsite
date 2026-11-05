@@ -14,7 +14,7 @@ class SEOTests(unittest.TestCase):
             c=site.inject_facts(site.localization_catalog.load_locale(lang),lang)
             html=site.render_not_found(c,lang)
             self.assertIn('noindex,follow',html)
-            self.assertIn(c['not_found']['headline'],html)
+            self.assertIn(c['not_found']['status'],html)
             self.assertIn('type="range"',html)
             self.assertNotIn('site.js?',html)
             self.assertNotIn('/assets/marketing/',html)

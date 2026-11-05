@@ -24,7 +24,7 @@ describe('static SEO routing',()=>{
         expect(html).toContain('error-comparison');
         expect(html).toContain('noindex,follow');
         expect(html).not.toContain('/assets/marketing/');
-        expect(html).toContain(path.startsWith('/ru/')?'Страница потерялась.':'Page lost.');
+        expect(html).toContain(path.startsWith('/ru/')?'<h1>Страница не найдена</h1>':'<h1>Page not found</h1>');
       }
     }
   });

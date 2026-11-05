@@ -682,18 +682,6 @@
     },
     "comment": "Standalone 404 page. No external dependencies or analytics."
   },
-  "not_found.headline": {
-    "localizations": {
-      "en": "Page lost. Clarity restored.",
-      "ru": "Страница потерялась. Чёткость вернули.",
-      "es": "La página se perdió. La nitidez volvió.",
-      "fr": "Page perdue. Netteté retrouvée.",
-      "de": "Seite verloren. Schärfe zurück.",
-      "ja": "ページは迷子に。写真はくっきり。",
-      "zh": "页面走丢了，清晰找回了。"
-    },
-    "comment": "Standalone 404 page. No external dependencies or analytics."
-  },
   "not_found.description": {
     "localizations": {
       "en": "We couldn’t find this page. But your photos can still find their best version.",
@@ -715,30 +703,6 @@
       "de": "Zur Startseite",
       "ja": "ホームに戻る",
       "zh": "返回首页"
-    },
-    "comment": "Standalone 404 page. No external dependencies or analytics."
-  },
-  "not_found.before": {
-    "localizations": {
-      "en": "Before",
-      "ru": "До",
-      "es": "Antes",
-      "fr": "Avant",
-      "de": "Vorher",
-      "ja": "処理前",
-      "zh": "处理前"
-    },
-    "comment": "Standalone 404 page. No external dependencies or analytics."
-  },
-  "not_found.after": {
-    "localizations": {
-      "en": "After",
-      "ru": "После",
-      "es": "Después",
-      "fr": "Après",
-      "de": "Nachher",
-      "ja": "処理後",
-      "zh": "处理后"
     },
     "comment": "Standalone 404 page. No external dependencies or analytics."
   },

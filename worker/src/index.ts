@@ -116,9 +116,9 @@ function escapeHtml(value: string): string {
     .replaceAll("'", "&#39;");
 }
 
-function commonHeaders(): Headers {
+function commonHeaders(allowAnalytics = false): Headers {
   return new Headers({
-    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'",
+    "Content-Security-Policy": `default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'${allowAnalytics ? " https://api2.amplitude.com" : ""}; base-uri 'self'; frame-ancestors 'none'; object-src 'none'`,
     "Referrer-Policy": "no-referrer",
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
@@ -158,7 +158,8 @@ async function renderShell(
     console.error(JSON.stringify({ event: "album_shell_invalid" }));
     return plain("Page template is temporarily unavailable", 503, { "Retry-After": "60" });
   }
-  const headers = commonHeaders();
+  // The shared shell includes consent-gated marketing analytics.
+  const headers = commonHeaders(true);
   headers.set("Content-Type", "text/html; charset=utf-8");
   headers.set("Cache-Control", cacheControl);
   if (robots) headers.set("X-Robots-Tag", robots);
