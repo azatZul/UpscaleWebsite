@@ -187,6 +187,37 @@ export function albumCheckoutBody(input: AlbumCheckoutInput): string {
   }).join("&");
 }
 
+export interface AlbumTipInput {
+  albumId: string;
+  attempt: string;
+  amountCents: number;
+  successUrl: string;
+  cancelUrl: string;
+}
+
+/** The form body for a tip session. Built only from the album id, the form's
+ *  attempt and the amount -- never the album title, which can be renamed -- so
+ *  a resubmitted form sends exactly the same request under the same key. */
+export function albumTipBody(input: AlbumTipInput): string {
+  return formEncode({
+    mode: "payment",
+    "payment_method_types[0]": "card",
+    success_url: input.successUrl,
+    cancel_url: input.cancelUrl,
+    // kind keeps tips apart from unlocks and credit purchases in the webhook.
+    metadata: { kind: "album_tip", album_id: input.albumId, tip_attempt: input.attempt },
+    payment_intent_data: { metadata: { kind: "album_tip", album_id: input.albumId } },
+    "line_items[0]": {
+      quantity: 1,
+      price_data: {
+        currency: "usd",
+        unit_amount: input.amountCents,
+        product_data: { name: "Tip for UScale" },
+      },
+    },
+  }).join("&");
+}
+
 export async function createCheckoutSessionFromBody(
   config: StripeConfig,
   body: string,

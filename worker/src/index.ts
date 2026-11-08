@@ -3,6 +3,9 @@ import {
   SALE_READY_SQL, albumForPayment, confirmCheckoutReturn, handleAlbumWebhook, processRefundJobs, startAlbumCheckout,
   type CheckoutOutcome,
 } from "./album-checkout";
+import {
+  DEFAULT_TIP_CENTS, TIPPABLE_SQL, TIP_AMOUNTS_CENTS, albumForTip, handleAlbumTipWebhook, startAlbumTip, tipReturnStatus,
+} from "./album-tip";
 import { bearerToken, verifyIdToken, type VerifiedIdentity } from "./auth";
 import {
   attachHistoryMedia, completeCloudJob, countActiveJobs, creditBalance, deleteHistoryItem, failCloudJob,
@@ -22,6 +25,7 @@ import { StripeError, createCheckoutSession, createCustomer, verifyWebhook } fro
 const ALBUM_ID = "[0-9A-HJKMNP-TV-Z]{26}";
 const ALBUM_PATH = new RegExp(`^/gallery/(${ALBUM_ID})$`);
 const UNLOCK_PATH = new RegExp(`^/gallery/(${ALBUM_ID})/unlock$`);
+const TIP_PATH = new RegExp(`^/gallery/(${ALBUM_ID})/tip$`);
 const COVER_PATH = new RegExp(`^/media/(${ALBUM_ID})/cover\\.jpg$`);
 const GALLERY_MEDIA_PATH = new RegExp(`^/media/(${ALBUM_ID})/gallery\\.jpg$`);
 const MEDIA_PATH = new RegExp(`^/media/(${ALBUM_ID})/(${ALBUM_ID})/(before|after)\\.webp$`);
@@ -43,6 +47,11 @@ const ICON_FLAG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" st
 const ICON_CALENDAR = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>`;
 const ICON_DOWNLOAD = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>`;
 const ICON_UNLOCK = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.8-1.2"/></svg>`;
+const ICON_HEART = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.1A4.4 4.4 0 0 1 12 7.2a4.4 4.4 0 0 1 7.5 2.7C19.5 15.4 12 20 12 20Z"/></svg>`;
+// Each wisp of steam is its own path, so they can drift up out of step.
+const ICON_COFFEE = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 10h11v4.5a4.5 4.5 0 0 1-4.5 4.5h-2a4.5 4.5 0 0 1-4.5-4.5V10Z"/><path d="M15.5 11.5h1.25a2.5 2.5 0 0 1 0 5H15.2"/><path class="steam" d="M8 7.5c0-1 1-1.4 1-2.5S8 3.6 8 2.5"/><path class="steam" d="M12 7.5c0-1 1-1.4 1-2.5s-1-1.4-1-2.5"/></svg>`;
+// Drawn by site.js once the saved state shows: the tick strokes itself in.
+const ICON_CHECK = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="m6 12.5 4 4 8-9"/></svg>`;
 const ICON_ARCHIVE = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18M4 7v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7M3 7l1.6-3.2A1 1 0 0 1 5.5 3h13a1 1 0 0 1 .9.8L21 7M10 12h4"/></svg>`;
 
 type AlbumState = "locked" | "unlocked" | "deleted";
@@ -61,6 +70,7 @@ type AlbumRow = {
   price_cents: number;
   currency: string;
   sale_ready: number;
+  tippable: number;
 };
 
 type GalleryRow = {
@@ -224,7 +234,7 @@ async function getAlbum(env: Env, id: string): Promise<AlbumRow | null> {
   return env.DB.prepare(
     `SELECT a.id, a.title, a.note, a.state, a.photo_count, a.cover_mime, a.cover_width,
             a.cover_height, a.zip_key, a.created_at, a.price_cents, a.currency,
-            ${SALE_READY_SQL} AS sale_ready
+            ${SALE_READY_SQL} AS sale_ready, ${TIPPABLE_SQL} AS tippable
        FROM albums a WHERE a.id = ?1`,
   ).bind(id).first<AlbumRow>();
 }
@@ -312,6 +322,72 @@ async function handleUnlock(request: Request, env: Env, albumId: string): Promis
   return seeOther(outcome.kind === "stripe" ? outcome.url : albumUrl(albumId, outcome.notice));
 }
 
+async function handleTip(request: Request, env: Env, albumId: string): Promise<Response> {
+  // A body that is not a form is as good as a garbled one: back to the album.
+  const form = await request.formData().catch(() => null);
+  const outcome: CheckoutOutcome = await startAlbumTip(env, albumId, form, new URL(request.url).origin);
+  return seeOther(outcome.kind === "stripe" ? outcome.url : albumUrl(albumId, outcome.notice));
+}
+
+/** The tip form: a plain form that is complete without JS. The $5 radio starts
+ *  checked and the button names no amount; site.js adds the amount to it. A
+ *  fresh attempt id per render makes a resubmitted form reuse its session.
+ *
+ *  Without JS it sits in a <details> under the downloads. With a script that
+ *  can show a modal <dialog>, the inline boot below marks the page before any
+ *  of it paints, so the fallback never flashes and the per-photo "Send a tip"
+ *  buttons show instead; site.js then moves this same form into the dialog. */
+function tipForm(albumId: string): string {
+  const chips = TIP_AMOUNTS_CENTS.map((cents) =>
+    `<label class="tip-chip"><input type="radio" name="amount" value="${cents}"${cents === DEFAULT_TIP_CENTS ? " checked" : ""}><span>$${cents / 100}</span></label>`,
+  ).join("");
+  return `<details class="tip-fallback tip-card" data-tip-fallback>
+        <summary class="tip-summary">${ICON_COFFEE}Leave a tip</summary>
+        <form class="album-tip" method="post" action="/gallery/${albumId}/tip" data-album-tip>
+        <input type="hidden" name="attempt" value="${crypto.randomUUID()}">
+        <div class="album-tip-head"><span class="album-tip-icon">${ICON_COFFEE}</span><div><h3 id="tip-title">Enjoying these photos?</h3><p>They're free to download. A small tip keeps it that way.</p></div></div>
+        <fieldset class="tip-amounts"><legend class="tip-legend">Tip amount</legend><div class="tip-chips"><span class="tip-pill" aria-hidden="true"></span>${chips}</div></fieldset>
+        <button class="btn btn-p tip-send" type="submit" data-tip-send>Leave a tip</button>
+        <span class="album-tip-note">Secure payment via Stripe. No account needed.</span>
+      </form>
+      </details>`;
+}
+
+const TIP_BOOT = `<script>if(window.HTMLDialogElement&&HTMLDialogElement.prototype.showModal)document.documentElement.classList.add("tip-modal")</script>`;
+
+const TIP_OPEN = `<button class="btn tip-open" type="button" data-tip-open aria-haspopup="dialog">${ICON_COFFEE}Send a tip</button>`;
+
+/** Empty until site.js moves the tip form in. Outside the carousel, so its
+ *  arrow keys never page the photos. After a photo download completes, the
+ *  same dialog opens with the saved block on top: the photo, a tick, and the
+ *  tip form below it. */
+const TIP_DIALOG = `<dialog class="tip-dialog" data-tip-dialog aria-labelledby="tip-title">
+      <div class="tip-sheet tip-card" data-tip-sheet><button class="tip-close" type="button" data-tip-close aria-label="Close">${ICON_CLOSE}</button>
+        <div class="tip-saved" data-tip-saved hidden>
+          <div class="tip-saved-photo"><img alt="" data-tip-saved-img><span class="tip-saved-check">${ICON_CHECK}</span></div>
+          <h3 id="tip-saved-title">Photo saved</h3>
+          <p>It's in your downloads, at full resolution.</p>
+        </div>
+      </div>
+    </dialog>`;
+
+/** Back from Stripe with a tip that is not confirmed yet. The URL keeps the
+ *  session, so a refresh asks again; the page refreshes itself a few times,
+ *  counted in sessionStorage, and never at all when that is unavailable. */
+function tipPendingNotice(albumId: string, sessionId: string): string {
+  const retryUrl = escapeHtml(`/gallery/${albumId}?tip=${encodeURIComponent(sessionId)}`);
+  return `<p class="album-notice" role="status" data-tip-pending><span data-tip-wait>Your tip is being confirmed…</span><span data-tip-stalled hidden>We couldn't confirm your tip yet. No need to pay again — check back in a minute.</span> <a href="${retryUrl}" data-tip-retry>Check again</a></p>
+      <script>(function(){var n=document.querySelector("[data-tip-pending]"),c=-1;try{var k="tip-check:"+${JSON.stringify(sessionId)};c=Number(sessionStorage.getItem(k))||0;sessionStorage.setItem(k,String(c+1))}catch(e){c=-1}
+      if(c>=0&&c<5){n.querySelector("[data-tip-retry]").hidden=true;setTimeout(function(){location.reload()},3000)}
+      else{n.querySelector("[data-tip-wait]").hidden=true;n.querySelector("[data-tip-stalled]").hidden=false}})()</script>`;
+}
+
+/** The result image as the slide shows it, versioned by its object key. */
+function afterUrl(albumId: string, photo: PhotoRow): string {
+  const version = encodeURIComponent(photo.after_key.split("/").pop() ?? photo.after_key);
+  return `/media/${albumId}/${photo.id}/after.webp?v=${version}`;
+}
+
 async function handleAlbum(request: Request, env: Env, albumId: string): Promise<Response> {
   const url = new URL(request.url);
   // Back from Stripe: confirm now rather than wait for the webhook, then drop
@@ -320,6 +396,15 @@ async function handleAlbum(request: Request, env: Env, albumId: string): Promise
   if (checkout !== null && request.method === "GET") {
     const result = await confirmCheckoutReturn(env, albumId, checkout);
     return seeOther(albumUrl(albumId, result === "ignored" ? undefined : result));
+  }
+  // Back from a tip: unlike an unlock, the session stays in the URL until the
+  // tip is confirmed, so the thank-you only ever follows a recorded payment.
+  const tipSession = url.searchParams.get("tip");
+  let tipReturn: "tipped" | "pending" | null = null;
+  if (tipSession !== null && request.method === "GET") {
+    const status = await tipReturnStatus(env, albumId, tipSession);
+    if (status === "ignored") return seeOther(albumUrl(albumId));
+    tipReturn = status;
   }
 
   const album = await getAlbum(env, albumId);
@@ -342,11 +427,10 @@ async function handleAlbum(request: Request, env: Env, albumId: string): Promise
   const slides = photos.results.map((photo, index) => {
     const sized = photo.after_width > 0 && photo.after_height > 0;
     const photoRatio = (sized ? photo.after_width / photo.after_height : 4 / 3).toFixed(4);
-    const afterVersion = encodeURIComponent(photo.after_key.split("/").pop() ?? photo.after_key);
     return `<article class="album-slide" data-album-slide style="--photo-ar:${photoRatio}"${index === 0 ? "" : " hidden"}>
       <div class="cmp-wrap" data-keep-pos="1">
         <div class="cmp" role="group" aria-label="Original and result: ${escapeHtml(photo.alt)}">
-          <img class="a-img" src="/media/${album.id}/${photo.id}/after.webp?v=${afterVersion}" width="${photo.after_width}" height="${photo.after_height}" ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async" alt="${escapeHtml(photo.alt)}">
+          <img class="a-img" src="${afterUrl(album.id, photo)}" width="${photo.after_width}" height="${photo.after_height}" ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async" alt="${escapeHtml(photo.alt)}">
           <img class="b" src="/media/${album.id}/${photo.id}/before.webp" width="${photo.before_width}" height="${photo.before_height}" ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async" alt="Original scan: ${escapeHtml(photo.alt)}">
           <span class="cmp-bar" aria-label="Drag to compare"></span>
           <span class="cmp-tag l">Original</span><span class="cmp-tag r">Result</span>
@@ -355,14 +439,19 @@ async function handleAlbum(request: Request, env: Env, albumId: string): Promise
     </article>`;
   }).join("");
 
+  // Free albums only, and not while a tip is being confirmed or just thanked
+  // for: a way to tip again beside either would invite paying twice.
+  const tipping = album.tippable && tipReturn === null;
   const details = photos.results.map((photo, index) => {
+    // On a free album site.js fetches the photo itself, so the dialog can say
+    // it was saved and show it; data-tip-download names the preview to show.
     const download = unlocked
-      ? `<a class="btn btn-g" href="/download/${album.id}/${photo.id}">${ICON_DOWNLOAD}Download this photo</a>`
+      ? `<a class="btn btn-g" href="/download/${album.id}/${photo.id}"${tipping ? ` data-tip-download="${afterUrl(album.id, photo)}"` : ""}>${ICON_DOWNLOAD}<span>Download this photo</span></a>`
       : "";
     const all = unlocked && album.zip_key && album.photo_count > 1
       ? `<a class="btn btn-p" href="/download/${album.id}/all.zip">${ICON_ARCHIVE}Download all ${album.photo_count} photos</a>`
       : "";
-    const actions = download || all ? `<div class="album-actions">${download}${all}</div>` : "";
+    const actions = download || all ? `<div class="album-actions">${download}${all}${tipping ? TIP_OPEN : ""}</div>` : "";
     return `<div class="album-detail" data-album-detail${index === 0 ? "" : " hidden"}>
       <h2>${escapeHtml(photo.alt)}</h2>${actions}
     </div>`;
@@ -376,11 +465,19 @@ async function handleAlbum(request: Request, env: Env, albumId: string): Promise
   const noticeKey = requested && Object.hasOwn(ALBUM_NOTICES, requested) ? requested as AlbumNotice : null;
   // "Preparing" means another request is still talking to Stripe: ask again
   // shortly with the same POST, which then finds the session ready.
-  const notice = noticeKey
+  const paymentNotice = noticeKey
     ? `<p class="album-notice" role="status">${ALBUM_NOTICES[noticeKey]}</p>${noticeKey === "preparing" && album.sale_ready
       ? `<script>setTimeout(function(){var f=document.querySelector("[data-album-unlock]");if(f)f.submit()},2000)</script>`
       : ""}`
     : "";
+  const notice = tipReturn === "pending" ? tipPendingNotice(album.id, tipSession!)
+    : tipReturn === "tipped"
+      ? `<p class="album-notice is-ok" role="status">Thank you for the tip! It really helps.</p><script>try{history.replaceState(null,"",location.pathname)}catch(e){}</script>`
+      : paymentNotice;
+  const tip = tipping ? tipForm(album.id)
+    : album.tippable && tipReturn === "tipped"
+      ? `<div class="album-tip tip-card is-thanked" role="status"><div class="album-tip-head"><span class="album-tip-icon">${ICON_HEART}</span><div><h3>Thank you!</h3><p>Your support keeps these photos free for everyone.</p></div></div></div>`
+      : "";
   // Sits where the download buttons appear once the album is unlocked.
   const unlock = !unlocked && album.sale_ready
     ? `<form class="album-actions album-unlock" method="post" action="/gallery/${album.id}/unlock" data-album-unlock>
@@ -406,8 +503,8 @@ async function handleAlbum(request: Request, env: Env, albumId: string): Promise
         <div class="album-page-control" aria-label="Choose photo">${pageControl}</div>
         <span class="album-counter" data-album-counter aria-live="polite">1 / ${album.photo_count}</span>
       </nav>` : ""}
-      <div class="album-details">${details}${unlock}</div>
-    </section>
+      <div class="album-details">${tipping ? TIP_BOOT : ""}${details}${unlock}${tip}</div>
+    </section>${tipping ? TIP_DIALOG : ""}
     <div class="album-foot">${date ? `<span class="album-date">${ICON_CALENDAR}<time datetime="${date.iso}">${date.label}</time></span>` : ""}<a class="album-more" href="/gallery">${ICON_GALLERY}See more examples in the gallery</a><a class="album-remove" href="mailto:${SUPPORT_EMAIL}?subject=${removalSubject}&body=${removalBody}">${ICON_FLAG}Request removal</a></div>
   </main>`;
   const origin = url.origin;
@@ -682,6 +779,11 @@ async function handleStripeWebhook(request: Request, env: Env): Promise<Response
         console.log(JSON.stringify({ event: "album_payment_refunded", albumId, paymentIntent, amountRefunded }));
         return json({ received: true, ignored: "album_payment" });
       }
+      const tipAlbumId = await albumForTip(env, paymentIntent);
+      if (tipAlbumId) {
+        console.log(JSON.stringify({ event: "album_tip_refunded", albumId: tipAlbumId, paymentIntent, amountRefunded }));
+        return json({ received: true, ignored: "album_tip" });
+      }
       // Not a credits purchase -- this Stripe account may sell other things.
       return json({ received: true, ignored: "no_matching_purchase" });
     }
@@ -713,6 +815,11 @@ async function handleStripeWebhook(request: Request, env: Env): Promise<Response
         console.warn(JSON.stringify({ event: "album_payment_disputed", albumId, paymentIntent, direction: event.type }));
         return json({ received: true, ignored: "album_payment" });
       }
+      const tipAlbumId = await albumForTip(env, paymentIntent);
+      if (tipAlbumId) {
+        console.warn(JSON.stringify({ event: "album_tip_disputed", albumId: tipAlbumId, paymentIntent, direction: event.type }));
+        return json({ received: true, ignored: "album_tip" });
+      }
       return json({ received: true, ignored: "no_matching_purchase" });
     }
     console.log(JSON.stringify({
@@ -725,6 +832,10 @@ async function handleStripeWebhook(request: Request, env: Env): Promise<Response
   // An album unlock, told apart from credit purchases by its metadata.
   if (event?.type === "checkout.session.completed" && event.data?.object?.metadata?.kind === "album_unlock") {
     const result = await handleAlbumWebhook(env, event);
+    return json(result.body, result.status);
+  }
+  if (event?.type === "checkout.session.completed" && event.data?.object?.metadata?.kind === "album_tip") {
+    const result = await handleAlbumTipWebhook(env, event);
     return json(result.body, result.status);
   }
 
@@ -1281,6 +1392,11 @@ async function route(request: Request, env: Env, ctx: ExecutionContext): Promise
   if (unlock?.[1]) {
     if (request.method !== "POST") return plain("Method not allowed", 405, { Allow: "POST" });
     return handleUnlock(request, env, unlock[1]);
+  }
+  const tip = TIP_PATH.exec(url.pathname);
+  if (tip?.[1]) {
+    if (request.method !== "POST") return plain("Method not allowed", 405, { Allow: "POST" });
+    return handleTip(request, env, tip[1]);
   }
   // /api/ is the one other dynamic prefix that accepts writes: sign-in creates
   // an account row, and Stripe will POST webhooks here.

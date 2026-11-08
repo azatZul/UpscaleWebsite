@@ -930,7 +930,8 @@
     if (next) next.addEventListener('click', function () { show(active + 1); });
     dots.forEach(function (dot, index) { dot.addEventListener('click', function () { show(index); }); });
     root.addEventListener('keydown', function (event) {
-      if (event.target && event.target.closest && event.target.closest('.cmp-bar')) return;
+      // Keep native keyboard controls, including the tip amount radios, independent of paging.
+      if (event.target && event.target.closest && event.target.closest('.cmp-bar, input, select, textarea')) return;
       if (event.key === 'ArrowLeft') { show(active - 1); event.preventDefault(); }
       if (event.key === 'ArrowRight') { show(active + 1); event.preventDefault(); }
     });
@@ -1086,5 +1087,169 @@
     else window.addEventListener('resize', measureStage);
     show(0);
     setExpanded(false);
+  });
+
+  /* Tips on free albums. The form is complete without this script (it folds into a
+     <details>, the checked chip fills itself, the button says "Leave a tip"); here the gold
+     pill slides between amounts and the button names the amount. Where a modal <dialog>
+     works, the page was already marked .tip-modal before it painted: the form moves into
+     the shared dialog and every "Send a tip" button opens it. */
+  document.querySelectorAll('[data-album-tip]').forEach(function (form) {
+    var row = form.querySelector('.tip-chips');
+    var pill = form.querySelector('.tip-pill');
+    var send = form.querySelector('[data-tip-send]');
+    if (!row || !pill || !send) return;
+
+    function sync() {
+      var input = form.querySelector('input[name="amount"]:checked');
+      if (!input) return;
+      var chip = input.closest('.tip-chip');
+      pill.style.setProperty('--pill-x', chip.offsetLeft + 'px');
+      pill.style.setProperty('--pill-w', chip.offsetWidth + 'px');
+      send.textContent = 'Send a $' + Number(input.value) / 100 + ' tip';
+    }
+    /* Place the pill with its transition off, so it does not fly in from the left edge.
+       Needed whenever the form becomes visible: while hidden its chips measure zero. The
+       reflow commits that position before the transition comes back. */
+    function place() {
+      pill.style.transition = 'none';
+      sync();
+      void pill.offsetWidth;
+      pill.style.transition = '';
+    }
+
+    place();
+    form.classList.add('is-live');
+    form.addEventListener('change', sync);
+    if (window.ResizeObserver) new ResizeObserver(place).observe(row);
+    else window.addEventListener('resize', place);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+
+    var fallback = form.closest('[data-tip-fallback]');
+    if (fallback) fallback.addEventListener('toggle', place);
+
+    var root = document.documentElement;
+    var dialog = document.querySelector('[data-tip-dialog]');
+    var sheet = dialog && dialog.querySelector('[data-tip-sheet]');
+    var openers = document.querySelectorAll('[data-tip-open]');
+    if (!root.classList.contains('tip-modal')) return;
+    if (!sheet || !openers.length || typeof dialog.showModal !== 'function') {
+      root.classList.remove('tip-modal');
+      return;
+    }
+    /* The same form node, so the chosen amount and the attempt id survive closing and
+       reopening, and a resubmitted form still reuses its Stripe session. */
+    sheet.appendChild(form);
+
+    var saved = sheet.querySelector('[data-tip-saved]');
+    var savedImg = saved && saved.querySelector('[data-tip-saved-img]');
+    var opener = null;
+    /* With a preview, the dialog opens as the confirmation of a finished download: the
+       photo and a tick on top, the tip below. Without, it is just the tip. */
+    function openDialog(trigger, preview) {
+      var isSaved = !!(preview && savedImg);
+      opener = trigger;
+      if (saved) saved.hidden = !isSaved;
+      if (isSaved) savedImg.src = preview;
+      dialog.classList.toggle('is-saved', isSaved);
+      dialog.setAttribute('aria-labelledby', isSaved ? 'tip-saved-title' : 'tip-title');
+      dialog.showModal();
+      place();
+      var checked = form.querySelector('input[name="amount"]:checked');
+      if (checked) checked.focus();
+    }
+    openers.forEach(function (button) {
+      button.addEventListener('click', function () { openDialog(button, null); });
+    });
+
+    /* A photo download on a free album is fetched here rather than left to the browser, so
+       the dialog only says "saved" once every byte has arrived. Any failure hands the link
+       back to the browser, which then shows its own download or error. */
+    function filenameOf(response, href) {
+      var match = /filename="([^"]+)"/.exec(response.headers.get('Content-Disposition') || '');
+      return match ? match[1] : href.split('/').pop();
+    }
+    function save(link) {
+      var label = link.querySelector('span');
+      var text = label ? label.textContent : '';
+      function status(value) { if (label) label.textContent = value; }
+      function done() {
+        link.removeAttribute('aria-busy');
+        link.classList.remove('is-saving');
+        link.style.minWidth = '';
+        link.style.removeProperty('--progress');
+        status(text);
+      }
+      // Hold the width, so the shorter "Saving…" does not shift the buttons beside it.
+      link.style.minWidth = link.offsetWidth + 'px';
+      link.setAttribute('aria-busy', 'true');
+      link.classList.add('is-saving');
+      status('Saving…');
+      fetch(link.href, { credentials: 'same-origin', cache: 'no-store' }).then(function (response) {
+        if (!response.ok) throw new Error('Download failed: ' + response.status);
+        var name = filenameOf(response, link.href);
+        var type = response.headers.get('Content-Type') || '';
+        var total = Number(response.headers.get('Content-Length')) || 0;
+        if (!total || !response.body || !response.body.getReader) {
+          return response.blob().then(function (blob) { return { blob: blob, name: name }; });
+        }
+        var reader = response.body.getReader();
+        var chunks = [];
+        var received = 0;
+        function pump() {
+          return reader.read().then(function (step) {
+            if (step.done) return { blob: new Blob(chunks, { type: type }), name: name };
+            chunks.push(step.value);
+            received += step.value.length;
+            var percent = Math.min(99, Math.round(received / total * 100));
+            link.style.setProperty('--progress', percent + '%');
+            status('Saving… ' + percent + '%');
+            return pump();
+          });
+        }
+        return pump();
+      }).then(function (file) {
+        var url = URL.createObjectURL(file.blob);
+        var anchor = document.createElement('a');
+        anchor.href = url;
+        anchor.download = file.name;
+        anchor.hidden = true;
+        document.body.appendChild(anchor);
+        anchor.click();
+        anchor.remove();
+        // Safari reads the blob after click() returns; give it time before letting go.
+        setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
+        done();
+        openDialog(link, link.getAttribute('data-tip-download'));
+      }).catch(function () {
+        done();
+        location.href = link.href;
+      });
+    }
+    if (window.fetch && window.Blob && window.URL && URL.createObjectURL) {
+      document.querySelectorAll('a[data-tip-download]').forEach(function (link) {
+        link.addEventListener('click', function (event) {
+          // A modified click (new tab, save as) stays the browser's.
+          if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+          event.preventDefault();
+          if (link.getAttribute('aria-busy') !== 'true') save(link);
+        });
+      });
+    }
+    dialog.querySelector('[data-tip-close]').addEventListener('click', function () { dialog.close(); });
+    /* The sheet fills the dialog, so a click on the dialog itself is a click on the backdrop. */
+    dialog.addEventListener('click', function (event) {
+      if (event.target === dialog) dialog.close();
+    });
+    /* Escape is the dialog's own; the menus and the expanded album listen on the document. */
+    dialog.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' || event.key === 'Esc') event.stopPropagation();
+    });
+    dialog.addEventListener('close', function () {
+      if (opener && document.contains(opener)) opener.focus();
+      opener = null;
+    });
+    /* Leaving for Stripe: come back to the album, not to a dialog still open. */
+    window.addEventListener('pagehide', function () { if (dialog.open) dialog.close(); });
   });
 })();
