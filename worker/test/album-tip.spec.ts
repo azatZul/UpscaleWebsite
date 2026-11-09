@@ -190,6 +190,11 @@ describe.sequential("tip card", () => {
       expect(html).toContain(`<input type="radio" name="amount" value="${cents}">`);
     }
     expect(html).toContain(">Leave a tip</button>");
+    // The mascot and the caption follow the checked amount in CSS alone: one caption per amount.
+    expect(html).toContain('class="tip-mascot"');
+    for (const [mood, caption] of [["m2", "Buys an espresso"], ["m5", "Coffee and a smile"], ["m10", "You just made our day!"]]) {
+      expect(html).toContain(`<span class="${mood}">${caption}</span>`);
+    }
     const again = await page(`/gallery/${id}`);
     expect(attemptOf(html)).toBeTruthy();
     expect(attemptOf(again)).not.toBe(attemptOf(html));

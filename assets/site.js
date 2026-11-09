@@ -1121,6 +1121,13 @@
     place();
     form.classList.add('is-live');
     form.addEventListener('change', sync);
+    /* The mascot's mood is CSS; restarting its hop here makes every pick feel answered. */
+    var mascot = form.querySelector('.tip-mascot');
+    if (mascot) form.addEventListener('change', function () {
+      mascot.classList.remove('is-hop');
+      void mascot.getBoundingClientRect();
+      mascot.classList.add('is-hop');
+    });
     if (window.ResizeObserver) new ResizeObserver(place).observe(row);
     else window.addEventListener('resize', place);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);

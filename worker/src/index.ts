@@ -341,17 +341,52 @@ function tipForm(albumId: string): string {
   const chips = TIP_AMOUNTS_CENTS.map((cents) =>
     `<label class="tip-chip"><input type="radio" name="amount" value="${cents}"${cents === DEFAULT_TIP_CENTS ? " checked" : ""}><span>$${cents / 100}</span></label>`,
   ).join("");
+  const captions = TIP_AMOUNTS_CENTS.map((cents) => `<span class="m${cents / 100}">${TIP_CAPTIONS[cents]}</span>`).join("");
   return `<details class="tip-fallback tip-card" data-tip-fallback>
         <summary class="tip-summary">${ICON_COFFEE}Leave a tip</summary>
         <form class="album-tip" method="post" action="/gallery/${albumId}/tip" data-album-tip>
         <input type="hidden" name="attempt" value="${crypto.randomUUID()}">
-        <div class="album-tip-head"><span class="album-tip-icon">${ICON_COFFEE}</span><div><h3 id="tip-title">Enjoying these photos?</h3><p>They're free to download. A small tip keeps it that way.</p></div></div>
+        <div class="album-tip-head"><span class="album-tip-icon is-mascot">${TIP_MASCOT}<span class="tip-confetti" aria-hidden="true">${"<i></i>".repeat(10)}</span></span><div><h3 id="tip-title">Enjoying these photos?</h3><p>They're free to download. A small tip keeps it that way.</p></div></div>
         <fieldset class="tip-amounts"><legend class="tip-legend">Tip amount</legend><div class="tip-chips"><span class="tip-pill" aria-hidden="true"></span>${chips}</div></fieldset>
+        <p class="tip-caption">${captions}</p>
         <button class="btn btn-p tip-send" type="submit" data-tip-send>Leave a tip</button>
         <span class="album-tip-note">Secure payment via Stripe. No account needed.</span>
       </form>
       </details>`;
 }
+
+/** The tip form's mascot: a coffee cup that gets happier the more is chosen. Every part
+ *  of every mood is drawn once and carries the amounts it belongs to (m2 … m10); site.css
+ *  shows the parts of the checked amount, so it reacts without site.js too. No mood is
+ *  sad: a small tip still gets a smile. */
+const TIP_MASCOT = `<svg class="tip-mascot" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <g class="mp m10 tip-sparkles" fill="currentColor" stroke="none"><path d="M4.5 10.5l.6 1.9 1.9.6-1.9.6-.6 1.9-.6-1.9-1.9-.6 1.9-.6z"/><path d="M33 4.5l.6 1.9 1.9.6-1.9.6-.6 1.9-.6-1.9-1.9-.6 1.9-.6z"/><path d="M35.5 15.2l.45 1.35 1.35.45-1.35.45-.45 1.35-.45-1.35-1.35-.45 1.35-.45z"/></g>
+          <g class="mp m2"><path class="tip-wisp" d="M19 17c0-1.3 1.3-1.8 1.3-3.2S19 11.9 19 10.6"/></g>
+          <g class="mp m3"><path class="tip-wisp" d="M15 14c0-1.3 1.3-1.8 1.3-3.2S15 8.9 15 7.6"/><path class="tip-wisp" d="M22 14c0-1.3 1.3-1.8 1.3-3.2S22 8.9 22 7.6"/></g>
+          <g class="mp m5 m7 m10"><path class="tip-heart" stroke="none" d="M18.5 13.2l-3.3-3.2a2.2 2.2 0 1 1 3.3-2.9 2.2 2.2 0 1 1 3.3 2.9z"/></g>
+          <path d="M6 36h28"/>
+          <g class="mp m7 m10 tip-croissant" stroke-width="1.4"><ellipse cx="31.2" cy="33.4" rx="1.8" ry="2.9" transform="rotate(-62 31.2 33.4)"/><ellipse cx="38.6" cy="33.4" rx="1.8" ry="2.9" transform="rotate(62 38.6 33.4)"/><ellipse cx="34.9" cy="31.6" rx="2.9" ry="3.6"/></g>
+          <g class="tip-mug"><g class="tip-dance">
+            <path class="tip-cup" d="M9 17h19v8a8 8 0 0 1-8 8h-3a8 8 0 0 1-8-8z"/><path d="M28 20h1.5a3.5 3.5 0 0 1 0 7H28"/>
+            <g class="mp m5 m7 m10 tip-cheeks" stroke="none"><ellipse cx="11.8" cy="26.2" rx="1.7" ry="1.1"/><ellipse cx="25.2" cy="26.2" rx="1.7" ry="1.1"/></g>
+            <g class="mp m2 m3"><g class="tip-blink" fill="currentColor" stroke="none"><circle cx="14.5" cy="22.5" r="1.5"/><circle cx="22.5" cy="22.5" r="1.5"/></g></g>
+            <g class="mp m5 m7"><path d="M13 23.2q1.5-2.2 3 0M21 23.2q1.5-2.2 3 0"/></g>
+            <g class="mp m10"><g class="tip-stars" fill="currentColor" stroke-width="1"><path d="M14.5 20l.8 1.8 1.8.8-1.8.8-.8 1.8-.8-1.8-1.8-.8 1.8-.8z"/><path d="M22.5 20l.8 1.8 1.8.8-1.8.8-.8 1.8-.8-1.8-1.8-.8 1.8-.8z"/></g></g>
+            <g class="mp m2"><path d="M16.5 26.3q2 1.6 4 0"/></g>
+            <g class="mp m3"><path d="M15.5 25.8q3 2.8 6 0"/></g>
+            <g class="mp m5"><path fill="currentColor" stroke-width="1" d="M15.5 25.3h6a3 3 0 0 1-6 0z"/></g>
+            <g class="mp m7 m10"><path fill="currentColor" stroke-width="1" d="M14.3 24.8h8.4a4.2 4.2 0 0 1-8.4 0z"/><ellipse class="tip-tongue" stroke="none" cx="18.5" cy="27.9" rx="2" ry="1"/></g>
+          </g></g>
+        </svg>`;
+
+/** One line under the amounts, swapped by site.css like the mascot's moods. */
+const TIP_CAPTIONS: Record<number, string> = {
+  200: "Buys an espresso",
+  300: "A proper cup of coffee",
+  500: "Coffee and a smile",
+  700: "Coffee with a croissant",
+  1000: "You just made our day!",
+};
 
 const TIP_BOOT = `<script>if(window.HTMLDialogElement&&HTMLDialogElement.prototype.showModal)document.documentElement.classList.add("tip-modal")</script>`;
 
