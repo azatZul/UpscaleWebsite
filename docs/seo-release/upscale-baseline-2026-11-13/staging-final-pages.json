@@ -1,0 +1,1278 @@
+{
+  "captured_at": "2026-11-13T12:27:35.170641+00:00",
+  "origin": "https://uscale-site-staging.sharrikk.workers.dev",
+  "sitemap_count": 141,
+  "tool_count": 28,
+  "failures": [],
+  "pages": [
+    {
+      "url": "https://upscales.app/",
+      "status": 200,
+      "canonical": "https://upscales.app/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/es/",
+      "status": 200,
+      "canonical": "https://upscales.app/es/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/fr/",
+      "status": 200,
+      "canonical": "https://upscales.app/fr/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/de/",
+      "status": 200,
+      "canonical": "https://upscales.app/de/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ja/",
+      "status": 200,
+      "canonical": "https://upscales.app/ja/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/zh/",
+      "status": 200,
+      "canonical": "https://upscales.app/zh/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ru/",
+      "status": 200,
+      "canonical": "https://upscales.app/ru/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/guides/",
+      "status": 200,
+      "canonical": "https://upscales.app/guides/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/es/guides/",
+      "status": 200,
+      "canonical": "https://upscales.app/es/guides/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/fr/guides/",
+      "status": 200,
+      "canonical": "https://upscales.app/fr/guides/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/de/guides/",
+      "status": 200,
+      "canonical": "https://upscales.app/de/guides/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ja/guides/",
+      "status": 200,
+      "canonical": "https://upscales.app/ja/guides/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/zh/guides/",
+      "status": 200,
+      "canonical": "https://upscales.app/zh/guides/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ru/guides/",
+      "status": 200,
+      "canonical": "https://upscales.app/ru/guides/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/guides/unblur-photo-iphone.html",
+      "status": 200,
+      "canonical": "https://upscales.app/guides/unblur-photo-iphone.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/es/guides/unblur-photo-iphone.html",
+      "status": 200,
+      "canonical": "https://upscales.app/es/guides/unblur-photo-iphone.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/fr/guides/unblur-photo-iphone.html",
+      "status": 200,
+      "canonical": "https://upscales.app/fr/guides/unblur-photo-iphone.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/de/guides/unblur-photo-iphone.html",
+      "status": 200,
+      "canonical": "https://upscales.app/de/guides/unblur-photo-iphone.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ja/guides/unblur-photo-iphone.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ja/guides/unblur-photo-iphone.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/zh/guides/unblur-photo-iphone.html",
+      "status": 200,
+      "canonical": "https://upscales.app/zh/guides/unblur-photo-iphone.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ru/guides/unblur-photo-iphone.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ru/guides/unblur-photo-iphone.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/guides/restore-old-photos.html",
+      "status": 200,
+      "canonical": "https://upscales.app/guides/restore-old-photos.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/es/guides/restore-old-photos.html",
+      "status": 200,
+      "canonical": "https://upscales.app/es/guides/restore-old-photos.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/fr/guides/restore-old-photos.html",
+      "status": 200,
+      "canonical": "https://upscales.app/fr/guides/restore-old-photos.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/de/guides/restore-old-photos.html",
+      "status": 200,
+      "canonical": "https://upscales.app/de/guides/restore-old-photos.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ja/guides/restore-old-photos.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ja/guides/restore-old-photos.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/zh/guides/restore-old-photos.html",
+      "status": 200,
+      "canonical": "https://upscales.app/zh/guides/restore-old-photos.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ru/guides/restore-old-photos.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ru/guides/restore-old-photos.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/guides/colorize-black-and-white-photos.html",
+      "status": 200,
+      "canonical": "https://upscales.app/guides/colorize-black-and-white-photos.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/es/guides/colorize-black-and-white-photos.html",
+      "status": 200,
+      "canonical": "https://upscales.app/es/guides/colorize-black-and-white-photos.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/fr/guides/colorize-black-and-white-photos.html",
+      "status": 200,
+      "canonical": "https://upscales.app/fr/guides/colorize-black-and-white-photos.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/de/guides/colorize-black-and-white-photos.html",
+      "status": 200,
+      "canonical": "https://upscales.app/de/guides/colorize-black-and-white-photos.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ja/guides/colorize-black-and-white-photos.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ja/guides/colorize-black-and-white-photos.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/zh/guides/colorize-black-and-white-photos.html",
+      "status": 200,
+      "canonical": "https://upscales.app/zh/guides/colorize-black-and-white-photos.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ru/guides/colorize-black-and-white-photos.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ru/guides/colorize-black-and-white-photos.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/guides/upscale-image-4k.html",
+      "status": 200,
+      "canonical": "https://upscales.app/guides/upscale-image-4k.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/es/guides/upscale-image-4k.html",
+      "status": 200,
+      "canonical": "https://upscales.app/es/guides/upscale-image-4k.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/fr/guides/upscale-image-4k.html",
+      "status": 200,
+      "canonical": "https://upscales.app/fr/guides/upscale-image-4k.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/de/guides/upscale-image-4k.html",
+      "status": 200,
+      "canonical": "https://upscales.app/de/guides/upscale-image-4k.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ja/guides/upscale-image-4k.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ja/guides/upscale-image-4k.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/zh/guides/upscale-image-4k.html",
+      "status": 200,
+      "canonical": "https://upscales.app/zh/guides/upscale-image-4k.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ru/guides/upscale-image-4k.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ru/guides/upscale-image-4k.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/guides/enhance-video-quality.html",
+      "status": 200,
+      "canonical": "https://upscales.app/guides/enhance-video-quality.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/es/guides/enhance-video-quality.html",
+      "status": 200,
+      "canonical": "https://upscales.app/es/guides/enhance-video-quality.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/fr/guides/enhance-video-quality.html",
+      "status": 200,
+      "canonical": "https://upscales.app/fr/guides/enhance-video-quality.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/de/guides/enhance-video-quality.html",
+      "status": 200,
+      "canonical": "https://upscales.app/de/guides/enhance-video-quality.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ja/guides/enhance-video-quality.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ja/guides/enhance-video-quality.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/zh/guides/enhance-video-quality.html",
+      "status": 200,
+      "canonical": "https://upscales.app/zh/guides/enhance-video-quality.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ru/guides/enhance-video-quality.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ru/guides/enhance-video-quality.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/guides/slow-motion-video.html",
+      "status": 200,
+      "canonical": "https://upscales.app/guides/slow-motion-video.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/es/guides/slow-motion-video.html",
+      "status": 200,
+      "canonical": "https://upscales.app/es/guides/slow-motion-video.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/fr/guides/slow-motion-video.html",
+      "status": 200,
+      "canonical": "https://upscales.app/fr/guides/slow-motion-video.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/de/guides/slow-motion-video.html",
+      "status": 200,
+      "canonical": "https://upscales.app/de/guides/slow-motion-video.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ja/guides/slow-motion-video.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ja/guides/slow-motion-video.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/zh/guides/slow-motion-video.html",
+      "status": 200,
+      "canonical": "https://upscales.app/zh/guides/slow-motion-video.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ru/guides/slow-motion-video.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ru/guides/slow-motion-video.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/guides/brighten-dark-photos.html",
+      "status": 200,
+      "canonical": "https://upscales.app/guides/brighten-dark-photos.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/es/guides/brighten-dark-photos.html",
+      "status": 200,
+      "canonical": "https://upscales.app/es/guides/brighten-dark-photos.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/fr/guides/brighten-dark-photos.html",
+      "status": 200,
+      "canonical": "https://upscales.app/fr/guides/brighten-dark-photos.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/de/guides/brighten-dark-photos.html",
+      "status": 200,
+      "canonical": "https://upscales.app/de/guides/brighten-dark-photos.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ja/guides/brighten-dark-photos.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ja/guides/brighten-dark-photos.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/zh/guides/brighten-dark-photos.html",
+      "status": 200,
+      "canonical": "https://upscales.app/zh/guides/brighten-dark-photos.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ru/guides/brighten-dark-photos.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ru/guides/brighten-dark-photos.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/guides/film-negative-to-photo.html",
+      "status": 200,
+      "canonical": "https://upscales.app/guides/film-negative-to-photo.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/es/guides/film-negative-to-photo.html",
+      "status": 200,
+      "canonical": "https://upscales.app/es/guides/film-negative-to-photo.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/fr/guides/film-negative-to-photo.html",
+      "status": 200,
+      "canonical": "https://upscales.app/fr/guides/film-negative-to-photo.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/de/guides/film-negative-to-photo.html",
+      "status": 200,
+      "canonical": "https://upscales.app/de/guides/film-negative-to-photo.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ja/guides/film-negative-to-photo.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ja/guides/film-negative-to-photo.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/zh/guides/film-negative-to-photo.html",
+      "status": 200,
+      "canonical": "https://upscales.app/zh/guides/film-negative-to-photo.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ru/guides/film-negative-to-photo.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ru/guides/film-negative-to-photo.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/guides/fix-blurry-faces.html",
+      "status": 200,
+      "canonical": "https://upscales.app/guides/fix-blurry-faces.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/es/guides/fix-blurry-faces.html",
+      "status": 200,
+      "canonical": "https://upscales.app/es/guides/fix-blurry-faces.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/fr/guides/fix-blurry-faces.html",
+      "status": 200,
+      "canonical": "https://upscales.app/fr/guides/fix-blurry-faces.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/de/guides/fix-blurry-faces.html",
+      "status": 200,
+      "canonical": "https://upscales.app/de/guides/fix-blurry-faces.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ja/guides/fix-blurry-faces.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ja/guides/fix-blurry-faces.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/zh/guides/fix-blurry-faces.html",
+      "status": 200,
+      "canonical": "https://upscales.app/zh/guides/fix-blurry-faces.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ru/guides/fix-blurry-faces.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ru/guides/fix-blurry-faces.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/guides/upscale-anime-art.html",
+      "status": 200,
+      "canonical": "https://upscales.app/guides/upscale-anime-art.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/es/guides/upscale-anime-art.html",
+      "status": 200,
+      "canonical": "https://upscales.app/es/guides/upscale-anime-art.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/fr/guides/upscale-anime-art.html",
+      "status": 200,
+      "canonical": "https://upscales.app/fr/guides/upscale-anime-art.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/de/guides/upscale-anime-art.html",
+      "status": 200,
+      "canonical": "https://upscales.app/de/guides/upscale-anime-art.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ja/guides/upscale-anime-art.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ja/guides/upscale-anime-art.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/zh/guides/upscale-anime-art.html",
+      "status": 200,
+      "canonical": "https://upscales.app/zh/guides/upscale-anime-art.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ru/guides/upscale-anime-art.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ru/guides/upscale-anime-art.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/compare.html",
+      "status": 200,
+      "canonical": "https://upscales.app/compare.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/es/compare.html",
+      "status": 200,
+      "canonical": "https://upscales.app/es/compare.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/fr/compare.html",
+      "status": 200,
+      "canonical": "https://upscales.app/fr/compare.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/de/compare.html",
+      "status": 200,
+      "canonical": "https://upscales.app/de/compare.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ja/compare.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ja/compare.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/zh/compare.html",
+      "status": 200,
+      "canonical": "https://upscales.app/zh/compare.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ru/compare.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ru/compare.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/support_page.html",
+      "status": 200,
+      "canonical": "https://upscales.app/support_page.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/es/support_page.html",
+      "status": 200,
+      "canonical": "https://upscales.app/es/support_page.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/fr/support_page.html",
+      "status": 200,
+      "canonical": "https://upscales.app/fr/support_page.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/de/support_page.html",
+      "status": 200,
+      "canonical": "https://upscales.app/de/support_page.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ja/support_page.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ja/support_page.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/zh/support_page.html",
+      "status": 200,
+      "canonical": "https://upscales.app/zh/support_page.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ru/support_page.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ru/support_page.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/terms.html",
+      "status": 200,
+      "canonical": "https://upscales.app/terms.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/es/terms.html",
+      "status": 200,
+      "canonical": "https://upscales.app/es/terms.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/fr/terms.html",
+      "status": 200,
+      "canonical": "https://upscales.app/fr/terms.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/de/terms.html",
+      "status": 200,
+      "canonical": "https://upscales.app/de/terms.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ja/terms.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ja/terms.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/zh/terms.html",
+      "status": 200,
+      "canonical": "https://upscales.app/zh/terms.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ru/terms.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ru/terms.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/privacy_policy.html",
+      "status": 200,
+      "canonical": "https://upscales.app/privacy_policy.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/es/privacy_policy.html",
+      "status": 200,
+      "canonical": "https://upscales.app/es/privacy_policy.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/fr/privacy_policy.html",
+      "status": 200,
+      "canonical": "https://upscales.app/fr/privacy_policy.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/de/privacy_policy.html",
+      "status": 200,
+      "canonical": "https://upscales.app/de/privacy_policy.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ja/privacy_policy.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ja/privacy_policy.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/zh/privacy_policy.html",
+      "status": 200,
+      "canonical": "https://upscales.app/zh/privacy_policy.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ru/privacy_policy.html",
+      "status": 200,
+      "canonical": "https://upscales.app/ru/privacy_policy.html",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/upscale/",
+      "status": 200,
+      "canonical": "https://upscales.app/upscale/",
+      "h1_count": 1,
+      "faq_count": 4,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/es/upscale/",
+      "status": 200,
+      "canonical": "https://upscales.app/es/upscale/",
+      "h1_count": 1,
+      "faq_count": 4,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/fr/upscale/",
+      "status": 200,
+      "canonical": "https://upscales.app/fr/upscale/",
+      "h1_count": 1,
+      "faq_count": 4,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/de/upscale/",
+      "status": 200,
+      "canonical": "https://upscales.app/de/upscale/",
+      "h1_count": 1,
+      "faq_count": 4,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ja/upscale/",
+      "status": 200,
+      "canonical": "https://upscales.app/ja/upscale/",
+      "h1_count": 1,
+      "faq_count": 4,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/zh/upscale/",
+      "status": 200,
+      "canonical": "https://upscales.app/zh/upscale/",
+      "h1_count": 1,
+      "faq_count": 4,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ru/upscale/",
+      "status": 200,
+      "canonical": "https://upscales.app/ru/upscale/",
+      "h1_count": 1,
+      "faq_count": 4,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/upscale/free/",
+      "status": 200,
+      "canonical": "https://upscales.app/upscale/free/",
+      "h1_count": 1,
+      "faq_count": 4,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/es/upscale/free/",
+      "status": 200,
+      "canonical": "https://upscales.app/es/upscale/free/",
+      "h1_count": 1,
+      "faq_count": 4,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/fr/upscale/free/",
+      "status": 200,
+      "canonical": "https://upscales.app/fr/upscale/free/",
+      "h1_count": 1,
+      "faq_count": 4,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/de/upscale/free/",
+      "status": 200,
+      "canonical": "https://upscales.app/de/upscale/free/",
+      "h1_count": 1,
+      "faq_count": 4,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ja/upscale/free/",
+      "status": 200,
+      "canonical": "https://upscales.app/ja/upscale/free/",
+      "h1_count": 1,
+      "faq_count": 4,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/zh/upscale/free/",
+      "status": 200,
+      "canonical": "https://upscales.app/zh/upscale/free/",
+      "h1_count": 1,
+      "faq_count": 4,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ru/upscale/free/",
+      "status": 200,
+      "canonical": "https://upscales.app/ru/upscale/free/",
+      "h1_count": 1,
+      "faq_count": 4,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/upscale/creative/",
+      "status": 200,
+      "canonical": "https://upscales.app/upscale/creative/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/es/upscale/creative/",
+      "status": 200,
+      "canonical": "https://upscales.app/es/upscale/creative/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/fr/upscale/creative/",
+      "status": 200,
+      "canonical": "https://upscales.app/fr/upscale/creative/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/de/upscale/creative/",
+      "status": 200,
+      "canonical": "https://upscales.app/de/upscale/creative/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ja/upscale/creative/",
+      "status": 200,
+      "canonical": "https://upscales.app/ja/upscale/creative/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/zh/upscale/creative/",
+      "status": 200,
+      "canonical": "https://upscales.app/zh/upscale/creative/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ru/upscale/creative/",
+      "status": 200,
+      "canonical": "https://upscales.app/ru/upscale/creative/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/upscale/restore/",
+      "status": 200,
+      "canonical": "https://upscales.app/upscale/restore/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/es/upscale/restore/",
+      "status": 200,
+      "canonical": "https://upscales.app/es/upscale/restore/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/fr/upscale/restore/",
+      "status": 200,
+      "canonical": "https://upscales.app/fr/upscale/restore/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/de/upscale/restore/",
+      "status": 200,
+      "canonical": "https://upscales.app/de/upscale/restore/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ja/upscale/restore/",
+      "status": 200,
+      "canonical": "https://upscales.app/ja/upscale/restore/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/zh/upscale/restore/",
+      "status": 200,
+      "canonical": "https://upscales.app/zh/upscale/restore/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/ru/upscale/restore/",
+      "status": 200,
+      "canonical": "https://upscales.app/ru/upscale/restore/",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 8,
+      "errors": []
+    },
+    {
+      "url": "https://upscales.app/gallery",
+      "status": 200,
+      "canonical": "https://uscale-site-staging.sharrikk.workers.dev/gallery",
+      "h1_count": 1,
+      "faq_count": 0,
+      "hreflang_count": 0,
+      "errors": []
+    }
+  ]
+}

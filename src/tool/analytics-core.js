@@ -23,6 +23,40 @@ const ID_KEY = 'uscale-analytics-id-v1';
 // are sent only if analytics is accepted; rejecting discards them.
 const PENDING_LIMIT = 100;
 
+// Where this visit came from, decided once on the first page of the tab's
+// session and kept in sessionStorage, so moving between pages, tool modes or
+// through sign-in does not turn a search visitor into "direct" or "internal".
+export const ENTRY_KEY = 'uscale-entry-v1';
+const SEARCH_HOSTS = /(^|\.)(google|bing|yandex|ya|duckduckgo|yahoo|baidu|ecosia|naver|seznam|qwant|startpage|brave)\.[a-z.]+$/i;
+
+export function entrySource({search = '', referrer = '', host = ''} = {}) {
+  let utm = null;
+  try { utm = new URLSearchParams(search).get('utm_source'); } catch { /* Malformed query. */ }
+  if (utm) return `utm:${utm.slice(0, 40)}`;
+  let from = '';
+  try { from = referrer ? new URL(referrer).hostname : ''; } catch { /* Unreadable referrer. */ }
+  if (!from) return 'direct';
+  if (from === host) return 'internal';
+  if (SEARCH_HOSTS.test(from) || from === 'search.brave.com') return 'organic';
+  return 'referral';
+}
+
+export function entryContext({location = globalThis.location, referrer = globalThis.document?.referrer,
+  session = sessionStore()} = {}) {
+  let entry = null;
+  try { entry = JSON.parse(session?.getItem(ENTRY_KEY) || 'null'); } catch { /* Storage is optional. */ }
+  if (!entry?.source) {
+    entry = {source: entrySource({search: location?.search, referrer, host: location?.hostname}),
+      landing: location?.pathname || '/'};
+    try { session?.setItem(ENTRY_KEY, JSON.stringify(entry)); } catch { /* Storage is optional. */ }
+  }
+  return {entry_source: entry.source, landing_path: entry.landing};
+}
+
+function sessionStore() {
+  try { return globalThis.sessionStorage; } catch { return undefined; }
+}
+
 export function browserStorage() {
   try { return globalThis.localStorage; } catch { return undefined; }
 }

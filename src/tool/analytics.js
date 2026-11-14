@@ -1,12 +1,12 @@
 import * as amplitude from '@amplitude/analytics-browser';
 import {diagnosticContext} from './diagnostics.js';
-import {createAnalytics, storedConsent, forgetIdentity, webIdentity, browserStorage, AMPLITUDE_KEY, CONSENT_EVENT} from './analytics-core.js';
+import {createAnalytics, storedConsent, forgetIdentity, webIdentity, browserStorage, entryContext, AMPLITUDE_KEY, CONSENT_EVENT} from './analytics-core.js';
 export * from './analytics-core.js';
 
 // Only the canonical production host sends events. Preview/local hosts and
 // ?analytics-debug log to the console without initializing the SDK.
 export function initAnalytics({location = globalThis.location, document = globalThis.document,
-  storage = browserStorage()} = {}) {
+  storage = browserStorage(), session = sessionStorageOrNone()} = {}) {
   const host = location?.hostname || '';
   const local = host === 'localhost' || host === '127.0.0.1';
   const debug = host !== 'upscales.app' || new URLSearchParams(location?.search || '').has('analytics-debug');
@@ -20,6 +20,9 @@ export function initAnalytics({location = globalThis.location, document = global
     app_build: import.meta.env?.VITE_TOOL_BUILD || 'development',
     environment: local ? 'local' : host === 'upscales.app' ? 'production' : 'preview',
     locale: document?.documentElement?.lang || 'en',
+    // Which tool page (hub, free, creative, restore) and how the visit began.
+    tool_page: document?.getElementById?.('main-content')?.dataset?.page || 'hub',
+    ...entryContext({location, referrer: document?.referrer, session}),
   };
   const analytics = createAnalytics({
     debug,
@@ -38,4 +41,8 @@ export function initAnalytics({location = globalThis.location, document = global
   });
   document?.addEventListener(CONSENT_EVENT, event => analytics.setConsent(Boolean(event.detail?.analytics)));
   return analytics;
+}
+
+function sessionStorageOrNone() {
+  try { return globalThis.sessionStorage; } catch { return undefined; }
 }

@@ -1,4 +1,4 @@
-import {createAnalytics, storedConsent, webIdentity, forgetIdentity, AMPLITUDE_KEY, CONSENT_EVENT} from '../tool/analytics-core.js';
+import {createAnalytics, storedConsent, webIdentity, forgetIdentity, entryContext, AMPLITUDE_KEY, CONSENT_EVENT} from '../tool/analytics-core.js';
 
 export function pageContext(pathname, locale) {
   const path = pathname.replace(/^\/(es|fr|de|ja|zh|ru)(?=\/|$)/, '') || '/';
@@ -6,13 +6,15 @@ export function pageContext(pathname, locale) {
     page_type:path==='/'?'home':path.startsWith('/guides/')?'guide':path.startsWith('/gallery')?'gallery':path.includes('compare')?'compare':'other'};
 }
 
-export function installMarketing({document,location,storage,load=()=>import('@amplitude/analytics-browser')}={}) {
+export function installMarketing({document,location,storage,session,load=()=>import('@amplitude/analytics-browser')}={}) {
+  // Record how the visit began on its first page, so the tool can report it later.
+  const entry=entryContext({location,referrer:document.referrer,session});
   // The tool owns its events. Unknown hosts never download or initialize the SDK.
   if(location.hostname!=='upscales.app' || /(?:^|\/)upscale(?:\/|$)/.test(location.pathname)) return;
   let allowed=storedConsent(storage)===true;
   let client, analytics, loading;
   let pending=[];
-  const context=pageContext(location.pathname,document.documentElement.lang);
+  const context={...pageContext(location.pathname,document.documentElement.lang),...entry};
   function connect() {
     if(!allowed || analytics || loading) return;
     loading=load().then(module=>{
@@ -45,6 +47,7 @@ export function installMarketing({document,location,storage,load=()=>import('@am
 }
 
 if(typeof document!=='undefined') {
-  let storage;try {storage=localStorage;}catch{}
-  installMarketing({document,location,storage});
+  let storage,session;try {storage=localStorage;}catch{}
+  try {session=sessionStorage;}catch{}
+  installMarketing({document,location,storage,session});
 }

@@ -28,6 +28,21 @@ export function normalizeRestore(options) {
     prompt: advanced ? '' : String(options.prompt || '')};
 }
 
+/** Options carried across a sign-in, checked again: they come back from
+ *  browser storage, so anything unexpected falls back to the default. */
+export function restoredOptions(saved) {
+  const options = defaultOptions();
+  const creative = saved?.creative || {};
+  if (Number.isInteger(creative.creativity) && creative.creativity >= -2 && creative.creativity <= 2) {
+    options.creative.creativity = creative.creativity;
+  }
+  if (['2k', '4k', '8k'].includes(creative.resolution)) options.creative.resolution = creative.resolution;
+  const restore = saved?.restore || {};
+  options.restore = normalizeRestore({mode: restore.mode, increaseResolution: restore.increaseResolution === true,
+    negative: restore.negative === true, prompt: typeof restore.prompt === 'string' ? restore.prompt.slice(0, 500) : ''});
+  return options;
+}
+
 export function cloudCredits(prices, mode, options) {
   if (!prices) return null;
   if (mode === 'creative') return prices.creative?.[options.resolution] ?? null;

@@ -2,7 +2,7 @@
 // gates, and the request. The photo, status, buttons and result viewer belong
 // to main.js and are shared through the hooks it passes in, so both kinds of
 // processing live in one card.
-import {DEFAULT_PRICES, cloudCredits, cloudFields, defaultOptions, normalizeRestore} from './cloud-pricing.js';
+import {DEFAULT_PRICES, cloudCredits, cloudFields, defaultOptions, normalizeRestore, restoredOptions} from './cloud-pricing.js';
 import {prepareUpload, uploadPlan} from './cloud-image.js';
 import {mergeTiles, splitPhoto, tileGrid, tileRects, tiledResolution} from './creative-tiles.js';
 import {ApiError} from './account-link.js';
@@ -15,6 +15,7 @@ export function createCloud(hooks) {
     presentResult, optionsChanged, analytics, trackTap, isLocked} = hooks;
   const number = value => new Intl.NumberFormat(document.documentElement.lang || 'en').format(value);
   const options = defaultOptions();
+  const editedOptions = {creative: new Set(), restore: new Set()};
   const restoreButtons = [...document.querySelectorAll('[data-restore-mode]')];
   const resolutionButtons = [...document.querySelectorAll('[data-resolution]')];
 
@@ -227,34 +228,38 @@ export function createCloud(hooks) {
     }
   }
 
-  const changed = () => { update(); optionsChanged(); };
+  const changed = (group, key) => { editedOptions[group].add(key); update(); optionsChanged(); };
   elements.creativity.addEventListener('input', () => {
     options.creative.creativity = Number(elements.creativity.value);
-    changed();
+    changed('creative', 'creativity');
   });
   for (const button of resolutionButtons) {
     button.addEventListener('click', () => {
       trackTap('resolution', {value: button.dataset.resolution});
       options.creative.resolution = button.dataset.resolution;
-      changed();
+      changed('creative', 'resolution');
     });
   }
   for (const button of restoreButtons) {
     button.addEventListener('click', () => {
       trackTap('restore_mode', {value: button.dataset.restoreMode});
       options.restore.mode = button.dataset.restoreMode;
-      changed();
+      changed('restore', 'mode');
     });
   }
   elements['increase-resolution'].addEventListener('change', () => {
     options.restore.increaseResolution = elements['increase-resolution'].checked;
-    changed();
+    changed('restore', 'increaseResolution');
   });
   elements.negative.addEventListener('change', () => {
     options.restore.negative = elements.negative.checked;
-    changed();
+    changed('restore', 'negative');
   });
-  elements['restore-prompt'].addEventListener('input', () => { options.restore.prompt = elements['restore-prompt'].value; });
+  elements['restore-prompt'].addEventListener('input', () => {
+    options.restore.prompt = elements['restore-prompt'].value;
+    editedOptions.restore.add('prompt');
+    optionsChanged();
+  });
   // The cloud top-up closes itself once the balance covers this mode's price.
   session.subscribe(state => {
     if (topUp.reason() !== 'cloud') return;
@@ -263,5 +268,20 @@ export function createCloud(hooks) {
     else topUp.setTitle(topUpTitle());
   });
 
-  return {refresh: render, start, onMode};
+  /** The settings a signed-out visitor chose, kept across the sign-in page. */
+  const getOptions = () => JSON.parse(JSON.stringify(options));
+  function setOptions(saved) {
+    const next = restoredOptions(saved);
+    // The visitor can edit controls before storage answers. Their choices,
+    // including an explicit default, win over the corresponding saved values.
+    for (const group of ['creative', 'restore']) {
+      for (const key of editedOptions[group]) next[group][key] = options[group][key];
+      options[group] = next[group];
+    }
+    elements['restore-prompt'].value = options.restore.prompt;
+    if (options.restore.prompt) elements['prompt-field'].open = true;
+    update();
+  }
+
+  return {refresh: render, start, onMode, getOptions, setOptions};
 }

@@ -114,9 +114,15 @@ The 12 locales use *native* keywords pulled from their own store — not machine
 /support_page.html                 brand + "uscale support"             (kept, redesigned)
 /terms.html /privacy_policy.html   legal                                (kept, redesigned)
 /sale.html                         "uscale discount / lifetime deal"    (kept, redesigned)
+/{lang}/upscale/                   enhance photo quality online, free, no sign-up   (original tool picker)
+/{lang}/upscale/free/              free image upscaler / upscale image online 2×, 4× (same free tool, size intent)
+/{lang}/upscale/creative/          creative AI upscale, up to 8K                     (cloud, credits)
+/{lang}/upscale/restore/           restore old photos online                         (cloud, credits)
 ```
 
-Current localized indexable set: **112 pages** — English, Spanish, French, German, Japanese, Simplified Chinese and Russian versions of the landing, guide hub, 10 guides, comparison, support, terms and privacy pages. The English gallery is listed separately in the sitemap. `/sale.html` is `noindex,follow` in every locale and stays out of the sitemap. A locale joins the indexable `hreflang` cluster automatically once it is translated in every section file under `localization/`; locales without translated content cannot be built.
+**Browser tool vs home: split by intent (2026-11-13).** The home page sells the iPhone app; the tool pages take the *online* intent — in Russian roughly half of `улучшить качество фото` carries `онлайн`, French leans `en ligne`, Japanese `サイト`. `/upscale/` takes "improve quality" and retains the original three-card tool picker; `/upscale/free/` takes "make bigger / resolution" and opens the free tool. The existing tool UI and Back link stay intact; cards and related links lead to the separate mode pages. Old `?mode=` and `/free-upscale/` links 301 to the matching page (`mode=device` goes to `/upscale/free/`). Check the actual query overlap in Search Console (between the picker, the free tool, the 4K guide and the home page) before changing titles again; if `/upscale/` and `/upscale/free/` turn out to compete, point the latter's canonical at the former. Brand note: the product used to be called UpScale, so bare `upscale` queries are ambiguous (old brand or the operation) — count them separately from brand and non-brand.
+
+Current localized indexable set: **140 pages** — English, Spanish, French, German, Japanese, Simplified Chinese and Russian versions of the landing, guide hub, 10 guides, comparison, support, terms, privacy and four browser tool pages. The English gallery is listed separately, bringing the sitemap total to **141 URLs**. `/sale.html` is `noindex,follow` in every locale and stays out of the sitemap. A locale joins the indexable `hreflang` cluster automatically once it is translated in every section file under `localization/`; locales without translated content cannot be built.
 
 ## 5. On-page SEO checklist applied to every generated page
 

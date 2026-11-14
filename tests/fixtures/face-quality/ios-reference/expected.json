@@ -1,0 +1,522 @@
+[
+  {
+    "id": "cap-1",
+    "status": "skip",
+    "reason": "correlated-detail-loss",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 0.7825794162115804,
+        "sourceSignal": 1.5432146596448784
+      },
+      "cropPixels": 472.2562764672266,
+      "interEyePixels": 112.67091352848018,
+      "landmarkShift": 0.00984671022818031,
+      "native": {
+        "retention": 0.37621680360757126,
+        "sourceSignal": 1.144773278919982
+      },
+      "structure": 0.9336012055948881
+    }
+  },
+  {
+    "id": "girls-before-1",
+    "status": "pass",
+    "reason": "no-obvious-risk",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 1.3917443775113072,
+        "sourceSignal": 0.2919478813409569
+      },
+      "cropPixels": 110.65955168261115,
+      "interEyePixels": 28.007792741152684,
+      "landmarkShift": 0.02108254192964924,
+      "native": {
+        "retention": 0.9798936095393301,
+        "sourceSignal": 0.10940616325142677
+      },
+      "structure": 0.9244018755982457
+    }
+  },
+  {
+    "id": "girls-before-2",
+    "status": "pass",
+    "reason": "no-obvious-risk",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 1.5713843754059549,
+        "sourceSignal": 0.501071681225158
+      },
+      "cropPixels": 127.28208534952337,
+      "interEyePixels": 28.69175698660623,
+      "landmarkShift": 0.03479687252681882,
+      "native": {
+        "retention": 1.2914749180360203,
+        "sourceSignal": 0.17005139178051482
+      },
+      "structure": 0.9242428150366966
+    }
+  },
+  {
+    "id": "girls-blurred-1",
+    "status": "pass",
+    "reason": "no-obvious-risk",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 1.6000886828856755,
+        "sourceSignal": 0.7265454388011467
+      },
+      "cropPixels": 131.91575549232104,
+      "interEyePixels": 33.59286817029195,
+      "landmarkShift": 0.023070745586255464,
+      "native": {
+        "retention": 1.432641240317185,
+        "sourceSignal": 0.22993424326578144
+      },
+      "structure": 0.9110891428292657
+    }
+  },
+  {
+    "id": "girls-blurred-2",
+    "status": "pass",
+    "reason": "no-obvious-risk",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 1.7665144373905535,
+        "sourceSignal": 0.5390862387148521
+      },
+      "cropPixels": 106.44122177716147,
+      "interEyePixels": 25.71024060980068,
+      "landmarkShift": 0.02033392816291339,
+      "native": {
+        "retention": 1.5591837040774317,
+        "sourceSignal": 0.1764000611687033
+      },
+      "structure": 0.8919379371763424
+    }
+  },
+  {
+    "id": "children-1",
+    "status": "pass",
+    "reason": "no-obvious-risk",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 1.3714809197734563,
+        "sourceSignal": 0.8813434465286261
+      },
+      "cropPixels": 237.84965328226522,
+      "interEyePixels": 58.98729797834364,
+      "landmarkShift": 0.011361111128166927,
+      "native": {
+        "retention": 1.3339216393928441,
+        "sourceSignal": 0.3083957236710748
+      },
+      "structure": 0.9634557569461094
+    }
+  },
+  {
+    "id": "children-2",
+    "status": "pass",
+    "reason": "no-obvious-risk",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 1.0810294827293276,
+        "sourceSignal": 0.8397834732933249
+      },
+      "cropPixels": 250.86772537481693,
+      "interEyePixels": 67.44524486558464,
+      "landmarkShift": 0.02079902636618813,
+      "native": {
+        "retention": 1.0619054841377098,
+        "sourceSignal": 0.28272400991152763
+      },
+      "structure": 0.9595204673639246
+    }
+  },
+  {
+    "id": "children-3",
+    "status": "pass",
+    "reason": "no-obvious-risk",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 1.3674279566152605,
+        "sourceSignal": 0.9093321256198144
+      },
+      "cropPixels": 283.49737063773694,
+      "interEyePixels": 71.66300500746276,
+      "landmarkShift": 0.00895426595661533,
+      "native": {
+        "retention": 1.252561497379269,
+        "sourceSignal": 0.31802212834298554
+      },
+      "structure": 0.9563982937591986
+    }
+  },
+  {
+    "id": "wedding-1",
+    "status": "pass",
+    "reason": "no-obvious-risk",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 1.0725694628325715,
+        "sourceSignal": 0.9755921934196765
+      },
+      "cropPixels": 211.20749627380326,
+      "interEyePixels": 47.75963004819438,
+      "landmarkShift": 0.0233599223765236,
+      "native": {
+        "retention": 0.8765812698824008,
+        "sourceSignal": 0.41249718966192167
+      },
+      "structure": 0.9645722428297137
+    }
+  },
+  {
+    "id": "wedding-2",
+    "status": "pass",
+    "reason": "no-obvious-risk",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 0.9639747565045023,
+        "sourceSignal": 0.9259988772697542
+      },
+      "cropPixels": 193.1580814336645,
+      "interEyePixels": 45.502703047303115,
+      "landmarkShift": 0.02463940308715423,
+      "native": {
+        "retention": 0.6960634150705598,
+        "sourceSignal": 0.36531215163257813
+      },
+      "structure": 0.969027259519023
+    }
+  },
+  {
+    "id": "wedding-3",
+    "status": "pass",
+    "reason": "no-obvious-risk",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 1.1511072567080087,
+        "sourceSignal": 0.527098810843428
+      },
+      "cropPixels": 122.73589217386323,
+      "interEyePixels": 28.72016110114495,
+      "landmarkShift": 0.01888756254466426,
+      "native": {
+        "retention": 0.9624148961816115,
+        "sourceSignal": 0.19199569718169857
+      },
+      "structure": 0.9381028472989832
+    }
+  },
+  {
+    "id": "wedding-4",
+    "status": "review",
+    "reason": "geometry-risk",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 1.3193107278356941,
+        "sourceSignal": 0.4555795279239384
+      },
+      "cropPixels": 103.56263697913194,
+      "interEyePixels": 21.53102726835706,
+      "landmarkShift": 0.04917973202459137,
+      "native": {
+        "retention": 0.9886273546073614,
+        "sourceSignal": 0.1637804065395026
+      },
+      "structure": 0.8885276253934653
+    }
+  },
+  {
+    "id": "wedding-5",
+    "status": "pass",
+    "reason": "no-obvious-risk",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 0.8356052954671832,
+        "sourceSignal": 0.8337047488284474
+      },
+      "cropPixels": 202.54892069288726,
+      "interEyePixels": 48.27022670906543,
+      "landmarkShift": 0.01508339564779743,
+      "native": {
+        "retention": 0.5807047234240854,
+        "sourceSignal": 0.35161058499009323
+      },
+      "structure": 0.9715642816076226
+    }
+  },
+  {
+    "id": "wedding-6",
+    "status": "review",
+    "reason": "geometry-risk",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 1.672136770323305,
+        "sourceSignal": 0.3756302414350771
+      },
+      "cropPixels": 96.7156059102647,
+      "interEyePixels": 17.888988347544142,
+      "landmarkShift": 0.05843219695166223,
+      "native": {
+        "retention": 1.154976389650234,
+        "sourceSignal": 0.13807748984998985
+      },
+      "structure": 0.8761546729751206
+    }
+  },
+  {
+    "id": "girls-after-1",
+    "status": "skip",
+    "reason": "correlated-detail-loss",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 0.8178980699879934,
+        "sourceSignal": 1.2027687483231149
+      },
+      "cropPixels": 392.73871315879177,
+      "interEyePixels": 100.70926029401224,
+      "landmarkShift": 0.015216844058618431,
+      "native": {
+        "retention": 0.7222786135812338,
+        "sourceSignal": 0.48738879663052775
+      },
+      "structure": 0.9718535755673874
+    }
+  },
+  {
+    "id": "girls-after-2",
+    "status": "skip",
+    "reason": "correlated-detail-loss",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 0.7997627218302313,
+        "sourceSignal": 1.9435652973135213
+      },
+      "cropPixels": 449.29269782611823,
+      "interEyePixels": 103.31144692404082,
+      "landmarkShift": 0.014423026093389222,
+      "native": {
+        "retention": 0.6187101479998228,
+        "sourceSignal": 0.8454975690788662
+      },
+      "structure": 0.9563615304765921
+    }
+  },
+  {
+    "id": "big-1",
+    "status": "skip",
+    "reason": "native-detail-loss",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 0.8600302732116307,
+        "sourceSignal": 2.6094779742588474
+      },
+      "cropPixels": 1343.5172592465717,
+      "interEyePixels": 304.04507672800787,
+      "landmarkShift": 0.012251465252048458,
+      "native": {
+        "retention": 0.46617155867420335,
+        "sourceSignal": 1.7514856047046947
+      },
+      "structure": 0.9617238986143105
+    }
+  },
+  {
+    "id": "big-1-actual",
+    "status": "skip",
+    "reason": "native-detail-loss",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 0.8124918184420523,
+        "sourceSignal": 2.6094779742588474
+      },
+      "cropPixels": 1343.5172592465717,
+      "interEyePixels": 304.04507672800787,
+      "landmarkShift": 0.017359426035675713,
+      "native": {
+        "retention": 0.41178229286418855,
+        "sourceSignal": 1.7514856047046947
+      },
+      "structure": 0.9637253120481953
+    }
+  },
+  {
+    "id": "extra-obama-1",
+    "status": "skip",
+    "reason": "native-detail-loss",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 0.9417152983008286,
+        "sourceSignal": 2.6315685832032205
+      },
+      "cropPixels": 1172.4723700147254,
+      "interEyePixels": 264.50464173893545,
+      "landmarkShift": 0.00822930125471762,
+      "native": {
+        "retention": 0.5573885053726712,
+        "sourceSignal": 1.7572030809533425
+      },
+      "structure": 0.9641545923949896
+    }
+  },
+  {
+    "id": "extra-grace-1",
+    "status": "skip",
+    "reason": "correlated-detail-loss",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 0.8495310918289736,
+        "sourceSignal": 3.633676372893898
+      },
+      "cropPixels": 335.99239510487587,
+      "interEyePixels": 78.74262770804735,
+      "landmarkShift": 0.009969101981034983,
+      "native": {
+        "retention": 0.6751754920942572,
+        "sourceSignal": 1.6500832021590355
+      },
+      "structure": 0.9393651384877726
+    }
+  },
+  {
+    "id": "extra-einstein-1",
+    "status": "pass",
+    "reason": "no-obvious-risk",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 1.1059464200384554,
+        "sourceSignal": 2.6120471173275575
+      },
+      "cropPixels": 284.025814014078,
+      "interEyePixels": 52.05357608953424,
+      "landmarkShift": 0.02393768826583815,
+      "native": {
+        "retention": 1.1443746708898512,
+        "sourceSignal": 0.9174711486970836
+      },
+      "structure": 0.9545116392254607
+    }
+  },
+  {
+    "id": "extra-collins-1",
+    "status": "pass",
+    "reason": "no-obvious-risk",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 1.031009468215227,
+        "sourceSignal": 2.183897256599507
+      },
+      "cropPixels": 720.5034505107151,
+      "interEyePixels": 172.61889300522682,
+      "landmarkShift": 0.014708289617037624,
+      "native": {
+        "retention": 0.8260843697000114,
+        "sourceSignal": 1.0594274665602974
+      },
+      "structure": 0.9736257745569163
+    }
+  },
+  {
+    "id": "extra-crew-1",
+    "status": "pass",
+    "reason": "no-obvious-risk",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 1.2919171016347346,
+        "sourceSignal": 0.8700678564572506
+      },
+      "cropPixels": 126.22626700283796,
+      "interEyePixels": 30.50422503990101,
+      "landmarkShift": 0.02121838997122989,
+      "native": {
+        "retention": 1.2453531150988169,
+        "sourceSignal": 0.28875585343195487
+      },
+      "structure": 0.9434857465525792
+    }
+  },
+  {
+    "id": "extra-crew-2",
+    "status": "pass",
+    "reason": "no-obvious-risk",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 1.276975090955113,
+        "sourceSignal": 0.8727540723767949
+      },
+      "cropPixels": 124.96633054309864,
+      "interEyePixels": 29.136171595107072,
+      "landmarkShift": 0.01124148846192962,
+      "native": {
+        "retention": 1.2442010982166338,
+        "sourceSignal": 0.2834104716990872
+      },
+      "structure": 0.9634707456914064
+    }
+  },
+  {
+    "id": "extra-crew-3",
+    "status": "pass",
+    "reason": "no-obvious-risk",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 1.2406872835055403,
+        "sourceSignal": 0.9574623741586277
+      },
+      "cropPixels": 130.85587369320083,
+      "interEyePixels": 30.18451856790457,
+      "landmarkShift": 0.015975440429095253,
+      "native": {
+        "retention": 1.1776411277603227,
+        "sourceSignal": 0.3244297230373343
+      },
+      "structure": 0.9477864327125192
+    }
+  },
+  {
+    "id": "extra-crew-4",
+    "status": "pass",
+    "reason": "no-obvious-risk",
+    "policyVersion": "face-guard-v1",
+    "evidence": {
+      "canonical": {
+        "retention": 1.3291570055248854,
+        "sourceSignal": 0.9001741488346015
+      },
+      "cropPixels": 118.41351066270047,
+      "interEyePixels": 27.853564111168023,
+      "landmarkShift": 0.01281486476506266,
+      "native": {
+        "retention": 1.2403556720948545,
+        "sourceSignal": 0.30180550134760886
+      },
+      "structure": 0.9217417934800914
+    }
+  }
+]

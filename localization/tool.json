@@ -1,36 +1,13 @@
 {
-  "tool.meta.title": {
-    "localizations": {
-      "en": "Free AI Photo Upscaler Online — 2× and 4× in Your Browser | UScale",
-      "ru": "Увеличить фото онлайн бесплатно — 2× и 4× в браузере | UScale",
-      "de": "Foto online kostenlos vergrößern – 2× und 4× im Browser | UScale",
-      "ja": "写真を無料で高画質化 — ブラウザで2倍・4倍｜UScale",
-      "fr": "Agrandir une photo en ligne gratuitement — 2× et 4× | UScale",
-      "es": "Ampliar fotos online gratis — 2× y 4× en el navegador | UScale",
-      "zh": "免费在线 AI 图片放大 2×/4×｜UScale"
-    },
-    "comment": "Page or section title; preserve product names."
-  },
-  "tool.meta.description": {
-    "localizations": {
-      "en": "Upscale a photo 2× or 4× for free, right in your browser. No sign-up and no upload: the photo is processed on your device.",
-      "ru": "Бесплатно увеличьте фото в 2 или 4 раза прямо в браузере. Без регистрации и загрузки на сервер: фото обрабатывается на вашем устройстве.",
-      "de": "Vergrößere ein Foto kostenlos um 2× oder 4× direkt im Browser. Ohne Anmeldung und ohne Upload: Das Foto wird auf deinem Gerät verarbeitet.",
-      "ja": "ブラウザで写真を無料で2倍・4倍に高画質化。登録もアップロードも不要で、写真はお使いのデバイス上で処理されます。",
-      "fr": "Agrandissez une photo 2× ou 4× gratuitement, directement dans votre navigateur. Sans inscription ni envoi : la photo est traitée sur votre appareil.",
-      "es": "Amplía una foto 2× o 4× gratis, directamente en tu navegador. Sin registro ni subidas: la foto se procesa en tu dispositivo.",
-      "zh": "在浏览器中免费把图片放大 2× 或 4×。无需注册，无需上传：图片在你的设备上处理。"
-    }
-  },
   "tool.hero_link": {
     "localizations": {
-      "en": "Upscale photos online",
-      "ru": "Увеличить фото онлайн",
-      "de": "Fotos online vergrößern",
-      "ja": "オンラインで写真を拡大",
-      "fr": "Agrandir des photos en ligne",
-      "es": "Ampliar fotos online",
-      "zh": "在线放大图片"
+      "en": "Enhance photo quality online",
+      "ru": "Улучшить качество фото онлайн",
+      "de": "Bildqualität online verbessern",
+      "ja": "写真をオンラインで高画質化",
+      "fr": "Améliorer la qualité d’une photo en ligne",
+      "es": "Mejorar la calidad de una foto online",
+      "zh": "在线让图片变清晰"
     },
     "comment": "Button label in the home page card that opens the free browser upscaler. Keep it short: tool.eyebrow is shown under it."
   },
@@ -43,28 +20,6 @@
       "fr": "Gratuit · Dans votre navigateur",
       "es": "Gratis · En tu navegador",
       "zh": "免费 · 在浏览器中"
-    }
-  },
-  "tool.h1": {
-    "localizations": {
-      "en": "Upscale your photo",
-      "ru": "Увеличьте фото",
-      "de": "Vergrößere dein Foto",
-      "ja": "写真を高画質化",
-      "fr": "Agrandissez votre photo",
-      "es": "Amplía tu foto",
-      "zh": "放大你的图片"
-    }
-  },
-  "tool.sub": {
-    "localizations": {
-      "en": "Make it 2× or 4× larger. The photo never leaves your device.",
-      "ru": "В 2 или 4 раза больше. Фото не покидает ваше устройство.",
-      "de": "Mach es 2× oder 4× größer. Das Foto verlässt dein Gerät nie.",
-      "ja": "2倍・4倍に拡大。写真がデバイスの外に出ることはありません。",
-      "fr": "Agrandissez-la 2× ou 4×. La photo ne quitte jamais votre appareil.",
-      "es": "Amplíala 2× o 4×. La foto nunca sale de tu dispositivo.",
-      "zh": "放大 2× 或 4×。图片不会离开你的设备。"
     }
   },
   "tool.private": {
@@ -212,14 +167,15 @@
   },
   "tool.faces": {
     "localizations": {
-      "en": "Enhance faces",
-      "ru": "Улучшить лица",
-      "de": "Gesichtsverbesserung",
-      "ja": "顔を強調",
-      "fr": "Améliorer les visages",
-      "es": "Mejorar rostros",
-      "zh": "增强人脸"
-    }
+      "en": "Auto-enhance faces",
+      "ru": "Автоулучшение лиц",
+      "de": "Automatische Gesichtsverbesserung",
+      "ja": "顔を自動で強調",
+      "fr": "Amélioration auto des visages",
+      "es": "Mejora automática de rostros",
+      "zh": "自动增强人脸"
+    },
+    "comment": "Label of the on-device face toggle; the tool finds faces by itself."
   },
   "tool.progress_label": {
     "localizations": {
@@ -2289,126 +2245,6 @@
     },
     "comment": "Browser upscaler runtime copy; preserve {placeholders}."
   },
-  "tool.js.eyebrow_cloud": {
-    "localizations": {
-      "en": "Pro · In the cloud",
-      "ru": "Pro · В облаке",
-      "de": "Pro · In der Cloud",
-      "ja": "Pro・クラウド",
-      "fr": "Pro · Dans le cloud",
-      "es": "Pro · En la nube",
-      "zh": "Pro · 云端处理"
-    },
-    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
-  },
-  "tool.js.h1_creative": {
-    "localizations": {
-      "en": "Upscale with natural detail",
-      "ru": "Увеличение с естественными деталями",
-      "de": "Vergrößern mit natürlichen Details",
-      "ja": "自然なディテールで高画質化",
-      "fr": "Agrandir avec des détails naturels",
-      "es": "Amplía con detalle natural",
-      "zh": "放大并添加自然细节"
-    },
-    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
-  },
-  "tool.js.lead_creative": {
-    "localizations": {
-      "en": "Up to 8K with new, natural detail. Processed in the cloud with credits.",
-      "ru": "До 8K с новыми естественными деталями. Обработка в облаке за кредиты.",
-      "de": "Bis 8K mit neuen, natürlichen Details. In der Cloud verarbeitet, mit Credits.",
-      "ja": "新しい自然なディテールで最大8Kに。クレジットを使ってクラウドで処理します。",
-      "fr": "Jusqu’à 8K avec de nouveaux détails naturels. Traité dans le cloud avec des crédits.",
-      "es": "Hasta 8K con detalle nuevo y natural. Se procesa en la nube con créditos.",
-      "zh": "最高可达 8K，并添加新的自然细节。使用积分在云端处理。"
-    },
-    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
-  },
-  "tool.js.h1_restore": {
-    "localizations": {
-      "en": "Restore old photos",
-      "ru": "Реставрация старых фото",
-      "de": "Alte Fotos restaurieren",
-      "ja": "古い写真を修復",
-      "fr": "Restaurer de vieilles photos",
-      "es": "Restaura fotos antiguas",
-      "zh": "老照片修复"
-    },
-    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
-  },
-  "tool.js.lead_restore": {
-    "localizations": {
-      "en": "Remove scratches and damage, and bring back color. Processed in the cloud with credits.",
-      "ru": "Уберите царапины и повреждения, верните цвет. Обработка в облаке за кредиты.",
-      "de": "Entferne Kratzer und Schäden und bring Farbe zurück. In der Cloud verarbeitet, mit Credits.",
-      "ja": "傷や損傷を取り除き、色を取り戻します。クレジットを使ってクラウドで処理します。",
-      "fr": "Supprimez rayures et dégâts, et retrouvez les couleurs. Traité dans le cloud avec des crédits.",
-      "es": "Elimina rayones y daños, y recupera el color. Se procesa en la nube con créditos.",
-      "zh": "去除划痕和损伤，还原色彩。使用积分在云端处理。"
-    },
-    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
-  },
-  "tool.picker_eyebrow": {
-    "localizations": {
-      "en": "UScale tools",
-      "ru": "Инструменты UScale",
-      "de": "UScale-Tools",
-      "ja": "UScaleのツール",
-      "fr": "Outils UScale",
-      "es": "Herramientas de UScale",
-      "zh": "UScale 工具"
-    },
-    "comment": "Browser upscaler tool picker; preserve product names."
-  },
-  "tool.picker_h1": {
-    "localizations": {
-      "en": "Upscale photos",
-      "ru": "Увеличить фото",
-      "de": "Fotos vergrößern",
-      "ja": "写真を高画質化",
-      "fr": "Agrandir des photos",
-      "es": "Ampliar fotos",
-      "zh": "图片放大"
-    },
-    "comment": "Browser upscaler tool picker; preserve product names."
-  },
-  "tool.picker_lead": {
-    "localizations": {
-      "en": "Choose a tool to start. The upscaler is free and runs on your device; Pro tools run in the cloud with credits.",
-      "ru": "Выберите инструмент. Увеличение бесплатно и работает на вашем устройстве; Pro-инструменты работают в облаке за кредиты.",
-      "de": "Wähle ein Tool. Das Vergrößern ist kostenlos und läuft auf deinem Gerät; Pro-Tools laufen in der Cloud mit Credits.",
-      "ja": "ツールを選んでください。高画質化は無料で端末上で処理されます。Proツールはクレジットを使ってクラウドで処理します。",
-      "fr": "Choisissez un outil. L’agrandissement est gratuit et s’exécute sur votre appareil ; les outils Pro fonctionnent dans le cloud avec des crédits.",
-      "es": "Elige una herramienta. La ampliación es gratis y funciona en tu dispositivo; las herramientas Pro funcionan en la nube con créditos.",
-      "zh": "选择一个工具开始。放大功能免费，在你的设备上运行；Pro 工具使用积分在云端运行。"
-    },
-    "comment": "Browser upscaler tool picker; preserve product names."
-  },
-  "tool.back_to_tools": {
-    "localizations": {
-      "en": "All tools",
-      "ru": "Все инструменты",
-      "de": "Alle Tools",
-      "ja": "すべてのツール",
-      "fr": "Tous les outils",
-      "es": "Todas las herramientas",
-      "zh": "全部工具"
-    },
-    "comment": "Browser upscaler tool picker; preserve product names."
-  },
-  "tool.signin_checking": {
-    "localizations": {
-      "en": "Checking sign-in…",
-      "ru": "Проверяем вход…",
-      "de": "Anmeldung wird geprüft…",
-      "ja": "ログインを確認しています…",
-      "fr": "Vérification de la connexion…",
-      "es": "Comprobando el inicio de sesión…",
-      "zh": "正在检查登录状态…"
-    },
-    "comment": "Browser upscaler tool picker; preserve product names."
-  },
   "tool.js.cloud_merging": {
     "localizations": {
       "en": "Putting your photo together",
@@ -2469,30 +2305,6 @@
     },
     "comment": "Browser upscaler tool picker; preserve {placeholders}."
   },
-  "tool.js.signin_stalled": {
-    "localizations": {
-      "en": "We couldn’t check your sign-in. Check your connection and try again.",
-      "ru": "Не удалось проверить вход. Проверьте подключение и попробуйте снова.",
-      "de": "Deine Anmeldung konnte nicht geprüft werden. Prüfe deine Verbindung und versuche es erneut.",
-      "ja": "ログイン状態を確認できませんでした。接続を確認してもう一度お試しください。",
-      "fr": "Impossible de vérifier votre connexion au compte. Vérifiez votre connexion et réessayez.",
-      "es": "No pudimos comprobar tu inicio de sesión. Revisa tu conexión e inténtalo de nuevo.",
-      "zh": "无法检查你的登录状态。请检查网络连接后重试。"
-    },
-    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
-  },
-  "tool.js.signin_go": {
-    "localizations": {
-      "en": "Go to sign-in",
-      "ru": "Перейти ко входу",
-      "de": "Zur Anmeldung",
-      "ja": "ログインへ進む",
-      "fr": "Aller à la connexion",
-      "es": "Ir al inicio de sesión",
-      "zh": "前往登录"
-    },
-    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
-  },
   "tool.js.cloud_test_mode": {
     "localizations": {
       "en": "This is UScale's test site, where credits are free, so buying and using them is limited to the team. If you're a developer, ask for your email to be added to TEST_ALLOWED_EMAILS.",
@@ -2547,6 +2359,413 @@
       "fr": "Impossible d’enregistrer le PNG transparent. Essayez une image plus petite ou 2×. La transparence a été conservée.",
       "es": "No se pudo guardar el PNG transparente. Prueba una imagen más pequeña o 2×. No se ha eliminado la transparencia.",
       "zh": "无法保存透明PNG。请尝试较小的图片或2倍放大。透明度未被移除。"
+    }
+  },
+  "tool.page.hub.title": {
+    "localizations": {
+      "en": "Enhance Photo Quality Online Free — No Sign-Up | UScale",
+      "ru": "Улучшить качество фото онлайн бесплатно, без регистрации | UScale",
+      "es": "Mejorar calidad de foto online gratis, sin registro | UScale",
+      "fr": "Améliorer la qualité d’une photo en ligne gratuitement | UScale",
+      "de": "Bildqualität online verbessern – kostenlos, ohne Anmeldung | UScale",
+      "ja": "写真を高画質化できるサイト｜無料・登録不要｜UScale",
+      "zh": "图片变清晰 在线免费 · 无需注册｜UScale"
+    }
+  },
+  "tool.page.hub.description": {
+    "localizations": {
+      "en": "Improve photo quality online for free: AI sharpens detail, cleans up blur and enhances faces. No sign-up and no upload — the photo is processed on your device.",
+      "ru": "Улучшите качество фото онлайн бесплатно: нейросеть повысит чёткость, уберёт размытие и улучшит лица. Без регистрации и загрузки на сервер — фото обрабатывается на вашем устройстве.",
+      "es": "Mejora la calidad de una foto online gratis: la IA aumenta la nitidez, reduce el desenfoque y mejora las caras. Sin registro ni subidas: la foto se procesa en tu dispositivo.",
+      "fr": "Améliorez la qualité d’une photo en ligne gratuitement : l’IA renforce la netteté, réduit le flou et améliore les visages. Sans inscription ni envoi : la photo est traitée sur votre appareil.",
+      "de": "Verbessere die Bildqualität online kostenlos: Die KI schärft Details, reduziert Unschärfe und verbessert Gesichter. Ohne Anmeldung und ohne Upload – das Foto wird auf deinem Gerät verarbeitet.",
+      "ja": "写真の画質を無料でオンライン改善。AIがディテールを鮮明にし、ぼやけを抑えて顔をきれいにします。登録もアップロードも不要で、写真はお使いのデバイス上で処理されます。",
+      "zh": "免费在线提升图片画质：AI 让细节更清晰、减轻模糊并增强人脸。无需注册，无需上传——图片在你的设备上处理。"
+    }
+  },
+  "tool.page.hub.h1": {
+    "localizations": {
+      "en": "Enhance photo quality online",
+      "ru": "Улучшить качество фото онлайн",
+      "es": "Mejorar la calidad de una foto online",
+      "fr": "Améliorer la qualité d’une photo en ligne",
+      "de": "Bildqualität online verbessern",
+      "ja": "写真をオンラインで高画質化",
+      "zh": "在线让图片变清晰"
+    }
+  },
+  "tool.page.free.title": {
+    "localizations": {
+      "en": "Free Image Upscaler Online — 2× and 4× | UScale",
+      "ru": "Увеличить фото онлайн бесплатно — в 2 и 4 раза | UScale",
+      "es": "Ampliar fotos online gratis — 2× y 4× | UScale",
+      "fr": "Agrandir une photo en ligne gratuitement — 2× et 4× | UScale",
+      "de": "Foto online kostenlos vergrößern – 2× und 4× | UScale",
+      "ja": "画像を無料で拡大 — 2倍・4倍｜UScale",
+      "zh": "免费在线图片放大 2×/4×｜UScale"
+    }
+  },
+  "tool.page.free.description": {
+    "localizations": {
+      "en": "Upscale an image 2× for free online, or 4× on a computer or iPad. AI keeps it sharp. No sign-up and no upload: the photo is processed on your device.",
+      "ru": "Увеличьте фото в 2 раза бесплатно онлайн, а на компьютере или iPad — в 4 раза. Нейросеть сохраняет чёткость. Без регистрации и загрузки: фото обрабатывается на вашем устройстве.",
+      "es": "Amplía una imagen 2× gratis online, o 4× en un ordenador o iPad. La IA mantiene la nitidez. Sin registro ni subidas: la foto se procesa en tu dispositivo.",
+      "fr": "Agrandissez une image 2× gratuitement en ligne, ou 4× sur un ordinateur ou un iPad. L’IA garde la netteté. Sans inscription ni envoi : la photo est traitée sur votre appareil.",
+      "de": "Vergrößere ein Bild kostenlos online um 2×, am Computer oder iPad um 4×. Die KI hält es scharf. Ohne Anmeldung und ohne Upload: Das Foto wird auf deinem Gerät verarbeitet.",
+      "ja": "画像を無料でオンライン2倍に拡大。パソコンやiPadなら4倍も可能。AIが鮮明さを保ちます。登録もアップロードも不要で、写真はデバイス上で処理されます。",
+      "zh": "免费在线把图片放大 2 倍，电脑或 iPad 上可放大 4 倍。AI 保持清晰。无需注册，无需上传：图片在你的设备上处理。"
+    }
+  },
+  "tool.page.free.h1": {
+    "localizations": {
+      "en": "Upscale images online for free",
+      "ru": "Увеличить фото онлайн бесплатно",
+      "es": "Ampliar fotos online gratis",
+      "fr": "Agrandir une photo en ligne gratuitement",
+      "de": "Foto online kostenlos vergrößern",
+      "ja": "画像を無料でオンライン拡大",
+      "zh": "免费在线放大图片"
+    }
+  },
+  "tool.page.creative.title": {
+    "localizations": {
+      "en": "Creative AI Upscale Online — Up to 8K with Natural Detail | UScale",
+      "ru": "Увеличить фото с ИИ-детализацией онлайн — до 8K | UScale",
+      "es": "Ampliación creativa con IA online — hasta 8K con detalle natural | UScale",
+      "fr": "Agrandissement créatif par IA en ligne — jusqu’à 8K | UScale",
+      "de": "Kreatives KI-Upscaling online – bis 8K mit natürlichen Details | UScale",
+      "ja": "AIクリエイティブ高画質化 — 最大8Kで自然なディテール｜UScale",
+      "zh": "AI 创意放大 在线 — 最高 8K 自然细节｜UScale"
+    }
+  },
+  "tool.page.creative.description": {
+    "localizations": {
+      "en": "Upscale a photo to 2K, 4K or 8K and let AI add natural detail. Processed in the cloud for credits; choose a photo first, sign in when you start.",
+      "ru": "Увеличьте фото до 2K, 4K или 8K — нейросеть добавит естественные детали. Обработка в облаке за кредиты; выберите фото, а войти можно при запуске.",
+      "es": "Amplía una foto a 2K, 4K u 8K y deja que la IA añada detalle natural. Se procesa en la nube con créditos; elige la foto y inicia sesión al empezar.",
+      "fr": "Agrandissez une photo en 2K, 4K ou 8K et laissez l’IA ajouter des détails naturels. Traitement dans le cloud avec des crédits ; choisissez la photo, connectez-vous au lancement.",
+      "de": "Vergrößere ein Foto auf 2K, 4K oder 8K und lass die KI natürliche Details ergänzen. Verarbeitung in der Cloud mit Credits; Foto wählen, beim Start anmelden.",
+      "ja": "写真を2K・4K・8Kに拡大し、AIが自然なディテールを描き足します。クレジットを使ってクラウドで処理。写真を選び、開始時にサインインします。",
+      "zh": "把图片放大到 2K、4K 或 8K，由 AI 补充自然细节。使用积分在云端处理；先选择图片，开始时再登录。"
+    }
+  },
+  "tool.page.creative.h1": {
+    "localizations": {
+      "en": "Upscale with natural detail",
+      "ru": "Увеличение с естественными деталями",
+      "es": "Ampliar con detalle natural",
+      "fr": "Agrandir avec des détails naturels",
+      "de": "Vergrößern mit natürlichen Details",
+      "ja": "自然なディテールで高画質化",
+      "zh": "以自然细节放大"
+    }
+  },
+  "tool.page.restore.title": {
+    "localizations": {
+      "en": "Restore Old Photos Online — Remove Scratches, Add Color | UScale",
+      "ru": "Реставрация старых фото онлайн — убрать царапины и раскрасить | UScale",
+      "es": "Restaurar fotos antiguas online — quitar arañazos y colorear | UScale",
+      "fr": "Restaurer de vieilles photos en ligne — rayures et couleur | UScale",
+      "de": "Alte Fotos online restaurieren – Kratzer entfernen, kolorieren | UScale",
+      "ja": "古い写真をオンラインで修復 — 傷を消してカラー化｜UScale",
+      "zh": "在线修复老照片 — 去除划痕并上色｜UScale"
+    }
+  },
+  "tool.page.restore.description": {
+    "localizations": {
+      "en": "Restore old and damaged photos online: AI removes scratches and creases, sharpens faces and can add color. Processed in the cloud for credits.",
+      "ru": "Отреставрируйте старые и повреждённые фото онлайн: нейросеть уберёт царапины и заломы, улучшит лица и может раскрасить снимок. Обработка в облаке за кредиты.",
+      "es": "Restaura fotos antiguas y dañadas online: la IA quita arañazos y pliegues, mejora las caras y puede añadir color. Se procesa en la nube con créditos.",
+      "fr": "Restaurez en ligne des photos anciennes et abîmées : l’IA retire rayures et pliures, améliore les visages et peut ajouter la couleur. Traitement dans le cloud avec des crédits.",
+      "de": "Restauriere alte und beschädigte Fotos online: Die KI entfernt Kratzer und Knicke, verbessert Gesichter und kann kolorieren. Verarbeitung in der Cloud mit Credits.",
+      "ja": "古い写真や傷んだ写真をオンラインで修復。AIが傷や折り目を消し、顔を鮮明にし、カラー化もできます。クレジットを使ってクラウドで処理します。",
+      "zh": "在线修复老旧和受损照片：AI 去除划痕和折痕、增强人脸，还能上色。使用积分在云端处理。"
+    }
+  },
+  "tool.page.restore.h1": {
+    "localizations": {
+      "en": "Restore old photos online",
+      "ru": "Реставрация старых фото онлайн",
+      "es": "Restaurar fotos antiguas online",
+      "fr": "Restaurer de vieilles photos en ligne",
+      "de": "Alte Fotos online restaurieren",
+      "ja": "古い写真をオンラインで修復",
+      "zh": "在线修复老照片"
+    }
+  },
+  "tool.page.common.faq_h": {
+    "localizations": {
+      "en": "Questions and answers",
+      "ru": "Вопросы и ответы",
+      "es": "Preguntas frecuentes",
+      "fr": "Questions fréquentes",
+      "de": "Häufige Fragen",
+      "ja": "よくある質問",
+      "zh": "常见问题"
+    }
+  },
+  "tool.page.hub.faq.0.q": {
+    "localizations": {
+      "en": "Is it really free?",
+      "ru": "Это правда бесплатно?",
+      "es": "¿De verdad es gratis?",
+      "fr": "C’est vraiment gratuit ?",
+      "de": "Ist das wirklich kostenlos?",
+      "ja": "本当に無料ですか？",
+      "zh": "真的免费吗？"
+    }
+  },
+  "tool.page.hub.faq.0.a": {
+    "localizations": {
+      "en": "Yes. Upscaling on your device has no limit on the number of photos and adds no watermark. Only Creative upscale and Restore, which run in the cloud, use credits.",
+      "ru": "Да. Обработка на устройстве не ограничена по числу фото и не добавляет водяной знак. Кредиты нужны только для креативного увеличения и реставрации — они работают в облаке.",
+      "es": "Sí. La ampliación en tu dispositivo no tiene límite de fotos ni añade marca de agua. Solo la ampliación creativa y la restauración, que funcionan en la nube, usan créditos.",
+      "fr": "Oui. L’agrandissement sur votre appareil n’a pas de limite de photos et n’ajoute pas de filigrane. Seuls l’agrandissement créatif et la restauration, qui fonctionnent dans le cloud, utilisent des crédits.",
+      "de": "Ja. Die Verarbeitung auf dem Gerät hat kein Fotolimit und fügt kein Wasserzeichen hinzu. Nur kreatives Upscaling und Restaurieren laufen in der Cloud und kosten Credits.",
+      "ja": "はい。デバイス上の処理は枚数無制限で、透かしも入りません。クレジットが必要なのは、クラウドで処理するクリエイティブ高画質化と修復だけです。",
+      "zh": "是的。在设备上处理不限张数，也不加水印。只有在云端运行的创意放大和修复需要积分。"
+    }
+  },
+  "tool.page.hub.faq.1.q": {
+    "localizations": {
+      "en": "Do I need to sign up?",
+      "ru": "Нужна ли регистрация?",
+      "es": "¿Tengo que registrarme?",
+      "fr": "Faut-il s’inscrire ?",
+      "de": "Muss ich mich anmelden?",
+      "ja": "登録は必要ですか？",
+      "zh": "需要注册吗？"
+    }
+  },
+  "tool.page.hub.faq.1.a": {
+    "localizations": {
+      "en": "No. The free upscaler works without an account. An account is only needed for the cloud tools, because credits and history are tied to it.",
+      "ru": "Нет. Бесплатный инструмент работает без аккаунта. Аккаунт нужен только для облачных инструментов: к нему привязаны кредиты и история.",
+      "es": "No. El ampliador gratuito funciona sin cuenta. Solo las herramientas en la nube necesitan una, porque los créditos y el historial van ligados a ella.",
+      "fr": "Non. L’outil gratuit fonctionne sans compte. Un compte n’est nécessaire que pour les outils dans le cloud, car les crédits et l’historique y sont liés.",
+      "de": "Nein. Das kostenlose Tool funktioniert ohne Konto. Ein Konto brauchst du nur für die Cloud-Tools, weil Credits und Verlauf daran hängen.",
+      "ja": "いいえ。無料ツールはアカウントなしで使えます。アカウントが必要なのはクラウドツールだけで、クレジットと履歴がアカウントに紐づきます。",
+      "zh": "不需要。免费工具无需账号即可使用。只有云端工具需要账号，因为积分和历史记录与账号绑定。"
+    }
+  },
+  "tool.page.hub.faq.2.q": {
+    "localizations": {
+      "en": "Is my photo uploaded anywhere?",
+      "ru": "Фото куда-нибудь загружается?",
+      "es": "¿Se sube mi foto a algún sitio?",
+      "fr": "Ma photo est-elle envoyée quelque part ?",
+      "de": "Wird mein Foto irgendwo hochgeladen?",
+      "ja": "写真はどこかにアップロードされますか？",
+      "zh": "我的图片会被上传吗？"
+    }
+  },
+  "tool.page.hub.faq.2.a": {
+    "localizations": {
+      "en": "No. The neural network runs in your browser, so the photo stays on your device. Only the cloud tools upload the photo, and they say so before you start.",
+      "ru": "Нет. Нейросеть работает в вашем браузере, поэтому фото остаётся на устройстве. Загружают фото только облачные инструменты, и они предупреждают об этом заранее.",
+      "es": "No. La red neuronal funciona en tu navegador, así que la foto se queda en tu dispositivo. Solo las herramientas en la nube suben la foto, y lo indican antes de empezar.",
+      "fr": "Non. Le réseau neuronal fonctionne dans votre navigateur, la photo reste donc sur votre appareil. Seuls les outils dans le cloud envoient la photo, et ils le disent avant de commencer.",
+      "de": "Nein. Das neuronale Netz läuft in deinem Browser, das Foto bleibt also auf deinem Gerät. Nur die Cloud-Tools laden das Foto hoch, und sie sagen das vorher.",
+      "ja": "いいえ。ニューラルネットワークはブラウザ内で動くので、写真はデバイスから出ません。写真をアップロードするのはクラウドツールだけで、開始前にその旨を表示します。",
+      "zh": "不会。神经网络在你的浏览器中运行，图片留在你的设备上。只有云端工具会上传图片，并会在开始前说明。"
+    }
+  },
+  "tool.page.common.guide_try": {
+    "localizations": {
+      "en": "No app at hand? Try it online, without installing anything:",
+      "ru": "Нет приложения под рукой? Попробуйте онлайн, без установки:",
+      "es": "¿No tienes la app a mano? Pruébalo online, sin instalar nada:",
+      "fr": "Pas l’app sous la main ? Essayez en ligne, sans rien installer :",
+      "de": "Keine App zur Hand? Probier es online, ohne etwas zu installieren:",
+      "ja": "アプリが手元にない場合は、インストール不要のオンライン版で：",
+      "zh": "手边没有 App？无需安装，直接在线试试："
+    }
+  },
+  "tool.js.handoff_failed": {
+    "localizations": {
+      "en": "Your photo couldn’t be carried over to this tool. Choose it again.",
+      "ru": "Не удалось перенести фото в этот инструмент. Выберите его снова.",
+      "es": "No se pudo pasar tu foto a esta herramienta. Vuelve a elegirla.",
+      "fr": "Votre photo n’a pas pu être transférée vers cet outil. Choisissez-la à nouveau.",
+      "de": "Dein Foto konnte nicht in dieses Tool übernommen werden. Wähle es erneut.",
+      "ja": "写真をこのツールに引き継げませんでした。もう一度選んでください。",
+      "zh": "未能把图片带到此工具，请重新选择。"
+    }
+  },
+  "tool.js.signin_checking": {
+    "localizations": {
+      "en": "Checking sign-in…",
+      "ru": "Проверяем вход…",
+      "es": "Comprobando el inicio de sesión…",
+      "fr": "Vérification de la connexion…",
+      "de": "Anmeldung wird geprüft…",
+      "ja": "ログインを確認しています…",
+      "zh": "正在检查登录状态…"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.signin_stalled": {
+    "localizations": {
+      "en": "We couldn’t check your sign-in. Check your connection and try again.",
+      "ru": "Не удалось проверить вход. Проверьте подключение и попробуйте снова.",
+      "es": "No pudimos comprobar tu inicio de sesión. Revisa tu conexión e inténtalo de nuevo.",
+      "fr": "Impossible de vérifier votre connexion au compte. Vérifiez votre connexion et réessayez.",
+      "de": "Deine Anmeldung konnte nicht geprüft werden. Prüfe deine Verbindung und versuche es erneut.",
+      "ja": "ログイン状態を確認できませんでした。接続を確認してもう一度お試しください。",
+      "zh": "无法检查你的登录状态。请检查网络连接后重试。"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.signin_go": {
+    "localizations": {
+      "en": "Go to sign-in",
+      "ru": "Перейти ко входу",
+      "es": "Ir al inicio de sesión",
+      "fr": "Aller à la connexion",
+      "de": "Zur Anmeldung",
+      "ja": "ログインへ進む",
+      "zh": "前往登录"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.h1": {
+    "localizations": {
+      "en": "Upscale your photo",
+      "ru": "Увеличьте фото",
+      "de": "Vergrößere dein Foto",
+      "ja": "写真を高画質化",
+      "fr": "Agrandissez votre photo",
+      "es": "Amplía tu foto",
+      "zh": "放大你的图片"
+    }
+  },
+  "tool.sub": {
+    "localizations": {
+      "en": "Make it 2× or 4× larger. The photo never leaves your device.",
+      "ru": "В 2 или 4 раза больше. Фото не покидает ваше устройство.",
+      "de": "Mach es 2× oder 4× größer. Das Foto verlässt dein Gerät nie.",
+      "ja": "2倍・4倍に拡大。写真がデバイスの外に出ることはありません。",
+      "fr": "Agrandissez-la 2× ou 4×. La photo ne quitte jamais votre appareil.",
+      "es": "Amplíala 2× o 4×. La foto nunca sale de tu dispositivo.",
+      "zh": "放大 2× 或 4×。图片不会离开你的设备。"
+    }
+  },
+  "tool.back_to_tools": {
+    "localizations": {
+      "en": "All tools",
+      "ru": "Все инструменты",
+      "de": "Alle Tools",
+      "ja": "すべてのツール",
+      "fr": "Tous les outils",
+      "es": "Todas las herramientas",
+      "zh": "全部工具"
+    },
+    "comment": "Browser upscaler tool picker; preserve product names."
+  },
+  "tool.picker_eyebrow": {
+    "localizations": {
+      "en": "UScale tools",
+      "ru": "Инструменты UScale",
+      "de": "UScale-Tools",
+      "ja": "UScaleのツール",
+      "fr": "Outils UScale",
+      "es": "Herramientas de UScale",
+      "zh": "UScale 工具"
+    },
+    "comment": "Browser upscaler tool picker; preserve product names."
+  },
+  "tool.picker_h1": {
+    "localizations": {
+      "en": "Upscale photos",
+      "ru": "Улучшить фото",
+      "de": "Fotos vergrößern",
+      "ja": "写真を高画質化",
+      "fr": "Agrandir des photos",
+      "es": "Ampliar fotos",
+      "zh": "图片放大"
+    },
+    "comment": "Browser upscaler tool picker; preserve product names."
+  },
+  "tool.js.eyebrow_cloud": {
+    "localizations": {
+      "en": "Pro · In the cloud",
+      "ru": "Pro · В облаке",
+      "de": "Pro · In der Cloud",
+      "ja": "Pro・クラウド",
+      "fr": "Pro · Dans le cloud",
+      "es": "Pro · En la nube",
+      "zh": "Pro · 云端处理"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.h1_creative": {
+    "localizations": {
+      "en": "Upscale with natural detail",
+      "ru": "Увеличение с естественными деталями",
+      "de": "Vergrößern mit natürlichen Details",
+      "ja": "自然なディテールで高画質化",
+      "fr": "Agrandir avec des détails naturels",
+      "es": "Amplía con detalle natural",
+      "zh": "放大并添加自然细节"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.lead_creative": {
+    "localizations": {
+      "en": "Up to 8K with new, natural detail. Processed in the cloud with credits.",
+      "ru": "До 8K с новыми естественными деталями. Обработка в облаке за кредиты.",
+      "de": "Bis 8K mit neuen, natürlichen Details. In der Cloud verarbeitet, mit Credits.",
+      "ja": "新しい自然なディテールで最大8Kに。クレジットを使ってクラウドで処理します。",
+      "fr": "Jusqu’à 8K avec de nouveaux détails naturels. Traité dans le cloud avec des crédits.",
+      "es": "Hasta 8K con detalle nuevo y natural. Se procesa en la nube con créditos.",
+      "zh": "最高可达 8K，并添加新的自然细节。使用积分在云端处理。"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.h1_restore": {
+    "localizations": {
+      "en": "Restore old photos",
+      "ru": "Реставрация старых фото",
+      "de": "Alte Fotos restaurieren",
+      "ja": "古い写真を修復",
+      "fr": "Restaurer de vieilles photos",
+      "es": "Restaura fotos antiguas",
+      "zh": "老照片修复"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.js.lead_restore": {
+    "localizations": {
+      "en": "Remove scratches and damage, and bring back color. Processed in the cloud with credits.",
+      "ru": "Уберите царапины и повреждения, верните цвет. Обработка в облаке за кредиты.",
+      "de": "Entferne Kratzer und Schäden und bring Farbe zurück. In der Cloud verarbeitet, mit Credits.",
+      "ja": "傷や損傷を取り除き、色を取り戻します。クレジットを使ってクラウドで処理します。",
+      "fr": "Supprimez rayures et dégâts, et retrouvez les couleurs. Traité dans le cloud avec des crédits.",
+      "es": "Elimina rayones y daños, y recupera el color. Se procesa en la nube con créditos.",
+      "zh": "去除划痕和损伤，还原色彩。使用积分在云端处理。"
+    },
+    "comment": "Browser upscaler runtime copy; preserve {placeholders}."
+  },
+  "tool.page.hub.faq.3.q": {
+    "localizations": {
+      "en": "How is this different from the UScale app?",
+      "ru": "Чем это отличается от приложения UScale?",
+      "es": "¿En qué se diferencia de la app UScale?",
+      "fr": "Quelle différence avec l’app UScale ?",
+      "de": "Was ist der Unterschied zur UScale-App?",
+      "ja": "UScaleアプリとの違いは？",
+      "zh": "和 UScale App 有什么区别？"
+    }
+  },
+  "tool.page.hub.faq.3.a": {
+    "localizations": {
+      "en": "The app on iPhone, iPad and Mac does more: video, slow motion and more models, and it runs faster. The site is a quick way to enhance a single photo without installing anything.",
+      "ru": "Приложение для iPhone, iPad и Mac умеет больше: видео, замедление и другие модели, и работает быстрее. Сайт — быстрый способ улучшить одно фото без установки.",
+      "es": "La app para iPhone, iPad y Mac hace más: vídeo, cámara lenta y más modelos, y es más rápida. La web es una forma rápida de mejorar una foto sin instalar nada.",
+      "fr": "L’app pour iPhone, iPad et Mac en fait plus : vidéo, ralenti et davantage de modèles, et elle est plus rapide. Le site permet d’améliorer vite une photo sans rien installer.",
+      "de": "Die App für iPhone, iPad und Mac kann mehr: Video, Zeitlupe und weitere Modelle, und sie ist schneller. Die Website verbessert schnell ein einzelnes Foto, ohne etwas zu installieren.",
+      "ja": "iPhone・iPad・Mac向けアプリは動画やスローモーション、ほかのモデルにも対応し、より高速です。サイトは、何もインストールせずに1枚の写真をすばやく補正する方法です。",
+      "zh": "适用于 iPhone、iPad 和 Mac 的 App 功能更多：视频、慢动作和更多模型，而且更快。网站则是一种无需安装、快速处理单张图片的方式。"
     }
   }
 }

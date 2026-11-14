@@ -1,0 +1,142 @@
+[
+  {
+    "url": "https://upscales.app/upscale/",
+    "faq": true,
+    "faq_schema": true
+  },
+  {
+    "url": "https://upscales.app/upscale/free/",
+    "faq": false,
+    "faq_schema": false
+  },
+  {
+    "url": "https://upscales.app/upscale/creative/",
+    "faq": false,
+    "faq_schema": false
+  },
+  {
+    "url": "https://upscales.app/upscale/restore/",
+    "faq": false,
+    "faq_schema": false
+  },
+  {
+    "url": "https://upscales.app/ru/upscale/",
+    "faq": true,
+    "faq_schema": true
+  },
+  {
+    "url": "https://upscales.app/ru/upscale/free/",
+    "faq": false,
+    "faq_schema": false
+  },
+  {
+    "url": "https://upscales.app/ru/upscale/creative/",
+    "faq": false,
+    "faq_schema": false
+  },
+  {
+    "url": "https://upscales.app/ru/upscale/restore/",
+    "faq": false,
+    "faq_schema": false
+  },
+  {
+    "url": "https://upscales.app/de/upscale/",
+    "faq": true,
+    "faq_schema": true
+  },
+  {
+    "url": "https://upscales.app/de/upscale/free/",
+    "faq": false,
+    "faq_schema": false
+  },
+  {
+    "url": "https://upscales.app/de/upscale/creative/",
+    "faq": false,
+    "faq_schema": false
+  },
+  {
+    "url": "https://upscales.app/de/upscale/restore/",
+    "faq": false,
+    "faq_schema": false
+  },
+  {
+    "url": "https://upscales.app/es/upscale/",
+    "faq": true,
+    "faq_schema": true
+  },
+  {
+    "url": "https://upscales.app/es/upscale/free/",
+    "faq": false,
+    "faq_schema": false
+  },
+  {
+    "url": "https://upscales.app/es/upscale/creative/",
+    "faq": false,
+    "faq_schema": false
+  },
+  {
+    "url": "https://upscales.app/es/upscale/restore/",
+    "faq": false,
+    "faq_schema": false
+  },
+  {
+    "url": "https://upscales.app/fr/upscale/",
+    "faq": true,
+    "faq_schema": true
+  },
+  {
+    "url": "https://upscales.app/fr/upscale/free/",
+    "faq": false,
+    "faq_schema": false
+  },
+  {
+    "url": "https://upscales.app/fr/upscale/creative/",
+    "faq": false,
+    "faq_schema": false
+  },
+  {
+    "url": "https://upscales.app/fr/upscale/restore/",
+    "faq": false,
+    "faq_schema": false
+  },
+  {
+    "url": "https://upscales.app/ja/upscale/",
+    "faq": true,
+    "faq_schema": true
+  },
+  {
+    "url": "https://upscales.app/ja/upscale/free/",
+    "faq": false,
+    "faq_schema": false
+  },
+  {
+    "url": "https://upscales.app/ja/upscale/creative/",
+    "faq": false,
+    "faq_schema": false
+  },
+  {
+    "url": "https://upscales.app/ja/upscale/restore/",
+    "faq": false,
+    "faq_schema": false
+  },
+  {
+    "url": "https://upscales.app/zh/upscale/",
+    "faq": true,
+    "faq_schema": true
+  },
+  {
+    "url": "https://upscales.app/zh/upscale/free/",
+    "faq": false,
+    "faq_schema": false
+  },
+  {
+    "url": "https://upscales.app/zh/upscale/creative/",
+    "faq": false,
+    "faq_schema": false
+  },
+  {
+    "url": "https://upscales.app/zh/upscale/restore/",
+    "faq": false,
+    "faq_schema": false
+  }
+]

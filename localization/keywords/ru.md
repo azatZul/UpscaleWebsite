@@ -56,3 +56,4 @@ Placement: `улучшить качество фото` + `нейросеть` �
 
 **Already correct before this pass, confirmed by the data:** `увеличить фото без потери качества` in the 4K title (4 002, exact match), `улучшить качество видео` in the video title (49 120, exact match), and `iPhone` throughout rather than `смартфон`.
 
+**Browser tool (2026-11-13).** The online half of the cluster goes to the tool pages, not the home page: `улучшить качество фото онлайн бесплатно, без регистрации` → `/ru/upscale/` `<title>`, description and the short FAQ under the cards; `увеличить фото онлайн бесплатно` (the `увеличить фото` 52 360 cluster) → `/ru/upscale/free/`; `реставрация старых фото онлайн` → `/ru/upscale/restore/`. The original picker, short tool headings and controls stay unchanged: `/ru/upscale/` shows the three large cards and each card opens the corresponding tool URL. The home `<title>` keeps `на iPhone`, so the two answer different intents.

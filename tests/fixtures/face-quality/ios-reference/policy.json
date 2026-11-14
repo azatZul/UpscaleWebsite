@@ -1,0 +1,10 @@
+{
+  "version": "face-guard-v1",
+  "retention": 0.9,
+  "structure": 0.88,
+  "shift": 0.04,
+  "nativeRetention": 0.65,
+  "nativeSignal": 0.7,
+  "sourceSignal": 1.0,
+  "minInterEyePixels": 24
+}

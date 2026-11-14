@@ -1,0 +1,1302 @@
+{
+  "captured_at": "2026-11-13T11:49:19.029216+00:00",
+  "sitemap_url_count": 120,
+  "responses": [
+    {
+      "url": "https://upscales.app/",
+      "status": 200,
+      "final_url": "https://upscales.app/",
+      "title": "AI Photo Enhancer for iPhone — Unblur &amp; Upscale | UScale",
+      "canonical": "https://upscales.app/",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "7ddfe0b5a4f71752d24d86a0415ebf44b4c5199ee1dbca8f8a993848ad3cace8"
+    },
+    {
+      "url": "https://upscales.app/es/",
+      "status": 200,
+      "final_url": "https://upscales.app/es/",
+      "title": "Mejorar calidad de imagen con IA gratis | UScale",
+      "canonical": "https://upscales.app/es/",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "ed44711bccc39160135160ef5c04afb0be2394782335cdd2e2f5bc5beb77d74a"
+    },
+    {
+      "url": "https://upscales.app/fr/",
+      "status": 200,
+      "final_url": "https://upscales.app/fr/",
+      "title": "Améliorer la qualité d’une image avec l’IA | UScale",
+      "canonical": "https://upscales.app/fr/",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "4e0438c46bfd1392166717922d5e2e179f326c1b6bd6c70d3da671b832ab8d30"
+    },
+    {
+      "url": "https://upscales.app/de/",
+      "status": 200,
+      "final_url": "https://upscales.app/de/",
+      "title": "Bildqualität verbessern am iPhone – KI-App | UScale",
+      "canonical": "https://upscales.app/de/",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "8e5b547b3924fce3fff72ddf5439deac2e9fe3bae1fcc4a9d4011c178c37da82"
+    },
+    {
+      "url": "https://upscales.app/ja/",
+      "status": 200,
+      "final_url": "https://upscales.app/ja/",
+      "title": "iPhoneで写真をAI高画質化するアプリ｜UScale",
+      "canonical": "https://upscales.app/ja/",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "7ea2828b6ff9679262ffd46763b5a0ac4deb3edd14d0a0969c41ec4a5997ad35"
+    },
+    {
+      "url": "https://upscales.app/zh/",
+      "status": 200,
+      "final_url": "https://upscales.app/zh/",
+      "title": "iPhone AI 画质修复：模糊图片变清晰｜UScale",
+      "canonical": "https://upscales.app/zh/",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "80d374e69d8127b8e69cb1561cba2d0dacbb1a925b3a466ef58ff9a2b1034830"
+    },
+    {
+      "url": "https://upscales.app/ru/",
+      "status": 200,
+      "final_url": "https://upscales.app/ru/",
+      "title": "Улучшить качество фото на iPhone — нейросеть и 4K | UScale",
+      "canonical": "https://upscales.app/ru/",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "385467ae317cd2e2892745fa1a6e54fd9255adea9678e561195b4bfb11860aa5"
+    },
+    {
+      "url": "https://upscales.app/guides/",
+      "status": 200,
+      "final_url": "https://upscales.app/guides/",
+      "title": "UScale Guides — Unblur, Upscale &amp; Restore Photos",
+      "canonical": "https://upscales.app/guides/",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "e575573b6712bfdfd5da7d667ef6a6fb9f66977fedb11ffbad69cb9c5ba24fca"
+    },
+    {
+      "url": "https://upscales.app/es/guides/",
+      "status": 200,
+      "final_url": "https://upscales.app/es/guides/",
+      "title": "Guías UScale — Mejorar calidad, enfoque y restauración",
+      "canonical": "https://upscales.app/es/guides/",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "45af435357b62cec04ca0ff979168dbcb6e4641f47b99c739999d46746687a0c"
+    },
+    {
+      "url": "https://upscales.app/fr/guides/",
+      "status": 200,
+      "final_url": "https://upscales.app/fr/guides/",
+      "title": "Guides UScale — Déflouter, agrandir et restaurer",
+      "canonical": "https://upscales.app/fr/guides/",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "3bb25db2e9f3c7e1d952f6f268e35603e32d1199e9bdc81018ae7736fac0a5ce"
+    },
+    {
+      "url": "https://upscales.app/de/guides/",
+      "status": 200,
+      "final_url": "https://upscales.app/de/guides/",
+      "title": "UScale-Ratgeber – Fotos schärfen, vergrößern und retten",
+      "canonical": "https://upscales.app/de/guides/",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "899f9782126f38732258ab041fdd04404b7c54c3a3e56fb870e9ff29dab39ab6"
+    },
+    {
+      "url": "https://upscales.app/ja/guides/",
+      "status": 200,
+      "final_url": "https://upscales.app/ja/guides/",
+      "title": "UScaleガイド｜画像・動画の高画質化と修復",
+      "canonical": "https://upscales.app/ja/guides/",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "9efb82f55445091348287f3d2be98d38cd288d092c5ff71e91fb0bb7f32c3e58"
+    },
+    {
+      "url": "https://upscales.app/zh/guides/",
+      "status": 200,
+      "final_url": "https://upscales.app/zh/guides/",
+      "title": "UScale 教程：图片变清晰、放大与老照片修复",
+      "canonical": "https://upscales.app/zh/guides/",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "5c43e7c80836dd953efa0bda9c229472874c8b882b7a7098944e80368e4523ef"
+    },
+    {
+      "url": "https://upscales.app/ru/guides/",
+      "status": 200,
+      "final_url": "https://upscales.app/ru/guides/",
+      "title": "Руководства UScale — резкость, 4K и восстановление фото",
+      "canonical": "https://upscales.app/ru/guides/",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "0b95bd06a5173b81d5b541c6338abfe63d7fb219da4c289fd053cbe680d8b752"
+    },
+    {
+      "url": "https://upscales.app/guides/unblur-photo-iphone.html",
+      "status": 200,
+      "final_url": "https://upscales.app/guides/unblur-photo-iphone.html",
+      "title": "How to Unblur a Photo on iPhone (Free Method)",
+      "canonical": "https://upscales.app/guides/unblur-photo-iphone.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "79052d9bc30c4c4df27590a426ed3fc4b5839040e67c26a1f92567cec1fdebe8"
+    },
+    {
+      "url": "https://upscales.app/es/guides/unblur-photo-iphone.html",
+      "status": 200,
+      "final_url": "https://upscales.app/es/guides/unblur-photo-iphone.html",
+      "title": "Cómo mejorar la calidad de una imagen borrosa gratis",
+      "canonical": "https://upscales.app/es/guides/unblur-photo-iphone.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "a1c9a9a39c551d51872444fe81bb39d6a489f4a856a61eb8668720e76903253e"
+    },
+    {
+      "url": "https://upscales.app/fr/guides/unblur-photo-iphone.html",
+      "status": 200,
+      "final_url": "https://upscales.app/fr/guides/unblur-photo-iphone.html",
+      "title": "Comment corriger une photo floue gratuitement",
+      "canonical": "https://upscales.app/fr/guides/unblur-photo-iphone.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "5a081578045d8bee06cf72015f21f62856478ce31fb7cf5cc71582cc25fb532b"
+    },
+    {
+      "url": "https://upscales.app/de/guides/unblur-photo-iphone.html",
+      "status": 200,
+      "final_url": "https://upscales.app/de/guides/unblur-photo-iphone.html",
+      "title": "Unscharfe Fotos auf dem iPhone kostenlos schärfen",
+      "canonical": "https://upscales.app/de/guides/unblur-photo-iphone.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "2bab2452f7f42fb219d81c7eec7796109a42ce9f5a93f4a7f5d425099bf27d0d"
+    },
+    {
+      "url": "https://upscales.app/ja/guides/unblur-photo-iphone.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ja/guides/unblur-photo-iphone.html",
+      "title": "iPhoneでぼやけた画像を鮮明にする方法",
+      "canonical": "https://upscales.app/ja/guides/unblur-photo-iphone.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "f13d33aa3b2ccce2cabba1daa0737adc53ac5c2eb8e5c529c045f42efc9f16b1"
+    },
+    {
+      "url": "https://upscales.app/zh/guides/unblur-photo-iphone.html",
+      "status": 200,
+      "final_url": "https://upscales.app/zh/guides/unblur-photo-iphone.html",
+      "title": "如何在 iPhone 上让模糊图片变清晰（免费）",
+      "canonical": "https://upscales.app/zh/guides/unblur-photo-iphone.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "775f45bb079786cf8e4c3bf197a6e89363822de85c03fb4d8490ed0b80f556c3"
+    },
+    {
+      "url": "https://upscales.app/ru/guides/unblur-photo-iphone.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ru/guides/unblur-photo-iphone.html",
+      "title": "Как убрать размытие с фото на iPhone — 3 способа | UScale",
+      "canonical": "https://upscales.app/ru/guides/unblur-photo-iphone.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "ddd6ea773d35cf59335447d285e77391d85fff861cd1be63a237afb4084a68e8"
+    },
+    {
+      "url": "https://upscales.app/guides/restore-old-photos.html",
+      "status": 200,
+      "final_url": "https://upscales.app/guides/restore-old-photos.html",
+      "title": "How to Restore Old Photos on Your Phone with AI (2026)",
+      "canonical": "https://upscales.app/guides/restore-old-photos.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "a74c3a5738ad3f9934d6ce2ce9b2204357d74de8cab4ff751a51a588ac796166"
+    },
+    {
+      "url": "https://upscales.app/es/guides/restore-old-photos.html",
+      "status": 200,
+      "final_url": "https://upscales.app/es/guides/restore-old-photos.html",
+      "title": "Restaurar fotos antiguas con IA y mejor calidad (2026)",
+      "canonical": "https://upscales.app/es/guides/restore-old-photos.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "defeafbe40c01bbff11f9e7f39afa6e5488c055ffea08f784d7a0cf164eebe0c"
+    },
+    {
+      "url": "https://upscales.app/fr/guides/restore-old-photos.html",
+      "status": 200,
+      "final_url": "https://upscales.app/fr/guides/restore-old-photos.html",
+      "title": "Comment restaurer une photo ancienne avec IA en 2026",
+      "canonical": "https://upscales.app/fr/guides/restore-old-photos.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "dc8f1bc91704a88e74c690b7af86fce578d362c834b357ecff70654c85997c34"
+    },
+    {
+      "url": "https://upscales.app/de/guides/restore-old-photos.html",
+      "status": 200,
+      "final_url": "https://upscales.app/de/guides/restore-old-photos.html",
+      "title": "Alte Fotos mit dem iPhone und KI restaurieren (2026)",
+      "canonical": "https://upscales.app/de/guides/restore-old-photos.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "8f048a78ee4a26893e9fba83f30cc041636dc125e54038daacb6c1da43d22107"
+    },
+    {
+      "url": "https://upscales.app/ja/guides/restore-old-photos.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ja/guides/restore-old-photos.html",
+      "title": "AIで古い写真を修復する方法（2026）",
+      "canonical": "https://upscales.app/ja/guides/restore-old-photos.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "6e92d6ac4a373849e91a314292cdf4aef1b6e3cdcc28e2d42e960937c5d53a76"
+    },
+    {
+      "url": "https://upscales.app/zh/guides/restore-old-photos.html",
+      "status": 200,
+      "final_url": "https://upscales.app/zh/guides/restore-old-photos.html",
+      "title": "如何用 AI 修复老照片（2026）",
+      "canonical": "https://upscales.app/zh/guides/restore-old-photos.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "e02e3439d43533c3ff80eb6834eb719a465d9035e3b1a128fc1008f7993b1501"
+    },
+    {
+      "url": "https://upscales.app/ru/guides/restore-old-photos.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ru/guides/restore-old-photos.html",
+      "title": "Реставрация старых фото на iPhone с ИИ | UScale",
+      "canonical": "https://upscales.app/ru/guides/restore-old-photos.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "30b68569449dcfcea4e4be1838b088b258a0625cbd9dc6321a1175e9c7a74a77"
+    },
+    {
+      "url": "https://upscales.app/guides/colorize-black-and-white-photos.html",
+      "status": 200,
+      "final_url": "https://upscales.app/guides/colorize-black-and-white-photos.html",
+      "title": "How to Colorize Black and White Photos with AI (iPhone)",
+      "canonical": "https://upscales.app/guides/colorize-black-and-white-photos.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "484e2a509b64ffaa2eda47bc2b156c085341c212fc4b03d2afb882b94452e1c0"
+    },
+    {
+      "url": "https://upscales.app/es/guides/colorize-black-and-white-photos.html",
+      "status": 200,
+      "final_url": "https://upscales.app/es/guides/colorize-black-and-white-photos.html",
+      "title": "Colorear fotos antiguas con IA y mejorar calidad",
+      "canonical": "https://upscales.app/es/guides/colorize-black-and-white-photos.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "685120058f6b91bbdded05fad2eda1c6921cbb6aea41050733a406e2d138c371"
+    },
+    {
+      "url": "https://upscales.app/fr/guides/colorize-black-and-white-photos.html",
+      "status": 200,
+      "final_url": "https://upscales.app/fr/guides/colorize-black-and-white-photos.html",
+      "title": "Coloriser une photo ancienne noir et blanc avec IA",
+      "canonical": "https://upscales.app/fr/guides/colorize-black-and-white-photos.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "c733471d96b1142c28ef3d593e511a11e24713a2d315a96c64c349a2f972cec3"
+    },
+    {
+      "url": "https://upscales.app/de/guides/colorize-black-and-white-photos.html",
+      "status": 200,
+      "final_url": "https://upscales.app/de/guides/colorize-black-and-white-photos.html",
+      "title": "Schwarz-Weiß-Fotos mit KI kolorieren (iPhone)",
+      "canonical": "https://upscales.app/de/guides/colorize-black-and-white-photos.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "36c51fb42a17b20630b75ca7e7ffc9c9dd05f7c5681017eab77e25dd6aa0593d"
+    },
+    {
+      "url": "https://upscales.app/ja/guides/colorize-black-and-white-photos.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ja/guides/colorize-black-and-white-photos.html",
+      "title": "iPhoneで白黒写真をカラー化する方法",
+      "canonical": "https://upscales.app/ja/guides/colorize-black-and-white-photos.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "32dd1ead985190eaea17022447360859098347caba2e7ccf00462631d826d9be"
+    },
+    {
+      "url": "https://upscales.app/zh/guides/colorize-black-and-white-photos.html",
+      "status": 200,
+      "final_url": "https://upscales.app/zh/guides/colorize-black-and-white-photos.html",
+      "title": "如何用 AI 给黑白照片上色（iPhone）",
+      "canonical": "https://upscales.app/zh/guides/colorize-black-and-white-photos.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "a64533c169a993c8a5068dab1b52a3a01e9df3205f49cebf7782124c011b9ca4"
+    },
+    {
+      "url": "https://upscales.app/ru/guides/colorize-black-and-white-photos.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ru/guides/colorize-black-and-white-photos.html",
+      "title": "Как раскрасить чёрно-белую фотографию на iPhone | UScale",
+      "canonical": "https://upscales.app/ru/guides/colorize-black-and-white-photos.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "b6cf170286e872558b8cdb9b386d733ea2052407df4bf18120fcd5a542dac9e8"
+    },
+    {
+      "url": "https://upscales.app/guides/upscale-image-4k.html",
+      "status": 200,
+      "final_url": "https://upscales.app/guides/upscale-image-4k.html",
+      "title": "How to Upscale an Image to 4K on iPhone",
+      "canonical": "https://upscales.app/guides/upscale-image-4k.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "7cae03cb827b8b648e095ebc14978800366d9b5053ba4334d48cfa8f07f09383"
+    },
+    {
+      "url": "https://upscales.app/es/guides/upscale-image-4k.html",
+      "status": 200,
+      "final_url": "https://upscales.app/es/guides/upscale-image-4k.html",
+      "title": "Aumentar resolución de imagen a 4K y mejorar calidad",
+      "canonical": "https://upscales.app/es/guides/upscale-image-4k.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "9e3a94c6853207774f8a259495b6adbfb0d87d3ea89bc58257d85ffe216e069d"
+    },
+    {
+      "url": "https://upscales.app/fr/guides/upscale-image-4k.html",
+      "status": 200,
+      "final_url": "https://upscales.app/fr/guides/upscale-image-4k.html",
+      "title": "Comment agrandir une image en 4K",
+      "canonical": "https://upscales.app/fr/guides/upscale-image-4k.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "6d48d719a04ff14fe29718827417d5bb817c4bedd5aa1824c87748b7f37242e5"
+    },
+    {
+      "url": "https://upscales.app/de/guides/upscale-image-4k.html",
+      "status": 200,
+      "final_url": "https://upscales.app/de/guides/upscale-image-4k.html",
+      "title": "Bilder vergrößern &amp; Auflösung erhöhen – iPhone (bis 4K)",
+      "canonical": "https://upscales.app/de/guides/upscale-image-4k.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "ccd3e32343196d9b7c1bd5f656038f4dca04482fcc0b839797f7a91e938ab799"
+    },
+    {
+      "url": "https://upscales.app/ja/guides/upscale-image-4k.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ja/guides/upscale-image-4k.html",
+      "title": "画像の解像度を4Kへ上げる方法｜UScale",
+      "canonical": "https://upscales.app/ja/guides/upscale-image-4k.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "d11a2201133d3ca452e19ac203e7b285caf67234f6f6bebc79e60c6a827f0137"
+    },
+    {
+      "url": "https://upscales.app/zh/guides/upscale-image-4k.html",
+      "status": 200,
+      "final_url": "https://upscales.app/zh/guides/upscale-image-4k.html",
+      "title": "如何把图片放大到 4K、提高分辨率",
+      "canonical": "https://upscales.app/zh/guides/upscale-image-4k.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "e0abb84131f5b97f4e4e84cec604bf22aafb67e01437fe7ade05de8f4a2ff21a"
+    },
+    {
+      "url": "https://upscales.app/ru/guides/upscale-image-4k.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ru/guides/upscale-image-4k.html",
+      "title": "Как увеличить фото до 4K без потери качества | UScale",
+      "canonical": "https://upscales.app/ru/guides/upscale-image-4k.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "33cfddaa6cd1ea8c62c0ebcda8bf643083a944bdeb61a34a0f8462c42e7a48a8"
+    },
+    {
+      "url": "https://upscales.app/guides/enhance-video-quality.html",
+      "status": 200,
+      "final_url": "https://upscales.app/guides/enhance-video-quality.html",
+      "title": "How to Improve Video Quality on iPhone with AI (2026)",
+      "canonical": "https://upscales.app/guides/enhance-video-quality.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "c4c28dac1ee730723e6988c1008ba6f86d6364c0992cf4ba93623782d44f46aa"
+    },
+    {
+      "url": "https://upscales.app/es/guides/enhance-video-quality.html",
+      "status": 200,
+      "final_url": "https://upscales.app/es/guides/enhance-video-quality.html",
+      "title": "Cómo mejorar calidad de video con IA (2026)",
+      "canonical": "https://upscales.app/es/guides/enhance-video-quality.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "d244785d00b967cf960b26ac63b507621281acc83595a47ad2181575d205c16a"
+    },
+    {
+      "url": "https://upscales.app/fr/guides/enhance-video-quality.html",
+      "status": 200,
+      "final_url": "https://upscales.app/fr/guides/enhance-video-quality.html",
+      "title": "Comment améliorer la qualité vidéo avec IA (2026)",
+      "canonical": "https://upscales.app/fr/guides/enhance-video-quality.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "6ae9ccc0e0a3b9d657cc70194d65d35a09751197d115b8863386b6a87fb00f5f"
+    },
+    {
+      "url": "https://upscales.app/de/guides/enhance-video-quality.html",
+      "status": 200,
+      "final_url": "https://upscales.app/de/guides/enhance-video-quality.html",
+      "title": "Videoqualität auf dem iPhone mit KI verbessern (2026)",
+      "canonical": "https://upscales.app/de/guides/enhance-video-quality.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "3fe01f128e063dc271eb702d08f80a21f0edc1e2036b2bbd0f0dec3e0def4613"
+    },
+    {
+      "url": "https://upscales.app/ja/guides/enhance-video-quality.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ja/guides/enhance-video-quality.html",
+      "title": "iPhoneで動画を高画質にする方法（2026）",
+      "canonical": "https://upscales.app/ja/guides/enhance-video-quality.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "3671cf2661dad0bca2a0740ef782c74b0273761212fb217cf63fd684f85bc74c"
+    },
+    {
+      "url": "https://upscales.app/zh/guides/enhance-video-quality.html",
+      "status": 200,
+      "final_url": "https://upscales.app/zh/guides/enhance-video-quality.html",
+      "title": "如何在 iPhone 上修复视频画质（2026）",
+      "canonical": "https://upscales.app/zh/guides/enhance-video-quality.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "3d9d789d595806ebd42659656909f3a3206a66ec2dab727d54407dbc08aceb1b"
+    },
+    {
+      "url": "https://upscales.app/ru/guides/enhance-video-quality.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ru/guides/enhance-video-quality.html",
+      "title": "Как улучшить качество видео на iPhone | UScale",
+      "canonical": "https://upscales.app/ru/guides/enhance-video-quality.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "f036c7cc2ef91f77e7207ee99834128d30e73d09b0a8e16c14c0d1da796d7580"
+    },
+    {
+      "url": "https://upscales.app/guides/slow-motion-video.html",
+      "status": 200,
+      "final_url": "https://upscales.app/guides/slow-motion-video.html",
+      "title": "How to Make a Video Slow Motion on iPhone with AI (2026)",
+      "canonical": "https://upscales.app/guides/slow-motion-video.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "ddf1d914ac606863ca37efc015b64760b43522fb72339ce030c4283c444c845a"
+    },
+    {
+      "url": "https://upscales.app/es/guides/slow-motion-video.html",
+      "status": 200,
+      "final_url": "https://upscales.app/es/guides/slow-motion-video.html",
+      "title": "Cómo poner un video en cámara lenta con IA (2026)",
+      "canonical": "https://upscales.app/es/guides/slow-motion-video.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "d6192969b6d0d0aa7ca5e3c33c338a1cdc96ca4d5d9d69c62c6578b9f427f739"
+    },
+    {
+      "url": "https://upscales.app/fr/guides/slow-motion-video.html",
+      "status": 200,
+      "final_url": "https://upscales.app/fr/guides/slow-motion-video.html",
+      "title": "Comment ralentir une vidéo sur iPhone avec IA (2026)",
+      "canonical": "https://upscales.app/fr/guides/slow-motion-video.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "b3432bcf821afda1a7b30fb6b679e290bc55ddd47402abcd7a9a38ecef2a2eb0"
+    },
+    {
+      "url": "https://upscales.app/de/guides/slow-motion-video.html",
+      "status": 200,
+      "final_url": "https://upscales.app/de/guides/slow-motion-video.html",
+      "title": "Videos auf dem iPhone mit KI in Zeitlupe umwandeln (2026)",
+      "canonical": "https://upscales.app/de/guides/slow-motion-video.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "57667df14ca1eda7446d42f493fd5520aa3b44ecd39934419256dbd597646151"
+    },
+    {
+      "url": "https://upscales.app/ja/guides/slow-motion-video.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ja/guides/slow-motion-video.html",
+      "title": "iPhoneで動画をスローにする方法（2026）",
+      "canonical": "https://upscales.app/ja/guides/slow-motion-video.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "8d1075997f8c933348e5b918dbb33b797b7f51cf63c6a546020100cf552fe0d9"
+    },
+    {
+      "url": "https://upscales.app/zh/guides/slow-motion-video.html",
+      "status": 200,
+      "final_url": "https://upscales.app/zh/guides/slow-motion-video.html",
+      "title": "如何在 iPhone 上制作慢动作视频（AI 补帧）",
+      "canonical": "https://upscales.app/zh/guides/slow-motion-video.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "c9bf1a63c4044dc0a6aa6e31a5f4781e4fde3bdf7db5d570e6e7c789f7893203"
+    },
+    {
+      "url": "https://upscales.app/ru/guides/slow-motion-video.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ru/guides/slow-motion-video.html",
+      "title": "Как замедлить видео на iPhone — плавное слоу-мо | UScale",
+      "canonical": "https://upscales.app/ru/guides/slow-motion-video.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "926869451c728c174ad243c9c9d3186932b8ef78e3609567667c4c7d6c06607c"
+    },
+    {
+      "url": "https://upscales.app/guides/brighten-dark-photos.html",
+      "status": 200,
+      "final_url": "https://upscales.app/guides/brighten-dark-photos.html",
+      "title": "How to Brighten a Dark Photo on iPhone Without Ruining It",
+      "canonical": "https://upscales.app/guides/brighten-dark-photos.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "fc99ccd348e2f70a6a9ab0dbc0bdc9e544eda5d0309ed847aeead1d4a0a5e958"
+    },
+    {
+      "url": "https://upscales.app/es/guides/brighten-dark-photos.html",
+      "status": 200,
+      "final_url": "https://upscales.app/es/guides/brighten-dark-photos.html",
+      "title": "Cómo mejorar una foto oscura sin perder calidad",
+      "canonical": "https://upscales.app/es/guides/brighten-dark-photos.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "0b7871aa4f56f0f69ccb0d1d899dd51ecc2bacbd571a11f27f5547f3a03b6068"
+    },
+    {
+      "url": "https://upscales.app/fr/guides/brighten-dark-photos.html",
+      "status": 200,
+      "final_url": "https://upscales.app/fr/guides/brighten-dark-photos.html",
+      "title": "Comment éclaircir une photo sombre sans l’abîmer",
+      "canonical": "https://upscales.app/fr/guides/brighten-dark-photos.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "f1dc20b35af554fe0c79b3a59b14d783d8d620e9020ed39bb9290897a3f598ce"
+    },
+    {
+      "url": "https://upscales.app/de/guides/brighten-dark-photos.html",
+      "status": 200,
+      "final_url": "https://upscales.app/de/guides/brighten-dark-photos.html",
+      "title": "Dunkle Fotos auf dem iPhone richtig aufhellen",
+      "canonical": "https://upscales.app/de/guides/brighten-dark-photos.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "3c6302bcd88fa942acdc093d05e93d5db89960cc66ceacb2a36a02b83d14cee6"
+    },
+    {
+      "url": "https://upscales.app/ja/guides/brighten-dark-photos.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ja/guides/brighten-dark-photos.html",
+      "title": "iPhoneで暗い写真を画質を落とさず明るくする方法",
+      "canonical": "https://upscales.app/ja/guides/brighten-dark-photos.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "664729f8182b3a7e25883f9c8a67d86d37d8e048d54fcd9053357a9c6d332d9b"
+    },
+    {
+      "url": "https://upscales.app/zh/guides/brighten-dark-photos.html",
+      "status": 200,
+      "final_url": "https://upscales.app/zh/guides/brighten-dark-photos.html",
+      "title": "照片太暗？如何在 iPhone 上无损调亮",
+      "canonical": "https://upscales.app/zh/guides/brighten-dark-photos.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "381e7ad6415ba6877053745e574333abb554e067a1edfeaa554bcfb888c18117"
+    },
+    {
+      "url": "https://upscales.app/ru/guides/brighten-dark-photos.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ru/guides/brighten-dark-photos.html",
+      "title": "Как осветлить тёмную фотографию без потери качества | UScale",
+      "canonical": "https://upscales.app/ru/guides/brighten-dark-photos.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "d3fe4889649f0c836bf49fe88c1ef68e77eec6c1add68224e639792c304886bc"
+    },
+    {
+      "url": "https://upscales.app/guides/film-negative-to-photo.html",
+      "status": 200,
+      "final_url": "https://upscales.app/guides/film-negative-to-photo.html",
+      "title": "How to Convert Film Negatives to Photos with Your Phone",
+      "canonical": "https://upscales.app/guides/film-negative-to-photo.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "f47783fb6086434cb3e162dca1332e1826cc6cdc16b25694c0ce0ba82e07c0ce"
+    },
+    {
+      "url": "https://upscales.app/es/guides/film-negative-to-photo.html",
+      "status": 200,
+      "final_url": "https://upscales.app/es/guides/film-negative-to-photo.html",
+      "title": "Cómo convertir negativos de película en fotos",
+      "canonical": "https://upscales.app/es/guides/film-negative-to-photo.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "078975605608c709a60a83e0907924ee108d624fdee7dd1f2662c160cbb6254c"
+    },
+    {
+      "url": "https://upscales.app/fr/guides/film-negative-to-photo.html",
+      "status": 200,
+      "final_url": "https://upscales.app/fr/guides/film-negative-to-photo.html",
+      "title": "Comment convertir un négatif argentique en photo",
+      "canonical": "https://upscales.app/fr/guides/film-negative-to-photo.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "7c91e37cee2abb94f59fcd1c5ebda3caa5943ca5bc1da7bc4bc5a9fba58d17be"
+    },
+    {
+      "url": "https://upscales.app/de/guides/film-negative-to-photo.html",
+      "status": 200,
+      "final_url": "https://upscales.app/de/guides/film-negative-to-photo.html",
+      "title": "Filmnegative mit dem iPhone in Fotos umwandeln",
+      "canonical": "https://upscales.app/de/guides/film-negative-to-photo.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "36505a72ddd4d2819968fe2e525f58377f56393e3ecb0ea236e64f67b9680768"
+    },
+    {
+      "url": "https://upscales.app/ja/guides/film-negative-to-photo.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ja/guides/film-negative-to-photo.html",
+      "title": "iPhoneでネガフィルムを写真に変換する方法",
+      "canonical": "https://upscales.app/ja/guides/film-negative-to-photo.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "488e7411f3e0bf5d9afa82e1df85114dd3cfccf8ef2fb920a0f204b488137db5"
+    },
+    {
+      "url": "https://upscales.app/zh/guides/film-negative-to-photo.html",
+      "status": 200,
+      "final_url": "https://upscales.app/zh/guides/film-negative-to-photo.html",
+      "title": "如何用手机扫描底片，负片转正片",
+      "canonical": "https://upscales.app/zh/guides/film-negative-to-photo.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "6a5227173ae9546c50d45f40c8007d1e1aad274a36810d9f823ba7e8aed1c78c"
+    },
+    {
+      "url": "https://upscales.app/ru/guides/film-negative-to-photo.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ru/guides/film-negative-to-photo.html",
+      "title": "Как оцифровать плёночный негатив на iPhone | UScale",
+      "canonical": "https://upscales.app/ru/guides/film-negative-to-photo.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "6587f79bcdd690f29590556bec174be2ae98ca7bc0056e825d420bed29458733"
+    },
+    {
+      "url": "https://upscales.app/guides/fix-blurry-faces.html",
+      "status": 200,
+      "final_url": "https://upscales.app/guides/fix-blurry-faces.html",
+      "title": "How to Fix Blurry Faces in Photos (AI Face Restore)",
+      "canonical": "https://upscales.app/guides/fix-blurry-faces.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "5656f6e442f7e1b2841420d8cd13a6cf23d3a2268ea96c4343b397af5101d22c"
+    },
+    {
+      "url": "https://upscales.app/es/guides/fix-blurry-faces.html",
+      "status": 200,
+      "final_url": "https://upscales.app/es/guides/fix-blurry-faces.html",
+      "title": "Cómo corregir rostros borrosos en fotos con IA",
+      "canonical": "https://upscales.app/es/guides/fix-blurry-faces.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "6a29e5401c975c7941858c7bb59714793f69ce54eccbf3f2c53530c67fbc048f"
+    },
+    {
+      "url": "https://upscales.app/fr/guides/fix-blurry-faces.html",
+      "status": 200,
+      "final_url": "https://upscales.app/fr/guides/fix-blurry-faces.html",
+      "title": "Comment corriger un visage flou sur une photo avec IA",
+      "canonical": "https://upscales.app/fr/guides/fix-blurry-faces.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "3d78b959b912a20dca1dde315dd098a000291732f214b67f50142f27a7b3c6c1"
+    },
+    {
+      "url": "https://upscales.app/de/guides/fix-blurry-faces.html",
+      "status": 200,
+      "final_url": "https://upscales.app/de/guides/fix-blurry-faces.html",
+      "title": "Unscharfe Gesichter auf Fotos mit KI korrigieren",
+      "canonical": "https://upscales.app/de/guides/fix-blurry-faces.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "d8374050481069feea52d8b6809cd7c00698817f89f9d5c93253e20662ce2753"
+    },
+    {
+      "url": "https://upscales.app/ja/guides/fix-blurry-faces.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ja/guides/fix-blurry-faces.html",
+      "title": "iPhoneで写真のぼやけた顔を鮮明にする方法",
+      "canonical": "https://upscales.app/ja/guides/fix-blurry-faces.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "da61cac93c3718ba285c916d39f1377fa302f18dca952d3a13df72bd0de4464f"
+    },
+    {
+      "url": "https://upscales.app/zh/guides/fix-blurry-faces.html",
+      "status": 200,
+      "final_url": "https://upscales.app/zh/guides/fix-blurry-faces.html",
+      "title": "如何修复照片中的模糊人脸（AI 人脸修复）",
+      "canonical": "https://upscales.app/zh/guides/fix-blurry-faces.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "2ee69557d42bcbc8533dcf89c2d3c0684c35cd99767e2b0df6957db3d64dcc76"
+    },
+    {
+      "url": "https://upscales.app/ru/guides/fix-blurry-faces.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ru/guides/fix-blurry-faces.html",
+      "title": "Как улучшить лицо на фото на iPhone с ИИ | UScale",
+      "canonical": "https://upscales.app/ru/guides/fix-blurry-faces.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "eb73322bc8c8b9242e2ccbdd00abbbcff2e735b944e6a21fa830bd67fcea561a"
+    },
+    {
+      "url": "https://upscales.app/guides/upscale-anime-art.html",
+      "status": 200,
+      "final_url": "https://upscales.app/guides/upscale-anime-art.html",
+      "title": "How to Upscale Anime Art and Drawings on iPhone",
+      "canonical": "https://upscales.app/guides/upscale-anime-art.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "6bee13a2940a32bd5b35e6a941e2917aece7131f0c68a0b66e4bf1d76a186fcf"
+    },
+    {
+      "url": "https://upscales.app/es/guides/upscale-anime-art.html",
+      "status": 200,
+      "final_url": "https://upscales.app/es/guides/upscale-anime-art.html",
+      "title": "Aumentar resolución y calidad de anime y dibujos con IA",
+      "canonical": "https://upscales.app/es/guides/upscale-anime-art.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "fb842822881f28f63f4fe8e9cb0530ebb39cfe6dbf38f4772774be1a6194c04d"
+    },
+    {
+      "url": "https://upscales.app/fr/guides/upscale-anime-art.html",
+      "status": 200,
+      "final_url": "https://upscales.app/fr/guides/upscale-anime-art.html",
+      "title": "Agrandir anime et dessins avec IA — alternative waifu2x",
+      "canonical": "https://upscales.app/fr/guides/upscale-anime-art.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "71a5949b211609dd75e0b7d582aa6d328347c3cdf35688cde15f7145fd7221f3"
+    },
+    {
+      "url": "https://upscales.app/de/guides/upscale-anime-art.html",
+      "status": 200,
+      "final_url": "https://upscales.app/de/guides/upscale-anime-art.html",
+      "title": "Anime-Bilder und Zeichnungen auf dem iPhone hochskalieren",
+      "canonical": "https://upscales.app/de/guides/upscale-anime-art.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "b4b4c2143067738bf2849e469a167b99b541a30a7c005674ed57953c429ee1c4"
+    },
+    {
+      "url": "https://upscales.app/ja/guides/upscale-anime-art.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ja/guides/upscale-anime-art.html",
+      "title": "iPhoneでwaifu2xのように画像を高画質化する方法",
+      "canonical": "https://upscales.app/ja/guides/upscale-anime-art.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "72c05d907e531994ba6c2b5ac5fb21bb3363f24d94c641bf732203afde849423"
+    },
+    {
+      "url": "https://upscales.app/zh/guides/upscale-anime-art.html",
+      "status": 200,
+      "final_url": "https://upscales.app/zh/guides/upscale-anime-art.html",
+      "title": "如何在 iPhone 上像 waifu2x 一样放大动漫图片",
+      "canonical": "https://upscales.app/zh/guides/upscale-anime-art.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "b4cfc3745b5ec406c3fb76d70059fd2422838db93e4c20eb0ce4e42f30be8e8b"
+    },
+    {
+      "url": "https://upscales.app/ru/guides/upscale-anime-art.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ru/guides/upscale-anime-art.html",
+      "title": "Как увеличить аниме-арт и рисунки без пикселизации | UScale",
+      "canonical": "https://upscales.app/ru/guides/upscale-anime-art.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "8cff890b053d23b67e3be40bccc68a61ff5128b62f5c672f7c3d2cd333e3da03"
+    },
+    {
+      "url": "https://upscales.app/compare.html",
+      "status": 200,
+      "final_url": "https://upscales.app/compare.html",
+      "title": "UScale vs Remini, BlurBuster and EnhanceFox — the same photo in four apps",
+      "canonical": "https://upscales.app/compare.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "f1e105711ba202debfd498360445a95b23ee46341b6bd0c20f1b6821071319fa"
+    },
+    {
+      "url": "https://upscales.app/es/compare.html",
+      "status": 200,
+      "final_url": "https://upscales.app/es/compare.html",
+      "title": "UScale vs Remini, BlurBuster y EnhanceFox: calidad de imagen",
+      "canonical": "https://upscales.app/es/compare.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "bc1a66331d48a81775348a2d76b19f065ac6a4f87831446c0e2a3b064d09f0cd"
+    },
+    {
+      "url": "https://upscales.app/fr/compare.html",
+      "status": 200,
+      "final_url": "https://upscales.app/fr/compare.html",
+      "title": "UScale vs Remini, BlurBuster et EnhanceFox comparés",
+      "canonical": "https://upscales.app/fr/compare.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "ff8a7c89b389082aa8cb625b278e40fbcd8300af002d52a2f807b493d0961496"
+    },
+    {
+      "url": "https://upscales.app/de/compare.html",
+      "status": 200,
+      "final_url": "https://upscales.app/de/compare.html",
+      "title": "UScale vs. Remini, BlurBuster &amp; EnhanceFox im Vergleich",
+      "canonical": "https://upscales.app/de/compare.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "737f75efb630047daa76d7b6142e3917a716b0bb1c103da3bbc67c51f22af1f4"
+    },
+    {
+      "url": "https://upscales.app/ja/compare.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ja/compare.html",
+      "title": "UScale・Reminiほか2アプリを比較",
+      "canonical": "https://upscales.app/ja/compare.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "bb560d117b03dbef7727180c92eb442eef86bc218180bc4c650a7fd5d98d72dd"
+    },
+    {
+      "url": "https://upscales.app/zh/compare.html",
+      "status": 200,
+      "final_url": "https://upscales.app/zh/compare.html",
+      "title": "UScale、Remini 等 4 款 App 画质修复实测",
+      "canonical": "https://upscales.app/zh/compare.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "1ee51b8bd8173ae0b80e763a648055d4f3da2b227a26e37a59519d101da306cb"
+    },
+    {
+      "url": "https://upscales.app/ru/compare.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ru/compare.html",
+      "title": "UScale или Remini: сравнение четырёх приложений для улучшения фото",
+      "canonical": "https://upscales.app/ru/compare.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "84bbd45cde35525b2ea1a39b996fd26940ff537da34e8525b2583afe1bd154de"
+    },
+    {
+      "url": "https://upscales.app/support_page.html",
+      "status": 200,
+      "final_url": "https://upscales.app/support_page.html",
+      "title": "UScale Support — Help with the AI Photo Enhancer app",
+      "canonical": "https://upscales.app/support_page.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "5b12841cefdad1d44deae1ac7e93692e66427c5e4df8aa234a8dfad421c27439"
+    },
+    {
+      "url": "https://upscales.app/es/support_page.html",
+      "status": 200,
+      "final_url": "https://upscales.app/es/support_page.html",
+      "title": "Soporte UScale — Mejorar calidad de imagen con IA",
+      "canonical": "https://upscales.app/es/support_page.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "01997d31f41b3987161ee5cd14907a697976c5222264d484d9d100709c77675f"
+    },
+    {
+      "url": "https://upscales.app/fr/support_page.html",
+      "status": 200,
+      "final_url": "https://upscales.app/fr/support_page.html",
+      "title": "Assistance UScale — aide pour améliorer les photos par IA",
+      "canonical": "https://upscales.app/fr/support_page.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "741c3f0232f248ebe6c1b3dcd18bddc23567692ca20d7aa15db4f7b2abb1b6f1"
+    },
+    {
+      "url": "https://upscales.app/de/support_page.html",
+      "status": 200,
+      "final_url": "https://upscales.app/de/support_page.html",
+      "title": "UScale Support – Hilfe zur KI-Fotoverbesserung",
+      "canonical": "https://upscales.app/de/support_page.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "0acaeb7d06163c67d13af393906b2c1c0d5b371a9552609ddb129dc4777f2023"
+    },
+    {
+      "url": "https://upscales.app/ja/support_page.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ja/support_page.html",
+      "title": "UScaleサポート — AI高画質化アプリのヘルプ",
+      "canonical": "https://upscales.app/ja/support_page.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "a618273e9cb9d3f04624620169895724154062ecbcd5c935521732ec2219eac9"
+    },
+    {
+      "url": "https://upscales.app/zh/support_page.html",
+      "status": 200,
+      "final_url": "https://upscales.app/zh/support_page.html",
+      "title": "UScale 支持：AI 图片画质修复 App 帮助",
+      "canonical": "https://upscales.app/zh/support_page.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "16b598c0173e7dfe7841f9c9e2658d0ded7ad359ac80bb513d37f34d7ebf3069"
+    },
+    {
+      "url": "https://upscales.app/ru/support_page.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ru/support_page.html",
+      "title": "Поддержка UScale — ответы на вопросы об улучшении фото",
+      "canonical": "https://upscales.app/ru/support_page.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "cda2e53d8397fa46076267407f1a0742a7cd998c72357fb1fd6a282e5db4460f"
+    },
+    {
+      "url": "https://upscales.app/terms.html",
+      "status": 200,
+      "final_url": "https://upscales.app/terms.html",
+      "title": "Terms of Use — UScale",
+      "canonical": "https://upscales.app/terms.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "44567f04c962bd5d246a2d7d72ec6ee487798b48646a27a91807999c74134234"
+    },
+    {
+      "url": "https://upscales.app/es/terms.html",
+      "status": 200,
+      "final_url": "https://upscales.app/es/terms.html",
+      "title": "Términos de uso — UScale",
+      "canonical": "https://upscales.app/es/terms.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "d6bfc889760d0c3c9914ff281a16cfbb180f4a196eb3faf6f80221bb84753618"
+    },
+    {
+      "url": "https://upscales.app/fr/terms.html",
+      "status": 200,
+      "final_url": "https://upscales.app/fr/terms.html",
+      "title": "Conditions d’utilisation — UScale",
+      "canonical": "https://upscales.app/fr/terms.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "210e1a565dfb021323a7259815107feb274ccc8fa278e44be9d5bf247032504a"
+    },
+    {
+      "url": "https://upscales.app/de/terms.html",
+      "status": 200,
+      "final_url": "https://upscales.app/de/terms.html",
+      "title": "Nutzungsbedingungen – UScale",
+      "canonical": "https://upscales.app/de/terms.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "873f5901d17aa62e870d9509a7759192555705f7cae2981e3de0ff0521c5546a"
+    },
+    {
+      "url": "https://upscales.app/ja/terms.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ja/terms.html",
+      "title": "利用規約 — UScale",
+      "canonical": "https://upscales.app/ja/terms.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "bffb33ab1399f39a8decada40ed799aacdf52822e072849fbc17c3ae59976f65"
+    },
+    {
+      "url": "https://upscales.app/zh/terms.html",
+      "status": 200,
+      "final_url": "https://upscales.app/zh/terms.html",
+      "title": "使用条款 — UScale",
+      "canonical": "https://upscales.app/zh/terms.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "918de18211b2185ef2669bc3883dfa8ca95371790b901b62d51e25341eb3d0a0"
+    },
+    {
+      "url": "https://upscales.app/ru/terms.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ru/terms.html",
+      "title": "Условия использования — UScale",
+      "canonical": "https://upscales.app/ru/terms.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "6a3f3bbb48ac22c65bb0acd06d534a96f0147b63a9a6dca0c1375382b6fa83de"
+    },
+    {
+      "url": "https://upscales.app/privacy_policy.html",
+      "status": 200,
+      "final_url": "https://upscales.app/privacy_policy.html",
+      "title": "Privacy Policy — UScale",
+      "canonical": "https://upscales.app/privacy_policy.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "dc4a133730faed6e01604dfc9a97b515f58fbfb438627d8f6fbdc3456c310bb0"
+    },
+    {
+      "url": "https://upscales.app/es/privacy_policy.html",
+      "status": 200,
+      "final_url": "https://upscales.app/es/privacy_policy.html",
+      "title": "Política de privacidad — UScale",
+      "canonical": "https://upscales.app/es/privacy_policy.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "9a3a8fc64e2c3652201f54c556a08c0043ad22152a30f898dfa372f7152bdc76"
+    },
+    {
+      "url": "https://upscales.app/fr/privacy_policy.html",
+      "status": 200,
+      "final_url": "https://upscales.app/fr/privacy_policy.html",
+      "title": "Politique de confidentialité — UScale",
+      "canonical": "https://upscales.app/fr/privacy_policy.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "73ebd19f9804bd47e6207e7b67611e77a16885bdf82852f465873fc6eedc1b56"
+    },
+    {
+      "url": "https://upscales.app/de/privacy_policy.html",
+      "status": 200,
+      "final_url": "https://upscales.app/de/privacy_policy.html",
+      "title": "Datenschutzerklärung – UScale",
+      "canonical": "https://upscales.app/de/privacy_policy.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "3af829071cb94ca9f15e403a946853b2ecbdde1b5aae0ff31e5aa24d11f47890"
+    },
+    {
+      "url": "https://upscales.app/ja/privacy_policy.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ja/privacy_policy.html",
+      "title": "プライバシーポリシー — UScale",
+      "canonical": "https://upscales.app/ja/privacy_policy.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "15270b1462e92eb245769c47665f170106556d8d7eb97dc69fdf30736f3ed803"
+    },
+    {
+      "url": "https://upscales.app/zh/privacy_policy.html",
+      "status": 200,
+      "final_url": "https://upscales.app/zh/privacy_policy.html",
+      "title": "隐私政策 — UScale",
+      "canonical": "https://upscales.app/zh/privacy_policy.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "42832932223327cf8d11718fbdacee15536a9f8fd1fe1538b8355c36ac1d5275"
+    },
+    {
+      "url": "https://upscales.app/ru/privacy_policy.html",
+      "status": 200,
+      "final_url": "https://upscales.app/ru/privacy_policy.html",
+      "title": "Политика конфиденциальности — UScale",
+      "canonical": "https://upscales.app/ru/privacy_policy.html",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "a47686a19d91b4d32fbd3450fc8d96e496cd90102aef9bc8c599f42193711b92"
+    },
+    {
+      "url": "https://upscales.app/upscale/",
+      "status": 200,
+      "final_url": "https://upscales.app/upscale/",
+      "title": "Free AI Photo Upscaler Online — 2× and 4× in Your Browser | UScale",
+      "canonical": "https://upscales.app/upscale/",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "93dee6441faa2a2b00472a87d9cbddd34545bdc2833005c224ee2bdcacd02e35"
+    },
+    {
+      "url": "https://upscales.app/es/upscale/",
+      "status": 200,
+      "final_url": "https://upscales.app/es/upscale/",
+      "title": "Ampliar fotos online gratis — 2× y 4× en el navegador | UScale",
+      "canonical": "https://upscales.app/es/upscale/",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "e45d078c895ad7c094fccc59a08b4fb8d8f98b98afdac8dc8af9a2ace1c4e5dd"
+    },
+    {
+      "url": "https://upscales.app/fr/upscale/",
+      "status": 200,
+      "final_url": "https://upscales.app/fr/upscale/",
+      "title": "Agrandir une photo en ligne gratuitement — 2× et 4× | UScale",
+      "canonical": "https://upscales.app/fr/upscale/",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "f861af25243288635a6baae596102ab369e118870aec9c937c2af1f7f7fceae6"
+    },
+    {
+      "url": "https://upscales.app/de/upscale/",
+      "status": 200,
+      "final_url": "https://upscales.app/de/upscale/",
+      "title": "Foto online kostenlos vergrößern – 2× und 4× im Browser | UScale",
+      "canonical": "https://upscales.app/de/upscale/",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "64018e70e1c7c158d130a7c3c72dbd7fdfc49965a8ba3c172dd72f08cc16c296"
+    },
+    {
+      "url": "https://upscales.app/ja/upscale/",
+      "status": 200,
+      "final_url": "https://upscales.app/ja/upscale/",
+      "title": "写真を無料で高画質化 — ブラウザで2倍・4倍｜UScale",
+      "canonical": "https://upscales.app/ja/upscale/",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "165a68d07ab1db58c28b6864e3bca3e0f306a8d1bc39a1517c5a3f0dd6fa9f7f"
+    },
+    {
+      "url": "https://upscales.app/zh/upscale/",
+      "status": 200,
+      "final_url": "https://upscales.app/zh/upscale/",
+      "title": "免费在线 AI 图片放大 2×/4×｜UScale",
+      "canonical": "https://upscales.app/zh/upscale/",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "3103f7eb96313dcb5b36a066acda35bfd0fc910094df80aa76dfe3042e7a168c"
+    },
+    {
+      "url": "https://upscales.app/ru/upscale/",
+      "status": 200,
+      "final_url": "https://upscales.app/ru/upscale/",
+      "title": "Увеличить фото онлайн бесплатно — 2× и 4× в браузере | UScale",
+      "canonical": "https://upscales.app/ru/upscale/",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "d84057d238ffee70bd1ecd8a74b73e695580df0fde2583d1012118c427990fc9"
+    },
+    {
+      "url": "https://upscales.app/gallery",
+      "status": 200,
+      "final_url": "https://upscales.app/gallery",
+      "title": "Photo restoration gallery — UScale",
+      "canonical": "https://upscales.app/gallery",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "cb8447f7016807e28aa213bd1a2c72531222f502d8c4d3844fc54ffb7be66bc7"
+    },
+    {
+      "url": "https://upscales.app/upscale/free/",
+      "status": 404,
+      "final_url": "https://upscales.app/upscale/free/",
+      "title": "Page not found — UScale",
+      "canonical": null,
+      "robots": "noindex,follow",
+      "sha256": "e8d65cfec6d72786a900616cfcd8f35cbac3589f921186625876a3d98ffc14b8"
+    },
+    {
+      "url": "https://upscales.app/upscale/creative/",
+      "status": 404,
+      "final_url": "https://upscales.app/upscale/creative/",
+      "title": "Page not found — UScale",
+      "canonical": null,
+      "robots": "noindex,follow",
+      "sha256": "e8d65cfec6d72786a900616cfcd8f35cbac3589f921186625876a3d98ffc14b8"
+    },
+    {
+      "url": "https://upscales.app/upscale/restore/",
+      "status": 404,
+      "final_url": "https://upscales.app/upscale/restore/",
+      "title": "Page not found — UScale",
+      "canonical": null,
+      "robots": "noindex,follow",
+      "sha256": "e8d65cfec6d72786a900616cfcd8f35cbac3589f921186625876a3d98ffc14b8"
+    },
+    {
+      "url": "https://upscales.app/ru/upscale/free/",
+      "status": 404,
+      "final_url": "https://upscales.app/ru/upscale/free/",
+      "title": "Страница не найдена — UScale",
+      "canonical": null,
+      "robots": "noindex,follow",
+      "sha256": "4ad7660a15e6c2fa3ba1b329c9c12aca61629c8f9c906f068b83262850441bba"
+    },
+    {
+      "url": "https://upscales.app/ru/upscale/creative/",
+      "status": 404,
+      "final_url": "https://upscales.app/ru/upscale/creative/",
+      "title": "Страница не найдена — UScale",
+      "canonical": null,
+      "robots": "noindex,follow",
+      "sha256": "4ad7660a15e6c2fa3ba1b329c9c12aca61629c8f9c906f068b83262850441bba"
+    },
+    {
+      "url": "https://upscales.app/ru/upscale/restore/",
+      "status": 404,
+      "final_url": "https://upscales.app/ru/upscale/restore/",
+      "title": "Страница не найдена — UScale",
+      "canonical": null,
+      "robots": "noindex,follow",
+      "sha256": "4ad7660a15e6c2fa3ba1b329c9c12aca61629c8f9c906f068b83262850441bba"
+    },
+    {
+      "url": "https://upscales.app/es/upscale/free/",
+      "status": 404,
+      "final_url": "https://upscales.app/es/upscale/free/",
+      "title": "Página no encontrada — UScale",
+      "canonical": null,
+      "robots": "noindex,follow",
+      "sha256": "a6e27265f6b153afc6401c26454801630963bbc1912d54376125b42d02ad27b7"
+    },
+    {
+      "url": "https://upscales.app/es/upscale/creative/",
+      "status": 404,
+      "final_url": "https://upscales.app/es/upscale/creative/",
+      "title": "Página no encontrada — UScale",
+      "canonical": null,
+      "robots": "noindex,follow",
+      "sha256": "a6e27265f6b153afc6401c26454801630963bbc1912d54376125b42d02ad27b7"
+    },
+    {
+      "url": "https://upscales.app/es/upscale/restore/",
+      "status": 404,
+      "final_url": "https://upscales.app/es/upscale/restore/",
+      "title": "Página no encontrada — UScale",
+      "canonical": null,
+      "robots": "noindex,follow",
+      "sha256": "a6e27265f6b153afc6401c26454801630963bbc1912d54376125b42d02ad27b7"
+    },
+    {
+      "url": "https://upscales.app/fr/upscale/free/",
+      "status": 404,
+      "final_url": "https://upscales.app/fr/upscale/free/",
+      "title": "Page introuvable — UScale",
+      "canonical": null,
+      "robots": "noindex,follow",
+      "sha256": "4e194c043918cf31669e597b86030370ec4073bab0c32110fc29b670f9d4ab91"
+    },
+    {
+      "url": "https://upscales.app/fr/upscale/creative/",
+      "status": 404,
+      "final_url": "https://upscales.app/fr/upscale/creative/",
+      "title": "Page introuvable — UScale",
+      "canonical": null,
+      "robots": "noindex,follow",
+      "sha256": "4e194c043918cf31669e597b86030370ec4073bab0c32110fc29b670f9d4ab91"
+    },
+    {
+      "url": "https://upscales.app/fr/upscale/restore/",
+      "status": 404,
+      "final_url": "https://upscales.app/fr/upscale/restore/",
+      "title": "Page introuvable — UScale",
+      "canonical": null,
+      "robots": "noindex,follow",
+      "sha256": "4e194c043918cf31669e597b86030370ec4073bab0c32110fc29b670f9d4ab91"
+    },
+    {
+      "url": "https://upscales.app/de/upscale/free/",
+      "status": 404,
+      "final_url": "https://upscales.app/de/upscale/free/",
+      "title": "Seite nicht gefunden — UScale",
+      "canonical": null,
+      "robots": "noindex,follow",
+      "sha256": "063639c5fac125ac22d08afef4c93cdf9ef3f144cf3403075d62b45783d5e0ab"
+    },
+    {
+      "url": "https://upscales.app/de/upscale/creative/",
+      "status": 404,
+      "final_url": "https://upscales.app/de/upscale/creative/",
+      "title": "Seite nicht gefunden — UScale",
+      "canonical": null,
+      "robots": "noindex,follow",
+      "sha256": "063639c5fac125ac22d08afef4c93cdf9ef3f144cf3403075d62b45783d5e0ab"
+    },
+    {
+      "url": "https://upscales.app/de/upscale/restore/",
+      "status": 404,
+      "final_url": "https://upscales.app/de/upscale/restore/",
+      "title": "Seite nicht gefunden — UScale",
+      "canonical": null,
+      "robots": "noindex,follow",
+      "sha256": "063639c5fac125ac22d08afef4c93cdf9ef3f144cf3403075d62b45783d5e0ab"
+    },
+    {
+      "url": "https://upscales.app/ja/upscale/free/",
+      "status": 404,
+      "final_url": "https://upscales.app/ja/upscale/free/",
+      "title": "ページが見つかりません — UScale",
+      "canonical": null,
+      "robots": "noindex,follow",
+      "sha256": "388cbe7566ee4d4d0029e7707d71314fefbdfdd063020ba810b836e30b1f4dcd"
+    },
+    {
+      "url": "https://upscales.app/ja/upscale/creative/",
+      "status": 404,
+      "final_url": "https://upscales.app/ja/upscale/creative/",
+      "title": "ページが見つかりません — UScale",
+      "canonical": null,
+      "robots": "noindex,follow",
+      "sha256": "388cbe7566ee4d4d0029e7707d71314fefbdfdd063020ba810b836e30b1f4dcd"
+    },
+    {
+      "url": "https://upscales.app/ja/upscale/restore/",
+      "status": 404,
+      "final_url": "https://upscales.app/ja/upscale/restore/",
+      "title": "ページが見つかりません — UScale",
+      "canonical": null,
+      "robots": "noindex,follow",
+      "sha256": "388cbe7566ee4d4d0029e7707d71314fefbdfdd063020ba810b836e30b1f4dcd"
+    },
+    {
+      "url": "https://upscales.app/zh/upscale/free/",
+      "status": 404,
+      "final_url": "https://upscales.app/zh/upscale/free/",
+      "title": "找不到页面 — UScale",
+      "canonical": null,
+      "robots": "noindex,follow",
+      "sha256": "0dfb9ca8929662cc2b0fb136b48f8dcd725f887fdf3050d4ad97b5cd30549328"
+    },
+    {
+      "url": "https://upscales.app/zh/upscale/creative/",
+      "status": 404,
+      "final_url": "https://upscales.app/zh/upscale/creative/",
+      "title": "找不到页面 — UScale",
+      "canonical": null,
+      "robots": "noindex,follow",
+      "sha256": "0dfb9ca8929662cc2b0fb136b48f8dcd725f887fdf3050d4ad97b5cd30549328"
+    },
+    {
+      "url": "https://upscales.app/zh/upscale/restore/",
+      "status": 404,
+      "final_url": "https://upscales.app/zh/upscale/restore/",
+      "title": "找不到页面 — UScale",
+      "canonical": null,
+      "robots": "noindex,follow",
+      "sha256": "0dfb9ca8929662cc2b0fb136b48f8dcd725f887fdf3050d4ad97b5cd30549328"
+    },
+    {
+      "url": "https://upscales.app/upscale/?mode=device",
+      "status": 200,
+      "final_url": "https://upscales.app/upscale/?mode=device",
+      "title": "Free AI Photo Upscaler Online — 2× and 4× in Your Browser | UScale",
+      "canonical": "https://upscales.app/upscale/",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "93dee6441faa2a2b00472a87d9cbddd34545bdc2833005c224ee2bdcacd02e35"
+    },
+    {
+      "url": "https://upscales.app/ru/upscale/?mode=device",
+      "status": 200,
+      "final_url": "https://upscales.app/ru/upscale/?mode=device",
+      "title": "Увеличить фото онлайн бесплатно — 2× и 4× в браузере | UScale",
+      "canonical": "https://upscales.app/ru/upscale/",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "d84057d238ffee70bd1ecd8a74b73e695580df0fde2583d1012118c427990fc9"
+    },
+    {
+      "url": "https://upscales.app/free-upscale/",
+      "status": 200,
+      "final_url": "https://upscales.app/upscale/?mode=device",
+      "title": "Free AI Photo Upscaler Online — 2× and 4× in Your Browser | UScale",
+      "canonical": "https://upscales.app/upscale/",
+      "robots": "index,follow,max-image-preview:large,max-snippet:-1",
+      "sha256": "93dee6441faa2a2b00472a87d9cbddd34545bdc2833005c224ee2bdcacd02e35"
+    }
+  ]
+}

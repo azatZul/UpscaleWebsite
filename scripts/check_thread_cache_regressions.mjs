@@ -37,7 +37,7 @@ export async function checkThreadCacheRegressions(page, origin) {
       }
     };
   });
-  await page.goto(`${origin}/upscale/?mode=device&analytics_debug=1`);
+  await page.goto(`${origin}/upscale/free/?analytics_debug=1`);
   const failureKeys = () => page.evaluate(() => Object.keys(localStorage).filter(key => key.startsWith('uscale-cpu-failure:')));
   assert.deepEqual(await failureKeys(), []);
   const runs = [];

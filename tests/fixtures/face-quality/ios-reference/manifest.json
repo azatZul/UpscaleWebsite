@@ -1,0 +1,420 @@
+{
+  "referenceVersion": "face-guard-v1",
+  "revisions": {
+    "ios": "2201b85da18678a0b1536c083d48c29576618bfc",
+    "package": "14b5fd6c200f978757193eaf68d0d75e93827478"
+  },
+  "referenceWasUncommitted": true,
+  "files": {
+    "policy.json": "ae87c2a9b9442738347e2fec988482a43a598322e96635ad345581027158ad55",
+    "expected.json": "ff5903514cbb84d99fd82b9b2c1dd80fc8374b17d73d9e8ab97a882307ea5699"
+  },
+  "iosSources": {
+    "UpscalePackage/Sources/MediaUpscaler/FaceRestorationQualityGate.swift": "6809351e5aefe76ec752bf66a100d7f02d5c65448874f4ea440be5059dd4138c",
+    "Scripts/face_quality_lab/QualityGateProbe.swift": "49e0686b5df85c039630c8c1b646bc5ca0ff775d2452127193448c82df5130e4"
+  },
+  "models": {
+    "web": {
+      "url": "https://upscales.uk/web_models/face_512-7333260230803fbf.onnx",
+      "bytes": 85578722,
+      "sha256": "7333260230803fbff15b60f3eaf4cee12bb85bf978f92b72c7dc86d99418bf2f"
+    },
+    "ios": {
+      "file": "faceup_7q.mlmodel",
+      "sha256": "23d1106e79e83c86604571ede9e0aae8136b60df77719e7d8e0bcf62da0f2d3b"
+    }
+  },
+  "samples": [
+    {
+      "id": "cap-1",
+      "sourceSha256": "be7e1ed9e6b10d320b96a3c0c2a2f422b034a900f631e1c46152e6457b550c9f",
+      "images": {
+        "cap-1-before.png": "e8537a1945e5279796b59ea58a630c85735fae553b39ec22180cd4629d16c247",
+        "cap-1-after.png": "7c4c55f2875d2bd122da163ba63fda6400c80c55ae2b01d194172a5985c7260d",
+        "cap-1-native.png": "9f947b5d0e6dec3cec9307449146ede3dbea3fae9824fd4f89bfc67be3594960"
+      },
+      "planes": {
+        "cap-1-before.f32": "1ffc7ea7150476e22a2e779f659cd7cfc4e9dc9c9cb5d9383b8af501b04f12b9",
+        "cap-1-after.f32": "1fd1ef87a0e03eb39bb595f6c9b9475b20acefe5e1c084a811bb60bd4c8fa9a7",
+        "cap-1-native.f32": "d45b31299aa00f813e7340186de87348cc829a5fe7ac1b2e91c751cb32b54a97",
+        "cap-1-native-after.f32": "402e905fdec254e9142a8e69c7c36a32ec91a9d6072cb5dc7a8c13a87428f4f6"
+      }
+    },
+    {
+      "id": "girls-before-1",
+      "sourceSha256": "ea71c8c391bf3406bfa371be44a86b7fc004744ae6384a73a836f131df50baa6",
+      "images": {
+        "girls-before-1-before.png": "57fe5ab371db0a4dd15b09ecfff9755fc35187f80b169af19111f60354553e9c",
+        "girls-before-1-after.png": "540280d4cb80966feaca54c27023a03b3a7f92e4865915e2a76a4fdfd22dd782",
+        "girls-before-1-native.png": "cb2ac207b07d66c7ddf89b717392199f78598079c11c1ed940f069054244a933"
+      },
+      "planes": {
+        "girls-before-1-before.f32": "af88bb769f5b5dd8bf7277709a05c22bd5e9c8f4f99f2d966b5e83a967361c82",
+        "girls-before-1-after.f32": "37da2ab5d7ac6be6edb08e084edc92078ddeb45c67a3c167cbf3cae2dd8d290e",
+        "girls-before-1-native.f32": "eeea8f5c016288847c32d51656c61bcda96c1e3eef0e78f10337af70c7841500",
+        "girls-before-1-native-after.f32": "e2960cf0cbe868084c66b64a88cf1698c6d1f5ac475d243f64f393c0c739b084"
+      }
+    },
+    {
+      "id": "girls-before-2",
+      "sourceSha256": "ea71c8c391bf3406bfa371be44a86b7fc004744ae6384a73a836f131df50baa6",
+      "images": {
+        "girls-before-2-before.png": "a65238c187c946a7e432b880d9e6f5d5b8ea1119646d16aad8c94fa2ee461565",
+        "girls-before-2-after.png": "28c4aa97c99579e2d13fb2927a9c9629e8f346ccae8187fcbe0ed3c988f7bc4f",
+        "girls-before-2-native.png": "7c3183463808c80d49b83cc6b16b078ca23621b11eb2f40fca99e389334d6d37"
+      },
+      "planes": {
+        "girls-before-2-before.f32": "9473d7cd229a3e8a3726033cb2c6245e4e3a70640a80d3bd881eb0287987508d",
+        "girls-before-2-after.f32": "738081db9a87918e669d2a07baff7d8eaab532d90fd29032ff590bb333928034",
+        "girls-before-2-native.f32": "84bf1e257d84058a7ba814ceb85e678f05458ebff5a290406eb25bc4ededdf73",
+        "girls-before-2-native-after.f32": "b006d5d1ba5960a502666714655c2b59d4e10a290f7f80ecb8f016e25b61f483"
+      }
+    },
+    {
+      "id": "girls-blurred-1",
+      "sourceSha256": "5f55772def53368bebed096f3ae21b5378513c8d63abad1f2935be823ab44ca1",
+      "images": {
+        "girls-blurred-1-before.png": "501d9567250203edc2a4b6d46878a666bfce53017af34c54e82b3b0d96f87697",
+        "girls-blurred-1-after.png": "45c2c077b0b11a0fd5e1d85be5a06c284831b9aefeca1acc90e9ddcc6ffc14a1",
+        "girls-blurred-1-native.png": "bd2b35482eeb0a3589b0d5d32c38277a510cf6600c192915c8a5f9add2c5b7b8"
+      },
+      "planes": {
+        "girls-blurred-1-before.f32": "a5b12a8fa4c86d347aaecbe5c335c5ab0a3cb27caecd2db101bacdf16569ee34",
+        "girls-blurred-1-after.f32": "b787217f59b215d17ab55766d31e9c6723846ed13c11282bbbb30e21c75881ea",
+        "girls-blurred-1-native.f32": "0049cc401af78769389af937668e85aef171d5602725ef0749a37451b90e624d",
+        "girls-blurred-1-native-after.f32": "39fd403f58d09231d68e0707d53ae6a2475bf01059a6efcde1fbeea050499ca7"
+      }
+    },
+    {
+      "id": "girls-blurred-2",
+      "sourceSha256": "5f55772def53368bebed096f3ae21b5378513c8d63abad1f2935be823ab44ca1",
+      "images": {
+        "girls-blurred-2-before.png": "2cd2f5cdd5ad49f07c5971d49a5f7419fa7c5130a866b2c3cd47866d983c395c",
+        "girls-blurred-2-after.png": "35c96aa2501a09bdeecd3cbdc3c0b65c534d3e8261cfdb2deb6da925a47c7cc4",
+        "girls-blurred-2-native.png": "681edad5201c5265dc31dec2e72979a354c5fe73254bf29ed35234ea7ee6cbc0"
+      },
+      "planes": {
+        "girls-blurred-2-before.f32": "43fade551760a05ff1c5984808f11bb3fa4865fc2767b1bed33222f39d076052",
+        "girls-blurred-2-after.f32": "5af45371cf3760b1c456e8f92568bc8975fa5d28d92beb00a7adf5876c394219",
+        "girls-blurred-2-native.f32": "7d20381e67e4c24ca7b354e1b6efc26374bd6b65b7f38fc23a7a5a1a2e7c21c1",
+        "girls-blurred-2-native-after.f32": "acb68071bfd2ba382cd6842851e7c9a3ff7a32e9aef150e73768deec9c4cc2e5"
+      }
+    },
+    {
+      "id": "children-1",
+      "sourceSha256": "d23489d03ea563d3fd04c6a5b016f06e24749c56b2ac64297424351201087f7a",
+      "images": {
+        "children-1-before.png": "1fccd0ef0d061551d136d01510ca3ba241489ae70087cd4becdfbaaa8ec4a37d",
+        "children-1-after.png": "80bf09891ce6181d78736cfff92329f1e5fca54bab4d1869fccac3463ca13be7",
+        "children-1-native.png": "1eb4592792d5f48e7272e9a11136adb30316cd69d70e8306d2f942fea359ffe5"
+      },
+      "planes": {
+        "children-1-before.f32": "0ce4ddc580155ba6548dfbadb6e8914f22e0a5b8830abe31d8c4548dba751623",
+        "children-1-after.f32": "42b0979057452356815a819c4252355ba88259eb90fc1ec9d0a68f7d36a8f6ae",
+        "children-1-native.f32": "74c9a80a398ceb943338fd459ef5a57b9609417cab1fdb3ad3d964802c5addaa",
+        "children-1-native-after.f32": "50396bbbb891c820d1318874d7593e2038011220f33d4fa1f4cce89660bded1f"
+      }
+    },
+    {
+      "id": "children-2",
+      "sourceSha256": "d23489d03ea563d3fd04c6a5b016f06e24749c56b2ac64297424351201087f7a",
+      "images": {
+        "children-2-before.png": "b4b55c863c6be9a28867fa5a47f12da4f92077bb3e944cf3001bae47c3d79949",
+        "children-2-after.png": "5c2dfd7149f466a6ff84d52e681e4deb39561082e2f5f3d0711f9fcdcc073f38",
+        "children-2-native.png": "dfe9961952503b0294ac6d0335505894bf3d3470de0b5139f048aed53b741ad9"
+      },
+      "planes": {
+        "children-2-before.f32": "4945db819120824b40f4f3d71dc0cb270c0bc31097d678a1d805c668bb9b7cd0",
+        "children-2-after.f32": "26ee5b0745074fa3b373df00181d96b0a3298dd032f554b51f7345286a8b744d",
+        "children-2-native.f32": "962348c1743d2b8f36119f447a885ff56139abbdffee6d587cc5416da12c2bbe",
+        "children-2-native-after.f32": "992e371bd59f744d0e247822a23abc6521d451c4c4a36b8d157e55c2c2b4020c"
+      }
+    },
+    {
+      "id": "children-3",
+      "sourceSha256": "d23489d03ea563d3fd04c6a5b016f06e24749c56b2ac64297424351201087f7a",
+      "images": {
+        "children-3-before.png": "0eeb6a9ce6530dd4f8b63c617c0f6d36abb7fa109ac7d4865de04b1335cfb7d4",
+        "children-3-after.png": "f35d0ba5397419d5fc375a1d9c939dce6d94324321062698b85a3d05e1835fda",
+        "children-3-native.png": "76b2a7291f24d31d87585159ee7086ade5dda4c20dad0a7586caf12c036a45bd"
+      },
+      "planes": {
+        "children-3-before.f32": "a555db3d25ce7f142fab7e1f39b5421c0db408fe01eee8e645d1fb0b932a2b89",
+        "children-3-after.f32": "a4d80e71c188b9ea96b5f78a0e18d31eee2e0314bc2fa53726e5115abba35723",
+        "children-3-native.f32": "16a4f93a05e5c82033489dda94b2ba3f708bb1700748a29f82fec3bd88d9bdd6",
+        "children-3-native-after.f32": "0e2528ab7a24be1f80cb0a8ed67742202b9a4c9c1eaef8a366de9476a38a2f69"
+      }
+    },
+    {
+      "id": "wedding-1",
+      "sourceSha256": "186f9cd552114ed239aa4a63011769f0ca174ce422c5dc3ed5a5a09d2b19aec5",
+      "images": {
+        "wedding-1-before.png": "b0e67b0e12b5acb0a63291ef02b3eb494e25e91528ab464c1526d13fe087bba2",
+        "wedding-1-after.png": "c14357532104f48aa671ba87127092da502503719668a322c0c335f2e1547073",
+        "wedding-1-native.png": "a564dd9da2211db159d9583eff43036d916928b19ac849f424ce85294176965b"
+      },
+      "planes": {
+        "wedding-1-before.f32": "79c83e5a8ee8445ece6d9de1c0abf864473c95a6625142f9e0cac922330cd8a5",
+        "wedding-1-after.f32": "cf6a231a1b528667406470f0faef0a2275bdf9e7bb2c7eab02ed208ff7ce6ae9",
+        "wedding-1-native.f32": "2ddc9e97f96eb8118c8c659db62e2307aed63c6ba5899e356cdb524d4e3c0aef",
+        "wedding-1-native-after.f32": "26d7e8839072ecfbffddc633ef6b3c611fe255f7599c5ab52d1441b017570834"
+      }
+    },
+    {
+      "id": "wedding-2",
+      "sourceSha256": "186f9cd552114ed239aa4a63011769f0ca174ce422c5dc3ed5a5a09d2b19aec5",
+      "images": {
+        "wedding-2-before.png": "09ae1a80a303cf4e96768b87f5f86e45654fb70d3de6ed2437a03b82067a6952",
+        "wedding-2-after.png": "093014623a69db0526317f62e28c15fd0d820804a10ae18a6477ea45534893c9",
+        "wedding-2-native.png": "8bf0025d21b8d45ae963335438a2caf4a89e9d1f777ce4ebe622d7cef8267b67"
+      },
+      "planes": {
+        "wedding-2-before.f32": "fb4412c4a04c1b25100652b190c9a0123c3a5025735d4b92d65b59d16cca7449",
+        "wedding-2-after.f32": "00935e6fa065564f16aee47d3553135a979ef31b682764d59ce586b533d42912",
+        "wedding-2-native.f32": "17e156f34e81b8c42928d3ab3d55833855040ea3485d3df2b261527923da5c45",
+        "wedding-2-native-after.f32": "e391cf5739bfa51301248d00d47e57dad80149e3e8ef91a2e109aaf2c00a3175"
+      }
+    },
+    {
+      "id": "wedding-3",
+      "sourceSha256": "186f9cd552114ed239aa4a63011769f0ca174ce422c5dc3ed5a5a09d2b19aec5",
+      "images": {
+        "wedding-3-before.png": "208a7f0e25b8ded4983bd26957c702fb40b2cfbe35ada9480cdba76bfde2ac42",
+        "wedding-3-after.png": "b9825a3ebb2a63bbc98edb29835f3dfa74d4b6a1e60ab2b7f13b9702603302cc",
+        "wedding-3-native.png": "7b3f0d70388f4988abc6bb8549b513a83aca285edd4600226cbb26e567e0f460"
+      },
+      "planes": {
+        "wedding-3-before.f32": "bb2bc8ce6c8c0d355a70295ac4da3f64e80e036aaa8e2dcefc4d05911757cad8",
+        "wedding-3-after.f32": "222901f04c36fb003a87c58378270424cfd17503cf0a9d373b1b2bcf41ec2b56",
+        "wedding-3-native.f32": "b28bfc750b4fb48f8dd5225669841ac16d6824a63ab481534944ead8c030943d",
+        "wedding-3-native-after.f32": "35ad4e236ac2e9354d4f670ca893122a57681781cb894120804c80f8e5fb9ecc"
+      }
+    },
+    {
+      "id": "wedding-4",
+      "sourceSha256": "186f9cd552114ed239aa4a63011769f0ca174ce422c5dc3ed5a5a09d2b19aec5",
+      "images": {
+        "wedding-4-before.png": "335bff1a3f3fda51391948f07e9979f365252349a65df1524d652d7c80b2ce7e",
+        "wedding-4-after.png": "a3c674c9c13047e42343bb3d5f44e071e3845f441d5d46cee4bd4f0480f8a492",
+        "wedding-4-native.png": "5db105f3ca383fb2119c88d106cffc1332787430d2f504a49cf77dba21c16568"
+      },
+      "planes": {
+        "wedding-4-before.f32": "114ad72e9ec46aa2947dbd05309044b4617590fb1affde1a35ebc795133825fb",
+        "wedding-4-after.f32": "b40d1fd1884f86e881c7b962c4abdf661e58ecca94dd9ecc0c7c30c5a92ed5f1",
+        "wedding-4-native.f32": "25790a9ebc302aba9ca1e93d3682f1795e33013c9631cc1d88901e4e9f91556f",
+        "wedding-4-native-after.f32": "3f30a860062b428d01d3720cb16eba844006880e2017e4b1f0c4b72c2fc7a926"
+      }
+    },
+    {
+      "id": "wedding-5",
+      "sourceSha256": "186f9cd552114ed239aa4a63011769f0ca174ce422c5dc3ed5a5a09d2b19aec5",
+      "images": {
+        "wedding-5-before.png": "78578af859feadc98551ed39b70ca36c4f8769bd48bcff90e081f2cab7d996c8",
+        "wedding-5-after.png": "53c265f2788fae80acc6a5e25e827cd3ed95ce1c314a887e70fb717b8ecaeb9e",
+        "wedding-5-native.png": "0e53d89c0ab3c4bd4d2372337ea12807d91a3019387f30edff2eacf404699bf6"
+      },
+      "planes": {
+        "wedding-5-before.f32": "c002cef4077380d35fbfc6c3dcc69ce94429024f5016352861e72315822c857d",
+        "wedding-5-after.f32": "6c49084b2acabac2ede002c68ccf2f3a86b27859317e45641b991e7ff0ca8e90",
+        "wedding-5-native.f32": "534036e4f66a7445bccf9c53fda9747e81680dceb0fc7252b466fe7c1c2523b8",
+        "wedding-5-native-after.f32": "5d21ea0eafd6831d73beaa41cc72e0877f5d7b017c0a89d61f2a8564091fc1a3"
+      }
+    },
+    {
+      "id": "wedding-6",
+      "sourceSha256": "186f9cd552114ed239aa4a63011769f0ca174ce422c5dc3ed5a5a09d2b19aec5",
+      "images": {
+        "wedding-6-before.png": "535bc85b09cf01f87f36e2fce02195ec323b336cb225d2518fbee995dec1b330",
+        "wedding-6-after.png": "3386a246866249e813cdc14049f5d179132bc37237d24b9db61f83f21f16af32",
+        "wedding-6-native.png": "9f69e11aac25ad9fdc821ea4efabb3bc2ddbf6ca691827d47d73bd17b62d403a"
+      },
+      "planes": {
+        "wedding-6-before.f32": "1a1a76fcff1ff5fcb9ed629151c5019d5a8800c067f7335880c2e8ac6ef72814",
+        "wedding-6-after.f32": "978d53c90a45ffbcb8d75b6d049a379a41517fcc0d01c9764e942a2b86c4e6ea",
+        "wedding-6-native.f32": "5ec8d1d98e653adfa17aab0af1ded86c542adeb1627c0c6db73bf5977e301752",
+        "wedding-6-native-after.f32": "dfa9a961c481b1f4be579f86fbe5c2c2864d20f336f630f9502c854ae79ee9ad"
+      }
+    },
+    {
+      "id": "girls-after-1",
+      "sourceSha256": "68d566a8250fbc283b6a392a2789ab2b14789de0d1672e4ae871100b64646597",
+      "images": {
+        "girls-after-1-before.png": "43916b1070e23b54d55170548cb3734738cb3ea5b8e34ab5115ee983ccdcc367",
+        "girls-after-1-after.png": "bd2017fc6af909806e353d1204e60c7d8e9b876c3fa981c78d4b4897f64052c8",
+        "girls-after-1-native.png": "9fe747b13d57b79545383b07bdc8dcde0523b54dc115baa6b7df527fb7cf04c7"
+      },
+      "planes": {
+        "girls-after-1-before.f32": "18af10e4f113574f8d7f51d7c405f433db12f71b6048beec60f037e1dc178825",
+        "girls-after-1-after.f32": "d7d656c8923fdbe72f8617b991f028f0d0b1e2ebdbf2d39e483dd2abcde9980f",
+        "girls-after-1-native.f32": "4a2e1e55f7bfd4776bbe45fbac1a0afc25fab97d6fe3f628769c2739cc9ff844",
+        "girls-after-1-native-after.f32": "c52fbc4967c6a6e033df85d65faccd0bc037b644e54d46381a3055749127b97c"
+      }
+    },
+    {
+      "id": "girls-after-2",
+      "sourceSha256": "68d566a8250fbc283b6a392a2789ab2b14789de0d1672e4ae871100b64646597",
+      "images": {
+        "girls-after-2-before.png": "dd53fd723950044fc2e66fdc189c2f192deac117822afd7314191ef0dfe302aa",
+        "girls-after-2-after.png": "54335ac40413eaacefc7683815dec292a747762eda224b027f60064d08cc3aeb",
+        "girls-after-2-native.png": "9ff0dd2b00bbe14c8d2952329018a34655f875a2f4d119e732631ae80219d884"
+      },
+      "planes": {
+        "girls-after-2-before.f32": "675d8834b39658f9aa1a9954e369c61299f3cbcdaff9caad7f46e29d26de1721",
+        "girls-after-2-after.f32": "cf65e1cd9706125d9d4fda797cabc8a93040f9f3de288a29946eea844e020539",
+        "girls-after-2-native.f32": "cb687f00423d6a03bf3c04ba56d8f1ceb2198454bcf1d21ae6640f725598df30",
+        "girls-after-2-native-after.f32": "79373687366ac2a179c370ad80f47b5157080155c86e3d3df63832a0ac3f4aaf"
+      }
+    },
+    {
+      "id": "big-1",
+      "sourceSha256": "d34584ef7fef2cf06e55d06df3353e943be25a1285586c9f33bf37e6a271184a",
+      "images": {
+        "big-1-before.png": "2d726c124ae1f73c7b2b58b2c21fe96ddc076ae7ce5cb057df648407a44385b3",
+        "big-1-after.png": "787858513967459cb6a142a3713a6438a0382a2262f9886112748f8a6f1ea3c8",
+        "big-1-native.png": "01dfaf64212cdd4a9493238d42fcd12006b6c6fa634e92f471b1d4782b750a1d"
+      },
+      "planes": {
+        "big-1-before.f32": "54d61deb7426f8364cf9097863d2fa48a1b207931bebf5d8e766fae39ef0537d",
+        "big-1-after.f32": "6e4da02059e7728a7c39cbdd8fa59291f4dda3962976475fb9a6ecc53b2337c7",
+        "big-1-native.f32": "52db28c19dff70b369861b8d2a12084c59a0b8cfb59b83a82b62928533140df3",
+        "big-1-native-after.f32": "e797328c92b85235888cc3ed47a9694dc4c40ae1309820607133836dc3b0c8bc"
+      }
+    },
+    {
+      "id": "big-1-actual",
+      "sourceSha256": "d34584ef7fef2cf06e55d06df3353e943be25a1285586c9f33bf37e6a271184a",
+      "images": {
+        "big-1-before.png": "2d726c124ae1f73c7b2b58b2c21fe96ddc076ae7ce5cb057df648407a44385b3",
+        "big-1-actual-after.png": "239a6123e1a5be56a784e9f865f5f27bb07f80b62b331ea8322cd65b938b1da5",
+        "big-1-native.png": "01dfaf64212cdd4a9493238d42fcd12006b6c6fa634e92f471b1d4782b750a1d",
+        "big-1-actual-native-after.png": "b03eed7ec83652cce71d554910f530e9151a737e44f66710728067bd9a8e92fb"
+      },
+      "planes": {
+        "big-1-actual-before.f32": "54d61deb7426f8364cf9097863d2fa48a1b207931bebf5d8e766fae39ef0537d",
+        "big-1-actual-after.f32": "ada9c650708c58afb073dab974a4edf0c89d669c6c8f10ffcc2eee03951cf459",
+        "big-1-actual-native.f32": "52db28c19dff70b369861b8d2a12084c59a0b8cfb59b83a82b62928533140df3",
+        "big-1-actual-native-after.f32": "9a2f75219ca8bd03ebc26b7b7ccaaf6468264d890e081c7cf013b92a1fae44e6"
+      }
+    },
+    {
+      "id": "extra-obama-1",
+      "sourceSha256": "744dd848fbb0584229169e01c4944664957c62495fb9e8af514a088ebca43e19",
+      "images": {
+        "extra-obama-1-before.png": "1b15e5608d0230bb156257744f95b80e787811dda14b6cc2b220380120973d42",
+        "extra-obama-1-after.png": "f028655d2e50ea85b7b41d31348c84c73a69d07eb517c550a4b8993941bfc4ac",
+        "extra-obama-1-native.png": "125e41852a1a55fb78189d625e7d34cd803748893954860ca460f6914492ad10"
+      },
+      "planes": {
+        "extra-obama-1-before.f32": "2a10027f0fb7ea18201dac285ed2134084b475bd9556aec3691d2c9685729603",
+        "extra-obama-1-after.f32": "25153069405472ee44d24df059835964af7681a0e2cb1cb18872d6913fca311c",
+        "extra-obama-1-native.f32": "3396dc605a0035a266079fe99e17ba506debf75f51e1f2c259aff40ea2ee3712",
+        "extra-obama-1-native-after.f32": "848861b3c2bc8c5117e219d3713184b8d068c37ae3087479bf3d8f83472fda99"
+      }
+    },
+    {
+      "id": "extra-grace-1",
+      "sourceSha256": "e1f57e98cf38076c0f9a058d74ffddf90f20453e436033784606b63c8ed2e49a",
+      "images": {
+        "extra-grace-1-before.png": "26813a4a7bed26bdb18eeebdf44492b853daa7296ef9745928d75515197358e6",
+        "extra-grace-1-after.png": "38e51c29e98622e4892855b9244da0dcd0f7a244cb8d482010fa6f92f80744f2",
+        "extra-grace-1-native.png": "522bdd4bd17a96e1272c942ee2120b83be6d79eea26a2aea32598e537b9122f5"
+      },
+      "planes": {
+        "extra-grace-1-before.f32": "a4171b9d71234447b5f6f12d401d155a43a8f1d5a0c1b3e36429fa77240e8f31",
+        "extra-grace-1-after.f32": "febf1a85199307f588a33d5f072ae67e29fe7d7543165a9fc8fa7f70568f7ce3",
+        "extra-grace-1-native.f32": "c42077e59e36bd9411075e4f15c392405720fe3576d646c7e28f9e44e487e6df",
+        "extra-grace-1-native-after.f32": "f6103d799fd2f6d3daad4094ac3466af32d79eba131dbfc89d13dcd66a2bca32"
+      }
+    },
+    {
+      "id": "extra-einstein-1",
+      "sourceSha256": "bb02d8986a28db4406ac84c3ec611fca73cf0f9b0a2ccf0b9b23af3cbd51f90e",
+      "images": {
+        "extra-einstein-1-before.png": "caa05c2341a81b9a69ead8ba120e225df22f3c752ac413ac921ae9687499cc9c",
+        "extra-einstein-1-after.png": "1b8fcdb301d0c931e25b03c943ec53cf56cc3282b86a291273852e3aa9dfcd41",
+        "extra-einstein-1-native.png": "0aff3e8be7534ffdbb07a65e37cab3b04710a1da0c553c26be34bf61cb012b26"
+      },
+      "planes": {
+        "extra-einstein-1-before.f32": "9d97c2b997b953bd89f4d27beee8554c604966010ab44469256d151b4fab6c76",
+        "extra-einstein-1-after.f32": "8529c11f57601fb408b8b586ed91194f073e6c3dba402e5a6f09d0633224f342",
+        "extra-einstein-1-native.f32": "ffb8d16b2264db1c2e88ebaa1f2178946d705289360831a52abfb171aea5a258",
+        "extra-einstein-1-native-after.f32": "7eee2694d60e0e0d09b135ac97f4690e80d0e9b634ee16e5e532c6092f158cde"
+      }
+    },
+    {
+      "id": "extra-collins-1",
+      "sourceSha256": "e03b9c87ce0dd30ecb9fd6a78b9d7d43c260cf8a9d0333663632b6a3b42c3aac",
+      "images": {
+        "extra-collins-1-before.png": "c64cd1f208ff0f59770448acf637bc820b5a7331ee7ec5479971cc3ed05b9c5d",
+        "extra-collins-1-after.png": "37f4c8687e140f4fda8fef6296adfe8d3f9f0df827a93f85e957b0c135a74e2a",
+        "extra-collins-1-native.png": "a5c3c97be7857d9345b3290000592036e615f1d063483adf94b28fc4249c78fd"
+      },
+      "planes": {
+        "extra-collins-1-before.f32": "12ce2732c4cedac9d781f66d70611abccf6890b854d037c017898e1a4f638735",
+        "extra-collins-1-after.f32": "7dab6e6ea452ba903acf4376df826f051f0f0e58da0979163d86f73796729d73",
+        "extra-collins-1-native.f32": "831843858e8195bb9cc3d0c4bd1f3912c2641b6d41957737af46f5afe2bd9846",
+        "extra-collins-1-native-after.f32": "480daa1e8697f4b0fc8fcd3f827e5776931d16f520a1ac8dc3d0454776ce4f4a"
+      }
+    },
+    {
+      "id": "extra-crew-1",
+      "sourceSha256": "65e6a32edc3b98e4c3bad200a1fe69ea490de4c253ad8dc93cbe8159b347973c",
+      "images": {
+        "extra-crew-1-before.png": "e4155b25cc442986068747240277dc3b7e5901ddd44a32c32685fdaac4423a9f",
+        "extra-crew-1-after.png": "bcfbe589a9694631ec73b120ee83e7b4b7f5c17e7700ec9fa5d9e8eeef8762fb",
+        "extra-crew-1-native.png": "2b557ecf28405e54d007548dc9247bbfe68f0a20dad90dcbdf9aad62e9a07248"
+      },
+      "planes": {
+        "extra-crew-1-before.f32": "175dbbb9de2f7dc46b4a94431da123199f6521198ad6b1ce12719dc6cf3eba3c",
+        "extra-crew-1-after.f32": "ca959b882ace26b5cfb7d938b6afafd88b62d16c9f8e5bdca890f008a03d9d23",
+        "extra-crew-1-native.f32": "e8697fd741a22415828d9ad6e0d53f5e00e9dd49af47ef37f194f76b270e821e",
+        "extra-crew-1-native-after.f32": "ca28f18814f1550d5bc38fc3918734aabd360e4d8a33c71e5a1acfa491854f37"
+      }
+    },
+    {
+      "id": "extra-crew-2",
+      "sourceSha256": "65e6a32edc3b98e4c3bad200a1fe69ea490de4c253ad8dc93cbe8159b347973c",
+      "images": {
+        "extra-crew-2-before.png": "f9b3f59e94602b35898535387f093f73927215f7cdbf0a6141b7d458303d8728",
+        "extra-crew-2-after.png": "a42e85fb25b54cbe53bb973edae14dd7f2fc7fe359869b7c84da5d5a3d0e0cfe",
+        "extra-crew-2-native.png": "355d91e8fe9c4b77d6edafa4f08be028e764bce58f895af8465c6c287f897068"
+      },
+      "planes": {
+        "extra-crew-2-before.f32": "c9ebac14b317bee14a5edc00330512557009aaeb5fea50d55f868e83ce52675d",
+        "extra-crew-2-after.f32": "4925019b67ca2b351ffd460e6fa665077af08c189ad0ae5c5a8bc6289e7eb71e",
+        "extra-crew-2-native.f32": "b51114b22da8d1a0606bbf71f47cd7f3a98086f2b8ab3f5be60a4f7ae07b9210",
+        "extra-crew-2-native-after.f32": "b8b7ae41386f6e73c481a20fed13eb17d946226b312502df1386437bc7e375fb"
+      }
+    },
+    {
+      "id": "extra-crew-3",
+      "sourceSha256": "65e6a32edc3b98e4c3bad200a1fe69ea490de4c253ad8dc93cbe8159b347973c",
+      "images": {
+        "extra-crew-3-before.png": "988c8185971b7fe58554fec35efa2081d0cfd21dedff4236137fc21b831ec98d",
+        "extra-crew-3-after.png": "ac6d0a25a982305124ca7550363982469635fc6b178a31f4116b6982f36ad050",
+        "extra-crew-3-native.png": "6b5b36464014bea7cad8579287a02a7d046dfda258f98c78b5d80c0c818f7052"
+      },
+      "planes": {
+        "extra-crew-3-before.f32": "2f9762189731fd8a624d6554d62dd5cf822e77449ee4f3d923622f7754ed4f0c",
+        "extra-crew-3-after.f32": "a34cc850f9fb1fabddcea5e69ba6cadd6f1b1ca572cce2c8636610c8fa255c46",
+        "extra-crew-3-native.f32": "de8e6708a723bc7c28ff7b0646aaa9adcc0573288e30413641bb458242d4fbd2",
+        "extra-crew-3-native-after.f32": "bf40276063f381b9eae34b2b3daf712eb323830df07348ea7fa0a557a621594d"
+      }
+    },
+    {
+      "id": "extra-crew-4",
+      "sourceSha256": "65e6a32edc3b98e4c3bad200a1fe69ea490de4c253ad8dc93cbe8159b347973c",
+      "images": {
+        "extra-crew-4-before.png": "dca23631aac8c93eb22258934aa0a6c1c6dc0ab4a879200676d54f9a84e59948",
+        "extra-crew-4-after.png": "b6b87aabe5ba414ac681d8b33d00f6df741615a076a862fd23d8e3e073692d28",
+        "extra-crew-4-native.png": "55b7d720321ff7d39c61f1db95281eae99d0ea16667c89f40b8f57f49d1a836f"
+      },
+      "planes": {
+        "extra-crew-4-before.f32": "5fdf935f18807317b2b6cec95b1d9c3ec395ccd7d678746388dd1709fdce372b",
+        "extra-crew-4-after.f32": "ac32c4a6699fa0651c8f1a948e00e1f23165aaf38c745a3c7dc7b8531ee2980b",
+        "extra-crew-4-native.f32": "299d4e732512d8d4576ad86a31f22cbab94d94846110d4da7eb11790c6f065b2",
+        "extra-crew-4-native-after.f32": "dcd6d938aaf82f2adbb6e5ae575823c3fcf1ab2a18b198c4dee6d538f6a5d0b2"
+      }
+    }
+  ]
+}

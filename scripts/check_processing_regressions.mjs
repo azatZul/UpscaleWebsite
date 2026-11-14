@@ -228,7 +228,7 @@ export async function checkProcessingRegressions(page, origin) {
     };
   });
   const open = async (scenario = {}, ios = false, cpu = false) => {
-    await page.goto(`${origin}/upscale/?mode=device&analytics_debug=1${ios ? '&test_ios=1' : ''}${cpu ? '&test_cpu=1' : ''}`);
+    await page.goto(`${origin}/upscale/free/?analytics_debug=1${ios ? '&test_ios=1' : ''}${cpu ? '&test_cpu=1' : ''}`);
     await page.evaluate(scenario => { window.__scenario = scenario; }, scenario);
     await page.locator('#photo-input').setInputFiles({name: 'fixture.png', mimeType: 'image/png', buffer: Buffer.from(input)});
     await page.locator('#process-photo').waitFor({state: 'visible'});

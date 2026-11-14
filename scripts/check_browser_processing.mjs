@@ -154,7 +154,7 @@ try {
         }
       };
     });
-    await page.goto(`${values.url}/upscale/?mode=device&analytics_debug=1`);
+    await page.goto(`${values.url}/upscale/free/?analytics_debug=1`);
     await page.locator('#photo-input').setInputFiles({name: 'gradient.png', mimeType: 'image/png', buffer: Buffer.from(input.transparent)});
     await page.locator('#model-drawing').click();
     await page.locator('#process-photo').click();

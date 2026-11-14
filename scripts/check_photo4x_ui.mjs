@@ -24,7 +24,7 @@ try {
   });
   const buffer = await readFile(new URL('../.web-model-work/photo4x/inputs/girls_blured.jpg', import.meta.url));
   for (const name of ['first-visit', 'return-visit']) {
-    await page.goto('http://127.0.0.1:4189/upscale/?mode=device&analytics_debug=1');
+    await page.goto('http://127.0.0.1:4189/upscale/free/?analytics_debug=1');
     await page.locator('#photo-input').setInputFiles({name: 'input.jpg', mimeType: 'image/jpeg', buffer});
     await page.locator('#scale-4x').click();
     await page.locator('#enhance-faces').uncheck();

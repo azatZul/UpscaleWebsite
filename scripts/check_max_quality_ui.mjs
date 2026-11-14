@@ -41,7 +41,7 @@ const recorder = () => {
 async function open(context, lang) {
   const page = await context.newPage();
   page.on('pageerror', e => report.errors.push(`${lang}: ${e.message}`));
-  await page.goto(`http://127.0.0.1:4189/${lang === 'en' ? '' : `${lang}/`}upscale/?mode=device`);
+  await page.goto(`http://127.0.0.1:4189/${lang === 'en' ? '' : `${lang}/`}upscale/free/`);
   return page;
 }
 

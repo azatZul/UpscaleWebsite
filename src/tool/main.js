@@ -10,6 +10,7 @@ import {shouldEnhanceFaces, tileMetricKey} from './model-selection.js';
 import {AnalyticsAction, AnalyticsEvent, SCREEN, initAnalytics, modeValue} from './analytics.js';
 import {createCloud} from './cloud.js';
 import {createSession} from './account-link.js';
+import {createHandoff} from './photo-handoff.js';
 import {createTopUp} from './topup.js';
 import {createAttemptController} from './attempt-controller.js';
 import {executionChoices, rememberThreadFailure} from './cpu-policy.js';
@@ -35,11 +36,11 @@ const elements = Object.fromEntries(['photo-input', 'choose-photo', 'remove-phot
   'face-summary', 'result-viewer', 'result-stage', 'expand-result', 'close-result', 'scale-2x', 'scale-4x', 'scale-popover',
   'result-tag', 'result-title', 'quality-chip', 'quality-note', 'model-photo', 'model-drawing', 'face-option', 'choose-faces', 'face-editor', 'face-stage',
   'face-frame', 'face-photo', 'face-marks', 'face-apply', 'face-cancel', 'face-close', 'face-editor-title',
-  'face-status', 'face-progress', 'photo-error', 'status', 'tool-options', 'choose-another', 'mode-device', 'mode-creative',
-  'mode-restore', 'private-note', 'cloud-note', 'creative-options', 'creativity',
+  'face-status', 'face-progress', 'photo-error', 'status', 'tool-options', 'choose-another',
+  'private-note', 'cloud-note', 'creative-options', 'creativity',
   'creativity-value', 'restore-options', 'negative', 'increase-resolution', 'hires-note', 'prompt-field', 'restore-prompt',
-  'topup-panel', 'topup-title', 'topup-status', 'topup-amounts', 'topup-refresh', 'saved-note', 'tool-picker', 'tool-step',
-  'tool-body', 'back-to-tools', 'signin-checking'].map(id => [id, $(id)]));
+  'topup-panel', 'topup-title', 'topup-status', 'topup-amounts', 'topup-refresh', 'saved-note',
+  'mode-picker', 'handoff-note', 'signin-go'].map(id => [id, $(id)]));
 const comparison = createComparison(elements['result-comparison'], elements['before-image'], elements['comparison-handle'],
   value => t('slider_value', {value}));
 const environment = {userAgent: navigator.userAgent, platform: navigator.platform,
@@ -68,12 +69,16 @@ let file;
 let scale = 2;
 let modelKind = 'photo';
 // 'device' runs the upscaler here; 'creative' and 'restore' send the photo to the
-// cloud for credits (cloud.js). The photo, status and result viewer are shared.
-let mode = 'device';
+// cloud for credits (cloud.js). Each mode is its own page (/upscale/,
+// /upscale/free/, /upscale/creative/, /upscale/restore/) and says which it is.
+const MODES = ['device', 'creative', 'restore'];
+const pageMode = $('main-content')?.dataset.mode;
+const mode = MODES.includes(pageMode) ? pageMode : 'device';
 let cloud;
-// 'pick' shows the tool picker; 'tool' shows one tool. Both live on this page,
-// switched with ?mode= so the back button returns to the picker.
-let step = 'pick';
+const handoff = createHandoff();
+const TOOL_PAGE = $('main-content')?.dataset.page || 'hub';
+let carriedSettings;
+const editedDeviceSettings = new Set();
 const session = createSession();
 const topUp = createTopUp({elements, t, session, trackTap: (...args) => trackTap(...args)});
 const number = value => new Intl.NumberFormat(document.documentElement.lang || 'en').format(value);
@@ -409,8 +414,12 @@ function refreshControls() {
   elements['choose-another'].hidden = !chooseAnother;
   // Without a photo the drop zone's own button is the only action on the card;
   // with a result the actions move under it, until an option change asks again.
-  elements['process-photo'].hidden = !hasFile || phase === 'done' || busy() || cpuRetry || tryTwo || retry || chooseAnother;
-  elements['process-photo'].disabled = phase !== 'ready';
+  // A sign-in check that could not answer offers the sign-in page in place of Start.
+  const signInOffered = hasFile && phase === 'ready' && needsAccount(mode) && signInWait === 'stalled' && !session.state.identity;
+  elements['signin-go'].hidden = !signInOffered;
+  elements['process-photo'].hidden = !hasFile || phase === 'done' || busy() || cpuRetry || tryTwo || retry || chooseAnother
+    || signInOffered;
+  elements['process-photo'].disabled = phase !== 'ready' || signInWait === 'checking';
   elements.cancel.hidden = !busy();
   elements['cpu-retry'].hidden = !cpuRetry;
   elements.retry.hidden = !retry;
@@ -427,6 +436,9 @@ function refreshControls() {
     elements['try-2x'].hidden = true;
     elements.cancel.hidden = true;
   }
+  // Returning to the picker mid-run would drop the work.
+  elements['mode-picker']?.classList.toggle('is-locked', locked);
+  for (const link of document.querySelectorAll('a[data-tool-mode]')) link.setAttribute('aria-disabled', String(locked));
   renderAccount();
   cloud?.refresh({busy: busy(), locked});
 }
@@ -683,13 +695,68 @@ const signedInHint = () => {
   try { return Boolean(JSON.parse(localStorage.getItem(HINT_KEY) || 'null')?.signedIn); } catch { return false; }
 };
 
-function requireSignIn(targetMode = mode) {
-  location.assign(session.signInUrl(toolUrl(targetMode)));
+const identityKnown = () => (session.state.known ? Promise.resolve() : new Promise(resolve => {
+  const timer = setTimeout(() => { stop(); resolve(); }, 8000);
+  const stop = session.subscribe(state => { if (state.known) { clearTimeout(timer); stop(); resolve(); } });
+}));
+
+// Sign-in starts only from the visitor's own action (the start button, or a
+// 401 from it), never on page load. The photo and this mode's settings go
+// with them and are back on this page afterwards; nothing starts by itself.
+let leaving = false;
+let toolNavigationPending = false;
+async function requireSignIn() {
+  if (leaving || toolNavigationPending) return;
+  leaving = true;
+  if (file) await handoff.save({file, settings: {mode, cloud: cloud.getOptions(), modelKind, scale}});
+  location.assign(session.signInUrl(location.pathname));
 }
 
+// The start button's wait on sign-in: 'checking' while the provider has not
+// answered yet, 'stalled' when it could not say. Only a clear "signed out"
+// sends the visitor to sign in; a check that timed out tells us nothing, and
+// sending them on its strength could bounce them straight back, so they get
+// the status and a link instead and decide for themselves.
+let signInWait;
+let signInAttempt = 0;
+function cancelPendingStart() {
+  signInAttempt++;
+  if (signInWait !== 'checking') return;
+  signInWait = undefined;
+  if (phase === 'ready') setStatus(t('cloud_ready'), t('cloud_ready_detail'));
+}
+function offerSignIn() {
+  signInWait = 'stalled';
+  setStatus(t('signin_stalled'), '');
+  refreshControls();
+}
+const unclearSignIn = () => !session.state.known || session.state.stalled;
+
 function start({cpu = false} = {}) {
-  if (!file || !supported || locked()) return;
-  if (needsAccount(mode) && !session.state.identity) { requireSignIn(); return; }
+  if (!file || !supported || locked() || leaving || toolNavigationPending || signInWait === 'checking') return;
+  if (needsAccount(mode) && !session.state.identity) {
+    if (!session.state.known) {
+      // Still asking the provider: say so and wait for the answer.
+      const current = selection;
+      const attempt = ++signInAttempt;
+      signInWait = 'checking';
+      setStatus(t('signin_checking'), '');
+      refreshControls();
+      identityKnown().then(() => {
+        // A changed selection or navigation spends the click, even after BFCache restores this page.
+        if (current !== selection || attempt !== signInAttempt || signInWait !== 'checking') return;
+        signInWait = undefined;
+        if (session.state.identity) { start({cpu}); return; }
+        if (unclearSignIn()) { offerSignIn(); return; }
+        refreshControls();
+        requireSignIn();
+      });
+      return;
+    }
+    if (session.state.stalled) { offerSignIn(); return; }
+    requireSignIn(); return;
+  }
+  signInWait = undefined;
   if (mode === 'device') cpuRequested ||= cpu;
   cpuFallback = mode === 'device' && cpuRequested;
   trackTap('start_processing', runProperties());
@@ -708,7 +775,7 @@ async function assessCurrentFile() {
   if (!file || locked()) return;
   const current = ++selection;
   clearOutput();
-  phase = 'assessing'; errorCode = undefined; scaleFallback = false;
+  phase = 'assessing'; errorCode = undefined; scaleFallback = false; signInWait = undefined;
   elements['source-size'].textContent = t('checking_size');
   refreshControls();
   if (mode !== 'device') { await assessForCloud(current); return; }
@@ -797,7 +864,9 @@ async function chooseFile(next, source = 'picker') {
   if (!next || locked() || !supported) return;
   stopWorker();
   file = next; completedFaces = undefined; cpuRequested = false; cpuFallback = false; tooLargeFor4x = false;
-  importSource = source; lastInfo = undefined;
+  // A photo carried over from another tool page or from sign-in was already
+  // counted as an import where it was first chosen.
+  importSource = source === 'handoff' ? undefined : source; lastInfo = undefined;
   if (thumbnailUrl) URL.revokeObjectURL(thumbnailUrl);
   thumbnailUrl = URL.createObjectURL(file);
   elements['source-thumb'].src = thumbnailUrl;
@@ -821,14 +890,17 @@ function setModelKind(value) {
   refreshControls();
 }
 elements['model-photo'].addEventListener('click', () => {
+  editedDeviceSettings.add('modelKind');
   trackTap('model', {value: 'photo'});
   if (modelKind !== 'photo') { setModelKind('photo'); assessCurrentFile(); }
 });
 elements['model-drawing'].addEventListener('click', () => {
+  editedDeviceSettings.add('modelKind');
   trackTap('model', {value: 'drawing'});
   if (modelKind !== 'drawing') { setModelKind('drawing'); assessCurrentFile(); }
 });
 elements['scale-2x'].addEventListener('click', () => {
+  editedDeviceSettings.add('scale');
   trackTap('scale', {value: 2, available: true});
   if (scale !== 2) { setScale(2); assessCurrentFile(); }
 });
@@ -843,6 +915,7 @@ elements['scale-4x'].addEventListener('click', () => {
   const reason = blocked4x();
   trackTap('scale', {value: 4, available: !reason, reason: reason === 'err_4x_device' ? 'device' : reason ? 'too_large' : 'none'});
   if (reason) { showScalePopover(t(reason)); return; }
+  editedDeviceSettings.add('scale');
   if (scale !== 4) { setScale(4); assessCurrentFile(); }
 });
 document.addEventListener('pointerdown', event => {
@@ -851,6 +924,7 @@ document.addEventListener('pointerdown', event => {
 document.addEventListener('keydown', event => { if (event.key === 'Escape') hideScalePopover(); });
 // A finished or failed photo gets a fresh check, so the other setting can run.
 elements['enhance-faces'].addEventListener('change', () => {
+  editedDeviceSettings.add('enhanceFaces');
   completedFaces = undefined;
   trackTap('enhance_faces', {value: elements['enhance-faces'].checked});
   if (['done', 'error'].includes(phase)) assessCurrentFile();
@@ -887,109 +961,54 @@ function presentCloudResult({mode: kind, options, result, before, plan}) {
   elements.results.scrollIntoView({behavior: 'smooth', block: 'start'});
 }
 
-const MODES = ['device', 'creative', 'restore'];
-// The heading describes the free on-device tool; cloud modes say what they are
-// instead, since "never leaves your device" is no longer true for them. The
-// on-device copy is read from the page, so it stays the locale's own.
-const heading = {
-  eyebrow: document.querySelector('.tool-heading .eyebrow'),
-  title: document.querySelector('.tool-heading h1'),
-  lead: document.querySelector('.tool-heading .lead'),
-};
-const deviceHeading = Object.fromEntries(Object.entries(heading).map(([key, node]) => [key, node?.textContent ?? '']));
-function renderHeading() {
-  const copy = mode === 'device' ? deviceHeading
-    : {eyebrow: t('eyebrow_cloud'), title: t(`h1_${mode}`), lead: t(`lead_${mode}`)};
-  for (const [key, node] of Object.entries(heading)) if (node) node.textContent = copy[key];
-}
-function setMode(value, {initial = false} = {}) {
-  if (!MODES.includes(value) || (value === mode && !initial) || locked()) return;
-  mode = value;
-  if (value === 'device') setScale(scale); else elements['limit-note'].textContent = formatsNote;
-  renderHeading();
-  cloud.onMode(value);
-  if (file) assessCurrentFile(); else idleStatus();
-  refreshControls();
-}
-const modeFromUrl = () => {
-  const requested = new URLSearchParams(location.search).get('mode');
-  return MODES.includes(requested) ? requested : null;
-};
-
-/** Which step shows, and whether the tool may show yet: every tool needs a
- *  signed-in account, so a tool step waits for sign-in to resolve and sends a
- *  signed-out visitor to the sign-in page. */
-function renderStep() {
-  $('main-content').dataset.step = step;
-  const {known, identity} = session.state;
-  const gated = step === 'tool' && needsAccount(mode);
-  const checking = gated && !known;
-  elements['signin-checking'].hidden = !checking;
-  elements['tool-body'].hidden = gated && !identity;
-  if (gated && known && !identity) {
-    // A check that timed out tells us nothing. Sending someone to sign in on
-    // the strength of it could bounce them straight back, so offer the link
-    // and let them decide.
-    if (session.state.stalled) offerSignIn(); else requireSignIn();
+// The original picker and Back link now navigate to real URLs. Carry the
+// photo through the picker without assessing it as an on-device upload.
+document.addEventListener('click', async event => {
+  const target = event.target.closest('a[data-tool-mode]');
+  if (!target || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  if (locked() || leaving || toolNavigationPending) { event.preventDefault(); return; }
+  if (target.pathname === location.pathname) return;
+  event.preventDefault();
+  toolNavigationPending = true;
+  cancelPendingStart();
+  try {
+    // take() has already consumed this tab's handoff id. Let it restore the
+    // photo before saving a new handoff, including on a quick picker click.
+    await handoffReady;
+    if (locked() || leaving) return;
+    leaving = true;
+    const destination = target.dataset.toolMode;
+    trackTap(destination === 'picker' ? 'back_to_tools' : 'mode_switch',
+      {from: mode, to: destination, page: TOOL_PAGE, has_photo: Boolean(file)});
+    if (file) {
+      const current = {mode, modelKind, scale, enhanceFaces: elements['enhance-faces'].checked,
+        ...(mode === 'device' ? {} : {cloud: cloud.getOptions()})};
+      const settings = destination === 'picker' ? current
+        : carriedSettings?.mode === destination ? carriedSettings : {...current, mode: destination};
+      await handoff.save({file, settings});
+    }
+    location.assign(target.href);
+  } finally {
+    toolNavigationPending = false;
   }
-}
-
-/** Say the check failed, with a way on. Replaces the "checking sign-in" line,
- *  which would otherwise sit there saying nothing for ever. */
-function offerSignIn() {
-  const notice = elements['signin-checking'];
-  notice.hidden = false;
-  notice.textContent = t('signin_stalled');
-  if (notice.querySelector('a')) return;
-  const link = document.createElement('a');
-  link.className = 'btn btn-p';
-  link.href = session.signInUrl(toolUrl(mode));
-  link.textContent = t('signin_go');
-  notice.append(document.createElement('br'), link);
-}
-
-function toolUrl(value) {
-  const url = new URL(location.href);
-  url.searchParams.set('mode', value);
-  return url.pathname + url.search;
-}
-
-function openTool(value, {push = true} = {}) {
-  if (needsAccount(value)) {
-    session.start();
-    if (session.state.known && !session.state.identity && !session.state.stalled) { requireSignIn(value); return; }
-  }
-  step = 'tool';
-  if (push) history.pushState({mode: value}, '', toolUrl(value));
-  setMode(value, {initial: true});
-  renderStep();
-  window.scrollTo({top: 0});
-}
-
-function showPicker({push = true} = {}) {
-  if (locked()) return;
-  step = 'pick';
-  if (push) {
-    const url = new URL(location.href);
-    url.searchParams.delete('mode');
-    history.pushState({}, '', url);
-  }
-  if (topUp.isOpen()) topUp.hide();
-  renderStep();
-  window.scrollTo({top: 0});
-}
-
-for (const id of MODES) {
-  elements[`mode-${id}`].addEventListener('click', () => { trackTap('tool', {value: id}); openTool(id); });
-}
-elements['back-to-tools'].addEventListener('click', () => { trackTap('back_to_tools', {mode}); showPicker(); });
-window.addEventListener('popstate', () => {
-  const requested = modeFromUrl();
-  if (requested) openTool(requested, {push: false}); else showPicker({push: false});
 });
-session.subscribe(() => {
-  renderStep();
+window.addEventListener('pageshow', () => { leaving = false; });
+session.subscribe(state => {
+  // A late answer from the provider settles a stalled check: signed in, Start
+  // is back; signed out, Start sends them to sign in as usual.
+  if (signInWait === 'stalled' && state.known && !state.stalled) {
+    signInWait = undefined;
+    if (phase === 'ready') setStatus(t('cloud_ready'), t('cloud_ready_detail'));
+  }
   refreshControls();
+});
+elements['signin-go'].href = session.signInUrl(location.pathname);
+elements['signin-go'].addEventListener('click', event => {
+  if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  // The photo and settings go along, as they do from the start button.
+  event.preventDefault();
+  trackTap('signin_go', {mode, reason: 'stalled'});
+  requireSignIn();
 });
 
 const readFailure = () => fail('format', 'err_unreadable');
@@ -1030,7 +1049,7 @@ elements.cancel.addEventListener('click', () => {
   refreshControls();
 });
 function reset() {
-  stopWorker(); selection++; phase = 'idle'; file = null;
+  stopWorker(); selection++; phase = 'idle'; file = null; signInWait = undefined;
   if (topUp.isOpen()) topUp.hide();
   errorCode = undefined; scaleFallback = false; cpuRequested = false; cpuFallback = false;
   completedFaces = undefined; tooLargeFor4x = false;
@@ -1079,17 +1098,21 @@ document.addEventListener('visibilitychange', () => {
   if (!document.hidden && session.state.identity) session.refresh();
 });
 window.addEventListener('pagehide', () => {
+  leaving = true;
+  cancelPendingStart();
   const interrupted = busy();
   if (interrupted) trackOutcome('interrupted');
   analytics.flush();
   stopWorker(); if (interrupted) remember(true);
   // A result survives in the back/forward cache; an Apply in flight does not.
   if (applying) applyFailed('err_face_apply');
-  if (phase !== 'done') phase = 'cancelled';
+  // Idle, selected photos and completed results can resume from BFCache.
+  // Only processing lost its worker and needs the interruption recovery below.
+  if (interrupted) phase = 'cancelled';
 });
 window.addEventListener('pageshow', event => {
   if (event.persisted) {
-    if (phase === 'done') return;
+    if (phase !== 'cancelled') { refreshControls(); return; }
     reset();
     setStatus(t('choose_again'), t('choose_again_detail'));
   }
@@ -1105,17 +1128,23 @@ try {
 const formatsNote = elements['limit-note'].textContent;
 cloud = createCloud({elements, t, session, topUp, requireSignIn, getMode: () => mode, getFile: () => file, getInfo: () => lastInfo, setStatus,
   setPhase: value => { phase = value; }, refreshControls, fail, presentResult: presentCloudResult,
-  optionsChanged: () => { if (['done', 'error'].includes(phase)) assessCurrentFile(); },
+  optionsChanged: () => {
+    if (signInWait === 'checking') {
+      // The pending click belongs to the old options. A new click can wait
+      // for the same identity check without reviving the previous request.
+      cancelPendingStart();
+      refreshControls();
+    }
+    if (['done', 'error'].includes(phase)) assessCurrentFile();
+  },
   analytics, trackTap, isLocked: () => busy() || applying || !supported});
 setScale(2);
 setModelKind('photo');
-const startMode = modeFromUrl();
-step = startMode ? 'tool' : 'pick';
-setMode(startMode || 'device', {initial: true});
+if (mode !== 'device') elements['limit-note'].textContent = formatsNote;
+cloud.onMode(mode);
 // Someone here only to upscale on their device never loads the auth SDK; a
 // cloud tool, or a browser that has signed in before, does.
 if (needsAccount(mode) || signedInHint()) session.start();
-renderStep();
 idleStatus();
 try {
   checkBrowser({secure: isSecureContext, worker: typeof Worker === 'function', wasm: typeof WebAssembly === 'object',
@@ -1135,4 +1164,35 @@ elements['download-result'].addEventListener('click', () => {
 document.addEventListener('click', event => {
   const cta = event.target.closest('a[data-cta]');
   if (cta) trackTap(cta.dataset.cta, {placement: cta.closest('.inline-cta') ? 'inline_banner' : 'page', phase});
+});
+
+// A photo (and settings) handed over from another tool page or from sign-in.
+// Taken once, so a reload or a page restored from the back/forward cache does
+// not pick it up again.
+const handoffSelection = selection;
+const handoffReady = handoff.take().then(arrived => {
+  // Storage may answer after the visitor has chosen or removed another photo.
+  // Restore only untouched settings while the empty selection is still current.
+  if (!arrived || file || selection !== handoffSelection || leaving) return;
+  if (arrived.failed) { elements['handoff-note'].hidden = false; return; }
+  const {settings} = arrived;
+  if (TOOL_PAGE === 'hub') {
+    file = arrived.file;
+    carriedSettings = settings;
+    return;
+  }
+  if (settings?.mode === mode) {
+    if (mode === 'device') {
+      if (!editedDeviceSettings.has('modelKind') && settings.modelKind === 'drawing') setModelKind('drawing');
+      if (!editedDeviceSettings.has('scale') && settings.scale === 4 && supportsScale(policy, 4)) setScale(4);
+      if (!editedDeviceSettings.has('enhanceFaces') && typeof settings.enhanceFaces === 'boolean') {
+        elements['enhance-faces'].checked = settings.enhanceFaces;
+      }
+    } else if (settings.cloud) {
+      cloud.setOptions(settings.cloud);
+    }
+  }
+  if (supported) return chooseFile(arrived.file, 'handoff').catch(readFailure);
+}).catch(() => {
+  if (!file && selection === handoffSelection && !leaving) elements['handoff-note'].hidden = false;
 });

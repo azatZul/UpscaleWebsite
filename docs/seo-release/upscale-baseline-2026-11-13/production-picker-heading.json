@@ -1,0 +1,40 @@
+{
+  "checked_at": "2026-11-13T12:33:34.262711+00:00",
+  "pages": [
+    {
+      "url": "https://upscales.app/upscale/",
+      "heading": "<span class=\"eyebrow\">UScale tools</span><h1 id=\"picker-title\">Upscale photos</h1>",
+      "no_subtitle": true
+    },
+    {
+      "url": "https://upscales.app/ru/upscale/",
+      "heading": "<span class=\"eyebrow\">Инструменты UScale</span><h1 id=\"picker-title\">Улучшить фото</h1>",
+      "no_subtitle": true
+    },
+    {
+      "url": "https://upscales.app/de/upscale/",
+      "heading": "<span class=\"eyebrow\">UScale-Tools</span><h1 id=\"picker-title\">Fotos vergrößern</h1>",
+      "no_subtitle": true
+    },
+    {
+      "url": "https://upscales.app/ja/upscale/",
+      "heading": "<span class=\"eyebrow\">UScaleのツール</span><h1 id=\"picker-title\">写真を高画質化</h1>",
+      "no_subtitle": true
+    },
+    {
+      "url": "https://upscales.app/fr/upscale/",
+      "heading": "<span class=\"eyebrow\">Outils UScale</span><h1 id=\"picker-title\">Agrandir des photos</h1>",
+      "no_subtitle": true
+    },
+    {
+      "url": "https://upscales.app/es/upscale/",
+      "heading": "<span class=\"eyebrow\">Herramientas de UScale</span><h1 id=\"picker-title\">Ampliar fotos</h1>",
+      "no_subtitle": true
+    },
+    {
+      "url": "https://upscales.app/zh/upscale/",
+      "heading": "<span class=\"eyebrow\">UScale 工具</span><h1 id=\"picker-title\">图片放大</h1>",
+      "no_subtitle": true
+    }
+  ]
+}

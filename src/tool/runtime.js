@@ -3,9 +3,20 @@ import {PhotoError, SCALE, TILE_SIZE} from './capability.js';
 import {resolveModelAsset} from './model-selection.js';
 import {tensorPixels} from './tile-pipeline.js';
 import {gpuSupportsVariant, variantKey} from './photo4x-policy.js';
+import {fetchModel, forgetModel} from './model-cache.js';
 
 import {requireGpuAdapter, selectBackend} from './gpu-backend.js';
 export {requireGpuAdapter, selectBackend} from './gpu-backend.js';
+
+// Every model file the current release can load; older ones are pruned from Cache Storage.
+export function currentModelUrls(assets = ASSETS) {
+  const urls = new Set([assets.photo4x, assets.faceFinder, ...(assets.faceModel?.parts ?? []).map(part => part.url)]);
+  for (const scales of Object.values(assets.models ?? {})) {
+    for (const backends of Object.values(scales)) for (const url of Object.values(backends)) urls.add(url);
+  }
+  urls.delete(undefined);
+  return urls;
+}
 
 let configured;
 export function wasmThreads(requested = 1, env = globalThis) {
@@ -69,7 +80,10 @@ export async function loadRuntime(forceCpu, progress, face = false, scale = SCAL
     timings.modelDownloadMs = performance.now() - downloadStarted;
     if (variant?.sha256) {
       const digest = [...new Uint8Array(await crypto.subtle.digest('SHA-256', modelBytes))].map(n => n.toString(16).padStart(2, '0')).join('');
-      if (digest !== variant.sha256) throw new PhotoError('download', 'err_unavailable');
+      if (digest !== variant.sha256) {
+        await forgetModel(model);
+        throw new PhotoError('download', 'err_unavailable');
+      }
     }
     const binary = backend === 'webgpu' ? 'ort-wasm-simd-threaded.asyncify.wasm' : 'ort-wasm-simd-threaded.wasm';
     // Fetch separately to report download progress instead of presenting it as
@@ -123,9 +137,12 @@ export async function loadRuntime(forceCpu, progress, face = false, scale = SCAL
   };
 }
 
+// Retained downloads are model files and go through Cache Storage. The engine
+// binary is fetched only to report progress: ORT loads it again from the HTTP
+// cache, so storing a second copy would not help.
 export async function download(url, onProgress = () => {}, retain = true) {
   let response;
-  try { response = await fetch(url); } catch (error) { throw new PhotoError('download', 'err_download', undefined, error); }
+  try { response = retain ? await fetchModel(url, {keep: currentModelUrls()}) : await fetch(url); } catch (error) { throw new PhotoError('download', 'err_download', undefined, error); }
   if (!response.ok) throw new PhotoError('download', 'err_unavailable', undefined, new Error(`Model download HTTP ${response.status}`));
   // A compressed response's Content-Length counts wire bytes, while fetch
   // exposes decoded bytes. Without a comparable total, show an indeterminate
@@ -162,7 +179,7 @@ async function downloadFace(onProgress) {
   let offset = 0;
   try {
     for (const part of ASSETS.faceModel.parts) {
-      const response = await fetch(part.url);
+      const response = await fetchModel(part.url, {keep: currentModelUrls()});
       if (!response.ok || !response.body) throw new Error(`Model part download HTTP ${response.status}; body ${Boolean(response.body)}`);
       const reader = response.body.getReader();
       let received = 0;
@@ -179,5 +196,9 @@ async function downloadFace(onProgress) {
     }
     onProgress(1, offset);
     return bytes;
-  } catch (error) { throw new PhotoError('download', 'err_face_download', undefined, error); }
+  } catch (error) {
+    // A size mismatch must not repeat on the next visit from a stored copy.
+    for (const part of ASSETS.faceModel.parts) await forgetModel(part.url);
+    throw new PhotoError('download', 'err_face_download', undefined, error);
+  }
 }

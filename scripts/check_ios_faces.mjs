@@ -24,7 +24,7 @@ export async function checkIosFaces(page, origin) {
       }
     };
   });
-  await page.goto(`${origin}/upscale/?mode=device`);
+  await page.goto(`${origin}/upscale/free/`);
   assert.equal(await page.evaluate(() => navigator.userAgent), IOS_CHROME_UA);
   const input = await page.evaluate(async () => {
     const source = await (await fetch('/benchmarks/ios/face/asset_face_preview_original.input.png')).blob();

@@ -25,9 +25,11 @@ def main():
         for method in ['GET','HEAD']:
             for navigation in [False,True]:
                 for suffix in ['', '/', '/index.html']:
-                    cases.append((f'{prefix}/free-upscale{suffix}?utm_source=test&mode=restore',method,navigation,301,f'{prefix}/upscale/?utm_source=test&mode=restore'))
-        for path in [prefix+'/',prefix+'/guides/',prefix+'/upscale/']:
+                    cases.append((f'{prefix}/free-upscale{suffix}?utm_source=test&mode=restore',method,navigation,301,f'{prefix}/upscale/restore/?utm_source=test'))
+        for path in [prefix+'/',prefix+'/guides/',prefix+'/upscale/',prefix+'/upscale/free/',prefix+'/upscale/creative/',prefix+'/upscale/restore/']:
             cases.append((path,'GET',True,200,None))
+        cases.append((prefix+'/upscale/?mode=device&utm_source=test','GET',True,301,prefix+'/upscale/free/?utm_source=test'))
+        cases.append((prefix+'/upscale/?mode=restore','GET',True,301,prefix+'/upscale/restore/'))
         cases.append((prefix+'/index.html?mode=device','GET',True,301,prefix+'/?mode=device'))
     for path in ['/free-upscale-xyz','/ru/free-upscale-xyz','/free-upscale/extra','/ru/extra/free-upscale/','/xx/free-upscale/','/upscale/foo','/ru/upscale/foo']:
         for method in ['GET','HEAD']:

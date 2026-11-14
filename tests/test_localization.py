@@ -50,29 +50,77 @@ class CatalogTests(unittest.TestCase):
         try:
             for locale in site_build.LOCALIZED_CODES:
                 c = site_build.inject_facts(catalog.load_locale(locale), locale)
-                html = site_build.render_tool(c, locale)
-                match = re.search(r'<script type="application/json" id="tool-strings">(.*?)</script>', html, re.S)
-                strings = json.loads(match.group(1))
-                # Runtime placeholders survive the build's fact injection.
-                self.assertIn("{scale}", strings["upscale_button"], locale)
-                self.assertIn(f'<link rel="canonical" href="{site_build.url(locale, site_build.TOOL_PATH)}">', html)
-                self.assertIn('content="index,follow,max-image-preview:large,max-snippet:-1"', html)
-                self.assertNotIn('noindex', html)
-                self.assertIn('src="/assets/processor/app/main-test.js"', html)
-                self.assertIn("uscale-theme", html)  # the shared theme boot
-                self.assertIn('class="theme-btn"', html)
-                self.assertIn('id="model-photo"', html)
-                self.assertIn('id="model-drawing"', html)
-                self.assertIn(f'>{c["tool"]["model_photo"]}</button>', html)
-                self.assertIn(f'>{c["tool"]["model_drawing"]}</button>', html)
+                titles = set()
+                for page, route in site_build.TOOL_ROUTES.items():
+                    html = site_build.render_tool(c, locale, page)
+                    match = re.search(r'<script type="application/json" id="tool-strings">(.*?)</script>', html, re.S)
+                    strings = json.loads(match.group(1))
+                    # Runtime placeholders survive the build's fact injection.
+                    self.assertIn("{scale}", strings["upscale_button"], locale)
+                    # Each page is its own address: canonical and hreflang point at
+                    # the directory, never at a .html file.
+                    canonical = site_build.url(locale, route)
+                    self.assertTrue(canonical.endswith(f"/{route}/"), canonical)
+                    self.assertIn(f'<link rel="canonical" href="{canonical}">', html)
+                    for other in site_build.LOCALIZED_CODES:
+                        self.assertIn(f'href="{site_build.url(other, route)}"', html)
+                    self.assertNotIn(f"{route}.html", html)
+                    self.assertIn('content="index,follow,max-image-preview:large,max-snippet:-1"', html)
+                    self.assertNotIn('noindex', html)
+                    self.assertIn(f'data-mode="{site_build.TOOL_PAGE_MODE[page]}" data-page="{page}"', html)
+                    self.assertEqual(len(re.findall(r"<h1[ >]", html)), 1, (locale, page))
+                    # Friendly URLs preserve the established two-screen UI.
+                    self.assertNotIn('class="mode-switch"', html)
+                    self.assertNotIn('class="tool-content"', html)
+                    self.assertNotIn('class="tool-examples"', html)
+                    self.assertNotIn('class="tool-more"', html)
+                    if page == "hub":
+                        self.assertEqual(html.count('<details><summary>'), 4)
+                        for item in c["tool"]["page"]["hub"]["faq"]:
+                            self.assertIn(f'<summary>{site_build.esc(item["q"])}</summary>', html)
+                    else:
+                        self.assertNotIn('class="wrap tool-faq"', html)
+                    # FAQ rich results are not shown for a site like this one.
+                    self.assertNotIn('"@type":"FAQPage"', html)
+                    # Only the free tool page is free; the picker also sells credits.
+                    self.assertEqual('"isAccessibleForFree":true' in html, page == "free", (locale, page))
+                    if page == "hub":
+                        self.assertIn('data-step="pick"', html)
+                        self.assertIn('id="tool-step" hidden', html)
+                        self.assertIn(f'<h1 id="picker-title">{c["tool"]["picker_h1"]}</h1>', html)
+                        for target in ("free", "creative", "restore"):
+                            self.assertIn(f'href="{site_build.rel_url(locale, site_build.TOOL_ROUTES[target])}"', html)
+                        self.assertEqual(html.count('class="mode-tile"'), 3)
+                    else:
+                        self.assertIn('data-step="tool"', html)
+                        self.assertIn('id="back-to-tools"', html)
+                        self.assertNotIn('class="mode-tile"', html)
+                    self.assertNotIn("{", re.search(r"<title>(.*?)</title>", html).group(1))
+                    titles.add(re.search(r"<title>(.*?)</title>", html).group(1))
+                    # The picker links to each tool; each tool links back.
+                    targets = ("free", "creative", "restore") if page == "hub" else ("hub",)
+                    for target in targets:
+                        self.assertIn(f'href="{site_build.rel_url(locale, site_build.TOOL_ROUTES[target])}"', html)
+                    self.assertIn('src="/assets/processor/app/main-test.js"', html)
+                    self.assertIn("uscale-theme", html)  # the shared theme boot
+                    self.assertIn('class="theme-btn"', html)
+                    self.assertIn('id="model-photo"', html)
+                    self.assertIn(f'>{c["tool"]["model_photo"]}</button>', html)
+                    self.assertIn(f'>{c["tool"]["model_drawing"]}</button>', html)
+                self.assertEqual(len(titles), len(site_build.TOOL_ROUTES), locale)
                 # The home page's card under the hero is the way in; the header stays store-focused.
                 tool_href = f'href="{site_build.rel_url(locale, site_build.TOOL_PATH)}"'
                 self.assertIn(tool_href, site_build.tool_cta(c, locale))
                 self.assertNotIn(tool_href, site_build.nav(c, locale, "/"))
             redirects = site_build.render_static_redirects()
-            self.assertIn("/upscale/ /upscale/index.html 200", redirects)
+            for route in site_build.TOOL_ROUTES.values():
+                self.assertIn(f"/{route}/ /{route}/index.html 200", redirects)
+                self.assertIn(f"/ru/{route} /ru/{route}/ 301", redirects)
             self.assertIn("/licenses/ /licenses/index.html 200", redirects)
             self.assertNotIn("free-upscale", redirects)
+            sitemap = site_build.render_sitemap()
+            for route in site_build.TOOL_ROUTES.values():
+                self.assertIn(f"<loc>{site_build.url('ja', route)}</loc>", sitemap)
         finally:
             site_build.TOOL_SCRIPT = original
 

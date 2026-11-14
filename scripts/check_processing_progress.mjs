@@ -25,7 +25,7 @@ export async function checkProcessingProgress(page, origin) {
       }
     };
   });
-  await page.goto(`${origin}/upscale/?mode=device`);
+  await page.goto(`${origin}/upscale/free/`);
   const cases = [];
   for (const transparent of [false, true]) {
     const input = await page.evaluate(async transparent => {

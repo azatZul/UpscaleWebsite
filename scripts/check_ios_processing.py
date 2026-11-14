@@ -136,7 +136,7 @@ def run_device(args, output):
         payload['maximum'] = {'width': args.width, 'height': args.height, 'runs': args.runs}
     payload['keepActive'] = args.keep_active
     base = args.driver.rstrip('/') + '/session/' + args.session
-    rpc(base, '/url', {'url': args.origin.rstrip('/') + '/upscale/?mode=device&analytics-debug=1'})
+    rpc(base, '/url', {'url': args.origin.rstrip('/') + '/upscale/free/?analytics-debug=1'})
     rpc(base, '/execute/sync', {'script': 'document.open();document.write(arguments[0]);document.close();return true;',
                               'args': [payload['html']]})
     print('START', rpc(base, '/execute/sync', {'script': INSTALL, 'args': [payload]}), flush=True)

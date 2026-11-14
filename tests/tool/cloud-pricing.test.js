@@ -70,3 +70,18 @@ test('the prices the page shows before sign-in match the worker', () => {
   const badge = Number(build.match(/tag_credits'\].replace\('\{credits\}', '(\d+)'\)/)[1]);
   assert.equal(badge, DEFAULT_PRICES.creative['4k'], 'the tile badge quotes the price of a photo');
 });
+
+test('options carried across sign-in are checked again before use', async () => {
+  const {restoredOptions, defaultOptions} = await import('../../src/tool/cloud-pricing.js');
+  assert.deepEqual(restoredOptions(null), defaultOptions());
+  assert.deepEqual(restoredOptions({creative: {creativity: 2, resolution: '8k'},
+    restore: {mode: 'colorization', increaseResolution: true, negative: true, prompt: 'blue eyes'}}),
+  {creative: {creativity: 2, resolution: '8k'},
+    restore: {mode: 'colorization', increaseResolution: true, negative: true, prompt: 'blue eyes'}});
+  assert.deepEqual(restoredOptions({creative: {creativity: 9, resolution: '16k'}, restore: {mode: 'evil', negative: 'yes'}}),
+    defaultOptions());
+  // Advanced Fix takes neither a prompt nor increased resolution.
+  assert.deepEqual(restoredOptions({restore: {mode: 'advanced_restoration', increaseResolution: true, prompt: 'x'}}).restore,
+    {mode: 'advanced_restoration', increaseResolution: false, negative: false, prompt: ''});
+  assert.equal(restoredOptions({restore: {prompt: 'x'.repeat(900)}}).restore.prompt.length, 500);
+});

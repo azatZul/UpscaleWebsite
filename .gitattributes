@@ -1,0 +1,2 @@
+# Captured HTTP bodies retain their original bytes for SHA-256 comparisons.
+docs/seo-release/upscale-baseline-2026-11-13/html/*.html -whitespace

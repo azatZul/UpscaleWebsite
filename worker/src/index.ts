@@ -31,10 +31,13 @@ const GALLERY_MEDIA_PATH = new RegExp(`^/media/(${ALBUM_ID})/gallery\\.jpg$`);
 const MEDIA_PATH = new RegExp(`^/media/(${ALBUM_ID})/(${ALBUM_ID})/(before|after)\\.webp$`);
 const DOWNLOAD_PATH = new RegExp(`^/download/(${ALBUM_ID})/(${ALBUM_ID})$`);
 const ZIP_PATH = new RegExp(`^/download/(${ALBUM_ID})/all\\.zip$`);
-// The browser tool moved from /free-upscale/ to /upscale/. Old links keep their
-// ?mode= when it names a tool mode (the list mirrors MODES in src/tool/main.js)
-// and otherwise open the free on-device tool.
+// The browser tool moved from /free-upscale/ to /upscale/, and then each of its
+// modes got its own page: /upscale/ keeps the picker, /upscale/free/ opens
+// the free on-device tool, followed by /upscale/creative/ and /upscale/restore/.
+// Old ?mode= links go straight to the page for that mode, keeping every other
+// parameter (utm and the like); the list mirrors MODES in src/tool/main.js.
 const LEGACY_TOOL_PATH = /^\/(?:(es|fr|de|ja|zh|ru)\/)?free-upscale(?:\/|\/index\.html)?$/;
+const TOOL_PAGE_PATH = /^\/(?:(es|fr|de|ja|zh|ru)\/)?upscale\/$/;
 const TOOL_MODES = new Set(["device", "creative", "restore"]);
 const SUPPORT_EMAIL = "alexandr.graschenkov91@gmail.com";
 
@@ -1411,11 +1414,24 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   return json({ error: "not_found" }, 404);
 }
 
-function redirectLegacyTool(url: URL, lang: string | undefined): Response {
-  const target = new URL(`/${lang ? `${lang}/` : ""}upscale/`, url);
+function toolRedirect(url: URL, lang: string | undefined, page: string): Response {
+  const target = new URL(`/${lang ? `${lang}/` : ""}upscale/${page}`, url);
   target.search = url.search;
-  if (!TOOL_MODES.has(target.searchParams.get("mode") ?? "")) target.searchParams.set("mode", "device");
+  target.searchParams.delete("mode");
   return new Response(null, { status: 301, headers: { Location: target.pathname + target.search } });
+}
+
+/** /free-upscale/ → the free tool's own page, or the page of the mode it names. */
+function redirectLegacyTool(url: URL, lang: string | undefined): Response {
+  const mode = url.searchParams.get("mode") ?? "";
+  return toolRedirect(url, lang, mode === "creative" || mode === "restore" ? `${mode}/` : "free/");
+}
+
+/** /upscale/?mode=… → that mode's page; null leaves /upscale/ to the assets. */
+function redirectToolMode(url: URL, lang: string | undefined): Response | null {
+  const mode = url.searchParams.get("mode") ?? "";
+  if (!TOOL_MODES.has(mode)) return null;
+  return toolRedirect(url, lang, mode === "device" ? "free/" : `${mode}/`);
 }
 
 async function route(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
@@ -1469,6 +1485,8 @@ async function route(request: Request, env: Env, ctx: ExecutionContext): Promise
   if (dynamic) return plain("Not found", 404);
   const legacyTool = isRead ? LEGACY_TOOL_PATH.exec(url.pathname) : null;
   if (legacyTool) return redirectLegacyTool(url, legacyTool[1]);
+  const toolPage = isRead ? TOOL_PAGE_PATH.exec(url.pathname) : null;
+  if (toolPage) return redirectToolMode(url, toolPage[1]) ?? env.ASSETS.fetch(request);
   return env.ASSETS.fetch(request);
 }
 

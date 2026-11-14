@@ -54,6 +54,12 @@ MARKETING_SCRIPT = marketing_script()
 # comes from the separate Vite build (npm run build:tool); without that build the
 # site still builds and simply leaves out the page, its links and the home banner.
 TOOL_PATH = "upscale"
+# One static page per tool page, so each mode has its own address and its own
+# search target. The original picker keeps /upscale/; /upscale/free/ opens
+# the on-device tool, and the two cloud tools have their own pages too.
+TOOL_ROUTES = {"hub": TOOL_PATH, "free": f"{TOOL_PATH}/free",
+               "creative": f"{TOOL_PATH}/creative", "restore": f"{TOOL_PATH}/restore"}
+TOOL_PAGE_MODE = {"hub": "device", "free": "device", "creative": "creative", "restore": "restore"}
 TOOL_MANIFEST = os.path.join(ROOT, "assets", "processor", "app", ".vite", "manifest.json")
 
 def _tool_script():
@@ -584,7 +590,7 @@ def page_path(path=""):
     """Logical path -> the file that is actually served (extension included)."""
     if not path:
         return ""
-    if path in ("guides", TOOL_PATH):
+    if path == "guides" or path in TOOL_ROUTES.values():
         return path + "/"
     return path + ".html"
 
@@ -922,6 +928,10 @@ def consent_banner(c, lang):
 
 def footer(c, lang, home_prefix, path=""):
     f = c["footer"]
+    tool_page = c.get("tool", {}).get("page", {})
+    tool_links = "".join(
+        f'<li><a href="{rel_url(lang, TOOL_ROUTES[key])}">{esc(tool_page[key]["h1"])}</a></li>'
+        for key in ("hub", "free") if TOOL_SCRIPT and key in tool_page)
     guide_links = "".join(
         f'<li><a href="{home_prefix}guides/{s}.html">{esc(c["guide_pages"][s]["nav_title"])}</a></li>'
         for s in GUIDE_SLUGS[:5]
@@ -939,7 +949,7 @@ def footer(c, lang, home_prefix, path=""):
       <div>
         <h2>{esc(f['product'])}</h2>
         <ul>
-          <li><a href="{home_prefix}#examples">{esc(c['nav']['screens'])}</a></li>
+          {tool_links}<li><a href="{home_prefix}#examples">{esc(c['nav']['screens'])}</a></li>
           <li><a href="{home_prefix}#how">{esc(c['nav']['how'])}</a></li>
           <li><a href="{home_prefix}#reviews">{esc(f['reviews'])}</a></li>
           <li><a href="{rel_url(lang, 'compare')}">{esc(c['nav'].get('compare', 'Comparison'))}</a></li>
@@ -969,7 +979,7 @@ def footer(c, lang, home_prefix, path=""):
 </footer>
 {consent_banner(c, lang)}
 <script src="/assets/site.js?v={JS_V}" defer></script>
-{f'<script type="module" src="{MARKETING_SCRIPT}"></script>' if MARKETING_SCRIPT and path != TOOL_PATH else ""}
+{f'<script type="module" src="{MARKETING_SCRIPT}"></script>' if MARKETING_SCRIPT and path not in TOOL_ROUTES.values() else ""}
 </body>
 </html>
 """
@@ -1287,6 +1297,19 @@ def render_guides_index(c, lang):
             + footer(c, lang, home_prefix, "guides"))
 
 # Guide page
+# Guides whose task the browser tool can do link to that tool page.
+GUIDE_TOOL = {"unblur-photo-iphone": "hub", "fix-blurry-faces": "hub", "upscale-image-4k": "free",
+              "upscale-anime-art": "free", "restore-old-photos": "restore",
+              "colorize-black-and-white-photos": "restore", "film-negative-to-photo": "restore"}
+
+def guide_tool_link(c, lang, slug):
+    page = GUIDE_TOOL.get(slug)
+    tool_page = c.get("tool", {}).get("page", {})
+    if not (TOOL_SCRIPT and page and page in tool_page):
+        return ""
+    return (f'<p class="guide-tool-link">{esc(tool_page["common"]["guide_try"])} '
+            f'<a href="{rel_url(lang, TOOL_ROUTES[page])}">{esc(tool_page[page]["h1"])}</a></p>')
+
 def render_guide(c, lang, slug):
     c = {**c, "_campaign": "site_guides"}
     seg = BY_CODE[lang][1]
@@ -1398,6 +1421,7 @@ def render_guide(c, lang, slug):
       <div class="inline-cta-copy"><h3>{esc(g['cta_h'])}</h3><p>{esc(g['cta_p'])}</p></div>
       <div class="inline-stores">{store_buttons(c)}</div>
     </div>
+    {guide_tool_link(c, lang, slug)}
 
     <h2>{esc(g['faq_h'])}</h2>
     <div class="faq" style="margin-top:20px">{mini_faq}</div>
@@ -1905,13 +1929,11 @@ def tool_cta(c, lang):
   </div>
 </section>"""
 
-
-def render_tool(c, lang):
+def render_tool(c, lang, page="hub"):
     """The browser upscaler page: site chrome and theme, the locale's copy, and
     the tool's runtime strings for src/tool/i18n.js."""
     tl, js = c["tool"], c["tool"]["js"]
     home_prefix = rel_url(lang)
-    canonical = url(lang, TOOL_PATH)
     first = lambda text: esc(text.replace("{scale}", "2"))
     # "</" would end the script element early; JSON allows the escaped slash.
     strings = json.dumps(js, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
@@ -1932,42 +1954,65 @@ def render_tool(c, lang):
         f'<em class="restore-mode-price"></em></span>'
         f'<span class="restore-mode-check" aria-hidden="true"></span></button>'
         for mode in ("restore", "colorization", "colorization_pro", "advanced_restoration"))
-    def mode_tile(mode, title, sub, tag):
-        name, width, height = TOOL_MODE_PREVIEWS[mode]
+    mode = TOOL_PAGE_MODE[page]
+    pg, common = tl["page"][page], tl["page"]["common"]
+    def mode_tile(target, title, sub, tag):
+        name, width, height = TOOL_MODE_PREVIEWS[target]
         badge = (f'<span class="mode-tag is-credits">{COIN_SVG}<span class="mode-tag-amount">{credits_tag}</span></span>'
                  if tag == "pro" else f'<span class="mode-tag is-free">{esc(tl["tag_free"])}</span>')
-        return (f'<button type="button" class="mode-tile" id="mode-{mode}" data-mode="{mode}">'
+        route = "free" if target == "device" else target
+        return (f'<a class="mode-tile" id="mode-{target}" data-tool-mode="{target}" href="{rel_url(lang, TOOL_ROUTES[route])}">'
                 f'<span class="mode-preview" aria-hidden="true">'
                 f'<img class="mode-after" src="{TOOL_MODE_IMG}/{name}_after.jpg" width="{width}" height="{height}" alt="" decoding="async">'
                 f'<img class="mode-before" src="{TOOL_MODE_IMG}/{name}_before.jpg" width="{width}" height="{height}" alt="" decoding="async">'
                 f'<i class="mode-divider"></i></span>{badge}'
-                f'<span class="mode-tile-text"><b>{title}</b><span class="mode-tile-sub">{sub}</span></span></button>')
+                f'<span class="mode-tile-text"><b>{title}</b><span class="mode-tile-sub">{sub}</span></span></a>')
     mode_tiles = "".join([
         mode_tile("device", esc(tl["mode_device"]), esc(tl["mode_device_sub"]), "free"),
         mode_tile("creative", esc(tl["mode_creative"]), creative_sub, "pro"),
         mode_tile("restore", esc(tl["mode_restore"]), restore_sub, "pro"),
     ])
-    return (head(c, lang, tl["meta"]["title"], tl["meta"]["description"], canonical, path=TOOL_PATH,
-                 stylesheet="upscale.css")
-            + nav(c, lang, home_prefix, TOOL_PATH)
-            + f"""<main class="tool" id="main-content" tabindex="-1" data-step="pick">
+    # Keep the original picker and tool screens. SEO metadata belongs to each
+    # URL; changing a URL must not redesign the controls or their headings.
+    picker = (f'<section class="tool-picker" id="tool-picker" aria-labelledby="picker-title">'
+              f'<div class="tool-heading"><span class="eyebrow">{esc(tl["picker_eyebrow"])}</span>'
+              f'<h1 id="picker-title">{esc(tl["picker_h1"])}</h1></div>'
+              f'<nav class="mode-picker" id="mode-picker" aria-label="{esc(tl["mode_label"])}">{mode_tiles}</nav></section>') if page == "hub" else ""
+    eyebrow = tl["eyebrow"] if mode == "device" else js["eyebrow_cloud"]
+    title = tl["h1"] if mode == "device" else js[f"h1_{mode}"]
+    lead = tl["sub"] if mode == "device" else js[f"lead_{mode}"]
+    tool_heading = (f'<a class="back-link" id="back-to-tools" data-tool-mode="picker" href="{rel_url(lang, TOOL_PATH)}">'
+                    f'<span aria-hidden="true">←</span> {esc(tl["back_to_tools"])}</a>'
+                    f'<div class="tool-heading"><span class="eyebrow">{esc(eyebrow)}</span>'
+                    f'<h1>{esc(title)}</h1><p class="lead">{esc(lead)}</p></div>') if page != "hub" else ""
+    path = TOOL_ROUTES[page]
+    canonical = url(lang, path)
+    crumbs_ld = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": c["ui"]["home"], "item": url(lang)},
+        {"@type": "ListItem", "position": 2, "name": pg["h1"], "item": canonical}]}
+    app_ld = {"@context": "https://schema.org", "@type": "WebApplication", "name": f'UScale — {pg["h1"]}',
+              "url": canonical, "description": pg["description"], "inLanguage": BY_CODE[content_lang(c, lang)][4],
+              "applicationCategory": "MultimediaApplication", "operatingSystem": "Any",
+              "browserRequirements": "Requires a current browser with WebAssembly",
+              "publisher": {"@id": SITE + "/#organization"}}
+    # The picker also offers the paid cloud tools; only the free tool page is free.
+    if page == "free":
+        app_ld["isAccessibleForFree"] = True
+        app_ld["offers"] = {"@type": "Offer", "price": "0", "priceCurrency": "USD"}
+    faq_items = tl["page"]["hub"]["faq"] if page == "hub" else []
+    faq_html = (f'<section class="wrap tool-faq" aria-labelledby="tool-faq-title">'
+                f'<h2 id="tool-faq-title">{esc(common["faq_h"])}</h2><div class="faq">'
+                + "".join(f'<details><summary>{esc(item["q"])}</summary><div class="a"><p>{esc(item["a"])}</p></div></details>'
+                          for item in faq_items) + '</div></section>') if faq_items else ""
+    return (head(c, lang, pg["title"], pg["description"], canonical, path=path,
+                 extra_ld=ld(app_ld) + ld(crumbs_ld), stylesheet="upscale.css")
+            + nav(c, lang, home_prefix, path)
+            + f"""<main class="tool" id="main-content" tabindex="-1" data-mode="{mode}" data-page="{page}" data-step="{'pick' if page == 'hub' else 'tool'}">
   <div class="wrap tool-wrap">
-    <section class="tool-picker" id="tool-picker" aria-labelledby="picker-title">
-      <div class="tool-heading">
-        <span class="eyebrow">{esc(tl['picker_eyebrow'])}</span>
-        <h1 id="picker-title">{esc(tl['picker_h1'])}</h1>
-        <p class="lead">{esc(tl['picker_lead'])}</p>
-      </div>
-      <div class="mode-picker" id="mode-picker" role="group" aria-label="{esc(tl['mode_label'])}">{mode_tiles}</div>
-    </section>
-    <div class="tool-step" id="tool-step">
-    <button type="button" class="back-link" id="back-to-tools"><span aria-hidden="true">←</span> {esc(tl['back_to_tools'])}</button>
-    <div class="tool-heading">
-      <span class="eyebrow">{esc(tl['eyebrow'])}</span>
-      <h1>{esc(tl['h1'])}</h1>
-      <p class="lead">{esc(tl['sub'])}</p>
-    </div>
-    <p class="signin-checking" id="signin-checking" role="status" hidden>{esc(tl['signin_checking'])}</p>
+    {picker}
+    <p class="notice" id="handoff-note" role="status" hidden>{esc(js['handoff_failed'])}</p>
+    <div class="tool-step" id="tool-step"{' hidden' if page == 'hub' else ''}>
+    {tool_heading}
     <div class="tool-body" id="tool-body">
     <p class="notice" id="interrupted" hidden>{esc(tl['interrupted'])}</p>
     <section class="tool-card" id="photo-stage" aria-labelledby="stage-title">
@@ -2056,6 +2101,7 @@ def render_tool(c, lang):
       <p id="visibility-note" class="notice" hidden>{esc(tl['visibility'])}</p>
       <div class="tool-actions">
         <button id="process-photo" class="btn btn-p" type="button" disabled hidden>{first(js['upscale_button'])}</button>
+        <a id="signin-go" class="btn btn-p" href="/account/" hidden>{esc(js['signin_go'])}</a>
         <button id="retry" class="btn btn-p" type="button" hidden>{esc(tl['retry'])}</button>
         <button id="cpu-retry" class="btn btn-p" type="button" hidden>{esc(tl['cpu_retry'])}</button>
         <button id="try-2x" class="btn btn-p" type="button" hidden>{esc(tl['try_2x'])}</button>
@@ -2093,13 +2139,16 @@ def render_tool(c, lang):
     </section>
     </div>
     </div>
+    <noscript><p class="notice">{esc(tl['noscript'])}</p></noscript>
+  </div>
+  {faq_html}
+  <div class="wrap">
     <div class="inline-cta">
       <img src="/resources/appstore/icon_512.png" width="66" height="66" loading="lazy"
            alt="{esc(c['ui']['icon_alt'])}">
       <div class="inline-cta-copy"><h3>UScale</h3><p>{esc(tl['app_sub'])}</p></div>
       <div class="inline-stores">{store_buttons(c)}</div>
     </div>
-    <noscript><p class="notice">{esc(tl['noscript'])}</p></noscript>
   </div>
 </main>
 <div class="face-editor" id="face-editor" role="dialog" aria-modal="true" aria-labelledby="face-editor-title" hidden>
@@ -2137,7 +2186,7 @@ def render_sitemap():
     paths = (["", "guides"] + [f"guides/{s}" for s in GUIDE_SLUGS]
              + ["compare", "support_page", "terms", "privacy_policy"])
     if TOOL_SCRIPT:
-        paths.append(TOOL_PATH)
+        paths.extend(TOOL_ROUTES.values())
     for p in paths:
         for code in LOCALIZED_CODES:
             alts = "".join(
@@ -2191,7 +2240,8 @@ def render_static_redirects():
     for code in LOCALIZED_CODES:
         segment = BY_CODE[code][1]
         base = f"/{segment}/" if segment else "/"
-        directories = (base, base + "guides/") + ((base + TOOL_PATH + "/",) if TOOL_SCRIPT else ())
+        directories = (base, base + "guides/") + (tuple(base + route + "/" for route in TOOL_ROUTES.values())
+                                                  if TOOL_SCRIPT else ())
         for directory in directories:
             rules.append(f"{directory}index.html {directory} 301")
             rules.append(f"{directory} {directory}index.html 200")
@@ -2316,7 +2366,8 @@ def main():
         write(f"{base}sale.html", render_sale(c, code)); built += 1
         write(f"{base}compare.html", render_compare(c, code)); built += 1
         if TOOL_SCRIPT:
-            write(f"{base}{TOOL_PATH}/index.html", render_tool(c, code)); built += 1
+            for page, route in TOOL_ROUTES.items():
+                write(f"{base}{route}/index.html", render_tool(c, code, page)); built += 1
         print(f"  ✓ {code}")
     write("sitemap.xml", render_sitemap())
     write("robots.txt", ROBOTS)

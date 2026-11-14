@@ -3,11 +3,30 @@ dist/
 
 # python
 __pycache__/
-*.pyc
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
 
 # javascript
 node_modules/
 node_modules
+.vite/
+*.tsbuildinfo
+
+# Local logs, caches, and test output; curated reports stay in Git.
+*.log
+.cache/
+coverage/
+.nyc_output/
+test-results/
+playwright-report/
+blob-report/
 
 # editors / OS
 .DS_Store
@@ -43,7 +62,17 @@ src/tool/assets.generated.js
 
 # album publishing CLI state and local secrets
 .env
+.env.*
+!.env.example
+!.env.*.example
+!.env.sample
+!.env.*.sample
 .dev.vars
+.dev.vars.*
+!.dev.vars.example
+!.dev.vars.*.example
+!.dev.vars.sample
+!.dev.vars.*.sample
 .album-state.json
 .album-work/
 .wrangler/

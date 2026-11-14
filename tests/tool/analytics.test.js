@@ -145,3 +145,29 @@ test('mode strings match the apps for photo and drawing models', () => {
   assert.equal(modeValue('photo', 4), 'normal4');
   assert.equal(modeValue('drawing', 4), 'anime4');
 });
+
+test('the visit source is decided on the first page and kept for the tab', async () => {
+  const {entrySource, entryContext, ENTRY_KEY} = await import('../../src/tool/analytics-core.js');
+  const host = 'upscales.app';
+  assert.equal(entrySource({referrer: 'https://www.google.com/', host}), 'organic');
+  assert.equal(entrySource({referrer: 'https://yandex.ru/search/?text=x', host}), 'organic');
+  assert.equal(entrySource({referrer: 'https://ya.ru/', host}), 'organic');
+  assert.equal(entrySource({referrer: 'https://www.bing.com/', host}), 'organic');
+  assert.equal(entrySource({referrer: 'https://habr.com/ru/articles/1/', host}), 'referral');
+  assert.equal(entrySource({referrer: '', host}), 'direct');
+  assert.equal(entrySource({referrer: 'https://upscales.app/ru/', host}), 'internal');
+  assert.equal(entrySource({search: '?utm_source=producthunt', referrer: 'https://www.google.com/', host}), 'utm:producthunt');
+
+  const session = memory();
+  const first = entryContext({location: {hostname: host, pathname: '/ru/upscale/', search: ''},
+    referrer: 'https://yandex.ru/', session});
+  assert.deepEqual(first, {entry_source: 'organic', landing_path: '/ru/upscale/'});
+  // Moving to another mode, or back from sign-in, keeps the first answer.
+  const later = entryContext({location: {hostname: host, pathname: '/ru/upscale/restore/', search: ''},
+    referrer: 'https://upscales.app/account/', session});
+  assert.deepEqual(later, first);
+  assert.ok(session.getItem(ENTRY_KEY));
+  // Without sessionStorage it still answers for this page.
+  assert.deepEqual(entryContext({location: {hostname: host, pathname: '/upscale/', search: ''}, referrer: '', session: undefined}),
+    {entry_source: 'direct', landing_path: '/upscale/'});
+});

@@ -1085,6 +1085,8 @@ html:has(.tip-dialog[open]){overflow:hidden}
 .art ul.b li{display:flex;gap:12px;color:var(--tx-2);font-size:16.5px}
 .art ul.b li::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--acc-tx);
   flex:0 0 auto;margin-top:11px}
+.art .guide-tool-link{margin:16px 0 0;color:var(--tx-2);font-size:15.5px}
+.art .guide-tool-link a{color:var(--acc-tx);font-weight:650;border-bottom:1px solid var(--acc-uline)}
 .answer{background:linear-gradient(150deg,var(--wash-a2),var(--wash-v));
   border:1px solid var(--acc-line);border-left:3px solid var(--acc);
   border-radius:var(--r-m);padding:24px 26px;margin:30px 0}

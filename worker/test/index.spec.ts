@@ -76,15 +76,16 @@ describe.sequential("album worker", () => {
       expect(html, path).not.toContain('noindex');
     }
   });
-  it("redirects the old /free-upscale/ address and keeps a known mode", async () => {
+  it("redirects the old /free-upscale/ address straight to the page of its mode", async () => {
     const cases: Array<[string, string]> = [
-      ["/free-upscale/", "/upscale/?mode=device"],
-      ["/free-upscale", "/upscale/?mode=device"],
-      ["/free-upscale/index.html", "/upscale/?mode=device"],
-      ["/free-upscale/?mode=restore", "/upscale/?mode=restore"],
-      ["/free-upscale/?mode=creative", "/upscale/?mode=creative"],
-      ["/de/free-upscale/?mode=bogus", "/de/upscale/?mode=device"],
-      ["/free-upscale/?utm_source=x&mode=restore", "/upscale/?utm_source=x&mode=restore"],
+      ["/free-upscale/", "/upscale/free/"],
+      ["/free-upscale", "/upscale/free/"],
+      ["/free-upscale/index.html", "/upscale/free/"],
+      ["/free-upscale/?mode=device", "/upscale/free/"],
+      ["/free-upscale/?mode=restore", "/upscale/restore/"],
+      ["/free-upscale/?mode=creative", "/upscale/creative/"],
+      ["/de/free-upscale/?mode=bogus", "/de/upscale/free/"],
+      ["/free-upscale/?utm_source=x&mode=restore", "/upscale/restore/?utm_source=x"],
     ];
     for (const [path, location] of cases) {
       const response = await fetchWorker(path, { redirect: "manual" });
@@ -93,11 +94,42 @@ describe.sequential("album worker", () => {
     }
     const head = await fetchWorker("/free-upscale/", { method: "HEAD", redirect: "manual" });
     expect(head.status).toBe(301);
-    expect(head.headers.get("Location")).toBe("/upscale/?mode=device");
+    expect(head.headers.get("Location")).toBe("/upscale/free/");
     const other = await fetchWorker("/free-upscale-other/", { redirect: "manual" });
     expect(other.status).toBe(404);
     expect(other.headers.get("Location")).toBeNull();
     await other.body?.cancel();
+  });
+  it("sends old /upscale/?mode= links to each mode's own page, keeping other parameters", async () => {
+    const cases: Array<[string, string]> = [
+      ["/upscale/?mode=device", "/upscale/free/"],
+      ["/upscale/?mode=device&utm_source=x", "/upscale/free/?utm_source=x"],
+      ["/upscale/?utm_source=x&mode=creative", "/upscale/creative/?utm_source=x"],
+      ["/ru/upscale/?mode=restore", "/ru/upscale/restore/"],
+      ["/zh/upscale/?mode=creative&ref=a", "/zh/upscale/creative/?ref=a"],
+    ];
+    for (const method of ["GET", "HEAD"]) {
+      for (const [path, location] of cases) {
+        const response = await fetchWorker(path, { method, redirect: "manual" });
+        expect(response.status, path).toBe(301);
+        expect(response.headers.get("Location"), path).toBe(location);
+      }
+    }
+    // No mode, or an unknown one, is the page itself, with its isolation headers.
+    for (const path of ["/upscale/", "/upscale/?mode=bogus", "/ru/upscale/?utm_source=x"]) {
+      const response = await fetchWorker(path, { redirect: "manual" });
+      expect(response.status, path).toBe(200);
+      expect(response.headers.get("Cross-Origin-Embedder-Policy"), path).toBe("require-corp");
+      await response.body?.cancel();
+    }
+    // The mode pages are plain assets.
+    for (const path of ["/upscale/free/", "/upscale/creative/", "/ru/upscale/restore/"]) {
+      const response = await fetchWorker(path, { redirect: "manual" });
+      expect(response.status, path).toBe(200);
+      expect(response.headers.get("Cross-Origin-Opener-Policy"), path).toBe("same-origin");
+      expect(response.headers.get("Cross-Origin-Embedder-Policy"), path).toBe("require-corp");
+      await response.body?.cancel();
+    }
   });
   it("parses only valid single byte ranges", () => {
     expect(parseRange("bytes=2-4", 10)).toEqual({ offset: 2, length: 3, end: 4 });

@@ -9,7 +9,7 @@ describe('static SEO routing',()=>{
         for(const method of ['GET','HEAD']) for(const suffix of ['', '/', '/index.html']) {
           const response=await fetchWorker(`${prefix}/free-upscale${suffix}?utm_source=test&mode=restore`,{method,headers,redirect:'manual'});
           expect(response.status).toBe(301);
-          expect(response.headers.get('Location')).toBe(`${prefix}/upscale/?utm_source=test&mode=restore`);
+          expect(response.headers.get('Location')).toBe(`${prefix}/upscale/restore/?utm_source=test`);
         }
       });
     }
@@ -34,7 +34,13 @@ describe('static SEO routing',()=>{
       expect(response.status,path).toBe(301);
       const location=response.headers.get('Location')!;
       expect(location).toContain('?mode=device');
-      const destination=await fetchWorker(location,{redirect:'manual'});
+      let destination=await fetchWorker(location,{redirect:'manual'});
+      // /upscale/?mode=device then goes to the free tool's own address, once.
+      if(path.includes('/upscale/')) {
+        expect(destination.status,location).toBe(301);
+        expect(destination.headers.get('Location')).toBe(path.replace('index.html','free/'));
+        destination=await fetchWorker(destination.headers.get('Location')!,{redirect:'manual'});
+      }
       expect(destination.status,location).toBe(200);
       await destination.body?.cancel();
     }
