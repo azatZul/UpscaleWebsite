@@ -1,8 +1,9 @@
 import { env, exports } from "cloudflare:workers";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
-import { handleAlbumWebhook, processRefundJobs, startAlbumCheckout } from "../src/album-checkout";
+import { confirmAlbumPayment, handleAlbumWebhook, processRefundJobs, startAlbumCheckout } from "../src/album-checkout";
 import { albumCheckoutBody } from "../src/stripe";
+import { type RedditSnapshot } from "../src/reddit";
 
 const WEBHOOK_SECRET = "whsec_test_secret";
 const ALPHABET = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
@@ -195,6 +196,46 @@ async function openSession(albumId: string) {
   expect(location).toMatch(/^https:\/\/checkout\.stripe\.com\//);
   return stripe.sessions.get(location.split("/").pop()!)!;
 }
+
+describe.sequential("Reddit album conversions", () => {
+  const live = { ...env, STRIPE_MODE: "live", STRIPE_SECRET_KEY: "sk_live_fake" };
+  const stripeConfig = { config: { secretKey: "sk_live_fake" }, livemode: true };
+  const tracking = (): RedditSnapshot => ({contextId: crypto.randomUUID(), payload: {
+    action_source: "WEBSITE", click_id: "album-ad-click", user: {user_agent: "browser"}, event_source_url: "https://upscales.app/gallery",
+  }});
+
+  it("commits the accepted payment and conversion once across return/webhook replay", async () => {
+    const id = await insertAlbum();
+    const opened = await startAlbumCheckout(live, id, "https://upscales.app", undefined, tracking());
+    if (opened.kind !== "stripe") throw new Error("No checkout");
+    const session = stripe.pay(opened.url.split("/").pop()!, {livemode: true});
+    expect(await confirmAlbumPayment(live, stripeConfig, session)).toMatchObject({status: "unlocked"});
+    await confirmAlbumPayment(live, stripeConfig, session);
+    const rows = await env.DB.prepare("SELECT payload FROM reddit_outbox WHERE conversion_id = ?").bind(`purchase:${session.id}`).all<{payload: string}>();
+    expect(rows.results).toHaveLength(1);
+    expect(JSON.parse(rows.results[0]!.payload)).toMatchObject({type: {tracking_type: "PURCHASE"}, metadata: {value: 3, currency: "USD"}});
+  });
+
+  it("does not count a payment queued for automatic refund", async () => {
+    const id = await insertAlbum();
+    const opened = await startAlbumCheckout(live, id, "https://upscales.app", undefined, tracking());
+    if (opened.kind !== "stripe") throw new Error("No checkout");
+    await env.DB.prepare("UPDATE albums SET state = 'unlocked' WHERE id = ?").bind(id).run();
+    const session = stripe.pay(opened.url.split("/").pop()!, {livemode: true});
+    await confirmAlbumPayment(live, stripeConfig, session);
+    expect(await env.DB.prepare("SELECT conversion_id FROM reddit_outbox WHERE conversion_id = ?").bind(`purchase:${session.id}`).first()).toBeNull();
+    expect((await refundJobs(id))).toHaveLength(1);
+  });
+
+  it("discards attribution if a shared checkout is reused by another visitor", async () => {
+    const id = await insertAlbum();
+    await startAlbumCheckout(live, id, "https://upscales.app", undefined, tracking());
+    const attempt = (await attempts(id))[0];
+    expect(await env.DB.prepare("SELECT id FROM reddit_checkouts WHERE id = ?").bind(attempt.id).first()).not.toBeNull();
+    await startAlbumCheckout(live, id, "https://upscales.app", undefined, tracking());
+    expect(await env.DB.prepare("SELECT id FROM reddit_checkouts WHERE id = ?").bind(attempt.id).first()).toBeNull();
+  });
+});
 
 describe.sequential("album page", () => {
   it("offers the unlock only for a locked, priced album whose clean previews are ready", async () => {

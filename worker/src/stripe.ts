@@ -112,6 +112,7 @@ export async function createCustomer(
 }
 
 export interface CheckoutInput {
+  redditCheckoutId?: string;
   accountId: string;
   customerId: string;
   packId: string;
@@ -134,7 +135,8 @@ export async function createCheckoutSession(
     client_reference_id: input.accountId,
     // The webhook reads pack_id from here and looks the pack up locally; these
     // are labels for reconciliation, never the source of the credit amount.
-    metadata: { account_id: input.accountId, pack_id: input.packId, credits: input.credits },
+    metadata: { account_id: input.accountId, pack_id: input.packId, credits: input.credits,
+      ...(input.redditCheckoutId ? { reddit_checkout_id: input.redditCheckoutId } : {}) },
     "line_items[0]": {
       quantity: 1,
       price_data: {

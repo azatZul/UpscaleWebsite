@@ -1,6 +1,7 @@
 // Every read and write of account and credit state goes through this module.
 // Route handlers never touch D1 directly, so moving the ledger to another store
 // later is a rewrite of this file rather than a hunt through handlers.
+import { checkoutEventStatement, purchaseMetadata, type RedditSnapshot } from "./reddit";
 
 export interface Account {
   id: string;
@@ -25,7 +26,8 @@ const toAccount = (row: AccountRow): Account => ({
   stripeCustomerId: row.stripe_customer_id,
 });
 
-export async function getOrCreateAccount(db: D1Database, firebaseUid: string, email: string | null): Promise<Account> {
+export async function getOrCreateAccount(db: D1Database, firebaseUid: string, email: string | null,
+  reddit?: RedditSnapshot | null): Promise<Account> {
   const existing = await db.prepare(
     "SELECT id, firebase_uid, email, stripe_customer_id FROM accounts WHERE firebase_uid = ?",
   ).bind(firebaseUid).first<AccountRow>();
@@ -38,9 +40,15 @@ export async function getOrCreateAccount(db: D1Database, firebaseUid: string, em
     return toAccount(existing);
   }
   const id = crypto.randomUUID();
-  await db.prepare(
+  const insert = db.prepare(
     "INSERT INTO accounts (id, firebase_uid, email, created_at) VALUES (?, ?, ?, ?) ON CONFLICT(firebase_uid) DO NOTHING",
-  ).bind(id, firebaseUid, email, Date.now()).run();
+  ).bind(id, firebaseUid, email, Date.now());
+  const at = Date.now();
+  const signup = reddit ? db.prepare(`INSERT OR IGNORE INTO reddit_outbox (conversion_id, context_id, payload, event_at)
+    SELECT ?, ?, ?, ? WHERE EXISTS (SELECT 1 FROM accounts WHERE id = ?)`)
+    .bind(`signup:${id}`, reddit.contextId, JSON.stringify({ ...reddit.payload, event_at: at,
+      type: { tracking_type: "SIGN_UP" }, metadata: { conversion_id: `signup:${id}` } }), at, id) : null;
+  await db.batch(signup ? [insert, signup] : [insert]);
   const row = await db.prepare(
     "SELECT id, firebase_uid, email, stripe_customer_id FROM accounts WHERE firebase_uid = ?",
   ).bind(firebaseUid).first<AccountRow>();
@@ -100,6 +108,8 @@ export async function spendCredits(
 }
 
 export interface PurchaseInput {
+  redditCheckoutId?: string;
+  eventAt?: number;
   accountId: string;
   packId: string;
   credits: number;
@@ -136,6 +146,11 @@ export async function recordPurchase(
       `INSERT OR IGNORE INTO credit_entries (account_id, delta, reason, idempotency_key, detail, created_at)
        VALUES (?, ?, 'purchase', ?, ?, ?)`,
     ).bind(input.accountId, input.credits, idempotencyKey, input.packId, now),
+    ...(input.redditCheckoutId ? [checkoutEventStatement(db, input.redditCheckoutId,
+      `purchase:${input.stripeSessionId}`, "PURCHASE", purchaseMetadata(input.amountCents, input.currency, "credit_topup"),
+      input.eventAt ?? now,
+      "EXISTS (SELECT 1 FROM purchases WHERE stripe_session_id = ? AND account_id = ?)",
+      [input.stripeSessionId, input.accountId])] : []),
   ]);
   // The credit row is the one that decides: the purchase row may already exist
   // from a retry that failed midway, but the ledger is what the customer sees.

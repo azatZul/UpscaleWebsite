@@ -100,3 +100,12 @@ npx wrangler d1 execute uscale-albums --env production --remote --command \
 
 Run `npm run types` whenever a binding changes. Do not add provider or Cloudflare API
 tokens to this Worker: administrative writes are performed by the local album CLI.
+
+## Reddit Ads
+
+Advertising measurement uses the production Reddit Pixel and server-side conversion
+delivery. Store `REDDIT_CAPI_ACCESS_TOKEN` as a Worker secret; the public pixel ID and
+production enable flag are in `wrangler.jsonc`. Staging never sends live ad events.
+Both database migrations must be applied before deployment. See
+[`docs/reddit-ads-setup.md`](../docs/reddit-ads-setup.md) for event names, consent,
+payment deduplication, diagnostics and the Stripe webhook event requirements.

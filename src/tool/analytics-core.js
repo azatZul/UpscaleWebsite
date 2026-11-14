@@ -65,7 +65,7 @@ export function browserStorage() {
 export function storedConsent(storage = browserStorage()) {
   try {
     const record = JSON.parse(storage?.getItem(CONSENT_KEY));
-    return record?.v === 1 ? Boolean(record.analytics) : undefined;
+    return record?.v === 1 || record?.v === 2 ? Boolean(record.analytics) : undefined;
   } catch {
     return undefined;
   }

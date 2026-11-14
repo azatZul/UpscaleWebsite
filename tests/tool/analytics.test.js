@@ -64,7 +64,8 @@ test('stored consent reads the banner record and ignores anything else', () => {
   assert.equal(storedConsent(memory({'uscale-consent': '{"v":1,"analytics":true}'})), true);
   assert.equal(storedConsent(memory({'uscale-consent': '{"v":1,"analytics":false}'})), false);
   assert.equal(storedConsent(memory({'uscale-consent': 'yes'})), undefined);
-  assert.equal(storedConsent(memory({'uscale-consent': '{"v":2,"analytics":true}'})), undefined);
+  assert.equal(storedConsent(memory({'uscale-consent': '{"v":2,"analytics":true,"advertising":false}'})), true);
+  assert.equal(storedConsent(memory({'uscale-consent': '{"v":2,"analytics":false,"advertising":true}'})), false);
 });
 
 test('nothing connects or sends before consent; accepting releases held events', () => {

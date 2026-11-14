@@ -217,6 +217,9 @@ export function createCloud(hooks) {
       analytics.trackEvent(AnalyticsEvent.processingCompleted, {...properties, result: 'success', saved: result.saved,
         tiles: rects?.length ?? 1, duration_sec: elapsed()});
       presentResult({mode, options: chosen, result, before: upload, plan});
+      document.dispatchEvent(new CustomEvent('uscale:ad-event', {detail: {
+        event: mode === 'restore' ? 'RestoreCompleted' : 'UpscaleCompleted',
+      }}));
     } catch (error) {
       running = false;
       analytics.trackEvent(AnalyticsEvent.processingCompleted, {...properties, result: 'failed',
