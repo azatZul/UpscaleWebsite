@@ -50,6 +50,7 @@ export function createSession() {
     if (!state.identity) return Promise.resolve();
     loading ||= (async () => {
       try {
+        await globalThis.uscaleAds?.ready();
         const [me, catalogue] = await Promise.all([call('/api/me'), call('/api/billing/packs')]);
         state.balance = me.credits;
         state.prices = catalogue.prices || null;
@@ -116,6 +117,9 @@ export function createSession() {
       if (original) form.append('original', new File([original], 'original.jpg', {type: 'image/jpeg'}));
       return call('/api/cloud/result', {method: 'POST', body: form});
     },
-    checkout: amountCents => call('/api/billing/checkout', {method: 'POST', json: {amountCents}}),
+    async checkout(amountCents) {
+      await globalThis.uscaleAds?.ready();
+      return call('/api/billing/checkout', {method: 'POST', json: {amountCents}});
+    },
   };
 }

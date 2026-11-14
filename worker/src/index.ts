@@ -21,6 +21,8 @@ import {
   priceKey, quoteCredits, type CloudKind,
 } from "./pricing";
 import { StripeError, createCheckoutSession, createCustomer, verifyWebhook } from "./stripe";
+import { checkoutEventStatement, checkoutSnapshotStatement, dispatchReddit, handleRedditRequest,
+  logFailure as logRedditFailure, snapshotForRequest } from "./reddit";
 
 const ALBUM_ID = "[0-9A-HJKMNP-TV-Z]{26}";
 const ALBUM_PATH = new RegExp(`^/gallery/(${ALBUM_ID})$`);
@@ -318,7 +320,8 @@ function seeOther(location: string): Response {
 }
 
 async function handleUnlock(request: Request, env: Env, albumId: string): Promise<Response> {
-  const outcome: CheckoutOutcome = await startAlbumCheckout(env, albumId, new URL(request.url).origin);
+  const tracking = await snapshotForRequest(request, env).catch(() => { logRedditFailure("album_context"); return null; });
+  const outcome: CheckoutOutcome = await startAlbumCheckout(env, albumId, new URL(request.url).origin, undefined, tracking);
   return seeOther(outcome.kind === "stripe" ? outcome.url : albumUrl(albumId, outcome.notice));
 }
 
@@ -749,9 +752,18 @@ async function handleCheckout(request: Request, env: Env, identity: VerifiedIden
 
   const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.firebaseUid, identity.email);
   const origin = new URL(request.url).origin;
+  let redditCheckoutId: string | undefined;
+  try {
+    const snapshot = await snapshotForRequest(request, env);
+    if (snapshot) {
+      redditCheckoutId = crypto.randomUUID();
+      await checkoutSnapshotStatement(env.ACCOUNTS_DB, redditCheckoutId, snapshot).run();
+    }
+  } catch { redditCheckoutId = undefined; logRedditFailure("checkout_context"); }
   try {
     const customerId = await ensureCustomer(env, config, account);
     const session = await createCheckoutSession(config, {
+      redditCheckoutId,
       accountId: account.id,
       customerId,
       packId: quote.tierId,
@@ -761,6 +773,10 @@ async function handleCheckout(request: Request, env: Env, identity: VerifiedIden
       successUrl: `${origin}/account/?purchase=success&session_id={CHECKOUT_SESSION_ID}`,
       cancelUrl: `${origin}/account/?purchase=cancelled`,
     });
+    if (redditCheckoutId) {
+      await checkoutEventStatement(env.ACCOUNTS_DB, redditCheckoutId, `checkout:${session.id}`,
+        "CheckoutStarted", {}, Date.now()).run().catch(() => logRedditFailure("checkout_started"));
+    }
     return json({ url: session.url });
   } catch (error) {
     console.error(JSON.stringify({
@@ -876,7 +892,7 @@ async function handleStripeWebhook(request: Request, env: Env): Promise<Response
 
   // Anything else is acknowledged, not retried: Stripe resends non-2xx for days
   // and an unhandled type is not a failure.
-  if (event?.type !== "checkout.session.completed") {
+  if (event?.type !== "checkout.session.completed" && event?.type !== "checkout.session.async_payment_succeeded") {
     return json({ received: true, ignored: event?.type ?? null });
   }
 
@@ -913,6 +929,10 @@ async function handleStripeWebhook(request: Request, env: Env): Promise<Response
   }
 
   const { applied, balance } = await recordPurchase(env.ACCOUNTS_DB, {
+    // Both the signed event and its session must explicitly be live.
+    redditCheckoutId: env.STRIPE_MODE === "live" && event.livemode === true && session.livemode === true
+      && typeof session.metadata?.reddit_checkout_id === "string" ? session.metadata.reddit_checkout_id : undefined,
+    eventAt: typeof event.created === "number" ? event.created * 1000 : Date.now(),
     accountId,
     packId: quote.tierId,
     credits: quote.credits,
@@ -1332,12 +1352,14 @@ async function handleApi(request: Request, env: Env): Promise<Response> {
   // Called once after sign-in, then idempotent. Creating the row here rather
   // than lazily means later endpoints can assume an account exists.
   if (url.pathname === "/api/auth/session" && request.method === "POST") {
-    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.firebaseUid, identity.email);
+    const tracking = await snapshotForRequest(request, env).catch(() => null);
+    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.firebaseUid, identity.email, tracking);
     return json({ accountId: account.id, email: account.email, credits: await creditBalance(env.ACCOUNTS_DB, account.id) });
   }
 
   if (url.pathname === "/api/me" && request.method === "GET") {
-    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.firebaseUid, identity.email);
+    const tracking = await snapshotForRequest(request, env).catch(() => null);
+    const account = await getOrCreateAccount(env.ACCOUNTS_DB, identity.firebaseUid, identity.email, tracking);
     return json({ accountId: account.id, email: account.email, credits: await creditBalance(env.ACCOUNTS_DB, account.id) });
   }
 
@@ -1445,6 +1467,7 @@ async function route(request: Request, env: Env, ctx: ExecutionContext): Promise
     if (request.method !== "POST") return plain("Method not allowed", 405, { Allow: "POST" });
     return handleStripeWebhook(request, env);
   }
+  if (url.pathname.startsWith("/api/ads/")) return handleRedditRequest(request, env, ctx);
   if (url.pathname.startsWith("/api/")) return handleApi(request, env);
   if (url.pathname === "/gallery") return handleGallery(request, env, ctx);
 
@@ -1477,6 +1500,12 @@ export default {
     let response: Response;
     try {
       response = await route(request, env, ctx);
+      const path = new URL(request.url).pathname;
+      if (path === "/api/webhooks/stripe" || path === "/api/billing/checkout"
+        || path === "/api/me" || path === "/api/auth/session"
+        || /^\/gallery\/[^/]+(?:\/(?:unlock|tip))?$/.test(path)) {
+        ctx.waitUntil(dispatchReddit(env).catch(() => logRedditFailure("dispatch")));
+      }
     } catch (error) {
       console.error(JSON.stringify({
         event: "unhandled_request_error",
@@ -1495,6 +1524,7 @@ export default {
   // Every 10 minutes (wrangler.jsonc triggers): refund jobs whose request
   // died, and push queued album refunds forward.
   async scheduled(_controller: ScheduledController, env: Env, ctx: ExecutionContext): Promise<void> {
+    ctx.waitUntil(dispatchReddit(env).catch(() => logRedditFailure("scheduled_dispatch")));
     ctx.waitUntil(refundStaleJobs(env.ACCOUNTS_DB, Date.now() - STALE_JOB_MS).then(refunded => {
       if (refunded > 0) console.log(JSON.stringify({ event: "stale_jobs_refunded", refunded }));
     }));

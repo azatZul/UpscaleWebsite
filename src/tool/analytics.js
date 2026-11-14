@@ -1,6 +1,6 @@
 import * as amplitude from '@amplitude/analytics-browser';
 import {diagnosticContext} from './diagnostics.js';
-import {createAnalytics, storedConsent, forgetIdentity, webIdentity, browserStorage, AMPLITUDE_KEY, CONSENT_EVENT} from './analytics-core.js';
+import {createAnalytics, storedConsent, forgetIdentity, webIdentity, browserStorage, AMPLITUDE_KEY, CONSENT_EVENT, CONSENT_KEY} from './analytics-core.js';
 export * from './analytics-core.js';
 
 // Only the canonical production host sends events. Preview/local hosts and
@@ -37,5 +37,8 @@ export function initAnalytics({location = globalThis.location, document = global
     },
   });
   document?.addEventListener(CONSENT_EVENT, event => analytics.setConsent(Boolean(event.detail?.analytics)));
+  globalThis.addEventListener?.('storage', event => {
+    if (event.key === CONSENT_KEY || event.key === null) analytics.setConsent(storedConsent(storage) === true);
+  });
   return analytics;
 }

@@ -17,6 +17,7 @@ import {
   albumCheckoutBody, createCheckoutSessionFromBody, createRefund, expireCheckoutSession, isDefinitiveRefusal,
   retrieveCheckoutSession, retrieveRefund, type RefundResult, type StripeConfig,
 } from "./stripe";
+import { checkoutEventStatement, checkoutSnapshotStatement, logFailure, purchaseMetadata, type RedditSnapshot } from "./reddit";
 
 export const ALBUM_MIN_PRICE_CENTS = 50;
 // Hand out a stored session only while the buyer still has time to pay it.
@@ -120,6 +121,7 @@ export async function startAlbumCheckout(
   albumId: string,
   origin: string,
   now = nowSeconds(),
+  tracking: RedditSnapshot | null = null,
 ): Promise<CheckoutOutcome> {
   const stripe = albumStripe(env);
   if (!stripe) return { kind: "album", notice: "unavailable" };
@@ -133,6 +135,10 @@ export async function startAlbumCheckout(
 
     const active = await activeAttempt(env.DB, albumId);
     if (active) {
+      // A reused album checkout can be handed to a different visitor. Without
+      // knowing who paid, discard the old ad attribution rather than guess.
+      await env.DB.prepare("DELETE FROM reddit_checkouts WHERE id = ? AND context_id != ?")
+        .bind(active.id, tracking?.contextId ?? "").run().catch(() => logFailure("album_reuse"));
       const outcome = await resolveActiveAttempt(env, stripe, active, album, now);
       if (outcome === "again") continue;
       if (outcome !== "closed") return outcome;
@@ -154,6 +160,9 @@ export async function startAlbumCheckout(
     ).bind(id, albumId, album.price_cents, stripe.livemode ? 1 : 0, body, now).run();
     // Another request holds the album's one active slot; look at it again.
     if (inserted.meta.changes !== 1) continue;
+    if (tracking && stripe.livemode) {
+      await checkoutSnapshotStatement(env.DB, id, tracking).run().catch(() => logFailure("album_snapshot"));
+    }
     return createSession(env, stripe, { id, request_body: body }, now);
   }
   return { kind: "album", notice: "retry" };
@@ -224,6 +233,8 @@ async function createSession(
     `UPDATE checkouts SET status = 'open', session_id = ?2, url = ?3, expires_at = ?4, last_error = NULL, updated_at = ?5
       WHERE id = ?1 AND status = 'creating'`,
   ).bind(attempt.id, session.id, session.url, session.expiresAt, now).run();
+  if (stripe.livemode) await checkoutEventStatement(env.DB, attempt.id, `checkout:${session.id}`,
+    "CheckoutStarted", {}, now * 1000).run().catch(() => logFailure("album_checkout_started"));
   if (opened.meta.changes === 1) return { kind: "stripe", url: session.url };
 
   // A concurrent recovery of the same attempt got there first; it holds the
@@ -331,6 +342,9 @@ export async function confirmAlbumPayment(
     env.DB.prepare(
       "UPDATE checkouts SET status = 'paid', updated_at = ?2 WHERE session_id = ?1 AND status != 'paid'",
     ).bind(sessionId, now),
+    ...(stripe.livemode ? [checkoutEventStatement(env.DB, attempt.id, `purchase:${sessionId}`,
+      "PURCHASE", purchaseMetadata(attempt.amount_cents, "USD", "album_unlock"), now * 1000,
+      "EXISTS (SELECT 1 FROM payment_events WHERE session_id = ? AND outcome = 'unlocked')", [sessionId])] : []),
   ]);
 
   const recorded = await env.DB.prepare(

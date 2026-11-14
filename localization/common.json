@@ -493,27 +493,27 @@
   },
   "consent.title": {
     "localizations": {
-      "en": "Cookies and analytics",
-      "ru": "Файлы cookie и аналитика",
-      "de": "Cookies und Analyse",
-      "ja": "Cookieと分析",
-      "fr": "Cookies et mesure d’audience",
-      "es": "Cookies y analítica",
-      "zh": "Cookie 与分析"
+      "en": "Cookies and privacy",
+      "ru": "Cookie и конфиденциальность",
+      "de": "Cookies und Datenschutz",
+      "ja": "Cookieとプライバシー",
+      "fr": "Cookies et confidentialité",
+      "es": "Cookies y privacidad",
+      "zh": "Cookie 与隐私"
     },
-    "comment": "Heading of the site-wide consent banner."
+    "comment": "Provider-neutral consent copy. Describe the purpose without naming advertisers, products, services or implementation details."
   },
   "consent.body": {
     "localizations": {
-      "en": "We use essential storage to run the site and, with your permission, analytics to understand how it’s used and improve it. Your photos are never sent or tracked.",
-      "ru": "Мы используем необходимое хранилище для работы сайта и, с вашего разрешения, аналитику, чтобы понимать, как им пользуются, и улучшать его. Ваши фото никуда не отправляются и не отслеживаются.",
-      "de": "Wir nutzen notwendigen Speicher für den Betrieb der Website und, mit deiner Erlaubnis, Analysen, um zu verstehen, wie sie genutzt wird, und sie zu verbessern. Deine Fotos werden nie gesendet oder erfasst.",
-      "ja": "サイトの動作に必要なストレージを使用し、許可いただいた場合は利用状況を把握して改善するための分析も行います。写真が送信・追跡されることはありません。",
-      "fr": "Nous utilisons un stockage essentiel au fonctionnement du site et, avec votre accord, la mesure d’audience pour comprendre son utilisation et l’améliorer. Vos photos ne sont jamais envoyées ni suivies.",
-      "es": "Usamos almacenamiento esencial para que el sitio funcione y, con tu permiso, analítica para entender cómo se usa y mejorarlo. Tus fotos nunca se envían ni se rastrean.",
-      "zh": "我们使用必要的存储来维持网站运行，并在你允许的情况下使用分析工具，了解网站的使用情况并加以改进。你的照片绝不会被发送或追踪。"
+      "en": "We use essential storage to run the site. With your permission, analytics helps us improve it and advertising measurement tracks visits, successful enhancements and payments. Your photos and their contents are never shared for advertising.",
+      "ru": "Обязательное хранилище обеспечивает работу сайта. С вашего согласия аналитика помогает улучшать сайт, а измерение рекламы учитывает посещения, успешную обработку и платежи. Фото и их содержимое не передаются для рекламы.",
+      "de": "Notwendiger Speicher sorgt dafür, dass die Website funktioniert. Mit deiner Einwilligung hilft uns die Analyse, sie zu verbessern, und die Werbemessung erfasst Besuche, erfolgreiche Bildverbesserungen und Zahlungen. Deine Fotos und deren Inhalte werden nicht für Werbung weitergegeben.",
+      "ja": "サイトの動作に必要なストレージを使用します。同意いただいた場合、分析でサイトを改善し、広告測定で訪問、画像処理の成功、支払いを記録します。写真やその内容を広告目的で共有することはありません。",
+      "fr": "Le stockage essentiel permet au site de fonctionner. Avec votre accord, la mesure d’audience nous aide à l’améliorer et la mesure publicitaire suit les visites, les améliorations réussies et les paiements. Vos photos et leur contenu ne sont jamais partagés à des fins publicitaires.",
+      "es": "El almacenamiento esencial permite que el sitio funcione. Con tu permiso, la analítica nos ayuda a mejorarlo y la medición publicitaria registra visitas, mejoras completadas y pagos. Tus fotos y su contenido nunca se comparten con fines publicitarios.",
+      "zh": "我们使用必要的存储来维持网站运行。在你允许的情况下，分析帮助我们改进网站，广告效果衡量会记录访问、成功的图像增强和付款。你的照片及其内容绝不会用于广告共享。"
     },
-    "comment": "Consent banner text; followed by a link to the Privacy Policy. Photos are processed on-device, so the last sentence must stay true."
+    "comment": "Provider-neutral consent copy. Describe the purpose without naming advertisers, products, services or implementation details."
   },
   "consent.accept": {
     "localizations": {
@@ -525,7 +525,7 @@
       "es": "Aceptar todo",
       "zh": "全部接受"
     },
-    "comment": "Consent button; same prominence as Reject all."
+    "comment": "Provider-neutral consent copy. Describe the purpose without naming advertisers, products, services or implementation details."
   },
   "consent.reject": {
     "localizations": {
@@ -537,7 +537,7 @@
       "es": "Rechazar todo",
       "zh": "全部拒绝"
     },
-    "comment": "Consent button; allows only necessary storage."
+    "comment": "Provider-neutral consent copy. Describe the purpose without naming advertisers, products, services or implementation details."
   },
   "consent.settings": {
     "localizations": {
@@ -549,7 +549,7 @@
       "es": "Configurar",
       "zh": "设置"
     },
-    "comment": "Consent button that reveals per-category toggles."
+    "comment": "Provider-neutral consent copy. Describe the purpose without naming advertisers, products, services or implementation details."
   },
   "consent.save": {
     "localizations": {
@@ -561,7 +561,7 @@
       "es": "Guardar selección",
       "zh": "保存选择"
     },
-    "comment": "Consent button that saves the toggles."
+    "comment": "Provider-neutral consent copy. Describe the purpose without naming advertisers, products, services or implementation details."
   },
   "consent.necessary": {
     "localizations": {
@@ -573,7 +573,7 @@
       "es": "Necesarias",
       "zh": "必要"
     },
-    "comment": "Consent category that cannot be turned off."
+    "comment": "Provider-neutral consent copy. Describe the purpose without naming advertisers, products, services or implementation details."
   },
   "consent.necessary_desc": {
     "localizations": {
@@ -585,7 +585,7 @@
       "es": "Recuerdan tu tema y esta selección. Siempre activas.",
       "zh": "记住你的主题和以上选择。始终开启。"
     },
-    "comment": "Description of the necessary category."
+    "comment": "Provider-neutral consent copy. Describe the purpose without naming advertisers, products, services or implementation details."
   },
   "consent.analytics": {
     "localizations": {
@@ -597,19 +597,19 @@
       "es": "Analítica",
       "zh": "分析"
     },
-    "comment": "Optional consent category."
+    "comment": "Provider-neutral consent copy. Describe the purpose without naming advertisers, products, services or implementation details."
   },
   "consent.analytics_desc": {
     "localizations": {
-      "en": "Usage statistics via Amplitude, such as which buttons are used and whether upscaling succeeds.",
-      "ru": "Статистика использования через Amplitude: например, какие кнопки нажимают и успешно ли проходит улучшение.",
-      "de": "Nutzungsstatistik über Amplitude, z. B. welche Schaltflächen genutzt werden und ob das Hochskalieren klappt.",
-      "ja": "Amplitudeによる利用統計（使われたボタンや高画質化の成否など）。",
-      "fr": "Statistiques d’utilisation via Amplitude, comme les boutons utilisés et la réussite de l’agrandissement.",
-      "es": "Estadísticas de uso con Amplitude, como qué botones se usan y si el escalado funciona.",
-      "zh": "通过 Amplitude 收集使用统计，例如使用了哪些按钮、放大是否成功。"
+      "en": "Usage statistics, such as which buttons are used and whether enhancements succeed.",
+      "ru": "Статистика использования: например, какие кнопки нажимают и успешно ли проходит улучшение.",
+      "de": "Nutzungsstatistik, z. B. welche Schaltflächen genutzt werden und ob Bildverbesserungen gelingen.",
+      "ja": "利用統計（使われたボタンや画像処理の成否など）。",
+      "fr": "Statistiques d’utilisation, comme les boutons utilisés et la réussite des améliorations.",
+      "es": "Estadísticas de uso, como qué botones se usan y si las mejoras se completan correctamente.",
+      "zh": "使用情况统计，例如使用了哪些按钮，以及图像增强是否成功。"
     },
-    "comment": "Description of the analytics category. Amplitude is the vendor name; do not translate."
+    "comment": "Provider-neutral consent copy. Describe the purpose without naming advertisers, products, services or implementation details."
   },
   "consent.footer_link": {
     "localizations": {
@@ -621,7 +621,7 @@
       "es": "Configuración de cookies",
       "zh": "Cookie 设置"
     },
-    "comment": "Footer link that reopens the consent settings."
+    "comment": "Provider-neutral consent copy. Describe the purpose without naming advertisers, products, services or implementation details."
   },
   "ui.google_play_download": {
     "localizations": {
@@ -741,5 +741,29 @@
       "zh": "AI 画质修复：去模糊、高清放大、修复老照片，就在你的 iPhone 上"
     },
     "comment": "Keep existing guide social-image descriptions when homepage positioning changes."
+  },
+  "consent.advertising": {
+    "localizations": {
+      "en": "Advertising measurement",
+      "ru": "Измерение рекламы",
+      "de": "Werbemessung",
+      "ja": "広告の効果測定",
+      "fr": "Mesure publicitaire",
+      "es": "Medición publicitaria",
+      "zh": "广告效果衡量"
+    },
+    "comment": "Provider-neutral consent copy. Describe the purpose without naming advertisers, products, services or implementation details."
+  },
+  "consent.advertising_desc": {
+    "localizations": {
+      "en": "Measures advertising performance, including visits, successful enhancements and purchases.",
+      "ru": "Измеряет эффективность рекламы, включая посещения, успешную обработку и покупки.",
+      "de": "Misst die Werbewirkung anhand von Besuchen, erfolgreichen Bildverbesserungen und Käufen.",
+      "ja": "訪問、画像処理の成功、購入などから広告の効果を測定します。",
+      "fr": "Mesure les performances publicitaires, dont les visites, les améliorations réussies et les achats.",
+      "es": "Mide el rendimiento de la publicidad, incluidas visitas, mejoras completadas y compras.",
+      "zh": "衡量广告效果，包括访问、成功的图像增强和购买。"
+    },
+    "comment": "Provider-neutral consent copy. Describe the purpose without naming advertisers, products, services or implementation details."
   }
 }

@@ -1,4 +1,4 @@
-import {createAnalytics, storedConsent, webIdentity, forgetIdentity, AMPLITUDE_KEY, CONSENT_EVENT} from '../tool/analytics-core.js';
+import {createAnalytics, storedConsent, webIdentity, forgetIdentity, AMPLITUDE_KEY, CONSENT_EVENT, CONSENT_KEY} from '../tool/analytics-core.js';
 
 export function pageContext(pathname, locale) {
   const path = pathname.replace(/^\/(es|fr|de|ja|zh|ru)(?=\/|$)/, '') || '/';
@@ -30,6 +30,9 @@ export function installMarketing({document,location,storage,load=()=>import('@am
     else {analytics?.setConsent(true);connect();}
   };
   document.addEventListener(CONSENT_EVENT,consent);
+  document.defaultView?.addEventListener('storage',event=>{
+    if(event.key===CONSENT_KEY || event.key===null) consent({detail:{analytics:storedConsent(storage)===true}});
+  });
   const click=event=>{
     const link=event.target.closest?.('a[data-cta]');
     const stores={appstore:'app_store',macappstore:'mac_app_store',googleplay:'google_play'};

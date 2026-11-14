@@ -670,6 +670,7 @@ function runProperties() {
 function trackOutcome(result, extra) {
   if (outcomeTracked) return;
   outcomeTracked = true;
+  if (result === 'success') document.dispatchEvent(new CustomEvent('uscale:ad-event', {detail: {event: 'UpscaleCompleted'}}));
   analytics.trackEvent(AnalyticsEvent.processingCompleted, {...runProperties(), result, progress: runProgress,
     duration_sec: Math.round((performance.now() - processingStartedAt) / 100) / 10, ...photo4xAnalytics, ...extra});
 }
@@ -1127,6 +1128,9 @@ analytics.trackScreen(SCREEN);
 if (!supported) analytics.trackEvent('browser_unsupported', {screen: SCREEN, error_type: errorCode});
 // Saving on the web is a download link, so a click is the closest to the apps' save success.
 elements['download-result'].addEventListener('click', () => {
+  if (elements['download-result'].hasAttribute('href')) {
+    document.dispatchEvent(new CustomEvent('uscale:ad-event', {detail: {event: 'ResultDownloaded'}}));
+  }
   analytics.trackEvent(AnalyticsEvent.resultSaveSuccess, {screen: SCREEN, save_to_gallery: false, is_video: false,
     batch_count: 1, method: 'download', scale: lastResult?.plan.scale, mode: lastResult ? modeValue(lastResult.modelKind, lastResult.plan.scale) : undefined,
     faces_edited: Boolean(faceEdit?.changed)});

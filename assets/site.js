@@ -40,37 +40,39 @@
     });
   }
 
-  /* Consent. Only analytics is optional; the choice lives next to the theme in
-     localStorage and is announced with a uscale:consent event for analytics code. */
+  /* Analytics and advertising have independent choices. A v1 analytics opt-in
+     never grants advertising consent; ask for the new choice on upgrade. */
   var CONSENT_KEY = 'uscale-consent';
   var consentBox = document.getElementById('consent');
   var readConsent = function () {
     try {
       var v = JSON.parse(localStorage.getItem(CONSENT_KEY));
-      return v && v.v === 1 ? v : null;
+      return v && (v.v === 1 || v.v === 2) ? v : null;
     } catch (e) { return null; }
   };
   if (consentBox) {
     var consentPrefs = document.getElementById('consent-prefs');
     var consentAnalytics = document.getElementById('consent-analytics');
+    var consentAdvertising = document.getElementById('consent-advertising');
     var consentBtn = function (name) { return consentBox.querySelector('[data-consent="' + name + '"]'); };
     var showConsent = function (withPrefs) {
       var saved = readConsent();
       consentAnalytics.checked = !!(saved && saved.analytics);
+      consentAdvertising.checked = !!(saved && saved.v === 2 && saved.advertising);
       consentPrefs.hidden = !withPrefs;
       consentBtn('settings').hidden = withPrefs;
       consentBtn('save').hidden = !withPrefs;
       consentBox.hidden = false;
     };
-    var decideConsent = function (analytics) {
-      var record = { v: 1, analytics: analytics, at: new Date().toISOString() };
+    var decideConsent = function (analytics, advertising) {
+      var record = { v: 2, analytics: analytics, advertising: advertising, at: new Date().toISOString() };
       try { localStorage.setItem(CONSENT_KEY, JSON.stringify(record)); } catch (e) {}
       consentBox.hidden = true;
       document.dispatchEvent(new CustomEvent('uscale:consent', { detail: record }));
     };
-    consentBtn('accept').addEventListener('click', function () { decideConsent(true); });
-    consentBtn('reject').addEventListener('click', function () { decideConsent(false); });
-    consentBtn('save').addEventListener('click', function () { decideConsent(consentAnalytics.checked); });
+    consentBtn('accept').addEventListener('click', function () { decideConsent(true, true); });
+    consentBtn('reject').addEventListener('click', function () { decideConsent(false, false); });
+    consentBtn('save').addEventListener('click', function () { decideConsent(consentAnalytics.checked, consentAdvertising.checked); });
     consentBtn('settings').addEventListener('click', function () {
       showConsent(true);
       consentAnalytics.focus();
@@ -80,7 +82,7 @@
       showConsent(true);
       consentAnalytics.focus();
     });
-    if (!readConsent()) showConsent(false);
+    if (!readConsent() || readConsent().v !== 2) showConsent(false);
   }
 
   /* Account link. Reflects the last known sign-in, and the credit balance, from
