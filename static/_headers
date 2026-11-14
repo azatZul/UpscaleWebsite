@@ -45,6 +45,9 @@ https://uscale-site-staging.sharrikk.workers.dev/*
 /assets/site.css
   Cache-Control: no-cache
 
+/assets/reddit.js
+  Cache-Control: no-cache
+
 /assets/upscale.css
   Cache-Control: no-cache
 

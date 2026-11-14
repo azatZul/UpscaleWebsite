@@ -6,6 +6,9 @@
 // Set with: wrangler secret put STRIPE_SECRET_KEY --env staging
 declare global {
   interface Env {
+    REDDIT_CAPI_ACCESS_TOKEN?: string;
+    REDDIT_PIXEL_ID?: string;
+    REDDIT_ENABLED?: string;
     STRIPE_SECRET_KEY?: string;
     // Test mode only: who may buy and spend credits. See test-mode.ts.
     TEST_ALLOWED_EMAILS?: string;

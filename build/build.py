@@ -40,6 +40,7 @@ def asset_v(name):
 
 CSS_V = asset_v("site.css")
 JS_V = asset_v("site.js")
+REDDIT_V = asset_v("reddit.js")
 
 def marketing_script():
     try:
@@ -630,6 +631,17 @@ def copy_static():
         shutil.copytree(os.path.join(ROOT, name), os.path.join(DIST, name),
                         ignore=IGNORE, dirs_exist_ok=True)
     shutil.copytree(STATIC, DIST, ignore=IGNORE, dirs_exist_ok=True)
+    # The account shell is static, but uses the same consent UI and tracker as
+    # generated pages. Keep its English copy sourced from the shared catalog.
+    account = os.path.join(DIST, "account", "index.html")
+    with open(account, encoding="utf-8") as handle:
+        html = handle.read()
+    c = inject_facts(localization_catalog.load_locale("en"), "en")
+    shared = (consent_banner(c, "en")
+              + f'\n<script src="/assets/site.js?v={JS_V}" defer></script>'
+              + f'\n<script type="module" src="/assets/reddit.js?v={REDDIT_V}"></script>')
+    with open(account, "w", encoding="utf-8") as handle:
+        handle.write(html.replace("<!-- USCALE_SHARED_PRIVACY -->", shared))
 
 # Shared markup
 def organization():
@@ -911,6 +923,7 @@ def consent_banner(c, lang):
   <div class="consent-prefs" id="consent-prefs" hidden>
     {row(k['necessary'], k['necessary_desc'], '<input type="checkbox" checked disabled>')}
     {row(k['analytics'], k['analytics_desc'], '<input type="checkbox" id="consent-analytics">')}
+    {row(k['advertising'], k['advertising_desc'], '<input type="checkbox" id="consent-advertising">')}
   </div>
   <div class="consent-actions">
     <button class="btn btn-g" type="button" data-consent="reject">{esc(k['reject'])}</button>
@@ -970,6 +983,7 @@ def footer(c, lang, home_prefix, path=""):
 {consent_banner(c, lang)}
 <script src="/assets/site.js?v={JS_V}" defer></script>
 {f'<script type="module" src="{MARKETING_SCRIPT}"></script>' if MARKETING_SCRIPT and path != TOOL_PATH else ""}
+<script type="module" src="/assets/reddit.js?v={REDDIT_V}"></script>
 </body>
 </html>
 """
