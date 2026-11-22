@@ -1,0 +1,238 @@
+.bf-grid {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+  padding-block: clamp(3rem, 8vw, 7rem);
+}
+
+.bf-offer {
+  container-type: inline-size;
+}
+
+.bf-event, .bf-plan {
+  display: block;
+}
+
+.bf-event {
+  margin-bottom: .8rem;
+  color: var(--tx-2);
+  font-size: .875rem;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.bf-discount {
+  --bf-discount-size: clamp(4rem, 9vw, 8rem);
+  position: relative;
+  z-index: 0;
+  display: inline-block;
+  color: var(--acc);
+  font-size: min(var(--bf-discount-size), var(--bf-discount-limit, 29cqi));
+  font-weight: 900;
+  line-height: .9;
+  letter-spacing: -.055em;
+  white-space: nowrap;
+}
+
+.bf-discount::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -.11em -.14em;
+  background: #131214;
+  clip-path: polygon(2% 14%, 15% 9%, 32% 13%, 51% 7%, 70% 9%, 87% 3%, 97% 6%, 96% 13%,
+    100% 19%, 98% 28%, 99% 35%, 97% 44%, 100% 51%, 98% 63%, 99% 75%, 95% 84%,
+    98% 91%, 81% 93%, 67% 90%, 52% 96%, 34% 94%, 19% 100%, 4% 96%, 5% 89%,
+    1% 86%, 3% 73%, 0 66%, 2% 54%, 1% 44%, 3% 33%, 0 26%, 2% 21%);
+  transform: rotate(-2deg);
+}
+
+.bf-discount span {
+  font-size: .48em;
+  letter-spacing: -.045em;
+  text-transform: uppercase;
+}
+
+:is(:lang(es), :lang(fr)) .bf-discount {
+  --bf-discount-limit: 23cqi;
+}
+
+:is(:lang(es), :lang(fr)) .bf-discount span {
+  font-size: .24em;
+  letter-spacing: -.02em;
+  text-transform: none;
+}
+
+:is(:lang(de), :lang(ru)) .bf-discount {
+  --bf-discount-limit: 26cqi;
+}
+
+:is(:lang(de), :lang(ru)) .bf-discount span {
+  font-size: .33em;
+}
+
+.bf-plan {
+  margin-top: 1.15rem;
+  font-size: clamp(1.375rem, 2.7vw, 2.25rem);
+  line-height: 1.14;
+  text-wrap: balance;
+}
+
+.bf-prices {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 1rem clamp(1.5rem, 4vw, 2.5rem);
+  margin-top: 1.75rem;
+}
+
+.bf-price {
+  display: grid;
+  gap: .25rem;
+  color: var(--tx-2);
+  font-size: .875rem;
+  font-weight: 600;
+}
+
+.bf-price :is(s, strong) {
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.04em;
+}
+
+.bf-price s {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.bf-price-sale strong {
+  color: var(--tx);
+  font-size: clamp(2rem, 4vw, 2.75rem);
+}
+
+.bf-dates {
+  margin-top: 1rem;
+  color: var(--tx-2);
+  font-size: .9375rem;
+}
+
+.bf-code, .bf-status {
+  margin-top: 1.5rem;
+}
+
+.bf-code {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  padding: .375rem .75rem;
+  border: 1px solid var(--line);
+  border-radius: .5rem;
+  background: var(--tint);
+  color: var(--tx-2);
+  font-size: .9375rem;
+}
+
+.bf-code[hidden] {
+  display: none;
+}
+
+.bf-code code {
+  color: var(--acc-tx);
+  font-weight: 700;
+  letter-spacing: .07em;
+}
+
+.bf-code:is(:hover, :focus-visible) code {
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+
+.bf-status {
+  font-weight: 700;
+}
+
+.bf-terms {
+  margin-top: .875rem;
+  color: var(--tx-2);
+  font-size: .8125rem;
+}
+
+.bf-example {
+  width: min(100%, 31rem);
+  margin: 0;
+  justify-self: center;
+}
+
+.bf-example .cmp {
+  aspect-ratio: 928 / 1152;
+}
+
+.bf-example .cmp-tag {
+  top: auto;
+  bottom: 14px;
+  pointer-events: none;
+}
+
+.bf-example .cmp-tag.r {
+  display: inline-flex;
+  align-items: center;
+  gap: .35em;
+  background: linear-gradient(110deg, transparent 35%, rgb(255 255 255 / .7) 50%, transparent 65%) no-repeat,
+    linear-gradient(135deg, #ffda9b, #ff9c4b);
+  background-size: 250% 100%, 100% 100%;
+  background-position: 150% 0, 0 0;
+  color: #301607;
+  box-shadow: 0 2px 12px rgb(48 22 7 / .25);
+  animation: bf-badge-shine 1.6s ease-in-out .5s 1;
+}
+
+.bf-example .cmp-bar::after {
+  display: none;
+}
+
+.bf-example .cmp-bar:focus-visible {
+  outline: 2px solid #131214;
+  outline-offset: 1px;
+}
+
+@keyframes bf-badge-shine {
+  to { background-position: -50% 0, 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bf-example .cmp-tag.r {
+    animation: none;
+  }
+}
+
+@media (max-width: 780px) {
+  .bf-grid {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 38rem;
+  }
+
+  .bf-discount {
+    --bf-discount-size: clamp(4rem, 16vw, 7rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .bf-example .cmp-tag {
+    bottom: 10px;
+    padding-inline: 8px;
+    font-size: 12px;
+  }
+
+  .bf-example .cmp-tag.l {
+    left: 10px;
+  }
+
+  .bf-example .cmp-tag.r {
+    right: 10px;
+  }
+
+  .fgrid {
+    overflow-wrap: anywhere;
+  }
+}

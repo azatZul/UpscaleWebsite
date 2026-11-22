@@ -476,6 +476,7 @@
     var badge = cmp.querySelector('.on-device');
     var mute = cmp.querySelector('.vid-mute');
     var follow = root.hasAttribute('data-follow');
+    var autoSweep = root.hasAttribute('data-auto-sweep');
     var dragging = false, pos = 50, aim = 50, hold = 0;
 
     function syncMute() {
@@ -584,6 +585,8 @@
          divider handle still moves the split. */
       if (cmp.closest('.album-viewer.is-expanded') &&
           !(e.target.closest && e.target.closest('.cmp-bar'))) return;
+      /* A mouse drag should not leave the keyboard slider focused when it ends. */
+      if (autoSweep && e.pointerType === 'mouse') e.preventDefault();
       dragging = true;
       if (cmp.setPointerCapture) cmp.setPointerCapture(e.pointerId);
       aim = pointerPos(e);
@@ -601,7 +604,7 @@
       if (cmp.releasePointerCapture && cmp.hasPointerCapture && cmp.hasPointerCapture(e.pointerId)) {
         cmp.releasePointerCapture(e.pointerId);
       }
-      hold = now() + 4000;
+      if (!autoSweep || e.pointerType !== 'mouse') hold = now() + 4000;
     }
 
     cmp.addEventListener('pointerdown', start);
@@ -622,24 +625,35 @@
       e.preventDefault();
     });
 
-    /* Animated hero divider */
-    if (follow) {
+    /* Animated dividers follow the pointer whenever it is over the comparison. */
+    if (follow || autoSweep) {
       var calm = matches('(prefers-reduced-motion:reduce)');
+      var still = autoSweep && calm;
       var fine = matches('(hover:hover) and (pointer:fine)');
-      var hover = false, focused = false, raf = 0, live = true, t0 = 0;
+      var swing = autoSweep ? -.88 : .46;
+      var speed = autoSweep ? 1450 : 2450;
+      var hover = false, focused = false, raf = 0, t0 = null;
+      var live = !autoSweep || !window.IntersectionObserver;
 
       var frame = function (t) {
         raf = 0;
-        if (!t0) t0 = t;
+        if (t0 === null) t0 = t;
+        /* Give the promotional comparison one five-second sweep once visible. */
+        var sweeping = !calm && (!autoSweep || t - t0 < 5000);
         var mid = midPct;
         var chase = hover || dragging || focused || t < hold;
-        var goal = chase ? aim : (calm ? mid : mid * (1 + .46 * Math.sin((t - t0) / 2450)));
-        var next = pos + (goal - pos) * (chase ? .18 : .06);
+        if (autoSweep && !sweeping && !chase) return;
+        var idle = sweeping ? mid * (1 + swing * Math.sin((t - t0) / speed)) : mid;
+        var goal = chase ? aim : idle;
+        if (autoSweep) goal = Math.max(1, Math.min(99, goal));
+        var next = still ? goal : pos + (goal - pos) * (chase ? .18 : .06);
         if (Math.abs(goal - pos) < .04) next = goal;
         if (next !== pos) setPos(next);
-        if (live) raf = requestAnimationFrame(frame);
+        if (live && (!autoSweep || sweeping || next !== goal)) raf = requestAnimationFrame(frame);
       };
-      var run = function () { if (live && !raf) raf = requestAnimationFrame(frame); };
+      var run = function () {
+        if (live && !raf) raf = requestAnimationFrame(frame);
+      };
 
       bar.addEventListener('focus', function () {
         focused = true;
@@ -648,11 +662,11 @@
       });
       bar.addEventListener('blur', function () {
         focused = false;
-        t0 = 0;
+        if (!autoSweep) t0 = null;
         run();
       });
 
-      /* Hero-only pointer tracking stays local to its comparison surface. */
+      /* Pointer tracking stays local to the comparison surface. */
       if (fine) {
         cmp.addEventListener('pointerenter', function (e) {
           hover = true;
@@ -669,14 +683,19 @@
       if (window.IntersectionObserver) {
         new IntersectionObserver(function (entries) {
           live = entries[0].isIntersecting;
-          if (live) { t0 = 0; run(); }
+          if (live) {
+            if (!autoSweep) t0 = null;
+            run();
+          }
           else if (raf) { cancelAnimationFrame(raf); raf = 0; }
         }, { threshold: 0 }).observe(root);
       }
       var rest = function () {
         fit();
-        if (!hover && !dragging) { setPos(midPct); }
-        t0 = 0;
+        if (!autoSweep) {
+          if (!hover && !dragging && !focused) setPos(midPct);
+          t0 = null;
+        }
         run();
       };
       if (window.ResizeObserver) new ResizeObserver(rest).observe(cmp);

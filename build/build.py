@@ -484,6 +484,8 @@ def fact_text(lang="en"):
     """App facts as strings, formatted for one locale."""
     prices = locale_pricing(lang)
     currency = prices["currency"]
+    percent_space = NUMBER_FORMATS.get(lang, NUMBER_FORMATS["en"])[2]
+    black_friday_percent = round((1 - prices["annual_sale"] / prices["annual"]) * 100)
     return {
         "rating_count": number_text(APP_FACTS["rating"]["count"], lang),
         "annual_price": money_text(prices["annual"], currency, lang),
@@ -492,7 +494,8 @@ def fact_text(lang="en"):
         "trial_days": APP_FACTS["annual_trial_days"],
         "free_photos_per_day": APP_FACTS["free_limits"]["photos_per_day"],
         "minimum_ios": APP_FACTS["minimum_ios"],
-        "off": f"{_SALE_PERCENT:d}{NUMBER_FORMATS.get(lang, NUMBER_FORMATS['en'])[2]}%",
+        "off": f"{_SALE_PERCENT:d}{percent_space}%",
+        "black_friday_off": f"{black_friday_percent:d}{percent_space}%",
     }
 
 
@@ -659,7 +662,7 @@ def organization():
 
 
 def head(c, lang, title, desc, canonical, path="", og_image=None, extra_ld=None, robots=None,
-         alternates=True, dynamic_meta=False, stylesheet=None):
+         alternates=True, dynamic_meta=False, stylesheet=None, og_image_alt=None):
     L = BY_CODE[lang]
     og_image = og_image or f"{SITE}{SCREENSHOTS[0]}"
     alts = ""
@@ -682,7 +685,7 @@ def head(c, lang, title, desc, canonical, path="", og_image=None, extra_ld=None,
   <meta property="og:description" content="{esc(desc)}">
   <meta property="og:url" content="{canonical}">
   <meta property="og:image" content="{og_image}">
-  <meta property="og:image:alt" content="{esc(image_alt)}">
+  <meta property="og:image:alt" content="{esc(og_image_alt or image_alt)}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{esc(title)}">
   <meta name="twitter:description" content="{esc(desc)}">
@@ -1607,6 +1610,78 @@ def render_sale(c, lang):
             + footer(c, lang, home_prefix, "sale"))
 
 
+def render_black_friday(c, lang):
+    path = "black-friday"
+    sale = c["black_friday"]
+    before_image = f"{BA}/bf26_before_2.jpeg"
+    after_image = f"{BA}/bf26_after_3.jpeg"
+    before_label = esc(sale["comparison_regular"])
+    after_label = esc(sale["comparison_offer"])
+    home_prefix = rel_url(lang)
+    prices = fact_text(lang)
+    regular = esc(prices["annual_price"])
+    discounted = esc(prices["annual_sale_price"])
+    return (head(c, lang, sale["title"], sale["description"], url(lang, path),
+                 path=path, og_image=f"{SITE}{after_image}", og_image_alt=sale["after_alt"],
+                 robots="noindex,follow", stylesheet="black-friday.css")
+            + nav(c, lang, home_prefix, path)
+            + f"""<main id="main-content" tabindex="-1">
+  <div class="wrap bf-grid">
+    <section class="bf-offer" aria-labelledby="bf-title" data-ends="2026-12-01T00:00:00-08:00">
+      <h1 id="bf-title"><span class="bf-event">{esc(sale['event'])}</span>
+        <span class="bf-discount">{sale['discount']}</span>
+        <span class="bf-plan">{esc(sale['plan'])}</span>
+      </h1>
+      <p class="bf-prices">
+        <span class="bf-price"><span>{esc(sale['regular'])}</span> <s>{regular}</s></span>
+        <span class="bf-price bf-price-sale"><span>{esc(sale['with_code'])}</span> <strong>{discounted}</strong></span>
+      </p>
+      <p class="bf-dates">{esc(sale['dates'])}</p>
+      <a class="bf-code" href="https://apps.apple.com/redeem?ctx=offercodes&amp;id=6736931330&amp;code=BF26">
+        <span>{esc(sale['code_label'])}</span> <code>BF26</code>
+      </a>
+      <p class="bf-status" hidden>{esc(sale['ended'])}</p>
+      <p class="bf-terms">{esc(sale['regional_prices'])}</p>
+    </section>
+    <figure class="bf-example cmp-wrap" data-auto-sweep>
+      <div class="cmp" role="group" aria-label="{before_label} / {after_label}">
+        <img class="a-img" src="{after_image}" width="1838" height="2282"
+             alt="{esc(sale['after_alt'])}" decoding="async">
+        <img class="b" src="{before_image}" width="928" height="1152"
+             alt="{esc(sale['before_alt'])}" decoding="async">
+        <span class="cmp-bar" aria-label="{esc(c['hero']['drag'])}"></span>
+        <span class="cmp-tag l">{before_label}</span>
+        <span class="cmp-tag r"><span aria-hidden="true">✦</span>{after_label}</span>
+      </div>
+    </figure>
+  </div>
+</main>
+<script>
+(() => {{
+  const offer = document.querySelector('.bf-offer');
+  const ends = Date.parse(offer.dataset.ends);
+  const code = offer.querySelector('.bf-code');
+  const status = offer.querySelector('.bf-status');
+  let timer;
+
+  function updateOffer() {{
+    clearTimeout(timer);
+    const remaining = ends - Date.now();
+    const expired = remaining <= 0;
+    code.hidden = expired;
+    status.hidden = !expired;
+    if (!expired) {{
+      timer = setTimeout(updateOffer, Math.min(remaining, 2147483647));
+    }}
+  }}
+
+  updateOffer();
+  window.addEventListener('pageshow', updateOffer);
+}})();
+</script>"""
+            + footer(c, lang, home_prefix, path))
+
+
 # Competitor comparison
 def app_icon(app, size=54, cls="vs-ico"):
     return (f'<img class="{cls}" src="{app["icon"]}" width="{size}" height="{size}" '
@@ -2215,7 +2290,7 @@ def render_sitemap():
         f'  <url>\n    <loc>{SITE}/gallery</loc>\n    <lastmod>{updated_for("gallery")}</lastmod>'
         '\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>'
     )
-    # sale.html is noindex and intentionally omitted.
+    # The sale and Black Friday pages are noindex and intentionally omitted.
     return ('<?xml version="1.0" encoding="UTF-8"?>\n'
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n'
             '        xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
@@ -2261,12 +2336,11 @@ def render_static_redirects():
             rules.append(f"{directory} {directory}index.html 200")
             if directory != "/":
                 rules.append(f"{directory.rstrip('/')} {directory} 301")
-    # The legal and support pages live at .html addresses; a link or a typed
-    # address without the extension should still find them.
+    # These pages live at .html addresses. Support extensionless URLs too.
     for code in LOCALIZED_CODES:
         segment = BY_CODE[code][1]
         base = f"/{segment}/" if segment else "/"
-        for page in ("terms", "privacy_policy", "support_page"):
+        for page in ("terms", "privacy_policy", "support_page", "black-friday"):
             rules.append(f"{base}{page} {base}{page}.html 301")
             rules.append(f"{base}{page}/ {base}{page}.html 301")
     # The model licenses page is English only and shared by every footer.
@@ -2378,6 +2452,7 @@ def main():
         for d in c["docs"]:
             write(f"{base}{d['file']}", render_doc(c, d, code)); built += 1
         write(f"{base}sale.html", render_sale(c, code)); built += 1
+        write(f"{base}black-friday.html", render_black_friday(c, code)); built += 1
         write(f"{base}compare.html", render_compare(c, code)); built += 1
         if TOOL_SCRIPT:
             for page, route in TOOL_ROUTES.items():

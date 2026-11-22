@@ -1743,6 +1743,174 @@
       "zh": "在 apple.com 上管理订阅"
     }
   },
+  "black_friday.title": {
+    "localizations": {
+      "en": "Black Friday 2026 – {black_friday_off} off UScale Premium",
+      "ru": "Чёрная пятница 2026 — скидка {black_friday_off} на UScale Premium",
+      "de": "Black Friday 2026 – {black_friday_off} Rabatt auf UScale Premium",
+      "ja": "ブラックフライデー2026 — UScale Premiumが{black_friday_off}オフ",
+      "fr": "Black Friday 2026 – {black_friday_off} de réduction sur UScale Premium",
+      "es": "Black Friday 2026 – {black_friday_off} de descuento en UScale Premium",
+      "zh": "2026 黑色星期五 — UScale Premium 首年立省 {black_friday_off}"
+    },
+    "comment": "Keep {black_friday_off} exactly once. It includes the percent sign."
+  },
+  "black_friday.description": {
+    "localizations": {
+      "en": "Save {black_friday_off} on your first year of UScale Premium with App Store code BF26.",
+      "ru": "Получите скидку {black_friday_off} на первый год UScale Premium по коду BF26 в App Store.",
+      "de": "Spare mit dem App-Store-Code BF26 {black_friday_off} auf dein erstes Jahr UScale Premium.",
+      "ja": "App StoreでコードBF26を使うと、UScale Premiumの初年度が{black_friday_off}オフになります。",
+      "fr": "Économisez {black_friday_off} sur votre première année de UScale Premium avec le code BF26 sur l’App Store.",
+      "es": "Ahorra un {black_friday_off} en tu primer año de UScale Premium con el código BF26 en App Store.",
+      "zh": "在 App Store 使用优惠代码 BF26，UScale Premium 首年立省 {black_friday_off}。"
+    },
+    "comment": "Keep {black_friday_off} exactly once. It includes the percent sign."
+  },
+  "black_friday.event": {
+    "localizations": {
+      "en": "Black Friday 2026",
+      "ru": "Чёрная пятница 2026",
+      "de": "Black Friday 2026",
+      "ja": "ブラックフライデー2026",
+      "fr": "Black Friday 2026",
+      "es": "Black Friday 2026",
+      "zh": "2026 黑色星期五"
+    }
+  },
+  "black_friday.discount": {
+    "localizations": {
+      "en": "{black_friday_off} <span>off</span>",
+      "ru": "<span>Скидка</span> {black_friday_off}",
+      "de": "{black_friday_off} <span>Rabatt</span>",
+      "ja": "{black_friday_off}<span>オフ</span>",
+      "fr": "{black_friday_off} <span>de réduction</span>",
+      "es": "{black_friday_off} <span>de descuento</span>",
+      "zh": "<span>立省</span> {black_friday_off}"
+    },
+    "comment": "Keep a single span around the words, with {black_friday_off} outside the span. The placeholder includes the percent sign."
+  },
+  "black_friday.plan": {
+    "localizations": {
+      "en": "UScale Premium · first year",
+      "ru": "Первый год UScale Premium",
+      "de": "UScale Premium · erstes Jahr",
+      "ja": "UScale Premiumの初年度",
+      "fr": "UScale Premium · première année",
+      "es": "UScale Premium · primer año",
+      "zh": "UScale Premium 首年"
+    }
+  },
+  "black_friday.regular": {
+    "localizations": {
+      "en": "Regular",
+      "ru": "Обычная цена",
+      "de": "Regulär",
+      "ja": "通常価格",
+      "fr": "Prix habituel",
+      "es": "Precio habitual",
+      "zh": "原价"
+    }
+  },
+  "black_friday.with_code": {
+    "localizations": {
+      "en": "With code",
+      "ru": "С промокодом",
+      "de": "Mit Code",
+      "ja": "コード適用後",
+      "fr": "Avec le code",
+      "es": "Con el código",
+      "zh": "用码后"
+    }
+  },
+  "black_friday.dates": {
+    "localizations": {
+      "en": "Nov 20–30 · Pacific time",
+      "ru": "20–30 ноября · тихоокеанское время США",
+      "de": "20.–30. November · US-Pazifikzeit",
+      "ja": "11月20日〜30日（米国太平洋時間）",
+      "fr": "Du 20 au 30 novembre · heure du Pacifique",
+      "es": "Del 20 al 30 de noviembre · hora del Pacífico",
+      "zh": "11 月 20 日至 30 日 · 美国太平洋时间"
+    }
+  },
+  "black_friday.code_label": {
+    "localizations": {
+      "en": "Redeem code:",
+      "ru": "Промокод:",
+      "de": "Gutscheincode:",
+      "ja": "引き換えコード：",
+      "fr": "Code promo :",
+      "es": "Código promocional:",
+      "zh": "兑换代码："
+    }
+  },
+  "black_friday.ended": {
+    "localizations": {
+      "en": "This offer has ended.",
+      "ru": "Акция завершилась.",
+      "de": "Dieses Angebot ist abgelaufen.",
+      "ja": "このキャンペーンは終了しました。",
+      "fr": "Cette offre est terminée.",
+      "es": "Esta oferta ha terminado.",
+      "zh": "活动已结束。"
+    }
+  },
+  "black_friday.regional_prices": {
+    "localizations": {
+      "en": "Prices vary by region.",
+      "ru": "Цены зависят от региона.",
+      "de": "Die Preise variieren je nach Region.",
+      "ja": "価格は地域によって異なります。",
+      "fr": "Les prix varient selon la région.",
+      "es": "Los precios varían según la región.",
+      "zh": "价格因地区而异。"
+    }
+  },
+  "black_friday.comparison_regular": {
+    "localizations": {
+      "en": "Regular price",
+      "ru": "Обычная цена",
+      "de": "Regulärer Preis",
+      "ja": "通常価格",
+      "fr": "Prix habituel",
+      "es": "Precio habitual",
+      "zh": "原价"
+    }
+  },
+  "black_friday.comparison_offer": {
+    "localizations": {
+      "en": "Black Friday",
+      "ru": "Черная пятница",
+      "de": "Black Friday",
+      "ja": "ブラックフライデー",
+      "fr": "Black Friday",
+      "es": "Black Friday",
+      "zh": "黑色星期五"
+    }
+  },
+  "black_friday.before_alt": {
+    "localizations": {
+      "en": "Woman looking at the regular price through a magnifying glass",
+      "ru": "Девушка разглядывает обычную цену через лупу",
+      "de": "Eine Frau betrachtet den regulären Preis durch eine Lupe",
+      "ja": "虫眼鏡で通常価格を見る女性",
+      "fr": "Une femme regarde le prix normal à la loupe",
+      "es": "Una mujer mira el precio habitual con una lupa",
+      "zh": "一位女士用放大镜查看原价"
+    }
+  },
+  "black_friday.after_alt": {
+    "localizations": {
+      "en": "Smiling woman beside a tag showing the sale price",
+      "ru": "Девушка улыбается рядом с ценником со скидкой",
+      "de": "Eine lächelnde Frau neben einem Schild mit dem Angebotspreis",
+      "ja": "セール価格の値札のそばで笑顔を見せる女性",
+      "fr": "Une femme sourit à côté d’une étiquette indiquant le prix en promotion",
+      "es": "Una mujer sonríe junto a una etiqueta con el precio de oferta",
+      "zh": "一位女士在促销价标签旁微笑"
+    }
+  },
   "sale.title": {
     "localizations": {
       "en": "UScale Premium Sale — {off} off",

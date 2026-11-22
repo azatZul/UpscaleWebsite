@@ -164,6 +164,18 @@ class CatalogTests(unittest.TestCase):
         self.assertEqual(site_build.locale_pricing("de")["currency"], "EUR")
         self.assertEqual(site_build.locale_pricing("zh")["currency"], "CNY")
 
+    def test_black_friday_uses_a_local_store_price_and_discount(self):
+        with patch.dict(site_build._PRICING, {
+            "fr": {"currency": "EUR", "annual": 50, "annual_sale": 20},
+        }):
+            localized = site_build.inject_facts(catalog.load_locale("fr"), "fr")
+            html = site_build.render_black_friday(localized, "fr")
+
+        self.assertIn("<s>50,00\u00a0€</s>", html)
+        self.assertIn("<strong>20,00\u00a0€</strong>", html)
+        self.assertIn('<span class="bf-discount">60\u00a0% <span>de réduction</span></span>', html)
+        self.assertIn("<title>Black Friday 2026 – 60\u00a0%", html)
+
     def test_prices_are_written_the_way_each_store_writes_them(self):
         # Fixed amounts, so a price change in app_facts.json can't break this.
         cases = [
