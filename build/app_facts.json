@@ -8,7 +8,7 @@
   "minimum_ios": "16",
   "rating": {
     "value": 4.6,
-    "count": 1723
+    "count": 1735
   },
   "free_limits": {
     "photos_per_day": 2
@@ -22,17 +22,17 @@
     "es": {
       "currency": "EUR",
       "annual": 39.99,
-      "annual_sale": 24.99
+      "annual_sale": 23.99
     },
     "fr": {
       "currency": "EUR",
       "annual": 39.99,
-      "annual_sale": 24.99
+      "annual_sale": 23.99
     },
     "de": {
       "currency": "EUR",
       "annual": 44.99,
-      "annual_sale": 24.99
+      "annual_sale": 26.99
     },
     "ru": {
       "currency": "RUB",
@@ -42,12 +42,12 @@
     "ja": {
       "currency": "JPY",
       "annual": 3790,
-      "annual_sale": 2390
+      "annual_sale": 2200
     },
     "zh": {
       "currency": "CNY",
       "annual": 129,
-      "annual_sale": 84.80
+      "annual_sale": 77.00
     }
   },
   "annual_trial_days": 3,

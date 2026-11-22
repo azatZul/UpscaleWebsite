@@ -164,7 +164,7 @@ class CatalogTests(unittest.TestCase):
         self.assertEqual(site_build.locale_pricing("de")["currency"], "EUR")
         self.assertEqual(site_build.locale_pricing("zh")["currency"], "CNY")
 
-    def test_black_friday_uses_a_local_store_price_and_discount(self):
+    def test_black_friday_uses_local_store_prices_and_the_global_discount(self):
         with patch.dict(site_build._PRICING, {
             "fr": {"currency": "EUR", "annual": 50, "annual_sale": 20},
         }):
@@ -173,8 +173,49 @@ class CatalogTests(unittest.TestCase):
 
         self.assertIn("<s>50,00\u00a0€</s>", html)
         self.assertIn("<strong>20,00\u00a0€</strong>", html)
-        self.assertIn('<span class="bf-discount">60\u00a0% <span>de réduction</span></span>', html)
-        self.assertIn("<title>Black Friday 2026 – 60\u00a0%", html)
+        self.assertIn('<span class="bf-discount">40\u00a0% <span>de réduction</span></span>', html)
+        self.assertIn("<title>Black Friday 2026 – 40\u00a0%", html)
+        self.assertEqual(html.count(f'data-bf-starts="{site_build.BLACK_FRIDAY_STARTS}"'), 1)
+        self.assertEqual(html.count(f'data-bf-ends="{site_build.BLACK_FRIDAY_ENDS}"'), 1)
+        self.assertEqual(html.count('/assets/black-friday.js?v='), 1)
+        self.assertIn(
+            '<a class="bf-code" href="https://apps.apple.com/redeem?ctx=offercodes&amp;id=6736931330&amp;code=BF26">',
+            html,
+        )
+        for status in ("upcoming", "ended"):
+            message = site_build.esc(localized["black_friday"][status])
+            self.assertIn(f'<p class="bf-status bf-status-{status}" hidden>{message}</p>', html)
+
+    def test_black_friday_ribbon_is_localized_and_opens_the_campaign_page(self):
+        for locale in site_build.LOCALIZED_CODES:
+            c = site_build.inject_facts(catalog.load_locale(locale, require_complete=True), locale)
+            copy = c["black_friday"]["ribbon"]
+            with self.subTest(locale=locale):
+                campaign = site_build.render_black_friday(c, locale)
+                self.assertNotIn('class="bf-ribbon"', campaign)
+                self.assertEqual(campaign.count('/assets/black-friday.js?v='), 1)
+            for html, nav_row in (
+                (site_build.nav(c, locale, site_build.rel_url(locale)), 'class="wrap nav-in"'),
+                (site_build.render_not_found(c, locale), 'class="wrap error-nav"'),
+            ):
+                with self.subTest(locale=locale):
+                    self.assertEqual(html.count('class="bf-ribbon"'), 1)
+                    self.assertIn(f'data-bf-starts="{site_build.BLACK_FRIDAY_STARTS}"', html)
+                    self.assertIn(f'data-bf-ends="{site_build.BLACK_FRIDAY_ENDS}"', html)
+                    self.assertIn(
+                        f'class="bf-ribbon-link" href="{site_build.rel_url(locale, "black-friday")}"',
+                        html,
+                    )
+                    self.assertIn(f'aria-label="{site_build.esc(copy["event"])} · {site_build.esc(copy["discount"])}"', html)
+                    self.assertLess(html.index('<header'), html.index('class="bf-ribbon"'))
+                    ribbon_script = html.index(site_build.BLACK_FRIDAY_RIBBON_SCRIPT)
+                    self.assertLess(html.index('class="bf-ribbon"'), ribbon_script)
+                    self.assertLess(ribbon_script, html.index(nav_row))
+                    self.assertLess(html.index(nav_row), html.index('</header>'))
+                    self.assertNotIn('/assets/black-friday.js?v=', html)
+                    self.assertIn(f'class="bf-ribbon-event">{site_build.esc(copy["event"])}<', html)
+                    self.assertIn(f'class="bf-ribbon-discount">{site_build.esc(copy["discount"])}<', html)
+            self.assertIn(site_build.fact_text(locale)["black_friday_off"], copy["discount"])
 
     def test_prices_are_written_the_way_each_store_writes_them(self):
         # Fixed amounts, so a price change in app_facts.json can't break this.

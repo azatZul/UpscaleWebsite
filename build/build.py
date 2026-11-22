@@ -41,6 +41,11 @@ def asset_v(name):
 CSS_V = asset_v("site.css")
 JS_V = asset_v("site.js")
 REDDIT_V = asset_v("reddit.js")
+BLACK_FRIDAY_SCRIPT = f'<script src="/assets/black-friday.js?v={asset_v("black-friday.js")}" defer></script>'
+BLACK_FRIDAY_STARTS = "2026-11-20T00:00:00-08:00"
+BLACK_FRIDAY_ENDS = "2026-12-01T00:00:00-08:00"
+with open(os.path.join(ROOT, "assets", "black-friday.js"), encoding="utf-8") as f:
+    BLACK_FRIDAY_RIBBON_SCRIPT = f"<script>\n{f.read()}</script>"
 
 def marketing_script():
     try:
@@ -485,7 +490,7 @@ def fact_text(lang="en"):
     prices = locale_pricing(lang)
     currency = prices["currency"]
     percent_space = NUMBER_FORMATS.get(lang, NUMBER_FORMATS["en"])[2]
-    black_friday_percent = round((1 - prices["annual_sale"] / prices["annual"]) * 100)
+    discount_label = f"{_SALE_PERCENT:d}{percent_space}%"
     return {
         "rating_count": number_text(APP_FACTS["rating"]["count"], lang),
         "annual_price": money_text(prices["annual"], currency, lang),
@@ -494,8 +499,8 @@ def fact_text(lang="en"):
         "trial_days": APP_FACTS["annual_trial_days"],
         "free_photos_per_day": APP_FACTS["free_limits"]["photos_per_day"],
         "minimum_ios": APP_FACTS["minimum_ios"],
-        "off": f"{_SALE_PERCENT:d}{percent_space}%",
-        "black_friday_off": f"{black_friday_percent:d}{percent_space}%",
+        "off": discount_label,
+        "black_friday_off": discount_label,
     }
 
 
@@ -640,8 +645,7 @@ def copy_static():
         shutil.copytree(os.path.join(ROOT, name), os.path.join(DIST, name),
                         ignore=IGNORE, dirs_exist_ok=True)
     shutil.copytree(STATIC, DIST, ignore=IGNORE, dirs_exist_ok=True)
-    # The account shell is static, but uses the same consent UI and tracker as
-    # generated pages. Keep its English copy sourced from the shared catalog.
+    # The account shell uses the same English promotion and consent UI as generated pages.
     account = os.path.join(DIST, "account", "index.html")
     with open(account, encoding="utf-8") as handle:
         html = handle.read()
@@ -650,7 +654,8 @@ def copy_static():
               + f'\n<script src="/assets/site.js?v={JS_V}" defer></script>'
               + f'\n<script type="module" src="/assets/reddit.js?v={REDDIT_V}"></script>')
     with open(account, "w", encoding="utf-8") as handle:
-        handle.write(html.replace("<!-- USCALE_SHARED_PRIVACY -->", shared))
+        handle.write(html.replace("<!-- USCALE_BLACK_FRIDAY -->", black_friday_ribbon(c, "en"))
+                         .replace("<!-- USCALE_SHARED_PRIVACY -->", shared))
 
 # Shared markup
 def organization():
@@ -894,11 +899,31 @@ def lang_switcher(c, lang, path=""):
       <div class="lang-menu" id="language-links">{items}</div>
     </div>"""
 
+def black_friday_ribbon(c, lang):
+    copy = c["black_friday"]["ribbon"]
+    event, discount = esc(copy["event"]), esc(copy["discount"])
+    # Set visibility before parsing the nav row, whose position depends on the ribbon.
+    return f"""<div class="bf-ribbon" data-bf-starts="{BLACK_FRIDAY_STARTS}" data-bf-ends="{BLACK_FRIDAY_ENDS}" hidden>
+  <div class="bf-ribbon-corner">
+    <a class="bf-ribbon-link" href="{rel_url(lang, 'black-friday')}" aria-label="{event} · {discount}">
+      <span class="bf-ribbon-window" aria-hidden="true">
+        <span class="bf-ribbon-event">{event}</span>
+        <span class="bf-ribbon-discount">{discount}</span>
+      </span>
+    </a>
+  </div>
+</div>
+{BLACK_FRIDAY_RIBBON_SCRIPT}
+"""
+
+
 def nav(c, lang, home_prefix, path="", on_home=False):
     n = c["nav"]
     compare_href = f"{home_prefix}#comparison" if on_home else rel_url(lang, "compare")
     guides_href = f"{home_prefix}#guides" if on_home else f"{home_prefix}guides/"
+    ribbon = "" if path == "black-friday" else black_friday_ribbon(c, lang)
     return f"""<header class="nav">
+  {ribbon}
   <div class="wrap nav-in">
     <a class="brand" href="{home_prefix}">
       <img src="/resources/appstore/icon_180.png" width="34" height="34" alt="{esc(c['ui']['icon_alt'])}">
@@ -1627,7 +1652,7 @@ def render_black_friday(c, lang):
             + nav(c, lang, home_prefix, path)
             + f"""<main id="main-content" tabindex="-1">
   <div class="wrap bf-grid">
-    <section class="bf-offer" aria-labelledby="bf-title" data-ends="2026-12-01T00:00:00-08:00">
+    <section class="bf-offer" aria-labelledby="bf-title" data-bf-starts="{BLACK_FRIDAY_STARTS}" data-bf-ends="{BLACK_FRIDAY_ENDS}">
       <h1 id="bf-title"><span class="bf-event">{esc(sale['event'])}</span>
         <span class="bf-discount">{sale['discount']}</span>
         <span class="bf-plan">{esc(sale['plan'])}</span>
@@ -1640,7 +1665,8 @@ def render_black_friday(c, lang):
       <a class="bf-code" href="https://apps.apple.com/redeem?ctx=offercodes&amp;id=6736931330&amp;code=BF26">
         <span>{esc(sale['code_label'])}</span> <code>BF26</code>
       </a>
-      <p class="bf-status" hidden>{esc(sale['ended'])}</p>
+      <p class="bf-status bf-status-upcoming" hidden>{esc(sale['upcoming'])}</p>
+      <p class="bf-status bf-status-ended" hidden>{esc(sale['ended'])}</p>
       <p class="bf-terms">{esc(sale['regional_prices'])}</p>
     </section>
     <figure class="bf-example cmp-wrap" data-auto-sweep>
@@ -1656,29 +1682,8 @@ def render_black_friday(c, lang):
     </figure>
   </div>
 </main>
-<script>
-(() => {{
-  const offer = document.querySelector('.bf-offer');
-  const ends = Date.parse(offer.dataset.ends);
-  const code = offer.querySelector('.bf-code');
-  const status = offer.querySelector('.bf-status');
-  let timer;
-
-  function updateOffer() {{
-    clearTimeout(timer);
-    const remaining = ends - Date.now();
-    const expired = remaining <= 0;
-    code.hidden = expired;
-    status.hidden = !expired;
-    if (!expired) {{
-      timer = setTimeout(updateOffer, Math.min(remaining, 2147483647));
-    }}
-  }}
-
-  updateOffer();
-  window.addEventListener('pageshow', updateOffer);
-}})();
-</script>"""
+{BLACK_FRIDAY_SCRIPT}
+"""
             + footer(c, lang, home_prefix, path))
 
 
@@ -2375,8 +2380,11 @@ def render_not_found(c, lang):
 <link rel="stylesheet" href="/assets/site.css?v={CSS_V}">
 <link rel="stylesheet" href="/assets/not-found.css?v={asset_v('not-found.css')}">
 </head><body class="error-page">
-<header class="wrap error-nav"><a class="error-brand" href="{home}"><img src="/resources/appstore/icon_180.png" width="40" height="40" alt="">UScale</a>
-<div class="error-actions"><nav class="error-links"><a href="{home}">{esc(c['ui']['home'])}</a><a href="{guides}">{esc(c['nav']['guides'])}</a></nav>{theme_toggle(c)}</div></header>
+<header class="error-header">
+{black_friday_ribbon(c, lang)}
+<div class="wrap error-nav"><a class="error-brand" href="{home}"><img src="/resources/appstore/icon_180.png" width="40" height="40" alt="">UScale</a>
+<div class="error-actions"><nav class="error-links"><a href="{home}">{esc(c['ui']['home'])}</a><a href="{guides}">{esc(c['nav']['guides'])}</a></nav>{theme_toggle(c)}</div></div>
+</header>
 <main class="error-main">
 <div class="error-comparison">
 <div class="error-fallback">{artwork}</div>

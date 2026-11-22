@@ -135,7 +135,7 @@ html.theme-anim *:not(.theme-ico,.theme-ico *,.appstore img),
 html.theme-anim *:not(.theme-ico,.theme-ico *,.appstore img)::before,
 html.theme-anim *:not(.theme-ico,.theme-ico *,.appstore img)::after{
   transition:box-shadow .3s ease!important}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:82px}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:calc(82px + var(--bf-ribbon-space, 0px))}
 body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--font);
   font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img,svg,video{max-width:100%;display:block}
@@ -158,11 +158,48 @@ ul,ol{margin:0;padding:0}
 .glow::before{width:640px;height:640px;top:-260px;left:-160px;background:radial-gradient(circle,var(--glow-1),transparent 68%)}
 .glow::after{width:560px;height:560px;top:120px;right:-220px;background:radial-gradient(circle,var(--glow-2),transparent 68%);opacity:var(--glow-o2)}
 
+/* ---------- Black Friday ribbon ---------- */
+@property --bf-ribbon-split{syntax:"<percentage>";inherits:true;initial-value:0%}
+:root:has(.bf-ribbon:not([hidden])){--bf-ribbon-space:6rem}
+.bf-ribbon{position:relative;z-index:1;height:6rem;pointer-events:none}
+.bf-ribbon[hidden]{display:none}
+/* Leave space below the ribbon for its shadow while clipping at the viewport corner. */
+.bf-ribbon-corner{position:absolute;inset:0 auto -3rem 0;width:15rem;overflow:hidden}
+.bf-ribbon-link{position:absolute;left:4.85rem;top:2.375rem;width:23rem;height:2.75rem;
+  display:grid;justify-items:center;transform:translate(-50%,-50%) rotate(-24deg);pointer-events:auto;
+  background:#131214;color:#fff;border-block:1px solid color-mix(in srgb,var(--acc) 48%,transparent);
+  box-shadow:0 3px 14px rgba(0,0,0,.36);
+  font-size:.875rem;font-weight:750;line-height:1.2;text-align:center;white-space:nowrap}
+.bf-ribbon-link:hover{border-color:var(--acc)}
+.bf-ribbon-link:focus-visible{outline:2px solid var(--acc);outline-offset:-3px;border-radius:0}
+.bf-ribbon-window{position:relative;display:grid;width:8.5rem;--bf-ribbon-split:0%;--bf-ribbon-duration:5s;
+  animation:bf-ribbon-wipe var(--bf-ribbon-duration) cubic-bezier(.37,0,.63,1) infinite}
+.bf-ribbon-window>span{grid-area:1/1;display:grid;place-items:center}
+.bf-ribbon-event{clip-path:inset(0 0 0 var(--bf-ribbon-split))}
+.bf-ribbon-discount{color:var(--acc);clip-path:inset(0 calc(100% - var(--bf-ribbon-split)) 0 0)}
+.bf-ribbon-window::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(var(--acc),var(--acc)) var(--bf-ribbon-split) center / 1px 65% no-repeat;
+  mask-image:linear-gradient(90deg,transparent,#000 10% 90%,transparent)}
+/* Hold each fully revealed label for 1.5s, then sweep for 1s. */
+@keyframes bf-ribbon-wipe{
+  0%,30%,100%{--bf-ribbon-split:0%}
+  50%,80%{--bf-ribbon-split:100%}
+}
+@media(min-width:95em){
+  /* The centered 1160px nav leaves room for the ribbon at this width. */
+  :root:has(.bf-ribbon:not([hidden])){--bf-ribbon-space:0px}
+  .bf-ribbon{position:absolute;top:0;left:0;width:15rem}
+}
+@media(prefers-reduced-motion:reduce){
+  .bf-ribbon-window{animation:bf-ribbon-wipe var(--bf-ribbon-duration) steps(1,end) infinite!important}
+  .bf-ribbon-window::after{display:none}
+}
+
 /* ---------- nav ---------- */
-.nav{position:sticky;top:0;z-index:60;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+.nav{--nav-row-height:70px;position:sticky;top:0;z-index:60;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
   background:var(--nav);border-bottom:1px solid transparent;transition:border-color .2s,background .2s}
 .nav.stuck{border-bottom-color:var(--line);background:var(--nav-2)}
-.nav-in{display:flex;align-items:center;gap:14px;height:70px}
+.nav-in{display:flex;align-items:center;gap:14px;height:var(--nav-row-height)}
 .brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:18px;letter-spacing:-.02em;flex:0 0 auto}
 .brand img{width:34px;height:34px;border-radius:9px}
 [data-theme="light"] .brand img{box-shadow:0 0 0 1px var(--line-2),0 5px 14px rgba(20,30,80,.14)}
@@ -209,7 +246,8 @@ ul,ol{margin:0;padding:0}
 .lang-btn .flag{width:20px;height:20px;flex:0 0 auto;border-radius:5px;box-shadow:0 0 0 1px var(--line-2) inset}
 .lang-menu{position:absolute;right:0;top:calc(100% + 8px);min-width:190px;background:var(--surface-2);
   border:1px solid var(--line);border-radius:14px;padding:6px;box-shadow:var(--shadow);display:none;
-  max-height:60vh;overflow:auto}
+  max-height:min(60vh,calc(100vh - var(--nav-row-height) - var(--bf-ribbon-space, 0px)));
+  max-height:min(60dvh,calc(100dvh - var(--nav-row-height) - var(--bf-ribbon-space, 0px)));overflow:auto}
 .lang-menu.open{display:block}
 .lang-menu a{display:flex;align-items:center;gap:10px;min-height:44px;padding:8px 12px;border-radius:9px;font-size:14.5px;color:var(--tx-2)}
 .lang-menu .flag{width:20px;height:20px;flex:0 0 auto;border-radius:5px;box-shadow:0 0 0 1px var(--line-2) inset}
@@ -1199,7 +1237,7 @@ html:has(.tip-dialog[open]){overflow:hidden}
 .doc-grid{display:grid;grid-template-columns:246px minmax(0,1fr);gap:44px;
   align-items:start;padding:26px 0 20px}
 .doc-grid>*{min-width:0}
-.doc-toc{position:sticky;top:96px;background:var(--bg-2);border:1px solid var(--line);
+.doc-toc{position:sticky;top:calc(96px + var(--bf-ribbon-space, 0px));background:var(--bg-2);border:1px solid var(--line);
   border-radius:var(--r-m);padding:18px 20px}
 .doc-toc>summary{font-size:12.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
   color:var(--tx-3);cursor:pointer;list-style:none}
@@ -1301,7 +1339,8 @@ html:has(.tip-dialog[open]){overflow:hidden}
 .nav-account-credits svg{width:11px;height:11px;flex:0 0 auto}
 .nav-account-icon{display:none;width:21px;height:21px;flex:0 0 auto}
 @media(max-width:1040px){
-  .nav-links{display:none;position:absolute;top:70px;left:0;right:0;flex-direction:column;align-items:stretch;
+  .nav-links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;
+    max-height:calc(100vh - 100%);max-height:calc(100dvh - 100%);overflow-y:auto;
     background:var(--surface-2);border-bottom:1px solid var(--line);padding:12px;gap:2px}
   .nav-links.open{display:flex}
   .nav-links a{padding:12px 14px;font-size:16px}

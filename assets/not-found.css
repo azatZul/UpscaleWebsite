@@ -4,6 +4,8 @@
   --nf-top:#fff4b8;--nf-mid:#ffd621;--nf-low:#ff8a1f;--nf-dull:#6f7489;--nf-grid:#eef0f7;--nf-grid-alpha:.06;--nf-glow:#ffb21f;--nf-glow-alpha:.42}
 :root[data-theme="light"] .error-page{--nf-top:#ffd23a;--nf-mid:#f5ad00;--nf-low:#e46a00;--nf-dull:#9aa0b6;--nf-grid:#141728;--nf-grid-alpha:.035;--nf-glow:#f7a600;--nf-glow-alpha:.22}
 .error-page{background:radial-gradient(60% 46% at 50% 28%,color-mix(in srgb,var(--nf-glow) 11%,transparent),transparent 70%) fixed,var(--bg)}
+.error-header:has(.bf-ribbon:not([hidden])){position:sticky;top:0;z-index:60;background:var(--nav);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
 .error-nav{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-block:26px}
 .error-brand{display:flex;gap:10px;align-items:center;font-size:21px;font-weight:800;text-decoration:none}
 .error-brand img{border-radius:12px}

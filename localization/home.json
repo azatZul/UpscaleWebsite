@@ -1743,6 +1743,29 @@
       "zh": "在 apple.com 上管理订阅"
     }
   },
+  "black_friday.ribbon.event": {
+    "localizations": {
+      "en": "Black Friday",
+      "ru": "черная пятница",
+      "de": "Black Friday",
+      "ja": "ブラックフライデー",
+      "fr": "Black Friday",
+      "es": "Black Friday",
+      "zh": "黑色星期五"
+    }
+  },
+  "black_friday.ribbon.discount": {
+    "localizations": {
+      "en": "{black_friday_off} off",
+      "ru": "скидка {black_friday_off}",
+      "de": "{black_friday_off} Rabatt",
+      "ja": "{black_friday_off}オフ",
+      "fr": "{black_friday_off} de remise",
+      "es": "{black_friday_off} de descuento",
+      "zh": "立省 {black_friday_off}"
+    },
+    "comment": "Keep {black_friday_off} exactly once. It includes the percent sign. Use a short label for the corner ribbon."
+  },
   "black_friday.title": {
     "localizations": {
       "en": "Black Friday 2026 – {black_friday_off} off UScale Premium",
@@ -1843,6 +1866,17 @@
       "fr": "Code promo :",
       "es": "Código promocional:",
       "zh": "兑换代码："
+    }
+  },
+  "black_friday.upcoming": {
+    "localizations": {
+      "en": "This offer hasn’t started yet.",
+      "ru": "Акция ещё не началась.",
+      "de": "Dieses Angebot hat noch nicht begonnen.",
+      "ja": "このキャンペーンはまだ始まっていません。",
+      "fr": "Cette offre n’a pas encore commencé.",
+      "es": "Esta oferta aún no ha comenzado.",
+      "zh": "活动尚未开始。"
     }
   },
   "black_friday.ended": {
