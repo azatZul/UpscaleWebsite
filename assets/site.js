@@ -547,8 +547,7 @@
     var announced = -1;
     function setPos(p) {
       pos = Math.max(1, Math.min(99, p));
-      bar.style.left = pos + '%';
-      before.style.clipPath = 'inset(0 ' + (100 - pos) + '% 0 0)';
+      cmp.style.setProperty('--cmp-split', pos + '%');
       var whole = Math.round(pos);
       if (whole !== announced) {
         announced = whole;
@@ -585,8 +584,8 @@
          divider handle still moves the split. */
       if (cmp.closest('.album-viewer.is-expanded') &&
           !(e.target.closest && e.target.closest('.cmp-bar'))) return;
-      /* A mouse drag should not leave the keyboard slider focused when it ends. */
-      if (autoSweep && e.pointerType === 'mouse') e.preventDefault();
+      /* A pointer drag should not leave the keyboard slider focused when it ends. */
+      if (autoSweep) e.preventDefault();
       dragging = true;
       if (cmp.setPointerCapture) cmp.setPointerCapture(e.pointerId);
       aim = pointerPos(e);
@@ -604,7 +603,8 @@
       if (cmp.releasePointerCapture && cmp.hasPointerCapture && cmp.hasPointerCapture(e.pointerId)) {
         cmp.releasePointerCapture(e.pointerId);
       }
-      if (!autoSweep || e.pointerType !== 'mouse') hold = now() + 4000;
+      if (autoSweep) resumeSweep();
+      else hold = now() + 4000;
     }
 
     cmp.addEventListener('pointerdown', start);
@@ -620,40 +620,73 @@
     bar.addEventListener('keydown', function (e) {
       if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
       aim = Math.max(0, Math.min(100, pos + (e.key === 'ArrowLeft' ? -4 : 4)));
-      hold = now() + 6000;
+      if (!autoSweep) hold = now() + 6000;
       setPos(aim);
       e.preventDefault();
     });
 
     /* Animated dividers follow the pointer whenever it is over the comparison. */
     if (follow || autoSweep) {
-      var calm = matches('(prefers-reduced-motion:reduce)');
-      var still = autoSweep && calm;
+      var motion = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)');
+      var reducedMotion = function () { return motion && motion.matches; };
       var fine = matches('(hover:hover) and (pointer:fine)');
-      var swing = autoSweep ? -.88 : .46;
       var speed = autoSweep ? 1450 : 2450;
       var hover = false, focused = false, raf = 0, t0 = null;
       var live = !autoSweep || !window.IntersectionObserver;
+      var sweepFrom, sweepTo, sweepDuration;
+
+      var sweepPosition = function (t) {
+        var amplitude = midPct * .88;
+        if (t0 === null) {
+          t0 = t;
+          sweepFrom = pos;
+          sweepTo = midPct + (pos < midPct ? amplitude : -amplitude);
+          sweepDuration = Math.PI * speed * Math.abs(sweepTo - sweepFrom) / (2 * amplitude);
+        }
+        var elapsed = t - t0;
+        if (elapsed < sweepDuration) {
+          /* Ease from the manual position to the first endpoint with zero initial velocity. */
+          var progress = (1 - Math.cos(Math.PI * elapsed / sweepDuration)) / 2;
+          return sweepFrom + (sweepTo - sweepFrom) * progress;
+        }
+        return midPct + (sweepTo - midPct) * Math.cos((elapsed - sweepDuration) / speed);
+      };
 
       var frame = function (t) {
         raf = 0;
-        if (t0 === null) t0 = t;
-        /* Give the promotional comparison one five-second sweep once visible. */
-        var sweeping = !calm && (!autoSweep || t - t0 < 5000);
-        var mid = midPct;
         var chase = hover || dragging || focused || t < hold;
-        if (autoSweep && !sweeping && !chase) return;
-        var idle = sweeping ? mid * (1 + swing * Math.sin((t - t0) / speed)) : mid;
-        var goal = chase ? aim : idle;
-        if (autoSweep) goal = Math.max(1, Math.min(99, goal));
-        var next = still ? goal : pos + (goal - pos) * (chase ? .18 : .06);
+        var goal;
+        if (autoSweep) {
+          if (reducedMotion() || dragging || focused) return;
+          if (!hover) {
+            if (t >= hold) setPos(sweepPosition(t));
+            run();
+            return;
+          }
+          goal = Math.max(1, Math.min(99, aim));
+        } else {
+          if (t0 === null) t0 = t;
+          var idle = reducedMotion() ? midPct : midPct * (1 + .46 * Math.sin((t - t0) / speed));
+          goal = chase ? aim : idle;
+        }
+        var next = pos + (goal - pos) * (chase ? .18 : .06);
         if (Math.abs(goal - pos) < .04) next = goal;
         if (next !== pos) setPos(next);
-        if (live && (!autoSweep || sweeping || next !== goal)) raf = requestAnimationFrame(frame);
+        if (!autoSweep || next !== goal) run();
       };
       var run = function () {
-        if (live && !raf) raf = requestAnimationFrame(frame);
+        if (live && !raf && (!autoSweep || !reducedMotion())) raf = requestAnimationFrame(frame);
       };
+      var resumeSweep = function () {
+        t0 = null;
+        hold = now() + 600;
+        run();
+      };
+      if (autoSweep && motion) {
+        var updateMotion = function () { t0 = null; run(); };
+        if (motion.addEventListener) motion.addEventListener('change', updateMotion);
+        else if (motion.addListener) motion.addListener(updateMotion);
+      }
 
       bar.addEventListener('focus', function () {
         focused = true;
@@ -662,29 +695,34 @@
       });
       bar.addEventListener('blur', function () {
         focused = false;
-        if (!autoSweep) t0 = null;
-        run();
+        if (autoSweep) resumeSweep();
+        else { t0 = null; run(); }
       });
 
       /* Pointer tracking stays local to the comparison surface. */
       if (fine) {
         cmp.addEventListener('pointerenter', function (e) {
+          if (autoSweep && e.pointerType === 'touch') return;
           hover = true;
-          aim = pointerPos(e);
+          if (!autoSweep || (!focused && !dragging)) aim = pointerPos(e);
           run();
         }, { passive: true });
         cmp.addEventListener('pointermove', function (e) {
-          if (!hover || dragging) return;
+          if (!hover || dragging || (autoSweep && (focused || e.pointerType === 'touch'))) return;
           aim = pointerPos(e);
           run();
         }, { passive: true });
-        cmp.addEventListener('pointerleave', function () { hover = false; }, { passive: true });
+        cmp.addEventListener('pointerleave', function (e) {
+          if (autoSweep && e.pointerType === 'touch') return;
+          hover = false;
+          if (autoSweep) resumeSweep();
+        }, { passive: true });
       }
       if (window.IntersectionObserver) {
         new IntersectionObserver(function (entries) {
           live = entries[0].isIntersecting;
           if (live) {
-            if (!autoSweep) t0 = null;
+            t0 = null;
             run();
           }
           else if (raf) { cancelAnimationFrame(raf); raf = 0; }

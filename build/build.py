@@ -1676,8 +1676,8 @@ def render_black_friday(c, lang):
         <img class="b" src="{before_image}" width="928" height="1152"
              alt="{esc(sale['before_alt'])}" decoding="async">
         <span class="cmp-bar" aria-label="{esc(c['hero']['drag'])}"></span>
-        <span class="cmp-tag l">{before_label}</span>
-        <span class="cmp-tag r"><span aria-hidden="true">✦</span>{after_label}</span>
+        <div class="bf-tag-mask l"><span class="cmp-tag l">{before_label}</span></div>
+        <div class="bf-tag-mask r"><span class="cmp-tag r"><span aria-hidden="true">✦</span>{after_label}</span></div>
       </div>
     </figure>
   </div>

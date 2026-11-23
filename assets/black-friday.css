@@ -168,10 +168,24 @@
   aspect-ratio: 928 / 1152;
 }
 
+.bf-tag-mask {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.bf-tag-mask.l {
+  clip-path: inset(0 calc(100% - var(--cmp-split)) 0 0);
+}
+
+.bf-tag-mask.r {
+  clip-path: inset(0 0 0 var(--cmp-split));
+}
+
 .bf-example .cmp-tag {
   top: auto;
   bottom: 14px;
-  pointer-events: none;
 }
 
 .bf-example .cmp-tag.r {
