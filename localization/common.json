@@ -493,15 +493,27 @@
   },
   "consent.title": {
     "localizations": {
-      "en": "Cookies and privacy",
-      "ru": "Cookie и конфиденциальность",
-      "de": "Cookies und Datenschutz",
-      "ja": "Cookieとプライバシー",
-      "fr": "Cookies et confidentialité",
-      "es": "Cookies y privacidad",
-      "zh": "Cookie 与隐私"
+      "en": "Cookies",
+      "ru": "Cookie",
+      "de": "Cookies",
+      "ja": "Cookie",
+      "fr": "Cookies",
+      "es": "Cookies",
+      "zh": "Cookie"
     },
-    "comment": "Provider-neutral consent copy. Describe the purpose without naming advertisers, products, services or implementation details."
+    "comment": "Short heading for the cookie banner."
+  },
+  "consent.summary": {
+    "localizations": {
+      "en": "With your permission, we use analytics and measure advertising performance.",
+      "ru": "С вашего согласия используем аналитику и оцениваем эффективность рекламы.",
+      "de": "Mit deiner Einwilligung nutzen wir Analysen und messen die Wirksamkeit von Werbung.",
+      "ja": "同意いただいた場合、サイトの利用状況を分析し、広告の効果を測定します。",
+      "fr": "Avec votre accord, nous mesurons l’audience et l’efficacité de nos publicités.",
+      "es": "Con tu permiso, analizamos el uso del sitio y medimos la eficacia de la publicidad.",
+      "zh": "经你同意，我们会分析网站使用情况并衡量广告效果。"
+    },
+    "comment": "Brief provider-neutral explanation shown before visitors choose their cookie preferences."
   },
   "consent.body": {
     "localizations": {

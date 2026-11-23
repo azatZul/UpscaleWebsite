@@ -944,16 +944,19 @@ def nav(c, lang, home_prefix, path="", on_home=False):
 </header>
 """
 
-# Site-wide consent. Hidden until site.js finds no saved choice; Accept and Reject
-# share one style so neither is nudged. Analytics code reads the same choice.
+# Site-wide consent. site.js opens the banner when a current choice is needed.
 def consent_banner(c, lang):
     k = c["consent"]
     def row(name, desc, control):
         return (f'<label class="consent-row"><span><b>{esc(name)}</b><small>{esc(desc)}</small></span>'
                 f'{control}<i class="consent-switch" aria-hidden="true"></i></label>')
     return f"""<section class="consent" id="consent" aria-labelledby="consent-title" hidden>
-  <h2 id="consent-title">{esc(k['title'])}</h2>
-  <p>{esc(k['body'])} <a href="{rel_url(lang, 'privacy_policy')}">{esc(c['footer']['privacy'])}</a></p>
+  <div class="consent-head">
+    <h2 id="consent-title">{esc(k['title'])}</h2>
+    <button class="consent-link" type="button" data-consent="settings" aria-controls="consent-prefs">{esc(k['settings'])}</button>
+  </div>
+  <p><span id="consent-summary">{esc(k['summary'])}</span><span id="consent-detail" hidden>{esc(k['body'])}</span>
+    <a href="{rel_url(lang, 'privacy_policy')}">{esc(c['footer']['privacy'])}</a></p>
   <div class="consent-prefs" id="consent-prefs" hidden>
     {row(k['necessary'], k['necessary_desc'], '<input type="checkbox" checked disabled>')}
     {row(k['analytics'], k['analytics_desc'], '<input type="checkbox" id="consent-analytics">')}
@@ -963,7 +966,6 @@ def consent_banner(c, lang):
     <button class="btn btn-g" type="button" data-consent="reject">{esc(k['reject'])}</button>
     <button class="btn btn-g" type="button" data-consent="accept">{esc(k['accept'])}</button>
     <button class="btn btn-p" type="button" data-consent="save" hidden>{esc(k['save'])}</button>
-    <button class="consent-link" type="button" data-consent="settings">{esc(k['settings'])}</button>
   </div>
 </section>"""
 

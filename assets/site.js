@@ -51,6 +51,8 @@
     } catch (e) { return null; }
   };
   if (consentBox) {
+    var consentSummary = document.getElementById('consent-summary');
+    var consentDetail = document.getElementById('consent-detail');
     var consentPrefs = document.getElementById('consent-prefs');
     var consentAnalytics = document.getElementById('consent-analytics');
     var consentAdvertising = document.getElementById('consent-advertising');
@@ -59,6 +61,8 @@
       var saved = readConsent();
       consentAnalytics.checked = !!(saved && saved.analytics);
       consentAdvertising.checked = !!(saved && saved.v === 2 && saved.advertising);
+      consentSummary.hidden = withPrefs;
+      consentDetail.hidden = !withPrefs;
       consentPrefs.hidden = !withPrefs;
       consentBtn('settings').hidden = withPrefs;
       consentBtn('save').hidden = !withPrefs;
